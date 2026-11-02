@@ -1,0 +1,103 @@
+{
+ "unit": {
+  "id": "PUMP01_FP",
+  "kind": "popup_set",
+  "windows": [
+   "PUMP01_FP"
+  ]
+ },
+ "purpose": "Pump faceplate content.",
+ "layout": "diagram",
+ "regions": [
+  {
+   "id": "r1",
+   "title": "Status",
+   "kind": "panel",
+   "bbox": {
+    "x": 0,
+    "y": 0,
+    "w": 400,
+    "h": 300
+   },
+   "ans": [
+    "PUMP01_FP:1",
+    "PUMP01_FP:2"
+   ]
+  }
+ ],
+ "devices": [],
+ "flows": [],
+ "readouts": [
+  {
+   "id": "v1",
+   "label": "Current",
+   "expr": "PUMP01_IAMP",
+   "format": "0.0",
+   "units": "A",
+   "bbox": {
+    "x": 20,
+    "y": 60,
+    "w": 120,
+    "h": 30
+   },
+   "ans": [
+    "PUMP01_FP:1"
+   ],
+   "region": "r1",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "indicators": [
+  {
+   "id": "i1",
+   "label": "Running",
+   "expr": "PUMP01_IRUN",
+   "on": "Running",
+   "off": "Stopped",
+   "bbox": {
+    "x": 20,
+    "y": 20,
+    "w": 24,
+    "h": 24
+   },
+   "ans": [
+    "PUMP01_FP:2"
+   ],
+   "basis": {
+    "on": "inventory:Text",
+    "off": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "navigation": [],
+ "static": [
+  {
+   "ans": [
+    "PUMP01_FP:3"
+   ],
+   "what": "Pop-up frame",
+   "class": "frame"
+  },
+  {
+   "ans": [
+    "PUMP01_FP:4"
+   ],
+   "what": "Status caption",
+   "class": "label"
+  }
+ ],
+ "dropped": [
+  {
+   "ans": [
+    "PUMP01_FP:5"
+   ],
+   "reason": "outside the pop-up",
+   "reason_class": "offpage"
+  }
+ ],
+ "modernise": []
+}

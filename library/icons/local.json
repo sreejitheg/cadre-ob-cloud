@@ -1,0 +1,22 @@
+{
+ "name": "local",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M5 3V21H19V16.5H9.66667V3H5Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-local.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

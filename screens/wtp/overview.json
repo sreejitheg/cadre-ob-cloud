@@ -1,0 +1,341 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "Overview",
+  "route": "/",
+  "title": "Plant Overview",
+  "view": "Screens/Overview",
+  "layout": "cards",
+  "width": 1600,
+  "height": 852,
+  "icon": "dashboard",
+  "node": "WTP"
+ },
+ "tagRoot": "[default]cadre_hmi_wtp",
+ "tagModel": "external",
+ "showTags": true,
+ "toolbar": false,
+ "rows": [
+  [
+   {
+    "id": "Production",
+    "title": "Production",
+    "route": "/intake",
+    "body": {
+     "direction": "row",
+     "items": [
+      {
+       "id": "F_FIT101",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "FIT101",
+       "label": "Raw water flow",
+       "params": {
+        "label": "Raw water",
+        "unit": "m³/h",
+        "format": "0.0",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "FIT-101"
+       },
+       "bind": {
+        "value": "FIT101/value"
+       }
+      },
+      {
+       "id": "F_FIT301",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "FIT301",
+       "label": "Filtered water flow",
+       "params": {
+        "label": "Filtered water",
+        "unit": "m³/h",
+        "format": "0.0",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "FIT-301"
+       },
+       "bind": {
+        "value": "FIT301/value"
+       }
+      },
+      {
+       "id": "F_FIT501",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "FIT501",
+       "label": "Distribution flow",
+       "params": {
+        "label": "Distribution",
+        "unit": "m³/h",
+        "format": "0.0",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "FIT-501"
+       },
+       "bind": {
+        "value": "FIT501/value"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "id": "Quality",
+    "title": "Water quality",
+    "route": "/disinfection",
+    "body": {
+     "direction": "row",
+     "items": [
+      {
+       "id": "F_AIT101",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "AIT101",
+       "label": "Raw water turbidity",
+       "params": {
+        "label": "Raw turbidity",
+        "unit": "NTU",
+        "format": "0.0",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "AIT-101"
+       },
+       "bind": {
+        "value": "AIT101/value"
+       }
+      },
+      {
+       "id": "F_AIT301",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "AIT301",
+       "label": "Filtered water turbidity",
+       "params": {
+        "label": "Filtered turbidity",
+        "unit": "NTU",
+        "format": "0.00",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "AIT-301"
+       },
+       "bind": {
+        "value": "AIT301/value"
+       }
+      },
+      {
+       "id": "F_AIT401",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "AIT401",
+       "label": "Free chlorine",
+       "params": {
+        "label": "Free chlorine",
+        "unit": "mg/L",
+        "format": "0.00",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "AIT-401"
+       },
+       "bind": {
+        "value": "AIT401/value"
+       }
+      },
+      {
+       "id": "F_AIT402",
+       "kind": "instrument-field",
+       "basis": "0px",
+       "grow": 1,
+       "device": "AIT402",
+       "label": "Treated water pH",
+       "params": {
+        "label": "pH",
+        "unit": "",
+        "format": "0.00",
+        "size": "enhanced",
+        "align": "center",
+        "tag": "AIT-402"
+       },
+       "bind": {
+        "value": "AIT402/value"
+       }
+      }
+     ]
+    }
+   }
+  ],
+  [
+   {
+    "id": "Storage",
+    "title": "Storage",
+    "body": {
+     "direction": "row",
+     "items": [
+      {
+       "id": "C_TK101",
+       "kind": "tank",
+       "basis": "0px",
+       "grow": 1,
+       "device": "TK101",
+       "label": "Raw water tank",
+       "params": {
+        "max": 500,
+        "unit": "m³",
+        "tag": "TK-101",
+        "compact": false
+       },
+       "bind": {
+        "value": "TK101/volume",
+        "trend": "TK101/trend"
+       }
+      },
+      {
+       "id": "C_TK202",
+       "kind": "tank",
+       "basis": "0px",
+       "grow": 1,
+       "device": "TK202",
+       "label": "Clarified water tank",
+       "params": {
+        "max": 300,
+        "unit": "m³",
+        "tag": "TK-202",
+        "compact": false
+       },
+       "bind": {
+        "value": "TK202/volume",
+        "trend": "TK202/trend"
+       }
+      },
+      {
+       "id": "C_TK501",
+       "kind": "tank",
+       "basis": "0px",
+       "grow": 1,
+       "device": "TK501",
+       "label": "Potable water tank",
+       "params": {
+        "max": 800,
+        "unit": "m³",
+        "tag": "TK-501",
+        "compact": false
+       },
+       "bind": {
+        "value": "TK501/volume",
+        "trend": "TK501/trend"
+       }
+      }
+     ]
+    }
+   },
+   {
+    "id": "Pumps",
+    "title": "Pumps",
+    "body": {
+     "direction": "row",
+     "justify": "space-around",
+     "items": [
+      {
+       "id": "C_P101",
+       "kind": "pump",
+       "basis": "0px",
+       "grow": 1,
+       "device": "P101",
+       "label": "Raw water feed pump",
+       "params": {
+        "readoutPosition": "bottom",
+        "hasSpeed": true,
+        "hasTag": true,
+        "tag": "P-101",
+        "alertFrameStatus": "alarm"
+       },
+       "bind": {
+        "on": "P101/state",
+        "speed": "P101/speed",
+        "alert": "P101/alert",
+        "alertFrameMode": "P101/alertMode",
+        "badgeControl": "P101/modeBadge",
+        "badgeInterlock": "P101/ilk/badge"
+       }
+      },
+      {
+       "id": "C_P301",
+       "kind": "pump",
+       "basis": "0px",
+       "grow": 1,
+       "device": "P301",
+       "label": "Filter feed pump",
+       "params": {
+        "readoutPosition": "bottom",
+        "hasSpeed": true,
+        "hasTag": true,
+        "tag": "P-301",
+        "alertFrameStatus": "alarm"
+       },
+       "bind": {
+        "on": "P301/state",
+        "speed": "P301/speed",
+        "alert": "P301/alert",
+        "alertFrameMode": "P301/alertMode",
+        "badgeControl": "P301/modeBadge",
+        "badgeInterlock": "P301/ilk/badge"
+       }
+      },
+      {
+       "id": "C_P501",
+       "kind": "pump",
+       "basis": "0px",
+       "grow": 1,
+       "device": "P501",
+       "label": "Distribution pump 1",
+       "params": {
+        "readoutPosition": "bottom",
+        "hasSpeed": true,
+        "hasTag": true,
+        "tag": "P-501",
+        "alertFrameStatus": "alarm"
+       },
+       "bind": {
+        "on": "P501/state",
+        "speed": "P501/speed",
+        "alert": "P501/alert",
+        "alertFrameMode": "P501/alertMode",
+        "badgeControl": "P501/modeBadge"
+       }
+      },
+      {
+       "id": "C_P502",
+       "kind": "pump",
+       "basis": "0px",
+       "grow": 1,
+       "device": "P502",
+       "label": "Distribution pump 2",
+       "params": {
+        "readoutPosition": "bottom",
+        "hasSpeed": true,
+        "hasTag": true,
+        "tag": "P-502",
+        "alertFrameStatus": "alarm"
+       },
+       "bind": {
+        "on": "P502/state",
+        "speed": "P502/speed",
+        "alert": "P502/alert",
+        "alertFrameMode": "P502/alertMode",
+        "badgeControl": "P502/modeBadge",
+        "badgeInterlock": "P502/ilk/badge"
+       }
+      }
+     ]
+    }
+   }
+  ]
+ ]
+}

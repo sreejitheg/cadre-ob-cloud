@@ -1,0 +1,68 @@
+{
+  "custom": {
+    "alarmScope": "*",
+    "deviceModel": false,
+    "devices": [
+      {
+        "folder": "[default]cadre_hmi_sample/P101",
+        "kind": "pump",
+        "label": "",
+        "title": "P101",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_sample/P102",
+        "kind": "pump",
+        "label": "",
+        "title": "P102",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_sample/V101",
+        "kind": "valve",
+        "label": "",
+        "title": "V101",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_sample/V102",
+        "kind": "valve",
+        "label": "",
+        "title": "V102",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_sample/V103",
+        "kind": "valve",
+        "label": "",
+        "title": "V103",
+        "unit": ""
+      }
+    ],
+    "nav": {
+      "footer": [
+        {
+          "icon": "alert-list",
+          "label": "Alerts",
+          "path": "/alerts"
+        }
+      ],
+      "items": [
+        {
+          "icon": "dashboard",
+          "label": "Pump Station",
+          "path": "/pump-station"
+        }
+      ]
+    },
+    "palette": "day",
+    "selectedDevice": "",
+    "selectedKind": "",
+    "selectedLabel": "",
+    "selectedTitle": "",
+    "trends": []
+  },
+  "props": {
+    "theme": "light-cool"
+  }
+}

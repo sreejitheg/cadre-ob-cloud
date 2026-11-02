@@ -1,0 +1,15 @@
+{
+  "attributes": {
+    "lastModification": {
+      "actor": "Cadre-Sandbox-OpenBridge tools/hmi",
+      "timestamp": "2026-10-07T00:00:00Z"
+    }
+  },
+  "files": [
+    "code.py"
+  ],
+  "overridable": true,
+  "restricted": false,
+  "scope": "A",
+  "version": 1
+}

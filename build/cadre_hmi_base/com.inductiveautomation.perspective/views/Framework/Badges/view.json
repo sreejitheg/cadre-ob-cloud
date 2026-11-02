@@ -1,0 +1,219 @@
+{
+  "custom": {},
+  "params": {
+    "counts": {
+      "Critical": 0,
+      "Diagnostic": 0,
+      "High": 0,
+      "Low": 0,
+      "Medium": 0,
+      "total": 0,
+      "unacked": 0
+    }
+  },
+  "propConfig": {
+    "params.counts": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 20,
+      "width": 160
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Badge_Critical"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts.Critical} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "toStr({view.params.counts.Critical})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "8px",
+            "classes": "cadre/font/label cadre/alert/badge-critical",
+            "padding": "0 6px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badge_High"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts.High} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "toStr({view.params.counts.High})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "8px",
+            "classes": "cadre/font/label cadre/alert/badge-alarm",
+            "padding": "0 6px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badge_Medium"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts.Medium} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "toStr({view.params.counts.Medium})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "8px",
+            "classes": "cadre/font/label cadre/alert/badge-warning",
+            "padding": "0 6px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badge_Low"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts.Low} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "toStr({view.params.counts.Low})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "8px",
+            "classes": "cadre/font/label cadre/alert/badge-caution",
+            "padding": "0 6px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badge_Diagnostic"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts.Diagnostic} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "toStr({view.params.counts.Diagnostic})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "border": "1px solid var(--border-outline-color)",
+            "borderRadius": "8px",
+            "classes": "cadre/font/label cadre/text/neutral",
+            "padding": "0 6px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "gap": "4px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

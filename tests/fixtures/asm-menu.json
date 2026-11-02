@@ -1,0 +1,34 @@
+{
+ "menu": [
+  {
+   "menu": "Plant",
+   "item": "Overview",
+   "command": "PageDisplay(Overview)",
+   "target": "Overview"
+  },
+  {
+   "menu": "Plant",
+   "item": "Pump station",
+   "command": "PageDisplay(PumpStation)",
+   "target": "PumpStation"
+  },
+  {
+   "menu": "Plant",
+   "item": "Aeration",
+   "command": "PageDisplay(Aeration)",
+   "target": "Aeration"
+  },
+  {
+   "menu": "Tools",
+   "item": "Active alarms",
+   "command": "PageDisplay(Alarm)",
+   "target": "Alarm"
+  },
+  {
+   "menu": "Tools",
+   "item": "Trend",
+   "command": "PageDisplay(Trend)",
+   "target": "Trend"
+  }
+ ]
+}

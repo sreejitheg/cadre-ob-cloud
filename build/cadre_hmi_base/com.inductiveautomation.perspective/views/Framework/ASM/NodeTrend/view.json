@@ -1,0 +1,305 @@
+{
+  "custom": {
+    "cards": [],
+    "hours": 1
+  },
+  "params": {},
+  "propConfig": {
+    "custom.cards": {
+      "binding": {
+        "config": {
+          "expression": "toStr({view.custom.hours}) + '|' + coalesce({session.custom.contentNode}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\tparts = (value or '').split('|', 1)\n\treturn cadre.hmi.node_trends(self.session, parts[1] if len(parts) > 1 else '', int(parts[0] or 1))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 788,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              },
+              "text": "HISTORISED MEMBERS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.hours = 1"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Range_1h"
+            },
+            "position": {
+              "basis": "80px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.hours} = 1, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px"
+              },
+              "text": "1 h"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.hours = 8"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Range_8h"
+            },
+            "position": {
+              "basis": "80px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.hours} = 8, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px"
+              },
+              "text": "8 h"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.hours = 24"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Range_24h"
+            },
+            "position": {
+              "basis": "80px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.hours} = 24, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px"
+              },
+              "text": "24 h"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Ranges"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Empty"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.cards}) = 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "padding": "0 8px",
+            "whiteSpace": "nowrap"
+          },
+          "text": "No device of this node has a historised member"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Cards"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.cards}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "row",
+          "elementPosition": {
+            "basis": "380px",
+            "grow": 1,
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Trend/Card",
+          "style": {
+            "gap": "8px",
+            "overflow": "auto"
+          },
+          "useDefaultViewHeight": true,
+          "useDefaultViewWidth": false,
+          "wrap": "wrap"
+        },
+        "type": "ia.display.flex-repeater"
+      },
+      {
+        "meta": {
+          "name": "SearchPanel"
+        },
+        "position": {
+          "basis": "0px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.searchOpen}, false) && len(coalesce({session.custom.searchQuery}, '')) > 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "path": "Framework/ASM/SearchResults",
+          "style": {
+            "bottom": "0px",
+            "left": "0px",
+            "position": "absolute",
+            "right": "0px",
+            "top": "0px",
+            "zIndex": 50
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "8px",
+        "overflow": "hidden",
+        "padding": "8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

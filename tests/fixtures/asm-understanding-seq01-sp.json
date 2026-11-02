@@ -1,0 +1,57 @@
+{
+ "unit": {
+  "id": "SEQ01_SP",
+  "kind": "popup_set",
+  "windows": [
+   "SEQ01_SP"
+  ]
+ },
+ "purpose": "Sequence set points.",
+ "layout": "diagram",
+ "regions": [
+  {
+   "id": "r1",
+   "title": "Set points",
+   "kind": "panel",
+   "bbox": {
+    "x": 0,
+    "y": 0,
+    "w": 400,
+    "h": 200
+   },
+   "ans": [
+    "SEQ01_SP:1"
+   ]
+  }
+ ],
+ "devices": [],
+ "flows": [],
+ "readouts": [
+  {
+   "id": "v1",
+   "label": "Start level",
+   "expr": "SEQ01_STARTLVL",
+   "format": "0.00",
+   "units": "m",
+   "bbox": {
+    "x": 20,
+    "y": 20,
+    "w": 120,
+    "h": 30
+   },
+   "ans": [
+    "SEQ01_SP:1"
+   ],
+   "region": "r1",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "indicators": [],
+ "navigation": [],
+ "static": [],
+ "dropped": [],
+ "modernise": []
+}

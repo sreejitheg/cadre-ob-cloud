@@ -1,0 +1,8 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--alert-caution-color)",
+      "color": "var(--on-caution-color)"
+    }
+  }
+}

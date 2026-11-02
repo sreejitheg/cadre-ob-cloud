@@ -1,0 +1,365 @@
+{
+  "custom": {},
+  "params": {
+    "deviceId": "",
+    "deviceKind": "controller",
+    "deviceLabel": "",
+    "format": "#,##0.0",
+    "hasOutput": false,
+    "hasSetpoint": false,
+    "hasTag": true,
+    "label": "",
+    "manual": false,
+    "output": 0,
+    "setpoint": 0,
+    "tag": "",
+    "unit": "",
+    "value": 0
+  },
+  "propConfig": {
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceKind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.format": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasOutput": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasSetpoint": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasTag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.manual": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.output": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.setpoint": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 96,
+      "width": 120
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Badge_auto"
+            },
+            "position": {
+              "basis": "16px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "!{view.params.manual}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M9.42846 3L3 20.9997H7.49992L8.94642 17.1426H15.0548L16.5013 20.9997H21.0012L14.5728 3H9.42846ZM12.0006 8.99864L10.3929 13.2855H13.6083L12.0006 8.99864Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)",
+                    "rule": "evenodd"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Badge_manual"
+            },
+            "position": {
+              "basis": "16px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.manual}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M5.75 3L2 21H6.44325L8.12573 12.7744L10.125 21H13.875L15.8942 12.6923L17.625 21H22L18.25 3H13.875L12 12L10.125 3H5.75Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Tag"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.params.hasTag} && len({view.params.tag}) > 0, {view.params.tag}, {view.params.label})"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/automation-label cadre/text/neutral cadre/text/ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Head"
+        },
+        "position": {
+          "basis": "20px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Setpoint"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.hasSetpoint}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "'▸ ' + numberFormat({view.params.setpoint}, {view.params.format})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-value-small-neutral",
+            "color": "var(--instrument-enhanced-secondary-color)",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Value"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "numberFormat({view.params.value}, {view.params.format})"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-value-regular-active cadre/text/active",
+                "lineHeight": "1",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Unit"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.unit}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-unit cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "ValueRow"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "baseline",
+          "direction": "row",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Output"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.hasOutput}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "'Out ' + numberFormat({view.params.output}, '0') + ' %'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-unit cadre/text/neutral",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.deviceId:\n\t\tcadre.hmi.select_device(self.session, self.view.params.deviceId, self.view.params.deviceKind or 'controller', self.view.params.tag or self.view.params.label, self.view.params.deviceLabel)\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "alignItems": "stretch",
+      "direction": "column",
+      "justify": "center",
+      "style": {
+        "backgroundColor": "var(--container-global-color)",
+        "border": "1px solid var(--automation-device-tertiary-color)",
+        "borderRadius": "4px",
+        "cursor": "pointer",
+        "gap": "2px",
+        "overflow": "hidden",
+        "padding": "2px 6px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

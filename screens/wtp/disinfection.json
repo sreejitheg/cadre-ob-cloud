@@ -1,0 +1,478 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "Disinfection",
+  "route": "/disinfection",
+  "title": "Disinfection and Storage",
+  "view": "Screens/Disinfection",
+  "layout": "diagram",
+  "width": 1580,
+  "height": 600,
+  "icon": "sensor-water-drop-google",
+  "node": "WTP/Disinfection"
+ },
+ "tagRoot": "[default]cadre_hmi_wtp",
+ "tagModel": "external",
+ "showTags": true,
+ "toolbar": true,
+ "sections": [
+  {
+   "id": "Dose",
+   "x": 20,
+   "y": 20,
+   "w": 520,
+   "h": 540,
+   "label": "Chemical dosing"
+  },
+  {
+   "id": "Store",
+   "x": 560,
+   "y": 20,
+   "w": 300,
+   "h": 540,
+   "label": "Potable storage"
+  },
+  {
+   "id": "Dist",
+   "x": 880,
+   "y": 20,
+   "w": 680,
+   "h": 540,
+   "label": "Distribution"
+  }
+ ],
+ "symbols": [
+  {
+   "id": "DP401",
+   "kind": "pump",
+   "x": 196,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Hypochlorite dosing pump",
+   "params": {
+    "readoutPosition": "right",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "DP-401",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "DP401/state",
+    "speed": "DP401/speed",
+    "alert": "DP401/alert",
+    "alertFrameMode": "DP401/alertMode",
+    "badgeControl": "DP401/modeBadge"
+   }
+  },
+  {
+   "id": "TK401",
+   "kind": "tank",
+   "x": 165,
+   "y": 380,
+   "w": 110,
+   "h": 150,
+   "device": true,
+   "label": "Hypochlorite tank",
+   "params": {
+    "max": 8,
+    "unit": "m³",
+    "tag": "TK-401",
+    "compact": true
+   },
+   "bind": {
+    "value": "TK401/volume",
+    "trend": "TK401/trend"
+   }
+  },
+  {
+   "id": "DP402",
+   "kind": "pump",
+   "x": 376,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Caustic dosing pump",
+   "params": {
+    "readoutPosition": "right",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "DP-402",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "DP402/state",
+    "speed": "DP402/speed",
+    "alert": "DP402/alert",
+    "alertFrameMode": "DP402/alertMode",
+    "badgeControl": "DP402/modeBadge"
+   }
+  },
+  {
+   "id": "TK402",
+   "kind": "tank",
+   "x": 345,
+   "y": 380,
+   "w": 110,
+   "h": 150,
+   "device": true,
+   "label": "Caustic tank",
+   "params": {
+    "max": 8,
+    "unit": "m³",
+    "tag": "TK-402",
+    "compact": true
+   },
+   "bind": {
+    "value": "TK402/volume",
+    "trend": "TK402/trend"
+   }
+  },
+  {
+   "id": "TK501",
+   "kind": "tank",
+   "x": 620,
+   "y": 80,
+   "w": 180,
+   "h": 200,
+   "device": true,
+   "label": "Potable water tank",
+   "params": {
+    "max": 800,
+    "unit": "m³",
+    "tag": "TK-501",
+    "compact": false
+   },
+   "bind": {
+    "value": "TK501/volume",
+    "trend": "TK501/trend"
+   }
+  },
+  {
+   "id": "AIT401",
+   "kind": "readout",
+   "x": 610,
+   "y": 330,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Free chlorine",
+   "params": {
+    "unit": "mg/L",
+    "format": "0.00",
+    "tag": "AIT-401",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "AIT401/value"
+   }
+  },
+  {
+   "id": "AIT402",
+   "kind": "readout",
+   "x": 730,
+   "y": 330,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Treated water pH",
+   "params": {
+    "unit": "pH",
+    "format": "0.00",
+    "tag": "AIT-402",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "AIT402/value"
+   }
+  },
+  {
+   "id": "P501",
+   "kind": "pump",
+   "x": 1036,
+   "y": 156,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Distribution pump 1",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "P-501",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "P501/state",
+    "speed": "P501/speed",
+    "alert": "P501/alert",
+    "alertFrameMode": "P501/alertMode",
+    "badgeControl": "P501/modeBadge"
+   }
+  },
+  {
+   "id": "P502",
+   "kind": "pump",
+   "x": 1036,
+   "y": 356,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Distribution pump 2",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "P-502",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "P502/state",
+    "speed": "P502/speed",
+    "alert": "P502/alert",
+    "alertFrameMode": "P502/alertMode",
+    "badgeControl": "P502/modeBadge",
+    "badgeInterlock": "P502/ilk/badge"
+   }
+  },
+  {
+   "id": "FIT501",
+   "kind": "readout",
+   "x": 1260,
+   "y": 200,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Distribution flow",
+   "params": {
+    "unit": "m³/h",
+    "format": "0.0",
+    "tag": "FIT-501",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "FIT501/value"
+   }
+  }
+ ],
+ "junctions": [
+  {
+   "id": "J1",
+   "x": 220,
+   "y": 180
+  },
+  {
+   "id": "J2",
+   "x": 400,
+   "y": 180
+  },
+  {
+   "id": "J3",
+   "x": 920,
+   "y": 180
+  },
+  {
+   "id": "J4",
+   "x": 1220,
+   "y": 180
+  }
+ ],
+ "pipes": [
+  {
+   "id": "d1",
+   "from": {
+    "x": 40,
+    "y": 180,
+    "end": "arrow-in"
+   },
+   "to": {
+    "ref": "J1"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d2",
+   "from": {
+    "ref": "J1"
+   },
+   "to": {
+    "ref": "J2"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d3",
+   "from": {
+    "ref": "J2"
+   },
+   "to": {
+    "ref": "TK501",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d4",
+   "from": {
+    "ref": "TK401",
+    "side": "top"
+   },
+   "to": {
+    "ref": "DP401",
+    "side": "bottom"
+   }
+  },
+  {
+   "id": "d5",
+   "from": {
+    "ref": "DP401",
+    "side": "top"
+   },
+   "to": {
+    "ref": "J1"
+   }
+  },
+  {
+   "id": "d6",
+   "from": {
+    "ref": "TK402",
+    "side": "top"
+   },
+   "to": {
+    "ref": "DP402",
+    "side": "bottom"
+   }
+  },
+  {
+   "id": "d7",
+   "from": {
+    "ref": "DP402",
+    "side": "top"
+   },
+   "to": {
+    "ref": "J2"
+   }
+  },
+  {
+   "id": "d8",
+   "from": {
+    "ref": "TK501",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J3"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d9",
+   "from": {
+    "ref": "J3"
+   },
+   "to": {
+    "ref": "P501",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d10",
+   "from": {
+    "ref": "J3"
+   },
+   "to": {
+    "ref": "P502",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d11",
+   "from": {
+    "ref": "P501",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J4"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d12",
+   "from": {
+    "ref": "P502",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J4"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "d13",
+   "from": {
+    "ref": "J4"
+   },
+   "to": {
+    "x": 1550,
+    "y": 180,
+    "end": "arrow-out"
+   },
+   "medium": "fresh-water"
+  }
+ ],
+ "labels": [
+  {
+   "id": "From",
+   "x": 36,
+   "y": 144,
+   "w": 160,
+   "h": 24,
+   "text": "From filtration",
+   "align": "left",
+   "style": "label"
+  },
+  {
+   "id": "TK401",
+   "x": 150,
+   "y": 534,
+   "w": 140,
+   "h": 24,
+   "text": "Hypochlorite tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "TK402",
+   "x": 330,
+   "y": 534,
+   "w": 140,
+   "h": 24,
+   "text": "Caustic tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "TK501",
+   "x": 620,
+   "y": 288,
+   "w": 180,
+   "h": 24,
+   "text": "Potable water tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "To",
+   "x": 1340,
+   "y": 144,
+   "w": 216,
+   "h": 24,
+   "text": "To village distribution",
+   "align": "right",
+   "style": "label"
+  }
+ ]
+}

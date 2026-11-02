@@ -1,0 +1,441 @@
+{
+  "custom": {
+    "ackMessage": "",
+    "ackPending": {
+      "active": false,
+      "ids": [],
+      "text": ""
+    },
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "selected": [],
+    "shown": [],
+    "unacked": 0
+  },
+  "params": {
+    "deviceId": "",
+    "source": ""
+  },
+  "propConfig": {
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.selected": {
+      "binding": {
+        "config": {
+          "path": "/root/Table.props.selection.active.data"
+        },
+        "type": "property"
+      }
+    },
+    "custom.shown": {
+      "binding": {
+        "config": {
+          "path": "/root/Table.props.filters.active.results.data"
+        },
+        "type": "property"
+      }
+    },
+    "custom.unacked": {
+      "binding": {
+        "config": {
+          "expression": "{view.custom.shown}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn len(cadre.hmi.unacked_ids(value))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.source": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 560,
+      "width": 368
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Table"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.enableAcknowledge": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.can.W7}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.enableShelve": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.can.W7}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.enableUnshelve": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.can.W7}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.filters.active.conditions.source": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.source}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.filters.active.priorities.diagnostic": {
+            "binding": {
+              "config": {
+                "expression": "true"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "filters": {
+            "active": {
+              "results": {
+                "enabled": true
+              }
+            }
+          },
+          "shelvingTimes": [
+            300,
+            900,
+            1800,
+            3600,
+            7200,
+            14400,
+            28800
+          ]
+        },
+        "type": "ia.display.alarmstatustable"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AckMessage"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ackMessage}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tids = cadre.hmi.selected_ids(self.view.custom.selected)\n\tself.view.custom.ackMessage = cadre.hmi.ack_listed(ids, self.session, 'W7')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckSelected"
+            },
+            "position": {
+              "basis": "116px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W7} && len({view.custom.selected}) > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "32px"
+              },
+              "text": "Ack selected"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tids = cadre.hmi.unacked_ids(self.view.custom.shown)\n\tif len(ids) > 0:\n\t\tself.view.custom.ackPending = {'active': True, 'ids': ids, 'text': 'Acknowledge ' + str(len(ids)) + (' alarm?' if len(ids) == 1 else ' alarms?')}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckAll"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W7} && {view.custom.unacked} > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "32px"
+              },
+              "text": "Ack all"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "AckBar"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 4px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AckConfirmText"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ackPending.text}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.ackMessage = cadre.hmi.ack_listed(self.view.custom.ackPending.ids, self.session, 'W7')\n\tself.view.custom.ackPending = {'active': False, 'ids': [], 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckConfirmYes"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W7}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Confirm"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.ackPending = {'active': False, 'ids': [], 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckConfirmNo"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Cancel"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "AckConfirm"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.ackPending.active}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/alert/badge-caution",
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

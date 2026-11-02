@@ -1,0 +1,276 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 800,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if(coalesce({session.custom.navPanel}, 'pages') = 'support', 'Tools and support', 'Navigation')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/title cadre/text/active",
+                "whiteSpace": "nowrap"
+              },
+              "text": "Navigation"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 24,
+                  "x": 8,
+                  "y": 8
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z",
+                      "fill": {
+                        "paint": "var(--element-active-color)"
+                      },
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 24 24"
+                },
+                "type": "ia.shapes.svg"
+              }
+            ],
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.closeDock('nav')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Close"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat",
+                "height": "40px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "width": "40px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "56px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "overflow": "hidden",
+            "padding": "0 8px 0 16px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Search"
+        },
+        "position": {
+          "basis": "36px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') != 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "bidirectional": true,
+                "path": "session.custom.navQuery"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "deferUpdates": false,
+          "placeholder": "Search pages and areas",
+          "rejectUpdatesWhileFocused": false,
+          "style": {
+            "margin": "8px 8px 4px 8px"
+          },
+          "text": ""
+        },
+        "type": "ia.input.text-field"
+      },
+      {
+        "meta": {
+          "name": "Tree"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') != 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.navQuery}, ''), '')"
+              },
+              "transforms": [
+                {
+                  "code": "\tparts = (value or '').split('|', 1)\n\treturn cadre.hmi.nav_tree(self.session, parts[1] if len(parts) > 1 else '', parts[0])",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "elementPosition": {
+            "basis": "44px",
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Framework/ASM/ListRow",
+          "style": {
+            "gap": "2px",
+            "overflow": "auto"
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.flex-repeater"
+      },
+      {
+        "meta": {
+          "name": "Support"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') = 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.nav_support(self.session, value)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "elementPosition": {
+            "basis": "44px",
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Framework/ASM/ListRow",
+          "style": {
+            "gap": "2px",
+            "overflow": "auto"
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.flex-repeater"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/menu cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden",
+        "padding": "0 0 8px 0"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

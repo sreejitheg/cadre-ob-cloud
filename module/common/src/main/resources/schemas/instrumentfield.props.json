@@ -1,0 +1,123 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "size": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "The size of the instrument field."
+    },
+    "setpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "The setpoint value to display."
+    },
+    "hasSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show the setpoint."
+    },
+    "hasSrc": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show the source (src) field."
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "The primary value to display."
+    },
+    "maxDigits": {
+      "type": "number",
+      "default": 1,
+      "description": "The maximum number of integer digits to show (for zero padding)."
+    },
+    "showZeroPadding": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show leading zeros up to maxDigits."
+    },
+    "fractionDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "The number of decimal places to display."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "The tag or label for the data (e.g., \"HDG\", \"SPD\")."
+    },
+    "unit": {
+      "type": "string",
+      "default": "",
+      "description": "The unit of measurement (e.g., \"DEG\", \"KN\")."
+    },
+    "src": {
+      "type": "string",
+      "default": "",
+      "description": "The current source name (e.g., \"GPS 1\")."
+    },
+    "neutralColor": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, uses a neutral color scheme instead of the default instrument color."
+    },
+    "horizontal": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, uses a horizontal layout."
+    },
+    "center": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, centers the content."
+    },
+    "labelOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, only the label (tag and unit) is displayed."
+    },
+    "off": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays the \"off\" state (e.g., showing \"OFF\" instead of value)."
+    },
+    "autoHideSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, automatically hides the setpoint when the value is close to it."
+    },
+    "autoHideDeadband": {
+      "type": "number",
+      "default": 0,
+      "description": "The deadband within which the setpoint is hidden if autoHideSetpoint is true."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "custom": {},
+  "params": {
+    "counts": {
+      "Critical": 0,
+      "Diagnostic": 0,
+      "High": 0,
+      "Low": 0,
+      "Medium": 0,
+      "total": 0,
+      "unacked": 0
+    },
+    "icon": "",
+    "label": "",
+    "path": ""
+  },
+  "propConfig": {
+    "params.counts": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.icon": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.path": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 48,
+      "width": 304
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Icon"
+        },
+        "position": {
+          "basis": "24px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.params.icon}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.elements": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.icon}"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.icons.elements(value)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [],
+          "style": {
+            "height": "24px"
+          },
+          "viewBox": "0 0 24 24"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "grow": 1
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.label}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badges"
+        },
+        "position": {
+          "basis": "120px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.params.counts": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "counts": {
+              "Critical": 0,
+              "Diagnostic": 0,
+              "High": 0,
+              "Low": 0,
+              "Medium": 0,
+              "total": 0,
+              "unacked": 0
+            }
+          },
+          "path": "Framework/Badges",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.path:\n\t\tsystem.perspective.navigate(self.view.params.path)\n\tsystem.perspective.closeDock('nav')"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "if({page.props.path} = {view.params.path}, 'cadre/nav/item-selected', 'cadre/nav/item cadre/text/active')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "gap": "12px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,2904 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    },
+    "trend-style.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "definitions": {
+        "styleConfig": {
+          "properties": {
+            "fill": {
+              "properties": {
+                "color": {
+                  "description": "The color to apply to the trend fill, if applicable.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "description": "The opacity to apply to the trend fill, if applicable.",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "stroke": {
+              "properties": {
+                "color": {
+                  "description": "The color to apply to the line stroke, if applicable.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "description": "The spacing to apply between dashes of the line stroke, if applicable.",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "opacity": {
+                  "description": "The opacity to apply to the line stroke, if applicable.",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "width": {
+                  "description": "The width to apply to the line stroke, if applicable.",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "type": "object"
+            }
+          }
+        }
+      },
+      "properties": {
+        "colorScheme": {
+          "description": "Specifies a Color Brewer color scheme to use on the series (http://colorbrewer2.org/).",
+          "enum": [
+            "Spectral",
+            "RdYlGn",
+            "RdBu",
+            "PiYG",
+            "PRGn",
+            "RdYlBu",
+            "BrBG",
+            "RdGy",
+            "PuOr",
+            "Set2",
+            "Accent",
+            "Set1",
+            "Set3",
+            "Dark2",
+            "Paired",
+            "Pastel2",
+            "Pastel1",
+            "OrRd",
+            "PuBu",
+            "BuPu",
+            "Oranges",
+            "BuGn",
+            "YlOrBr",
+            "YlGn",
+            "Reds",
+            "RdPu",
+            "Greens",
+            "YlGnBu",
+            "Purples",
+            "GnBu",
+            "Greys",
+            "YlOrRd",
+            "PuRd",
+            "Blues",
+            "PuBuGn"
+          ],
+          "type": "string"
+        },
+        "colors": {
+          "description": "If provided, the colors listed here will override the colors used in the colorScheme.",
+          "items": {
+            "format": "color",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "highlighted": {
+          "$ref": "#/definitions/styleConfig",
+          "description": "The style applied to the highlighted state of the trend."
+        },
+        "muted": {
+          "$ref": "#/definitions/styleConfig",
+          "description": "The style applied to the muted (unselected) state of the trend."
+        },
+        "normal": {
+          "$ref": "#/definitions/styleConfig",
+          "description": "The style applied to the default state of the trend."
+        },
+        "selected": {
+          "$ref": "#/definitions/styleConfig",
+          "description": "The style applied to the selected state of the trend."
+        }
+      },
+      "title": "Trend Style Schema",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.chart.powerchart.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "definitions": {
+    "fill": {
+      "properties": {
+        "color": {
+          "default": "#FAFAFB",
+          "format": "color",
+          "type": "string"
+        },
+        "opacity": {
+          "default": 0.9,
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "font": {
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "The text color of the info box label and datetime text.",
+          "format": "color",
+          "type": "string"
+        },
+        "size": {
+          "default": 11,
+          "description": "The font size of the info box label and datetime text.",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema",
+          "default": {
+            "classes": ""
+          },
+          "description": "Style properties to be applied to the text of the info box."
+        }
+      },
+      "type": "object"
+    },
+    "grid": {
+      "description": "Configuration for gridlines to display on this axis.",
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Color of the gridlines.",
+          "format": "color",
+          "type": "string"
+        },
+        "dashArray": {
+          "default": 0,
+          "description": "Dashed appearance of the gridlines.",
+          "type": "number"
+        },
+        "opacity": {
+          "default": 0.9,
+          "description": "Opacity of the gridlines.",
+          "type": "number"
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema",
+          "default": {
+            "classes": ""
+          },
+          "description": "Style properties to be applied to the axis gridlines."
+        },
+        "visible": {
+          "default": false,
+          "description": "Visible state of the gridlines. Gridlines are shown only for axes that connect directly to the chart. Any satellite axes will display their tick configurations instead of gridlines.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "stroke": {
+      "properties": {
+        "color": {
+          "default": "#757A7F",
+          "format": "color",
+          "type": "string"
+        },
+        "dashArray": {
+          "default": 0,
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "opacity": {
+          "default": 0.9,
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "width": {
+          "default": 1,
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "description": "Props contract for the Perspective component ia.chart.powerchart. Ignition 8.3, Perspective module 3.3.6, registry perspective-timeseries.components.json hash 8a3bb62bf541937ba438.",
+  "properties": {
+    "axes": {
+      "default": [],
+      "description": "Collection of predefined axes against which the data visualizations can be drawn.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "color": {
+            "default": "#757A7F",
+            "description": "The color of the Y axis vertical bar.",
+            "format": "color",
+            "type": "string"
+          },
+          "dataFormat": {
+            "default": "0,0.##",
+            "description": "Format pattern for displaying the data for this axis.",
+            "suggestions": {
+              "abbreviation [1.2k]": "0.0a",
+              "accounting [$ (1,000.12)]": "$ (0,0.00)",
+              "currency (rounded) [$1,012]": "$0,0",
+              "currency [$1,000.12]": "$0,0.00",
+              "duration [24:01:00]": "00:00:00",
+              "financial [(1,000.12)]": "(0,0.00)",
+              "four decimal precision [1.1200]": "0,0.0000",
+              "integer [1,200]": "0,0",
+              "number [1,000.12]": "0,0.##",
+              "ordinal [100th]": "0o",
+              "percent [10.12%]": "0.##%",
+              "scientific [1.01E+03]": "0.00e+0"
+            },
+            "type": "string"
+          },
+          "grid": {
+            "$ref": "#/definitions/grid"
+          },
+          "label": {
+            "additionalProperties": false,
+            "description": "Y axis label configuration.",
+            "properties": {
+              "font": {
+                "additionalProperties": false,
+                "description": "Y axis label font configuration.",
+                "properties": {
+                  "color": {
+                    "default": "#757A7F",
+                    "description": "The color of the Y axis label text.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "size": {
+                    "default": 10,
+                    "description": "The size of the Y axis label text.",
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "offset": {
+                "default": 0,
+                "description": "Offset the Y axis label from its default position. This allows you to fine tune the label location, which may be necessary depending on the scale and how much room the tick labels take up. Maybe positive or negative.",
+                "type": "number"
+              },
+              "style": {
+                "$ref": "#/$defs/style-properties.schema",
+                "default": {
+                  "classes": ""
+                },
+                "description": "Style properties to be applied to the Y axis label. Any style that applies to an SVG text element can be used."
+              },
+              "text": {
+                "default": "",
+                "description": "The text of the Y axis label.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "name": {
+            "default": "",
+            "description": "The name of the axis.",
+            "type": "string"
+          },
+          "position": {
+            "default": "left",
+            "description": "The side of the plot upon which the axis should be drawn.",
+            "enum": [
+              "left",
+              "right"
+            ],
+            "type": "string"
+          },
+          "range": {
+            "additionalProperties": false,
+            "description": "Configuration for the upper and lower limits of the axis.",
+            "properties": {
+              "auto": {
+                "default": true,
+                "description": "If true, the minimum and maximum displaying values for the axis will be auto calculated.",
+                "type": "boolean"
+              },
+              "max": {
+                "default": "",
+                "description": "Maximum range value. If no value is provided, a maximum value will be calculated from the data bound to this axis.",
+                "type": [
+                  "number",
+                  "string",
+                  "null"
+                ],
+                "visibleWhen": {
+                  "equals": false,
+                  "property": "auto"
+                }
+              },
+              "min": {
+                "default": "",
+                "description": "Minimum range value. If no value is provided, a minimum value will be calculated from the data bound to this axis.",
+                "type": [
+                  "number",
+                  "string",
+                  "null"
+                ],
+                "visibleWhen": {
+                  "equals": false,
+                  "property": "auto"
+                }
+              }
+            },
+            "type": "object"
+          },
+          "style": {
+            "$ref": "#/$defs/style-properties.schema",
+            "default": {
+              "classes": ""
+            },
+            "description": "Style properties to be applied to the axis line. Any style that applies to an SVG line element can be used."
+          },
+          "tick": {
+            "additionalProperties": false,
+            "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+            "properties": {
+              "color": {
+                "default": "#757A7F",
+                "description": "The color of the ticks.",
+                "format": "color",
+                "type": "string"
+              },
+              "count": {
+                "default": "Auto",
+                "description": "The number of ticks. If \"Auto\" is used, the ticks will be determined by available space in the interface.",
+                "suggestions": {
+                  "10": 10,
+                  "2": 2,
+                  "4": 4,
+                  "6": 6,
+                  "8": 8,
+                  "Auto": "Auto"
+                },
+                "type": [
+                  "number",
+                  "string"
+                ]
+              },
+              "label": {
+                "additionalProperties": false,
+                "description": "Tick label configuration.",
+                "properties": {
+                  "font": {
+                    "description": "Label font configuration.",
+                    "properties": {
+                      "color": {
+                        "default": "#757A7F",
+                        "description": "The color of the label text.",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "size": {
+                        "default": 10,
+                        "description": "The size of the label text.",
+                        "type": [
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "format": {
+                    "default": "Auto",
+                    "description": "Data format displayed by each tick using a D3 format string (https://github.com/d3/d3-format).",
+                    "suggestions": {
+                      "2 Decimal Points [1234.00]": ".2f",
+                      "4 Decimal Points [1234.0000]": ".4f",
+                      "Auto": "Auto",
+                      "Binary [10011010010]": "b",
+                      "Comma-Separated Integer [1,234]": ",.0f",
+                      "Comma-Separated w/ 2 Decimal Points [1,234.00]": ",.2f",
+                      "Currency [$1,234.00]": "$,.2f",
+                      "Exponential [1.234000e+3]": "e",
+                      "Hexadecimal (lowercase) [4d2]": "x",
+                      "Hexadecimal (uppercase) [4D2]": "X",
+                      "Integer [1234]": "d",
+                      "Octal [2322]": "o",
+                      "Percentage [123400%]": ".0%"
+                    },
+                    "type": "string"
+                  },
+                  "style": {
+                    "$ref": "#/$defs/style-properties.schema",
+                    "default": {
+                      "classes": ""
+                    },
+                    "description": "Style properties to be applied to the tick labels. Any style that applies to an SVG text element can be used."
+                  }
+                },
+                "type": "object"
+              },
+              "style": {
+                "$ref": "#/$defs/style-properties.schema",
+                "default": {
+                  "classes": ""
+                },
+                "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used."
+              }
+            },
+            "type": "object"
+          },
+          "width": {
+            "default": 60,
+            "description": "The width of the axis.",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "config": {
+      "additionalProperties": false,
+      "description": "Configuration for the data feeding the chart.",
+      "properties": {
+        "dateFormat": {
+          "default": "YYYY/MM/DD",
+          "description": "The date format displayed when in historical mode using a MomentJS date string (https://momentjs.com/).",
+          "suggestions": {
+            "[03/10/2020]": "MM/DD/YYYY",
+            "[2020-3-10]": "YYYY-M-D",
+            "[2020/03/10]": "YYYY/MM/DD",
+            "[3-10-2020]": "M-D-YYYY",
+            "[Mar 10th 20]": "MMM Do YY",
+            "[March 10th 2020]": "MMMM Do YYYY",
+            "none": "None"
+          },
+          "type": "string",
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "endDate": {
+          "default": null,
+          "description": "End date for a historical data query.",
+          "type": [
+            "date",
+            "null"
+          ],
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "export": {
+          "additionalProperties": false,
+          "description": "Settings to control the format of the data exported from the chart.",
+          "properties": {
+            "dateFormat": {
+              "default": "None",
+              "description": "The date format of the exported data using a MomentJS date string (https://momentjs.com/).",
+              "suggestions": {
+                "[03/10/2020]": "MM/DD/YYYY",
+                "[2020-3-10]": "YYYY-M-D",
+                "[2020/03/10]": "YYYY/MM/DD",
+                "[3-10-2020]": "M-D-YYYY",
+                "[Mar 10th 20]": "MMM Do YY",
+                "[March 10th 2020]": "MMMM Do YYYY",
+                "none": "None"
+              },
+              "type": "string"
+            },
+            "timeFormat": {
+              "default": "x",
+              "description": "The time format of the exported data using a MomentJS time string (https://momentjs.com/).",
+              "suggestions": {
+                "12 Hour [8:41]": "h:mm",
+                "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+                "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+                "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+                "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+                "Unix Millisecond Timestamp [1563464737269]": "x",
+                "Unix Timestamp [1563464737]": "X",
+                "none": "None"
+              },
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "measureOfTime": {
+          "default": "hours",
+          "description": "Time measurement used for a realtime data query.",
+          "enum": [
+            "seconds",
+            "minutes",
+            "hours",
+            "days",
+            "weeks",
+            "months",
+            "years"
+          ],
+          "type": "string",
+          "visibleWhen": {
+            "equals": [
+              "realtime"
+            ],
+            "property": "mode"
+          }
+        },
+        "mode": {
+          "default": "realtime",
+          "description": "The type of query that is being made against the data source.",
+          "enum": [
+            "realtime",
+            "historical"
+          ],
+          "type": "string"
+        },
+        "penNamePathDepth": {
+          "default": 1,
+          "description": "Depth of the tag path to include in the pen name.",
+          "type": "number"
+        },
+        "pointCount": {
+          "default": 300,
+          "description": "Number of data points returned for the selected time range.",
+          "type": "number"
+        },
+        "rangeEndDate": {
+          "default": null,
+          "description": "READ-ONLY: End date for the modified chart data range that the user has selected either with the range brush or by panning/zooming.",
+          "type": [
+            "date",
+            "null"
+          ]
+        },
+        "rangeSelectorPen": {
+          "default": "",
+          "description": "The pen that will drive the data display of the range selector in Historical mode.",
+          "dynamicSuggestions": "../../pens/*/data/source",
+          "type": "string",
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "rangeStartDate": {
+          "default": null,
+          "description": "READ-ONLY: Start date for the modified chart data range that the user has selected either with the range brush or by panning/zooming.",
+          "type": [
+            "date",
+            "null"
+          ]
+        },
+        "refreshRate": {
+          "default": 1000,
+          "description": "Duration (in milliseconds) that data will be queried for updated results.",
+          "type": "number",
+          "visibleWhen": {
+            "equals": [
+              "realtime"
+            ],
+            "property": "mode"
+          }
+        },
+        "responsiveDesignWidth": {
+          "default": 750,
+          "description": "A number (in pixels) that will be used as the switch over width to the responsive design for the chart.",
+          "type": "number"
+        },
+        "startDate": {
+          "default": null,
+          "description": "Start date for a historical data query.",
+          "type": [
+            "date",
+            "null"
+          ],
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "tagBrowserStartPath": {
+          "default": "",
+          "description": "A path to a nested History provider structure from which browsing will start.",
+          "type": "string"
+        },
+        "timeFormat": {
+          "default": "h:mm A",
+          "description": "The time format displayed when in historical mode using a MomentJS time string (https://momentjs.com/).",
+          "suggestions": {
+            "12 Hour [8:41]": "h:mm",
+            "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+            "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+            "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+            "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+            "Unix Millisecond Timestamp [1563464737269]": "x",
+            "Unix Timestamp [1563464737]": "X",
+            "none": "None"
+          },
+          "type": "string",
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "unitOfTime": {
+          "default": 8,
+          "description": "Time unit used for a realtime data query.",
+          "type": "number",
+          "visibleWhen": {
+            "equals": [
+              "realtime"
+            ],
+            "property": "mode"
+          }
+        },
+        "visibility": {
+          "additionalProperties": false,
+          "description": "Settings to show/hide elements within the component interface.",
+          "properties": {
+            "buttons": {
+              "additionalProperties": false,
+              "description": "Settings to show/hide the buttons used in the interface.",
+              "properties": {
+                "showAnnotationButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Annotation\" mode button.",
+                  "type": "boolean"
+                },
+                "showFullscreenButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Fullscreen\" presentation mode button.",
+                  "type": "boolean"
+                },
+                "showMoreButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"More\" menu button.",
+                  "type": "boolean"
+                },
+                "showPanZoomButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Pan and Zoom\" mode button.",
+                  "type": "boolean"
+                },
+                "showRangeBrushButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Range Brush\" mode button.",
+                  "type": "boolean"
+                },
+                "showSettingsButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Settings\" menu button.",
+                  "type": "boolean"
+                },
+                "showTagBrowserButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"Open Tag Browser\" and \"Close Tag Browser\" buttons.",
+                  "type": "boolean"
+                },
+                "showXTraceButton": {
+                  "default": true,
+                  "description": "Flag representing the visible state of the \"X Trace\" mode button.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "showDateRangeSelector": {
+              "default": true,
+              "description": "Flag representing the visible state of the realtime/historical date range selector.",
+              "type": "boolean"
+            },
+            "showPenControlDisplay": {
+              "default": true,
+              "description": "Flag representing the visible state of the pen data table and pen legend.",
+              "type": "boolean"
+            },
+            "showTagBrowser": {
+              "default": false,
+              "description": "Flag representing the visible state of the tag browser.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "dataColumns": {
+      "additionalProperties": false,
+      "description": "Configuration for the data columns that can be shown in tabular displays throughout the chart.",
+      "properties": {
+        "penControl": {
+          "additionalProperties": false,
+          "description": "Configuration for the data columns that can display for pens.",
+          "properties": {
+            "average": {
+              "default": true,
+              "description": "Show the \"Average\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "axis": {
+              "default": true,
+              "description": "Show the \"Axis\" column for the pen.",
+              "type": "boolean"
+            },
+            "currentValue": {
+              "default": true,
+              "description": "Show the \"Current Value\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "maximum": {
+              "default": true,
+              "description": "Show the \"Maximum\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "minimum": {
+              "default": true,
+              "description": "Show the \"Minimum\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "plot": {
+              "default": true,
+              "description": "Show the \"Plot\" column for the pen.",
+              "type": "boolean"
+            },
+            "xTrace": {
+              "default": true,
+              "description": "Show the \"X Trace\" column for the pen.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "rangeSelection": {
+          "additionalProperties": false,
+          "description": "Configuration for the data columns that can display for the range brush.",
+          "properties": {
+            "average": {
+              "default": true,
+              "description": "Show the \"Average\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "delta": {
+              "default": true,
+              "description": "Show the \"Delta\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "first": {
+              "default": true,
+              "description": "Show the \"First\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "last": {
+              "default": true,
+              "description": "Show the \"Last\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "lcl": {
+              "default": true,
+              "description": "Show the \"LCL\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "maximum": {
+              "default": true,
+              "description": "Show the \"Maximum\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "median": {
+              "default": true,
+              "description": "Show the \"Median\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "minimum": {
+              "default": true,
+              "description": "Show the \"Minimum\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "standardDeviation": {
+              "default": true,
+              "description": "Show the \"Standard Deviation\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "sum": {
+              "default": true,
+              "description": "Show the \"Sum\" column for the pen based on the time range.",
+              "type": "boolean"
+            },
+            "ucl": {
+              "default": true,
+              "description": "Show the \"UCL\" column for the pen based on the time range.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "interaction": {
+      "additionalProperties": false,
+      "description": "Configuration for the presentation of, and interaction with, chart data.",
+      "properties": {
+        "annotation": {
+          "additionalProperties": false,
+          "description": "Configuration to build the annotation display.",
+          "properties": {
+            "dot": {
+              "additionalProperties": false,
+              "description": "Configuration to build the dot portion of the annotation display.",
+              "properties": {
+                "color": {
+                  "default": "#757A7F",
+                  "description": "The color of the dot.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 1,
+                  "description": "The opacity of the dot.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "radius": {
+                  "default": 3,
+                  "description": "The radius of the dot.",
+                  "type": "number"
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the annotation dot. Any style properties that can be applied to a 'circle' SVG shape can be applied here."
+                },
+                "visible": {
+                  "default": true,
+                  "description": "The visible state of the dot.",
+                  "type": "boolean"
+                }
+              },
+              "type": "object"
+            },
+            "infoBox": {
+              "additionalProperties": false,
+              "description": "Configuration to build the box portion of the annotation display.",
+              "properties": {
+                "dateFormat": {
+                  "default": "YYYY/MM/DD",
+                  "description": "The date format of the date/time display using a MomentJS date string (https://momentjs.com/).",
+                  "suggestions": {
+                    "[03/10/2020]": "MM/DD/YYYY",
+                    "[2020-3-10]": "YYYY-M-D",
+                    "[2020/03/10]": "YYYY/MM/DD",
+                    "[3-10-2020]": "M-D-YYYY",
+                    "[Mar 10th 20]": "MMM Do YY",
+                    "[March 10th 2020]": "MMMM Do YYYY",
+                    "none": "None"
+                  },
+                  "type": "string"
+                },
+                "fill": {
+                  "$ref": "#/definitions/fill"
+                },
+                "font": {
+                  "$ref": "#/definitions/font"
+                },
+                "icon": {
+                  "additionalProperties": false,
+                  "default": {
+                    "fill": {
+                      "color": "#929597",
+                      "opacity": 1
+                    },
+                    "stroke": {
+                      "color": "#929597",
+                      "dashArray": 0,
+                      "opacity": 0,
+                      "width": 0
+                    },
+                    "style": {
+                      "classes": ""
+                    }
+                  },
+                  "description": "The configuration applied to the icons within the annotation's infoBox.",
+                  "properties": {
+                    "fill": {
+                      "$ref": "#/definitions/fill"
+                    },
+                    "stroke": {
+                      "$ref": "#/definitions/stroke"
+                    },
+                    "style": {
+                      "$ref": "#/$defs/style-properties.schema"
+                    }
+                  },
+                  "type": "object"
+                },
+                "showTime": {
+                  "default": true,
+                  "description": "The visible state of the time value above the box.",
+                  "type": "boolean"
+                },
+                "stroke": {
+                  "$ref": "#/definitions/stroke"
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the annotation info box. Any style properties that can be applied to a 'rect' SVG shape can be applied here."
+                },
+                "timeFormat": {
+                  "default": "h:mm A",
+                  "description": "The time format of the date/time display using a MomentJS time string (https://momentjs.com/).",
+                  "suggestions": {
+                    "12 Hour [8:41]": "h:mm",
+                    "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+                    "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+                    "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+                    "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+                    "Unix Millisecond Timestamp [1563464737269]": "x",
+                    "Unix Timestamp [1563464737]": "X",
+                    "none": "None"
+                  },
+                  "type": "string"
+                },
+                "visible": {
+                  "default": true,
+                  "description": "The visible state of the box.",
+                  "type": "boolean"
+                },
+                "width": {
+                  "default": "auto",
+                  "description": "The width of the box.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "line": {
+              "additionalProperties": false,
+              "description": "Configuration to build the connecting line portion of the annotation display.",
+              "properties": {
+                "color": {
+                  "default": "#757A7F",
+                  "description": "The color of the line.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "default": 0,
+                  "description": "The dashed appearance of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "opacity": {
+                  "default": 0.9,
+                  "description": "The opacity of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the annotation line. Any style properties that can be applied to a 'line' SVG shape can be applied here."
+                },
+                "visible": {
+                  "default": true,
+                  "description": "The visible state of the line.",
+                  "type": "boolean"
+                },
+                "width": {
+                  "default": 1,
+                  "description": "The width of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "annotation"
+            ],
+            "property": "mode"
+          }
+        },
+        "chartZoomLevel": {
+          "description": "READ-ONLY: The zoom level displayed on the chart.",
+          "type": "number"
+        },
+        "fullscreen": {
+          "default": false,
+          "description": "Flag representing the fullscreen presentation mode of the chart.",
+          "type": "boolean"
+        },
+        "mode": {
+          "default": "panAndZoom",
+          "description": "Current user interaction mode of the chart.",
+          "enum": [
+            "panAndZoom",
+            "xTrace",
+            "rangeBrush",
+            "annotation"
+          ],
+          "type": "string"
+        },
+        "panAndZoom": {
+          "additionalProperties": false,
+          "description": "Configuration to use when panning and zooming.",
+          "properties": {
+            "freeRange": {
+              "default": false,
+              "description": "When enabled, this allows panning and zooming to dictate the time range used for the chart display.",
+              "type": "boolean"
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "panAndZoom"
+            ],
+            "property": "mode"
+          }
+        },
+        "rangeBrush": {
+          "additionalProperties": false,
+          "description": "Configuration to build the range brush display.",
+          "properties": {
+            "active": {
+              "additionalProperties": false,
+              "description": "Configuration to build the active range brush display.",
+              "properties": {
+                "color": {
+                  "default": "#0C7BB3",
+                  "description": "The color of the active range brush.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 0.3,
+                  "description": "The opacity of the active range brush.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Additional style properties to be applied to the active range brush. Any style properties that can be applied to a 'rect' SVG shape can be applied here."
+                }
+              },
+              "type": "object"
+            },
+            "inactive": {
+              "additionalProperties": false,
+              "description": "Configuration to build the inactive range brush displays.",
+              "properties": {
+                "color": {
+                  "default": "#757A7F",
+                  "description": "The color of the range brush.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 0.3,
+                  "description": "The opacity of the range brush.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the range brush. Any style properties that can be applied to a 'rect' SVG shape can be applied here."
+                }
+              },
+              "type": "object"
+            },
+            "values": {
+              "default": [],
+              "description": "An array of config objects used to build each range brush.",
+              "items": {
+                "additionalProperties": false,
+                "description": "An object containing the start and end timestamps for each range brush.",
+                "properties": {
+                  "end": {
+                    "default": "",
+                    "description": "The end timestamp position.",
+                    "type": [
+                      "date",
+                      "string"
+                    ]
+                  },
+                  "id": {
+                    "description": "The ID of the brush.",
+                    "type": "string"
+                  },
+                  "plot": {
+                    "description": "The plot into which this range brush will be added.",
+                    "type": "number"
+                  },
+                  "start": {
+                    "default": "",
+                    "description": "The start timestamp position.",
+                    "type": [
+                      "date",
+                      "string"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "rangeBrush"
+            ],
+            "property": "mode"
+          }
+        },
+        "rangeZoomLevel": {
+          "description": "READ-ONLY: The zoom level displayed on the range brush in Historical mode.",
+          "type": "number"
+        },
+        "xTrace": {
+          "additionalProperties": false,
+          "description": "Configuration to build the x-trace display.",
+          "properties": {
+            "infoBox": {
+              "additionalProperties": false,
+              "description": "Configuration to build the box portion of the x-trace display.",
+              "properties": {
+                "dataFormat": {
+                  "default": "0,0.##",
+                  "description": "Format pattern for displaying the data.",
+                  "suggestions": {
+                    "abbreviation [1.2k]": "0.0a",
+                    "accounting [$ (1,000.12)]": "$ (0,0.00)",
+                    "currency (rounded) [$1,012]": "$0,0",
+                    "currency [$1,000.12]": "$0,0.00",
+                    "duration [24:01:00]": "00:00:00",
+                    "financial [(1,000.12)]": "(0,0.00)",
+                    "four decimal precision [1.1200]": "0,0.0000",
+                    "integer [1,200]": "0,0",
+                    "number [1,000.12]": "0,0.##",
+                    "ordinal [100th]": "0o",
+                    "percent [10.12%]": "0.##%",
+                    "scientific [1.01E+03]": "0.00e+0"
+                  },
+                  "type": "string"
+                },
+                "dateFormat": {
+                  "default": "YYYY/MM/DD",
+                  "description": "The date format of the date/time display using a MomentJS date string (https://momentjs.com/).",
+                  "suggestions": {
+                    "[03/10/2020]": "MM/DD/YYYY",
+                    "[2020-3-10]": "YYYY-M-D",
+                    "[2020/03/10]": "YYYY/MM/DD",
+                    "[3-10-2020]": "M-D-YYYY",
+                    "[Mar 10th 20]": "MMM Do YY",
+                    "[March 10th 2020]": "MMMM Do YYYY",
+                    "none": "None"
+                  },
+                  "type": "string"
+                },
+                "fill": {
+                  "$ref": "#/definitions/fill"
+                },
+                "font": {
+                  "$ref": "#/definitions/font"
+                },
+                "showTime": {
+                  "default": true,
+                  "description": "The visible state of the time value above the box.",
+                  "type": "boolean"
+                },
+                "stroke": {
+                  "$ref": "#/definitions/stroke"
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the X-Trace info box. Any style properties that can be applied to a 'rect' SVG shape can be applied here."
+                },
+                "timeFormat": {
+                  "default": "h:mm A",
+                  "description": "The time format of the date/time display using a MomentJS time string (https://momentjs.com/).",
+                  "suggestions": {
+                    "12 Hour [8:41]": "h:mm",
+                    "12 Hour w/ Meridiem [8:41 AM]": "h:mm A",
+                    "12 Hour w/ Meridiem and Seconds [8:41:56 AM]": "h:mm:ss A",
+                    "24 Hour w/ Milliseconds [08:41:06:269]": "HH:mm:ss:SSS",
+                    "24 Hour w/ Seconds [08:41:06]": "HH:mm:ss",
+                    "Unix Millisecond Timestamp [1563464737269]": "x",
+                    "Unix Timestamp [1563464737]": "X",
+                    "none": "None"
+                  },
+                  "type": "string"
+                },
+                "visible": {
+                  "default": true,
+                  "description": "The visible state of the box.",
+                  "type": "boolean"
+                },
+                "width": {
+                  "default": "auto",
+                  "description": "The width of the box.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "line": {
+              "additionalProperties": false,
+              "description": "Configuration to build the vertical line portion of the x-trace display.",
+              "properties": {
+                "color": {
+                  "default": "#757A7F",
+                  "description": "The color of the line.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "default": 0,
+                  "description": "The dashed appearance of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "opacity": {
+                  "default": 0.5,
+                  "description": "The opacity of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the X-Trace tracking line. Any style properties that can be applied to a 'line' SVG shape can be applied here."
+                },
+                "visible": {
+                  "default": true,
+                  "description": "The visible state of the line.",
+                  "type": "boolean"
+                },
+                "width": {
+                  "default": 1,
+                  "description": "The width of the line.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                }
+              },
+              "type": "object"
+            },
+            "values": {
+              "default": [],
+              "description": "An array of timestamp or numeric values representing the visible x-trace positions. In \"historical\" interaction mode, a timestamp representing an x-trace position. In \"realtime\" interaction mode, a number representing the percentage of the distance to the end of the chart where the x-trace will be positioned.",
+              "items": {
+                "description": "In \"historical\" interaction mode, a timestamp representing an x-trace position. In \"realtime\" interaction mode, a number representing the percentage of the distance to the end of the chart where the x-trace will be positioned.",
+                "type": [
+                  "date",
+                  "number"
+                ]
+              },
+              "type": "array"
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "xTrace"
+            ],
+            "property": "mode"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "legend": {
+      "additionalProperties": false,
+      "description": "Configuration for the display of the legend for the chart.",
+      "properties": {
+        "visible": {
+          "default": false,
+          "description": "The visible state of the legend.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "pens": {
+      "default": [],
+      "description": "Visual representation of each active data item.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "axis": {
+            "default": "",
+            "description": "Name of an axis in the \"axes\" array to plot against. If left blank, a default axis will be created based on data values.",
+            "dynamicSuggestions": "../../../axes/*/name",
+            "type": "string"
+          },
+          "data": {
+            "additionalProperties": false,
+            "description": "Configuration that defines the data structure for the pen.",
+            "properties": {
+              "aggregateMode": {
+                "default": "default",
+                "description": "Mode used to group the data.",
+                "enum": [
+                  "default",
+                  "Average",
+                  "MinMax",
+                  "LastValue",
+                  "SimpleAverage",
+                  "Sum",
+                  "Minimum",
+                  "Maximum",
+                  "DurationOn",
+                  "DurationOff",
+                  "CountOn",
+                  "CountOff",
+                  "Count",
+                  "Range",
+                  "Variance",
+                  "StdDev",
+                  "PctGood",
+                  "PctBad"
+                ],
+                "type": "string"
+              },
+              "source": {
+                "default": "",
+                "description": "Source of the data behind the pen.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "display": {
+            "additionalProperties": false,
+            "description": "Configuration that drives the display of the pen.",
+            "properties": {
+              "breakLine": {
+                "default": true,
+                "description": "If true, the line will be broken on either side of bad/missing data values. If false, bad/missing data values are removed and the adjoining points are connected.",
+                "type": "boolean",
+                "visibleWhen": {
+                  "equals": "line",
+                  "property": "type"
+                }
+              },
+              "interpolation": {
+                "default": "curveLinear",
+                "description": "Type of curve that should be used to draw the line portion of the chart.",
+                "enum": [
+                  "curveBasis",
+                  "curveBasisOpen",
+                  "curveCardinal",
+                  "curveCardinalOpen",
+                  "curveCatmullRom",
+                  "curveCatmullRomOpen",
+                  "curveLinear",
+                  "curveMonotoneX",
+                  "curveMonotoneY",
+                  "curveNatural",
+                  "curveStep",
+                  "curveStepAfter",
+                  "curveStepBefore"
+                ],
+                "type": "string",
+                "visibleWhen": {
+                  "equals": [
+                    "line",
+                    "area"
+                  ],
+                  "property": "type"
+                }
+              },
+              "radius": {
+                "default": 3,
+                "description": "The radius of the points.",
+                "type": "number",
+                "visibleWhen": {
+                  "equals": "scatter",
+                  "property": "type"
+                }
+              },
+              "styles": {
+                "$ref": "#/$defs/trend-style.schema",
+                "default": {
+                  "highlighted": {
+                    "fill": {
+                      "color": "#63BEA2",
+                      "opacity": 1
+                    },
+                    "stroke": {
+                      "color": "#63BEA2",
+                      "dashArray": 0,
+                      "opacity": 1,
+                      "width": 1
+                    }
+                  },
+                  "muted": {
+                    "fill": {
+                      "color": "#63BEA2",
+                      "opacity": 0.4
+                    },
+                    "stroke": {
+                      "color": "#63BEA2",
+                      "dashArray": 0,
+                      "opacity": 0.4,
+                      "width": 1
+                    }
+                  },
+                  "normal": {
+                    "fill": {
+                      "color": "#63BEA2",
+                      "opacity": 0.8
+                    },
+                    "stroke": {
+                      "color": "#63BEA2",
+                      "dashArray": 0,
+                      "opacity": 0.8,
+                      "width": 1
+                    }
+                  },
+                  "selected": {
+                    "fill": {
+                      "color": "#63BEA2",
+                      "opacity": 1
+                    },
+                    "stroke": {
+                      "color": "#63BEA2",
+                      "dashArray": 0,
+                      "opacity": 1,
+                      "width": 1
+                    }
+                  }
+                },
+                "description": "If provided, the default styles to apply to the column."
+              },
+              "type": {
+                "default": "line",
+                "description": "The type of chart to be built.",
+                "enum": [
+                  "line",
+                  "area",
+                  "bar",
+                  "scatter"
+                ],
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "enabled": {
+            "default": true,
+            "description": "Availability of the pen on the chart and pen configuration panel.",
+            "type": "boolean"
+          },
+          "name": {
+            "default": "",
+            "description": "Name of the pen.",
+            "type": "string"
+          },
+          "plot": {
+            "default": 0,
+            "description": "The plot to which this pen is bound.",
+            "type": "number"
+          },
+          "selectable": {
+            "default": true,
+            "description": "Flag to allow the pen to be responsive to user selection.",
+            "type": "boolean"
+          },
+          "visible": {
+            "default": true,
+            "description": "Visible state of the pen on the chart.",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "plots": {
+      "description": "A plot represents a row containing one or more pens.",
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "color": {
+            "default": "#FFFFFF",
+            "description": "The background color of the plot.",
+            "format": "color",
+            "type": "string"
+          },
+          "markers": {
+            "default": [],
+            "description": "A collection of markers that can be added on the plot to better visualize the data being displayed.",
+            "items": {
+              "additionalProperties": false,
+              "description": "Marker that can be added on the plot to better visualize the data being displayed.",
+              "properties": {
+                "axis": {
+                  "default": "",
+                  "description": "Name of the axis against which the marker should be drawn. This must be specified for the marker to be drawn.",
+                  "dynamicSuggestions": "../../../../../axes/*/name",
+                  "type": "string"
+                },
+                "display": {
+                  "additionalProperties": false,
+                  "description": "Configuration for the display of the marker.",
+                  "properties": {
+                    "color": {
+                      "default": "#757A7F",
+                      "description": "Color of the marker.",
+                      "format": "color",
+                      "type": "string"
+                    },
+                    "dashArray": {
+                      "default": 0,
+                      "description": "Dashed appearance of the marker.",
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "visibleWhen": {
+                        "equals": "line",
+                        "property": "../type"
+                      }
+                    },
+                    "label": {
+                      "additionalProperties": false,
+                      "description": "Configuration for the label of the marker.",
+                      "properties": {
+                        "font": {
+                          "additionalProperties": false,
+                          "description": "Label font configuration.",
+                          "properties": {
+                            "color": {
+                              "default": "#757A7F",
+                              "description": "The color of the label text.",
+                              "format": "color",
+                              "type": "string"
+                            },
+                            "size": {
+                              "default": 10,
+                              "description": "The size of the label text.",
+                              "type": [
+                                "number",
+                                "string"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "position": {
+                          "default": "right",
+                          "description": "The position of the label relative to the line.",
+                          "enum": [
+                            "left",
+                            "right"
+                          ],
+                          "type": "string"
+                        },
+                        "style": {
+                          "$ref": "#/$defs/style-properties.schema",
+                          "default": {
+                            "classes": ""
+                          },
+                          "description": "Style properties to be applied to the marker label. Any style that applies to an SVG text element can be used."
+                        },
+                        "text": {
+                          "default": "",
+                          "description": "The label drawn on the chart for the line.",
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "opacity": {
+                      "default": 0.5,
+                      "description": "Opacity of the marker.",
+                      "type": [
+                        "number",
+                        "string"
+                      ]
+                    },
+                    "style": {
+                      "$ref": "#/$defs/style-properties.schema",
+                      "default": {
+                        "classes": ""
+                      },
+                      "description": "Style properties to be applied to the marker line. Any style that applies to an SVG line element can be used."
+                    },
+                    "width": {
+                      "default": 1,
+                      "description": "Width of the line.",
+                      "type": [
+                        "number",
+                        "string"
+                      ],
+                      "visibleWhen": {
+                        "equals": "line",
+                        "property": "../type"
+                      }
+                    }
+                  },
+                  "type": "object"
+                },
+                "max": {
+                  "default": 0,
+                  "description": "Upper value where the band should end.",
+                  "type": "number",
+                  "visibleWhen": {
+                    "equals": "band",
+                    "property": "type"
+                  }
+                },
+                "min": {
+                  "default": 0,
+                  "description": "Lower value where the band should start.",
+                  "type": "number",
+                  "visibleWhen": {
+                    "equals": "band",
+                    "property": "type"
+                  }
+                },
+                "type": {
+                  "default": "line",
+                  "description": "Type of marker to add to the plot.",
+                  "enum": [
+                    "line",
+                    "band"
+                  ],
+                  "type": "string"
+                },
+                "value": {
+                  "default": 0,
+                  "description": "Value where the line marker should be drawn.",
+                  "type": "number",
+                  "visibleWhen": {
+                    "equals": "line",
+                    "property": "type"
+                  }
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "relativeWeight": {
+            "default": 1,
+            "description": "Ratio between all plots.",
+            "type": "number"
+          },
+          "style": {
+            "$ref": "#/$defs/style-properties.schema",
+            "default": {
+              "classes": ""
+            },
+            "description": "Style properties to be applied to the plot. Any style that applies to an SVG box element can be used."
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema",
+      "default": {
+        "classes": ""
+      },
+      "description": "Style properties to be applied to the base chart component."
+    },
+    "timeAxis": {
+      "additionalProperties": false,
+      "description": "Configuration for the time axis (X axis) of the chart.",
+      "properties": {
+        "color": {
+          "default": "#757A7F",
+          "description": "The color of the axis.",
+          "format": "color",
+          "type": "string"
+        },
+        "grid": {
+          "$ref": "#/definitions/grid"
+        },
+        "height": {
+          "default": 35,
+          "description": "The height of the time axis.",
+          "type": "number"
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema",
+          "default": {
+            "classes": ""
+          },
+          "description": "Style properties to be applied to the horizontal line of the axis. Any property that would apply to an SVG line element can be used here."
+        },
+        "tick": {
+          "description": "Tick configuration. When the grid is displaying, ticks will be hidden.",
+          "properties": {
+            "color": {
+              "default": "#757A7F",
+              "description": "The color of the ticks.",
+              "format": "color",
+              "type": "string"
+            },
+            "label": {
+              "description": "Tick label configuration.",
+              "properties": {
+                "angled": {
+                  "default": false,
+                  "description": "A flag to toggle the angled state of the tick labels.",
+                  "type": "boolean"
+                },
+                "font": {
+                  "description": "Tick label font configuration.",
+                  "properties": {
+                    "color": {
+                      "default": "#757A7F",
+                      "description": "The color of the tick label text.",
+                      "format": "color",
+                      "type": "string"
+                    },
+                    "size": {
+                      "default": 10,
+                      "description": "The size of the tick label text.",
+                      "type": [
+                        "number",
+                        "string"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "format": {
+                  "default": "Auto",
+                  "description": "Date/time format displayed by each tick using a MomentJS date string (https://momentjs.com/).",
+                  "suggestions": {
+                    "Abbreviated Day of Week and Month [Mon 2nd]": "ddd Do",
+                    "Abbreviated Month and Day of Month [Jan 2nd]": "MMM Do",
+                    "Abbreviated Month and Year [Jan 20]": "MMM YY",
+                    "Auto": "Auto",
+                    "Day of Week, Month, and Hour [Monday 2nd, 08 AM]": "dddd Do, hh A",
+                    "Full Month [January]": "MMMM",
+                    "Full Year [2020]": "YYYY",
+                    "Hour Minute [8:15]": "h:mm",
+                    "Hour with Meridiem [8 AM]": "h A",
+                    "Millisecond [638]": "SSS",
+                    "Second [35]": ":ss",
+                    "Unix Millisecond Timestamp [1563464737269]": "x",
+                    "Unix Timestamp [1563464737]": "X",
+                    "[2020-3-2 8:15:35]": "YYYY-M-D h:mm:ss",
+                    "[3-2-2020 8:15:35]": "M-D-YYYY h:mm:ss"
+                  },
+                  "type": "string"
+                },
+                "style": {
+                  "$ref": "#/$defs/style-properties.schema",
+                  "default": {
+                    "classes": ""
+                  },
+                  "description": "Style properties to be applied to the timeAxis labels. Any style that applies to an SVG text element can be used."
+                }
+              },
+              "type": "object"
+            },
+            "style": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "classes": ""
+              },
+              "description": "Style properties to be applied to the ticks. Any style that applies to an SVG line element can be used."
+            }
+          },
+          "type": "object"
+        },
+        "tickCount": {
+          "default": "auto",
+          "description": "The number of ticks.",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "visible": {
+          "default": true,
+          "description": "The visible state of the time axis.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "title": {
+      "additionalProperties": false,
+      "description": "Configuration for the title of the chart.",
+      "properties": {
+        "font": {
+          "description": "Title font configuration.",
+          "properties": {
+            "color": {
+              "default": "#222222",
+              "description": "The color of the title text.",
+              "format": "color",
+              "type": "string"
+            },
+            "size": {
+              "default": 12,
+              "description": "The size of the title text.",
+              "type": [
+                "number",
+                "string"
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema",
+          "default": {
+            "classes": ""
+          },
+          "description": "A style object that is used to add visual style to the title. Style that can be applied to an SVG text element can be used here."
+        },
+        "text": {
+          "default": "",
+          "description": "The text of the title.",
+          "type": "string"
+        },
+        "visible": {
+          "default": false,
+          "description": "The visible state of the title.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "Power Chart",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.chart.powerchart",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveTimeseriesCharts",
+    "palette_category": "chart",
+    "registry_file": "perspective-timeseries.components.json",
+    "registry_hash": "8a3bb62bf541937ba438"
+  }
+}

@@ -1,0 +1,773 @@
+{
+  "custom": {},
+  "params": {
+    "chart": false,
+    "compact": false,
+    "deviceId": "",
+    "deviceLabel": "",
+    "hasCapacity": true,
+    "hasTag": true,
+    "history": [],
+    "max": 100,
+    "medium": "normal",
+    "showPercent": true,
+    "static": false,
+    "tag": "",
+    "trend": "stable",
+    "unit": "m³",
+    "value": 0,
+    "valueFractionDigits": 0
+  },
+  "propConfig": {
+    "params.chart": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.compact": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasCapacity": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasTag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.history": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.max": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.medium": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showPercent": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.static": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.trend": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.valueFractionDigits": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 216,
+      "width": 168
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Vessel"
+        },
+        "position": {
+          "height": 1,
+          "width": 1,
+          "x": 0,
+          "y": 0
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.static}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M2 22C2 10 12 3 24 2H76C88 3 98 10 98 22V97C98 98 97 99 96 99H4C3 99 2 98 2 97Z",
+              "fill": {
+                "paint": "var(--instrument-frame-primary-color)"
+              },
+              "name": "outline",
+              "stroke": {
+                "paint": "var(--instrument-frame-tertiary-color)",
+                "width": 1
+              },
+              "type": "path",
+              "vectorEffect": "non-scaling-stroke"
+            }
+          ],
+          "preserveAspectRatio": "none",
+          "viewBox": "0 0 100 100"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "StaticTile"
+        },
+        "position": {
+          "height": 0.66,
+          "width": 0.88,
+          "x": 0.06,
+          "y": 0.06
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.static}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M4 0H96Q100 0 100 4V96Q100 100 96 100H4Q0 100 0 96V4Q0 0 4 0Z",
+              "fill": {
+                "paint": "var(--container-section-color)"
+              },
+              "name": "tile",
+              "stroke": {
+                "paint": "var(--instrument-frame-tertiary-color)",
+                "width": 1
+              },
+              "type": "path",
+              "vectorEffect": "non-scaling-stroke"
+            }
+          ],
+          "preserveAspectRatio": "none",
+          "viewBox": "0 0 100 100"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Level"
+        },
+        "position": {
+          "height": 0.3,
+          "width": 0.84,
+          "x": 0.08,
+          "y": 0.62
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.chart} && !{view.params.static}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.elements[1].d": {
+            "binding": {
+              "config": {
+                "expression": "'M0 ' + toStr(100 - if(if({view.params.max} > 0, 100.0 * {view.params.value} / {view.params.max}, 0) > 100, 100, if(if({view.params.max} > 0, 100.0 * {view.params.value} / {view.params.max}, 0) < 0, 0, if({view.params.max} > 0, 100.0 * {view.params.value} / {view.params.max}, 0)))) + 'H100V100H0Z'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M0 0H100V100H0Z",
+              "fill": {
+                "paint": "var(--instrument-frame-primary-color)"
+              },
+              "name": "box",
+              "stroke": {
+                "paint": "var(--instrument-frame-tertiary-color)",
+                "width": 1
+              },
+              "type": "path",
+              "vectorEffect": "non-scaling-stroke"
+            },
+            {
+              "d": "M0 100H100V100H0Z",
+              "fill": {
+                "paint": "var(--instrument-regular-tertiary-color)"
+              },
+              "name": "fill",
+              "type": "path"
+            }
+          ],
+          "preserveAspectRatio": "none",
+          "viewBox": "0 0 100 100"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Chart"
+        },
+        "position": {
+          "height": 0.42,
+          "width": 0.84,
+          "x": 0.08,
+          "y": 0.5
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.chart}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.points": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.history}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "color": "var(--instrument-enhanced-secondary-color)"
+        },
+        "type": "ia.display.sparkline"
+      },
+      {
+        "meta": {
+          "name": "Tag"
+        },
+        "position": {
+          "height": 0.09,
+          "width": 0.86,
+          "x": 0.07,
+          "y": 0.06
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.static} && {view.params.hasTag}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.tag}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-label cadre/text/neutral cadre/text/ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Trend_fast_rising"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.trend} = 'fast-rising' && !{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M7.11508 18.7051L5.70508 17.2951L11.7051 11.2951L17.7051 17.2951L16.2951 18.7051L11.7051 14.1251L7.11508 18.7051Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)"
+                  },
+                  "type": "path"
+                },
+                {
+                  "d": "M7.11508 12.7052L5.70508 11.2952L11.7051 5.29517L17.7051 11.2952L16.2951 12.7052L11.7051 8.12517L7.11508 12.7052Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Trend_rising"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.trend} = 'rising' && !{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M13 20L13 7.83L18.59 13.42L20 12L12 4L4 12L5.41 13.41L11 7.83L11 20L13 20Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)",
+                    "rule": "evenodd"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Trend_stable"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.trend} = 'stable' && !{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M12 4L10.59 5.41L16.17 11H4V13H16.17L10.59 18.59L12 20L20 12L12 4Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Trend_falling"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.trend} = 'falling' && !{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M11 4L11 16.17L5.41 10.58L4 12L12 20L20 12L18.59 10.59L13 16.17L13 4L11 4Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)",
+                    "rule": "evenodd"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Trend_fast_falling"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.trend} = 'fast-falling' && !{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M16.2948 5.29487L17.7048 6.70487L11.7048 12.7049L5.70483 6.70487L7.11483 5.29487L11.7048 9.87487L16.2948 5.29487Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)"
+                  },
+                  "type": "path"
+                },
+                {
+                  "d": "M16.2948 11.2948L17.7048 12.7048L11.7048 18.7048L5.70483 12.7048L7.11483 11.2948L11.7048 15.8748L16.2948 11.2948Z",
+                  "fill": {
+                    "paint": "var(--element-neutral-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Number"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "!{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.params.compact}, 'cadre/font/instrument-value-regular-neutral', 'cadre/font/instrument-value-enhanced-neutral') + ' cadre/text/neutral'"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "numberFormat(if({view.params.max} > 0, 100.0 * {view.params.value} / {view.params.max}, 0), '0')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-value-enhanced-neutral cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "PercentSign"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "!{view.params.static}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-unit cadre/text/neutral"
+              },
+              "text": "%"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "height": 0.2,
+          "width": 0.9,
+          "x": 0.05,
+          "y": 0.15
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showPercent} && !{view.params.static}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.justify": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.compact} || {view.params.static}, 'center', 'flex-end')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "baseline",
+          "direction": "row",
+          "justify": "flex-end",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Current"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "numberFormat({view.params.value}, '0')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-value-regular-active cadre/text/active",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "OfMax"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "' / ' + numberFormat({view.params.max}, '0') + ' ' + {view.params.unit}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-unit cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "ValueRow"
+        },
+        "position": {
+          "height": 0.11,
+          "width": 0.9,
+          "x": 0.05,
+          "y": 0.36
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.compact} && !{view.params.static}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "flex-end",
+          "direction": "row",
+          "justify": "flex-end",
+          "style": {
+            "gap": "2px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "StaticValue"
+        },
+        "position": {
+          "height": 0.24,
+          "width": 0.88,
+          "x": 0.06,
+          "y": 0.26
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.static} && {view.params.hasCapacity}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "numberFormat({view.params.max}, '0') + ' ' + {view.params.unit}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-value-small-neutral cadre/text/neutral",
+            "justifyContent": "center",
+            "whiteSpace": "nowrap"
+          },
+          "textStyle": {
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "StaticTag"
+        },
+        "position": {
+          "height": 0.2,
+          "width": 1.0,
+          "x": 0.0,
+          "y": 0.76
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.static} && {view.params.hasTag}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.tag}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-label cadre/text/neutral cadre/text/ellipsis",
+            "justifyContent": "center",
+            "whiteSpace": "nowrap"
+          },
+          "textStyle": {
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.deviceId:\n\t\tcadre.hmi.select_device(self.session, self.view.params.deviceId, 'tank', self.view.params.tag, self.view.params.deviceLabel)\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "mode": "percent",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.coord"
+  }
+}

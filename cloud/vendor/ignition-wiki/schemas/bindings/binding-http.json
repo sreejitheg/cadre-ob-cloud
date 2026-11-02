@@ -1,0 +1,201 @@
+{
+  "additionalProperties": false,
+  "default": {
+    "polling": {
+      "enabled": false,
+      "rate": 5
+    },
+    "request": {
+      "auth": {
+        "type": "none",
+        "value": ""
+      },
+      "header": [],
+      "method": "GET",
+      "url": ""
+    }
+  },
+  "properties": {
+    "connectTimeout": {
+      "default": 30000,
+      "description": "Determines the timeout in milliseconds until a connection is established. A timeout value of zero is interpreted as an infinite timeout. A negative value is interpreted as undefined (system default).",
+      "type": "integer"
+    },
+    "enableCookies": {
+      "default": true,
+      "description": "Automatic Cookie handling for reading Set-Cookie: headers from the server and sending them back out in a Cookie: header when appropriate. True (enabled) by default. Cookies are scoped to the life of the component instance.",
+      "type": "boolean"
+    },
+    "polling": {
+      "additionalProperties": false,
+      "default": {
+        "enabled": false,
+        "rate": 5
+      },
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "If true, the HTTP request will poll: that is, execute repeatedly at an interval. If false, the HTTP request will only run once on startup and again as parameter values change.",
+          "type": "boolean"
+        },
+        "rate": {
+          "default": 5,
+          "description": "The rate at which the query will be executed. If numeric, this rate will be interpreted as the number of seconds between executions. If a string, the string will be interpreted as an expression whose result will be the poll rate. If the rate is not positive, polling will be disabled.",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "request": {
+      "additionalProperties": false,
+      "default": {
+        "auth": {
+          "type": "none",
+          "value": ""
+        },
+        "header": [],
+        "method": "GET",
+        "url": ""
+      },
+      "description": "The HTTP Request Configuration",
+      "properties": {
+        "auth": {
+          "additionalProperties": false,
+          "default": {
+            "type": "none",
+            "value": ""
+          },
+          "description": "The authorization type and value for the request.",
+          "properties": {
+            "type": {
+              "default": "none",
+              "description": "The type of authorization for the request.",
+              "suggestions": [
+                "none",
+                "basic",
+                "bearer",
+                "digest"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "",
+              "description": "An expression which evaluates to an authorization credential (i.e. a password or token).",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "value"
+          ],
+          "type": "object"
+        },
+        "body": {
+          "default": "",
+          "description": "The body of the HTTP request. This property should be removed for an HTTP request whose method does not expect a body (such as GET). Can be any valid JSON type. Nulls, booleans, numbers, arrays, and objects will be sent as their JSON-stringified values. Strings will be interpreted as an expression which evaluates to the body's value."
+        },
+        "header": {
+          "description": "An array of HTTP request header key / value pairs.",
+          "items": {
+            "additionalProperties": false,
+            "default": {
+              "key": "",
+              "value": ""
+            },
+            "description": "Static HTTP Request Header Key / Value Pairs",
+            "properties": {
+              "key": {
+                "default": "",
+                "description": "The header key.",
+                "suggestions": [
+                  "Accept",
+                  "Accept-Charset",
+                  "Accept-Datetime",
+                  "Accept-Encoding",
+                  "Accept-Language",
+                  "Access-Control-Request-Headers",
+                  "Access-Control-Request-Method",
+                  "Authorization",
+                  "Cache-Control",
+                  "Connection",
+                  "Content-Length",
+                  "Content-MD5",
+                  "Content-Type",
+                  "Cookie",
+                  "Date",
+                  "Forwarded",
+                  "From",
+                  "Host",
+                  "If-Match",
+                  "If-Modified-Since",
+                  "If-None-Match",
+                  "If-Range",
+                  "If-Unmodified-Since",
+                  "Max-Forwards",
+                  "Origin",
+                  "Pragma",
+                  "Proxy-Authorization",
+                  "Range",
+                  "Referer",
+                  "TE",
+                  "User-Agent",
+                  "Upgrade",
+                  "Via",
+                  "Warning"
+                ],
+                "type": "string"
+              },
+              "value": {
+                "default": "",
+                "description": "An expression which evaluates to the header value.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "key",
+              "value"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "method": {
+          "default": "GET",
+          "description": "The HTTP Request Method",
+          "suggestions": [
+            "GET",
+            "DELETE",
+            "HEAD",
+            "OPTIONS",
+            "PATCH",
+            "POST",
+            "PUT"
+          ],
+          "type": "string"
+        },
+        "url": {
+          "default": "",
+          "description": "An expression which evaluates to a URL target for the HTTP Request",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "method"
+      ],
+      "type": "object"
+    },
+    "socketTimeout": {
+      "default": 30000,
+      "description": "Defines the socket timeout (SO_TIMEOUT) in milliseconds, which is the timeout for waiting for data or, put differently, a maximum period inactivity between two consecutive data packets). A timeout value of zero is interpreted as an infinite timeout. A negative value is interpreted as undefined (system default).",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "request"
+  ],
+  "type": "object"
+}

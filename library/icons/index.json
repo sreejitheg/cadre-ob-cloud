@@ -1,0 +1,687 @@
+{
+ "source_commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+ "licence": "Apache-2.0",
+ "icons": {
+  "alarm-acknowledged-outlined": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "alarm-badge": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "alert-list": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 7
+  },
+  "alert-off-filled": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "alerts": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "arrow-down-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "arrow-left-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "arrow-right-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "arrow-up-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "auto": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "backward": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "backward-fast": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "backward-stopped": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "caution-badge": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "check-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "chevron-double-down-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "chevron-double-up-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "chevron-down-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "chevron-left-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "chevron-right-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "chevron-up-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "close-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "command-locked-f": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "damper-horizontal-off": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "damper-horizontal-on": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "dashboard": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "display-brilliance-low": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 9
+  },
+  "duty": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "energy-battery": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "fan-off": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 4
+  },
+  "fan-on": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "filter": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "filter-1-off": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "filter-1-on": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "forward": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "forward-fast": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "forward-stopped": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "generator": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "heatexhanger": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "heatpump": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "home": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "hydraulic-separator": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "local": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "local-only": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "manual": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "manual-only": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "media-play": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "media-stop": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "menu": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 4
+  },
+  "more-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "more-vertical-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "motor-off-horizontal": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "motor-off-vertical": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 7
+  },
+  "motor-on-horizontal": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "motor-on-vertical": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "motor-static-horizontal": {
+   "vars": [
+    "--automation-device-secondary-color",
+    "--container-section-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "motor-static-vertical": {
+   "vars": [
+    "--automation-device-secondary-color",
+    "--container-section-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "notification": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "notification-filled": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "off": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "on": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "palette-day": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "palette-day-bright": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "palette-dimming": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "palette-dusk": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "palette-night": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "placeholder": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "pump-off-horizontal": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "pump-off-vertical": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "pump-on-horizontal": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "pump-on-vertical": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "pump-static-horizontal": {
+   "vars": [
+    "--automation-device-secondary-color",
+    "--container-section-color"
+   ],
+   "mode": "iconCss",
+   "elements": 5
+  },
+  "pump-static-vertical": {
+   "vars": [
+    "--automation-device-secondary-color",
+    "--container-section-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "search": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "sensor-water-drop-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "sensor-water-ph-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "speed": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "standby": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "support-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "switch-horizontal-off": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "switch-horizontal-on": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "tank": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "trend": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "trend-down": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "trend-up": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "twoway-analog-closed": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 6
+  },
+  "twoway-digital-closed": {
+   "vars": [
+    "--automation-device-primary-inverted-color",
+    "--automation-device-tertiary-inverted-color"
+   ],
+   "mode": "iconCss",
+   "elements": 3
+  },
+  "twoway-digital-open": {
+   "vars": [
+    "--automation-device-primary-color",
+    "--automation-device-tertiary-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "user": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "user-google": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "warning-badge": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 1
+  },
+  "warning-rectified-outlined": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  },
+  "warning-unacknowledged-outlined": {
+   "vars": [
+    "--element-active-color"
+   ],
+   "mode": "iconCss",
+   "elements": 2
+  }
+ },
+ "failed": []
+}

@@ -1,0 +1,35 @@
+{
+ "openers": [
+  {
+   "page": "PumpStation",
+   "an": "15",
+   "command": "PopUp(PUMP01_FP)",
+   "function": "PopUp",
+   "popup": "PUMP01_FP",
+   "device_arg": "PUMP01",
+   "privilege": null,
+   "resolved": true
+  },
+  {
+   "page": "Overview",
+   "an": "7",
+   "command": "PopUp(PUMP01_FP)",
+   "function": "PopUp",
+   "popup": "PUMP01_FP",
+   "device_arg": "PUMP01",
+   "privilege": null,
+   "resolved": true
+  },
+  {
+   "page": "PumpStation",
+   "an": "16",
+   "command": "PopUp(SEQ01_SP)",
+   "function": "PopUp",
+   "popup": "SEQ01_SP",
+   "device_arg": "SEQ01",
+   "privilege": "2",
+   "resolved": true
+  }
+ ],
+ "unresolved": []
+}

@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "The ACK visible button was clicked. event.mode is the list mode; event.ids holds the unacknowledged alerts it shows.",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "description": "The alert ids of the event."
+    },
+    "mode": {
+      "type": "string",
+      "description": "The list mode."
+    }
+  }
+}

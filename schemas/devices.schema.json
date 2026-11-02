@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cadre.local/schemas/cadre-hmi-devices-1.json",
+  "title": "Cadre HMI device model, version 1",
+  "description": "The devices of a child project over the Cadre HMI parent library: what each device's tag folder carries. Written by a Cadre tool beside the screen descriptors (for example ctig from the devices of a Citect project) and consumed by tools/hmi/screen.py (--devices-file). The library's faceplates list only the members a device carries, so a device lists exactly those. Wiki page 08 section 3.1; the kinds and members the library knows are in library/profile.json.",
+  "type": "object",
+  "required": [
+    "schema",
+    "tagRoot",
+    "devices"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "cadre-hmi-devices/1"
+    },
+    "tagRoot": {
+      "type": "string",
+      "pattern": "^\\[[^\\]]+\\][^/].*[^/]$",
+      "description": "The tag folder the device folders sit under, with its provider, for example [default]site/area: the tagRoot of the descriptors that draw the devices."
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/device"
+      }
+    }
+  },
+  "$defs": {
+    "device": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "members"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+(/[A-Za-z0-9_-]+)*$",
+          "description": "The device's tag folder under tagRoot: the string a symbol's device resolves to (the symbol id for device true, else the folder it names)."
+        },
+        "kind": {
+          "type": "string",
+          "description": "A device kind of the library profile (deviceKinds): pump, motor, fan, valve, analogvalve, damper, tank, instrument (readout and instrument-field are the same), controller, indicator, sequence, generator. It selects the faceplate."
+        },
+        "title": {
+          "type": "string",
+          "description": "The identifier shown in the faceplate header, for example P-1; else the symbol's tag parameter."
+        },
+        "label": {
+          "type": "string",
+          "description": "The description shown beneath the identifier."
+        },
+        "unit": {
+          "type": "string",
+          "description": "The engineering unit of the device's value."
+        },
+        "members": {
+          "type": "object",
+          "description": "Every member the device's tag folder carries that its faceplate reads, by name relative to the folder (maintenance members under mnt/). A name the library profile does not know for the kind fails gate G7 devices.",
+          "propertyNames": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_]*(/[A-Za-z0-9_]+)*$"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/member"
+          }
+        },
+        "alarmSources": {
+          "type": "array",
+          "description": "The source path patterns of the device's alarms, where they stay on source tags outside the device folder, for example prov:default:/tag:site/P1_OE:/alm:*. Left out, the device's alarms are those under its folder; given empty, the device has no alarm.",
+          "items": {
+            "type": "string",
+            "pattern": "^prov:[^:,]+:/tag:[^,]+$"
+          }
+        },
+        "trend": {
+          "type": "array",
+          "description": "The members the tag model historises: each gets a card on the trend page, and the faceplate's trend draws those of its kind.",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "faceplate": {
+          "enum": [
+            "openbridge",
+            "asm"
+          ],
+          "description": "The device's faceplate style (COBD-045): openbridge, the default, or asm, the anatomy of the ASMP study (a header strip and the tabs Home, Config, Diagnostics, Alarms, Interlock and Info). Left out, the device takes the project's default (screen.py --faceplate). A kind without an asm faceplate opens its openbridge one, and gate G7 devices warns of it."
+        },
+        "modes": {
+          "type": "array",
+          "description": "Ownership by mode (COBD-044): each value of the member mode, its name and its owner. The owner decides which commands the faceplate and the checked writes allow; Take control, Release and Maintenance write the first mode of the operator, the program and maintenance. Left out, the device is not gated by ownership. Gate G7 devices requires the member mode, unique values and names, and at least one mode the operator holds.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "value",
+              "name",
+              "owner"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "integer"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 24
+              },
+              "owner": {
+                "enum": [
+                  "program",
+                  "operator",
+                  "maintenance",
+                  "local"
+                ]
+              }
+            }
+          }
+        },
+        "node": {
+          "type": "string",
+          "description": "The device's node of the plant hierarchy (a screen.node path), for a device no page draws with `device`: it is then that device's node (search, crumb, alarms). Left out, such a device has no node (L5)."
+        }
+      }
+    },
+    "member": {
+      "type": "object",
+      "required": [
+        "type",
+        "access"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "Boolean",
+            "Int1",
+            "Int2",
+            "Int4",
+            "Int8",
+            "Float4",
+            "Float8",
+            "String"
+          ],
+          "description": "The tag's dataType."
+        },
+        "access": {
+          "enum": [
+            "read",
+            "write"
+          ],
+          "description": "write: a session whose user holds the role of the member's write path may write it. read: no control writes it and the checked functions refuse it."
+        },
+        "pulse": {
+          "type": "boolean",
+          "description": "true: the member is a pulse command. The faceplate draws a button that writes true to it (write path W18) and the plant returns it to false. Gate G7 devices requires a pulse member to be Boolean, marked write, and a pulse member of the device's kind in the library profile (pulses)."
+        },
+        "caption": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "pattern": "^[^\\s\\x00-\\x1f\\x7f]([^\\x00-\\x1f\\x7f]*[^\\s\\x00-\\x1f\\x7f])?$",
+          "description": "The text of a pulse member's button, for example Start cycle: one line of 1 to 32 characters, with no space at either end and no line break or control character; left out, the button shows the member's name. A caption on a member that is not marked pulse, a caption outside these bounds and a caption that is the label of a faceplate tab each fail gate G7 devices."
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "caption"
+          ],
+          "description": "A configuration member (F010 of the ASMP study, COBD-045): a number under the device's subfolder cfg/, shown as a row of the Config tab (the Maintenance tab of an openbridge faceplate) and written through W19 within its bounds. Gate G7 devices requires the member under cfg/, of a numeric type, on a kind whose faceplate draws the rows, and the minimum not above the maximum; it warns of a member without bounds.",
+          "properties": {
+            "caption": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 24,
+              "pattern": "^[^\\s\\x00-\\x1f\\x7f]([^\\x00-\\x1f\\x7f]*[^\\s\\x00-\\x1f\\x7f])?$",
+              "description": "The row's label, for example Start delay: one line of 1 to 24 characters."
+            },
+            "unit": {
+              "type": "string",
+              "maxLength": 12,
+              "description": "The unit shown beside the field, for example s."
+            },
+            "minimum": {
+              "type": "number",
+              "description": "The least value the row and W19 accept."
+            },
+            "maximum": {
+              "type": "number",
+              "description": "The greatest value the row and W19 accept."
+            },
+            "format": {
+              "type": "string",
+              "pattern": "^0(\\.0{1,4})?$",
+              "description": "The field's number format: 0, 0.0, 0.00, 0.000 or 0.0000; left out, 0.0."
+            }
+          }
+        }
+      }
+    }
+  }
+}

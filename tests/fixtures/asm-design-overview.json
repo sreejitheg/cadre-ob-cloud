@@ -1,0 +1,205 @@
+{
+ "page": "Overview",
+ "canvas": {
+  "w": 1580,
+  "h": 600,
+  "scale": 1.0
+ },
+ "regions": [
+  {
+   "id": "r0",
+   "kind": "panel",
+   "bbox": {
+    "x": 20,
+    "y": 60,
+    "w": 980,
+    "h": 400
+   },
+   "source_region": "r0",
+   "items": [
+    "Overview:d_brk",
+    "Overview:d_pump",
+    "Overview:v1",
+    "Overview:v2",
+    "Overview:i1",
+    "Overview:n1",
+    "Overview:n2",
+    "Overview:n3",
+    "Overview:s9"
+   ]
+  }
+ ],
+ "items": [
+  {
+   "uid": "Overview:d_brk",
+   "kind": "symbol",
+   "component": "switch",
+   "bbox": {
+    "x": 60,
+    "y": 120,
+    "w": 48,
+    "h": 48
+   },
+   "reads": [
+    "BRK01_CLOSED"
+   ],
+   "shows": "state",
+   "original_an": "Overview:1"
+  },
+  {
+   "uid": "Overview:d_pump",
+   "kind": "symbol",
+   "component": "pump",
+   "bbox": {
+    "x": 260,
+    "y": 120,
+    "w": 48,
+    "h": 48
+   },
+   "reads": [
+    "PUMP01_IRUN"
+   ],
+   "shows": "state",
+   "original_an": "Overview:2",
+   "faceplate": "PUMP01"
+  },
+  {
+   "uid": "Overview:v1",
+   "kind": "readout",
+   "component": "readout",
+   "bbox": {
+    "x": 400,
+    "y": 120,
+    "w": 120,
+    "h": 30
+   },
+   "reads": [
+    "FLOW01_PV"
+   ],
+   "shows": "value",
+   "original_an": "Overview:3"
+  },
+  {
+   "uid": "Overview:v2",
+   "kind": "readout",
+   "component": "readout",
+   "bbox": {
+    "x": 400,
+    "y": 170,
+    "w": 120,
+    "h": 30
+   },
+   "reads": [
+    "BRK01_VOLT"
+   ],
+   "shows": "value",
+   "original_an": "Overview:4"
+  },
+  {
+   "uid": "Overview:i1",
+   "kind": "indicator",
+   "component": "indicator",
+   "bbox": {
+    "x": 60,
+    "y": 244,
+    "w": 24,
+    "h": 24
+   },
+   "reads": [
+    "BRK01_CLOSED"
+   ],
+   "shows": "state",
+   "original_an": "Overview:5",
+   "states": [
+    {
+     "value": true,
+     "colour": "on",
+     "label": "Healthy"
+    },
+    {
+     "value": false,
+     "colour": "alarm",
+     "label": "Lost"
+    }
+   ],
+   "state_default": "off"
+  },
+  {
+   "uid": "Overview:n1",
+   "kind": "link",
+   "component": "link",
+   "bbox": {
+    "x": 700,
+    "y": 120,
+    "w": 140,
+    "h": 36
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "Overview:6"
+  },
+  {
+   "uid": "Overview:n2",
+   "kind": "button",
+   "component": "button",
+   "bbox": {
+    "x": 260,
+    "y": 180,
+    "w": 60,
+    "h": 24
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "Overview:7"
+  },
+  {
+   "uid": "Overview:n3",
+   "kind": "link",
+   "component": "link",
+   "bbox": {
+    "x": 700,
+    "y": 180,
+    "w": 140,
+    "h": 36
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "Overview:8"
+  },
+  {
+   "uid": "Overview:s9",
+   "kind": "label",
+   "component": "label",
+   "bbox": {
+    "x": 60,
+    "y": 70,
+    "w": 300,
+    "h": 30
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "Overview:9",
+   "text": "Station overview"
+  }
+ ],
+ "navigation": [
+  {
+   "uid": "Overview:n1",
+   "route": "/pumpstation"
+  },
+  {
+   "uid": "Overview:n2",
+   "faceplate": "PUMP01"
+  },
+  {
+   "uid": "Overview:n3",
+   "route": "/alerts"
+  }
+ ],
+ "balance": {
+  "columns": [],
+  "rows": []
+ },
+ "deviations": [],
+ "notes": ""
+}

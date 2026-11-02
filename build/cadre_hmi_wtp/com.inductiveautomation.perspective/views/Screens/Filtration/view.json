@@ -1,0 +1,1639 @@
+{
+  "custom": {
+    "colorMode": false,
+    "g_F301": false,
+    "g_F302": false,
+    "g_F303": false,
+    "g_P301": false,
+    "g_XV301": false,
+    "g_XV302": false,
+    "g_XV303": false,
+    "showReadout": true,
+    "showTag": true
+  },
+  "params": {},
+  "propConfig": {
+    "custom.g_F301": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/F301/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_F302": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/F302/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_F303": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/F303/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_P301": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P301/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_XV301": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/XV301/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_XV302": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/XV302/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_XV303": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/XV303/state"
+        },
+        "type": "tag"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1580
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Filter feed"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Feed"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 380,
+                  "x": 20,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Media filters"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Filters"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 560,
+                  "x": 420,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Filtered water"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Out"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 560,
+                  "x": 1000,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "Text_From"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 220,
+                  "x": 36,
+                  "y": 236
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "flex-start",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "From clarified water tank",
+                  "textStyle": {
+                    "textAlign": "left"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_To"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 136,
+                  "x": 1420,
+                  "y": 264
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "flex-end",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "To disinfection",
+                  "textStyle": {
+                    "textAlign": "right"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Pipes"
+                },
+                "position": {
+                  "height": 600,
+                  "width": 1580,
+                  "x": 0,
+                  "y": 0
+                },
+                "propConfig": {
+                  "props.elements[12].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}) || ({view.custom.g_P301} && {view.custom.g_XV302}) || ({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[13].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}) || ({view.custom.g_P301} && {view.custom.g_XV302}) || ({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[14].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[15].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[16].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[17].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV302}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[18].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV302}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[19].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV302}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[20].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[21].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[22].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[23].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_P301} && {view.custom.g_XV301}) || ({view.custom.g_P301} && {view.custom.g_XV302}) || ({view.custom.g_P301} && {view.custom.g_XV303}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M40 300 L182 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M218 300 L440 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L440 140 L522 140",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1a_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 140 L682 140",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1b_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 140 L880 140 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1c_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L522 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2a_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 300 L682 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2b_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 300 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2c_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L440 460 L522 460",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3a_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 460 L682 460",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3b_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 460 L880 460 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3c_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M880 300 L1550 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f9_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M40 300 L182 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M218 300 L440 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L440 140 L522 140",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1a",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 140 L682 140",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1b",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 140 L880 140 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f1c",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L522 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2a",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 300 L682 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2b",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 300 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f2c",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M440 300 L440 460 L522 460",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3a",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M558 460 L682 460",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3b",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M718 460 L880 460 L880 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f3c",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M880 300 L1550 300",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "f9",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M50 300L40 290L40 310Z",
+                      "fill": {
+                        "paint": "var(--automation-pipe-tertiary-color)"
+                      },
+                      "name": "arrow-in",
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1560 300L1550 290L1550 310Z",
+                      "fill": {
+                        "paint": "var(--automation-pipe-tertiary-color)"
+                      },
+                      "name": "arrow-out",
+                      "type": "path"
+                    }
+                  ],
+                  "preserveAspectRatio": "none",
+                  "viewBox": "0 0 1580 600"
+                },
+                "type": "ia.shapes.svg"
+              },
+              {
+                "meta": {
+                  "name": "P301"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 164.0,
+                  "y": 276
+                },
+                "propConfig": {
+                  "props.params.alert": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P301/alert"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.alertFrameMode": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P301/alertMode"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P301/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeInterlock": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P301/ilk/badge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_P301}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.speed": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P301/speed"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/P301",
+                    "deviceKind": "pump",
+                    "deviceLabel": "Filter feed pump",
+                    "hasSpeed": true,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "statusText": "",
+                    "tag": "P-301",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Pump"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "PIT301"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 260,
+                  "y": 228
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/PIT301/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/PIT301",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filter feed pressure",
+                    "format": "0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "PIT-301",
+                    "unit": "kPa"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "XV301"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 504.0,
+                  "y": 116
+                },
+                "propConfig": {
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/XV301/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.open": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_XV301}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/XV301",
+                    "deviceKind": "valve",
+                    "deviceLabel": "Filter 1 inlet valve",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "XV-301",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Valve"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "F301"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 664.0,
+                  "y": 116
+                },
+                "propConfig": {
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_F301}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeControl": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "",
+                    "deviceKind": "filter",
+                    "deviceLabel": "",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "F-301",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Filter"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "DPIT301"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 756,
+                  "y": 74
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DPIT301/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/DPIT301",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filter 1 differential pressure",
+                    "format": "0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "DPIT-301",
+                    "unit": "kPa"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "XV302"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 504.0,
+                  "y": 276
+                },
+                "propConfig": {
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/XV302/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.open": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_XV302}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/XV302",
+                    "deviceKind": "valve",
+                    "deviceLabel": "Filter 2 inlet valve",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "XV-302",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Valve"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "F302"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 664.0,
+                  "y": 276
+                },
+                "propConfig": {
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_F302}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeControl": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "",
+                    "deviceKind": "filter",
+                    "deviceLabel": "",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "F-302",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Filter"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "DPIT302"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 756,
+                  "y": 234
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DPIT302/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/DPIT302",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filter 2 differential pressure",
+                    "format": "0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "DPIT-302",
+                    "unit": "kPa"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "XV303"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 504.0,
+                  "y": 436
+                },
+                "propConfig": {
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/XV303/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.open": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_XV303}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/XV303",
+                    "deviceKind": "valve",
+                    "deviceLabel": "Filter 3 inlet valve",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "XV-303",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Valve"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "F303"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 664.0,
+                  "y": 436
+                },
+                "propConfig": {
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_F303}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeControl": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "",
+                    "deviceKind": "filter",
+                    "deviceLabel": "",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "F-303",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Filter"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "DPIT303"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 756,
+                  "y": 394
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DPIT303/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/DPIT303",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filter 3 differential pressure",
+                    "format": "0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "DPIT-303",
+                    "unit": "kPa"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "FIT301"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 1040,
+                  "y": 236
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/FIT301/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/FIT301",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filtered water flow",
+                    "format": "0.0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "FIT-301",
+                    "unit": "m³/h"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "AIT301"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 1160,
+                  "y": 236
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/AIT301/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/AIT301",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Filtered water turbidity",
+                    "format": "0.00",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "AIT-301",
+                    "unit": "NTU"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              }
+            ],
+            "meta": {
+              "name": "Diagram"
+            },
+            "position": {
+              "basis": "600px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "height": "600px",
+                "minWidth": "1580px",
+                "overflow": "hidden",
+                "width": "1580px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Canvas"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.colorMode = not self.view.custom.colorMode"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Color"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.colorMode}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "Color"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.showTag = not self.view.custom.showTag"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "IdTag"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.showTag}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "ID-tag"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.showReadout = not self.view.custom.showReadout"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Readout"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.showReadout}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "Readout"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "UserToolbar"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "alignSelf": "flex-start",
+            "classes": "cadre/surface/card",
+            "gap": "4px",
+            "margin": "0 0 8px 8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

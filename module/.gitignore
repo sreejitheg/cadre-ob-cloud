@@ -1,0 +1,7 @@
+.gradle/
+build/
+*/build/
+web/node_modules/
+private/
+*.modl
+tools/harness/vendor/

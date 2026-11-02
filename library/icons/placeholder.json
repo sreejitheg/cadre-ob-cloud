@@ -1,0 +1,30 @@
+{
+ "name": "placeholder",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M11 7H13V11H17V13H13V17H11V13H7V11H11V7Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M1.61214 10.516L10.516 1.61214C11.3322 0.795953 12.6678 0.795953 13.484 1.61214L22.3879 10.516C23.204 11.3322 23.204 12.6678 22.3879 13.484L13.484 22.3879C12.6678 23.204 11.3322 23.204 10.516 22.3879L1.61214 13.484C0.795953 12.6678 0.795953 11.3322 1.61214 10.516ZM12 3L3 12L12 21L21 12L12 3Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-placeholder.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

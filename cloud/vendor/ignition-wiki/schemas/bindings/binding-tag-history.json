@@ -1,0 +1,268 @@
+{
+  "default": {
+    "dateRange": {
+      "mostRecent": "10",
+      "mostRecentUnits": "min"
+    },
+    "tags": [
+      {
+        "path": ""
+      }
+    ]
+  },
+  "definitions": {
+    "aggregate": {
+      "default": "Average",
+      "description": "Dictates how multiple history values are \"aggregated\" together in order to form a result for a given time slice.",
+      "suggestions": [
+        "Average",
+        "MinMax",
+        "LastValue",
+        "SimpleAverage",
+        "Sum",
+        "Minimum",
+        "Maximum",
+        "DurationOn",
+        "DurationOff",
+        "CountOn",
+        "CountOff",
+        "Count",
+        "Range",
+        "Variance",
+        "StdDev",
+        "PctGood",
+        "PctBad"
+      ],
+      "type": "string"
+    }
+  },
+  "properties": {
+    "aggregate": {
+      "$ref": "#/definitions/aggregate",
+      "description": "Default aggregation mode used by a column in case the column does not override it"
+    },
+    "avoidScanClassValidation": {
+      "default": false,
+      "type": "boolean"
+    },
+    "calculations": {
+      "items": {
+        "$ref": "#/definitions/aggregate"
+      },
+      "type": "array"
+    },
+    "dateRange": {
+      "oneOf": [
+        {
+          "properties": {
+            "endDate": {
+              "description": "An end date expression",
+              "type": [
+                "number",
+                "string"
+              ]
+            },
+            "startDate": {
+              "description": "A start date expression",
+              "type": [
+                "number",
+                "string"
+              ]
+            }
+          },
+          "required": [
+            "startDate",
+            "endDate"
+          ],
+          "type": "object"
+        },
+        {
+          "properties": {
+            "mostRecent": {
+              "description": "An expression which emits the most recent real-time data to pull in milliseconds",
+              "type": [
+                "number",
+                "string"
+              ]
+            },
+            "mostRecentUnits": {
+              "enum": [
+                "sec",
+                "min",
+                "hour",
+                "day",
+                "week",
+                "month"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "mostRecent",
+            "mostRecentUnits"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "ignoreBadQuality": {
+      "default": false,
+      "type": "boolean"
+    },
+    "polling": {
+      "default": {
+        "enabled": false,
+        "rate": 5
+      },
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "If true, the query will polled: that is, executed repeatedly at an interval. If false, the query will only run once on startup and again as parameter values change.",
+          "type": "boolean"
+        },
+        "rate": {
+          "default": 5,
+          "description": "The rate at which the query will be executed. If numeric, this rate will be interpreted as the number of seconds between executions. If a string, the string will be interpreted as an expression whose result will be the poll rate. If the rate is not positive, polling will be disabled.",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "required": [
+        "enabled",
+        "rate"
+      ],
+      "type": "object"
+    },
+    "preventInterpolation": {
+      "default": false,
+      "type": "boolean"
+    },
+    "returnFormat": {
+      "default": "wide",
+      "enum": [
+        "wide",
+        "tall",
+        "calculations"
+      ],
+      "type": "string"
+    },
+    "returnSize": {
+      "anyOf": [
+        {
+          "properties": {
+            "type": {
+              "constant": "raw",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "constant": "natural",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "properties": {
+            "numRows": {
+              "type": "integer"
+            },
+            "type": {
+              "constant": "fixed",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "numRows"
+          ]
+        },
+        {
+          "properties": {
+            "delay": {
+              "type": "integer"
+            },
+            "delayUnits": {
+              "enum": [
+                "sec",
+                "min",
+                "hour"
+              ],
+              "type": "string"
+            },
+            "type": {
+              "constant": "interval",
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "delay",
+            "delayUnits"
+          ]
+        }
+      ],
+      "default": {
+        "type": "raw"
+      },
+      "type": "object"
+    },
+    "tags": {
+      "oneOf": [
+        {
+          "items": {
+            "default": {
+              "path": ""
+            },
+            "properties": {
+              "aggregate": {
+                "default": "",
+                "type": "string"
+              },
+              "alias": {
+                "default": "",
+                "type": "string"
+              },
+              "path": {
+                "default": "",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        {
+          "default": "",
+          "type": "string"
+        }
+      ]
+    },
+    "valueFormat": {
+      "default": "dataset",
+      "enum": [
+        "dataset",
+        "document"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "dateRange",
+    "tags"
+  ],
+  "type": "object"
+}

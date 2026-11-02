@@ -1,0 +1,29 @@
+{
+ "name": "chevron-double-up-google",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M7.11508 18.7051L5.70508 17.2951L11.7051 11.2951L17.7051 17.2951L16.2951 18.7051L11.7051 14.1251L7.11508 18.7051Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M7.11508 12.7052L5.70508 11.2952L11.7051 5.29517L17.7051 11.2952L16.2951 12.7052L11.7051 8.12517L7.11508 12.7052Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-chevron-double-up-google.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

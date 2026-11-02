@@ -1,0 +1,31 @@
+{
+ "name": "standby",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M10 19H6V5H10V19Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M18 19H14V5H18V19Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-standby.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

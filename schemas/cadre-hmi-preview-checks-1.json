@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-preview-checks/1",
+  "title": "Cadre HMI preview checks, version 1",
+  "description": "The checks of an HTML preview written by tools/hmi/preview.py (ARCH-WFB-01 revision B8 Table 105): each check with what it expected and found, the pictures taken, and the facts of the self-contained bundle. script_hashes holds the lower case hex SHA-256 of the text of each executable inline script of the bundle (not the application/json blocks), in document order; external_refs and inline_handlers must be 0. Wiki page 04.",
+  "type": "object",
+  "required": ["mode", "window", "checks", "pictures", "bundle", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-preview-checks/1"},
+    "mode": {"enum": ["recon", "asm"]},
+    "window": {"type": "object", "required": ["w", "h"], "properties": {"w": {"type": "integer"}, "h": {"type": "integer"}}},
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "ok", "expected", "found", "detail"],
+        "properties": {
+          "name": {"type": "string"},
+          "ok": {"type": "boolean"},
+          "expected": {"type": "integer"},
+          "found": {"type": "integer"},
+          "detail": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "pictures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "file"],
+        "properties": {"name": {"type": "string"}, "kind": {"enum": ["page", "faceplate"]}, "file": {"type": "string"}}
+      }
+    },
+    "bundle": {
+      "type": "object",
+      "required": ["file", "bytes", "external_refs", "script_hashes", "inline_handlers"],
+      "properties": {
+        "file": {"type": ["string", "null"]},
+        "bytes": {"type": "integer", "minimum": 0},
+        "external_refs": {"type": "integer", "minimum": 0},
+        "script_hashes": {"type": "array", "items": {"type": "string", "pattern": "^[0-9a-f]{64}$"}},
+        "inline_handlers": {"type": "integer", "minimum": 0}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

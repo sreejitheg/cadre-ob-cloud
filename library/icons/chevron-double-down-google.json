@@ -1,0 +1,29 @@
+{
+ "name": "chevron-double-down-google",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M16.2948 5.29487L17.7048 6.70487L11.7048 12.7049L5.70483 6.70487L7.11483 5.29487L11.7048 9.87487L16.2948 5.29487Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M16.2948 11.2948L17.7048 12.7048L11.7048 18.7048L5.70483 12.7048L7.11483 11.2948L11.7048 15.8748L16.2948 11.2948Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-chevron-double-down-google.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

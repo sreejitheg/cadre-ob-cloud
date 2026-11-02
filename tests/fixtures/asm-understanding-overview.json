@@ -1,0 +1,232 @@
+{
+ "unit": {
+  "id": "Overview",
+  "kind": "page",
+  "windows": [
+   "Overview"
+  ]
+ },
+ "purpose": "Shows the station at a glance.",
+ "layout": "diagram",
+ "regions": [
+  {
+   "id": "r0",
+   "title": "Station",
+   "kind": "panel",
+   "bbox": {
+    "x": 20,
+    "y": 60,
+    "w": 980,
+    "h": 400
+   },
+   "ans": [
+    "Overview:1",
+    "Overview:2",
+    "Overview:3",
+    "Overview:4",
+    "Overview:5",
+    "Overview:6"
+   ]
+  }
+ ],
+ "devices": [
+  {
+   "id": "d_brk",
+   "type": "breaker",
+   "tag": "BRK01",
+   "label": "Main breaker",
+   "bbox": {
+    "x": 60,
+    "y": 120,
+    "w": 48,
+    "h": 48
+   },
+   "ans": [
+    "Overview:1"
+   ],
+   "states": [],
+   "faceplate": null,
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_pump",
+   "type": "pump",
+   "tag": "PUMP01",
+   "label": "Pump 1",
+   "bbox": {
+    "x": 260,
+    "y": 120,
+    "w": 48,
+    "h": 48
+   },
+   "ans": [
+    "Overview:2"
+   ],
+   "states": [],
+   "faceplate": "pump",
+   "click": "open the pump faceplate",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "flows": [],
+ "readouts": [
+  {
+   "id": "v1",
+   "label": "Total flow",
+   "expr": "FLOW01_PV",
+   "format": "0.0",
+   "units": "L/s",
+   "bbox": {
+    "x": 400,
+    "y": 120,
+    "w": 120,
+    "h": 30
+   },
+   "ans": [
+    "Overview:3"
+   ],
+   "region": "r0",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "v2",
+   "label": "Supply voltage",
+   "expr": "BRK01_VOLT",
+   "format": "0",
+   "units": "V",
+   "bbox": {
+    "x": 400,
+    "y": 170,
+    "w": 120,
+    "h": 30
+   },
+   "ans": [
+    "Overview:4"
+   ],
+   "region": "r0",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "indicators": [
+  {
+   "id": "i1",
+   "label": "Grid healthy",
+   "expr": "BRK01_CLOSED",
+   "on": "Healthy",
+   "off": "Lost",
+   "bbox": {
+    "x": 60,
+    "y": 244,
+    "w": 24,
+    "h": 24
+   },
+   "ans": [
+    "Overview:5"
+   ],
+   "basis": {
+    "on": "inventory:Text",
+    "off": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "navigation": [
+  {
+   "id": "n1",
+   "label": "Pump station",
+   "kind": "page",
+   "target": "PumpStation",
+   "priv": null,
+   "bbox": {
+    "x": 700,
+    "y": 120,
+    "w": 140,
+    "h": 36
+   },
+   "ans": [
+    "Overview:6"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "n2",
+   "label": "Pump 1",
+   "kind": "faceplate",
+   "target": "PUMP01_FP",
+   "priv": null,
+   "bbox": {
+    "x": 260,
+    "y": 180,
+    "w": 60,
+    "h": 24
+   },
+   "ans": [
+    "Overview:7"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "n3",
+   "label": "Alarms",
+   "kind": "page",
+   "target": "Alarm",
+   "priv": null,
+   "bbox": {
+    "x": 700,
+    "y": 180,
+    "w": 140,
+    "h": 36
+   },
+   "ans": [
+    "Overview:8"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "static": [
+  {
+   "ans": [
+    "Overview:9"
+   ],
+   "what": "Station heading",
+   "class": "heading"
+  }
+ ],
+ "dropped": [
+  {
+   "ans": [
+    "Overview:10"
+   ],
+   "reason": "constant false visibility",
+   "reason_class": "invisible"
+  }
+ ],
+ "modernise": []
+}

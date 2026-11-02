@@ -1,0 +1,497 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "Intake",
+  "route": "/intake",
+  "title": "Intake and Clarification",
+  "view": "Screens/Intake",
+  "layout": "diagram",
+  "width": 1580,
+  "height": 600,
+  "icon": "tank",
+  "node": "WTP/Intake"
+ },
+ "tagRoot": "[default]cadre_hmi_wtp",
+ "tagModel": "external",
+ "showTags": true,
+ "toolbar": true,
+ "sections": [
+  {
+   "id": "Raw",
+   "x": 20,
+   "y": 20,
+   "w": 620,
+   "h": 540,
+   "label": "Raw water intake"
+  },
+  {
+   "id": "Coag",
+   "x": 660,
+   "y": 20,
+   "w": 300,
+   "h": 540,
+   "label": "Coagulation"
+  },
+  {
+   "id": "Clar",
+   "x": 980,
+   "y": 20,
+   "w": 580,
+   "h": 540,
+   "label": "Clarification"
+  }
+ ],
+ "symbols": [
+  {
+   "id": "XV101",
+   "kind": "valve",
+   "x": 150,
+   "y": 156,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Raw water inlet valve",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "XV-101",
+    "vertical": false
+   },
+   "bind": {
+    "open": "XV101/state",
+    "badgeControl": "XV101/modeBadge"
+   }
+  },
+  {
+   "id": "TK101",
+   "kind": "tank",
+   "x": 260,
+   "y": 80,
+   "w": 150,
+   "h": 200,
+   "device": true,
+   "label": "Raw water tank",
+   "params": {
+    "max": 500,
+    "unit": "m³",
+    "tag": "TK-101",
+    "compact": false
+   },
+   "bind": {
+    "value": "TK101/volume",
+    "trend": "TK101/trend"
+   }
+  },
+  {
+   "id": "P101",
+   "kind": "pump",
+   "x": 470,
+   "y": 156,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Raw water feed pump",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "P-101",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "P101/state",
+    "speed": "P101/speed",
+    "alert": "P101/alert",
+    "alertFrameMode": "P101/alertMode",
+    "badgeControl": "P101/modeBadge",
+    "badgeInterlock": "P101/ilk/badge"
+   }
+  },
+  {
+   "id": "FIT101",
+   "kind": "readout",
+   "x": 536,
+   "y": 112,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Raw water flow",
+   "params": {
+    "unit": "m³/h",
+    "format": "0.0",
+    "tag": "FIT-101",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "FIT101/value"
+   }
+  },
+  {
+   "id": "AIT101",
+   "kind": "readout",
+   "x": 546,
+   "y": 228,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Raw water turbidity",
+   "params": {
+    "unit": "NTU",
+    "format": "0.0",
+    "tag": "AIT-101",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "AIT101/value"
+   }
+  },
+  {
+   "id": "DP201",
+   "kind": "pump",
+   "x": 696,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Coagulant dosing pump",
+   "params": {
+    "readoutPosition": "right",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "DP-201",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "DP201/state",
+    "speed": "DP201/speed",
+    "alert": "DP201/alert",
+    "alertFrameMode": "DP201/alertMode",
+    "badgeControl": "DP201/modeBadge"
+   }
+  },
+  {
+   "id": "TK201",
+   "kind": "tank",
+   "x": 665,
+   "y": 380,
+   "w": 110,
+   "h": 150,
+   "device": true,
+   "label": "Coagulant tank",
+   "params": {
+    "max": 10,
+    "unit": "m³",
+    "tag": "TK-201",
+    "compact": true
+   },
+   "bind": {
+    "value": "TK201/volume",
+    "trend": "TK201/trend"
+   }
+  },
+  {
+   "id": "M201",
+   "kind": "motor",
+   "x": 840,
+   "y": 156,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Flash mixer",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasSpeed": false,
+    "hasTag": true,
+    "tag": "M-201",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "M201/state",
+    "alert": "M201/alert",
+    "alertFrameMode": "M201/alertMode",
+    "badgeControl": "M201/modeBadge"
+   }
+  },
+  {
+   "id": "CL201",
+   "kind": "tank",
+   "x": 1040,
+   "y": 80,
+   "w": 200,
+   "h": 200,
+   "params": {
+    "static": true,
+    "max": 450,
+    "unit": "m³",
+    "tag": "CL-201"
+   }
+  },
+  {
+   "id": "TK202",
+   "kind": "tank",
+   "x": 1300,
+   "y": 80,
+   "w": 150,
+   "h": 200,
+   "device": true,
+   "label": "Clarified water tank",
+   "params": {
+    "max": 300,
+    "unit": "m³",
+    "tag": "TK-202",
+    "compact": false
+   },
+   "bind": {
+    "value": "TK202/volume",
+    "trend": "TK202/trend"
+   }
+  },
+  {
+   "id": "P202",
+   "kind": "pump",
+   "x": 1116,
+   "y": 376,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Sludge pump",
+   "params": {
+    "readoutPosition": "right",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "P-202",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "P202/state",
+    "speed": "P202/speed",
+    "alert": "P202/alert",
+    "alertFrameMode": "P202/alertMode",
+    "badgeControl": "P202/modeBadge"
+   }
+  }
+ ],
+ "junctions": [
+  {
+   "id": "J1",
+   "x": 720,
+   "y": 180
+  }
+ ],
+ "pipes": [
+  {
+   "id": "p1",
+   "from": {
+    "x": 40,
+    "y": 180,
+    "end": "arrow-in"
+   },
+   "to": {
+    "ref": "XV101",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p2",
+   "from": {
+    "ref": "XV101",
+    "side": "right"
+   },
+   "to": {
+    "ref": "TK101",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p3",
+   "from": {
+    "ref": "TK101",
+    "side": "right"
+   },
+   "to": {
+    "ref": "P101",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p4",
+   "from": {
+    "ref": "P101",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J1"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p5",
+   "from": {
+    "ref": "J1"
+   },
+   "to": {
+    "ref": "M201",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p6",
+   "from": {
+    "ref": "TK201",
+    "side": "top"
+   },
+   "to": {
+    "ref": "DP201",
+    "side": "bottom"
+   }
+  },
+  {
+   "id": "p7",
+   "from": {
+    "ref": "DP201",
+    "side": "top"
+   },
+   "to": {
+    "ref": "J1"
+   }
+  },
+  {
+   "id": "p8",
+   "from": {
+    "ref": "M201",
+    "side": "right"
+   },
+   "to": {
+    "ref": "CL201",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p9",
+   "from": {
+    "ref": "CL201",
+    "side": "right"
+   },
+   "to": {
+    "ref": "TK202",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p10",
+   "from": {
+    "ref": "TK202",
+    "side": "right"
+   },
+   "to": {
+    "x": 1550,
+    "y": 180,
+    "end": "arrow-out"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "p11",
+   "from": {
+    "ref": "CL201",
+    "side": "bottom"
+   },
+   "to": {
+    "ref": "P202",
+    "side": "top"
+   },
+   "medium": "waste"
+  },
+  {
+   "id": "p12",
+   "from": {
+    "ref": "P202",
+    "side": "bottom"
+   },
+   "to": {
+    "x": 1140,
+    "y": 520,
+    "end": "arrow-out"
+   },
+   "medium": "waste"
+  }
+ ],
+ "labels": [
+  {
+   "id": "Supply",
+   "x": 36,
+   "y": 120,
+   "w": 170,
+   "h": 24,
+   "text": "Raw water supply",
+   "align": "left",
+   "style": "label"
+  },
+  {
+   "id": "TK101",
+   "x": 260,
+   "y": 288,
+   "w": 150,
+   "h": 24,
+   "text": "Raw water tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "TK201",
+   "x": 640,
+   "y": 534,
+   "w": 160,
+   "h": 24,
+   "text": "Coagulant tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "CL201",
+   "x": 1040,
+   "y": 50,
+   "w": 200,
+   "h": 24,
+   "text": "Lamella clarifier",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "TK202",
+   "x": 1300,
+   "y": 288,
+   "w": 150,
+   "h": 24,
+   "text": "Clarified water tank",
+   "align": "center",
+   "style": "label"
+  },
+  {
+   "id": "ToFilt",
+   "x": 1460,
+   "y": 144,
+   "w": 96,
+   "h": 24,
+   "text": "To filtration",
+   "align": "right",
+   "style": "label"
+  },
+  {
+   "id": "Sludge",
+   "x": 1156,
+   "y": 508,
+   "w": 140,
+   "h": 24,
+   "text": "Sludge to waste",
+   "align": "left",
+   "style": "label"
+  }
+ ]
+}

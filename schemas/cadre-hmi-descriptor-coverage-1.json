@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-descriptor-coverage/1",
+  "title": "Cadre HMI descriptor coverage, version 1",
+  "description": "What the descriptors built by tools/hmi/asm_descriptors.py carry: for each mapping row of the ASM model the descriptor elements that carry it, the routes of the navigation with their resolution, the kinds the module draws, and the widths of the stated columns (ARCH-WFB-01 revision B8 Table 105). Wiki page 04.",
+  "type": "object",
+  "required": ["schema", "rows", "missing", "routes", "unresolved", "module_first", "columns", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-descriptor-coverage/1"},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["uid", "carried_by", "gap"],
+        "properties": {
+          "uid": {"type": "string"},
+          "carried_by": {"type": "array", "items": {"type": "string"}},
+          "gap": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "missing": {"type": "array", "items": {"type": "string"}},
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["target", "resolution"],
+        "properties": {
+          "target": {"type": "string"},
+          "resolution": {"enum": ["page", "faceplate", "support", "not_migrated", null]},
+          "route": {"type": "string"},
+          "device": {"type": "string"}
+        }
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {"type": "object", "required": ["target", "reason"]}
+    },
+    "module_first": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "rendered_by", "reason"],
+        "properties": {
+          "kind": {"type": "string"},
+          "rendered_by": {"enum": ["module", "library", "gap"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["page", "column", "widths"],
+        "properties": {
+          "page": {"type": "string"},
+          "column": {"type": "string"},
+          "widths": {"type": "array", "items": {"type": "number"}}
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {"type": "object", "required": ["id", "kind", "status"]}
+    },
+    "findings": {"type": "array", "items": {"type": "string"}},
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

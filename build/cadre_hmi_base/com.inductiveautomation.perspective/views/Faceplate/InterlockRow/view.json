@@ -1,0 +1,572 @@
+{
+  "custom": {
+    "action": "",
+    "bypassable": false,
+    "bypassed": false,
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "kind": "permissive",
+    "latched": false,
+    "liveText": "",
+    "message": "",
+    "ok": true,
+    "pending": false,
+    "requiredText": "",
+    "resetRequired": false,
+    "text": ""
+  },
+  "params": {
+    "cid": "",
+    "deviceId": "",
+    "writable": false
+  },
+  "propConfig": {
+    "custom.action": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/action"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.bypassable": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/bypassable"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.bypassed": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/bypassed"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.kind": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/kind"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.latched": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/latched"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.liveText": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/liveText"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.ok": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/ok"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.requiredText": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/requiredText"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.resetRequired": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/resetRequired"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.text": {
+      "binding": {
+        "config": {
+          "mode": "indirect",
+          "references": {
+            "0": "{view.params.deviceId}",
+            "1": "{view.params.cid}"
+          },
+          "tagPath": "{0}/ilk/{1}/text"
+        },
+        "type": "tag"
+      }
+    },
+    "params.cid": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.pending = False"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceId": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.pending = False"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.writable": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 112,
+      "width": 368
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "State"
+            },
+            "position": {
+              "basis": "88px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if((!{view.custom.ok} && !{view.custom.bypassed}) || {view.custom.resetRequired}, 'cadre/font/label cadre/alert/badge-warning', if({view.custom.bypassed}, 'cadre/font/label cadre/alert/badge-caution', 'cadre/font/label cadre/text/neutral'))"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.bypassed}, 'Bypassed', if({view.custom.resetRequired}, 'Latched', if({view.custom.ok}, 'Met', 'Not met')))"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/label cadre/text/neutral",
+                "justifyContent": "center"
+              },
+              "textStyle": {
+                "textAlign": "center"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Kind"
+            },
+            "position": {
+              "basis": "72px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.kind} = 'trip', 'Trip', 'Permissive')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Text"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.text}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Head"
+        },
+        "position": {
+          "basis": "28px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Values"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "'Live: ' + {view.custom.liveText} + '    Required: ' + {view.custom.requiredText}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body cadre/text/active",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.pending = True"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Bypass"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.bypassable} && !{view.custom.pending}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W10} && {view.params.writable}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.bypassed}, 'Unbypass', 'Bypass')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px"
+              },
+              "text": "Bypass"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tmsg = cadre.hmi.bypass(self.session, self.view.params.deviceId, self.view.params.cid, not self.view.custom.bypassed)\n\tself.view.custom.pending = False\n\tself.view.custom.message = msg"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "BypassYes"
+            },
+            "position": {
+              "basis": "88px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.pending}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W10} && {view.params.writable}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "28px"
+              },
+              "text": "Confirm"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.pending = False"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "BypassNo"
+            },
+            "position": {
+              "basis": "88px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.pending}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px"
+              },
+              "text": "Cancel"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "ValuesRow"
+        },
+        "position": {
+          "basis": "28px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Action"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "((!{view.custom.ok} && !{view.custom.bypassed}) || {view.custom.resetRequired}) || len({view.custom.message}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if(len({view.custom.message}) > 0, {view.custom.message}, 'Action: ' + if({view.custom.resetRequired}, 'the trip has cleared; press Reset', {view.custom.action}))"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "whiteSpace": "normal"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/divider/bottom cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "classes": "cadre/divider/bottom",
+        "gap": "2px",
+        "overflow": "hidden",
+        "padding": "6px 0"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

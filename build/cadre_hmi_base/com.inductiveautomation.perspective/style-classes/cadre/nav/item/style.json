@@ -1,0 +1,17 @@
+{
+  "base": {
+    "style": {
+      "borderRadius": "6px",
+      "cursor": "pointer",
+      "padding": "0 12px"
+    }
+  },
+  "variants": [
+    {
+      "pseudo": "hover",
+      "style": {
+        "backgroundColor": "var(--flat-hover-background-color)"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+ "name": "warning-badge",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-warning-badge.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

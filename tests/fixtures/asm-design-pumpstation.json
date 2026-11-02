@@ -1,0 +1,353 @@
+{
+ "page": "PumpStation",
+ "canvas": {
+  "w": 1580,
+  "h": 600,
+  "scale": 1.0
+ },
+ "regions": [
+  {
+   "id": "r0",
+   "kind": "process-diagram",
+   "bbox": {
+    "x": 20,
+    "y": 60,
+    "w": 980,
+    "h": 520
+   },
+   "source_region": "r0",
+   "items": [
+    "PumpStation:d_tank",
+    "PumpStation:d_p1",
+    "PumpStation:d_p2",
+    "PumpStation:d_v1",
+    "PumpStation:d_sq",
+    "PumpStation:d_ups",
+    "PumpStation:f1",
+    "PumpStation:f2",
+    "PumpStation:f3",
+    "PumpStation:v1",
+    "PumpStation:v2",
+    "PumpStation:i1",
+    "PumpStation:i2",
+    "PumpStation:n1",
+    "PumpStation:n2",
+    "PumpStation:n3",
+    "PumpStation:s18"
+   ]
+  }
+ ],
+ "items": [
+  {
+   "uid": "PumpStation:d_tank",
+   "kind": "symbol",
+   "component": "tank",
+   "bbox": {
+    "x": 60,
+    "y": 300,
+    "w": 140,
+    "h": 200
+   },
+   "reads": [
+    "TANK01_LEVEL"
+   ],
+   "shows": "value",
+   "original_an": "PumpStation:1"
+  },
+  {
+   "uid": "PumpStation:d_p1",
+   "kind": "symbol",
+   "component": "pump",
+   "bbox": {
+    "x": 320,
+    "y": 330,
+    "w": 48,
+    "h": 48
+   },
+   "reads": [
+    "PUMP01_IRUN"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:2"
+  },
+  {
+   "uid": "PumpStation:d_p2",
+   "kind": "symbol",
+   "component": "pump",
+   "bbox": {
+    "x": 320,
+    "y": 450,
+    "w": 48,
+    "h": 48
+   },
+   "reads": [
+    "PUMP02_IRUN"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:3"
+  },
+  {
+   "uid": "PumpStation:d_v1",
+   "kind": "symbol",
+   "component": "valve",
+   "bbox": {
+    "x": 520,
+    "y": 390,
+    "w": 48,
+    "h": 48
+   },
+   "reads": [
+    "VALVE01_OPEN"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:4"
+  },
+  {
+   "uid": "PumpStation:d_sq",
+   "kind": "symbol",
+   "component": "sequence",
+   "bbox": {
+    "x": 700,
+    "y": 330,
+    "w": 144,
+    "h": 72
+   },
+   "reads": [
+    "SEQ01_STEPTEXT"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:5"
+  },
+  {
+   "uid": "PumpStation:d_ups",
+   "kind": "symbol",
+   "component": "ups",
+   "bbox": {
+    "x": 700,
+    "y": 450,
+    "w": 96,
+    "h": 48
+   },
+   "reads": [
+    "UPS01_ONBATT"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:6"
+  },
+  {
+   "uid": "PumpStation:f1",
+   "kind": "pipe",
+   "component": "pipe",
+   "bbox": {
+    "x": 200,
+    "y": 354,
+    "w": 120,
+    "h": 2
+   },
+   "reads": [
+    "PUMP01_IRUN"
+   ],
+   "shows": "flow",
+   "original_an": "PumpStation:7"
+  },
+  {
+   "uid": "PumpStation:f2",
+   "kind": "pipe",
+   "component": "pipe",
+   "bbox": {
+    "x": 200,
+    "y": 474,
+    "w": 120,
+    "h": 2
+   },
+   "reads": [
+    "PUMP02_IRUN"
+   ],
+   "shows": "flow",
+   "original_an": "PumpStation:8"
+  },
+  {
+   "uid": "PumpStation:f3",
+   "kind": "pipe",
+   "component": "pipe",
+   "bbox": {
+    "x": 368,
+    "y": 354,
+    "w": 152,
+    "h": 60
+   },
+   "reads": [
+    "PUMP01_IRUN"
+   ],
+   "shows": "flow",
+   "original_an": "PumpStation:9"
+  },
+  {
+   "uid": "PumpStation:v1",
+   "kind": "readout",
+   "component": "readout",
+   "bbox": {
+    "x": 60,
+    "y": 520,
+    "w": 120,
+    "h": 30
+   },
+   "reads": [
+    "TANK01_LEVEL"
+   ],
+   "shows": "value",
+   "original_an": "PumpStation:10"
+  },
+  {
+   "uid": "PumpStation:v2",
+   "kind": "readout",
+   "component": "readout",
+   "bbox": {
+    "x": 320,
+    "y": 290,
+    "w": 90,
+    "h": 30
+   },
+   "reads": [
+    "PUMP01_IAMP"
+   ],
+   "shows": "value",
+   "original_an": "PumpStation:11"
+  },
+  {
+   "uid": "PumpStation:i1",
+   "kind": "indicator",
+   "component": "indicator",
+   "bbox": {
+    "x": 380,
+    "y": 330,
+    "w": 24,
+    "h": 24
+   },
+   "reads": [
+    "PUMP01_IRUN"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:12",
+   "states": [
+    {
+     "value": true,
+     "colour": "on",
+     "label": "Running"
+    },
+    {
+     "value": false,
+     "colour": "off",
+     "label": "Stopped"
+    }
+   ],
+   "state_default": "off"
+  },
+  {
+   "uid": "PumpStation:i2",
+   "kind": "indicator",
+   "component": "indicator",
+   "bbox": {
+    "x": 60,
+    "y": 226,
+    "w": 24,
+    "h": 24
+   },
+   "reads": [
+    "TANK01_HIGH"
+   ],
+   "shows": "state",
+   "original_an": "PumpStation:13",
+   "states": [
+    {
+     "value": true,
+     "colour": "alarm",
+     "label": "High"
+    },
+    {
+     "value": false,
+     "colour": "off",
+     "label": "Normal"
+    }
+   ],
+   "state_default": "off"
+  },
+  {
+   "uid": "PumpStation:n1",
+   "kind": "link",
+   "component": "link",
+   "bbox": {
+    "x": 700,
+    "y": 80,
+    "w": 140,
+    "h": 36
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "PumpStation:14"
+  },
+  {
+   "uid": "PumpStation:n2",
+   "kind": "button",
+   "component": "button",
+   "bbox": {
+    "x": 320,
+    "y": 390,
+    "w": 60,
+    "h": 24
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "PumpStation:15"
+  },
+  {
+   "uid": "PumpStation:n3",
+   "kind": "button",
+   "component": "button",
+   "bbox": {
+    "x": 700,
+    "y": 410,
+    "w": 100,
+    "h": 24
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "PumpStation:16"
+  },
+  {
+   "uid": "PumpStation:s18",
+   "kind": "label",
+   "component": "label",
+   "bbox": {
+    "x": 60,
+    "y": 70,
+    "w": 300,
+    "h": 30
+   },
+   "reads": [],
+   "shows": "label",
+   "original_an": "PumpStation:18",
+   "text": "Pump station"
+  }
+ ],
+ "navigation": [
+  {
+   "uid": "PumpStation:n1",
+   "route": "/overview"
+  },
+  {
+   "uid": "PumpStation:n2",
+   "faceplate": "PUMP01"
+  },
+  {
+   "uid": "PumpStation:n3",
+   "faceplate": "SEQ01"
+  }
+ ],
+ "balance": {
+  "columns": [],
+  "rows": []
+ },
+ "deviations": [],
+ "notes": ""
+}

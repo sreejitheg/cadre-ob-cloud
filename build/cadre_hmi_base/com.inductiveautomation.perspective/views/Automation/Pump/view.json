@@ -1,0 +1,1886 @@
+{
+  "custom": {},
+  "params": {
+    "activated": false,
+    "alert": false,
+    "alertFrameMode": "acked-active",
+    "alertFrameStatus": "alarm",
+    "badgeCommandLocked": "none",
+    "badgeControl": "none",
+    "badgeDuty": false,
+    "badgeInterlock": "none",
+    "deviceId": "",
+    "deviceKind": "pump",
+    "deviceLabel": "",
+    "hasSpeed": false,
+    "hasTag": false,
+    "on": false,
+    "outOfService": false,
+    "progress": false,
+    "readoutPosition": "bottom",
+    "showStatus": true,
+    "speed": 0,
+    "statusText": "",
+    "tag": "",
+    "value": 0,
+    "variant": "regular",
+    "vertical": false
+  },
+  "propConfig": {
+    "params.activated": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.alert": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.alertFrameMode": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.alertFrameStatus": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.badgeCommandLocked": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.badgeControl": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.badgeDuty": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.badgeInterlock": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceKind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasSpeed": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasTag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.on": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.outOfService": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.progress": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.readoutPosition": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showStatus": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.speed": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.statusText": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.variant": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.vertical": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 48,
+      "width": 48
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Activated"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.activated}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M6 0H42A6 6 0 0 1 48 6V42A6 6 0 0 1 42 48H6A6 6 0 0 1 0 42V6A6 6 0 0 1 6 0Z",
+                          "fill": {
+                            "paint": "var(--flat-activated-background-color)"
+                          },
+                          "name": "bg",
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 48 48"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Holder"
+                    },
+                    "position": {
+                      "height": 36,
+                      "width": 36,
+                      "x": 6,
+                      "y": 6
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.variant} != 'flat'"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[0].fill.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.params.progress}, 'var(--automation-pipe-primary-color)', if({view.params.on}, 'var(--on-background-color)', 'var(--automation-button-off-background-color)'))"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[0].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.params.progress}, 'transparent', if({view.params.on}, 'var(--on-border-color)', 'var(--automation-button-off-border-color)'))"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M0.5 18a17.5 17.5 0 1 0 35.0 0a17.5 17.5 0 1 0 -35.0 0Z",
+                          "fill": {
+                            "paint": "var(--automation-button-off-background-color)"
+                          },
+                          "name": "ring",
+                          "stroke": {
+                            "paint": "var(--automation-button-off-border-color)",
+                            "width": 1
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 36 36"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Progress"
+                    },
+                    "position": {
+                      "height": 40,
+                      "width": 40,
+                      "x": 4,
+                      "y": 4
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.progress}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M20 2A18 18 0 0 1 38 20",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "arc",
+                          "stroke": {
+                            "linecap": "round",
+                            "paint": "var(--element-active-color)",
+                            "width": 2
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "style": {
+                        "classes": "cadre/anim/spin"
+                      },
+                      "viewBox": "0 0 40 40"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "IconOn"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.on} && !{view.params.vertical} && {view.params.variant} != 'double'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M11.8819 13C13.5388 13 14.8819 11.6569 14.8819 10C14.8819 8.34315 13.5388 7 11.8819 7C10.225 7 8.8819 8.34315 8.8819 10C8.8819 11.6569 10.225 13 11.8819 13ZM13.8819 10C13.8819 11.1046 12.9865 12 11.8819 12C10.7773 12 9.8819 11.1046 9.8819 10C9.8819 8.89543 10.7773 8 11.8819 8C12.9865 8 13.8819 8.89543 13.8819 10Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.8819 7C21.4342 7 21.8819 6.55229 21.8819 6V3C21.8819 2.44772 21.4342 2 20.8819 2H11.8819C7.46362 2 3.8819 5.58172 3.8819 10C3.8819 12.1897 4.76167 14.174 6.18702 15.6186L3.83151 18.563C3.0458 19.5451 3.74506 21 5.00282 21H18.7609C20.0187 21 20.718 19.5451 19.9322 18.563L17.5768 15.6186C19.0021 14.174 19.8819 12.1897 19.8819 10C19.8819 9.3094 19.7944 8.63924 19.6299 8C19.5416 7.65724 19.4313 7.32337 19.3004 7H20.8819ZM17.8168 6H20.8819V3H11.8819C8.0159 3 4.8819 6.13401 4.8819 10C4.8819 13.866 8.0159 17 11.8819 17C15.7479 17 18.8819 13.866 18.8819 10C18.8819 9.06987 18.701 8.18446 18.3734 7.37522L17.8168 6ZM4.61238 19.1877L6.93344 16.2863C8.29499 17.3596 10.0137 18 11.8819 18C13.7501 18 15.4688 17.3596 16.8303 16.2864L19.1514 19.1877C19.4133 19.515 19.1802 20 18.7609 20H5.00282C4.58356 20 4.35048 19.515 4.61238 19.1877Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.93156 16.2863L4.6105 19.1877C4.3486 19.515 4.58169 20 5.00094 20H18.7591C19.1783 20 19.4114 19.515 19.1495 19.1877L16.8285 16.2864C15.4669 17.3596 13.7483 18 11.88 18C10.0118 18 8.29311 17.3596 6.93156 16.2863Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.88 12C12.9846 12 13.88 11.1046 13.88 10C13.88 8.89543 12.9846 8 11.88 8C10.7755 8 9.88002 8.89543 9.88002 10C9.88002 11.1046 10.7755 12 11.88 12Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.88 6H17.8149L18.3716 7.37522C18.6991 8.18446 18.88 9.06987 18.88 10C18.88 13.866 15.746 17 11.88 17C8.01403 17 4.88002 13.866 4.88002 10C4.88002 6.13401 8.01403 3 11.88 3H20.88V6ZM11.88 13C13.5369 13 14.88 11.6569 14.88 10C14.88 8.34315 13.5369 7 11.88 7C10.2232 7 8.88002 8.34315 8.88002 10C8.88002 11.6569 10.2232 13 11.88 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "IconOff"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "!{view.params.on} && !{view.params.vertical} && {view.params.variant} != 'double'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M11.8819 13C13.5388 13 14.8819 11.6569 14.8819 10C14.8819 8.34315 13.5388 7 11.8819 7C10.225 7 8.8819 8.34315 8.8819 10C8.8819 11.6569 10.225 13 11.8819 13ZM13.8819 10C13.8819 11.1046 12.9865 12 11.8819 12C10.7773 12 9.8819 11.1046 9.8819 10C9.8819 8.89543 10.7773 8 11.8819 8C12.9865 8 13.8819 8.89543 13.8819 10Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.8819 7C21.4342 7 21.8819 6.55229 21.8819 6V3C21.8819 2.44772 21.4342 2 20.8819 2H11.8819C7.46362 2 3.8819 5.58172 3.8819 10C3.8819 12.1897 4.76167 14.174 6.18702 15.6186L3.83151 18.563C3.0458 19.5451 3.74506 21 5.00282 21H18.7609C20.0187 21 20.718 19.5451 19.9322 18.563L17.5768 15.6186C19.0021 14.174 19.8819 12.1897 19.8819 10C19.8819 9.3094 19.7944 8.63924 19.6299 8C19.5416 7.65724 19.4313 7.32337 19.3004 7H20.8819ZM17.8168 6H20.8819V3H11.8819C8.0159 3 4.8819 6.13401 4.8819 10C4.8819 13.866 8.0159 17 11.8819 17C15.7479 17 18.8819 13.866 18.8819 10C18.8819 9.06987 18.701 8.18446 18.3734 7.37522L17.8168 6ZM4.61238 19.1877L6.93344 16.2863C8.29499 17.3596 10.0137 18 11.8819 18C13.7501 18 15.4688 17.3596 16.8303 16.2864L19.1514 19.1877C19.4133 19.515 19.1802 20 18.7609 20H5.00282C4.58356 20 4.35048 19.515 4.61238 19.1877Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.93156 16.2863L4.6105 19.1877C4.3486 19.515 4.58169 20 5.00094 20H18.7591C19.1783 20 19.4114 19.515 19.1495 19.1877L16.8285 16.2864C15.4669 17.3596 13.7483 18 11.88 18C10.0118 18 8.29311 17.3596 6.93156 16.2863Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.88 12C12.9846 12 13.88 11.1046 13.88 10C13.88 8.89543 12.9846 8 11.88 8C10.7755 8 9.88002 8.89543 9.88002 10C9.88002 11.1046 10.7755 12 11.88 12Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.88 6H17.8149L18.3716 7.37522C18.6991 8.18446 18.88 9.06987 18.88 10C18.88 13.866 15.746 17 11.88 17C8.01403 17 4.88002 13.866 4.88002 10C4.88002 6.13401 8.01403 3 11.88 3H20.88V6ZM11.88 13C13.5369 13 14.88 11.6569 14.88 10C14.88 8.34315 13.5369 7 11.88 7C10.2232 7 8.88002 8.34315 8.88002 10C8.88002 11.6569 10.2232 13 11.88 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "DirOn"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 16,
+                      "y": 9
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.variant} = 'double' && {view.params.on}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M5.74904 3.56754C5.90319 3.47808 6.09332 3.47745 6.24807 3.56588L20.2481 11.5659C20.4039 11.6549 20.5 11.8206 20.5 12C20.5 12.1794 20.4039 12.3451 20.2481 12.4341L6.24807 20.4341C6.09332 20.5226 5.90319 20.5219 5.74904 20.4325C5.59488 20.343 5.5 20.1782 5.5 20V4C5.5 3.82176 5.59488 3.65701 5.74904 3.56754ZM6.5 4.86159V19.1384L18.9922 12L6.5 4.86159Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.5 4.86157V19.1384L18.9922 12L6.5 4.86157Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "DirOff"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 16,
+                      "y": 9
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.variant} = 'double' && !{view.params.on}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M5.74904 3.56754C5.90319 3.47808 6.09332 3.47745 6.24807 3.56588L20.2481 11.5659C20.4039 11.6549 20.5 11.8206 20.5 12C20.5 12.1794 20.4039 12.3451 20.2481 12.4341L6.24807 20.4341C6.09332 20.5226 5.90319 20.5219 5.74904 20.4325C5.59488 20.343 5.5 20.1782 5.5 20V4C5.5 3.82176 5.59488 3.65701 5.74904 3.56754ZM6.5 4.86159V19.1384L18.9922 12L6.5 4.86159Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.5 4.86157V19.1384L18.9922 12L6.5 4.86157Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "SmallOn"
+                    },
+                    "position": {
+                      "height": 12,
+                      "width": 12,
+                      "x": 18,
+                      "y": 25
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.variant} = 'double' && {view.params.on}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M11.8819 13C13.5388 13 14.8819 11.6569 14.8819 10C14.8819 8.34315 13.5388 7 11.8819 7C10.225 7 8.8819 8.34315 8.8819 10C8.8819 11.6569 10.225 13 11.8819 13ZM13.8819 10C13.8819 11.1046 12.9865 12 11.8819 12C10.7773 12 9.8819 11.1046 9.8819 10C9.8819 8.89543 10.7773 8 11.8819 8C12.9865 8 13.8819 8.89543 13.8819 10Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.8819 7C21.4342 7 21.8819 6.55229 21.8819 6V3C21.8819 2.44772 21.4342 2 20.8819 2H11.8819C7.46362 2 3.8819 5.58172 3.8819 10C3.8819 12.1897 4.76167 14.174 6.18702 15.6186L3.83151 18.563C3.0458 19.5451 3.74506 21 5.00282 21H18.7609C20.0187 21 20.718 19.5451 19.9322 18.563L17.5768 15.6186C19.0021 14.174 19.8819 12.1897 19.8819 10C19.8819 9.3094 19.7944 8.63924 19.6299 8C19.5416 7.65724 19.4313 7.32337 19.3004 7H20.8819ZM17.8168 6H20.8819V3H11.8819C8.0159 3 4.8819 6.13401 4.8819 10C4.8819 13.866 8.0159 17 11.8819 17C15.7479 17 18.8819 13.866 18.8819 10C18.8819 9.06987 18.701 8.18446 18.3734 7.37522L17.8168 6ZM4.61238 19.1877L6.93344 16.2863C8.29499 17.3596 10.0137 18 11.8819 18C13.7501 18 15.4688 17.3596 16.8303 16.2864L19.1514 19.1877C19.4133 19.515 19.1802 20 18.7609 20H5.00282C4.58356 20 4.35048 19.515 4.61238 19.1877Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.93156 16.2863L4.6105 19.1877C4.3486 19.515 4.58169 20 5.00094 20H18.7591C19.1783 20 19.4114 19.515 19.1495 19.1877L16.8285 16.2864C15.4669 17.3596 13.7483 18 11.88 18C10.0118 18 8.29311 17.3596 6.93156 16.2863Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.88 12C12.9846 12 13.88 11.1046 13.88 10C13.88 8.89543 12.9846 8 11.88 8C10.7755 8 9.88002 8.89543 9.88002 10C9.88002 11.1046 10.7755 12 11.88 12Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.88 6H17.8149L18.3716 7.37522C18.6991 8.18446 18.88 9.06987 18.88 10C18.88 13.866 15.746 17 11.88 17C8.01403 17 4.88002 13.866 4.88002 10C4.88002 6.13401 8.01403 3 11.88 3H20.88V6ZM11.88 13C13.5369 13 14.88 11.6569 14.88 10C14.88 8.34315 13.5369 7 11.88 7C10.2232 7 8.88002 8.34315 8.88002 10C8.88002 11.6569 10.2232 13 11.88 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "SmallOff"
+                    },
+                    "position": {
+                      "height": 12,
+                      "width": 12,
+                      "x": 18,
+                      "y": 25
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.variant} = 'double' && !{view.params.on}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M11.8819 13C13.5388 13 14.8819 11.6569 14.8819 10C14.8819 8.34315 13.5388 7 11.8819 7C10.225 7 8.8819 8.34315 8.8819 10C8.8819 11.6569 10.225 13 11.8819 13ZM13.8819 10C13.8819 11.1046 12.9865 12 11.8819 12C10.7773 12 9.8819 11.1046 9.8819 10C9.8819 8.89543 10.7773 8 11.8819 8C12.9865 8 13.8819 8.89543 13.8819 10Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.8819 7C21.4342 7 21.8819 6.55229 21.8819 6V3C21.8819 2.44772 21.4342 2 20.8819 2H11.8819C7.46362 2 3.8819 5.58172 3.8819 10C3.8819 12.1897 4.76167 14.174 6.18702 15.6186L3.83151 18.563C3.0458 19.5451 3.74506 21 5.00282 21H18.7609C20.0187 21 20.718 19.5451 19.9322 18.563L17.5768 15.6186C19.0021 14.174 19.8819 12.1897 19.8819 10C19.8819 9.3094 19.7944 8.63924 19.6299 8C19.5416 7.65724 19.4313 7.32337 19.3004 7H20.8819ZM17.8168 6H20.8819V3H11.8819C8.0159 3 4.8819 6.13401 4.8819 10C4.8819 13.866 8.0159 17 11.8819 17C15.7479 17 18.8819 13.866 18.8819 10C18.8819 9.06987 18.701 8.18446 18.3734 7.37522L17.8168 6ZM4.61238 19.1877L6.93344 16.2863C8.29499 17.3596 10.0137 18 11.8819 18C13.7501 18 15.4688 17.3596 16.8303 16.2864L19.1514 19.1877C19.4133 19.515 19.1802 20 18.7609 20H5.00282C4.58356 20 4.35048 19.515 4.61238 19.1877Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6.93156 16.2863L4.6105 19.1877C4.3486 19.515 4.58169 20 5.00094 20H18.7591C19.1783 20 19.4114 19.515 19.1495 19.1877L16.8285 16.2864C15.4669 17.3596 13.7483 18 11.88 18C10.0118 18 8.29311 17.3596 6.93156 16.2863Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.88 12C12.9846 12 13.88 11.1046 13.88 10C13.88 8.89543 12.9846 8 11.88 8C10.7755 8 9.88002 8.89543 9.88002 10C9.88002 11.1046 10.7755 12 11.88 12Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M20.88 6H17.8149L18.3716 7.37522C18.6991 8.18446 18.88 9.06987 18.88 10C18.88 13.866 15.746 17 11.88 17C8.01403 17 4.88002 13.866 4.88002 10C4.88002 6.13401 8.01403 3 11.88 3H20.88V6ZM11.88 13C13.5369 13 14.88 11.6569 14.88 10C14.88 8.34315 13.5369 7 11.88 7C10.2232 7 8.88002 8.34315 8.88002 10C8.88002 11.6569 10.2232 13 11.88 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "IconOnV"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.on} && {view.params.vertical}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M12 14C13.6569 14 15 12.6569 15 11C15 9.34315 13.6569 8 12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14ZM14 11C14 12.1046 13.1046 13 12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M9 2C9 1.44772 8.55228 1 8 1H5C4.44772 1 4 1.44772 4 2V11C4 13.1846 4.87566 15.1647 6.29514 16.6084L3.83151 19.688C3.0458 20.6701 3.74506 22.125 5.00282 22.125H18.7609C20.0187 22.125 20.718 20.6701 19.9322 19.688L17.5733 16.7392C19.07 15.2855 20 13.2514 20 11C20 6.58172 16.4183 3 12 3C11.3094 3 10.6392 3.08751 10 3.25203C9.65724 3.34026 9.32337 3.45062 9 3.58152V2ZM8 5.06513V2H5V11C5 14.866 8.13401 18 12 18C15.866 18 19 14.866 19 11C19 7.13401 15.866 4 12 4C11.0699 4 10.1845 4.18088 9.37522 4.50845L8 5.06513ZM4.61238 20.3127L7.04045 17.2776C8.40375 18.3561 10.1267 19 12 19C13.8071 19 15.4742 18.4009 16.8136 17.3904L19.1514 20.3127C19.4133 20.64 19.1802 21.125 18.7609 21.125H5.00282C4.58356 21.125 4.35048 20.64 4.61238 20.3127Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.9981 13C13.1027 13 13.9981 12.1046 13.9981 11C13.9981 9.89543 13.1027 9 11.9981 9C10.8936 9 9.99812 9.89543 9.99812 11C9.99812 12.1046 10.8936 13 11.9981 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.99812 2V5.06513L9.37334 4.50845C10.1826 4.18088 11.068 4 11.9981 4C15.8641 4 18.9981 7.13401 18.9981 11C18.9981 14.866 15.8641 18 11.9981 18C8.13213 18 4.99812 14.866 4.99812 11V2H7.99812ZM11.9981 14C13.655 14 14.9981 12.6569 14.9981 11C14.9981 9.34315 13.655 8 11.9981 8C10.3413 8 8.99812 9.34315 8.99812 11C8.99812 12.6569 10.3413 14 11.9981 14Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.03857 17.2776L4.6105 20.3127C4.3486 20.64 4.58169 21.125 5.00094 21.125H18.7591C19.1783 21.125 19.4114 20.64 19.1495 20.3127L16.8117 17.3904C15.4723 18.4009 13.8052 19 11.9981 19C10.1248 19 8.40187 18.3561 7.03857 17.2776Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.99812 2V5.06513L9.37334 4.50845C10.1826 4.18088 11.068 4 11.9981 4C15.8641 4 18.9981 7.13401 18.9981 11C18.9981 14.866 15.8641 18 11.9981 18C8.13213 18 4.99812 14.866 4.99812 11V2H7.99812ZM7.03857 17.2776L4.6105 20.3127C4.3486 20.64 4.58169 21.125 5.00094 21.125H18.7591C19.1783 21.125 19.4114 20.64 19.1495 20.3127L16.8117 17.3904C15.4723 18.4009 13.8052 19 11.9981 19C10.1248 19 8.40187 18.3561 7.03857 17.2776ZM11.9981 14C13.655 14 14.9981 12.6569 14.9981 11C14.9981 9.34315 13.655 8 11.9981 8C10.3413 8 8.99812 9.34315 8.99812 11C8.99812 12.6569 10.3413 14 11.9981 14ZM11.9981 13C13.1027 13 13.9981 12.1046 13.9981 11C13.9981 9.89543 13.1027 9 11.9981 9C10.8936 9 9.99812 9.89543 9.99812 11C9.99812 12.1046 10.8936 13 11.9981 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "IconOffV"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "!{view.params.on} && {view.params.vertical}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M12 14C13.6569 14 15 12.6569 15 11C15 9.34315 13.6569 8 12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14ZM14 11C14 12.1046 13.1046 13 12 13C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M9 2C9 1.44772 8.55228 1 8 1H5C4.44772 1 4 1.44772 4 2V11C4 13.1846 4.87566 15.1647 6.29514 16.6084L3.83151 19.688C3.0458 20.6701 3.74506 22.125 5.00282 22.125H18.7609C20.0187 22.125 20.718 20.6701 19.9322 19.688L17.5733 16.7392C19.07 15.2855 20 13.2514 20 11C20 6.58172 16.4183 3 12 3C11.3094 3 10.6392 3.08751 10 3.25203C9.65724 3.34026 9.32337 3.45062 9 3.58152V2ZM8 5.06513V2H5V11C5 14.866 8.13401 18 12 18C15.866 18 19 14.866 19 11C19 7.13401 15.866 4 12 4C11.0699 4 10.1845 4.18088 9.37522 4.50845L8 5.06513ZM4.61238 20.3127L7.04045 17.2776C8.40375 18.3561 10.1267 19 12 19C13.8071 19 15.4742 18.4009 16.8136 17.3904L19.1514 20.3127C19.4133 20.64 19.1802 21.125 18.7609 21.125H5.00282C4.58356 21.125 4.35048 20.64 4.61238 20.3127Z",
+                          "fill": {
+                            "paint": "var(--automation-device-tertiary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M11.9981 13C13.1027 13 13.9981 12.1046 13.9981 11C13.9981 9.89543 13.1027 9 11.9981 9C10.8936 9 9.99812 9.89543 9.99812 11C9.99812 12.1046 10.8936 13 11.9981 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.99812 2V5.06513L9.37334 4.50845C10.1826 4.18088 11.068 4 11.9981 4C15.8641 4 18.9981 7.13401 18.9981 11C18.9981 14.866 15.8641 18 11.9981 18C8.13213 18 4.99812 14.866 4.99812 11V2H7.99812ZM11.9981 14C13.655 14 14.9981 12.6569 14.9981 11C14.9981 9.34315 13.655 8 11.9981 8C10.3413 8 8.99812 9.34315 8.99812 11C8.99812 12.6569 10.3413 14 11.9981 14Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.03857 17.2776L4.6105 20.3127C4.3486 20.64 4.58169 21.125 5.00094 21.125H18.7591C19.1783 21.125 19.4114 20.64 19.1495 20.3127L16.8117 17.3904C15.4723 18.4009 13.8052 19 11.9981 19C10.1248 19 8.40187 18.3561 7.03857 17.2776Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M7.99812 2V5.06513L9.37334 4.50845C10.1826 4.18088 11.068 4 11.9981 4C15.8641 4 18.9981 7.13401 18.9981 11C18.9981 14.866 15.8641 18 11.9981 18C8.13213 18 4.99812 14.866 4.99812 11V2H7.99812ZM7.03857 17.2776L4.6105 20.3127C4.3486 20.64 4.58169 21.125 5.00094 21.125H18.7591C19.1783 21.125 19.4114 20.64 19.1495 20.3127L16.8117 17.3904C15.4723 18.4009 13.8052 19 11.9981 19C10.1248 19 8.40187 18.3561 7.03857 17.2776ZM11.9981 14C13.655 14 14.9981 12.6569 14.9981 11C14.9981 9.34315 13.655 8 11.9981 8C10.3413 8 8.99812 9.34315 8.99812 11C8.99812 12.6569 10.3413 14 11.9981 14ZM11.9981 13C13.1027 13 13.9981 12.1046 13.9981 11C13.9981 9.89543 13.1027 9 11.9981 9C10.8936 9 9.99812 9.89543 9.99812 11C9.99812 12.1046 10.8936 13 11.9981 13Z",
+                          "fill": {
+                            "paint": "var(--automation-device-primary-inverted-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "OosVeil"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.outOfService}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M6 0H42A6 6 0 0 1 48 6V42A6 6 0 0 1 42 48H6A6 6 0 0 1 0 42V6A6 6 0 0 1 6 0Z",
+                          "fill": {
+                            "opacity": 0.72,
+                            "paint": "var(--container-background-color)"
+                          },
+                          "name": "veil",
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 48 48"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "OosWord"
+                    },
+                    "position": {
+                      "height": 14,
+                      "width": 48,
+                      "x": 0,
+                      "y": 17
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.outOfService}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/automation-label cadre/text/active",
+                        "justifyContent": "center"
+                      },
+                      "text": "OOS",
+                      "textStyle": {
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_auto"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeControl} = 'auto'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M9.42846 3L3 20.9997H7.49992L8.94642 17.1426H15.0548L16.5013 20.9997H21.0012L14.5728 3H9.42846ZM12.0006 8.99864L10.3929 13.2855H13.6083L12.0006 8.99864Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_manual"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeControl} = 'manual'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M5.75 3L2 21H6.44325L8.12573 12.7744L10.125 21H13.875L15.8942 12.6923L17.625 21H22L18.25 3H13.875L12 12L10.125 3H5.75Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_manual_only"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeControl} = 'manual-only'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M6.375 2L3 17.5556H6.99893L8.51315 10.447L10.3125 17.5556H13.6875L15.5048 10.3761L17.0625 17.5556H21L17.625 2H13.6875L12 9.77778L10.3125 2H6.375Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M3 19.7778H21V22H3V19.7778Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_local"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeControl} = 'local'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M5 3V21H19V16.5H9.66667V3H5Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_local_only"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeControl} = 'local-only'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M6 3V17H18V13H10V3H6Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M6 19H18V21H6V19Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_interlock"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 32
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeInterlock} = 'interlock'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M14 21H10V3H14V21Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_interlockInhibit"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 0,
+                      "y": 32
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeInterlock} = 'interlock-inhibit'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M10 19H6V5H10V19Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M18 19H14V5H18V19Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_commandLocked"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 32,
+                      "y": 32
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeCommandLocked} != 'none'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M18 8H17V6C17 3.24 14.76 1 12 1C9.24 1 7 3.24 7 6V8H6C4.9 8 4 8.9 4 10V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V10C20 8.9 19.1 8 18 8ZM9 6C9 4.34 10.34 3 12 3C13.66 3 15 4.34 15 6V8H9V6ZM14 15C14 16.1 13.1 17 12 17C10.9 17 10 16.1 10 15C10 13.9 10.9 13 12 13C13.1 13 14 13.9 14 15Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Badge_duty"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 16,
+                      "x": 16,
+                      "y": 32
+                    },
+                    "propConfig": {
+                      "meta.visible": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.badgeDuty}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M14 21H10V3H14V21Z",
+                          "fill": {
+                            "paint": "var(--element-active-color)",
+                            "rule": "evenodd"
+                          },
+                          "type": "path"
+                        }
+                      ],
+                      "viewBox": "0 0 24 24"
+                    },
+                    "type": "ia.shapes.svg"
+                  }
+                ],
+                "meta": {
+                  "name": "Symbol"
+                },
+                "position": {
+                  "basis": "48px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "cursor": "pointer",
+                    "height": "48px",
+                    "margin": "0px 3px",
+                    "minWidth": "48px",
+                    "overflow": "hidden",
+                    "width": "48px"
+                  }
+                },
+                "type": "ia.container.coord"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "IconOn"
+                        },
+                        "position": {
+                          "basis": "16px",
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "position.display": {
+                            "binding": {
+                              "config": {
+                                "expression": "({view.params.on} || ('speed' = 'opening')) && !{view.params.hasSpeed}"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "d": "M12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2ZM12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)",
+                                "rule": "evenodd"
+                              },
+                              "type": "path"
+                            },
+                            {
+                              "d": "M12 6C13.1046 6 14 6.89543 14 8L14 16C14 17.1046 13.1046 18 12 18C10.8954 18 10 17.1046 10 16L10 8C10 6.89543 10.8954 6 12 6Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)"
+                              },
+                              "type": "path"
+                            }
+                          ],
+                          "viewBox": "0 0 24 24"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "IconOff"
+                        },
+                        "position": {
+                          "basis": "16px",
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "position.display": {
+                            "binding": {
+                              "config": {
+                                "expression": "!{view.params.on} && ('speed' != 'opening') && !{view.params.hasSpeed}"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "d": "M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)",
+                                "rule": "evenodd"
+                              },
+                              "type": "path"
+                            },
+                            {
+                              "d": "M8 11C7.44772 11 7 11.4477 7 12C7 12.5523 7.44772 13 8 13H16C16.5523 13 17 12.5523 17 12C17 11.4477 16.5523 11 16 11H8Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)"
+                              },
+                              "type": "path"
+                            }
+                          ],
+                          "viewBox": "0 0 24 24"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "IconRun"
+                        },
+                        "position": {
+                          "basis": "16px",
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "position.display": {
+                            "binding": {
+                              "config": {
+                                "expression": "{view.params.on} && {view.params.hasSpeed}"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "d": "M5.74904 3.56754C5.90319 3.47808 6.09332 3.47745 6.24807 3.56588L20.2481 11.5659C20.4039 11.6549 20.5 11.8206 20.5 12C20.5 12.1794 20.4039 12.3451 20.2481 12.4341L6.24807 20.4341C6.09332 20.5226 5.90319 20.5219 5.74904 20.4325C5.59488 20.343 5.5 20.1782 5.5 20V4C5.5 3.82176 5.59488 3.65701 5.74904 3.56754ZM6.5 4.86159V19.1384L18.9922 12L6.5 4.86159Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)",
+                                "rule": "evenodd"
+                              },
+                              "type": "path"
+                            },
+                            {
+                              "d": "M6.5 4.86157V19.1384L18.9922 12L6.5 4.86157Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)"
+                              },
+                              "type": "path"
+                            }
+                          ],
+                          "viewBox": "0 0 24 24"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "IconStopped"
+                        },
+                        "position": {
+                          "basis": "16px",
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "position.display": {
+                            "binding": {
+                              "config": {
+                                "expression": "!{view.params.on} && {view.params.hasSpeed}"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "elements": [
+                            {
+                              "d": "M5.74904 3.56754C5.90319 3.47808 6.09332 3.47745 6.24807 3.56588L20.2481 11.5659C20.4039 11.6549 20.5 11.8206 20.5 12C20.5 12.1794 20.4039 12.3451 20.2481 12.4341L6.24807 20.4341C6.09332 20.5226 5.90319 20.5219 5.74904 20.4325C5.59488 20.343 5.5 20.1782 5.5 20V4C5.5 3.82176 5.59488 3.65701 5.74904 3.56754ZM6.5 4.86159V19.1384L18.9922 12L6.5 4.86159Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)",
+                                "rule": "evenodd"
+                              },
+                              "type": "path"
+                            },
+                            {
+                              "d": "M6.5 4.86157V19.1384L18.9922 12L6.5 4.86157Z",
+                              "fill": {
+                                "paint": "var(--element-active-color)"
+                              },
+                              "type": "path"
+                            }
+                          ],
+                          "viewBox": "0 0 24 24"
+                        },
+                        "type": "ia.shapes.svg"
+                      },
+                      {
+                        "meta": {
+                          "name": "Text"
+                        },
+                        "position": {
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "props.style.classes": {
+                            "binding": {
+                              "config": {
+                                "expression": "'cadre/font/automation-value-regular-off ' + if({view.params.on}, 'cadre/text/active', 'cadre/text/inactive')"
+                              },
+                              "type": "expr"
+                            }
+                          },
+                          "props.text": {
+                            "binding": {
+                              "config": {
+                                "expression": "if(len({view.params.statusText}) > 0, {view.params.statusText}, if({view.params.on}, if({view.params.hasSpeed}, numberFormat({view.params.speed}, '0') + ' %', 'On'), 'Off'))"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "cadre/font/automation-value-regular-off cadre/text/active",
+                            "lineHeight": "20px",
+                            "whiteSpace": "nowrap"
+                          }
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "Status"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.showStatus}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alignItems": "center",
+                      "direction": "row",
+                      "style": {
+                        "gap": "4px",
+                        "height": "20px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "Tag"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.hasTag}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.tag}"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/automation-label cadre/text/neutral cadre/text/ellipsis",
+                        "whiteSpace": "nowrap"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Readout"
+                },
+                "position": {
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.params.readoutPosition} != 'none'"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "alignItems": "flex-start",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/box/within",
+                    "gap": "0px",
+                    "overflow": "hidden",
+                    "padding": "0px 4px"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "AlertPulse"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "meta.visible": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.params.alert} && ({view.params.alertFrameMode} = 'unacked-active' || {view.params.alertFrameMode} = 'unacked-rectified') && {view.params.alertFrameStatus} != 'caution'"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.borderColor": {
+                    "binding": {
+                      "config": {
+                        "expression": "case({view.params.alertFrameStatus}, 'warning', 'var(--alert-warning-color)', 'caution', 'var(--alert-caution-color)', 'critical', 'var(--alert-critical-color)', 'var(--alert-alarm-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.borderStyle": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.params.alertFrameMode} = 'unacked-rectified', 'dashed', 'solid')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.params.alertFrameMode} = 'unacked-active', if({view.params.alertFrameStatus} = 'warning', 'cadre/alert/blink-slow', 'cadre/alert/blink-fast'), 'cadre/alert/blink-very-slow')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "alignItems": "flex-start",
+                  "direction": "row",
+                  "justify": "flex-end",
+                  "style": {
+                    "borderRadius": "6px",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                    "bottom": "-3px",
+                    "boxSizing": "border-box",
+                    "left": "-2px",
+                    "overflow": "visible",
+                    "pointerEvents": "none",
+                    "position": "absolute",
+                    "right": "-2px",
+                    "top": "-2px"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Flap_alarm"
+                    },
+                    "position": {
+                      "basis": "20px",
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.alertFrameStatus} != 'warning' && {view.params.alertFrameStatus} != 'caution' && {view.params.alertFrameStatus} != 'critical'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M0 0H18A2 2 0 0 1 20 2V18A2 2 0 0 1 18 20H0Z",
+                          "fill": {
+                            "paint": "var(--alert-alarm-color)"
+                          },
+                          "name": "frame",
+                          "type": "path"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "d": "M10.5977 3.45245L2.11783 18.6539C1.68126 19.4365 1.46298 19.8278 1.5 20.1481C1.5323 20.4276 1.68084 20.6806 1.90919 20.8449C2.17092 21.0333 2.61899 21.0333 3.51513 21.0333H20.4697C21.3656 21.0333 21.8136 21.0333 22.0753 20.845C22.3036 20.6806 22.4522 20.4277 22.4845 20.1483C22.5216 19.828 22.3034 19.4367 21.8672 18.6542L13.3925 3.45281C12.9361 2.63423 12.7079 2.22495 12.4074 2.08895C12.1454 1.97039 11.8451 1.97035 11.5831 2.08884C11.2825 2.22476 11.0542 2.63399 10.5977 3.45245Z",
+                              "fill": {
+                                "paint": "var(--on-alarm-active-color)"
+                              },
+                              "name": "mark",
+                              "type": "path"
+                            }
+                          ],
+                          "name": "badge",
+                          "transform": "translate(2 2) scale(0.666667)",
+                          "type": "group"
+                        }
+                      ],
+                      "style": {
+                        "height": "20px",
+                        "position": "absolute",
+                        "right": "-22px",
+                        "top": "-3px",
+                        "width": "20px"
+                      },
+                      "viewBox": "0 0 20 20"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Flap_warning"
+                    },
+                    "position": {
+                      "basis": "20px",
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.alertFrameStatus} = 'warning'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M0 0H18A2 2 0 0 1 20 2V18A2 2 0 0 1 18 20H0Z",
+                          "fill": {
+                            "paint": "var(--alert-warning-color)"
+                          },
+                          "name": "frame",
+                          "type": "path"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "d": "M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0Z",
+                              "fill": {
+                                "paint": "var(--on-warning-active-color)"
+                              },
+                              "name": "mark",
+                              "type": "path"
+                            }
+                          ],
+                          "name": "badge",
+                          "transform": "translate(2 2) scale(0.666667)",
+                          "type": "group"
+                        }
+                      ],
+                      "style": {
+                        "height": "20px",
+                        "position": "absolute",
+                        "right": "-22px",
+                        "top": "-3px",
+                        "width": "20px"
+                      },
+                      "viewBox": "0 0 20 20"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Flap_caution"
+                    },
+                    "position": {
+                      "basis": "20px",
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.alertFrameStatus} = 'caution'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M0 0H18A2 2 0 0 1 20 2V18A2 2 0 0 1 18 20H0Z",
+                          "fill": {
+                            "paint": "var(--alert-caution-color)"
+                          },
+                          "name": "frame",
+                          "type": "path"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "d": "M3 4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V19.4C21 19.9601 21 20.2401 20.891 20.454C20.7951 20.6422 20.6422 20.7951 20.454 20.891C20.2401 21 19.9601 21 19.4 21H4.6C4.03995 21 3.75992 21 3.54601 20.891C3.35785 20.7951 3.20487 20.6422 3.10899 20.454C3 20.2401 3 19.9601 3 19.4V4.6Z",
+                              "fill": {
+                                "paint": "var(--on-caution-active-color)"
+                              },
+                              "name": "mark",
+                              "type": "path"
+                            }
+                          ],
+                          "name": "badge",
+                          "transform": "translate(2 2) scale(0.666667)",
+                          "type": "group"
+                        }
+                      ],
+                      "style": {
+                        "height": "20px",
+                        "position": "absolute",
+                        "right": "-22px",
+                        "top": "-3px",
+                        "width": "20px"
+                      },
+                      "viewBox": "0 0 20 20"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "meta": {
+                      "name": "Flap_critical"
+                    },
+                    "position": {
+                      "basis": "20px",
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "position.display": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.params.alertFrameStatus} = 'critical'"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M0 0H18A2 2 0 0 1 20 2V18A2 2 0 0 1 18 20H0Z",
+                          "fill": {
+                            "paint": "var(--alert-critical-color)"
+                          },
+                          "name": "frame",
+                          "type": "path"
+                        },
+                        {
+                          "elements": [
+                            {
+                              "d": "M2.47717 12.8113C2.30349 12.516 2.21665 12.3684 2.18269 12.2111C2.15265 12.072 2.15265 11.9281 2.18269 11.7889C2.21665 11.6317 2.30349 11.484 2.47717 11.1888L6.536 4.28877C6.7051 4.00128 6.78966 3.85754 6.90703 3.75306C7.01089 3.66061 7.13288 3.59084 7.26522 3.54819C7.41479 3.5 7.58155 3.5 7.91509 3.5L16.0849 3.5C16.4184 3.5 16.5852 3.5 16.7347 3.54819C16.8671 3.59084 16.9891 3.66061 17.0929 3.75306C17.2103 3.85754 17.2948 4.00128 17.464 4.28877L21.5228 11.1888C21.6965 11.484 21.7833 11.6317 21.8173 11.7889C21.8473 11.9281 21.8473 12.072 21.8173 12.2111C21.7833 12.3684 21.6965 12.516 21.5228 12.8113L17.464 19.7112C17.2948 19.9987 17.2103 20.1425 17.0929 20.2469C16.9891 20.3394 16.8671 20.4092 16.7347 20.4518C16.5852 20.5 16.4184 20.5 16.0849 20.5H7.91509C7.58155 20.5 7.41479 20.5 7.26522 20.4518C7.13288 20.4092 7.01089 20.3394 6.90703 20.2469C6.78966 20.1425 6.7051 19.9987 6.53599 19.7112L2.47717 12.8113Z",
+                              "fill": {
+                                "paint": "var(--on-critical-active-color)"
+                              },
+                              "name": "mark",
+                              "type": "path"
+                            }
+                          ],
+                          "name": "badge",
+                          "transform": "translate(2 2) scale(0.666667)",
+                          "type": "group"
+                        }
+                      ],
+                      "style": {
+                        "height": "20px",
+                        "position": "absolute",
+                        "right": "-22px",
+                        "top": "-3px",
+                        "width": "20px"
+                      },
+                      "viewBox": "0 0 20 20"
+                    },
+                    "type": "ia.shapes.svg"
+                  }
+                ],
+                "meta": {
+                  "name": "AlertFrame"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "meta.visible": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.params.alert}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.borderColor": {
+                    "binding": {
+                      "config": {
+                        "expression": "case({view.params.alertFrameStatus}, 'warning', 'var(--alert-warning-color)', 'caution', 'var(--alert-caution-color)', 'critical', 'var(--alert-critical-color)', 'var(--alert-alarm-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.borderStyle": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.params.alertFrameMode} = 'unacked-rectified', 'dashed', 'solid')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "alignItems": "flex-start",
+                  "direction": "row",
+                  "justify": "flex-end",
+                  "style": {
+                    "borderRadius": "6px",
+                    "borderStyle": "solid",
+                    "borderWidth": "2px",
+                    "bottom": "-1px",
+                    "boxSizing": "border-box",
+                    "left": "0px",
+                    "overflow": "visible",
+                    "pointerEvents": "none",
+                    "position": "absolute",
+                    "right": "0px",
+                    "top": "0px"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "Content"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.direction": {
+                "binding": {
+                  "config": {
+                    "expression": "case({view.params.readoutPosition}, 'right', 'row', 'left', 'row-reverse', 'top', 'column-reverse', 'column')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "flex-start",
+              "direction": "column",
+              "justify": "flex-start",
+              "style": {
+                "overflow": "visible",
+                "position": "relative"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Layout"
+        },
+        "position": {
+          "height": 1,
+          "width": 1,
+          "x": 0,
+          "y": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "column",
+          "justify": "flex-start",
+          "style": {
+            "overflow": "visible"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.deviceId:\n\t\tcadre.hmi.select_device(self.session, self.view.params.deviceId, self.view.params.deviceKind, self.view.params.tag, self.view.params.deviceLabel)\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "mode": "percent",
+      "style": {
+        "cursor": "pointer",
+        "overflow": "visible"
+      }
+    },
+    "type": "ia.container.coord"
+  }
+}

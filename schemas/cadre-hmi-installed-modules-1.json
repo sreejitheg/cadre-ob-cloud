@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-installed-modules/1",
+  "title": "Cadre HMI installed modules, version 1",
+  "description": "The output of `module/tools/install_module.py --list` (COB-202), read only: each module the gateway lists with its name, version and state as the gateway's module list answers, and the SHA-256 of the file the gateway's own record (`modules.json`) names for it. The gateway's list carries no digest; where its data folder cannot be read the digest is null and `note` says why. No token or login appears.",
+  "type": "object",
+  "required": [
+    "schema",
+    "gateway",
+    "modules_json",
+    "modules"
+  ],
+  "properties": {
+    "schema": {
+      "const": "cadre-hmi-installed-modules/1"
+    },
+    "gateway": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modules_json": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "version",
+          "state",
+          "file",
+          "bytes",
+          "sha256",
+          "file_version",
+          "file_matches_version",
+          "note"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "state": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "license_state": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "file": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "bytes": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "file_version": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "file_matches_version": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

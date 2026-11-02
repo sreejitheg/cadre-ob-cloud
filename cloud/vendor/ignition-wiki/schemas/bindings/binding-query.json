@@ -1,0 +1,58 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "bypassCache": {
+      "default": false,
+      "description": "If true, this binding will bypass the query's cache built-in result cache.",
+      "type": "boolean"
+    },
+    "designerUseLimit": {
+      "default": true,
+      "description": "If true, this query will use the query's limit settings when executed in the designer.",
+      "type": "boolean"
+    },
+    "parameters": {
+      "default": {},
+      "description": "Parameter values to be passed to the query. Values are expressions.",
+      "type": "object"
+    },
+    "polling": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "If true, the query will polled: that is, executed repeatedly at an interval. If false, the query will only run once on startup and again as parameter values change.",
+          "type": "boolean"
+        },
+        "rate": {
+          "default": 5,
+          "description": "The rate at which the query will be executed. If numeric, this rate will be interpreted as the number of seconds between executions. If a string, the string will be interpreted as an expression whose result will be the poll rate. If the rate is not positive, polling will be disabled.",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "queryPath": {
+      "description": "Path to the named query this binding will execute",
+      "type": "string"
+    },
+    "returnFormat": {
+      "default": "auto",
+      "description": "The format to use for the results of the query execution",
+      "enum": [
+        "auto",
+        "json",
+        "dataset",
+        "scalar"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "queryPath"
+  ],
+  "type": "object"
+}

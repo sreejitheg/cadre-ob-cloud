@@ -1,0 +1,11 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--selected-enabled-background-color)",
+      "borderRadius": "6px",
+      "color": "var(--on-selected-active-color)",
+      "cursor": "pointer",
+      "padding": "0 12px"
+    }
+  }
+}

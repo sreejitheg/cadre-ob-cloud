@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-asm-model/1",
+  "title": "Cadre HMI ASM model, version 1",
+  "description": "The ASM model of a migrated plant, written by tools/hmi/asm_model.py (ARCH-WFB-01 revision B8 Table 105): the hierarchy, the pages, the devices with their nodes and faceplates, the alarms with their priorities, the tag search index, the trends, the navigation of the original with the resolution of each target, and a mapping row for every understanding entry. Read by preview.py, library_gaps.py, asm_descriptors.py and glass_gates.py. Wiki page 04.",
+  "type": "object",
+  "required": ["schema", "nodes", "pages", "devices", "alarms", "tags", "trends", "nav", "mapping", "unmapped", "catalogue", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-asm-model/1"},
+    "site": {"type": "string"},
+    "home": {"type": ["string", "null"]},
+    "tag_root": {"type": "string"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "parent", "name", "level", "pages"],
+        "properties": {
+          "id": {"type": "string"},
+          "parent": {"type": ["string", "null"]},
+          "name": {"type": "string"},
+          "level": {"type": "integer", "minimum": 1},
+          "pages": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "node", "route", "kind", "built", "folder"],
+        "properties": {
+          "id": {"type": "string"},
+          "title": {"type": "string"},
+          "node": {"type": "string"},
+          "route": {"type": "string", "pattern": "^/"},
+          "kind": {"enum": ["mimic", "stub"]},
+          "built": {"type": "boolean"},
+          "folder": {"type": ["string", "null"]},
+          "previous": {"type": ["string", "null"]},
+          "next": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "devices": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["tag", "label", "kind", "node", "page", "uid", "faceplate", "openers"],
+        "properties": {
+          "tag": {"type": "string"},
+          "label": {"type": "string"},
+          "kind": {"type": "string"},
+          "type": {"type": ["string", "null"]},
+          "node": {"type": "string", "minLength": 1},
+          "page": {"type": "string"},
+          "uid": {"type": "string"},
+          "faceplate": {"type": "string", "minLength": 1},
+          "drawn_on": {"type": "array", "items": {"type": "string"}},
+          "openers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["page", "an", "tab"],
+              "properties": {
+                "page": {"type": "string"},
+                "an": {"type": "string"},
+                "tab": {"type": ["string", "null"]},
+                "uid": {"type": ["string", "null"]},
+                "command": {"type": ["string", "null"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "alarms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tag", "desc", "priority", "inferred", "delay", "device", "node", "uid"],
+        "properties": {
+          "tag": {"type": "string"},
+          "desc": {"type": "string"},
+          "priority": {"enum": ["critical", "high", "medium", "low", "diagnostic"]},
+          "inferred": {"type": "boolean"},
+          "delay": {"type": "integer", "minimum": 0},
+          "device": {"type": ["string", "null"]},
+          "node": {"type": ["string", "null"]},
+          "uid": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "comment", "units", "device", "page", "alarm"],
+        "properties": {
+          "name": {"type": "string"},
+          "comment": {"type": "string"},
+          "units": {"type": "string"},
+          "range": {"type": ["array", "null"]},
+          "device": {"type": ["string", "null"]},
+          "tab": {"type": ["string", "null"]},
+          "page": {"type": ["string", "null"]},
+          "uid": {"type": ["string", "null"]},
+          "alarm": {"type": "boolean"}
+        }
+      }
+    },
+    "trends": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["node", "pens"],
+        "properties": {
+          "node": {"type": "string"},
+          "pens": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {"type": "object", "required": ["label", "expr", "units"], "properties": {"label": {"type": "string"}, "expr": {"type": "string"}, "units": {"type": "string"}}}
+          }
+        }
+      }
+    },
+    "nav": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "target", "priv", "uid", "resolution"],
+        "properties": {
+          "from": {"type": "string"},
+          "target": {"type": "string"},
+          "priv": {"type": ["string", "integer", "null"]},
+          "uid": {"type": ["string", "null"]},
+          "resolution": {"enum": ["page", "faceplate", "support", "not_migrated", null]},
+          "route": {"type": ["string", "null"]},
+          "faceplate": {"type": "string"},
+          "tab": {"type": ["string", "null"]},
+          "reason": {"type": "string"}
+        },
+        "allOf": [
+          {"if": {"properties": {"resolution": {"const": "not_migrated"}}, "required": ["resolution"]}, "then": {"required": ["reason"]}},
+          {"if": {"properties": {"resolution": {"enum": ["page", "support"]}}, "required": ["resolution"]}, "then": {"required": ["route"]}},
+          {"if": {"properties": {"resolution": {"const": "faceplate"}}, "required": ["resolution"]}, "then": {"required": ["faceplate"]}}
+        ]
+      }
+    },
+    "flows": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["an", "path", "medium", "from", "to"],
+        "properties": {
+          "an": {"type": ["string", "null"]},
+          "path": {"type": "array", "items": {"type": "object", "required": ["x", "y"]}},
+          "medium": {"type": ["string", "null"]},
+          "from": {"type": ["string", "null"]},
+          "to": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "id", "uid", "section", "label", "place"],
+        "properties": {
+          "source": {"type": "string"},
+          "id": {"type": "string"},
+          "uid": {"type": "string", "minLength": 1},
+          "section": {"enum": ["regions", "devices", "flows", "readouts", "indicators", "navigation", "static", "dropped"]},
+          "label": {"type": "string"},
+          "place": {"type": "string"},
+          "device": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "unmapped": {
+      "type": "array",
+      "items": {"type": "object", "required": ["source", "section", "reason"]}
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {"type": "object", "required": ["from", "target", "reason"]}
+    },
+    "catalogue": {
+      "type": "object",
+      "required": ["kinds", "module_parts"],
+      "properties": {
+        "kinds": {"type": "array", "items": {"type": "string"}},
+        "device_kinds": {"type": "array", "items": {"type": "string"}},
+        "module_parts": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "dirty", "argv", "inputs", "started", "duration_s", "interpreter"],
+      "properties": {
+        "tool": {"type": "string"},
+        "repository": {"type": "string"},
+        "commit": {"type": ["string", "null"]},
+        "dirty": {"type": ["boolean", "null"]},
+        "argv": {"type": "array", "items": {"type": "string"}},
+        "inputs": {"type": "array", "items": {"type": "object", "required": ["path", "sha256"]}},
+        "started": {"type": "string"},
+        "duration_s": {"type": "number"},
+        "interpreter": {"type": "object", "required": ["path", "version", "bits"]}
+      }
+    }
+  }
+}

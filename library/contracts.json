@@ -1,0 +1,1402 @@
+{
+ "Automation/AnalogValve": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "open",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "analogvalve",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "analogvalve",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "open": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "open",
+  "statusMode": "opening",
+  "symbolSize": 48,
+  "view": "Automation/AnalogValve"
+ },
+ "Automation/Damper": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "damper",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "damper",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Damper"
+ },
+ "Automation/Fan": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "fan",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "fan",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "speed",
+  "symbolSize": 48,
+  "view": "Automation/Fan"
+ },
+ "Automation/Filter": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "filter",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "filter",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Filter"
+ },
+ "Automation/Generator": {
+  "anchor": "symbol-centre",
+  "flow": "pass",
+  "gate": null,
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "generator",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "generator",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "picture": "symbol",
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Generator"
+ },
+ "Automation/GeneratorSet": {
+  "anchor": "box",
+  "flow": "pass",
+  "gate": null,
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 0,
+   "param": "tag"
+  },
+  "kind": "generator",
+  "params": {
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "deviceId": "",
+   "deviceKind": "generator",
+   "deviceLabel": "",
+   "hasTag": false,
+   "on": false,
+   "picture": "genset",
+   "tag": ""
+  },
+  "size": [
+   240,
+   150
+  ],
+  "state": "on",
+  "view": "Automation/GeneratorSet"
+ },
+ "Automation/Indicator": {
+  "anchor": "symbol-centre",
+  "flow": "pass",
+  "gate": null,
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "indicator",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "colour": "",
+   "deviceId": "",
+   "deviceKind": "indicator",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": false,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Indicator"
+ },
+ "Automation/Motor": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "motor",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "motor",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "speed",
+  "symbolSize": 48,
+  "view": "Automation/Motor"
+ },
+ "Automation/Pump": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "pump",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "pump",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "speed",
+  "symbolSize": 48,
+  "view": "Automation/Pump"
+ },
+ "Automation/Readout": {
+  "anchor": "symbol-centre",
+  "flow": "pass",
+  "grows": true,
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 10,
+   "param": "tag"
+  },
+  "kind": "readout",
+  "params": {
+   "deviceId": "",
+   "deviceKind": "instrument",
+   "deviceLabel": "",
+   "format": "#,##0.0",
+   "hasTag": false,
+   "label": "",
+   "stretch": false,
+   "tag": "",
+   "unit": "",
+   "value": 0
+  },
+  "size": [
+   72,
+   24
+  ],
+  "sizes": [
+   {
+    "size": [
+     72,
+     40
+    ],
+    "when": {
+     "hasTag": true
+    }
+   }
+  ],
+  "value": {
+   "font": "automation-value-regular",
+   "pad": 10
+  },
+  "view": "Automation/Readout"
+ },
+ "Automation/Switch": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "on",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "switch",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "switch",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "on": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "on",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Switch"
+ },
+ "Automation/Tank": {
+  "anchor": "box",
+  "flow": "source-sink",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "instrument-label",
+   "pad": 24,
+   "param": "tag",
+   "share": 0.86
+  },
+  "kind": "tank",
+  "params": {
+   "chart": false,
+   "compact": false,
+   "deviceId": "",
+   "deviceLabel": "",
+   "hasCapacity": true,
+   "hasTag": true,
+   "history": [],
+   "max": 100,
+   "medium": "normal",
+   "showPercent": true,
+   "static": false,
+   "tag": "",
+   "trend": "stable",
+   "unit": "m\u00b3",
+   "value": 0,
+   "valueFractionDigits": 0
+  },
+  "size": [
+   168,
+   216
+  ],
+  "sizes": [
+   {
+    "size": [
+     96,
+     80
+    ],
+    "when": {
+     "static": true
+    }
+   }
+  ],
+  "view": "Automation/Tank"
+ },
+ "Automation/Valve": {
+  "anchor": "symbol-centre",
+  "flow": "gated",
+  "gate": "open",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 8,
+   "param": "tag"
+  },
+  "kind": "valve",
+  "params": {
+   "activated": false,
+   "alert": false,
+   "alertFrameMode": "acked-active",
+   "alertFrameStatus": "alarm",
+   "badgeCommandLocked": "none",
+   "badgeControl": "none",
+   "badgeDuty": false,
+   "badgeInterlock": "none",
+   "deviceId": "",
+   "deviceKind": "valve",
+   "deviceLabel": "",
+   "hasSpeed": false,
+   "hasTag": false,
+   "open": false,
+   "outOfService": false,
+   "progress": false,
+   "readoutPosition": "bottom",
+   "showStatus": true,
+   "speed": 0,
+   "statusText": "",
+   "tag": "",
+   "value": 0,
+   "variant": "regular",
+   "vertical": false
+  },
+  "readoutExtent": {
+   "bottom": [
+    48,
+    44
+   ],
+   "left": [
+    64,
+    48
+   ],
+   "none": [
+    0,
+    0
+   ],
+   "right": [
+    64,
+    48
+   ],
+   "top": [
+    48,
+    44
+   ]
+  },
+  "size": [
+   48,
+   48
+  ],
+  "state": "open",
+  "statusMode": "onoff",
+  "symbolSize": 48,
+  "view": "Automation/Valve"
+ },
+ "Faceplate/ASM/Generator": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Generator"
+ },
+ "Faceplate/ASM/Instrument": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Instrument"
+ },
+ "Faceplate/ASM/Pump": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Pump"
+ },
+ "Faceplate/ASM/Sequence": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Sequence"
+ },
+ "Faceplate/ASM/Valve": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Valve"
+ },
+ "Faceplate/Alarms": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "source": ""
+  },
+  "view": "Faceplate/Alarms"
+ },
+ "Faceplate/Controller": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Controller"
+ },
+ "Faceplate/Empty": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Empty"
+ },
+ "Faceplate/Input": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Input"
+ },
+ "Faceplate/Instrument": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Instrument"
+ },
+ "Faceplate/InterlockRow": {
+  "kind": "framework",
+  "params": {
+   "cid": "",
+   "deviceId": "",
+   "writable": false
+  },
+  "view": "Faceplate/InterlockRow"
+ },
+ "Faceplate/LimitRow": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "high": true,
+   "label": "",
+   "member": "",
+   "valueMember": "value",
+   "writable": false
+  },
+  "view": "Faceplate/LimitRow"
+ },
+ "Faceplate/Pump": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Pump"
+ },
+ "Faceplate/Sequence": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Sequence"
+ },
+ "Faceplate/SetpointRow": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "enabled": false,
+   "format": "0.0",
+   "label": "",
+   "maximum": null,
+   "member": "",
+   "minimum": null,
+   "path": "",
+   "unit": ""
+  },
+  "view": "Faceplate/SetpointRow"
+ },
+ "Faceplate/Tank": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Tank"
+ },
+ "Faceplate/TankTile": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "level": 0
+  },
+  "view": "Faceplate/TankTile"
+ },
+ "Faceplate/Valve": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "tab": ""
+  },
+  "view": "Faceplate/Valve"
+ },
+ "Framework/ASM/AlarmBanner": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/AlarmBanner"
+ },
+ "Framework/ASM/BannerRow": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "deviceKind": "",
+   "deviceLabel": "",
+   "deviceTitle": "",
+   "id": "",
+   "node": "",
+   "priority": "",
+   "state": "",
+   "status": "neutral",
+   "tag": "",
+   "text": "",
+   "time": "",
+   "unacked": false
+  },
+  "view": "Framework/ASM/BannerRow"
+ },
+ "Framework/ASM/Crumb": {
+  "kind": "framework",
+  "params": {
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   },
+   "first": true,
+   "last": false,
+   "name": "",
+   "nodeId": "",
+   "route": ""
+  },
+  "view": "Framework/ASM/Crumb"
+ },
+ "Framework/ASM/CrumbPopup": {
+  "kind": "framework",
+  "params": {
+   "nodeId": ""
+  },
+  "view": "Framework/ASM/CrumbPopup"
+ },
+ "Framework/ASM/FloatFaceplate": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "kind": "",
+   "label": "",
+   "popupId": "",
+   "style": "openbridge",
+   "tab": "",
+   "title": ""
+  },
+  "view": "Framework/ASM/FloatFaceplate"
+ },
+ "Framework/ASM/Head": {
+  "kind": "framework",
+  "params": {
+   "alertsPath": "/alerts",
+   "appName": "App",
+   "clockLabel": "UTC",
+   "showUser": true,
+   "siteNote": ""
+  },
+  "view": "Framework/ASM/Head"
+ },
+ "Framework/ASM/ListRow": {
+  "kind": "framework",
+  "params": {
+   "action": "",
+   "close": "",
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   },
+   "depth": 0,
+   "deviceId": "",
+   "deviceKind": "",
+   "deviceLabel": "",
+   "deviceTitle": "",
+   "disabled": false,
+   "icon": "",
+   "kind": "",
+   "label": "",
+   "nodeId": "",
+   "route": "",
+   "second": "",
+   "selected": false,
+   "tab": ""
+  },
+  "view": "Framework/ASM/ListRow"
+ },
+ "Framework/ASM/NavDock": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/NavDock"
+ },
+ "Framework/ASM/NodeAlarms": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/NodeAlarms"
+ },
+ "Framework/ASM/NodeTrend": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/NodeTrend"
+ },
+ "Framework/ASM/PageHeader": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/PageHeader"
+ },
+ "Framework/ASM/PageTab": {
+  "kind": "framework",
+  "params": {
+   "label": "",
+   "route": "",
+   "selected": false
+  },
+  "view": "Framework/ASM/PageTab"
+ },
+ "Framework/ASM/SearchResults": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/ASM/SearchResults"
+ },
+ "Framework/ASM/TopBar": {
+  "kind": "framework",
+  "params": {
+   "alertsPath": "/alerts",
+   "appName": "App",
+   "clockLabel": "UTC",
+   "showUser": true,
+   "siteNote": ""
+  },
+  "view": "Framework/ASM/TopBar"
+ },
+ "Framework/AlertMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/AlertMenu"
+ },
+ "Framework/AlertsPage": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/AlertsPage"
+ },
+ "Framework/Badges": {
+  "kind": "framework",
+  "params": {
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   }
+  },
+  "view": "Framework/Badges"
+ },
+ "Framework/BrillianceMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/BrillianceMenu"
+ },
+ "Framework/Crumb": {
+  "kind": "framework",
+  "params": {
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   },
+   "first": true,
+   "name": "",
+   "route": ""
+  },
+  "view": "Framework/Crumb"
+ },
+ "Framework/FaceplatePopup": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/FaceplatePopup"
+ },
+ "Framework/NavItem": {
+  "kind": "framework",
+  "params": {
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   },
+   "icon": "",
+   "label": "",
+   "path": ""
+  },
+  "view": "Framework/NavItem"
+ },
+ "Framework/NavMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/NavMenu"
+ },
+ "Framework/SideMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/SideMenu"
+ },
+ "Framework/TopBar": {
+  "kind": "framework",
+  "params": {
+   "alertsPath": "/alerts",
+   "appName": "App",
+   "clockLabel": "UTC",
+   "showUser": true
+  },
+  "view": "Framework/TopBar"
+ },
+ "Framework/TrendsPage": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/TrendsPage"
+ },
+ "Framework/UserMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/UserMenu"
+ },
+ "Instrument/Controller": {
+  "anchor": "box",
+  "flow": "pass",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 34,
+   "param": "tag"
+  },
+  "kind": "controller",
+  "params": {
+   "deviceId": "",
+   "deviceKind": "controller",
+   "deviceLabel": "",
+   "format": "#,##0.0",
+   "hasOutput": false,
+   "hasSetpoint": false,
+   "hasTag": true,
+   "label": "",
+   "manual": false,
+   "output": 0,
+   "setpoint": 0,
+   "tag": "",
+   "unit": "",
+   "value": 0
+  },
+  "size": [
+   120,
+   96
+  ],
+  "view": "Instrument/Controller"
+ },
+ "Instrument/Field": {
+  "anchor": "box",
+  "flow": "none",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "instrument-unit",
+   "pad": 0,
+   "param": "label",
+   "suffix": "unit"
+  },
+  "kind": "instrument-field",
+  "params": {
+   "align": "end",
+   "deviceId": "",
+   "deviceKind": "instrument",
+   "deviceLabel": "",
+   "format": "#,##0",
+   "hasSetpoint": false,
+   "hasTag": true,
+   "label": "",
+   "setpoint": 0,
+   "setpointFormat": "#,##0",
+   "size": "regular",
+   "source": "",
+   "tag": "",
+   "unit": "",
+   "value": 0
+  },
+  "size": [
+   96,
+   64
+  ],
+  "sizes": [
+   {
+    "size": [
+     96,
+     66
+    ],
+    "when": {
+     "hasSetpoint": true,
+     "size": "enhanced"
+    }
+   }
+  ],
+  "view": "Instrument/Field"
+ },
+ "Instrument/Sequence": {
+  "anchor": "box",
+  "flow": "pass",
+  "identifier": {
+   "flag": "hasTag",
+   "font": "automation-label",
+   "pad": 14,
+   "param": "tag"
+  },
+  "kind": "sequence",
+  "params": {
+   "deviceId": "",
+   "deviceKind": "sequence",
+   "deviceLabel": "",
+   "hasStep": false,
+   "hasTag": true,
+   "label": "",
+   "step": 0,
+   "tag": "",
+   "text": ""
+  },
+  "size": [
+   144,
+   72
+  ],
+  "view": "Instrument/Sequence"
+ },
+ "Parts/RangeBar": {
+  "kind": "rangebar",
+  "params": {
+   "format": "#,##0.0",
+   "hiLimit": null,
+   "loLimit": null,
+   "max": 100,
+   "min": 0,
+   "normalHi": null,
+   "normalLo": null,
+   "showValue": false,
+   "unit": "",
+   "value": 0,
+   "vertical": false
+  },
+  "size": [
+   64,
+   10
+  ],
+  "view": "Parts/RangeBar"
+ },
+ "Parts/Trend": {
+  "kind": "trend",
+  "params": {
+   "label1": "",
+   "minutes": 10,
+   "tag1": "",
+   "title": "",
+   "unit1": ""
+  },
+  "size": [
+   340,
+   130
+  ],
+  "view": "Parts/Trend"
+ },
+ "Parts/Trend2": {
+  "kind": "trend",
+  "params": {
+   "label1": "",
+   "label2": "",
+   "minutes": 10,
+   "tag1": "",
+   "tag2": "",
+   "title": "",
+   "unit1": "",
+   "unit2": ""
+  },
+  "size": [
+   340,
+   130
+  ],
+  "view": "Parts/Trend2"
+ },
+ "Parts/Trend2Axes": {
+  "kind": "trend",
+  "params": {
+   "label1": "",
+   "label2": "",
+   "minutes": 10,
+   "tag1": "",
+   "tag2": "",
+   "title": "",
+   "unit1": "",
+   "unit2": ""
+  },
+  "size": [
+   340,
+   130
+  ],
+  "view": "Parts/Trend2Axes"
+ },
+ "Trend/Card": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "hours": 1,
+   "kind": "",
+   "label": "",
+   "member": "value",
+   "title": "",
+   "unit": ""
+  },
+  "view": "Trend/Card"
+ }
+}

@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "expression": {
+      "description": "The source of the expression to execute for this binding.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "expression"
+  ],
+  "type": "object"
+}

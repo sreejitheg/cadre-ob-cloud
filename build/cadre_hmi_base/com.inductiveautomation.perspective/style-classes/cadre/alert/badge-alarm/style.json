@@ -1,0 +1,8 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--alert-alarm-color)",
+      "color": "var(--on-alarm-color)"
+    }
+  }
+}

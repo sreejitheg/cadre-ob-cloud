@@ -1,0 +1,52 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {"id": "PumpStation", "route": "/pump-station", "title": "Pump Station", "view": "Screens/PumpStation",
+            "layout": "diagram", "width": 1600, "height": 800, "icon": "dashboard"},
+ "tagRoot": "[default]cadre_hmi_sample",
+ "toolbar": true,
+ "showTags": true,
+ "tagValues": {"T101/level": 6500, "T102/level": 1800, "V101/state": true, "V102/state": false,
+               "P101/state": true, "P101/speed": 82, "P102/state": false, "P102/speed": 0, "V103/state": true},
+ "sections": [
+  {"id": "Intake", "x": 40, "y": 40, "w": 520, "h": 560, "label": "Intake"},
+  {"id": "Delivery", "x": 640, "y": 40, "w": 900, "h": 560, "label": "Delivery"}
+ ],
+ "symbols": [
+  {"id": "T101", "kind": "tank", "x": 120, "y": 300, "w": 168, "h": 216,
+   "params": {"max": 10000, "tag": "T-101", "unit": "m³", "trend": "rising"}, "bind": {"value": "T101/level"}},
+  {"id": "V101", "kind": "valve", "x": 380, "y": 200, "w": 48, "h": 48,
+   "params": {"readoutPosition": "bottom", "badgeControl": "auto"}, "bind": {"open": "V101/state"}, "device": true},
+  {"id": "P101", "kind": "pump", "x": 740, "y": 200, "w": 48, "h": 48,
+   "params": {"readoutPosition": "bottom", "hasSpeed": true, "badgeControl": "auto"},
+   "bind": {"on": "P101/state", "speed": "P101/speed"}, "device": true},
+  {"id": "P102", "kind": "pump", "x": 740, "y": 420, "w": 48, "h": 48,
+   "params": {"readoutPosition": "bottom", "hasSpeed": true, "badgeControl": "manual", "alert": true,
+              "alertFrameStatus": "warning", "alertFrameMode": "unacked-active"},
+   "bind": {"on": "P102/state", "speed": "P102/speed"}, "device": true},
+  {"id": "V102", "kind": "valve", "x": 380, "y": 420, "w": 48, "h": 48,
+   "params": {"readoutPosition": "bottom"}, "bind": {"open": "V102/state"}, "device": true},
+  {"id": "V103", "kind": "valve", "x": 1060, "y": 300, "w": 48, "h": 48,
+   "params": {"readoutPosition": "right", "vertical": true}, "bind": {"open": "V103/state"}, "device": true},
+  {"id": "T102", "kind": "tank", "x": 1280, "y": 300, "w": 168, "h": 216,
+   "params": {"max": 4000, "tag": "T-102", "unit": "m³", "trend": "stable"}, "bind": {"value": "T102/level"}}
+ ],
+ "junctions": [
+  {"id": "J1", "x": 600, "y": 224},
+  {"id": "J2", "x": 900, "y": 224},
+  {"id": "J3", "x": 1084, "y": 224}
+ ],
+ "pipes": [
+  {"id": "p1", "from": {"ref": "T101", "side": "top"}, "to": {"ref": "V101", "side": "left"}},
+  {"id": "p2", "from": {"ref": "V101", "side": "right"}, "to": {"ref": "J1"}},
+  {"id": "p3", "from": {"ref": "T101", "side": "right"}, "to": {"ref": "V102", "side": "left"}},
+  {"id": "p4", "from": {"ref": "V102", "side": "right"}, "to": {"ref": "J1"}, "via": [[600, 444]]},
+  {"id": "p5", "from": {"ref": "J1"}, "to": {"ref": "P101", "side": "left"}},
+  {"id": "p6", "from": {"ref": "J1"}, "to": {"ref": "P102", "side": "left"}, "via": [[600, 444]]},
+  {"id": "p7", "from": {"ref": "P101", "side": "right"}, "to": {"ref": "J2"}},
+  {"id": "p8", "from": {"ref": "P102", "side": "right"}, "to": {"ref": "J2"}, "via": [[900, 444]]},
+  {"id": "p9", "from": {"ref": "J2"}, "to": {"ref": "J3"}},
+  {"id": "p10", "from": {"ref": "J3"}, "to": {"ref": "V103", "side": "top"}},
+  {"id": "p11", "from": {"ref": "V103", "side": "bottom"}, "to": {"ref": "T102", "side": "left"}, "via": [[1084, 408]]},
+  {"id": "p12", "from": {"ref": "J3"}, "to": {"x": 1500, "y": 224, "end": "arrow-out"}, "medium": "fresh-water"}
+ ]
+}

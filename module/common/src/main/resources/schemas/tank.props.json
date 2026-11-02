@@ -1,0 +1,276 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "medium": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "empty",
+        "water",
+        "air"
+      ],
+      "default": "water",
+      "description": "OpenBridge `obc-automation-tank` property `medium`."
+    },
+    "value": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-automation-tank` property `value`."
+    },
+    "max": {
+      "type": "number",
+      "default": 100,
+      "description": "OpenBridge `obc-automation-tank` property `max`."
+    },
+    "trend": {
+      "type": "string",
+      "enum": [
+        "fast-rising",
+        "rising",
+        "stable",
+        "falling",
+        "fast-falling",
+        "closed"
+      ],
+      "default": "stable",
+      "description": "OpenBridge `obc-automation-tank` property `trend`."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "generic",
+        "atmospheric",
+        "pressurized",
+        "battery"
+      ],
+      "default": "generic",
+      "description": "OpenBridge `obc-automation-tank` property `type`."
+    },
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "vertical",
+        "horizontal"
+      ],
+      "default": "vertical",
+      "description": "OpenBridge `obc-automation-tank` property `orientation`."
+    },
+    "compact": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-automation-tank` property `compact`."
+    },
+    "positioning": {
+      "type": "string",
+      "enum": [
+        "point",
+        "button"
+      ],
+      "default": "button",
+      "description": "Host positioning model \u2014 see TankPositioning for details. Defaults to button (host fills parent container, 100% \u00d7 100%, falling back to the design aspect ratio on any axis the parent leaves indefinite, no anchor..."
+    },
+    "static": {
+      "type": "boolean",
+      "default": false,
+      "description": "Static (display-only) variant. Always rendered at the compact size; the inner chart/bar is hidden, the bordered area is filled with --container-section-color, and the readout is centered inside the frame. Tag is..."
+    },
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enables the activated background color, used to indicate that the tank is activated/selected. Requires an interactive tank \u2014 the noClick mixin variant used when clickable is false only paints the enabled state, so a..."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-automation-tank` property `tag`."
+    },
+    "chartMode": {
+      "type": "string",
+      "enum": [
+        "bar",
+        "graph",
+        "graph-and-bar"
+      ],
+      "default": "bar",
+      "description": "Chart cell rendering mode. - bar: static fill bar driven by value/max (default). - graph: embedded obc-gauge-trend line/area chart. - graphAndBar: embedded obc-gauge-trend with an integrated side bar."
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "Priority hint forwarded to child charts (regular | enhanced)."
+    },
+    "hasAdvice": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show advice overlays (works in all chartMode variants)."
+    },
+    "alert": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show an <obc-alert-frame> overlay around the bordered tank area (the .halo wrapper). Mirrors the API of obc-automation-button: same six properties, same three slots (alert-icon, alert-label, alert-timer). The ring..."
+    },
+    "alertFrameType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "small-side-flip",
+        "large-side-flip",
+        "bottom-flip",
+        "top-flip"
+      ],
+      "default": "small-side-flip",
+      "description": "OpenBridge `obc-automation-tank` property `alertFrameType`."
+    },
+    "alertFrameThickness": {
+      "type": "string",
+      "enum": [
+        "small",
+        "large"
+      ],
+      "default": "small",
+      "description": "OpenBridge `obc-automation-tank` property `alertFrameThickness`."
+    },
+    "alertFrameStatus": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "alarm",
+      "description": "OpenBridge `obc-automation-tank` property `alertFrameStatus`."
+    },
+    "showAlertIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-automation-tank` property `showAlertIcon`."
+    },
+    "percentFractionDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of fraction digits used to format the percent readout in the non-compact (regular) layout. Defaults to 0 (integer percent). The compact layout always renders integer percent to keep its fixed-width footprint..."
+    },
+    "badgeControl": {
+      "type": "string",
+      "enum": [
+        "none",
+        "local",
+        "local-only",
+        "manual",
+        "manual-only",
+        "auto"
+      ],
+      "default": "none",
+      "description": "Enum-driven badges rendered inside the badges cell. Mirrors the API introduced for ObcAbstractAutomationButton in PR #839 (#829). When set to a non-None value, an <obc-automation-badge> of the corresponding type is..."
+    },
+    "badgeAlert": {
+      "type": "string",
+      "enum": [
+        "none",
+        "silence",
+        "caution",
+        "warning",
+        "alarm",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-automation-tank` property `badgeAlert`."
+    },
+    "badgeInterlock": {
+      "type": "string",
+      "enum": [
+        "none",
+        "interlock",
+        "interlock-inhibit"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-automation-tank` property `badgeInterlock`."
+    },
+    "badgeCommandLocked": {
+      "type": "string",
+      "enum": [
+        "none",
+        "command-locked"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-automation-tank` property `badgeCommandLocked`."
+    },
+    "setpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Target setpoint value. undefined = no setpoint marker shown."
+    },
+    "newSetpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Adjustment preview for 2-step interface. When defined, two markers are shown: original (dimmed) + new (focus). Available when setpoint!=undefined."
+    },
+    "autoAtSetpointDeadband": {
+      "type": "number",
+      "default": 2,
+      "description": "Tolerance for auto at-setpoint detection. Available when setpoint!=undefined && autoAtSetpoint==true."
+    },
+    "setpointAtZeroDeadband": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Tolerance for zero-snap visual state. Available when setpoint!=undefined."
+    },
+    "setpointOverride": {
+      "type": "boolean",
+      "default": false,
+      "description": "Override to derive the setpoint color from the instrument's priority regardless of instrument state. Available when setpoint!=undefined."
+    },
+    "animateSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable CSS-animated confirm transition. Available when setpoint!=undefined."
+    },
+    "unit": {
+      "type": "string",
+      "default": "m\u00b3",
+      "description": "The unit printed after the capacity, in place of the cubic metres of the OpenBridge tank."
+    },
+    "hasCapacity": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether a static tank prints its capacity. False draws the vessel and its tag with no capacity line, where the OpenBridge tank always prints one."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "custom": {},
+  "params": {
+    "deviceId": "",
+    "deviceKind": "",
+    "deviceLabel": "",
+    "deviceTitle": "",
+    "id": "",
+    "node": "",
+    "priority": "",
+    "state": "",
+    "status": "neutral",
+    "tag": "",
+    "text": "",
+    "time": "",
+    "unacked": false
+  },
+  "propConfig": {
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceKind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceTitle": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.id": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.node": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.priority": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.state": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.status": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.text": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.time": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unacked": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 24,
+      "width": 1200
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Priority_alarm"
+        },
+        "position": {
+          "basis": "18px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.status} = 'alarm'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.unacked}, 'cadre/alert/flash-' + if({view.params.status} = 'neutral', 'caution', {view.params.status}), '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M8 1L15 14H1Z",
+              "fill": {
+                "paint": "var(--alert-alarm-color)"
+              },
+              "name": "shape",
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 16 16"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Priority_critical"
+        },
+        "position": {
+          "basis": "18px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.status} = 'critical'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.unacked}, 'cadre/alert/flash-' + if({view.params.status} = 'neutral', 'caution', {view.params.status}), '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M8 1L15 14H1Z",
+              "fill": {
+                "paint": "var(--alert-critical-color)"
+              },
+              "name": "shape",
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 16 16"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Priority_warning"
+        },
+        "position": {
+          "basis": "18px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.status} = 'warning'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.unacked}, 'cadre/alert/flash-' + if({view.params.status} = 'neutral', 'caution', {view.params.status}), '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M1 8a7 7 0 1 0 14 0a7 7 0 1 0 -14 0Z",
+              "fill": {
+                "paint": "var(--alert-warning-color)"
+              },
+              "name": "shape",
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 16 16"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Priority_caution"
+        },
+        "position": {
+          "basis": "18px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.status} = 'caution'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.unacked}, 'cadre/alert/flash-' + if({view.params.status} = 'neutral', 'caution', {view.params.status}), '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M1.5 1.5H14.5V14.5H1.5Z",
+              "fill": {
+                "paint": "var(--alert-caution-color)"
+              },
+              "name": "shape",
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 16 16"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Priority_neutral"
+        },
+        "position": {
+          "basis": "18px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.status} = 'neutral'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.unacked}, 'cadre/alert/flash-' + if({view.params.status} = 'neutral', 'caution', {view.params.status}), '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M2 8a6 6 0 1 0 12 0a6 6 0 1 0 -12 0Z",
+              "fill": {
+                "paint": "var(--element-neutral-color)"
+              },
+              "name": "shape",
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 16 16"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Time"
+        },
+        "position": {
+          "basis": "72px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.time}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Node"
+        },
+        "position": {
+          "basis": "120px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.node}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Tag"
+        },
+        "position": {
+          "basis": "140px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.tag}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Text"
+        },
+        "position": {
+          "grow": 1,
+          "shrink": 1
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.text}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body cadre/text/active",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "State"
+        },
+        "position": {
+          "basis": "170px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.state}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tp = self.view.params\n\tif p.deviceId:\n\t\tcadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, 'alarms')\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "cursor": "pointer",
+        "gap": "10px",
+        "overflow": "hidden",
+        "padding": "0 8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

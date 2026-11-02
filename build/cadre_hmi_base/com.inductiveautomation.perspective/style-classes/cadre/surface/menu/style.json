@@ -1,0 +1,8 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--container-global-color)",
+      "borderRight": "1px solid var(--border-divider-color)"
+    }
+  }
+}

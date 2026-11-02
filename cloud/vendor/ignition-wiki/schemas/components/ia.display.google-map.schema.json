@@ -1,0 +1,4435 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.display.google-map.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "definitions": {
+    "ControlPosition": {
+      "default": "top_left",
+      "description": "Control display position.",
+      "enum": [
+        "bottom_center",
+        "bottom_left",
+        "bottom_right",
+        "left_bottom",
+        "left_center",
+        "left_top",
+        "right_bottom",
+        "right_center",
+        "right_top",
+        "top_center",
+        "top_left",
+        "top_right"
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "description": "A Google Map component.",
+  "properties": {
+    "backgroundColor": {
+      "default": "",
+      "description": "Color used for the background of the Map when the tiles have not yet loaded as the user pans.",
+      "format": "color",
+      "type": "string"
+    },
+    "clickableIcons": {
+      "default": true,
+      "description": "Allow map icons (represents a point of interest, also known as a POI) to be clickable.",
+      "type": "boolean"
+    },
+    "controlSize": {
+      "default": null,
+      "description": "Size in pixels of the controls appearing on the map.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "cursor": {
+      "description": "Cursor related configuration.",
+      "properties": {
+        "draggable": {
+          "default": "",
+          "description": "The name or url of the cursor to display when mousing over a draggable map. This property uses the css cursor attribute to change the icon. As with the css property, you must specify at least one fallback cursor that is not a URL.",
+          "type": "string"
+        },
+        "dragging": {
+          "default": "",
+          "description": "The name or url of the cursor to display when the map is being dragged. This property uses the css cursor attribute to change the icon. As with the css property, you must specify at least one fallback cursor that is not a URL.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "disableDefaultUI": {
+      "default": false,
+      "description": "Enables/disables all default UI buttons. May be overridden individually. Does not disable the keyboard controls, which are separately controlled by the \"keyboardShortcuts\" option. Does not disable gesture controls, which are separately controlled by the \"gestureHandling\" option.",
+      "type": "boolean"
+    },
+    "fullscreen": {
+      "description": "Fullscreen related configuration.",
+      "properties": {
+        "controlPosition": {
+          "$ref": "#/definitions/ControlPosition"
+        },
+        "controls": {
+          "default": true,
+          "description": "Enabled/disabled state of the Fullscreen control.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "gestureHandling": {
+      "default": "auto",
+      "description": "Controls how the map handles gestures.",
+      "enum": [
+        "cooperative",
+        "greedy",
+        "none",
+        "auto"
+      ],
+      "type": "string"
+    },
+    "heading": {
+      "default": null,
+      "description": "The heading for aerial imagery in degrees measured clockwise from cardinal direction North.",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "init": {
+      "description": "Maps initial state on load.",
+      "example": {
+        "center": {
+          "lat": 38.660867,
+          "lng": -121.159728
+        },
+        "zoom": 13
+      },
+      "properties": {
+        "center": {
+          "description": "Initial geographic center of the map",
+          "properties": {
+            "lat": {
+              "default": null,
+              "description": "Latitudinal coordinate.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "lng": {
+              "default": null,
+              "description": "Longitude coordinate.",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "lat",
+            "lng"
+          ],
+          "type": "object"
+        },
+        "zoom": {
+          "default": null,
+          "description": "Initial map zoom level.",
+          "minimum": 0,
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "center",
+        "zoom"
+      ],
+      "type": "object"
+    },
+    "isFractionalZoomEnabled": {
+      "default": null,
+      "description": "Whether the map should allow fractional zoom levels.",
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "keyboardShortcuts": {
+      "default": true,
+      "description": "Allow map to be controlled by the keyboard.",
+      "type": "boolean"
+    },
+    "layers": {
+      "description": "Map layers.",
+      "properties": {
+        "bicycling": {
+          "description": "Bicycling layer configuration",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "If true, enables layer that displays bike lanes and paths and demotes large roads.",
+              "type": "boolean"
+            },
+            "name": {
+              "default": "",
+              "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "properties": {
+              "default": {},
+              "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "circle": {
+          "default": [],
+          "items": {
+            "description": "Circle layer configuration",
+            "properties": {
+              "circles": {
+                "default": [],
+                "items": {
+                  "description": "Circle instance configuration",
+                  "properties": {
+                    "center": {
+                      "description": "Sets the center of the circle",
+                      "properties": {
+                        "lat": {
+                          "default": null,
+                          "description": "Latitudinal coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "lng": {
+                          "default": null,
+                          "description": "Longitude coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "lat",
+                        "lng"
+                      ],
+                      "type": "object"
+                    },
+                    "clickable": {
+                      "description": "Indicates whether this circle handles mouse events.",
+                      "type": "boolean"
+                    },
+                    "draggable": {
+                      "description": "If set to true, the user can drag this circle over the map.",
+                      "type": "boolean"
+                    },
+                    "editable": {
+                      "description": "If set to true, the user can edit this circle by dragging the control points shown at the center and around the circumference of the circle.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of circle instance.",
+                      "type": "boolean"
+                    },
+                    "fill": {
+                      "default": {},
+                      "description": "Circle fill configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The fill opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "radius": {
+                      "description": "Sets the radius of this circle (in meters)",
+                      "type": "number"
+                    },
+                    "stroke": {
+                      "default": {},
+                      "description": "Circle stroke configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The stroke opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "position": {
+                          "description": "Stroke dash array.",
+                          "enum": [
+                            "center",
+                            "inside",
+                            "outside"
+                          ],
+                          "type": "string"
+                        },
+                        "weight": {
+                          "description": "The stroke width in pixels",
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "visible": {
+                      "description": "Whether this circle is visible on the map.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "The zIndex compared to other polys.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "clickable": {
+                "default": true,
+                "description": "Indicates whether this circle handles mouse events.",
+                "type": "boolean"
+              },
+              "draggable": {
+                "default": false,
+                "description": "If set to true, the user can drag this circle over the map.",
+                "type": "boolean"
+              },
+              "editable": {
+                "default": false,
+                "description": "If set to true, the user can edit this circle by dragging the control points shown at the center and around the circumference of the circle.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of circle.",
+                "type": "boolean"
+              },
+              "fill": {
+                "default": {},
+                "description": "Circle fill configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The fill opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "radius": {
+                "default": 10,
+                "description": "Sets the radius of this circle (in meters)",
+                "type": "number"
+              },
+              "stroke": {
+                "default": {},
+                "description": "Circle stroke configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The stroke opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "position": {
+                    "default": "center",
+                    "description": "Stroke dash array.",
+                    "enum": [
+                      "center",
+                      "inside",
+                      "outside"
+                    ],
+                    "type": "string"
+                  },
+                  "weight": {
+                    "default": 3,
+                    "description": "The stroke width in pixels",
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "visible": {
+                "default": true,
+                "description": "Whether this circle is visible on the map.",
+                "type": "boolean"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The zIndex compared to other polys.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "groundOverlay": {
+          "default": [],
+          "description": "GroundOverlay layer configuration",
+          "items": {
+            "properties": {
+              "clickable": {
+                "default": true,
+                "description": "If true, the ground overlay can receive mouse events.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of GroundOverlay layer.",
+                "type": "boolean"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "opacity": {
+                "default": 1,
+                "description": "The opacity of the overlay, expressed as a number between 0 and 1. Optional.",
+                "maximum": 1,
+                "minimum": 0,
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "overlays": {
+                "default": [],
+                "items": {
+                  "properties": {
+                    "bounds": {
+                      "description": "Sets the bounds of the overlay",
+                      "properties": {
+                        "corner1": {
+                          "description": "South-West corner of overlay",
+                          "properties": {
+                            "lat": {
+                              "default": null,
+                              "description": "Latitudinal coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "default": null,
+                              "description": "Longitude coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "lat",
+                            "lng"
+                          ],
+                          "type": "object"
+                        },
+                        "corner2": {
+                          "description": "North-East corner of overlay",
+                          "properties": {
+                            "lat": {
+                              "default": null,
+                              "description": "Latitudinal coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "default": null,
+                              "description": "Longitude coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "lat",
+                            "lng"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "corner1",
+                        "corner2"
+                      ],
+                      "type": "object"
+                    },
+                    "clickable": {
+                      "description": "If true, the ground overlay can receive mouse events.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of GroundOverlay overlay.",
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "opacity": {
+                      "description": "The opacity of the overlay, expressed as a number between 0 and 1. Optional.",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": [
+                        "number",
+                        "string"
+                      ]
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "source": {
+                      "default": "",
+                      "description": "The URL of the image to display.",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "kml": {
+          "default": [],
+          "description": "KML layer configuration",
+          "items": {
+            "properties": {
+              "clickable": {
+                "default": true,
+                "description": "If true, the layer receives mouse events.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of KML layer.",
+                "type": "boolean"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "preserveViewport": {
+                "default": false,
+                "description": "If this option is set to true or if the map's center and zoom were never set, the input map is centered and zoomed to the bounding box of the contents of the layer.",
+                "type": "boolean"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "screenOverlays": {
+                "default": true,
+                "description": "Whether to render the screen overlays.",
+                "type": "boolean"
+              },
+              "suppressInfoWindows": {
+                "default": null,
+                "description": "Suppress the rendering of info windows when layer features are clicked.",
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "url": {
+                "default": "",
+                "description": "The URL of the KML document to display.",
+                "type": "string"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The z-index of the layer.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "marker": {
+          "default": [],
+          "items": {
+            "description": "Marker shared configuration",
+            "properties": {
+              "animation": {
+                "default": "none",
+                "description": "Start an animation. Any ongoing animation will be cancelled. Passing in null will cause any animation to stop.",
+                "enum": [
+                  "none",
+                  "bounce",
+                  "drop"
+                ],
+                "type": "string"
+              },
+              "clickable": {
+                "default": true,
+                "description": "If true, the marker receives mouse and touch events.",
+                "type": "boolean"
+              },
+              "clusterMarkers": {
+                "default": false,
+                "description": "Enables marker clustering",
+                "type": "boolean"
+              },
+              "clusterer": {
+                "description": "Configuration for marker clustering",
+                "properties": {
+                  "averageCenter": {
+                    "default": false,
+                    "description": "Whether the position of a cluster marker should be the average position of all markers in the cluster. If set to false, the cluster marker is positioned at the location of the first marker added to the cluster.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "clusterClass": {
+                    "default": "cluster",
+                    "description": "The name of the CSS class defining general styles for the cluster markers. Use this class to define CSS styles that are not set up by the code that processes the styles array.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "enableRetinaIcons": {
+                    "default": false,
+                    "description": "Whether to allow the use of cluster icons that have sizes that are some multiple (typically double) of their actual display size. Icons such as these look better when viewed on high-resolution monitors such as Apple's Retina displays. Note: if this property is true, sprites cannot be used as cluster icons.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "gridSize": {
+                    "default": 60,
+                    "description": "The grid size of a cluster in pixels. The grid is a square.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "ignoreHidden": {
+                    "default": false,
+                    "description": "Whether to ignore hidden markers in clusters. You may want to set this to true to ensure that hidden markers are not included in the marker count that appears on a cluster marker.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "imageExtension": {
+                    "default": "png",
+                    "description": "The extension name for the cluster icon image files (e.g., \"png\" or \"jpg\").",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "imagePath": {
+                    "default": null,
+                    "description": "The full URL of the root name of the group of image files to use for cluster icons. The complete file name is of the form imagePath.imageExtension where n is the image file number (1, 2, etc.).",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "imageSizes": {
+                    "default": [
+                      53,
+                      56,
+                      66,
+                      78,
+                      90
+                    ],
+                    "description": "An array of numbers containing the widths of the group of imagePath.imageExtension image files. (The images are assumed to be square.)",
+                    "items": {
+                      "type": "number"
+                    },
+                    "type": [
+                      "array",
+                      "null"
+                    ]
+                  },
+                  "maxZoom": {
+                    "default": null,
+                    "description": "The maximum zoom level at which clustering is enabled or null if clustering is to be enabled at all zoom levels.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "minimumClusterSize": {
+                    "default": 2,
+                    "description": "The minimum number of markers needed in a cluster before the markers are hidden and a cluster marker appears.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "title": {
+                    "default": "",
+                    "description": "The tooltip to display when the mouse moves over a cluster marker.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "zoomOnClick": {
+                    "default": true,
+                    "description": "Whether to zoom the map when a cluster marker is clicked. You may want to set this to false if you have installed a handler for the click event and it deals with zooming on its own.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object",
+                "visibleWhen": {
+                  "equals": true,
+                  "property": "clusterMarkers"
+                }
+              },
+              "crossOnDrag": {
+                "default": true,
+                "description": "If false, disables cross that appears beneath the marker when dragging.",
+                "type": "boolean"
+              },
+              "cursor": {
+                "default": "pointer",
+                "description": "Mouse cursor to show on hover",
+                "type": "string"
+              },
+              "draggable": {
+                "default": false,
+                "description": "If true, the marker can be dragged.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of marker layer",
+                "type": "boolean"
+              },
+              "icon": {
+                "description": "Marker icon configuration.",
+                "properties": {
+                  "image": {
+                    "description": "Marker icon image configuration",
+                    "properties": {
+                      "anchor": {
+                        "default": {},
+                        "description": "The position at which to anchor an image in correspondence to the location of the marker on the map. By default, the anchor is located along the center point of the bottom of the image.",
+                        "properties": {
+                          "x": {
+                            "description": "The X coordinate",
+                            "type": "number"
+                          },
+                          "y": {
+                            "description": "The Y coordinate",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "labelOrigin": {
+                        "default": {},
+                        "description": "The origin of the label relative to the top-left corner of the icon image, if a label is supplied by the marker. By default, the origin is located in the center point of the image.",
+                        "properties": {
+                          "x": {
+                            "description": "The X coordinate",
+                            "type": "number"
+                          },
+                          "y": {
+                            "description": "The Y coordinate",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "origin": {
+                        "description": "The position of the image within a sprite, if any. By default, the origin is located at the top left corner of the image (0, 0).",
+                        "properties": {
+                          "x": {
+                            "default": 0,
+                            "description": "The X coordinate",
+                            "type": "number"
+                          },
+                          "y": {
+                            "default": 0,
+                            "description": "The Y coordinate",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "scaledSize": {
+                        "default": {},
+                        "description": "The size of the entire image after scaling, if any. Use this property to stretch/shrink an image or a sprite.",
+                        "properties": {
+                          "height": {
+                            "type": "number"
+                          },
+                          "heightUnit": {
+                            "type": "string"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "widthUnit": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "size": {
+                        "default": {},
+                        "description": "The display size of the sprite or image. When using sprites, you must specify the sprite size. If the size is not provided, it will be set when the image loads.",
+                        "properties": {
+                          "height": {
+                            "type": "number"
+                          },
+                          "heightUnit": {
+                            "type": "string"
+                          },
+                          "width": {
+                            "type": "number"
+                          },
+                          "widthUnit": {
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "url": {
+                        "default": "",
+                        "description": "The URL of the image or sprite sheet.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object",
+                    "visibleWhen": {
+                      "equals": "image",
+                      "property": "type"
+                    }
+                  },
+                  "symbol": {
+                    "description": "Marker vector symbol configuration",
+                    "properties": {
+                      "anchor": {
+                        "default": {},
+                        "description": "The position of the symbol relative to the marker. The coordinates of the symbol's path are translated left and up by the anchor's x and y coordinates respectively. The position is expressed in the same coordinate system as the symbol's path.",
+                        "properties": {
+                          "x": {
+                            "description": "The X coordinate",
+                            "type": "number"
+                          },
+                          "y": {
+                            "description": "The Y coordinate",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "customPath": {
+                        "default": "",
+                        "description": "The symbol's custom path expressed using SVG path notation",
+                        "type": "string",
+                        "visibleWhen": {
+                          "equals": "custom",
+                          "property": "path"
+                        }
+                      },
+                      "fill": {
+                        "default": {},
+                        "description": "Symbol fill configuration",
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "description": "The symbol's fill color. All CSS3 colors are supported except for extended named colors.",
+                            "format": "color",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                            "type": "boolean"
+                          },
+                          "opacity": {
+                            "default": 1,
+                            "description": "The symbol's fill opacity.",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "labelOrigin": {
+                        "default": {},
+                        "description": "The origin of the label relative to the origin of the path, if label is supplied by the marker. The origin is expressed in the same coordinate system as the symbol's path.",
+                        "properties": {
+                          "x": {
+                            "description": "The X coordinate",
+                            "type": "number"
+                          },
+                          "y": {
+                            "description": "The Y coordinate",
+                            "type": "number"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "path": {
+                        "default": "custom",
+                        "description": "The symbol's path, which is a built-in symbol path, or a custom path expressed using SVG path notation.",
+                        "enum": [
+                          "backward_closed_arrow",
+                          "backward_open_arrow",
+                          "circle",
+                          "custom",
+                          "forward_closed_arrow",
+                          "forward_open_arrow"
+                        ],
+                        "type": "string"
+                      },
+                      "rotation": {
+                        "description": "The angle by which to rotate the symbol, expressed clockwise in degrees. A symbol in an IconSequence where fixedRotation is false is rotated relative to the angle of the edge on which it lies.",
+                        "type": "number"
+                      },
+                      "scale": {
+                        "description": "The amount by which the symbol is scaled in size. For symbol markers, this defaults to 1; after scaling, the symbol may be of any size.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "stroke": {
+                        "default": {},
+                        "description": "Symbol stroke configuration",
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "description": "The symbol's stroke color. All CSS3 colors are supported except for extended named colors.",
+                            "format": "color",
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                            "type": "boolean"
+                          },
+                          "opacity": {
+                            "default": 1,
+                            "description": "The symbol's stroke opacity. For symbol markers, this defaults to 1.",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "type": "number"
+                          },
+                          "weight": {
+                            "description": "The symbol's stroke weight.",
+                            "minimum": 0,
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object",
+                    "visibleWhen": {
+                      "equals": "symbol",
+                      "property": "type"
+                    }
+                  },
+                  "type": {
+                    "default": "default",
+                    "description": "Icon type for the foreground.",
+                    "enum": [
+                      "default",
+                      "image",
+                      "symbol"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "label": {
+                "default": "",
+                "description": "Adds a label to the marker.",
+                "type": "string"
+              },
+              "markers": {
+                "default": [],
+                "items": {
+                  "description": "Marker instance configuration (overwrites shared configuration)",
+                  "properties": {
+                    "animation": {
+                      "description": "Start an animation. Any ongoing animation will be cancelled. Passing in null will cause any animation to stop.",
+                      "enum": [
+                        "none",
+                        "bounce",
+                        "drop"
+                      ],
+                      "type": "string"
+                    },
+                    "clickable": {
+                      "description": "If true, the marker receives mouse and touch events.",
+                      "type": "boolean"
+                    },
+                    "crossOnDrag": {
+                      "description": "If false, disables cross that appears beneath the marker when dragging.",
+                      "type": "boolean"
+                    },
+                    "cursor": {
+                      "description": "Mouse cursor to show on hover",
+                      "type": "string"
+                    },
+                    "draggable": {
+                      "description": "If true, the marker can be dragged.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of marker.",
+                      "type": "boolean"
+                    },
+                    "icon": {
+                      "default": {
+                        "image": {
+                          "anchor": {},
+                          "labelOrigin": {},
+                          "origin": {
+                            "x": 0,
+                            "y": 0
+                          },
+                          "scaledSize": {},
+                          "size": {},
+                          "url": ""
+                        },
+                        "symbol": {
+                          "anchor": {},
+                          "customPath": "",
+                          "fill": {},
+                          "labelOrigin": {},
+                          "path": "custom",
+                          "stroke": {}
+                        },
+                        "type": "default"
+                      },
+                      "description": "Marker icon configuration.",
+                      "properties": {
+                        "image": {
+                          "default": {},
+                          "description": "Marker icon image configuration",
+                          "properties": {
+                            "anchor": {
+                              "default": {},
+                              "description": "The position at which to anchor an image in correspondence to the location of the marker on the map. By default, the anchor is located along the center point of the bottom of the image.",
+                              "properties": {
+                                "x": {
+                                  "description": "The X coordinate",
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "description": "The Y coordinate",
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "labelOrigin": {
+                              "default": {},
+                              "description": "The origin of the label relative to the top-left corner of the icon image, if a label is supplied by the marker. By default, the origin is located in the center point of the image.",
+                              "properties": {
+                                "x": {
+                                  "description": "The X coordinate",
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "description": "The Y coordinate",
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "origin": {
+                              "default": {},
+                              "description": "The position of the image within a sprite, if any. By default, the origin is located at the top left corner of the image (0, 0).",
+                              "properties": {
+                                "x": {
+                                  "description": "The X coordinate",
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "description": "The Y coordinate",
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "scaledSize": {
+                              "default": {},
+                              "description": "The size of the entire image after scaling, if any. Use this property to stretch/shrink an image or a sprite.",
+                              "properties": {
+                                "height": {
+                                  "type": "number"
+                                },
+                                "heightUnit": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "widthUnit": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "size": {
+                              "default": {},
+                              "description": "The display size of the sprite or image. When using sprites, you must specify the sprite size. If the size is not provided, it will be set when the image loads.",
+                              "properties": {
+                                "height": {
+                                  "type": "number"
+                                },
+                                "heightUnit": {
+                                  "type": "string"
+                                },
+                                "width": {
+                                  "type": "number"
+                                },
+                                "widthUnit": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "url": {
+                              "description": "The URL of the image or sprite sheet.",
+                              "type": "string"
+                            }
+                          },
+                          "type": "object",
+                          "visibleWhen": {
+                            "equals": "image",
+                            "property": "type"
+                          }
+                        },
+                        "symbol": {
+                          "default": {},
+                          "properties": {
+                            "anchor": {
+                              "default": {},
+                              "description": "The position of the symbol relative to the marker. The coordinates of the symbol's path are translated left and up by the anchor's x and y coordinates respectively. The position is expressed in the same coordinate system as the symbol's path.",
+                              "properties": {
+                                "x": {
+                                  "description": "The X coordinate",
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "description": "The Y coordinate",
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "customPath": {
+                              "description": "The symbol's custom path expressed using SVG path notation",
+                              "type": "string",
+                              "visibleWhen": {
+                                "equals": "custom",
+                                "property": "path"
+                              }
+                            },
+                            "fill": {
+                              "default": {},
+                              "description": "Symbol fill configuration",
+                              "properties": {
+                                "color": {
+                                  "default": "",
+                                  "description": "The symbol's fill color. All CSS3 colors are supported except for extended named colors.",
+                                  "format": "color",
+                                  "type": "string"
+                                },
+                                "enabled": {
+                                  "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                                  "type": "boolean"
+                                },
+                                "opacity": {
+                                  "default": 1,
+                                  "description": "The symbol's fill opacity.",
+                                  "maximum": 1,
+                                  "minimum": 0,
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "labelOrigin": {
+                              "default": {},
+                              "description": "The origin of the label relative to the origin of the path, if label is supplied by the marker. The origin is expressed in the same coordinate system as the symbol's path.",
+                              "properties": {
+                                "x": {
+                                  "description": "The X coordinate",
+                                  "type": "number"
+                                },
+                                "y": {
+                                  "description": "The Y coordinate",
+                                  "type": "number"
+                                }
+                              },
+                              "type": "object"
+                            },
+                            "path": {
+                              "description": "The symbol's path, which is a built-in symbol path, or a custom path expressed using SVG path notation.",
+                              "enum": [
+                                "backward_closed_arrow",
+                                "backward_open_arrow",
+                                "circle",
+                                "custom",
+                                "forward_closed_arrow",
+                                "forward_open_arrow"
+                              ],
+                              "type": "string"
+                            },
+                            "rotation": {
+                              "description": "The angle by which to rotate the symbol, expressed clockwise in degrees. A symbol in an IconSequence where fixedRotation is false is rotated relative to the angle of the edge on which it lies.",
+                              "type": "number"
+                            },
+                            "scale": {
+                              "description": "The amount by which the symbol is scaled in size. For symbol markers, this defaults to 1; after scaling, the symbol may be of any size.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "stroke": {
+                              "default": {},
+                              "description": "Symbol stroke configuration",
+                              "properties": {
+                                "color": {
+                                  "default": "",
+                                  "description": "The symbol's stroke color. All CSS3 colors are supported except for extended named colors.",
+                                  "format": "color",
+                                  "type": "string"
+                                },
+                                "enabled": {
+                                  "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                                  "type": "boolean"
+                                },
+                                "opacity": {
+                                  "default": 1,
+                                  "description": "The symbol's stroke opacity. For symbol markers, this defaults to 1.",
+                                  "maximum": 1,
+                                  "minimum": 0,
+                                  "type": "number"
+                                },
+                                "weight": {
+                                  "description": "The symbol's stroke weight.",
+                                  "minimum": 0,
+                                  "type": [
+                                    "number",
+                                    "null"
+                                  ]
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object",
+                          "visibleWhen": {
+                            "equals": "symbol",
+                            "property": "type"
+                          }
+                        },
+                        "type": {
+                          "default": "default",
+                          "description": "Icon type for the foreground.",
+                          "enum": [
+                            "default",
+                            "image",
+                            "symbol"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "label": {
+                      "description": "Adds a label to the marker.",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "opacity": {
+                      "description": "The marker's opacity between 0.0 and 1.0.",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "optimized": {
+                      "description": "Optimization enhances performance by rendering many markers as a single static element. This is useful in cases where a large number of markers is required.",
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "popup": {
+                      "default": {},
+                      "description": "If enabled, popup configuration for this marker. Popups do not apply to clusters.",
+                      "properties": {
+                        "ariaLabel": {
+                          "description": "AriaLabel to assign to the popup.",
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "autoClose": {
+                          "description": "Set it to false if you want to override the default behavior of the popup closing when another popup is opened.",
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        },
+                        "content": {
+                          "default": {},
+                          "description": "The popup content to display.",
+                          "properties": {
+                            "text": {
+                              "description": "Text to display.",
+                              "type": "string"
+                            },
+                            "view": {
+                              "default": {},
+                              "description": "A view to display as popup content. If configured, overrides the text property.",
+                              "properties": {
+                                "params": {
+                                  "default": {},
+                                  "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                                  "extension": {
+                                    "view-params": {
+                                      "path": "../path"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "path": {
+                                  "description": "Path of view to display",
+                                  "format": "view-path",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "disableAutoPan": {
+                          "description": "Disable panning the map to make the popup fully visible when it opens.",
+                          "type": [
+                            "boolean",
+                            "null"
+                          ]
+                        },
+                        "enabled": {
+                          "description": "Enable marker popup.",
+                          "type": "boolean"
+                        },
+                        "pixelOffset": {
+                          "default": {},
+                          "description": "The offset, in pixels, of the tip of the popup from the point on the map at whose geographical coordinates the popup is anchored.",
+                          "properties": {
+                            "x": {
+                              "description": "Distance on the x-axis.",
+                              "type": "number"
+                            },
+                            "y": {
+                              "description": "Distance on the y-axis.",
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "visible": {
+                          "description": "If true, the popup is visible.",
+                          "type": "boolean"
+                        },
+                        "width": {
+                          "default": {},
+                          "properties": {
+                            "max": {
+                              "description": "Max popup width in pixels.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "min": {
+                              "description": "Min popup width in pixels.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "zIndex": {
+                          "description": "All popups are displayed on the map in order of their zIndex, with higher values displaying in front of popups with lower values. By default, popups are displayed according to their latitude, with popups of lower latitudes appearing in front of popups at higher latitudes. Popups are always displayed in front of markers.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "position": {
+                      "description": "Marker position.",
+                      "properties": {
+                        "lat": {
+                          "default": null,
+                          "description": "Latitudinal coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "lng": {
+                          "default": null,
+                          "description": "Longitude coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "title": {
+                      "description": "Rollover text.",
+                      "type": "string"
+                    },
+                    "tooltip": {
+                      "default": {},
+                      "description": "If enabled, this markers tooltip configuration. Tooltips do not apply to clusters.",
+                      "properties": {
+                        "content": {
+                          "default": {},
+                          "description": "The tooltip content to display.",
+                          "properties": {
+                            "text": {
+                              "description": "Text to display.",
+                              "type": "string"
+                            },
+                            "view": {
+                              "default": {},
+                              "description": "A view to display as tooltip content. If configured, overrides the text property.",
+                              "properties": {
+                                "params": {
+                                  "default": {},
+                                  "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                                  "extension": {
+                                    "view-params": {
+                                      "path": "../path"
+                                    }
+                                  },
+                                  "type": "object"
+                                },
+                                "path": {
+                                  "description": "Path of view to display",
+                                  "format": "view-path",
+                                  "type": "string"
+                                }
+                              },
+                              "type": "object"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "direction": {
+                          "description": "Direction where to open the tooltip. Possible values are: right, left, top, bottom, center, auto. auto will dynamically switch between right and left according to the tooltip position on the map.",
+                          "enum": [
+                            "auto",
+                            "right",
+                            "left",
+                            "top",
+                            "bottom",
+                            "center"
+                          ],
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Enable marker tooltip.",
+                          "type": "boolean"
+                        },
+                        "permanent": {
+                          "description": "Whether to open the tooltip permanently or only on mouseover.",
+                          "type": "boolean"
+                        },
+                        "pixelOffset": {
+                          "default": {},
+                          "description": "The offset, in pixels, of the tooltip from the marker's position. For tooltips configured with \"auto\" direction, positive offsets move the tooltip away from the marker's position and negative is the opposite.",
+                          "properties": {
+                            "x": {
+                              "description": "Distance on the x-axis.",
+                              "type": "number"
+                            },
+                            "y": {
+                              "description": "Distance on the y-axis.",
+                              "type": "number"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "visible": {
+                      "description": "If true, the marker is visible.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "All markers are displayed on the map in order of their zIndex, with higher values displaying in front of markers with lower values. By default, markers are displayed according to their vertical position on screen, with lower markers appearing in front of markers further up the screen.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "noClustererRedraw": {
+                "default": false,
+                "description": "If enabled, clusters are not redrawn when a marker is added to the map.",
+                "type": "boolean",
+                "visibleWhen": {
+                  "equals": true,
+                  "property": "clusterMarkers"
+                }
+              },
+              "opacity": {
+                "default": 1,
+                "description": "The marker's opacity between 0.0 and 1.0.",
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "optimized": {
+                "default": null,
+                "description": "Optimization enhances performance by rendering many markers as a single static element. This is useful in cases where a large number of markers is required.",
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "popup": {
+                "description": "If enabled, popup configuration for this marker. Popups do not apply to clusters.",
+                "properties": {
+                  "ariaLabel": {
+                    "default": null,
+                    "description": "AriaLabel to assign to the popup.",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "autoClose": {
+                    "default": true,
+                    "description": "Set it to false if you want to override the default behavior of the popup closing when another popup is opened.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "content": {
+                    "description": "The popup content to display.",
+                    "properties": {
+                      "text": {
+                        "default": "",
+                        "description": "Text to display.",
+                        "type": "string"
+                      },
+                      "view": {
+                        "description": "A view to display as popup content. If configured, overrides the text property.",
+                        "properties": {
+                          "params": {
+                            "default": {},
+                            "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                            "extension": {
+                              "view-params": {
+                                "path": "../path"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "path": {
+                            "default": "",
+                            "description": "Path of view to display",
+                            "format": "view-path",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "disableAutoPan": {
+                    "default": false,
+                    "description": "Disable panning the map to make the popup fully visible when it opens.",
+                    "type": [
+                      "boolean",
+                      "null"
+                    ]
+                  },
+                  "enabled": {
+                    "default": false,
+                    "description": "Enable marker popup.",
+                    "type": "boolean"
+                  },
+                  "pixelOffset": {
+                    "default": {},
+                    "description": "The offset, in pixels, of the tip of the popup from the point on the map at whose geographical coordinates the popup is anchored.",
+                    "properties": {
+                      "x": {
+                        "description": "Distance on the x-axis.",
+                        "type": "number"
+                      },
+                      "y": {
+                        "description": "Distance on the y-axis.",
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "style": {
+                    "$ref": "#/$defs/style-properties.schema"
+                  },
+                  "visible": {
+                    "default": false,
+                    "description": "If true, the popup is visible.",
+                    "type": "boolean"
+                  },
+                  "width": {
+                    "default": {},
+                    "properties": {
+                      "max": {
+                        "description": "Max popup width in pixels.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "min": {
+                        "description": "Min popup width in pixels.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "zIndex": {
+                    "default": null,
+                    "description": "All popups are displayed on the map in order of their zIndex, with higher values displaying in front of popups with lower values. By default, popups are displayed according to their latitude, with popups of lower latitudes appearing in front of popups at higher latitudes. Popups are always displayed in front of markers.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "shape": {
+                "description": "Image map region definition used for drag/click.",
+                "properties": {
+                  "circleCoords": {
+                    "description": "Specifies the pixel position of the shape relative to the top-left corner of the target image.",
+                    "properties": {
+                      "r": {
+                        "default": null,
+                        "description": "Radius of the circle.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "x1": {
+                        "default": null,
+                        "description": "Center coordinate pixel offset (x-axis) of the circle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "y1": {
+                        "default": null,
+                        "description": "Center coordinate pixel offset (y-axis) of the circle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": "object",
+                    "visibleWhen": {
+                      "equals": "circle",
+                      "property": "type"
+                    }
+                  },
+                  "polyCoords": {
+                    "description": "Specifies the pixel position of the shape relative to the top-left corner of the target image.",
+                    "items": {
+                      "description": "Pixel coordinate of one vertex of the polygon.",
+                      "properties": {
+                        "x": {
+                          "default": null,
+                          "description": "Coordinate pair pixel offset (x-axis) of one polygon vertex relative to the top-left corner of the target image.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "y": {
+                          "default": null,
+                          "description": "Coordinate pair pixel offset (y-axis) of one polygon vertex relative to the top-left corner of the target image.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "type": "array",
+                    "visibleWhen": {
+                      "equals": "poly",
+                      "property": "type"
+                    }
+                  },
+                  "rectCoords": {
+                    "description": "Specifies the pixel position of the shape relative to the top-left corner of the target image.",
+                    "properties": {
+                      "x1": {
+                        "default": null,
+                        "description": "Upper-left corner pixel offset (x-axis) of the rectangle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "x2": {
+                        "default": null,
+                        "description": "Lower-right corner pixel offset (x-axis) of the rectangle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "y1": {
+                        "default": null,
+                        "description": "Upper-left corner pixel offset (y-axis) of the rectangle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "y2": {
+                        "default": null,
+                        "description": "Lower-right corner pixel offset (y-axis) of the rectangle relative to the top-left corner of the target image.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "type": "object",
+                    "visibleWhen": {
+                      "equals": "rect",
+                      "property": "type"
+                    }
+                  },
+                  "type": {
+                    "default": "none",
+                    "enum": [
+                      "none",
+                      "circle",
+                      "poly",
+                      "rect"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "title": {
+                "default": "",
+                "description": "Rollover text.",
+                "type": "string"
+              },
+              "tooltip": {
+                "description": "If enabled, this markers tooltip configuration. Tooltips do not apply to clusters.",
+                "properties": {
+                  "content": {
+                    "description": "The tooltip content to display.",
+                    "properties": {
+                      "text": {
+                        "default": "",
+                        "description": "Text to display.",
+                        "type": "string"
+                      },
+                      "view": {
+                        "description": "A view to display as tooltip content. If configured, overrides the text property.",
+                        "properties": {
+                          "params": {
+                            "default": {},
+                            "description": "Parameters for the view. If passing parameters into the embedded view, the names here must match the parameters on that view.",
+                            "extension": {
+                              "view-params": {
+                                "path": "../path"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "path": {
+                            "default": "",
+                            "description": "Path of view to display",
+                            "format": "view-path",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "direction": {
+                    "default": "auto",
+                    "description": "Direction where to open the tooltip. Possible values are: right, left, top, bottom, center, auto. auto will dynamically switch between right and left according to the tooltip position on the map.",
+                    "enum": [
+                      "auto",
+                      "right",
+                      "left",
+                      "top",
+                      "bottom",
+                      "center"
+                    ],
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": false,
+                    "description": "Enable marker tooltip.",
+                    "type": "boolean"
+                  },
+                  "permanent": {
+                    "default": false,
+                    "description": "Whether to open the tooltip permanently or only on mouseover.",
+                    "type": "boolean"
+                  },
+                  "pixelOffset": {
+                    "default": {},
+                    "description": "The offset, in pixels, of the tooltip from the marker's position. For tooltips configured with \"auto\" direction, positive offsets move the tooltip away from the marker's position and negative is the opposite.",
+                    "properties": {
+                      "x": {
+                        "description": "Distance on the x-axis.",
+                        "type": "number"
+                      },
+                      "y": {
+                        "description": "Distance on the y-axis.",
+                        "type": "number"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "style": {
+                    "$ref": "#/$defs/style-properties.schema"
+                  }
+                },
+                "type": "object"
+              },
+              "visible": {
+                "default": true,
+                "description": "If true, the marker is visible.",
+                "type": "boolean"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "All markers are displayed on the map in order of their zIndex, with higher values displaying in front of markers with lower values. By default, markers are displayed according to their vertical position on screen, with lower markers appearing in front of markers further up the screen.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "overlayView": {
+          "default": [],
+          "items": {
+            "description": "OverlayView layer configuration",
+            "properties": {
+              "bounds": {
+                "description": "Sets the bounds of the overlay. Either of bounds or position are required.",
+                "properties": {
+                  "corner1": {
+                    "description": "South-West corner of overlay",
+                    "properties": {
+                      "lat": {
+                        "default": null,
+                        "description": "Latitudinal coordinate.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "lng": {
+                        "default": null,
+                        "description": "Longitude coordinate.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "lat",
+                      "lng"
+                    ],
+                    "type": "object"
+                  },
+                  "corner2": {
+                    "description": "North-East corner of overlay",
+                    "properties": {
+                      "lat": {
+                        "default": null,
+                        "description": "Latitudinal coordinate.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "lng": {
+                        "default": null,
+                        "description": "Longitude coordinate.",
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "lat",
+                      "lng"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "corner1",
+                  "corner2"
+                ],
+                "type": "object"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of OverlayView layer.",
+                "type": "boolean"
+              },
+              "mapPaneName": {
+                "default": "floatPane",
+                "description": "Map pane in which to render the OverlayView",
+                "enum": [
+                  "floatPane",
+                  "mapPane",
+                  "markerLayer",
+                  "overlayLayer",
+                  "overlayMouseTarget"
+                ],
+                "type": "string"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "position": {
+                "description": "OverlayView position. Either of bounds or position are required.",
+                "properties": {
+                  "lat": {
+                    "default": null,
+                    "description": "Latitudinal coordinate.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "lng": {
+                    "default": null,
+                    "description": "Longitude coordinate.",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "type": "object"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "shadow": {
+                "default": true,
+                "description": "If enabled, apply a box shadow around the view.",
+                "type": "boolean"
+              },
+              "style": {
+                "$ref": "#/$defs/style-properties.schema"
+              },
+              "transparentBackground": {
+                "default": false,
+                "description": "If enabled, disables the default background color.",
+                "type": "boolean"
+              },
+              "views": {
+                "items": {
+                  "description": "OverlayView instance configuration",
+                  "properties": {
+                    "bounds": {
+                      "description": "Sets the bounds of the overlay. Either of bounds or position are required.",
+                      "properties": {
+                        "corner1": {
+                          "description": "South-West corner of overlay",
+                          "properties": {
+                            "lat": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        },
+                        "corner2": {
+                          "description": "North-East corner of overlay",
+                          "properties": {
+                            "lat": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of OverlayView instance.",
+                      "type": "boolean"
+                    },
+                    "mapPaneName": {
+                      "description": "Map pane in which to render the view instance",
+                      "enum": [
+                        "floatPane",
+                        "mapPane",
+                        "markerLayer",
+                        "overlayLayer",
+                        "overlayMouseTarget"
+                      ],
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "params": {
+                      "default": {},
+                      "description": "Params to pass to the view instance.",
+                      "extension": {
+                        "view-params": {
+                          "path": "../path"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "path": {
+                      "default": "",
+                      "description": "Path to the view instance.",
+                      "format": "view-path",
+                      "type": "string"
+                    },
+                    "position": {
+                      "description": "OverlayView instance position. Either of bounds or position are required.",
+                      "properties": {
+                        "lat": {
+                          "description": "Latitudinal coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        },
+                        "lng": {
+                          "description": "Longitude coordinate.",
+                          "type": [
+                            "number",
+                            "null"
+                          ]
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "shadow": {
+                      "description": "If enabled, apply a box shadow around the view instance.",
+                      "type": "boolean"
+                    },
+                    "style": {
+                      "$ref": "#/$defs/style-properties.schema"
+                    },
+                    "transparentBackground": {
+                      "description": "If enabled, disables the default background color.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "The z-index of the view instance.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The z-index of the layer.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "polygon": {
+          "default": [],
+          "items": {
+            "description": "Polygon layer configuration",
+            "properties": {
+              "clickable": {
+                "default": true,
+                "description": "Indicates whether this polygon handles mouse events.",
+                "type": "boolean"
+              },
+              "draggable": {
+                "default": false,
+                "description": "If set to true, the user can drag this polygon over the map.",
+                "type": "boolean"
+              },
+              "editable": {
+                "default": false,
+                "description": "If set to true, the user can edit this shape by dragging the control points shown at the vertices and on each segment.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of polygon layer.",
+                "type": "boolean"
+              },
+              "fill": {
+                "default": {},
+                "description": "Polygon fill configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The fill opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "geodesic": {
+                "default": false,
+                "description": "When true, edges of the polygon are interpreted as geodesic and will follow the curvature of the Earth. When false, edges of the polygon are rendered as straight lines in screen space. Note that the shape of a geodesic polygon may appear to change when dragged, as the dimensions are maintained relative to the surface of the earth.",
+                "type": "boolean"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "polygons": {
+                "default": [],
+                "items": {
+                  "description": "Polygon instance configuration",
+                  "properties": {
+                    "clickable": {
+                      "description": "Indicates whether this polygon handles mouse events.",
+                      "type": "boolean"
+                    },
+                    "draggable": {
+                      "description": "If set to true, the user can drag this polygon over the map.",
+                      "type": "boolean"
+                    },
+                    "editable": {
+                      "description": "If set to true, the user can edit this shape by dragging the control points shown at the vertices and on each segment.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of polygon instance.",
+                      "type": "boolean"
+                    },
+                    "fill": {
+                      "default": {},
+                      "description": "Polygon fill configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The fill opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "geodesic": {
+                      "description": "When true, edges of the polygon are interpreted as geodesic and will follow the curvature of the Earth. When false, edges of the polygon are rendered as straight lines in screen space. Note that the shape of a geodesic polygon may appear to change when dragged, as the dimensions are maintained relative to the surface of the earth.",
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "points": {
+                      "default": [],
+                      "description": "Sets the path for this polygon. The ordered sequence of coordinates that designates a closed loop. Unlike polylines, a polygon may consist of one or more paths. As a result, the paths property may specify one or more arrays of LatLng coordinates. Paths are closed automatically; do not repeat the first vertex of the path as the last vertex.",
+                      "items": {
+                        "default": [],
+                        "items": {
+                          "description": "A path of the polygon",
+                          "properties": {
+                            "lat": {
+                              "default": null,
+                              "description": "Latitudinal coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "default": null,
+                              "description": "Longitude coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "lat",
+                            "lng"
+                          ],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "type": "array"
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "stroke": {
+                      "default": {},
+                      "description": "Polygon stroke configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The stroke opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "position": {
+                          "description": "Stroke dash array.",
+                          "enum": [
+                            "center",
+                            "inside",
+                            "outside"
+                          ],
+                          "type": "string"
+                        },
+                        "weight": {
+                          "description": "The stroke width in pixels",
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "visible": {
+                      "description": "Whether this polygon is visible on the map.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "The zIndex compared to other polys.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "stroke": {
+                "default": {},
+                "description": "Polygon stroke configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The stroke opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "position": {
+                    "default": "center",
+                    "description": "Stroke dash array.",
+                    "enum": [
+                      "center",
+                      "inside",
+                      "outside"
+                    ],
+                    "type": "string"
+                  },
+                  "weight": {
+                    "default": 3,
+                    "description": "The stroke width in pixels",
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "visible": {
+                "default": true,
+                "description": "Whether this polygon is visible on the map.",
+                "type": "boolean"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The zIndex compared to other polys.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "polyline": {
+          "default": [],
+          "items": {
+            "description": "Polyline layer configuration",
+            "properties": {
+              "clickable": {
+                "default": true,
+                "description": "Indicates whether this polyline handles mouse events.",
+                "type": "boolean"
+              },
+              "draggable": {
+                "default": false,
+                "description": "If set to true, the user can drag this polyline over the map.",
+                "type": "boolean"
+              },
+              "editable": {
+                "default": false,
+                "description": "If set to true, the user can edit this polyline by dragging the control points shown at the center and around the circumference of the circle.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of polyline layer.",
+                "type": "boolean"
+              },
+              "geodesic": {
+                "default": false,
+                "description": "When true, edges of the polygon are interpreted as geodesic and will follow the curvature of the Earth. When false, edges of the polygon are rendered as straight lines in screen space. Note that the shape of a geodesic polygon may appear to change when dragged, as the dimensions are maintained relative to the surface of the earth.",
+                "type": "boolean"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "polylines": {
+                "default": [],
+                "items": {
+                  "description": "Polyline instance configuration",
+                  "properties": {
+                    "clickable": {
+                      "description": "Indicates whether this polyline handles mouse events.",
+                      "type": "boolean"
+                    },
+                    "draggable": {
+                      "description": "If set to true, the user can drag this polyline over the map.",
+                      "type": "boolean"
+                    },
+                    "editable": {
+                      "description": "If set to true, the user can edit this polyline by dragging the control points shown at the center and around the circumference of the circle.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of polyline instance.",
+                      "type": "boolean"
+                    },
+                    "geodesic": {
+                      "description": "When true, edges of the polygon are interpreted as geodesic and will follow the curvature of the Earth. When false, edges of the polygon are rendered as straight lines in screen space. Note that the shape of a geodesic polygon may appear to change when dragged, as the dimensions are maintained relative to the surface of the earth.",
+                      "type": "boolean"
+                    },
+                    "icons": {
+                      "default": [],
+                      "description": "The icons to be rendered along the polyline.",
+                      "items": {
+                        "description": "Describes how icons are to be rendered on a line. If your polyline is geodesic, then the distances specified for both offset and repeat are calculated in meters by default. Setting either offset or repeat to a pixel value will cause the distances to be calculated in pixels on the screen.",
+                        "properties": {
+                          "fixedRotation": {
+                            "default": false,
+                            "description": "If true, each icon in the sequence has the same fixed rotation regardless of the angle of the edge on which it lies. If false, case each icon in the sequence is rotated to align with its edge.",
+                            "type": "boolean"
+                          },
+                          "icon": {
+                            "description": "The icon to render on the line.",
+                            "properties": {
+                              "anchor": {
+                                "default": {},
+                                "description": "The position of the symbol relative to the polyline. The coordinates of the symbol's path are translated left and up by the anchor's x and y coordinates respectively. The position is expressed in the same coordinate system as the symbol's path.",
+                                "properties": {
+                                  "x": {
+                                    "default": 0,
+                                    "description": "The X coordinate",
+                                    "type": "number"
+                                  },
+                                  "y": {
+                                    "default": 0,
+                                    "description": "The Y coordinate",
+                                    "type": "number"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "customPath": {
+                                "default": "",
+                                "description": "The symbol's custom path expressed using SVG path notation",
+                                "type": "string",
+                                "visibleWhen": {
+                                  "equals": "custom",
+                                  "property": "path"
+                                }
+                              },
+                              "fill": {
+                                "default": {},
+                                "description": "Icon fill configuration.",
+                                "properties": {
+                                  "color": {
+                                    "default": "",
+                                    "description": "The symbol's fill color. All CSS3 colors are supported except for extended named colors. Defaults to the stroke color of the corresponding polyline.",
+                                    "format": "color",
+                                    "type": "string"
+                                  },
+                                  "enabled": {
+                                    "default": false,
+                                    "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                                    "type": "boolean"
+                                  },
+                                  "opacity": {
+                                    "default": 0,
+                                    "description": "The symbol's fill opacity.",
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  }
+                                },
+                                "type": "object"
+                              },
+                              "path": {
+                                "default": "circle",
+                                "description": "The symbol's path, which is a built-in symbol path, or a custom path expressed using SVG path notation.",
+                                "enum": [
+                                  "backward_closed_arrow",
+                                  "backward_open_arrow",
+                                  "circle",
+                                  "custom",
+                                  "forward_closed_arrow",
+                                  "forward_open_arrow"
+                                ],
+                                "type": "string"
+                              },
+                              "rotation": {
+                                "default": 0,
+                                "description": "The angle by which to rotate the symbol, expressed clockwise in degrees. A symbol in an IconSequence where fixedRotation is false is rotated relative to the angle of the edge on which it lies.",
+                                "type": "number"
+                              },
+                              "scale": {
+                                "default": null,
+                                "description": "The amount by which the symbol is scaled in size. Defaults to the stroke weight of the polyline; after scaling, the symbol must lie inside a square 22 pixels in size centered at the symbol's anchor.",
+                                "type": [
+                                  "number",
+                                  "null"
+                                ]
+                              },
+                              "stroke": {
+                                "default": {},
+                                "description": "Icon stroke configuration.",
+                                "properties": {
+                                  "color": {
+                                    "default": "",
+                                    "description": "The symbol's stroke color. All CSS3 colors are supported except for extended named colors. Defaults to the stroke color of the polyline.",
+                                    "format": "color",
+                                    "type": "string"
+                                  },
+                                  "enabled": {
+                                    "default": false,
+                                    "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                                    "type": "boolean"
+                                  },
+                                  "opacity": {
+                                    "default": 1,
+                                    "description": "The symbol's stroke opacity. Defaults to the stroke opacity of the polyline.",
+                                    "maximum": 1,
+                                    "minimum": 0,
+                                    "type": "number"
+                                  },
+                                  "weight": {
+                                    "default": null,
+                                    "description": "The symbol's stroke weight.",
+                                    "minimum": 0,
+                                    "type": [
+                                      "number",
+                                      "null"
+                                    ]
+                                  }
+                                },
+                                "type": "object"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "offset": {
+                            "default": "100%",
+                            "description": "The distance from the start of the line at which an icon is to be rendered. This distance may be expressed as a percentage of line's length (e.g. '50%') or in pixels (e.g. '50px').",
+                            "type": "string"
+                          },
+                          "repeat": {
+                            "default": "0",
+                            "description": "The distance between consecutive icons on the line. This distance may be expressed as a percentage of the line's length (e.g. '50%') or in pixels (e.g. '50px'). To disable repeating of the icon, specify '0'.",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "points": {
+                      "default": [],
+                      "description": "Sets the path for this polyline. The ordered sequence of coordinates of the Polyline. This path may be specified using either a simple array of LatLngs, or an MVCArray of LatLngs. Note that if you pass a simple array, it will be converted to an MVCArray Inserting or removing LatLngs in the MVCArray will automatically update the polyline on the map.",
+                      "items": {
+                        "description": "A path of the polyline",
+                        "properties": {
+                          "lat": {
+                            "default": null,
+                            "description": "Latitudinal coordinate.",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          },
+                          "lng": {
+                            "default": null,
+                            "description": "Longitude coordinate.",
+                            "type": [
+                              "number",
+                              "null"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "lat",
+                          "lng"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "stroke": {
+                      "default": {},
+                      "description": "Polyline stroke configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The stroke opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "weight": {
+                          "description": "The stroke width in pixels",
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "visible": {
+                      "description": "Whether this polyline is visible on the map.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "The zIndex compared to other polys.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "stroke": {
+                "default": {},
+                "description": "Polyline stroke configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The stroke opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "weight": {
+                    "default": 3,
+                    "description": "The stroke width in pixels",
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "visible": {
+                "default": true,
+                "description": "Whether this polyline is visible on the map.",
+                "type": "boolean"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The zIndex compared to other polys.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "rectangle": {
+          "default": [],
+          "items": {
+            "description": "Rectangle layer configuration",
+            "properties": {
+              "clickable": {
+                "default": true,
+                "description": "Indicates whether this rectangle handles mouse events.",
+                "type": "boolean"
+              },
+              "draggable": {
+                "default": false,
+                "description": "If set to true, the user can drag this rectangle over the map.",
+                "type": "boolean"
+              },
+              "editable": {
+                "default": false,
+                "description": "If set to true, the user can edit this rectangle by dragging the control points shown at the center and around the circumference of the circle.",
+                "type": "boolean"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable/disable rendering of rectangle.",
+                "type": "boolean"
+              },
+              "fill": {
+                "default": {},
+                "description": "Rectangle fill configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The fill opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "name": {
+                "default": "",
+                "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                "type": [
+                  "string",
+                  "number",
+                  "null"
+                ]
+              },
+              "properties": {
+                "default": {},
+                "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                "type": "object"
+              },
+              "rectangles": {
+                "default": [],
+                "items": {
+                  "description": "Rectangle instance configuration",
+                  "properties": {
+                    "bounds": {
+                      "description": "Sets the bounds of the rectangle",
+                      "properties": {
+                        "corner1": {
+                          "description": "South-West corner of rectangle",
+                          "properties": {
+                            "lat": {
+                              "default": null,
+                              "description": "Latitudinal coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "default": null,
+                              "description": "Longitude coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "lat",
+                            "lng"
+                          ],
+                          "type": "object"
+                        },
+                        "corner2": {
+                          "description": "North-East corner of rectangle",
+                          "properties": {
+                            "lat": {
+                              "default": null,
+                              "description": "Latitudinal coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            },
+                            "lng": {
+                              "default": null,
+                              "description": "Longitude coordinate.",
+                              "type": [
+                                "number",
+                                "null"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "lat",
+                            "lng"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "required": [
+                        "corner1",
+                        "corner2"
+                      ],
+                      "type": "object"
+                    },
+                    "clickable": {
+                      "description": "Indicates whether this rectangle handles mouse events.",
+                      "type": "boolean"
+                    },
+                    "draggable": {
+                      "description": "If set to true, the user can drag this rectangle over the map.",
+                      "type": "boolean"
+                    },
+                    "editable": {
+                      "description": "If set to true, the user can edit this rectangle by dragging the control points shown at the center and around the circumference of the circle.",
+                      "type": "boolean"
+                    },
+                    "enabled": {
+                      "description": "Enable/disable rendering of rectangle.",
+                      "type": "boolean"
+                    },
+                    "fill": {
+                      "default": {},
+                      "description": "Rectangle fill configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The fill color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to fill the path with color. Set it to false to disable filling.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The fill opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "name": {
+                      "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": [
+                        "string",
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "properties": {
+                      "default": {},
+                      "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+                      "type": "object"
+                    },
+                    "stroke": {
+                      "default": {},
+                      "description": "Rectangle stroke configuration.",
+                      "properties": {
+                        "color": {
+                          "default": "",
+                          "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                          "format": "color",
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                          "type": "boolean"
+                        },
+                        "opacity": {
+                          "default": 1,
+                          "description": "The stroke opacity between 0.0 and 1.0.",
+                          "maximum": 1,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "position": {
+                          "description": "Stroke dash array.",
+                          "enum": [
+                            "center",
+                            "inside",
+                            "outside"
+                          ],
+                          "type": "string"
+                        },
+                        "weight": {
+                          "description": "The stroke width in pixels",
+                          "minimum": 0,
+                          "type": "number"
+                        }
+                      },
+                      "type": "object"
+                    },
+                    "visible": {
+                      "description": "Whether this rectangle is visible on the map.",
+                      "type": "boolean"
+                    },
+                    "zIndex": {
+                      "description": "The zIndex compared to other polys.",
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "stroke": {
+                "default": {},
+                "description": "Rectangle stroke configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "The stroke color. All CSS3 colors are supported except for extended named colors.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "enabled": {
+                    "default": true,
+                    "description": "Whether to draw stroke along the path. Set it to false to disable borders.",
+                    "type": "boolean"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "The stroke opacity between 0.0 and 1.0.",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "position": {
+                    "default": "center",
+                    "description": "Stroke dash array.",
+                    "enum": [
+                      "center",
+                      "inside",
+                      "outside"
+                    ],
+                    "type": "string"
+                  },
+                  "weight": {
+                    "default": 3,
+                    "description": "The stroke width in pixels",
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "visible": {
+                "default": true,
+                "description": "Whether this rectangle is visible on the map.",
+                "type": "boolean"
+              },
+              "zIndex": {
+                "default": null,
+                "description": "The zIndex compared to other polys.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "traffic": {
+          "description": "Traffic layer configuration",
+          "properties": {
+            "autoRefresh": {
+              "default": true,
+              "description": "Whether the traffic layer refreshes with updated information automatically.",
+              "type": "boolean"
+            },
+            "enabled": {
+              "default": false,
+              "description": "If true, enables layer that displays current road traffic.",
+              "type": "boolean"
+            },
+            "name": {
+              "default": "",
+              "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "properties": {
+              "default": {},
+              "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "transit": {
+          "description": "Transit layer configuration",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "If true, enables layer that displays transit lines.",
+              "type": "boolean"
+            },
+            "name": {
+              "default": "",
+              "description": "A unique name which is used to distinguish this element from others. This name is provided to any applicable interaction event handlers, such as click handlers.",
+              "type": [
+                "string",
+                "number",
+                "null"
+              ]
+            },
+            "properties": {
+              "default": {},
+              "description": "Properties of this element. These are provided to any applicable interaction event handlers, such as click handlers.",
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "mapId": {
+      "default": "",
+      "description": "The Map ID of the map.",
+      "type": "string"
+    },
+    "mapType": {
+      "description": "MapType related configuration.",
+      "properties": {
+        "controlMapTypeIds": {
+          "default": [],
+          "description": "IDs of map types to show in the control.",
+          "items": {
+            "enum": [
+              "hybrid",
+              "roadmap",
+              "satellite",
+              "terrain"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "controlPosition": {
+          "$ref": "#/definitions/ControlPosition",
+          "default": "top_right"
+        },
+        "controlStyle": {
+          "default": "default",
+          "description": "Style of map type control to display.",
+          "enum": [
+            "default",
+            "dropdown_menu",
+            "horizontal_bar"
+          ],
+          "type": "string"
+        },
+        "controls": {
+          "default": true,
+          "description": "The initial enabled/disabled state of the map type control.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "id": {
+          "default": "roadmap",
+          "description": "The initial Map mapTypeId.",
+          "enum": [
+            "hybrid",
+            "roadmap",
+            "satellite",
+            "terrain"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "restriction": {
+      "description": "Defines a boundary that restricts the area of the map accessible to users. When set, a user can only pan and zoom while the camera view stays inside the limits of the boundary.",
+      "properties": {
+        "bounds": {
+          "description": "When set, a user can only pan and zoom inside the given bounds. Bounds can restrict both longitude and latitude, or can restrict latitude only. For latitude-only bounds use west and east longitudes of -180 and 180, respectively, for example, latLngBounds: {north: northLat, south: southLat, west: -180, east: 180}.",
+          "properties": {
+            "east": {
+              "default": null,
+              "description": "Longitude for Eastern boundary.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "north": {
+              "default": null,
+              "description": "Latitude for Northern boundary.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "south": {
+              "default": null,
+              "description": "Latitude for Southern boundary.",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "west": {
+              "default": null,
+              "description": "Longitude for Western boundary.",
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "strict": {
+          "default": false,
+          "description": "Bounds can be made more restrictive by setting the strictBounds flag to true. This reduces how far a user can zoom out, ensuring that everything outside of the restricted bounds stays hidden. The default is false, meaning that a user can zoom out until the entire bounded area is in view, possibly including areas outside the bounded area.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "rotate": {
+      "description": "Rotate related configuration.",
+      "properties": {
+        "controlPosition": {
+          "$ref": "#/definitions/ControlPosition"
+        },
+        "controls": {
+          "default": true,
+          "description": "Enabled/disabled state of the Rotate control.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "scale": {
+      "description": "Scale related configuration.",
+      "properties": {
+        "controls": {
+          "default": true,
+          "description": "Enabled/disabled state of the Scale control.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema"
+    },
+    "tilt": {
+      "default": null,
+      "description": "Controls the automatic switching behavior for the angle of incidence of the map. The only allowed values are 0 and 45.",
+      "enum": [
+        null,
+        0,
+        45
+      ],
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "zoom": {
+      "description": "Zoom related configurations.",
+      "properties": {
+        "controlPosition": {
+          "$ref": "#/definitions/ControlPosition"
+        },
+        "controls": {
+          "default": true,
+          "description": "Enabled/disabled state of the Zoom control.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "max": {
+          "default": null,
+          "description": "The maximum zoom level which will be displayed on the map.",
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "min": {
+          "default": null,
+          "description": "The minimum zoom level which will be displayed on the map.",
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "init"
+  ],
+  "title": "Google Map",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.display.google-map",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveGoogleMap",
+    "palette_category": "display",
+    "registry_file": "perspective-googlemap.components.json",
+    "registry_hash": "88f32adb473b48bd2912"
+  }
+}

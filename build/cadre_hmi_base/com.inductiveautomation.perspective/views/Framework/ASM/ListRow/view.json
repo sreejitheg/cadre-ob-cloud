@@ -1,0 +1,326 @@
+{
+  "custom": {},
+  "params": {
+    "action": "",
+    "close": "",
+    "counts": {
+      "Critical": 0,
+      "Diagnostic": 0,
+      "High": 0,
+      "Low": 0,
+      "Medium": 0,
+      "total": 0,
+      "unacked": 0
+    },
+    "depth": 0,
+    "deviceId": "",
+    "deviceKind": "",
+    "deviceLabel": "",
+    "deviceTitle": "",
+    "disabled": false,
+    "icon": "",
+    "kind": "",
+    "label": "",
+    "nodeId": "",
+    "route": "",
+    "second": "",
+    "selected": false,
+    "tab": ""
+  },
+  "propConfig": {
+    "params.action": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.close": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.counts": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.depth": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceKind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceTitle": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.disabled": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.icon": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.kind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.nodeId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.route": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.second": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.selected": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tab": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 44,
+      "width": 304
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Icon"
+        },
+        "position": {
+          "basis": "20px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.params.icon}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.elements": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.icon}"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.icons.elements(value)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [],
+          "style": {
+            "height": "20px"
+          },
+          "viewBox": "0 0 24 24"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.params.kind} = 'group', 'cadre/font/overline cadre/text/neutral', if({view.params.disabled}, 'cadre/font/body cadre/text/neutral', 'cadre/font/body-active cadre/text/active'))"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.label}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Second"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.params.second}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.second}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Texts"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Badges"
+        },
+        "position": {
+          "basis": "120px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.kind} != 'group' && {view.params.counts.total} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.counts": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "counts": {
+              "Critical": 0,
+              "Diagnostic": 0,
+              "High": 0,
+              "Low": 0,
+              "Medium": 0,
+              "total": 0,
+              "unacked": 0
+            }
+          },
+          "path": "Framework/Badges",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tp = self.view.params\n\tif p.kind != 'group' and not p.disabled:\n\t\tif p.action == 'alarms' or p.action == 'trend':\n\t\t\tself.session.custom.contentNode = p.nodeId\n\t\t\tsystem.perspective.navigate('/node/' + p.action)\n\t\telif p.route:\n\t\t\tsystem.perspective.navigate(p.route)\n\t\tif p.deviceId:\n\t\t\tcadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, p.tab)\n\t\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\telse:\n\t\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\t\tself.session.custom.faceplateDocked = True\n\t\tif p.close == 'nav':\n\t\t\tsystem.perspective.closeDock('nav')\n\t\telif p.close == 'search':\n\t\t\tself.session.custom.searchQuery = ''\n\t\t\tself.session.custom.searchOpen = False\n\t\telif p.close:\n\t\t\tsystem.perspective.closePopup(p.close)"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "if({view.params.kind} = 'group', 'cadre/divider/bottom', if({view.params.selected}, 'cadre/nav/item-selected', 'cadre/nav/item cadre/text/active'))"
+          },
+          "type": "expr"
+        }
+      },
+      "props.style.paddingLeft": {
+        "binding": {
+          "config": {
+            "expression": "toStr(8 + 16 * {view.params.depth}) + 'px'"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "gap": "10px",
+        "overflow": "hidden",
+        "padding": "0 8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

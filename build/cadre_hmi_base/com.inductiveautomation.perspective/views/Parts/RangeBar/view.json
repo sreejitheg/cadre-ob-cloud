@@ -1,0 +1,168 @@
+{
+  "custom": {},
+  "params": {
+    "format": "#,##0.0",
+    "hiLimit": null,
+    "loLimit": null,
+    "max": 100,
+    "min": 0,
+    "normalHi": null,
+    "normalLo": null,
+    "showValue": false,
+    "unit": "",
+    "value": 0,
+    "vertical": false
+  },
+  "propConfig": {
+    "params.format": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hiLimit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.loLimit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.max": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.min": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.normalHi": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.normalLo": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showValue": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.vertical": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 10,
+      "width": 64
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Bar"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.elements": {
+            "binding": {
+              "config": {
+                "expression": "if(isNull({view.params.value}), '', toStr({view.params.value})) + '|' + if(isNull({view.params.min}), '', toStr({view.params.min})) + '|' + if(isNull({view.params.max}), '', toStr({view.params.max})) + '|' + if(isNull({view.params.normalLo}), '', toStr({view.params.normalLo})) + '|' + if(isNull({view.params.normalHi}), '', toStr({view.params.normalHi})) + '|' + if(isNull({view.params.loLimit}), '', toStr({view.params.loLimit})) + '|' + if(isNull({view.params.hiLimit}), '', toStr({view.params.hiLimit})) + '|' + toStr({view.params.vertical})"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.range_bar_elements(value)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.viewBox": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.vertical}, '0 0 10 100', '0 0 100 10')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [],
+          "preserveAspectRatio": "none",
+          "viewBox": "0 0 100 10"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Value"
+        },
+        "position": {
+          "basis": "auto",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showValue}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "numberFormat(coalesce({view.params.value}, 0), {view.params.format}) + if(len({view.params.unit}) > 0, ' ' + {view.params.unit}, '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/automation-label cadre/text/active",
+            "padding": "0 4px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.direction": {
+        "binding": {
+          "config": {
+            "expression": "if({view.params.vertical}, 'column', 'row')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

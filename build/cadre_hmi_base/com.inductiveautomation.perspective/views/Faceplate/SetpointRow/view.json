@@ -1,0 +1,365 @@
+{
+  "custom": {
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "message": "",
+    "pending": false,
+    "typed": 0
+  },
+  "params": {
+    "deviceId": "",
+    "enabled": false,
+    "format": "0.0",
+    "label": "",
+    "maximum": null,
+    "member": "",
+    "minimum": null,
+    "path": "",
+    "unit": ""
+  },
+  "propConfig": {
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.message = ''\n\tself.custom.pending = False"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.enabled": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.format": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.maximum": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.member": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.message = ''\n\tself.custom.pending = False"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.minimum": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.path": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 44,
+      "width": 368
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Label"
+        },
+        "position": {
+          "basis": "132px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.label}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tself.view.custom.typed = self.props.value\n\tself.view.custom.pending = True"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Setpoint"
+        },
+        "position": {
+          "basis": "120px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.enabled": {
+            "binding": {
+              "config": {
+                "expression": "case({view.params.path}, 'W3', {view.custom.can.W3}, 'W4', {view.custom.can.W4}, 'W12', {view.custom.can.W12}, 'W14', {view.custom.can.W14}, 'W15', {view.custom.can.W15}, 'W19', {view.custom.can.W19}, false) && {view.params.enabled}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.format": {
+            "binding": {
+              "config": {
+                "path": "view.params.format"
+              },
+              "type": "property"
+            }
+          },
+          "props.inputBounds.maximum": {
+            "binding": {
+              "config": {
+                "path": "view.params.maximum"
+              },
+              "type": "property"
+            }
+          },
+          "props.inputBounds.minimum": {
+            "binding": {
+              "config": {
+                "path": "view.params.minimum"
+              },
+              "type": "property"
+            }
+          },
+          "props.value": {
+            "binding": {
+              "config": {
+                "mode": "indirect",
+                "references": {
+                  "0": "{view.params.deviceId}",
+                  "1": "{view.params.member}"
+                },
+                "tagPath": "{0}/{1}"
+              },
+              "type": "tag"
+            }
+          }
+        },
+        "props": {
+          "format": "0.0",
+          "spinner": {
+            "enabled": false
+          },
+          "style": {
+            "height": "32px"
+          }
+        },
+        "type": "ia.input.numeric-entry-field"
+      },
+      {
+        "meta": {
+          "name": "Note"
+        },
+        "position": {
+          "basis": "72px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "!{view.custom.pending}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if(len({view.custom.message}) > 0, 'cadre/font/label cadre/alert/badge-warning', 'cadre/font/label cadre/text/neutral')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if(len({view.custom.message}) > 0, 'Refused', {view.params.unit})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/font/label cadre/text/neutral",
+            "justifyContent": "center"
+          },
+          "textStyle": {
+            "textAlign": "center"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tp = self.view.params\n\tmsg = cadre.hmi.command(self.session, p.path, p.deviceId, p.member, self.view.custom.typed)\n\tself.view.custom.pending = False\n\tself.view.custom.message = msg\n\tif msg:\n\t\tself.getSibling('Setpoint').props.value = system.tag.readBlocking([p.deviceId + '/' + p.member])[0].value"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Set"
+        },
+        "position": {
+          "basis": "56px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.pending}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.enabled": {
+            "binding": {
+              "config": {
+                "expression": "case({view.params.path}, 'W3', {view.custom.can.W3}, 'W4', {view.custom.can.W4}, 'W12', {view.custom.can.W12}, 'W14', {view.custom.can.W14}, 'W15', {view.custom.can.W15}, 'W19', {view.custom.can.W19}, false) && {view.params.enabled}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/normal cadre/font/button",
+            "height": "32px"
+          },
+          "text": "Set"
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tp = self.view.params\n\tself.view.custom.pending = False\n\tself.getSibling('Setpoint').props.value = system.tag.readBlocking([p.deviceId + '/' + p.member])[0].value"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Undo"
+        },
+        "position": {
+          "basis": "32px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.pending}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat cadre/font/button",
+            "height": "32px"
+          },
+          "text": "×"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "gap": "8px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

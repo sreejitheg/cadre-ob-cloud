@@ -1,0 +1,213 @@
+{
+  "custom": {
+    "banner": {
+      "counts": {
+        "Critical": 0,
+        "Diagnostic": 0,
+        "High": 0,
+        "Low": 0,
+        "Medium": 0,
+        "total": 0,
+        "unacked": 0
+      },
+      "rows": []
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.banner": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.banner_alarms(self.session, value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 76,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Rows"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.banner.rows}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "24px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Framework/ASM/BannerRow",
+              "style": {
+                "overflow": "hidden"
+              },
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "meta": {
+              "name": "None"
+            },
+            "position": {
+              "basis": "24px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.banner.rows}) = 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "padding": "0 8px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "No active alarms"
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Left"
+        },
+        "position": {
+          "align": "stretch",
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Counts"
+        },
+        "position": {
+          "basis": "160px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.params.counts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.banner.counts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "counts": {
+              "Critical": 0,
+              "Diagnostic": 0,
+              "High": 0,
+              "Low": 0,
+              "Medium": 0,
+              "total": 0,
+              "unacked": 0
+            }
+          },
+          "path": "Framework/Badges",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tif len(self.session.custom.hierarchy) > 0:\n\t\tself.session.custom.contentNode = ''\n\t\tsystem.perspective.navigate('/node/alarms')\n\telse:\n\t\tsystem.perspective.navigate('/alerts')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "AllAlarms"
+        },
+        "position": {
+          "basis": "110px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/normal cadre/font/button",
+            "height": "32px",
+            "margin": "0 8px"
+          },
+          "text": "All alarms"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/bar cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "overflow": "hidden",
+        "padding": "0 4px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

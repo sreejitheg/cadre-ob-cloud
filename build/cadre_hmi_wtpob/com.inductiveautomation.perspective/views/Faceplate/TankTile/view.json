@@ -1,0 +1,108 @@
+{
+  "custom": {
+    "tile": {
+      "max": 100,
+      "trend": "stable",
+      "value": 0
+    }
+  },
+  "params": {
+    "deviceId": "",
+    "level": 0
+  },
+  "propConfig": {
+    "custom.tile": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.tank_tile(value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.level": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 220,
+      "width": 180
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Tank"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.max": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tile.max}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.trend": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tile.trend}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.value": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tile.value}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "max": 100,
+          "value": 0
+        },
+        "type": "cadre.ob.tank"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

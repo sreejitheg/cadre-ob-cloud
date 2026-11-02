@@ -1,0 +1,665 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wfb.migration.understanding/1",
+  "title": "The understanding of one Citect page or pop-up set: what the operator sees, how it is organised, and how every top-level object contributes, each claim grounded",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "unit",
+    "purpose",
+    "layout",
+    "regions",
+    "devices",
+    "flows",
+    "readouts",
+    "indicators",
+    "navigation",
+    "static",
+    "dropped",
+    "modernise"
+  ],
+  "properties": {
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "kind",
+        "windows"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "page",
+            "popup_set"
+          ]
+        },
+        "windows": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layout": {
+      "type": "string",
+      "minLength": 1
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "kind",
+          "bbox",
+          "ans"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "process-diagram",
+              "single-line-diagram",
+              "data-table",
+              "status-list",
+              "panel",
+              "button-bar",
+              "legend"
+            ]
+          },
+          "bbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 0
+              },
+              "h": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          }
+        }
+      }
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "tag",
+          "label",
+          "bbox",
+          "ans",
+          "states",
+          "faceplate",
+          "click",
+          "basis",
+          "inferred"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tag": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 0
+              },
+              "h": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "states": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "faceplate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "click": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "basis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(inventory:.+|picture|inferred)$"
+            },
+            "description": "Each judged field to its basis: inventory:<field>, picture or inferred"
+          },
+          "inferred": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "medium",
+          "path",
+          "from",
+          "to",
+          "ans",
+          "basis",
+          "inferred"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "medium": {
+            "type": "string"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "x",
+                "y"
+              ],
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "from": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "to": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "basis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(inventory:.+|picture|inferred)$"
+            },
+            "description": "Each judged field to its basis: inventory:<field>, picture or inferred"
+          },
+          "inferred": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "readouts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "expr",
+          "format",
+          "units",
+          "bbox",
+          "ans",
+          "region",
+          "basis",
+          "inferred"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "expr": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "units": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 0
+              },
+              "h": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "region": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "basis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(inventory:.+|picture|inferred)$"
+            },
+            "description": "Each judged field to its basis: inventory:<field>, picture or inferred"
+          },
+          "inferred": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "indicators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "expr",
+          "on",
+          "off",
+          "bbox",
+          "ans",
+          "basis",
+          "inferred"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "expr": {
+            "type": "string"
+          },
+          "on": {
+            "type": "string"
+          },
+          "off": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 0
+              },
+              "h": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "region": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "basis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(inventory:.+|picture|inferred)$"
+            },
+            "description": "Each judged field to its basis: inventory:<field>, picture or inferred"
+          },
+          "inferred": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "navigation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "target",
+          "priv",
+          "bbox",
+          "ans",
+          "basis",
+          "inferred"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "page",
+              "popup",
+              "faceplate"
+            ]
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priv": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "bbox": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "x",
+              "y",
+              "w",
+              "h"
+            ],
+            "properties": {
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 0
+              },
+              "h": {
+                "type": "number",
+                "minimum": 0
+              }
+            }
+          },
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "basis": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(inventory:.+|picture|inferred)$"
+            },
+            "description": "Each judged field to its basis: inventory:<field>, picture or inferred"
+          },
+          "inferred": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "static": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ans",
+          "what",
+          "class"
+        ],
+        "properties": {
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "what": {
+            "type": "string"
+          },
+          "class": {
+            "enum": [
+              "label",
+              "frame",
+              "artwork",
+              "heading",
+              "legend"
+            ]
+          }
+        }
+      }
+    },
+    "dropped": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ans",
+          "reason",
+          "reason_class"
+        ],
+        "properties": {
+          "ans": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^.+:[0-9]+$"
+            },
+            "description": "Objects as \"<target>:<an>\": the window's target name and the object number"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason_class": {
+            "enum": [
+              "offpage",
+              "invisible",
+              "duplicate",
+              "frame"
+            ]
+          }
+        }
+      }
+    },
+    "modernise": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "what",
+          "why"
+        ],
+        "properties": {
+          "what": {
+            "type": "string",
+            "minLength": 1
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "members_of_note": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

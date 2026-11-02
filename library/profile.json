@@ -1,0 +1,3791 @@
+{
+ "ackRelay": {
+  "member": "alarmAck",
+  "paths": [
+   "W6",
+   "W8",
+   "W9"
+  ],
+  "value": true
+ },
+ "alarms": {
+  "delaySuffix": "Delay",
+  "displayPath": "{node}/{identifier}",
+  "label": "{identifier} {text}",
+  "priorities": [
+   "Critical",
+   "High",
+   "Medium",
+   "Low",
+   "Diagnostic"
+  ],
+  "shelvable": {
+   "Critical": false,
+   "Diagnostic": true,
+   "High": true,
+   "Low": true,
+   "Medium": true
+  },
+  "shelvingTimes": [
+   300,
+   900,
+   1800,
+   3600,
+   7200,
+   14400,
+   28800
+  ],
+  "stateReport": "Diagnostic"
+ },
+ "config": {
+  "captionMax": 24,
+  "path": "W19",
+  "prefix": "cfg/",
+  "types": [
+   "Int1",
+   "Int2",
+   "Int4",
+   "Int8",
+   "Float4",
+   "Float8"
+  ]
+ },
+ "descriptor": "cadre-hmi-screen/1",
+ "deviceKinds": {
+  "analogvalve": {
+   "bind": {
+    "on": "state",
+    "open": "state"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Valve",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Valve",
+    "openbridge": "Faceplate/Valve"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "controller": {
+   "bind": {
+    "manual": "manual",
+    "output": "out",
+    "setpoint": "sp",
+    "value": "value"
+   },
+   "config": false,
+   "faceplate": "Faceplate/Controller",
+   "faceplates": {
+    "asm": "Faceplate/Controller",
+    "openbridge": "Faceplate/Controller"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "gain": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "manOut": {
+     "required": false,
+     "type": "Float8"
+    },
+    "manual": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "out": {
+     "required": false,
+     "type": "Float8"
+    },
+    "sp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "td": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ti": {
+     "required": false,
+     "type": "Float8"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [],
+   "trend": [
+    "value",
+    "out",
+    "sp"
+   ]
+  },
+  "damper": {
+   "bind": {
+    "on": "state",
+    "open": "state"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Valve",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Valve",
+    "openbridge": "Faceplate/Valve"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "fan": {
+   "bind": {
+    "on": "state",
+    "open": "state",
+    "speed": "speed"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Pump",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Pump",
+    "openbridge": "Faceplate/Pump"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "generator": {
+   "bind": {
+    "on": "state",
+    "open": "state"
+   },
+   "config": true,
+   "faceplate": "Faceplate/ASM/Generator",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Generator",
+    "openbridge": "Faceplate/ASM/Generator"
+   },
+   "interlocks": false,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdReset": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdServiceDone": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdStart": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdStop": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "engineSpeed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "faultCode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "fuelLevel": {
+     "required": false,
+     "type": "Float8"
+    },
+    "fuelLowLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "genComm": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "oilPressureOk": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "plcComm": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "readyToRun": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "runHours": {
+     "required": false,
+     "type": "Float8"
+    },
+    "runText": {
+     "required": false,
+     "type": "String"
+    },
+    "serviceHours": {
+     "required": false,
+     "type": "Float8"
+    },
+    "startDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "startsToday": {
+     "required": false,
+     "type": "Int4"
+    },
+    "startsYesterday": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "stopDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "switchText": {
+     "required": false,
+     "type": "String"
+    },
+    "timeLeft": {
+     "required": false,
+     "type": "Float8"
+    },
+    "voltageLL": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [
+    "cmdStart",
+    "cmdStop",
+    "cmdReset",
+    "cmdServiceDone"
+   ],
+   "trend": [
+    "engineSpeed",
+    "fuelLevel"
+   ]
+  },
+  "indicator": {
+   "bind": {
+    "on": "state",
+    "open": "state"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Input",
+   "faceplates": {
+    "asm": "Faceplate/Input",
+    "openbridge": "Faceplate/Input"
+   },
+   "interlocks": false,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "instrument": {
+   "bind": {
+    "value": "value"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Instrument",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Instrument",
+    "openbridge": "Faceplate/Instrument"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "badValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ioFault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "oos": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "overRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "rangeHi": {
+     "required": false,
+     "type": "Float8"
+    },
+    "rangeLo": {
+     "required": false,
+     "type": "Float8"
+    },
+    "remoteAuto": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "underRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [],
+   "trend": [
+    "value"
+   ]
+  },
+  "instrument-field": {
+   "bind": {
+    "value": "value"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Instrument",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Instrument",
+    "openbridge": "Faceplate/Instrument"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "badValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ioFault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "oos": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "overRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "rangeHi": {
+     "required": false,
+     "type": "Float8"
+    },
+    "rangeLo": {
+     "required": false,
+     "type": "Float8"
+    },
+    "remoteAuto": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "underRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [],
+   "trend": [
+    "value"
+   ]
+  },
+  "motor": {
+   "bind": {
+    "on": "state",
+    "open": "state",
+    "speed": "speed"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Pump",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Pump",
+    "openbridge": "Faceplate/Pump"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "pump": {
+   "bind": {
+    "on": "state",
+    "open": "state",
+    "speed": "speed"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Pump",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Pump",
+    "openbridge": "Faceplate/Pump"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  },
+  "readout": {
+   "bind": {
+    "value": "value"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Instrument",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Instrument",
+    "openbridge": "Faceplate/Instrument"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "badValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ioFault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "oos": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "overRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "rangeHi": {
+     "required": false,
+     "type": "Float8"
+    },
+    "rangeLo": {
+     "required": false,
+     "type": "Float8"
+    },
+    "remoteAuto": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "underRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [],
+   "trend": [
+    "value"
+   ]
+  },
+  "sequence": {
+   "bind": {
+    "step": "step",
+    "text": "stepText"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Sequence",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Sequence",
+    "openbridge": "Faceplate/Sequence"
+   },
+   "interlocks": true,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdDisable": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdEnable": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdInService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdOutOfService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "enabled": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "inService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "normal": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "step": {
+     "required": false,
+     "type": "Int4"
+    },
+    "stepText": {
+     "required": false,
+     "type": "String"
+    },
+    "trigger": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [
+    "trigger",
+    "cmdInService",
+    "cmdOutOfService",
+    "cmdEnable",
+    "cmdDisable"
+   ],
+   "trend": [
+    "step"
+   ]
+  },
+  "tank": {
+   "bind": {},
+   "config": false,
+   "faceplate": "Faceplate/Tank",
+   "faceplates": {
+    "asm": "Faceplate/Tank",
+    "openbridge": "Faceplate/Tank"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "capacity": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "level": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "trend": {
+     "required": false,
+     "type": "String"
+    },
+    "volume": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "pulses": [],
+   "trend": [
+    "level"
+   ]
+  },
+  "valve": {
+   "bind": {
+    "on": "state",
+    "open": "state"
+   },
+   "config": true,
+   "faceplate": "Faceplate/Valve",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Valve",
+    "openbridge": "Faceplate/Valve"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "pulses": [],
+   "trend": []
+  }
+ },
+ "devices": "cadre-hmi-devices/1",
+ "diagram": {
+  "overlap": 4,
+  "ring": 18,
+  "routes": {
+   "--": "L_Y",
+   "-h": "L_Y",
+   "-v": "L_X",
+   "h-": "L_X",
+   "hh": "Z_X",
+   "hv": "L_X",
+   "v-": "L_Y",
+   "vh": "L_Y",
+   "vv": "Z_Y"
+  },
+  "staticTile": [
+   0.06,
+   0.06,
+   0.88,
+   0.66
+  ],
+  "symbol": 48,
+  "via": "L_X"
+ },
+ "faceplate": {
+  "mode": "dock",
+  "modes": [
+   "dock",
+   "popup"
+  ],
+  "popup": {
+   "id": "faceplatePopup",
+   "size": [
+    450,
+    600
+   ],
+   "view": "Framework/FaceplatePopup"
+  },
+  "style": "openbridge",
+  "styles": [
+   "openbridge",
+   "asm"
+  ]
+ },
+ "faceplates": {
+  "Faceplate/ASM/Generator": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "config",
+    "diagnostics",
+    "alarms",
+    "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/ASM/Instrument": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "config",
+    "diagnostics",
+    "alarms",
+    "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/ASM/Pump": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "config",
+    "diagnostics",
+    "alarms",
+    "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/ASM/Sequence": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "config",
+    "diagnostics",
+    "alarms",
+    "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/ASM/Valve": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "config",
+    "diagnostics",
+    "alarms",
+    "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/Controller": {
+   "tabs": [
+    "control",
+    "trend",
+    "tuning",
+    "alarms"
+   ]
+  },
+  "Faceplate/Input": {
+   "tabs": [
+    "status",
+    "maintenance",
+    "alarms"
+   ]
+  },
+  "Faceplate/Instrument": {
+   "tabs": [
+    "values",
+    "trend",
+    "alarms"
+   ]
+  },
+  "Faceplate/Pump": {
+   "tabs": [
+    "control",
+    "alarms",
+    "interlocks",
+    "maintenance"
+   ]
+  },
+  "Faceplate/Sequence": {
+   "tabs": [
+    "status",
+    "trend",
+    "alarms"
+   ]
+  },
+  "Faceplate/Tank": {
+   "tabs": [
+    "values",
+    "trend",
+    "alarms"
+   ]
+  },
+  "Faceplate/Valve": {
+   "tabs": [
+    "control",
+    "alarms",
+    "interlocks",
+    "maintenance"
+   ]
+  }
+ },
+ "forceEncodings": [
+  [
+   "mnt/forceOn",
+   "mnt/forceOff"
+  ],
+  [
+   "mnt/forceMode",
+   "mnt/forceValue"
+  ]
+ ],
+ "frame": {
+  "cardsCanvas": [
+   1600,
+   852
+  ],
+  "diagramCanvas": [
+   1580,
+   600
+  ],
+  "faceplateDock": 400,
+  "topDock": 48,
+  "viewport": [
+   1600,
+   900
+  ]
+ },
+ "functions": [
+  "alarm-limits",
+  "alarm-list",
+  "error-mask",
+  "force",
+  "interlocks",
+  "pid-faceplate",
+  "pid-tuning",
+  "pulse-command",
+  "trend",
+  "trend-page"
+ ],
+ "kinds": {
+  "analogvalve": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "open": "state"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Valve",
+   "flow": "gate",
+   "gate": "open",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": "cadre.ob.analogvalve",
+   "moduleExcept": [],
+   "moduleNeeds": {
+    "variant": [
+     "regular",
+     "flat"
+    ]
+   },
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "open",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/AnalogValve"
+  },
+  "controller": {
+   "anchor": "box",
+   "bind": {
+    "manual": "manual",
+    "output": "out",
+    "setpoint": "sp",
+    "value": "value"
+   },
+   "embedBox": null,
+   "faceplate": "Faceplate/Controller",
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 10,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 34,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "gain": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "manOut": {
+     "required": false,
+     "type": "Float8"
+    },
+    "manual": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "out": {
+     "required": false,
+     "type": "Float8"
+    },
+    "sp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "td": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ti": {
+     "required": false,
+     "type": "Float8"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "format",
+    "hasOutput",
+    "hasSetpoint",
+    "hasTag",
+    "label",
+    "manual",
+    "output",
+    "setpoint",
+    "tag",
+    "unit",
+    "value"
+   ],
+   "pulses": [],
+   "size": [
+    120,
+    96
+   ],
+   "sizes": [],
+   "symbolSize": null,
+   "trend": "value",
+   "value": null,
+   "view": "Instrument/Controller"
+  },
+  "damper": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Valve",
+   "flow": "gate",
+   "gate": "on",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Damper"
+  },
+  "fan": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state",
+    "speed": "speed"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Pump",
+   "flow": "gate",
+   "gate": "on",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": "cadre.ob.fan",
+   "moduleExcept": [
+    {
+     "vertical": true
+    }
+   ],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Fan"
+  },
+  "filter": {
+   "anchor": "symbol-centre",
+   "bind": {},
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": null,
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {},
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Filter"
+  },
+  "generator": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/ASM/Generator",
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdReset": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdServiceDone": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdStart": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdStop": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "engineSpeed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "faultCode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "fuelLevel": {
+     "required": false,
+     "type": "Float8"
+    },
+    "fuelLowLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "genComm": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "oilPressureOk": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "plcComm": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "readyToRun": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "runHours": {
+     "required": false,
+     "type": "Float8"
+    },
+    "runText": {
+     "required": false,
+     "type": "String"
+    },
+    "serviceHours": {
+     "required": false,
+     "type": "Float8"
+    },
+    "startDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "startsToday": {
+     "required": false,
+     "type": "Int4"
+    },
+    "startsYesterday": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "stopDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "switchText": {
+     "required": false,
+     "type": "String"
+    },
+    "timeLeft": {
+     "required": false,
+     "type": "Float8"
+    },
+    "voltageLL": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "picture",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [
+    "cmdStart",
+    "cmdStop",
+    "cmdReset",
+    "cmdServiceDone"
+   ],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": "engineSpeed",
+   "value": null,
+   "view": "Automation/Generator"
+  },
+  "indicator": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Input",
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "colour",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Indicator"
+  },
+  "instrument-field": {
+   "anchor": "box",
+   "bind": {
+    "value": "value"
+   },
+   "embedBox": null,
+   "faceplate": "Faceplate/Instrument",
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 12,
+    "flag": "hasTag",
+    "font": "instrument-unit",
+    "pad": 0,
+    "param": "label",
+    "suffix": "unit"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "badValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ioFault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "oos": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "overRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "rangeHi": {
+     "required": false,
+     "type": "Float8"
+    },
+    "rangeLo": {
+     "required": false,
+     "type": "Float8"
+    },
+    "remoteAuto": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "underRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "module": "cadre.ob.instrumentfield",
+   "moduleExcept": [
+    {
+     "hasSetpoint": true,
+     "size": "enhanced"
+    }
+   ],
+   "moduleNeeds": {
+    "align": [
+     "center",
+     "end"
+    ]
+   },
+   "params": [
+    "align",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "format",
+    "hasSetpoint",
+    "hasTag",
+    "label",
+    "setpoint",
+    "setpointFormat",
+    "size",
+    "source",
+    "tag",
+    "unit",
+    "value"
+   ],
+   "pulses": [],
+   "size": [
+    96,
+    64
+   ],
+   "sizes": [
+    {
+     "size": [
+      96,
+      66
+     ],
+     "when": {
+      "hasSetpoint": true,
+      "size": "enhanced"
+     }
+    }
+   ],
+   "symbolSize": null,
+   "trend": "value",
+   "value": null,
+   "view": "Instrument/Field"
+  },
+  "motor": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state",
+    "speed": "speed"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Pump",
+   "flow": "gate",
+   "gate": "on",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": "cadre.ob.motor",
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Motor"
+  },
+  "pump": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "on": "state",
+    "speed": "speed"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Pump",
+   "flow": "gate",
+   "gate": "on",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "speed": {
+     "required": false,
+     "type": "Float8"
+    },
+    "speedSp": {
+     "required": false,
+     "type": "Float8"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": "cadre.ob.pump",
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Pump"
+  },
+  "readout": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "value": "value"
+   },
+   "embedBox": null,
+   "faceplate": "Faceplate/Instrument",
+   "flow": "pass",
+   "gate": null,
+   "grows": true,
+   "identifier": {
+    "fits": 7,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 10,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "badValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "ioFault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "oos": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "overRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "rangeHi": {
+     "required": false,
+     "type": "Float8"
+    },
+    "rangeLo": {
+     "required": false,
+     "type": "Float8"
+    },
+    "remoteAuto": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "underRange": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "value": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "module": "cadre.ob.readout",
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "format",
+    "hasTag",
+    "label",
+    "stretch",
+    "tag",
+    "unit",
+    "value"
+   ],
+   "pulses": [],
+   "size": [
+    72,
+    24
+   ],
+   "sizes": [
+    {
+     "size": [
+      72,
+      40
+     ],
+     "when": {
+      "hasTag": true
+     }
+    }
+   ],
+   "symbolSize": null,
+   "trend": "value",
+   "value": {
+    "font": "automation-value-regular",
+    "pad": 10
+   },
+   "view": "Automation/Readout"
+  },
+  "sequence": {
+   "anchor": "box",
+   "bind": {
+    "step": "step",
+    "text": "stepText"
+   },
+   "embedBox": null,
+   "faceplate": "Faceplate/Sequence",
+   "flow": "pass",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 16,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 14,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdDisable": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdEnable": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdInService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmdOutOfService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "enabled": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "inService": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "normal": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "step": {
+     "required": false,
+     "type": "Int4"
+    },
+    "stepText": {
+     "required": false,
+     "type": "String"
+    },
+    "trigger": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasStep",
+    "hasTag",
+    "label",
+    "step",
+    "tag",
+    "text"
+   ],
+   "pulses": [
+    "trigger",
+    "cmdInService",
+    "cmdOutOfService",
+    "cmdEnable",
+    "cmdDisable"
+   ],
+   "size": [
+    144,
+    72
+   ],
+   "sizes": [],
+   "symbolSize": null,
+   "trend": "step",
+   "value": null,
+   "view": "Instrument/Sequence"
+  },
+  "switch": {
+   "anchor": "symbol-centre",
+   "bind": {},
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": null,
+   "flow": "gate",
+   "gate": "on",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {},
+   "module": null,
+   "moduleExcept": [],
+   "moduleNeeds": {},
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "on",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Switch"
+  },
+  "tank": {
+   "anchor": "box",
+   "bind": {},
+   "embedBox": null,
+   "faceplate": "Faceplate/Tank",
+   "flow": "terminal",
+   "gate": null,
+   "grows": false,
+   "identifier": {
+    "fits": 19,
+    "flag": "hasTag",
+    "font": "instrument-label",
+    "pad": 24,
+    "param": "tag",
+    "share": 0.86
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "capacity": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiHiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "hiLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "level": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimit": {
+     "required": false,
+     "type": "Float8"
+    },
+    "loLoLimitDelay": {
+     "required": false,
+     "type": "Float8"
+    },
+    "trend": {
+     "required": false,
+     "type": "String"
+    },
+    "volume": {
+     "required": false,
+     "type": "Float8"
+    }
+   },
+   "module": "cadre.ob.tank",
+   "moduleExcept": [],
+   "moduleNeeds": {
+    "valueFractionDigits": [
+     0
+    ]
+   },
+   "params": [
+    "chart",
+    "compact",
+    "deviceId",
+    "deviceLabel",
+    "hasCapacity",
+    "hasTag",
+    "history",
+    "max",
+    "medium",
+    "showPercent",
+    "static",
+    "tag",
+    "trend",
+    "unit",
+    "value",
+    "valueFractionDigits"
+   ],
+   "pulses": [],
+   "size": [
+    168,
+    216
+   ],
+   "sizes": [
+    {
+     "size": [
+      96,
+      80
+     ],
+     "when": {
+      "static": true
+     }
+    }
+   ],
+   "symbolSize": null,
+   "trend": "level",
+   "value": null,
+   "view": "Automation/Tank"
+  },
+  "valve": {
+   "anchor": "symbol-centre",
+   "bind": {
+    "open": "state"
+   },
+   "embedBox": {
+    "bottom": [
+     -12.0,
+     0,
+     72,
+     92
+    ],
+    "left": [
+     -64,
+     0,
+     112,
+     48
+    ],
+    "none": [
+     0,
+     0,
+     48,
+     48
+    ],
+    "right": [
+     0,
+     0,
+     112,
+     48
+    ],
+    "top": [
+     -12.0,
+     -44,
+     72,
+     92
+    ]
+   },
+   "faceplate": "Faceplate/Valve",
+   "flow": "gate",
+   "gate": "open",
+   "grows": false,
+   "identifier": {
+    "fits": 8,
+    "flag": "hasTag",
+    "font": "automation-label",
+    "pad": 8,
+    "param": "tag"
+   },
+   "interlocks": true,
+   "maintenance": true,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "cmd": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "fault": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/alarmSuppress": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/errorMask": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOff": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceOn": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/forceValue": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/manualMode": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mnt/simulated": {
+     "required": false,
+     "type": "Boolean"
+    },
+    "mode": {
+     "required": false,
+     "type": "Int4"
+    },
+    "state": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "module": "cadre.ob.valve",
+   "moduleExcept": [],
+   "moduleNeeds": {
+    "variant": [
+     "regular",
+     "flat"
+    ]
+   },
+   "params": [
+    "activated",
+    "alert",
+    "alertFrameMode",
+    "alertFrameStatus",
+    "badgeCommandLocked",
+    "badgeControl",
+    "badgeDuty",
+    "badgeInterlock",
+    "deviceId",
+    "deviceKind",
+    "deviceLabel",
+    "hasSpeed",
+    "hasTag",
+    "open",
+    "outOfService",
+    "progress",
+    "readoutPosition",
+    "showStatus",
+    "speed",
+    "statusText",
+    "tag",
+    "value",
+    "variant",
+    "vertical"
+   ],
+   "pulses": [],
+   "size": [
+    48,
+    48
+   ],
+   "sizes": [],
+   "symbolSize": 48,
+   "trend": null,
+   "value": null,
+   "view": "Automation/Valve"
+  }
+ },
+ "library": "cadre_hmi_base",
+ "ownership": {
+  "gated": [
+   "W1",
+   "W3",
+   "W5",
+   "W16",
+   "W17",
+   "W18",
+   "W19"
+  ],
+  "move": "W2",
+  "owners": [
+   "program",
+   "operator",
+   "maintenance",
+   "local"
+  ],
+  "paths": {
+   "local": [],
+   "maintenance": [
+    "W1",
+    "W3",
+    "W5",
+    "W16",
+    "W17",
+    "W18",
+    "W19"
+   ],
+   "operator": [
+    "W1",
+    "W3",
+    "W5",
+    "W18"
+   ],
+   "program": []
+  }
+ },
+ "parts": {
+  "actions": [
+   "pulse",
+   "faceplate",
+   "route"
+  ],
+  "arrays": [
+   "buttons",
+   "bars",
+   "trends",
+   "lines",
+   "links",
+   "brackets",
+   "wells",
+   "alarmPanels"
+  ],
+  "function": "page_pulse",
+  "history": {
+   "historyEnabled": true,
+   "historyProvider": "<the gateway's history provider>",
+   "sampleMode": "on change, or periodic (the chart interpolates between samples)"
+  },
+  "labelKeys": [
+   "emphasis"
+  ],
+  "pulsePath": "W18",
+  "screenKeys": [
+   "fit"
+  ],
+  "symbolKeys": [
+   "bar",
+   "alarm"
+  ],
+  "symbolMore": [
+   "states",
+   "stateDefault",
+   "faceplate",
+   "render"
+  ],
+  "symbolParams": [
+   "badgeDuty",
+   "outOfService"
+  ],
+  "views": {
+   "rangeBar": "Parts/RangeBar",
+   "trends": {
+    "one": "Parts/Trend",
+    "same": "Parts/Trend2",
+    "two": "Parts/Trend2Axes"
+   }
+  }
+ },
+ "schema": "cadre-hmi-library/1",
+ "text": {
+  "fonts": {
+   "automation-label": {
+    "charWidth": 8,
+    "line": 16,
+    "measured": {
+     "digit": 6.61,
+     "lower": 6.36,
+     "upper": 7.61,
+     "widest": 11.22
+    },
+    "px": 12
+   },
+   "automation-value-regular": {
+    "charWidth": 9.5,
+    "line": 22,
+    "measured": {
+     "digit": 9.15,
+     "lower": 9.09,
+     "upper": 10.62,
+     "widest": 15.6
+    },
+    "px": 16
+   },
+   "instrument-label": {
+    "charWidth": 7.5,
+    "line": 16,
+    "measured": {
+     "digit": 6.33,
+     "lower": 6.1,
+     "upper": 7.3,
+     "widest": 10.76
+    },
+    "px": 11.5
+   },
+   "instrument-unit": {
+    "charWidth": 7.5,
+    "line": 16,
+    "measured": {
+     "digit": 6.33,
+     "lower": 6.1,
+     "upper": 7.3,
+     "widest": 10.76
+    },
+    "px": 11.5
+   }
+  },
+  "identifierChars": 16
+ },
+ "writePaths": {
+  "W1": {
+   "function": "command",
+   "members": [
+    "cmd"
+   ],
+   "role": "Administrator",
+   "what": "start, stop, open, close"
+  },
+  "W10": {
+   "function": "bypass",
+   "members": [],
+   "role": "Administrator",
+   "what": "interlock bypass"
+  },
+  "W11": {
+   "function": "reset_interlocks",
+   "members": [],
+   "role": "Administrator",
+   "what": "trip reset"
+  },
+  "W12": {
+   "function": "command",
+   "members": [
+    "sp"
+   ],
+   "role": "Administrator",
+   "what": "controller setpoint"
+  },
+  "W13": {
+   "function": "command",
+   "members": [
+    "manual"
+   ],
+   "role": "Administrator",
+   "what": "loop mode"
+  },
+  "W14": {
+   "function": "command",
+   "members": [
+    "manOut"
+   ],
+   "role": "Administrator",
+   "what": "manual output"
+  },
+  "W15": {
+   "function": "command",
+   "members": [
+    "gain",
+    "ti",
+    "td"
+   ],
+   "role": "Administrator",
+   "what": "controller tuning"
+  },
+  "W16": {
+   "function": "force",
+   "members": [
+    "mnt/forceOn",
+    "mnt/forceOff",
+    "mnt/forceMode",
+    "mnt/forceValue"
+   ],
+   "role": "Administrator",
+   "what": "force"
+  },
+  "W17": {
+   "function": "error_mask",
+   "members": [
+    "mnt/errorMask"
+   ],
+   "role": "Administrator",
+   "what": "object error mask"
+  },
+  "W18": {
+   "function": "pulse",
+   "members": [
+    "trigger",
+    "cmdStart",
+    "cmdStop",
+    "cmdReset",
+    "cmdServiceDone",
+    "cmdInService",
+    "cmdOutOfService",
+    "cmdEnable",
+    "cmdDisable"
+   ],
+   "role": "Administrator",
+   "what": "pulse command"
+  },
+  "W19": {
+   "function": "configure",
+   "members": [],
+   "role": "Administrator",
+   "what": "configuration value"
+  },
+  "W2": {
+   "function": "command",
+   "members": [
+    "mode"
+   ],
+   "role": "Administrator",
+   "what": "control mode"
+  },
+  "W3": {
+   "function": "command",
+   "members": [
+    "speedSp"
+   ],
+   "role": "Administrator",
+   "what": "speed setpoint"
+  },
+  "W4": {
+   "function": "command",
+   "members": [
+    "hiHiLimit",
+    "hiLimit",
+    "loLimit",
+    "loLoLimit",
+    "hiHiLimitDelay",
+    "hiLimitDelay",
+    "loLimitDelay",
+    "loLoLimitDelay"
+   ],
+   "role": "Administrator",
+   "what": "alarm limit"
+  },
+  "W5": {
+   "function": "command",
+   "members": [
+    "fault"
+   ],
+   "role": "Administrator",
+   "what": "fault reset"
+  },
+  "W6": {
+   "function": "ack_top",
+   "members": [
+    "alarmAck"
+   ],
+   "role": "Administrator",
+   "what": "acknowledge from the top bar"
+  },
+  "W7": {
+   "function": "",
+   "members": [],
+   "role": "Administrator",
+   "what": "stock alarm table actions"
+  },
+  "W8": {
+   "function": "ack_event",
+   "members": [
+    "alarmAck"
+   ],
+   "role": "Administrator",
+   "what": "acknowledge a row of the alarm menu"
+  },
+  "W9": {
+   "function": "ack_event",
+   "members": [
+    "alarmAck"
+   ],
+   "role": "Administrator",
+   "what": "acknowledge the visible alarms"
+  }
+ }
+}

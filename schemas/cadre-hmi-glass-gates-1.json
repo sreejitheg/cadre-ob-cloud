@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-glass-gates/1",
+  "title": "Cadre HMI glass gates, version 1",
+  "description": "The result of tools/compare/glass_gates.py (ARCH-WFB-01 revision B8 Table 105): the gates run on the deployed project with real input, each with its steps (what was done, what was expected, what was found), the frame's rectangles before and after each zoom, and whether the one raised alarm's source tag was put back. base is the gateway's origin only. A gate with a `skipped` reason ran no step; a step with `accepted` was failed and accepted by the owner (accepted rows). The test login and the gateway token never appear. Wiki page 13.",
+  "type": "object",
+  "required": ["schema", "base", "window", "plan", "gates", "frame_before", "frame_after", "restored", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-glass-gates/1"},
+    "base": {"type": "string", "pattern": "^https?://[^/]+$"},
+    "window": {"type": "object", "required": ["w", "h"], "properties": {"w": {"type": "integer"}, "h": {"type": "integer"}}},
+    "plan": {
+      "type": "object",
+      "required": ["base", "window", "gates", "search", "routes", "zoom", "alarm"],
+      "properties": {
+        "gates": {"type": "array", "items": {"enum": ["search", "zoom", "menus", "panels", "readouts", "colour", "sizes", "fill", "routes", "symbols", "alarm", "ack", "banner", "lamps", "testpanel"]}},
+        "search": {"type": "object"},
+        "routes": {"type": "array", "items": {"type": "string"}},
+        "zoom": {"type": "object", "required": ["steps"]},
+        "alarm": {"type": ["object", "null"]}
+      }
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "ok", "steps"],
+        "properties": {
+          "name": {"type": "string"},
+          "ok": {"type": "boolean"},
+          "skipped": {"type": "string"},
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["action", "expected", "found", "ok"],
+              "properties": {
+                "action": {"type": "string"},
+                "expected": {},
+                "found": {},
+                "ok": {"type": "boolean"},
+                "accepted": {"type": "boolean"},
+                "picture": {"type": ["string", "null"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "frame_before": {"type": "object", "additionalProperties": {"type": "object"}},
+    "frame_after": {"type": "object", "additionalProperties": {"type": "object"}},
+    "restored": {"type": "boolean"},
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

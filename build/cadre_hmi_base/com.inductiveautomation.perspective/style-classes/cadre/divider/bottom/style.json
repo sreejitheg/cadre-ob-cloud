@@ -1,0 +1,7 @@
+{
+  "base": {
+    "style": {
+      "borderBottom": "1px solid var(--border-divider-color)"
+    }
+  }
+}

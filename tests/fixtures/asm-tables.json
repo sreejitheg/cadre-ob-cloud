@@ -1,0 +1,351 @@
+{
+ "projects": [
+  "PROJ"
+ ],
+ "devices": {
+  "PUMP01": {
+   "pages": [
+    "PumpStation",
+    "Overview"
+   ],
+   "variables": [
+    {
+     "tag": "PUMP01_IRUN",
+     "type": "DIGITAL",
+     "eng_lo": null,
+     "eng_hi": null,
+     "units": "",
+     "format": "",
+     "comment": "Pump 1 running",
+     "project": "PROJ"
+    },
+    {
+     "tag": "PUMP01_IAMP",
+     "type": "REAL",
+     "eng_lo": "0",
+     "eng_hi": "20",
+     "units": "A",
+     "format": "",
+     "comment": "Pump 1 current",
+     "project": "PROJ"
+    }
+   ],
+   "digital_alarms": [
+    {
+     "tag": "PUMP01_AFAIL",
+     "name": "Pump 1 fail",
+     "desc": "Pump 1 failed",
+     "category": "1",
+     "delay": "00:00:05",
+     "var_a": "PUMP01_IFAIL",
+     "var_b": "",
+     "table": "digalm",
+     "project": "PROJ"
+    },
+    {
+     "tag": "PUMP01_ATRIP",
+     "name": "Pump 1 trip",
+     "desc": "Pump 1 tripped",
+     "category": "2",
+     "delay": "00:00:00",
+     "var_a": "PUMP01_ITRIP",
+     "var_b": "",
+     "table": "digalm",
+     "project": "PROJ"
+    }
+   ],
+   "advanced_alarms": [],
+   "priority": {
+    "by_category": {},
+    "inferred": true,
+    "basis": "rank"
+   },
+   "other_alarms": []
+  },
+  "TANK01": {
+   "pages": [
+    "PumpStation"
+   ],
+   "variables": [
+    {
+     "tag": "TANK01_LEVEL",
+     "type": "REAL",
+     "eng_lo": "0",
+     "eng_hi": "6",
+     "units": "m",
+     "format": "",
+     "comment": "Well level",
+     "project": "PROJ"
+    },
+    {
+     "tag": "TANK01_HIGH",
+     "type": "DIGITAL",
+     "eng_lo": null,
+     "eng_hi": null,
+     "units": "",
+     "format": "",
+     "comment": "High level",
+     "project": "PROJ"
+    }
+   ],
+   "digital_alarms": [
+    {
+     "tag": "TANK01_AHIGH",
+     "name": "Well high",
+     "desc": "Well level high",
+     "category": "3",
+     "delay": "00:00:30",
+     "var_a": "TANK01_HIGH",
+     "var_b": "",
+     "table": "digalm",
+     "project": "PROJ"
+    }
+   ],
+   "advanced_alarms": [],
+   "priority": {
+    "by_category": {},
+    "inferred": true,
+    "basis": "rank"
+   },
+   "other_alarms": []
+  },
+  "BRK01": {
+   "pages": [
+    "Overview"
+   ],
+   "variables": [
+    {
+     "tag": "BRK01_CLOSED",
+     "type": "DIGITAL",
+     "eng_lo": null,
+     "eng_hi": null,
+     "units": "",
+     "format": "",
+     "comment": "Breaker closed",
+     "project": "PROJ"
+    },
+    {
+     "tag": "BRK01_VOLT",
+     "type": "REAL",
+     "eng_lo": "0",
+     "eng_hi": "500",
+     "units": "V",
+     "format": "",
+     "comment": "Supply voltage",
+     "project": "PROJ"
+    }
+   ],
+   "digital_alarms": [],
+   "advanced_alarms": [
+    {
+     "tag": "BRK01_AUV",
+     "name": "Undervoltage",
+     "desc": "Supply undervoltage",
+     "category": "100",
+     "delay": "00:01:00",
+     "expression": "BRK01_VOLT < 380",
+     "table": "advalm",
+     "project": "PROJ"
+    }
+   ],
+   "priority": {
+    "by_category": {},
+    "inferred": true,
+    "basis": "rank"
+   },
+   "other_alarms": []
+  },
+  "SEQ01": {
+   "pages": [
+    "PumpStation"
+   ],
+   "variables": [
+    {
+     "tag": "SEQ01_STARTLVL",
+     "type": "REAL",
+     "eng_lo": "0",
+     "eng_hi": "6",
+     "units": "m",
+     "format": "",
+     "comment": "Start level",
+     "project": "PROJ"
+    }
+   ],
+   "digital_alarms": [],
+   "advanced_alarms": [],
+   "priority": {
+    "by_category": {},
+    "inferred": true,
+    "basis": "rank"
+   },
+   "other_alarms": []
+  },
+  "FLOW01": {
+   "pages": [
+    "Overview"
+   ],
+   "variables": [
+    {
+     "tag": "FLOW01_PV",
+     "type": "REAL",
+     "eng_lo": "0",
+     "eng_hi": "100",
+     "units": "L/s",
+     "format": "",
+     "comment": "Total flow",
+     "project": "PROJ"
+    }
+   ],
+   "digital_alarms": [],
+   "advanced_alarms": [],
+   "priority": {
+    "by_category": {},
+    "inferred": true,
+    "basis": "rank"
+   },
+   "other_alarms": []
+  }
+ },
+ "reasons": {
+  "UPS01": "no tag rows in the project"
+ },
+ "unmatched": [],
+ "provenance": {
+  "tool": "ctig",
+  "repository": "Citect-Ignition-Migrator",
+  "commit": null,
+  "dirty": null,
+  "argv": [
+   "tables"
+  ],
+  "secret_env": [],
+  "inputs": [],
+  "started": "2026-10-27T00:00:00+00:00",
+  "duration_s": 0,
+  "interpreter": {
+   "path": "python",
+   "version": "3.13",
+   "bits": 64
+  }
+ },
+ "schema": "ctig.tables/1",
+ "pages": [
+  "Overview",
+  "PumpStation"
+ ],
+ "alarm_tables": {
+  "digalm": true,
+  "advalm": true
+ },
+ "category_table": null,
+ "tags": {
+  "PUMP01_IRUN": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "Pump 1 running",
+   "project": "PROJ"
+  },
+  "PUMP01_IAMP": {
+   "type": "REAL",
+   "eng_lo": "0",
+   "eng_hi": "20",
+   "units": "A",
+   "format": "",
+   "comment": "Pump 1 current",
+   "project": "PROJ"
+  },
+  "TANK01_LEVEL": {
+   "type": "REAL",
+   "eng_lo": "0",
+   "eng_hi": "6",
+   "units": "m",
+   "format": "",
+   "comment": "Well level",
+   "project": "PROJ"
+  },
+  "TANK01_HIGH": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "High level",
+   "project": "PROJ"
+  },
+  "BRK01_CLOSED": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "Breaker closed",
+   "project": "PROJ"
+  },
+  "BRK01_VOLT": {
+   "type": "REAL",
+   "eng_lo": "0",
+   "eng_hi": "500",
+   "units": "V",
+   "format": "",
+   "comment": "Supply voltage",
+   "project": "PROJ"
+  },
+  "SEQ01_STARTLVL": {
+   "type": "REAL",
+   "eng_lo": "0",
+   "eng_hi": "6",
+   "units": "m",
+   "format": "",
+   "comment": "Start level",
+   "project": "PROJ"
+  },
+  "FLOW01_PV": {
+   "type": "REAL",
+   "eng_lo": "0",
+   "eng_hi": "100",
+   "units": "L/s",
+   "format": "",
+   "comment": "Total flow",
+   "project": "PROJ"
+  },
+  "PUMP02_IRUN": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "Pump 2 running",
+   "project": "PROJ"
+  },
+  "VALVE01_OPEN": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "Outlet valve open",
+   "project": "PROJ"
+  },
+  "SEQ01_STEPTEXT": {
+   "type": "STRING",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "Sequence step text",
+   "project": "PROJ"
+  },
+  "UPS01_ONBATT": {
+   "type": "DIGITAL",
+   "eng_lo": null,
+   "eng_hi": null,
+   "units": "",
+   "format": "",
+   "comment": "UPS on battery",
+   "project": "PROJ"
+  }
+ }
+}

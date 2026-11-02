@@ -1,0 +1,95 @@
+{
+  "custom": {
+    "rows": []
+  },
+  "params": {
+    "nodeId": ""
+  },
+  "propConfig": {
+    "custom.rows": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {view.params.nodeId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.crumb_menu(self.session, value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.nodeId": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 360,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Rows"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.rows}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "elementPosition": {
+            "basis": "44px",
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Framework/ASM/ListRow",
+          "style": {
+            "gap": "2px",
+            "overflow": "auto"
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.flex-repeater"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/card cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden",
+        "padding": "4px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

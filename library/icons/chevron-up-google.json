@@ -1,0 +1,23 @@
+{
+ "name": "chevron-up-google",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M6 14.0002L7.41 15.4102L12 10.8302L16.59 15.4102L18 14.0002L12 8.00016L6 14.0002Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-chevron-up-google.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

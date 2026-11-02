@@ -1,0 +1,216 @@
+{
+  "custom": {
+    "rows": []
+  },
+  "params": {},
+  "propConfig": {
+    "custom.rows": {
+      "binding": {
+        "config": {
+          "expression": "if(coalesce({session.custom.searchOpen}, false), coalesce({session.custom.searchQuery}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.search(self.session, value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 788,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tself.session.custom.searchOpen = False"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "ScrimLeft"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Rows"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.instances": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.rows}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "direction": "column",
+                  "elementPosition": {
+                    "basis": "48px",
+                    "shrink": 0
+                  },
+                  "instances": [],
+                  "path": "Framework/ASM/ListRow",
+                  "style": {
+                    "gap": "2px",
+                    "overflow": "auto"
+                  },
+                  "useDefaultViewHeight": false,
+                  "useDefaultViewWidth": false
+                },
+                "type": "ia.display.flex-repeater"
+              },
+              {
+                "meta": {
+                  "name": "Empty"
+                },
+                "position": {
+                  "basis": "40px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "len({view.custom.rows}) = 0 && len(coalesce({session.custom.searchQuery}, '')) > 0"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "padding": "0 12px",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "No page, device or tag matches"
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Panel"
+            },
+            "position": {
+              "basis": "420px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "'cadre/surface/card cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "margin": "4px 8px 0 0",
+                "overflow": "hidden",
+                "padding": "4px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "PanelRow"
+        },
+        "position": {
+          "basis": "480px",
+          "shrink": 1
+        },
+        "props": {
+          "direction": "row",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tself.session.custom.searchOpen = False"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "ScrimBelow"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

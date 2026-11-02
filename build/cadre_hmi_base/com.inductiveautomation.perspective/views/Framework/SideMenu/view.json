@@ -1,0 +1,252 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 800,
+      "width": 400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Title"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{session.custom.selectedTitle}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/title cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Description"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{session.custom.selectedLabel}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Titles"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.session.custom.faceplateMode = 'popup'\n\tsystem.perspective.closeDock('faceplate')\n\tself.session.custom.faceplateDocked = False\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Float"
+            },
+            "position": {
+              "basis": "72px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Float"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 24,
+                  "x": 8,
+                  "y": 8
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z",
+                      "fill": {
+                        "paint": "var(--element-active-color)"
+                      },
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 24 24"
+                },
+                "type": "ia.shapes.svg"
+              }
+            ],
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.closeDock('faceplate')\n\tself.session.custom.faceplateDocked = False"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Close"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat",
+                "height": "40px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "width": "40px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "64px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "overflow": "hidden",
+            "padding": "0 8px 0 16px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Faceplate"
+        },
+        "position": {
+          "grow": 1
+        },
+        "propConfig": {
+          "props.params.deviceId": {
+            "binding": {
+              "config": {
+                "expression": "{session.custom.selectedDevice}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.tab": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.selectedTab}, '')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.path": {
+            "binding": {
+              "config": {
+                "expression": "if(coalesce({session.custom.selectedStyle}, '') = 'asm', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/ASM/Pump', 'motor', 'Faceplate/ASM/Pump', 'fan', 'Faceplate/ASM/Pump', 'valve', 'Faceplate/ASM/Valve', 'analogvalve', 'Faceplate/ASM/Valve', 'damper', 'Faceplate/ASM/Valve', 'instrument', 'Faceplate/ASM/Instrument', 'readout', 'Faceplate/ASM/Instrument', 'instrument-field', 'Faceplate/ASM/Instrument', 'sequence', 'Faceplate/ASM/Sequence', 'generator', 'Faceplate/ASM/Generator', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty')), case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty'))"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "deviceId": "",
+            "tab": ""
+          },
+          "path": "Faceplate/Empty",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/menu cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

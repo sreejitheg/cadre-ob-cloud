@@ -1,0 +1,219 @@
+{
+  "custom": {},
+  "params": {
+    "align": "end",
+    "deviceId": "",
+    "deviceKind": "instrument",
+    "deviceLabel": "",
+    "format": "#,##0",
+    "hasSetpoint": false,
+    "hasTag": true,
+    "label": "",
+    "setpoint": 0,
+    "setpointFormat": "#,##0",
+    "size": "regular",
+    "source": "",
+    "tag": "",
+    "unit": "",
+    "value": 0
+  },
+  "propConfig": {
+    "params.align": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceKind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.format": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasSetpoint": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hasTag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.setpoint": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.setpointFormat": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.size": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.source": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.value": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 64,
+      "width": 96
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Setpoint"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.hasSetpoint}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "'▸ ' + numberFormat({view.params.setpoint}, {view.params.setpointFormat})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-value-small-neutral",
+            "color": "var(--instrument-enhanced-secondary-color)",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Value"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.size} = 'enhanced', 'cadre/font/instrument-value-enhanced-active', 'cadre/font/instrument-value-regular-active') + ' cadre/text/active'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "numberFormat({view.params.value}, {view.params.format})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-value-regular-active cadre/text/active",
+            "lineHeight": "1",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "UnitLabel"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.hasTag}, {view.params.label} + if(len({view.params.unit}) > 0, ' ' + {view.params.unit}, ''), {view.params.unit})"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/instrument-unit cadre/text/neutral cadre/text/ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.deviceId:\n\t\tcadre.hmi.select_device(self.session, self.view.params.deviceId, self.view.params.deviceKind or 'instrument', self.view.params.tag or self.view.params.label, self.view.params.deviceLabel)\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.alignItems": {
+        "binding": {
+          "config": {
+            "expression": "case({view.params.align}, 'center', 'center', 'start', 'flex-start', 'flex-end')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "flex-end",
+      "direction": "column",
+      "justify": "center",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

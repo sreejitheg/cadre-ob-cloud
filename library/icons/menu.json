@@ -1,0 +1,43 @@
+{
+ "name": "menu",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M19 19V21H6V19H19ZM19 5H6V21L5.7959 20.9893C4.85435 20.8938 4.1062 20.1457 4.01074 19.2041L4 19V5C4 3.89543 4.89543 3 6 3H19C20.1046 3 21 3.89543 21 5V19C21 20.0357 20.2128 20.887 19.2041 20.9893L19 21V5Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M8 7H17V9H8V7Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M8 11H17V13H8V11Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  },
+  {
+   "type": "path",
+   "d": "M8 15H17V17H8V15Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-menu.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

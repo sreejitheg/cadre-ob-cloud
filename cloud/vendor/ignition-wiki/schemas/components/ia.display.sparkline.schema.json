@@ -1,0 +1,1377 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.display.sparkline.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "definitions": {
+    "fill": {
+      "default": {
+        "color": "",
+        "opacity": 1
+      },
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Fill color.",
+          "format": "color",
+          "type": "string"
+        },
+        "opacity": {
+          "default": 1,
+          "description": "Fill opacity.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "marker": {
+      "default": {
+        "fill": {
+          "color": "",
+          "opacity": 1
+        },
+        "shape": "circle",
+        "size": 5,
+        "stroke": {
+          "color": "",
+          "dashArray": "",
+          "opacity": 1,
+          "width": 0.5
+        },
+        "style": {
+          "classes": ""
+        }
+      },
+      "properties": {
+        "fill": {
+          "$ref": "#/definitions/fill"
+        },
+        "shape": {
+          "default": "circle",
+          "enum": [
+            "square",
+            "circle",
+            "triangle"
+          ],
+          "type": "string"
+        },
+        "size": {
+          "default": 5,
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "stroke": {
+          "$ref": "#/definitions/stroke"
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema"
+        }
+      },
+      "type": "object"
+    },
+    "stroke": {
+      "default": {
+        "color": "",
+        "dashArray": "",
+        "opacity": 1,
+        "width": 0.5
+      },
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Stroke color.",
+          "format": "color",
+          "type": "string"
+        },
+        "dashArray": {
+          "default": "",
+          "description": "Pattern of dashes and gaps used to paint stroke.",
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "opacity": {
+          "default": 1,
+          "description": "Stroke opacity.",
+          "type": "number"
+        },
+        "width": {
+          "default": 0.5,
+          "description": "Stroke width.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "description": "Props contract for the Perspective component ia.display.sparkline. Ignition 8.3, Perspective module 3.3.6, registry ia.components.json hash e4dad85e3a1108251d7c.",
+  "properties": {
+    "color": {
+      "default": "",
+      "description": "Stroke color.",
+      "format": "color",
+      "type": "string"
+    },
+    "dashArray": {
+      "default": "",
+      "description": "Pattern of dashes and gaps used to paint stroke.",
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "desired": {
+      "description": "The desired operating range.",
+      "properties": {
+        "fill": {
+          "$ref": "#/definitions/fill",
+          "default": {
+            "color": "",
+            "opacity": 0.1
+          }
+        },
+        "high": {
+          "default": "",
+          "description": "The high value of the desired operating range as a number.",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "low": {
+          "default": "",
+          "description": "The low value of the desired operating range as a number.",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "stroke": {
+          "$ref": "#/definitions/stroke",
+          "default": {
+            "color": "",
+            "dashArray": 4,
+            "opacity": 1,
+            "width": 1
+          }
+        }
+      },
+      "type": "object"
+    },
+    "marker": {
+      "properties": {
+        "first": {
+          "$ref": "#/definitions/marker",
+          "default": {
+            "fill": {
+              "color": "",
+              "opacity": 1
+            },
+            "shape": "circle",
+            "size": 5,
+            "stroke": {
+              "color": "",
+              "dashArray": "",
+              "opacity": 1,
+              "width": 0.5
+            },
+            "style": {
+              "classes": ""
+            }
+          }
+        },
+        "high": {
+          "$ref": "#/definitions/marker",
+          "default": {
+            "fill": {
+              "color": "",
+              "opacity": 1
+            },
+            "shape": "square",
+            "size": 5,
+            "stroke": {
+              "color": "",
+              "dashArray": "",
+              "opacity": 1,
+              "width": 0.5
+            },
+            "style": {
+              "classes": ""
+            }
+          }
+        },
+        "last": {
+          "$ref": "#/definitions/marker",
+          "default": {
+            "fill": {
+              "color": "",
+              "opacity": 1
+            },
+            "shape": "circle",
+            "size": 5,
+            "stroke": {
+              "color": "",
+              "dashArray": "",
+              "opacity": 1,
+              "width": 0.5
+            },
+            "style": {
+              "classes": ""
+            }
+          }
+        },
+        "low": {
+          "$ref": "#/definitions/marker",
+          "default": {
+            "fill": {
+              "color": "",
+              "opacity": 1
+            },
+            "shape": "square",
+            "size": 5,
+            "stroke": {
+              "color": "",
+              "dashArray": "",
+              "opacity": 1,
+              "width": 0.5
+            },
+            "style": {
+              "classes": ""
+            }
+          }
+        }
+      },
+      "type": "object"
+    },
+    "opacity": {
+      "default": 1,
+      "description": "Stroke opacity.",
+      "type": "number"
+    },
+    "points": {
+      "anyOf": [
+        {
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "dataset"
+        }
+      ],
+      "description": "Data points to plot. May be a dataset, or an array of values or objects containing x and y coordinates ([{x: 0, y: 9}]). Also may be a string formatted with x and y values separated by comma ('x,y x,y').",
+      "example": [
+        59,
+        80,
+        80,
+        100,
+        68,
+        62,
+        87,
+        72,
+        42,
+        49,
+        58,
+        53,
+        57,
+        51,
+        42,
+        32,
+        37,
+        30,
+        24,
+        38,
+        57,
+        29,
+        18,
+        32,
+        38,
+        24,
+        24,
+        24,
+        20,
+        21,
+        29,
+        32,
+        26,
+        18,
+        32,
+        36,
+        30,
+        36,
+        29,
+        32,
+        29,
+        28,
+        41,
+        20,
+        28,
+        58,
+        18,
+        24,
+        16,
+        2,
+        22,
+        17,
+        22,
+        21,
+        12,
+        22,
+        14,
+        13,
+        11,
+        20,
+        16,
+        16,
+        18,
+        12,
+        28,
+        28,
+        32,
+        16,
+        16,
+        24,
+        16,
+        20,
+        14,
+        18,
+        12,
+        26,
+        17,
+        11,
+        30,
+        16,
+        9,
+        20,
+        42,
+        13,
+        13,
+        24,
+        17,
+        13,
+        20,
+        12,
+        14,
+        13,
+        14,
+        71,
+        82,
+        20,
+        16,
+        20,
+        22,
+        17,
+        5
+      ]
+    },
+    "range": {
+      "properties": {
+        "high": {
+          "default": "",
+          "description": "A fixed value for the upper edge of the chart as a number.",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "low": {
+          "default": "",
+          "description": "A fixed value for the lower edge of the chart as a number.",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "stroke": {
+      "description": "Color of the line. DEPRECATED: renamed to color.",
+      "format": "color",
+      "type": "string"
+    },
+    "strokeWidth": {
+      "description": "Thickness of the line in px. DEPRECATED: renamed to width.",
+      "type": "number"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema"
+    },
+    "width": {
+      "default": 0.75,
+      "description": "Stroke width.",
+      "type": "number"
+    }
+  },
+  "title": "Sparkline",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.display.sparkline",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveComponents",
+    "palette_category": "display",
+    "registry_file": "ia.components.json",
+    "registry_hash": "e4dad85e3a1108251d7c"
+  }
+}

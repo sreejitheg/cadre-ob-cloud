@@ -1,0 +1,427 @@
+{
+  "custom": {
+    "historyTags": [
+      {
+        "alias": "value",
+        "path": ""
+      }
+    ]
+  },
+  "params": {
+    "deviceId": "",
+    "hours": 1,
+    "kind": "",
+    "label": "",
+    "member": "value",
+    "title": "",
+    "unit": ""
+  },
+  "propConfig": {
+    "custom.historyTags": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId} + '|' + {view.params.member}"
+        },
+        "transforms": [
+          {
+            "code": "\tparts = (value or '').split('|')\n\treturn cadre.hmi.history_tags(parts[0], parts[1] if len(parts) > 1 else 'value')",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.hours": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.kind": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.member": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.title": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 240,
+      "width": 380
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.title}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Label"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.label}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Unit"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.unit}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tp = self.view.params\n\tcadre.hmi.select_device(self.session, p.deviceId, p.kind, p.title, p.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Head"
+        },
+        "position": {
+          "basis": "28px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "cursor": "pointer",
+            "gap": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Chart"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.plots[0].trends[0].interpolation": {
+            "binding": {
+              "config": {
+                "expression": "if({view.params.member} = 'step', 'curveStepAfter', 'curveLinear')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.plots[0].trends[1].visible": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.deviceId}"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn len(cadre.hmi.limit_rows(value)) > 0",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.series[0].data": {
+            "binding": {
+              "config": {
+                "aggregate": "Average",
+                "avoidScanClassValidation": true,
+                "dateRange": {
+                  "mostRecent": "{view.params.hours}",
+                  "mostRecentUnits": "HOUR"
+                },
+                "ignoreBadQuality": false,
+                "polling": {
+                  "enabled": true,
+                  "rate": "10"
+                },
+                "preventInterpolation": false,
+                "returnFormat": "Wide",
+                "returnSize": {
+                  "numRows": "300",
+                  "type": "FIXED"
+                },
+                "tags": "{view.custom.historyTags}",
+                "valueFormat": "DATASET"
+              },
+              "type": "tag-history"
+            }
+          },
+          "props.series[1].data": {
+            "binding": {
+              "config": {
+                "expression": "if(toMillis(now(10000)) > 0, {view.params.deviceId} + '|' + toStr({view.params.hours}), '')"
+              },
+              "transforms": [
+                {
+                  "code": "\tparts = (value or '').split('|')\n\treturn cadre.hmi.limit_series(parts[0], int(parts[1]) if len(parts) > 1 and parts[1] else 1)",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "plots": [
+            {
+              "axes": [
+                {
+                  "alignment": "left",
+                  "name": "value",
+                  "tick": {
+                    "count": 5,
+                    "label": {
+                      "format": ".3~g"
+                    }
+                  }
+                }
+              ],
+              "markers": [],
+              "trends": [
+                {
+                  "axis": "value",
+                  "baselines": [],
+                  "columns": [
+                    {
+                      "key": "value"
+                    }
+                  ],
+                  "series": "value",
+                  "type": "line",
+                  "visible": true
+                },
+                {
+                  "axis": "value",
+                  "baselines": [],
+                  "columns": [
+                    {
+                      "key": "hiLimit",
+                      "styles": {
+                        "highlighted": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        },
+                        "muted": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        },
+                        "normal": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "key": "loLimit",
+                      "styles": {
+                        "highlighted": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        },
+                        "muted": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        },
+                        "normal": {
+                          "fill": {
+                            "color": "",
+                            "opacity": null
+                          },
+                          "stroke": {
+                            "color": "",
+                            "dashArray": "6 4",
+                            "opacity": null,
+                            "width": null
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "series": "limits",
+                  "type": "line",
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "series": [
+            {
+              "data": [],
+              "name": "value"
+            },
+            {
+              "data": [],
+              "name": "limits"
+            }
+          ],
+          "timeAxis": {
+            "tick": {
+              "label": {
+                "format": "HH:mm"
+              }
+            },
+            "tickCount": 4
+          },
+          "timeRange": {
+            "dateFormat": "D-M-YYYY",
+            "timeFormat": "HH:mm",
+            "visible": true
+          },
+          "title": {}
+        },
+        "type": "ia.chart.timeseries"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/card cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "4px",
+        "overflow": "hidden",
+        "padding": "8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

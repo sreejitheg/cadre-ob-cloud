@@ -1,0 +1,1347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cadre.local/schemas/cadre-hmi-screen-1.json",
+  "title": "Cadre HMI screen descriptor, version 1",
+  "description": "One screen of a child project over the Cadre HMI parent library. Written by a Cadre tool (for example ctig from a Citect page model, or tools/import_openstudio.py from an OpenStudio connector diagram) and consumed by tools/hmi/screen.py. Wiki page 08.",
+  "type": "object",
+  "required": [
+    "schema",
+    "screen"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "cadre-hmi-screen/1"
+    },
+    "screen": {
+      "type": "object",
+      "required": [
+        "id",
+        "route",
+        "title",
+        "view",
+        "layout"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "route": {
+          "type": "string",
+          "pattern": "^/"
+        },
+        "title": {
+          "type": "string"
+        },
+        "view": {
+          "type": "string",
+          "description": "View path in the child project, for example Screens/ProcessOverview"
+        },
+        "layout": {
+          "enum": [
+            "diagram",
+            "cards"
+          ]
+        },
+        "width": {
+          "type": "number",
+          "minimum": 1
+        },
+        "height": {
+          "type": "number",
+          "minimum": 1
+        },
+        "icon": {
+          "type": "string",
+          "description": "Icon name from library/icons for the navigation item"
+        },
+        "nav": {
+          "type": "boolean",
+          "default": true
+        },
+        "navLabel": {
+          "type": "string"
+        },
+        "node": {
+          "type": "string",
+          "pattern": "^[^/]+(/[^/]+)*$",
+          "maxLength": 120,
+          "description": "The node of the plant hierarchy the page shows (F033 of the ASMP study, COB-141): names from the root, separated by '/', for example WTP/Filtration. The pages of the descriptor set make the hierarchy: each node holds the pages that name it, as its content, and the nodes above it. A device belongs to the node of the deepest page that draws it, which its alarms' display path names (tools/hmi/alarms.py) and whose alarm counts include it."
+        },
+        "fit": {
+          "description": "Diagram layout: scale the page down to fit its window, keeping the aspect ratio (never above 1). true takes the frame's top dock (48 px) and the toolbar (56 px) off the viewport's height; an object states the pixels to reserve (reserveX for a dock that stays open, reserveY). COB-159, GP-10.",
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "reserveX": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "reserveY": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            }
+          ]
+        },
+        "level": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "The display level word the page header of the ASM frame shows beside the title (COB-160; screen.py --frame asm), for example 'Level 1 overview' or 'Level 2 unit'. Not used by the default frame."
+        },
+        "previous": {
+          "type": "string",
+          "pattern": "^/",
+          "description": "The route of the page the header's previous button opens (COB-160; screen.py --frame asm): the route of another descriptor of the set. Without it the button is disabled."
+        },
+        "next": {
+          "type": "string",
+          "pattern": "^/",
+          "description": "The route of the page the header's next button opens (COB-160; screen.py --frame asm): the route of another descriptor of the set. Without it the button is disabled."
+        }
+      }
+    },
+    "tagRoot": {
+      "type": "string",
+      "description": "Tag folder that relative binding members resolve under, for example [default]site/area"
+    },
+    "tagValues": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "boolean",
+          "string"
+        ]
+      },
+      "description": "Initial memory tag values for a test build, keyed by binding member"
+    },
+    "toolbar": {
+      "type": "boolean",
+      "default": true,
+      "description": "Diagram layout: the operator toolbar (colour mode, ID tags, readouts)"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "Drill-down route opened by a click"
+          }
+        }
+      }
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/symbol"
+      }
+    },
+    "junctions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "pipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "from",
+          "to"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "$ref": "#/$defs/end"
+          },
+          "to": {
+            "$ref": "#/$defs/end"
+          },
+          "via": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "medium": {
+            "enum": [
+              "neutral",
+              "fresh-water",
+              "sea-water",
+              "fuel",
+              "oil",
+              "steam",
+              "hot",
+              "cold",
+              "air",
+              "waste"
+            ]
+          },
+          "size": {
+            "enum": [
+              "small",
+              "medium",
+              "large",
+              "xl"
+            ]
+          },
+          "state": {
+            "enum": [
+              "open",
+              "closed"
+            ],
+            "description": "closed blocks the flow and draws the pipe closed"
+          }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "description": "Cards layout: rows of cards, each card with items in card body pixels",
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/card"
+        }
+      }
+    },
+    "unmapped": {
+      "type": "array",
+      "description": "Importer record of source objects with no library kind (informative)"
+    },
+    "showTags": {
+      "type": "boolean",
+      "default": false,
+      "description": "Diagram layout: equipment ID tags shown by default (the toolbar still toggles them)"
+    },
+    "tagModel": {
+      "enum": [
+        "generated",
+        "external"
+      ],
+      "default": "generated",
+      "description": "external: the tags exist (imported from a tag model file); no memory tags are generated for the bindings"
+    },
+    "labels": {
+      "type": "array",
+      "description": "Diagram layout: free text labels",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "text"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "text": {
+            "type": "string"
+          },
+          "align": {
+            "enum": [
+              "left",
+              "center",
+              "right"
+            ]
+          },
+          "style": {
+            "enum": [
+              "heading",
+              "body",
+              "label"
+            ]
+          },
+          "emphasis": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "description": "The label is bold and active while a Boolean holds: a tag member, or the state of a symbol of the page (COB-159, GP-12). With `words`, the label reads the first word while the Boolean is clear and the second while it holds (a two-state text: the normal word, then the abnormal word).",
+            "properties": {
+              "tag": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "words": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "oneOf": [
+              {
+                "required": [
+                  "tag"
+                ],
+                "not": {
+                  "required": [
+                    "symbol"
+                  ]
+                }
+              },
+              {
+                "required": [
+                  "symbol"
+                ],
+                "not": {
+                  "required": [
+                    "tag"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "buttons": {
+      "type": "array",
+      "description": "Diagram layout: command buttons (COB-159, GP-06, GM-02, GM-03): a label and one action. A pulse asks first (Confirm, Cancel) and is made by cadre.hmi.page_pulse under write path W18 (the admin role) on a tag the descriptors declared; a faceplate action opens a device's faceplate on a named tab (library.open_device); a route navigates.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "label",
+          "action"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "style": {
+            "enum": [
+              "normal",
+              "flat"
+            ]
+          },
+          "action": {
+            "oneOf": [
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "tag"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "pulse"
+                  },
+                  "tag": {
+                    "type": "string",
+                    "description": "The tag pulsed, relative to tagRoot or an absolute [provider]path"
+                  },
+                  "ms": {
+                    "type": "integer",
+                    "minimum": 100,
+                    "maximum": 600000,
+                    "default": 1000,
+                    "description": "How long the tag is held true"
+                  },
+                  "confirm": {
+                    "type": "string",
+                    "description": "The question asked before the pulse (default: the label and a question mark)"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "device"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "faceplate"
+                  },
+                  "device": {
+                    "type": "string",
+                    "description": "A symbol of the page by its id, or a device's tag folder relative to tagRoot"
+                  },
+                  "tab": {
+                    "type": "string",
+                    "description": "A tab key of the faceplate: home, config, diagnostics, alarms, interlocks, info, or an openbridge key; a key it lacks opens the first tab"
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "The device kind, where the device is no symbol of the page"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "type",
+                  "route"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "type": {
+                    "const": "route"
+                  },
+                  "route": {
+                    "type": "string",
+                    "pattern": "^/"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "bars": {
+      "type": "array",
+      "description": "Diagram layout: range bars (COB-159, GP-04, GP-05, GG-03): a tag's value on a track with its normal band and limit marks (view Parts/RangeBar). Beside a readout, use the symbol's own `bar` key.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "value"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "value": {
+            "type": "string",
+            "description": "The tag member shown"
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "normalLo": {
+            "type": "number"
+          },
+          "normalHi": {
+            "type": "number"
+          },
+          "loLimit": {
+            "type": "number"
+          },
+          "hiLimit": {
+            "type": "number"
+          },
+          "unit": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "vertical": {
+            "type": "boolean"
+          },
+          "showValue": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "trends": {
+      "type": "array",
+      "description": "Diagram layout: embedded trends (COB-159, GM-04, GG-02): a title, the last `minutes` minutes and one or two pens from tag history. Two pens with different units get an axis each. A pen's tag needs historyEnabled and a historyProvider in the tag model.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "pens"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "title": {
+            "type": "string"
+          },
+          "minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 10
+          },
+          "pens": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2,
+            "items": {
+              "type": "object",
+              "required": [
+                "tag"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "tag": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "unit": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "lines": {
+      "type": "array",
+      "description": "Diagram layout: free lines (COB-159, GP-02, GP-03): `style` dashed draws a dashed line (the ATS interlock); a `gate` draws it solid while energised and light and dashed while dead. A list of gates needs all of them.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "points"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "points": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            }
+          },
+          "width": {
+            "type": "number",
+            "minimum": 0.5,
+            "default": 2
+          },
+          "style": {
+            "enum": [
+              "solid",
+              "dashed"
+            ]
+          },
+          "gate": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "minProperties": 1,
+                "maxProperties": 1,
+                "properties": {
+                  "tag": {
+                    "type": "string",
+                    "description": "A Boolean tag member: true while energised"
+                  },
+                  "symbol": {
+                    "type": "string",
+                    "description": "A symbol of the page whose state energises the line"
+                  }
+                }
+              },
+              {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "minProperties": 1,
+                  "maxProperties": 1,
+                  "properties": {
+                    "tag": {
+                      "type": "string",
+                      "description": "A Boolean tag member: true while energised"
+                    },
+                    "symbol": {
+                      "type": "string",
+                      "description": "A symbol of the page whose state energises the line"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "array",
+      "description": "Diagram layout: icons that navigate (COB-159, GP-07): an area chevron. A click opens the route; a symbol opens its faceplate, and the two are never the same click.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "route"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "route": {
+            "type": "string",
+            "pattern": "^/"
+          },
+          "icon": {
+            "type": "string",
+            "default": "chevron-right-google",
+            "description": "An icon of library/icons"
+          }
+        }
+      }
+    },
+    "brackets": {
+      "type": "array",
+      "description": "Diagram layout: a thin bracket with its name under (default) or over a group (COB-159, GP-09). x, y is the bracket's left end; w its length.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "label"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "label": {
+            "type": "string"
+          },
+          "side": {
+            "enum": [
+              "below",
+              "above"
+            ]
+          }
+        }
+      }
+    },
+    "wells": {
+      "type": "array",
+      "description": "Diagram layout: the liquid of a well with level switches (COB-159, GM-01). Filled up to the highest mark whose tag is true, with a lighter band up to the next mark; the fill steps from mark to mark and states no percentage. Marks run from the lowest level up; level is a fraction of the well's height from its floor.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "marks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "marks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "level",
+                "tag"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "level": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "description": "A Boolean tag member: true while the mark is reached"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "alarmPanels": {
+      "type": "array",
+      "description": "Diagram layout: alarm panels (L5): the library's alarm list of `Faceplate/Alarms` over the alarms under the tag folders of `sources`, with Ack selected and Ack all beneath it.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "x",
+          "y",
+          "w",
+          "h",
+          "sources"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "w": {
+            "type": "number",
+            "minimum": 1
+          },
+          "h": {
+            "type": "number",
+            "minimum": 1
+          },
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "description": "Tag folders, relative to tagRoot or absolute"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "symbol": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "x",
+        "y"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "kind": {
+          "type": "string",
+          "description": "pump, motor, fan, valve, analogvalve, damper, filter, switch, indicator, generator, tank, readout, instrument-field, controller, sequence; a generator with params.picture \"genset\" is drawn as the larger vector generator set; any other kind is drawn as a counted gap box"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "w": {
+          "type": "number",
+          "minimum": 1
+        },
+        "h": {
+          "type": "number",
+          "minimum": 1
+        },
+        "params": {
+          "type": "object",
+          "description": "Static parameters; names must be in the kind's library contract (gate G7)"
+        },
+        "bind": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Parameter name to tag member (relative to tagRoot, or an absolute [provider]path)"
+        },
+        "device": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "The symbol opens the faceplate dock. true: its tag folder is named by its id; a string: the tag folder, relative to tagRoot (a card symbol showing a device drawn elsewhere)"
+        },
+        "label": {
+          "type": "string",
+          "description": "Device description shown in the faceplate header"
+        },
+        "bar": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "On a readout or an instrument field: a range bar (Parts/RangeBar) beside it, without moving it (COB-159). The value is the symbol's bound `value` unless the bar names its own. `side` right (default), left, below or above; `length`, `thickness` and `gap` in px; `x`, `y`, `w`, `h` place it outright.",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            },
+            "normalLo": {
+              "type": "number"
+            },
+            "normalHi": {
+              "type": "number"
+            },
+            "loLimit": {
+              "type": "number"
+            },
+            "hiLimit": {
+              "type": "number"
+            },
+            "value": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            },
+            "format": {
+              "type": "string"
+            },
+            "vertical": {
+              "type": "boolean"
+            },
+            "showValue": {
+              "type": "boolean"
+            },
+            "side": {
+              "enum": [
+                "right",
+                "left",
+                "below",
+                "above"
+              ]
+            },
+            "length": {
+              "type": "number",
+              "minimum": 1
+            },
+            "thickness": {
+              "type": "number",
+              "minimum": 1
+            },
+            "gap": {
+              "type": "number",
+              "minimum": 0
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "w": {
+              "type": "number",
+              "minimum": 1
+            },
+            "h": {
+              "type": "number",
+              "minimum": 1
+            }
+          }
+        },
+        "alarm": {
+          "type": "string",
+          "description": "On an indicator: the tag whose alarms the lamp follows (a fault row, COB-159). Its alert frame shows the priority of the most severe alarm on the tag and flashes until acknowledged, through the library's alert states."
+        },
+        "states": {
+          "type": "array",
+          "description": "On an indicator: the colours its state takes (L5). Each entry gives the state value (a boolean, a number or a string), the colour (a palette name of wiki 13 section 9: off, on, active, alarm, warning, caution, critical, neutral, or a CSS paint) and optionally a label word. The lamp reads the tag named by bind.state.",
+          "items": {
+            "type": "object",
+            "required": [
+              "value",
+              "colour"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": [
+                  "boolean",
+                  "number",
+                  "string"
+                ]
+              },
+              "colour": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "stateDefault": {
+          "type": "string",
+          "description": "On an indicator with states: the colour of a value no entry names (a palette name or a CSS paint; default off)."
+        },
+        "faceplate": {
+          "type": "string",
+          "description": "The symbol opens the faceplate of this device (an id of the devices file, relative to tagRoot) on a click, as a device symbol does, and is not the device's own drawing: the device's node stays where the page that draws it with `device` puts it (L5)."
+        },
+        "render": {
+          "enum": [
+            "view",
+            "module"
+          ],
+          "description": "`view` forces the library's view where the project renders with the module (the component test page's side by side, L5)."
+        }
+      }
+    },
+    "end": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "ref"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string"
+            },
+            "side": {
+              "enum": [
+                "top",
+                "bottom",
+                "left",
+                "right"
+              ]
+            },
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "x",
+            "y"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "end": {
+              "enum": [
+                "cap",
+                "arrow-in",
+                "arrow-out",
+                "none"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "card": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "bodyWidth": {
+          "type": "number",
+          "minimum": 1
+        },
+        "bodyHeight": {
+          "type": "number",
+          "minimum": 1
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/symbol"
+          }
+        },
+        "body": {
+          "$ref": "#/$defs/group"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        },
+        "route": {
+          "type": "string",
+          "pattern": "^/",
+          "description": "Route opened by a click on the card title"
+        }
+      }
+    },
+    "group": {
+      "type": "object",
+      "description": "A flex group of a card body: direction, flex sizing, and items that are groups, symbols or labels",
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "enum": [
+            "row",
+            "column"
+          ]
+        },
+        "basis": {
+          "type": "string"
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        },
+        "justify": {
+          "enum": [
+            "flex-start",
+            "flex-end",
+            "center",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/group"
+              },
+              {
+                "$ref": "#/$defs/flexSymbol"
+              },
+              {
+                "$ref": "#/$defs/label"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "flexSymbol": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "kind": {
+          "type": "string"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        },
+        "params": {
+          "type": "object"
+        },
+        "bind": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "device": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "description": "The symbol opens the faceplate dock. true: its tag folder is named by its id; a string: the tag folder, relative to tagRoot (a card symbol showing a device drawn elsewhere)"
+        },
+        "label": {
+          "type": "string"
+        },
+        "states": {
+          "type": "array",
+          "description": "On an indicator: the colours its state takes (L5). Each entry gives the state value (a boolean, a number or a string), the colour (a palette name of wiki 13 section 9: off, on, active, alarm, warning, caution, critical, neutral, or a CSS paint) and optionally a label word. The lamp reads the tag named by bind.state.",
+          "items": {
+            "type": "object",
+            "required": [
+              "value",
+              "colour"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": [
+                  "boolean",
+                  "number",
+                  "string"
+                ]
+              },
+              "colour": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "stateDefault": {
+          "type": "string",
+          "description": "On an indicator with states: the colour of a value no entry names (a palette name or a CSS paint; default off)."
+        },
+        "faceplate": {
+          "type": "string",
+          "description": "The symbol opens the faceplate of this device (an id of the devices file, relative to tagRoot) on a click, as a device symbol does, and is not the device's own drawing: the device's node stays where the page that draws it with `device` puts it (L5)."
+        },
+        "render": {
+          "enum": [
+            "view",
+            "module"
+          ],
+          "description": "`view` forces the library's view where the project renders with the module (the component test page's side by side, L5)."
+        }
+      }
+    },
+    "label": {
+      "type": "object",
+      "required": [
+        "label"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "basis": {
+          "type": "string"
+        },
+        "grow": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

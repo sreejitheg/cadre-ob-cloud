@@ -1,0 +1,10 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--container-global-color)",
+      "borderRadius": "8px",
+      "boxShadow": "var(--shadow-floating-x) var(--shadow-floating-y) var(--shadow-floating-blur) var(--shadow-floating-color)",
+      "overflow": "hidden"
+    }
+  }
+}

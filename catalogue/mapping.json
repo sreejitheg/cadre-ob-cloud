@@ -1,0 +1,643 @@
+{
+ "meta": {
+  "source": "catalogue/openstudio-interface.json",
+  "authored": "2026-10-07",
+  "statuses": [
+   "implemented",
+   "framework",
+   "generator",
+   "stock",
+   "factory",
+   "partial",
+   "gap",
+   "out-of-scope"
+  ]
+ },
+ "components": {
+  "connector-diagram": {
+   "status": "generator",
+   "cadre": "`tools/hmi/screen.py` diagram layout: sections, symbols, routed pipes, compiled flow (`tools/hmi/diagram.py`)",
+   "note": "Pipes are drawn by the generator, not in the Designer; flow is compiled into one expression per pipe and verified against a reference solver (gate G6)."
+  },
+  "app": {
+   "status": "framework",
+   "cadre": "`Framework/*` views and the shared docks (wiki page 04)",
+   "note": "Overview page of the application frame."
+  },
+  "topbar": {
+   "status": "framework",
+   "cadre": "`Framework/TopBar` in the shared top dock",
+   "note": "Menu button, app and page name, most severe alarm with ACK, alarm count, brilliance menu, user menu and clock are implemented; the command button, the apps button and the narrow-screen breakpoints are not (register COB-020)."
+  },
+  "navbar": {
+   "status": "framework",
+   "cadre": "`Framework/NavMenu` and `Framework/NavItem` in the shared left dock",
+   "note": "Items and footer from `session.custom.nav`; the selected item from `page.props.path`; groups, flyouts and alert badges are not implemented (register COB-021)."
+  },
+  "card": {
+   "status": "generator",
+   "cadre": "Card pattern of the cards layout (`cadre/surface/card` plus a title)",
+   "note": "The dialog option is not implemented."
+  },
+  "tabbed-card": {
+   "status": "stock",
+   "cadre": "`ia.container.tab` with `cadre/surface/card`"
+  },
+  "modal": {
+   "status": "stock",
+   "cadre": "`system.perspective.openPopup` with a `cadre/surface/card` root"
+  },
+  "badge": {
+   "status": "partial",
+   "cadre": "Corner badges of the automation symbols",
+   "note": "A free-standing badge view is not implemented."
+  },
+  "app-bar": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Multi-application integration chrome; no requirement in process automation screens so far."
+  },
+  "integration-bar": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Multi-application integration chrome; no requirement in process automation screens so far."
+  },
+  "integration-button": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Multi-application integration chrome; no requirement in process automation screens so far."
+  },
+  "fleet-button": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Multi-application integration chrome; no requirement in process automation screens so far."
+  },
+  "pagination": {
+   "status": "stock",
+   "cadre": "Table pager of `ia.display.table` and the alarm tables"
+  },
+  "input": {
+   "status": "stock",
+   "cadre": "Stock `ia.input.*` components with `cadre/button/*` and `cadre/font/*` classes",
+   "note": "Common features page of the input family."
+  },
+  "button": {
+   "status": "stock",
+   "cadre": "`ia.input.button` with `cadre/button/normal`, `raised`, `flat` or `selected`"
+  },
+  "icon-button": {
+   "status": "implemented",
+   "cadre": "Icon button pattern: an `ia.shapes.svg` icon in a flat button container (`tools/hmi/framework.py`)"
+  },
+  "icon": {
+   "status": "implemented",
+   "cadre": "`ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted OpenBridge icons)"
+  },
+  "checkbox": {
+   "status": "stock",
+   "cadre": "`ia.input.checkbox`"
+  },
+  "checkbox-list": {
+   "status": "stock",
+   "cadre": "`ia.input.checkbox` instances in an `ia.container.flex`"
+  },
+  "radio-button-group": {
+   "status": "stock",
+   "cadre": "`ia.input.radio-group`"
+  },
+  "dropdown-button": {
+   "status": "stock",
+   "cadre": "`ia.input.dropdown`"
+  },
+  "slider": {
+   "status": "stock",
+   "cadre": "`ia.input.slider`"
+  },
+  "double-slider": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "The stock `ia.input.slider` has one handle."
+  },
+  "number-input-field": {
+   "status": "stock",
+   "cadre": "`ia.input.numeric-entry-field`"
+  },
+  "text-input-field": {
+   "status": "stock",
+   "cadre": "`ia.input.text-field`"
+  },
+  "textarea-field": {
+   "status": "stock",
+   "cadre": "`ia.input.text-area`"
+  },
+  "toggle-switch": {
+   "status": "stock",
+   "cadre": "`ia.input.toggle-switch`"
+  },
+  "toggle-button-horizontal": {
+   "status": "implemented",
+   "cadre": "Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar)"
+  },
+  "toggle-button-vertical": {
+   "status": "implemented",
+   "cadre": "Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar)"
+  },
+  "tab-row": {
+   "status": "implemented",
+   "cadre": "Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar)"
+  },
+  "pivot-item-group": {
+   "status": "implemented",
+   "cadre": "Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar)"
+  },
+  "progress-bar": {
+   "status": "stock",
+   "cadre": "`ia.display.progress`"
+  },
+  "sequence-loading-spinner": {
+   "status": "partial",
+   "cadre": "`cadre/anim/spin` animation class (the progress ring of the symbols)"
+  },
+  "stepper-box": {
+   "status": "stock",
+   "cadre": "`ia.input.numeric-entry-field` (spinner mode)"
+  },
+  "status-indicator": {
+   "status": "partial",
+   "cadre": "Status row of the automation symbols"
+  },
+  "user-button": {
+   "status": "framework",
+   "cadre": "`Framework/TopBar` user button and the `Framework/UserMenu` popup"
+  },
+  "user-menu": {
+   "status": "framework",
+   "cadre": "`Framework/TopBar` user button and the `Framework/UserMenu` popup"
+  },
+  "app-button": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "breadcrumb": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "chat-message": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "filter-chip": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "floating-item": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "icon-check-button": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "message-menu-item": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "slide-button": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "tag": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "No requirement in process screens so far; each is a small view when needed."
+  },
+  "automation-button": {
+   "status": "implemented",
+   "cadre": "Common contract of every `Automation/*` symbol view",
+   "note": "Readout (status row and tag), readout side, activated, alert frame (status, mode), progress, and the four corner badges."
+  },
+  "valve": {
+   "status": "implemented",
+   "cadre": "`Automation/Valve` (`open`)"
+  },
+  "digital-valve": {
+   "status": "implemented",
+   "cadre": "`Automation/Valve` (`open`)"
+  },
+  "analog-valve": {
+   "status": "implemented",
+   "cadre": "`Automation/AnalogValve` (`open`, `value`)"
+  },
+  "pump": {
+   "status": "implemented",
+   "cadre": "`Automation/Pump` (`on`, `speed`, `variant` regular or double)",
+   "note": "`componentSize` medium (52 px holder) is not implemented (register COB-030)."
+  },
+  "motor": {
+   "status": "implemented",
+   "cadre": "`Automation/Motor`"
+  },
+  "fan": {
+   "status": "implemented",
+   "cadre": "`Automation/Fan`"
+  },
+  "damper": {
+   "status": "implemented",
+   "cadre": "`Automation/Damper`"
+  },
+  "filter": {
+   "status": "implemented",
+   "cadre": "`Automation/Filter`"
+  },
+  "switch": {
+   "status": "implemented",
+   "cadre": "`Automation/Switch`"
+  },
+  "automation-tank": {
+   "status": "implemented",
+   "cadre": "`Automation/Tank` (level, trend, chart, compact, static)",
+   "note": "The chart is a line sparkline, not the vendor's filled area chart (register COB-031)."
+  },
+  "automation-readout": {
+   "status": "implemented",
+   "cadre": "`Automation/Readout`"
+  },
+  "automation-badge": {
+   "status": "partial",
+   "cadre": "Corner badges inside the symbols"
+  },
+  "bipolar-transistor": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "capacitor": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "converter": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "diodes": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "ground": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "logic": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "mosfet": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "resistor": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "router": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "source": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "transformer": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "heat-pump": {
+   "status": "factory",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "note": "Electrical single-line symbols; add when a screen needs them."
+  },
+  "gauge-valve": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Each needs its own layout beyond a two-state icon."
+  },
+  "hydraulic-check-valve": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Each needs its own layout beyond a two-state icon."
+  },
+  "transmitter": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Each needs its own layout beyond a two-state icon."
+  },
+  "transmitter-stack": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "Each needs its own layout beyond a two-state icon."
+  },
+  "instrument-field": {
+   "status": "implemented",
+   "cadre": "`Instrument/Field`"
+  },
+  "readout": {
+   "status": "implemented",
+   "cadre": "`Instrument/Field`"
+  },
+  "readout-list-item": {
+   "status": "stock",
+   "cadre": "`Instrument/Field` rows in an `ia.container.flex`"
+  },
+  "gauge-radial": {
+   "status": "stock",
+   "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
+   "note": "Visual parity with the vendor gauge is not claimed."
+  },
+  "gauge-radial-indicator": {
+   "status": "stock",
+   "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
+   "note": "Visual parity with the vendor gauge is not claimed."
+  },
+  "speed-gauge": {
+   "status": "stock",
+   "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
+   "note": "Visual parity with the vendor gauge is not claimed."
+  },
+  "gauge-horizontal": {
+   "status": "stock",
+   "cadre": "`ia.display.linear-scale` or `ia.display.progress`"
+  },
+  "gauge-vertical": {
+   "status": "stock",
+   "cadre": "`ia.display.linear-scale` or `ia.display.progress`"
+  },
+  "gauge-bar-indicator": {
+   "status": "stock",
+   "cadre": "`ia.display.linear-scale` or `ia.display.progress`"
+  },
+  "gauge-trend": {
+   "status": "stock",
+   "cadre": "`ia.display.sparkline` beside an `Instrument/Field`"
+  },
+  "gauge-trend-indicator": {
+   "status": "stock",
+   "cadre": "`ia.display.sparkline` beside an `Instrument/Field`"
+  },
+  "maritime": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Common features page of the maritime family."
+  },
+  "azimuth-thruster": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "azimuth-thruster-labeled": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "bearing-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "compass": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "compass-flat": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "compass-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "compass-sector": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "depth-actual": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "depth-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "heading": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "heading-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "heave": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "heave-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "main-engine": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "main-engine-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "pitch": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "pitch-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "pitch-roll": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "pitch-roll-heave": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "pitch-roll-yaw": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "propulsion-azimuth-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rate-of-turn": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "roll": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "roll-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rot-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rot-linear": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rot-sector": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rudder": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "rudder-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "speed-arrows": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "speed-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "surge-sway-yaw": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "thruster": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "tunnel-thruster": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "velocity-projection-plot": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "wind": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "wind-indicator": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "wind-propulsion": {
+   "status": "out-of-scope",
+   "cadre": "None",
+   "note": "Ship navigation instrument; drawn as a visible gap box if a descriptor names it."
+  },
+  "donut-chart": {
+   "status": "stock",
+   "cadre": "`ia.chart.pie`"
+  },
+  "graph-mini": {
+   "status": "stock",
+   "cadre": "`ia.display.sparkline`"
+  },
+  "indicator-graph": {
+   "status": "gap",
+   "cadre": "None"
+  },
+  "radial-bar-chart": {
+   "status": "gap",
+   "cadre": "None"
+  },
+  "alert-list": {
+   "status": "framework",
+   "cadre": "`Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`",
+   "note": "Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022)."
+  },
+  "alert-list-page": {
+   "status": "framework",
+   "cadre": "`Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`",
+   "note": "Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022)."
+  },
+  "alert-detail": {
+   "status": "gap",
+   "cadre": "None",
+   "note": "The stock alarm tables offer a details option (`enableDetails`)."
+  },
+  "alert-frame-container": {
+   "status": "implemented",
+   "cadre": "Alert frame of the automation symbols (status colour, flashing when unacknowledged, dashed when rectified)"
+  },
+  "accordion-card": {
+   "status": "stock",
+   "cadre": "`ia.display.accordion`"
+  },
+  "accordion-item": {
+   "status": "stock",
+   "cadre": "`ia.display.accordion`"
+  }
+ }
+}

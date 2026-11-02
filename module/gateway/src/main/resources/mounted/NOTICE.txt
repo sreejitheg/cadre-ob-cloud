@@ -1,0 +1,43 @@
+Cadre-Sandbox-OpenBridge
+Copyright 2026 the repository owner.
+
+This repository includes material derived from the OpenBridge web components:
+
+  Package:   @oicl/openbridge-webcomponents, version 2.0.0-next.155
+  Source:    https://github.com/Ocean-Industries-Concept-Lab/openbridge-webcomponents
+  Commit:    2c98dda1ac33b2a931bea2532fc78961f097e548 (published 2026-09-16)
+  Licence:   Apache License, Version 2.0 (LICENSES/Apache-2.0.txt, the licence file at that commit)
+  Copyright: Copyright 2024 OICL
+
+Derived files:
+  library/tokens/openbridge-tokens.json   design tokens and type styles extracted from
+                                          src/palettes/variables.css and src/mixins/fonts.css
+  library/icons/*.json                    icon geometry converted from src/icons/icon-*.ts
+  build/*/.../stylesheet/stylesheet.css   generated from the token file
+  build/*/.../script-python/cadre/icons   generated from the icon files
+
+Changes: values were extracted and reformatted (JSON, Perspective stylesheet classes, ia.shapes.svg
+element lists); circles, rectangles, lines and polygons were rewritten as SVG path data.
+
+The Cadre OpenBridge module (module/, wiki/12) also carries the package's own code and files,
+under module/gateway/src/main/resources/mounted/:
+
+  js/cadre-ob.js            the OpenBridge components the module wraps (pump, tank, alert list,
+                            small alert page) with their dependencies, bundled and minified
+                            with esbuild from module/web/entry.js, followed by the module's own
+                            wrappers. The bundle also contains:
+                              Lit (lit-html, lit-element, @lit/reactive-element, @lit/localize),
+                                BSD-3-Clause, Copyright Google LLC; the fnv1a64 function of
+                                @lit/localize, MIT, Copyright 2014 Travis Webb
+                              Chart.js 4.5.1, MIT, Copyright 2025 Chart.js Contributors
+                              @kurkle/color 0.3.4, MIT, Copyright 2024 Jukka Kurkela
+  css/cadre-ob.css          the package's dist/openbridge.css, scoped and trimmed by
+                            module/tools/gen_module_assets.py
+  fonts/NotoSans-OB.ttf     the Noto Sans font file as shipped in the package (dist/NotoSans.ttf);
+                            the package states no separate licence for it
+
+The bundle's licence comments are in js/ob-components.js.LEGAL.txt and the Apache-2.0 text in
+LICENSES/Apache-2.0.txt, both in the same folder. No other OpenBridge source is included.
+
+This repository does not include, and is not derived from, the OpenStudio "OpenBridge for
+Ignition" module, its demo project or its documentation text.

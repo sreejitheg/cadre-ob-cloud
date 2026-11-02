@@ -1,0 +1,22 @@
+{
+ "name": "manual",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M5.75 3L2 21H6.44325L8.12573 12.7744L10.125 21H13.875L15.8942 12.6923L17.625 21H22L18.25 3H13.875L12 12L10.125 3H5.75Z",
+   "fill": {
+    "paint": "var(--element-active-color)"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-manual.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

@@ -1,0 +1,41 @@
+{
+  "custom": {
+    "alarmScope": "*",
+    "contentNode": "",
+    "deviceModel": false,
+    "devices": [],
+    "faceplateDocked": false,
+    "faceplateMode": "dock",
+    "faceplateStyle": "openbridge",
+    "floating": {},
+    "frame": "openbridge",
+    "hierarchy": [],
+    "nav": {
+      "footer": [
+        {
+          "icon": "alert-list",
+          "label": "Alerts",
+          "path": "/alerts"
+        }
+      ],
+      "items": []
+    },
+    "navPanel": "pages",
+    "navQuery": "",
+    "pageInfo": {},
+    "palette": "day",
+    "searchIndex": {},
+    "searchOpen": false,
+    "searchQuery": "",
+    "selectedDevice": "",
+    "selectedKind": "",
+    "selectedLabel": "",
+    "selectedStyle": "openbridge",
+    "selectedTab": "",
+    "selectedTitle": "",
+    "trends": []
+  },
+  "props": {
+    "theme": "light-cool"
+  }
+}

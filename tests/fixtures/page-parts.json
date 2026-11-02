@@ -1,0 +1,437 @@
+{
+  "schema": "cadre-hmi-screen/1",
+  "screen": {
+    "id": "PageParts",
+    "route": "/page-parts",
+    "title": "Page parts",
+    "view": "Screens/PageParts",
+    "layout": "diagram",
+    "width": 1580,
+    "height": 740,
+    "fit": true,
+    "node": "Parts"
+  },
+  "tagRoot": "[default]cadre_hmi_parts",
+  "toolbar": true,
+  "tagValues": {
+    "gen/voltage": 412,
+    "gen/fuel": 55,
+    "gen/load": 62,
+    "gen/speed": 1500,
+    "gen/current": 88,
+    "sw1/closed": true,
+    "sw2/closed": false,
+    "P1/state": true,
+    "P1/duty": true,
+    "P1/oos": false,
+    "ups/battery": false,
+    "well/duty": true,
+    "well/standby": false,
+    "well/high": false
+  },
+  "sections": [
+    {
+      "id": "Gen",
+      "x": 20,
+      "y": 20,
+      "w": 520,
+      "h": 330,
+      "label": "Generator readings"
+    },
+    {
+      "id": "Faults",
+      "x": 20,
+      "y": 370,
+      "w": 520,
+      "h": 200,
+      "label": "Fault status"
+    }
+  ],
+  "symbols": [
+    {
+      "id": "RD1",
+      "kind": "readout",
+      "x": 40,
+      "y": 60,
+      "w": 72,
+      "h": 24,
+      "params": {
+        "unit": "V",
+        "format": "#,##0",
+        "label": "Voltage"
+      },
+      "bind": {
+        "value": "gen/voltage"
+      },
+      "bar": {
+        "min": 0,
+        "max": 500,
+        "normalLo": 380,
+        "normalHi": 440,
+        "side": "right",
+        "length": 120
+      }
+    },
+    {
+      "id": "RD2",
+      "kind": "readout",
+      "x": 40,
+      "y": 110,
+      "w": 72,
+      "h": 24,
+      "params": {
+        "unit": "%",
+        "format": "#,##0",
+        "label": "Fuel"
+      },
+      "bind": {
+        "value": "gen/fuel"
+      },
+      "bar": {
+        "min": 0,
+        "max": 100,
+        "loLimit": 40,
+        "side": "right",
+        "length": 120
+      }
+    },
+    {
+      "id": "P1",
+      "kind": "pump",
+      "x": 700,
+      "y": 80,
+      "w": 48,
+      "h": 48,
+      "device": true,
+      "params": {
+        "readoutPosition": "bottom",
+        "hasTag": true,
+        "tag": "Pump 1",
+        "badgeControl": "auto"
+      },
+      "bind": {
+        "on": "P1/state",
+        "badgeDuty": "P1/duty",
+        "outOfService": "P1/oos"
+      }
+    },
+    {
+      "id": "P2",
+      "kind": "pump",
+      "x": 860,
+      "y": 80,
+      "w": 48,
+      "h": 48,
+      "device": true,
+      "params": {
+        "readoutPosition": "bottom",
+        "hasTag": true,
+        "tag": "Pump 2",
+        "outOfService": true
+      },
+      "bind": {
+        "on": "P2/state"
+      }
+    },
+    {
+      "id": "SW1",
+      "kind": "switch",
+      "x": 700,
+      "y": 400,
+      "w": 48,
+      "h": 48,
+      "params": {
+        "readoutPosition": "bottom"
+      },
+      "bind": {
+        "on": "sw1/closed"
+      }
+    },
+    {
+      "id": "SW2",
+      "kind": "switch",
+      "x": 860,
+      "y": 400,
+      "w": 48,
+      "h": 48,
+      "params": {
+        "readoutPosition": "bottom"
+      },
+      "bind": {
+        "on": "sw2/closed"
+      }
+    },
+    {
+      "id": "FL1",
+      "kind": "indicator",
+      "x": 40,
+      "y": 410,
+      "w": 48,
+      "h": 48,
+      "alarm": "gen/fault01",
+      "params": {
+        "readoutPosition": "right",
+        "hasTag": true,
+        "tag": "Low oil pressure",
+        "showStatus": false
+      },
+      "bind": {
+        "on": "gen/fault01"
+      }
+    },
+    {
+      "id": "FL2",
+      "kind": "indicator",
+      "x": 40,
+      "y": 470,
+      "w": 48,
+      "h": 48,
+      "alarm": "gen/fault02",
+      "params": {
+        "readoutPosition": "right",
+        "hasTag": true,
+        "tag": "Coolant too hot",
+        "showStatus": false
+      },
+      "bind": {
+        "on": "gen/fault02"
+      }
+    }
+  ],
+  "junctions": [],
+  "pipes": [],
+  "lines": [
+    {
+      "id": "interlock",
+      "points": [
+        [
+          724,
+          520
+        ],
+        [
+          884,
+          520
+        ]
+      ],
+      "style": "dashed"
+    },
+    {
+      "id": "bus1",
+      "points": [
+        [
+          724,
+          450
+        ],
+        [
+          724,
+          600
+        ],
+        [
+          1100,
+          600
+        ]
+      ],
+      "width": 3,
+      "gate": [
+        {
+          "symbol": "SW1"
+        }
+      ]
+    },
+    {
+      "id": "bus2",
+      "points": [
+        [
+          884,
+          450
+        ],
+        [
+          884,
+          640
+        ],
+        [
+          1100,
+          640
+        ]
+      ],
+      "width": 3,
+      "gate": {
+        "tag": "sw2/closed"
+      }
+    }
+  ],
+  "bars": [
+    {
+      "id": "load",
+      "x": 40,
+      "y": 160,
+      "w": 200,
+      "h": 12,
+      "value": "gen/load",
+      "min": 0,
+      "max": 100,
+      "normalLo": 20,
+      "normalHi": 80,
+      "hiLimit": 90,
+      "unit": "%"
+    }
+  ],
+  "trends": [
+    {
+      "id": "tr1",
+      "x": 40,
+      "y": 190,
+      "w": 340,
+      "h": 140,
+      "title": "Engine speed and voltage",
+      "minutes": 10,
+      "pens": [
+        {
+          "tag": "gen/speed",
+          "label": "Speed",
+          "unit": "rpm"
+        },
+        {
+          "tag": "gen/voltage",
+          "label": "Voltage",
+          "unit": "V"
+        }
+      ]
+    },
+    {
+      "id": "tr2",
+      "x": 560,
+      "y": 250,
+      "w": 340,
+      "h": 140,
+      "title": "Current",
+      "minutes": 10,
+      "pens": [
+        {
+          "tag": "gen/current",
+          "label": "Current",
+          "unit": "A"
+        }
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "id": "reset",
+      "x": 1300,
+      "y": 20,
+      "w": 240,
+      "h": 36,
+      "label": "PLANTWIDE RESET",
+      "action": {
+        "type": "pulse",
+        "tag": "sim/reset",
+        "ms": 5000,
+        "confirm": "Reset the plant?"
+      }
+    },
+    {
+      "id": "alarms",
+      "x": 1000,
+      "y": 80,
+      "w": 130,
+      "h": 36,
+      "label": "Pump alarms",
+      "action": {
+        "type": "faceplate",
+        "device": "P1",
+        "tab": "alarms"
+      }
+    },
+    {
+      "id": "folder",
+      "x": 1000,
+      "y": 130,
+      "w": 130,
+      "h": 36,
+      "label": "Pump 2 home",
+      "action": {
+        "type": "faceplate",
+        "device": "P2",
+        "tab": "home"
+      }
+    },
+    {
+      "id": "next",
+      "x": 1300,
+      "y": 80,
+      "w": 130,
+      "h": 36,
+      "label": "NEXT",
+      "style": "flat",
+      "action": {
+        "type": "route",
+        "route": "/alerts"
+      }
+    }
+  ],
+  "labels": [
+    {
+      "id": "ups",
+      "x": 300,
+      "y": 410,
+      "w": 180,
+      "h": 20,
+      "text": "UPS on battery",
+      "emphasis": {
+        "tag": "ups/battery"
+      }
+    },
+    {
+      "id": "gen",
+      "x": 300,
+      "y": 440,
+      "w": 180,
+      "h": 20,
+      "text": "Generator running",
+      "emphasis": {
+        "symbol": "SW1"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "toGen",
+      "x": 1450,
+      "y": 84,
+      "route": "/alerts"
+    }
+  ],
+  "brackets": [
+    {
+      "id": "grp",
+      "x": 700,
+      "y": 170,
+      "w": 208,
+      "label": "Pump group"
+    }
+  ],
+  "wells": [
+    {
+      "id": "well",
+      "x": 1000,
+      "y": 250,
+      "w": 200,
+      "h": 220,
+      "marks": [
+        {
+          "level": 0.5,
+          "tag": "well/duty"
+        },
+        {
+          "level": 0.7,
+          "tag": "well/standby"
+        },
+        {
+          "level": 0.9,
+          "tag": "well/high"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-sidebyside/1",
+  "title": "Cadre HMI side-by-side manifest, version 1",
+  "description": "The side-by-side pictures written by tools/compare/sidebyside.py (ARCH-WFB-01 revision B8 Table 105): for each page and faceplate one picture of the original beside the renderings, with each source named by path and SHA-256, the pictures that were missing, and the two contact sheets of the last two columns tiled page by page in one fixed grid. Wiki page 04.",
+  "type": "object",
+  "required": ["schema", "columns", "pictures", "missing", "sheets", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-sidebyside/1"},
+    "columns": {"type": "array", "minItems": 1, "maxItems": 4, "items": {"enum": ["original", "preview", "asm", "ignition"]}},
+    "pictures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "file", "sources"],
+        "properties": {
+          "name": {"type": "string"},
+          "kind": {"enum": ["page", "faceplate"]},
+          "file": {"type": "string"},
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["column", "path", "sha256"],
+              "properties": {"column": {"type": "string"}, "path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+            }
+          }
+        }
+      }
+    },
+    "missing": {
+      "type": "array",
+      "items": {"type": "object", "required": ["name", "kind", "column"]}
+    },
+    "sheets": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["a", "b", "grid"],
+          "properties": {
+            "a": {"type": "string"},
+            "b": {"type": "string"},
+            "columns": {"type": "array", "items": {"type": "string"}},
+            "grid": {
+              "type": "object",
+              "required": ["cols", "rows", "cell_w", "cell_h", "order"],
+              "properties": {
+                "cols": {"type": "integer", "minimum": 1},
+                "rows": {"type": "integer", "minimum": 1},
+                "cell_w": {"type": "integer"},
+                "cell_h": {"type": "integer"},
+                "order": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

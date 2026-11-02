@@ -1,0 +1,16 @@
+{
+ "schema": "cadre-hmi-devices/1",
+ "tagRoot": "[default]cadre_hmi_plant",
+ "devices": [
+  {
+   "id": "PUMP01",
+   "kind": "pump",
+   "members": {}
+  },
+  {
+   "id": "PUMP02",
+   "kind": "pump",
+   "members": {}
+  }
+ ]
+}

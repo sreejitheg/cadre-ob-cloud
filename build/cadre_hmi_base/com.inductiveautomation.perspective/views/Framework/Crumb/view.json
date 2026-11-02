@@ -1,0 +1,165 @@
+{
+  "custom": {},
+  "params": {
+    "counts": {
+      "Critical": 0,
+      "Diagnostic": 0,
+      "High": 0,
+      "Low": 0,
+      "Medium": 0,
+      "total": 0,
+      "unacked": 0
+    },
+    "first": true,
+    "name": "",
+    "route": ""
+  },
+  "propConfig": {
+    "params.counts": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.first": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.name": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.route": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 40,
+      "width": 220
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Chevron"
+        },
+        "position": {
+          "basis": "16px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.first}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M8.59009 7.41L10.0001 6L16.0001 12L10.0001 18L8.59009 16.59L13.1701 12L8.59009 7.41Z",
+              "fill": {
+                "paint": "var(--element-active-color)"
+              },
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 24 24"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Name"
+        },
+        "position": {
+          "shrink": 1
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.name}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badges"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.params.counts": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "counts": {
+              "Critical": 0,
+              "Diagnostic": 0,
+              "High": 0,
+              "Low": 0,
+              "Medium": 0,
+              "total": 0,
+              "unacked": 0
+            }
+          },
+          "path": "Framework/Badges",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tif self.view.params.route:\n\t\tsystem.perspective.navigate(self.view.params.route)"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "cursor": "pointer",
+        "gap": "6px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

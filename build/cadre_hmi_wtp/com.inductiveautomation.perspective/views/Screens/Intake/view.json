@@ -1,0 +1,1726 @@
+{
+  "custom": {
+    "colorMode": false,
+    "g_DP201": false,
+    "g_M201": false,
+    "g_P101": false,
+    "g_P202": false,
+    "g_XV101": false,
+    "showReadout": true,
+    "showTag": true
+  },
+  "params": {},
+  "propConfig": {
+    "custom.g_DP201": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/DP201/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_M201": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/M201/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_P101": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P101/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_P202": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P202/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_XV101": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/XV101/state"
+        },
+        "type": "tag"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 1580
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Raw water intake"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Raw"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 620,
+                  "x": 20,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Coagulation"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Coag"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 300,
+                  "x": 660,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "Label"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "padding": "4px 8px"
+                      },
+                      "text": "Clarification"
+                    },
+                    "type": "ia.display.label"
+                  }
+                ],
+                "meta": {
+                  "name": "Section_Clar"
+                },
+                "position": {
+                  "height": 540,
+                  "width": 580,
+                  "x": 980,
+                  "y": 20
+                },
+                "props": {
+                  "alignItems": "flex-end",
+                  "direction": "column",
+                  "style": {
+                    "classes": "cadre/surface/section",
+                    "overflow": "hidden"
+                  }
+                },
+                "type": "ia.container.flex"
+              },
+              {
+                "meta": {
+                  "name": "Text_Supply"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 170,
+                  "x": 36,
+                  "y": 120
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "flex-start",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Raw water supply",
+                  "textStyle": {
+                    "textAlign": "left"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_TK101"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 150,
+                  "x": 260,
+                  "y": 288
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "center",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Raw water tank",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_TK201"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 160,
+                  "x": 640,
+                  "y": 534
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "center",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Coagulant tank",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_CL201"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 200,
+                  "x": 1040,
+                  "y": 50
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "center",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Lamella clarifier",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_TK202"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 150,
+                  "x": 1300,
+                  "y": 288
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "center",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Clarified water tank",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_ToFilt"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 96,
+                  "x": 1460,
+                  "y": 144
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "flex-end",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "To filtration",
+                  "textStyle": {
+                    "textAlign": "right"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Text_Sludge"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 140,
+                  "x": 1156,
+                  "y": 508
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "justifyContent": "flex-start",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Sludge to waste",
+                  "textStyle": {
+                    "textAlign": "left"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Pipes"
+                },
+                "position": {
+                  "height": 600,
+                  "width": 1580,
+                  "x": 0,
+                  "y": 0
+                },
+                "propConfig": {
+                  "props.elements[12].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.g_XV101}, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[13].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.g_XV101}, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[14].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[15].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[16].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[17].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[18].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[19].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[20].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(true, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[21].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(true, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[22].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.g_P202}, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.elements[23].stroke.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.g_P202}, 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M40 180 L156 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p1_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M192 180 L260 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p2_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M410 180 L476 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p3_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M512 180 L720 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p4_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 180 L846 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p5_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 380 L720 318",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p6_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 282 L720 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p7_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M882 180 L1052 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p8_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1228 180 L1300 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p9_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1450 180 L1550 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p10_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1140 280 L1140 382",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p11_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1140 418 L1140 520",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p12_outline",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-tertiary-color)",
+                        "width": 6
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M40 180 L156 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p1",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M192 180 L260 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p2",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M410 180 L476 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p3",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M512 180 L720 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p4",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 180 L846 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p5",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 380 L720 318",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p6",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M720 282 L720 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p7",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M882 180 L1052 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p8",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1228 180 L1300 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p9",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1450 180 L1550 180",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p10",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1140 280 L1140 382",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p11",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1140 418 L1140 520",
+                      "fill": {
+                        "paint": "none"
+                      },
+                      "name": "p12",
+                      "stroke": {
+                        "linecap": "square",
+                        "linejoin": "miter",
+                        "paint": "var(--automation-pipe-primary-color)",
+                        "width": 4
+                      },
+                      "type": "path"
+                    },
+                    {
+                      "d": "M50 180L40 170L40 190Z",
+                      "fill": {
+                        "paint": "var(--automation-pipe-tertiary-color)"
+                      },
+                      "name": "arrow-in",
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1560 180L1550 170L1550 190Z",
+                      "fill": {
+                        "paint": "var(--automation-pipe-tertiary-color)"
+                      },
+                      "name": "arrow-out",
+                      "type": "path"
+                    },
+                    {
+                      "d": "M1140 530L1130 520L1150 520Z",
+                      "fill": {
+                        "paint": "var(--automation-pipe-tertiary-color)"
+                      },
+                      "name": "arrow-out",
+                      "type": "path"
+                    }
+                  ],
+                  "preserveAspectRatio": "none",
+                  "viewBox": "0 0 1580 600"
+                },
+                "type": "ia.shapes.svg"
+              },
+              {
+                "meta": {
+                  "name": "XV101"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 138.0,
+                  "y": 156
+                },
+                "propConfig": {
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/XV101/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.open": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_XV101}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alert": false,
+                    "alertFrameMode": "acked-active",
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/XV101",
+                    "deviceKind": "valve",
+                    "deviceLabel": "Raw water inlet valve",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "XV-101",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Valve"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "TK101"
+                },
+                "position": {
+                  "height": 200,
+                  "width": 150,
+                  "x": 260,
+                  "y": 80
+                },
+                "propConfig": {
+                  "props.params.trend": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK101/trend"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK101/volume"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "chart": false,
+                    "compact": false,
+                    "deviceId": "[default]cadre_hmi_wtp/TK101",
+                    "deviceLabel": "Raw water tank",
+                    "hasCapacity": true,
+                    "history": [],
+                    "max": 500,
+                    "medium": "normal",
+                    "showPercent": true,
+                    "static": false,
+                    "tag": "TK-101",
+                    "unit": "m³",
+                    "valueFractionDigits": 0
+                  },
+                  "path": "Automation/Tank"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "P101"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 458.0,
+                  "y": 156
+                },
+                "propConfig": {
+                  "props.params.alert": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P101/alert"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.alertFrameMode": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P101/alertMode"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P101/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeInterlock": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P101/ilk/badge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_P101}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.speed": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P101/speed"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/P101",
+                    "deviceKind": "pump",
+                    "deviceLabel": "Raw water feed pump",
+                    "hasSpeed": true,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "statusText": "",
+                    "tag": "P-101",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Pump"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "FIT101"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 536,
+                  "y": 112
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/FIT101/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/FIT101",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Raw water flow",
+                    "format": "0.0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "FIT-101",
+                    "unit": "m³/h"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "AIT101"
+                },
+                "position": {
+                  "height": 40,
+                  "width": 96,
+                  "x": 546,
+                  "y": 228
+                },
+                "propConfig": {
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/AIT101/value"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "deviceId": "[default]cadre_hmi_wtp/AIT101",
+                    "deviceKind": "instrument",
+                    "deviceLabel": "Raw water turbidity",
+                    "format": "0.0",
+                    "hasTag": true,
+                    "label": "",
+                    "tag": "AIT-101",
+                    "unit": "NTU"
+                  },
+                  "path": "Automation/Readout"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "DP201"
+                },
+                "position": {
+                  "height": 48,
+                  "width": 112,
+                  "x": 696,
+                  "y": 276
+                },
+                "propConfig": {
+                  "props.params.alert": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DP201/alert"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.alertFrameMode": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DP201/alertMode"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DP201/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_DP201}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.speed": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/DP201/speed"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/DP201",
+                    "deviceKind": "pump",
+                    "deviceLabel": "Coagulant dosing pump",
+                    "hasSpeed": true,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "right",
+                    "statusText": "",
+                    "tag": "DP-201",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Pump"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "TK201"
+                },
+                "position": {
+                  "height": 150,
+                  "width": 110,
+                  "x": 665,
+                  "y": 380
+                },
+                "propConfig": {
+                  "props.params.trend": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK201/trend"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK201/volume"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "chart": false,
+                    "compact": true,
+                    "deviceId": "[default]cadre_hmi_wtp/TK201",
+                    "deviceLabel": "Coagulant tank",
+                    "hasCapacity": true,
+                    "history": [],
+                    "max": 10,
+                    "medium": "normal",
+                    "showPercent": true,
+                    "static": false,
+                    "tag": "TK-201",
+                    "unit": "m³",
+                    "valueFractionDigits": 0
+                  },
+                  "path": "Automation/Tank"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "M201"
+                },
+                "position": {
+                  "height": 92,
+                  "width": 72,
+                  "x": 828.0,
+                  "y": 156
+                },
+                "propConfig": {
+                  "props.params.alert": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/M201/alert"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.alertFrameMode": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/M201/alertMode"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/M201/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_M201}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/M201",
+                    "deviceKind": "motor",
+                    "deviceLabel": "Flash mixer",
+                    "hasSpeed": false,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "bottom",
+                    "speed": 0,
+                    "statusText": "",
+                    "tag": "M-201",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Motor"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "CL201"
+                },
+                "position": {
+                  "height": 200,
+                  "width": 200,
+                  "x": 1040,
+                  "y": 80
+                },
+                "props": {
+                  "params": {
+                    "chart": false,
+                    "compact": false,
+                    "deviceId": "",
+                    "deviceLabel": "",
+                    "hasCapacity": true,
+                    "history": [],
+                    "max": 450,
+                    "medium": "normal",
+                    "showPercent": true,
+                    "static": true,
+                    "tag": "CL-201",
+                    "trend": "stable",
+                    "unit": "m³",
+                    "value": 0,
+                    "valueFractionDigits": 0
+                  },
+                  "path": "Automation/Tank"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "TK202"
+                },
+                "position": {
+                  "height": 200,
+                  "width": 150,
+                  "x": 1300,
+                  "y": 80
+                },
+                "propConfig": {
+                  "props.params.trend": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK202/trend"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.value": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/TK202/volume"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "chart": false,
+                    "compact": false,
+                    "deviceId": "[default]cadre_hmi_wtp/TK202",
+                    "deviceLabel": "Clarified water tank",
+                    "hasCapacity": true,
+                    "history": [],
+                    "max": 300,
+                    "medium": "normal",
+                    "showPercent": true,
+                    "static": false,
+                    "tag": "TK-202",
+                    "unit": "m³",
+                    "valueFractionDigits": 0
+                  },
+                  "path": "Automation/Tank"
+                },
+                "type": "ia.display.view"
+              },
+              {
+                "meta": {
+                  "name": "P202"
+                },
+                "position": {
+                  "height": 48,
+                  "width": 112,
+                  "x": 1116,
+                  "y": 376
+                },
+                "propConfig": {
+                  "props.params.alert": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P202/alert"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.alertFrameMode": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P202/alertMode"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.badgeControl": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P202/modeBadge"
+                      },
+                      "type": "tag"
+                    }
+                  },
+                  "props.params.hasTag": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showTag} && true"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.on": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.g_P202}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.showStatus": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.showReadout}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.params.speed": {
+                    "binding": {
+                      "config": {
+                        "mode": "direct",
+                        "tagPath": "[default]cadre_hmi_wtp/P202/speed"
+                      },
+                      "type": "tag"
+                    }
+                  }
+                },
+                "props": {
+                  "params": {
+                    "activated": false,
+                    "alertFrameStatus": "alarm",
+                    "badgeCommandLocked": "none",
+                    "badgeInterlock": "none",
+                    "deviceId": "[default]cadre_hmi_wtp/P202",
+                    "deviceKind": "pump",
+                    "deviceLabel": "Sludge pump",
+                    "hasSpeed": true,
+                    "hasTag": true,
+                    "progress": false,
+                    "readoutPosition": "right",
+                    "statusText": "",
+                    "tag": "P-202",
+                    "value": 0,
+                    "variant": "regular",
+                    "vertical": false
+                  },
+                  "path": "Automation/Pump"
+                },
+                "type": "ia.display.view"
+              }
+            ],
+            "meta": {
+              "name": "Diagram"
+            },
+            "position": {
+              "basis": "600px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "height": "600px",
+                "minWidth": "1580px",
+                "overflow": "hidden",
+                "width": "1580px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Canvas"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.colorMode = not self.view.custom.colorMode"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Color"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.colorMode}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "Color"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.showTag = not self.view.custom.showTag"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "IdTag"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.showTag}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "ID-tag"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.showReadout = not self.view.custom.showReadout"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Readout"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.showReadout}, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "32px",
+                "padding": "0 8px"
+              },
+              "text": "Readout"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "UserToolbar"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "alignSelf": "flex-start",
+            "classes": "cadre/surface/card",
+            "gap": "4px",
+            "margin": "0 0 8px 8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

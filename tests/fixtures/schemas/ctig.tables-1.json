@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ctig.tables/1",
+  "title": "The tag and alarm table rows of every device of the scoped pages, the reason for each device that has none, and the names the pages read that no table defines",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "projects", "pages", "alarm_tables", "category_table", "devices", "tags", "reasons", "unmatched", "provenance"],
+  "properties": {
+    "schema": {"const": "ctig.tables/1"},
+    "projects": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "pages": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "alarm_tables": {
+      "description": "Each alarm table asked for, and whether any project of the tree holds it",
+      "type": "object",
+      "additionalProperties": {"type": "boolean"}
+    },
+    "category_table": {
+      "description": "The category table read (almcat or category), or null when the tree holds neither",
+      "type": ["string", "null"]
+    },
+    "devices": {
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/device"}
+    },
+    "tags": {
+      "description": "The variable row of every tag a scoped page or one of its pop-up pages reads, keyed by the tag's name as the variable table spells it",
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/tag"}
+    },
+    "reasons": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
+    "unmatched": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["device", "tag", "reason"],
+        "properties": {
+          "device": {"description": "The device whose instance reads the tag, or null for a page's expression", "type": ["string", "null"]},
+          "tag": {"type": "string"},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "provenance": {"$ref": "#/$defs/provenance"}
+  },
+  "$defs": {
+    "text": {"type": ["string", "null"]},
+    "variable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "type", "eng_lo", "eng_hi", "units", "format", "comment", "project"],
+      "properties": {
+        "tag": {"type": "string", "minLength": 1},
+        "type": {"$ref": "#/$defs/text"},
+        "eng_lo": {"$ref": "#/$defs/text"},
+        "eng_hi": {"$ref": "#/$defs/text"},
+        "units": {"$ref": "#/$defs/text"},
+        "format": {"$ref": "#/$defs/text"},
+        "comment": {"$ref": "#/$defs/text"},
+        "project": {"type": "string"}
+      }
+    },
+    "tag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "eng_lo", "eng_hi", "units", "format", "comment", "project"],
+      "properties": {
+        "type": {"$ref": "#/$defs/text"},
+        "eng_lo": {"$ref": "#/$defs/text"},
+        "eng_hi": {"$ref": "#/$defs/text"},
+        "units": {"$ref": "#/$defs/text"},
+        "format": {"$ref": "#/$defs/text"},
+        "comment": {"$ref": "#/$defs/text"},
+        "project": {"type": "string"}
+      }
+    },
+    "digital_alarm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "name", "desc", "category", "delay", "var_a", "var_b", "table", "project"],
+      "properties": {
+        "tag": {"$ref": "#/$defs/text"},
+        "name": {"$ref": "#/$defs/text"},
+        "desc": {"$ref": "#/$defs/text"},
+        "category": {"$ref": "#/$defs/text"},
+        "delay": {"$ref": "#/$defs/text"},
+        "var_a": {"$ref": "#/$defs/text"},
+        "var_b": {"$ref": "#/$defs/text"},
+        "table": {"type": "string"},
+        "project": {"type": "string"}
+      }
+    },
+    "advanced_alarm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "name", "desc", "category", "delay", "expression", "table", "project"],
+      "properties": {
+        "tag": {"$ref": "#/$defs/text"},
+        "name": {"$ref": "#/$defs/text"},
+        "desc": {"$ref": "#/$defs/text"},
+        "category": {"$ref": "#/$defs/text"},
+        "delay": {"$ref": "#/$defs/text"},
+        "expression": {"$ref": "#/$defs/text"},
+        "table": {"type": "string"},
+        "project": {"type": "string"}
+      }
+    },
+    "other_alarm": {
+      "description": "A row of an alarm table beyond digalm and advalm that --alarm-tables asked for",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tag", "name", "desc", "category", "delay", "var", "table", "project"],
+      "properties": {
+        "tag": {"$ref": "#/$defs/text"},
+        "name": {"$ref": "#/$defs/text"},
+        "desc": {"$ref": "#/$defs/text"},
+        "category": {"$ref": "#/$defs/text"},
+        "delay": {"$ref": "#/$defs/text"},
+        "var": {"$ref": "#/$defs/text"},
+        "table": {"type": "string"},
+        "project": {"type": "string"}
+      }
+    },
+    "priority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["by_category", "inferred", "basis"],
+      "properties": {
+        "by_category": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["priority", "inferred", "basis"],
+            "properties": {
+              "priority": {"type": ["integer", "null"]},
+              "inferred": {"type": "boolean"},
+              "basis": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "inferred": {"type": "boolean"},
+        "basis": {"type": "string", "minLength": 1}
+      }
+    },
+    "device": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pages", "variables", "digital_alarms", "advanced_alarms", "other_alarms", "priority"],
+      "properties": {
+        "pages": {"type": "array", "items": {"type": "string"}},
+        "variables": {"type": "array", "items": {"$ref": "#/$defs/variable"}},
+        "digital_alarms": {"type": "array", "items": {"$ref": "#/$defs/digital_alarm"}},
+        "advanced_alarms": {"type": "array", "items": {"$ref": "#/$defs/advanced_alarm"}},
+        "other_alarms": {"type": "array", "items": {"$ref": "#/$defs/other_alarm"}},
+        "priority": {"$ref": "#/$defs/priority"}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "dirty", "argv", "secret_env", "inputs", "started", "duration_s", "interpreter"],
+      "properties": {
+        "tool": {"const": "ctig"},
+        "repository": {"type": "string"},
+        "commit": {"type": ["string", "null"]},
+        "dirty": {"type": ["boolean", "null"]},
+        "argv": {"type": "array", "items": {"type": "string"}},
+        "secret_env": {"type": "array", "items": {"type": "string"}},
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["path", "sha256"],
+            "properties": {"path": {"type": "string"}, "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+          }
+        },
+        "started": {"type": "string"},
+        "duration_s": {"type": "number", "minimum": 0},
+        "interpreter": {
+          "type": "object",
+          "required": ["path", "version", "bits"],
+          "properties": {"path": {"type": "string"}, "version": {"type": "string"}, "bits": {"enum": [32, 64]}}
+        }
+      }
+    }
+  }
+}

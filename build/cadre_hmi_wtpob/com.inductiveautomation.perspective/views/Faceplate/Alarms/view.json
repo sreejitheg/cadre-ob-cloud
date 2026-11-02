@@ -1,0 +1,155 @@
+{
+  "custom": {
+    "alarms": {
+      "alerts": [],
+      "rectified": 0
+    }
+  },
+  "params": {
+    "deviceId": "",
+    "source": ""
+  },
+  "propConfig": {
+    "custom.alarms": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, if(len(coalesce({view.params.source}, '')) > 0, {view.params.source}, 'prov:none:/tag:none/none'), '')"
+        },
+        "transforms": [
+          {
+            "code": "\talerts = cadre.hmi.alarm_list(self.session.custom.alarmScope, value, no_ack=True, session=self.session)\n\treturn {'alerts': alerts, 'rectified': len([a for a in alerts if a['active'] is not True])}",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.source": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 560,
+      "width": 368
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "List"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 2
+        },
+        "propConfig": {
+          "props.alerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.alerts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alerts": [],
+          "selectedMode": "all",
+          "showTime": true,
+          "small": true
+        },
+        "type": "cadre.ob.alertlist"
+      },
+      {
+        "meta": {
+          "name": "RectifiedTitle"
+        },
+        "position": {
+          "basis": "28px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.rectified} > 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/overline cadre/text/neutral",
+            "whiteSpace": "nowrap"
+          },
+          "text": "CLEARED, NOT ACKNOWLEDGED"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Rectified"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.rectified} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.alerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.alerts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alerts": [],
+          "selectedMode": "rectified",
+          "showTime": true,
+          "small": true
+        },
+        "type": "cadre.ob.alertlist"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "4px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,336 @@
+{
+ "schema": "cadre-hmi-devices/1",
+ "tagRoot": "[default]cadre_hmi_asmtest",
+ "devices": [
+  {
+   "id": "GEN1",
+   "kind": "generator",
+   "title": "GEN-1",
+   "label": "Standby generator",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "runText": {
+     "type": "String",
+     "access": "read"
+    },
+    "switchText": {
+     "type": "String",
+     "access": "read"
+    },
+    "faultCode": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "fault": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "cmdStart": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Start generator"
+    },
+    "cmdStop": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Stop generator"
+    },
+    "cmdReset": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Reset generator"
+    },
+    "engineSpeed": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "voltageLL": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "fuelLevel": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "fuelLowLimit": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "startDelay": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "stopDelay": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "timeLeft": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "runHours": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "startsToday": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "startsYesterday": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "serviceHours": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "cmdServiceDone": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Service done"
+    },
+    "oilPressureOk": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "readyToRun": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "genComm": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "plcComm": {
+     "type": "Boolean",
+     "access": "read"
+    }
+   },
+   "trend": [
+    "engineSpeed",
+    "fuelLevel"
+   ]
+  },
+  {
+   "id": "GEN2",
+   "kind": "generator",
+   "title": "GEN-2",
+   "label": "Second generator",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "runText": {
+     "type": "String",
+     "access": "read"
+    }
+   }
+  },
+  {
+   "id": "SQ1",
+   "kind": "sequence",
+   "title": "SQ-1",
+   "label": "Duty sequence",
+   "unit": "",
+   "faceplate": "asm",
+   "members": {
+    "step": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "stepText": {
+     "type": "String",
+     "access": "read"
+    },
+    "fault": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "inService": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "enabled": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "normal": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "trigger": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Start cycle"
+    },
+    "cmdInService": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Put in service"
+    },
+    "cmdOutOfService": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Take out of service"
+    },
+    "cmdEnable": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Enable sequence"
+    },
+    "cmdDisable": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Disable sequence"
+    },
+    "cfg/runTimeSP": {
+     "type": "Float8",
+     "access": "write",
+     "config": {
+      "caption": "Excess run time alarm",
+      "unit": "min",
+      "minimum": 0,
+      "maximum": 1440,
+      "format": "0"
+     }
+    },
+    "ilk/permitted": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/interlocked": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/bypassed": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/unsatisfied": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "ilk/resetRequired": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/resetAt": {
+     "type": "Int8",
+     "access": "read"
+    },
+    "ilk/C01/kind": {
+     "type": "String",
+     "access": "read"
+    },
+    "ilk/C01/text": {
+     "type": "String",
+     "access": "read"
+    },
+    "ilk/C01/action": {
+     "type": "String",
+     "access": "read"
+    },
+    "ilk/C01/ok": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/C01/liveText": {
+     "type": "String",
+     "access": "read"
+    },
+    "ilk/C01/requiredText": {
+     "type": "String",
+     "access": "read"
+    },
+    "ilk/C01/bypassed": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/C01/bypassable": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/C01/latched": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ilk/C01/resetRequired": {
+     "type": "Boolean",
+     "access": "read"
+    }
+   }
+  },
+  {
+   "id": "TT1",
+   "kind": "instrument",
+   "title": "TT-1",
+   "label": "Winding temperature",
+   "unit": "deg C",
+   "faceplate": "asm",
+   "members": {
+    "value": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "remoteAuto": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "oos": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "badValue": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "ioFault": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "overRange": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "underRange": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "rangeLo": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "rangeHi": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "hiLimit": {
+     "type": "Float8",
+     "access": "write"
+    },
+    "loLimit": {
+     "type": "Float8",
+     "access": "write"
+    }
+   },
+   "trend": [
+    "value"
+   ]
+  }
+ ]
+}

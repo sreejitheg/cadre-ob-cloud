@@ -1,0 +1,217 @@
+{
+ "schema": "cadre-hmi-walk-effects/1",
+ "about": "What the fixture's tag model does after a command, for the generated walk (tools/compare/walk.py): a pump's state follows its command or its force, the flow is 12.5 L/s for each running pump, and the sources read P1_RUN true, XV1_ZSO true and LSL1 false. A pulse of the filter's trigger is returned by the trigger's own event script, which stamps SQ1/started; the step then reads 2 for 5 s, 3 for 5 s and 1 again, and the step's text follows it. The alarm scene raises and clears the object error of XV-1 on its source tag.",
+ "tagRoot": "[default]cadre_hmi_pilot",
+ "effects": [
+  {
+   "device": "P2",
+   "path": "W1",
+   "value": true,
+   "within": 6,
+   "expect": [
+    {
+     "member": "P2/state",
+     "value": true
+    },
+    {
+     "member": "FT1/value",
+     "value": 25.0
+    }
+   ]
+  },
+  {
+   "device": "P2",
+   "path": "W1",
+   "value": false,
+   "within": 6,
+   "expect": [
+    {
+     "member": "P2/state",
+     "value": false
+    },
+    {
+     "member": "FT1/value",
+     "value": 12.5
+    }
+   ]
+  },
+  {
+   "device": "P1",
+   "path": "W16",
+   "value": "on",
+   "within": 6,
+   "expect": [
+    {
+     "member": "P1/state",
+     "value": true
+    },
+    {
+     "member": "FT1/value",
+     "value": 12.5
+    }
+   ]
+  },
+  {
+   "device": "P1",
+   "path": "W16",
+   "value": "off",
+   "within": 6,
+   "expect": [
+    {
+     "member": "P1/state",
+     "value": false
+    },
+    {
+     "member": "FT1/value",
+     "value": 0.0
+    }
+   ]
+  },
+  {
+   "device": "P1",
+   "path": "W16",
+   "value": "auto",
+   "within": 6,
+   "expect": [
+    {
+     "member": "P1/state",
+     "value": true
+    },
+    {
+     "member": "FT1/value",
+     "value": 12.5
+    }
+   ]
+  },
+  {
+   "device": "XV1",
+   "path": "W16",
+   "value": "on",
+   "within": 6,
+   "expect": [
+    {
+     "member": "XV1/state",
+     "value": true
+    }
+   ]
+  },
+  {
+   "device": "XV1",
+   "path": "W16",
+   "value": "off",
+   "within": 6,
+   "expect": [
+    {
+     "member": "XV1/state",
+     "value": false
+    }
+   ]
+  },
+  {
+   "device": "XV1",
+   "path": "W16",
+   "value": "auto",
+   "within": 6,
+   "expect": [
+    {
+     "member": "XV1/state",
+     "value": true
+    }
+   ]
+  },
+  {
+   "device": "DI1",
+   "path": "W16",
+   "value": "on",
+   "within": 6,
+   "expect": [
+    {
+     "member": "DI1/state",
+     "value": true
+    }
+   ]
+  },
+  {
+   "device": "DI1",
+   "path": "W16",
+   "value": "off",
+   "within": 6,
+   "expect": [
+    {
+     "member": "DI1/state",
+     "value": false
+    }
+   ]
+  },
+  {
+   "device": "DI1",
+   "path": "W16",
+   "value": "auto",
+   "within": 6,
+   "expect": [
+    {
+     "member": "DI1/state",
+     "value": false
+    }
+   ]
+  },
+  {
+   "device": "SQ1",
+   "path": "W18",
+   "member": "trigger",
+   "within": 8,
+   "returns": true,
+   "expect": [
+    {
+     "member": "SQ1/started",
+     "changes": true
+    },
+    {
+     "member": "SQ1/stepText",
+     "leaves": true,
+     "returnsWithin": 20
+    }
+   ]
+  }
+ ],
+ "alarmScenes": [
+  {
+   "device": "XV1",
+   "member": "fault",
+   "tag": "[default]cadre_hmi_pilot/src/XV1_OE",
+   "text": "XV-1 Object error",
+   "raise": {
+    "name": "XV1_OE",
+    "tagType": "AtomicTag",
+    "valueSource": "memory",
+    "dataType": "Boolean",
+    "value": true,
+    "alarms": [
+     {
+      "name": "Object error",
+      "label": "XV-1 Object error",
+      "displayPath": "Pilot/XV-1",
+      "priority": "High",
+      "setpointA": 1.0
+     }
+    ]
+   },
+   "clear": {
+    "name": "XV1_OE",
+    "tagType": "AtomicTag",
+    "valueSource": "memory",
+    "dataType": "Boolean",
+    "value": false,
+    "alarms": [
+     {
+      "name": "Object error",
+      "label": "XV-1 Object error",
+      "displayPath": "Pilot/XV-1",
+      "priority": "High",
+      "setpointA": 1.0
+     }
+    ]
+   }
+  }
+ ]
+}

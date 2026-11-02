@@ -1,0 +1,1422 @@
+{
+ "readout": {
+  "identifier_tag": {
+   "drawsIdentifier": false,
+   "idTagBox": null
+  },
+  "identifier_idTag": {
+   "drawsIdentifier": true,
+   "idTagBox": [
+    18.2,
+    18,
+    35.7,
+    16
+   ]
+  },
+  "valueText": "m3/h 1234.5",
+  "groupsThousands": false,
+  "cases": [
+   {
+    "box": [
+     72,
+     24
+    ],
+    "value": "0.0",
+    "unit": "",
+    "idTag": "",
+    "chip": [
+     37.7,
+     26
+    ],
+    "idTagSize": null,
+    "libraryValueWidth": 48.0,
+    "libraryIdWidth": 0,
+    "narrowerThanLibrary": true,
+    "heightOver": 2,
+    "text": "0.0"
+   },
+   {
+    "box": [
+     72,
+     24
+    ],
+    "value": "12.5",
+    "unit": "%",
+    "idTag": "",
+    "chip": [
+     58.9,
+     26
+    ],
+    "idTagSize": null,
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 0,
+    "narrowerThanLibrary": true,
+    "heightOver": 2,
+    "text": "% 12.5"
+   },
+   {
+    "box": [
+     72,
+     24
+    ],
+    "value": "1234.5",
+    "unit": "m3/h",
+    "idTag": "",
+    "chip": [
+     97.3,
+     26
+    ],
+    "idTagSize": null,
+    "libraryValueWidth": 114.5,
+    "libraryIdWidth": 0,
+    "narrowerThanLibrary": true,
+    "heightOver": 2,
+    "text": "m3/h 1234.5"
+   },
+   {
+    "box": [
+     72,
+     24
+    ],
+    "value": "123456.7",
+    "unit": "mg/L",
+    "idTag": "",
+    "chip": [
+     115.9,
+     26
+    ],
+    "idTagSize": null,
+    "libraryValueWidth": 133.5,
+    "libraryIdWidth": 0,
+    "narrowerThanLibrary": true,
+    "heightOver": 2,
+    "text": "mg/L 123456.7"
+   },
+   {
+    "box": [
+     72,
+     24
+    ],
+    "value": "-12.5",
+    "unit": "",
+    "idTag": "",
+    "chip": [
+     52.8,
+     26
+    ],
+    "idTagSize": null,
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 0,
+    "narrowerThanLibrary": true,
+    "heightOver": 2,
+    "text": "-12.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "0.0",
+    "unit": "",
+    "idTag": "FT-101",
+    "chip": [
+     37.7,
+     26
+    ],
+    "idTagSize": [
+     35.7,
+     16
+    ],
+    "libraryValueWidth": 48.0,
+    "libraryIdWidth": 58,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FT-101 0.0"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "0.0",
+    "unit": "",
+    "idTag": "FIT-3011-A",
+    "chip": [
+     37.7,
+     26
+    ],
+    "idTagSize": [
+     57.2,
+     16
+    ],
+    "libraryValueWidth": 48.0,
+    "libraryIdWidth": 90,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FIT-3011-A 0.0"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "12.5",
+    "unit": "%",
+    "idTag": "FT-101",
+    "chip": [
+     58.9,
+     26
+    ],
+    "idTagSize": [
+     35.7,
+     16
+    ],
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 58,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FT-101 % 12.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "12.5",
+    "unit": "%",
+    "idTag": "FIT-3011-A",
+    "chip": [
+     58.9,
+     26
+    ],
+    "idTagSize": [
+     57.2,
+     16
+    ],
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 90,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FIT-3011-A % 12.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "1234.5",
+    "unit": "m3/h",
+    "idTag": "FT-101",
+    "chip": [
+     97.3,
+     26
+    ],
+    "idTagSize": [
+     35.7,
+     16
+    ],
+    "libraryValueWidth": 114.5,
+    "libraryIdWidth": 58,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FT-101 m3/h 1234.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "1234.5",
+    "unit": "m3/h",
+    "idTag": "FIT-3011-A",
+    "chip": [
+     97.3,
+     26
+    ],
+    "idTagSize": [
+     57.2,
+     16
+    ],
+    "libraryValueWidth": 114.5,
+    "libraryIdWidth": 90,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FIT-3011-A m3/h 1234.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "123456.7",
+    "unit": "mg/L",
+    "idTag": "FT-101",
+    "chip": [
+     115.9,
+     26
+    ],
+    "idTagSize": [
+     35.7,
+     16
+    ],
+    "libraryValueWidth": 133.5,
+    "libraryIdWidth": 58,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FT-101 mg/L 123456.7"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "123456.7",
+    "unit": "mg/L",
+    "idTag": "FIT-3011-A",
+    "chip": [
+     115.9,
+     26
+    ],
+    "idTagSize": [
+     57.2,
+     16
+    ],
+    "libraryValueWidth": 133.5,
+    "libraryIdWidth": 90,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FIT-3011-A mg/L 123456.7"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "-12.5",
+    "unit": "",
+    "idTag": "FT-101",
+    "chip": [
+     52.8,
+     26
+    ],
+    "idTagSize": [
+     35.7,
+     16
+    ],
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 58,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FT-101 -12.5"
+   },
+   {
+    "box": [
+     72,
+     40
+    ],
+    "value": "-12.5",
+    "unit": "",
+    "idTag": "FIT-3011-A",
+    "chip": [
+     52.8,
+     26
+    ],
+    "idTagSize": [
+     57.2,
+     16
+    ],
+    "libraryValueWidth": 67.0,
+    "libraryIdWidth": 90,
+    "narrowerThanLibrary": true,
+    "heightOver": 4,
+    "text": "FIT-3011-A -12.5"
+   }
+  ]
+ },
+ "instrumentfield": {
+  "valueText": "1234.5",
+  "groupsThousands": false,
+  "cases": [
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     73.4,
+     40
+    ],
+    "overBox": [
+     -22.6,
+     -24
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 26.6,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     65.4,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     73.4,
+     40
+    ],
+    "overBox": [
+     -22.6,
+     -24
+    ],
+    "valueRight": 80.7,
+    "valueLeft": 15.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     65.4,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     40
+    ],
+    "overBox": [
+     34.9,
+     -24
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -30.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     40
+    ],
+    "overBox": [
+     34.9,
+     -24
+    ],
+    "valueRight": 109.4,
+    "valueLeft": -13.5,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     84.4,
+     24
+    ],
+    "overBox": [
+     -11.6,
+     -40
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 15.6,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     76.4,
+     0
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     84.4,
+     24
+    ],
+    "overBox": [
+     -11.6,
+     -40
+    ],
+    "valueRight": 86.2,
+    "valueLeft": 9.8,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     76.4,
+     0
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     47.8,
+     40
+    ],
+    "overBox": [
+     -48.2,
+     -24
+    ],
+    "valueRight": 92.1,
+    "valueLeft": 52.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     39.8,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     47.8,
+     40
+    ],
+    "overBox": [
+     -48.2,
+     -24
+    ],
+    "valueRight": 67.9,
+    "valueLeft": 28.1,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     39.8,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     40
+    ],
+    "overBox": [
+     -4.7,
+     -24
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 8.7,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     40
+    ],
+    "overBox": [
+     -4.7,
+     -24
+    ],
+    "valueRight": 89.6,
+    "valueLeft": 6.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     82.1,
+     60
+    ],
+    "overBox": [
+     -13.9,
+     -4
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 17.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     82.1,
+     60
+    ],
+    "overBox": [
+     -13.9,
+     -4
+    ],
+    "valueRight": 85.1,
+    "valueLeft": 11,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     60
+    ],
+    "overBox": [
+     34.9,
+     -4
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -30.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     60
+    ],
+    "overBox": [
+     34.9,
+     -4
+    ],
+    "valueRight": 109.4,
+    "valueLeft": -13.5,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     84.4,
+     44
+    ],
+    "overBox": [
+     -11.6,
+     -20
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 15.6,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     76.4,
+     0
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     84.4,
+     44
+    ],
+    "overBox": [
+     -11.6,
+     -20
+    ],
+    "valueRight": 86.2,
+    "valueLeft": 9.8,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     76.4,
+     0
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     82.1,
+     60
+    ],
+    "overBox": [
+     -13.9,
+     -4
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 17.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     82.1,
+     60
+    ],
+    "overBox": [
+     -13.9,
+     -4
+    ],
+    "valueRight": 85.1,
+    "valueLeft": 11,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     60
+    ],
+    "overBox": [
+     -4.7,
+     -4
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 8.7,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "regular",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     60
+    ],
+    "overBox": [
+     -4.7,
+     -4
+    ],
+    "valueRight": 89.6,
+    "valueLeft": 6.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     81.8,
+     52
+    ],
+    "overBox": [
+     -14.2,
+     -12
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 18.2,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     73.8,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     81.8,
+     52
+    ],
+    "overBox": [
+     -14.2,
+     -12
+    ],
+    "valueRight": 84.9,
+    "valueLeft": 11.1,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     73.8,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     52
+    ],
+    "overBox": [
+     34.9,
+     -12
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -30.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     52
+    ],
+    "overBox": [
+     34.9,
+     -12
+    ],
+    "valueRight": 109.4,
+    "valueLeft": -13.5,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     157.6,
+     36
+    ],
+    "overBox": [
+     61.6,
+     -28
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -57.6,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     149.6,
+     0
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     157.6,
+     36
+    ],
+    "overBox": [
+     61.6,
+     -28
+    ],
+    "valueRight": 122.8,
+    "valueLeft": -26.8,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     149.6,
+     0
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     81.8,
+     52
+    ],
+    "overBox": [
+     -14.2,
+     -12
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 18.2,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     73.8,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     81.8,
+     52
+    ],
+    "overBox": [
+     -14.2,
+     -12
+    ],
+    "valueRight": 84.9,
+    "valueLeft": 11.1,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     73.8,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     52
+    ],
+    "overBox": [
+     -4.7,
+     -12
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 8.7,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": false,
+    "box": [
+     96,
+     64
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     52
+    ],
+    "overBox": [
+     -4.7,
+     -12
+    ],
+    "valueRight": 89.6,
+    "valueLeft": 6.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     82.1,
+     72
+    ],
+    "overBox": [
+     -13.9,
+     6
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 17.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Flow m3/h",
+    "element": [
+     82.1,
+     72
+    ],
+    "overBox": [
+     -13.9,
+     6
+    ],
+    "valueRight": 85.1,
+    "valueLeft": 11,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 67.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": false,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     72
+    ],
+    "overBox": [
+     34.9,
+     6
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -30.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": true,
+    "value": "1234.5",
+    "caption": "Raw water flow m3/h",
+    "element": [
+     130.9,
+     72
+    ],
+    "overBox": [
+     34.9,
+     6
+    ],
+    "valueRight": 109.4,
+    "valueLeft": -13.5,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 142.5,
+    "labelRow": [
+     122.9,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": false,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     157.6,
+     56
+    ],
+    "overBox": [
+     61.6,
+     -10
+    ],
+    "valueRight": 92.0,
+    "valueLeft": -57.6,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     149.6,
+     0
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": true,
+    "value": "123456.7",
+    "caption": "",
+    "element": [
+     157.6,
+     56
+    ],
+    "overBox": [
+     61.6,
+     -10
+    ],
+    "valueRight": 122.8,
+    "valueLeft": -26.8,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 0.0,
+    "labelRow": [
+     149.6,
+     0
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     82.1,
+     72
+    ],
+    "overBox": [
+     -13.9,
+     6
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 17.9,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Level",
+    "element": [
+     82.1,
+     72
+    ],
+    "overBox": [
+     -13.9,
+     6
+    ],
+    "valueRight": 85.1,
+    "valueLeft": 11,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 37.5,
+    "labelRow": [
+     74.1,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": false,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     72
+    ],
+    "overBox": [
+     -4.7,
+     6
+    ],
+    "valueRight": 92.0,
+    "valueLeft": 8.7,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   },
+   {
+    "size": "enhanced",
+    "hasSetpoint": true,
+    "box": [
+     96,
+     66
+    ],
+    "center": true,
+    "value": "12",
+    "caption": "Turbidity NTU",
+    "element": [
+     91.3,
+     72
+    ],
+    "overBox": [
+     -4.7,
+     6
+    ],
+    "valueRight": 89.6,
+    "valueLeft": 6.3,
+    "boxWidth": 96,
+    "libraryCaptionWidth": 97.5,
+    "labelRow": [
+     83.3,
+     16
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,226 @@
+{
+ "schema": "cadre-hmi-devices/1",
+ "tagRoot": "[default]cadre_hmi_pilot",
+ "devices": [
+  {
+   "id": "P1",
+   "kind": "pump",
+   "title": "P-1",
+   "label": "Supply pump 1",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "fault": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "mnt/forceOn": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "mnt/forceOff": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "mnt/errorMask": {
+     "type": "Boolean",
+     "access": "write"
+    }
+   },
+   "alarmSources": [
+    "prov:default:/tag:cadre_hmi_pilot/src/P1_OE:/alm:*"
+   ]
+  },
+  {
+   "id": "P2",
+   "kind": "pump",
+   "title": "SupplyPump_No2",
+   "label": "Supply pump 2",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "cmd": {
+     "type": "Boolean",
+     "access": "write"
+    }
+   },
+   "alarmSources": []
+  },
+  {
+   "id": "XV1",
+   "kind": "valve",
+   "title": "XV-1",
+   "label": "Supply header valve",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "fault": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "mnt/forceMode": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "mnt/forceValue": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "mnt/errorMask": {
+     "type": "Boolean",
+     "access": "write"
+    }
+   },
+   "alarmSources": [
+    "prov:default:/tag:cadre_hmi_pilot/src/XV1_OE:/alm:*"
+   ]
+  },
+  {
+   "id": "PIC1",
+   "kind": "controller",
+   "title": "PIC-1",
+   "label": "Header pressure control",
+   "unit": "kPa",
+   "members": {
+    "value": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "sp": {
+     "type": "Float8",
+     "access": "write"
+    },
+    "out": {
+     "type": "Float8",
+     "access": "read"
+    },
+    "manual": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "manOut": {
+     "type": "Float8",
+     "access": "write"
+    },
+    "gain": {
+     "type": "Float8",
+     "access": "write"
+    },
+    "ti": {
+     "type": "Float8",
+     "access": "write"
+    },
+    "td": {
+     "type": "Float8",
+     "access": "write"
+    }
+   },
+   "alarmSources": [
+    "prov:default:/tag:cadre_hmi_pilot/src/PIC1_HI:/alm:*",
+    "prov:default:/tag:cadre_hmi_pilot/src/PIC1_LO:/alm:*"
+   ],
+   "trend": [
+    "value",
+    "sp",
+    "out"
+   ]
+  },
+  {
+   "id": "DI1",
+   "kind": "indicator",
+   "title": "SuctionLowLvl_SW",
+   "label": "Suction low level switch",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "mnt/forceOn": {
+     "type": "Boolean",
+     "access": "write"
+    },
+    "mnt/forceOff": {
+     "type": "Boolean",
+     "access": "write"
+    }
+   },
+   "alarmSources": []
+  },
+  {
+   "id": "FT1",
+   "kind": "instrument",
+   "title": "SupplyFlow_FT01",
+   "label": "Supply flow",
+   "unit": "L/s",
+   "members": {
+    "value": {
+     "type": "Float8",
+     "access": "read"
+    }
+   },
+   "trend": [
+    "value"
+   ]
+  },
+  {
+   "id": "SQ1",
+   "kind": "sequence",
+   "title": "FLT-1",
+   "label": "Self cleaning filter",
+   "unit": "",
+   "members": {
+    "step": {
+     "type": "Int4",
+     "access": "read"
+    },
+    "stepText": {
+     "type": "String",
+     "access": "read"
+    },
+    "trigger": {
+     "type": "Boolean",
+     "access": "write",
+     "pulse": true,
+     "caption": "Start cycle"
+    },
+    "fault": {
+     "type": "Boolean",
+     "access": "read"
+    }
+   },
+   "alarmSources": [
+    "prov:default:/tag:cadre_hmi_pilot/src/SQ1_FLT:/alm:*"
+   ],
+   "trend": [
+    "step"
+   ]
+  },
+  {
+   "id": "TST1",
+   "kind": "indicator",
+   "title": "TST-1",
+   "label": "Alarm test: one alarm of each priority; acknowledgement bit",
+   "unit": "",
+   "members": {
+    "state": {
+     "type": "Boolean",
+     "access": "read"
+    },
+    "alarmAck": {
+     "type": "Boolean",
+     "access": "write"
+    }
+   }
+  }
+ ]
+}

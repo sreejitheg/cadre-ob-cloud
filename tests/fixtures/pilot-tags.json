@@ -1,0 +1,489 @@
+{
+ "name": "cadre_hmi_pilot",
+ "tagType": "Folder",
+ "tags": [
+  {
+   "name": "src",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "P1_RUN",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "P1_OE",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true,
+     "alarms": [
+      {
+       "name": "Object error",
+       "label": "P-1 Object error",
+       "displayPath": "Pilot/P-1",
+       "priority": "High",
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "XV1_ZSO",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "XV1_OE",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Object error",
+       "label": "XV-1 Object error",
+       "displayPath": "Pilot/XV-1",
+       "priority": "High",
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "LSL1",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    },
+    {
+     "name": "PIC1_HI",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_pilot/PIC1/value}, 0) > 80",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High pressure",
+       "label": "PIC-1 High pressure",
+       "displayPath": "Pilot/PIC-1",
+       "priority": "Medium",
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "PIC1_LO",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_pilot/PIC1/value}, 50) < 20",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "Low pressure",
+       "label": "PIC-1 Low pressure",
+       "displayPath": "Pilot/PIC-1",
+       "priority": "Medium",
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "SQ1_FLT",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Filter fault",
+       "label": "FLT-1 Filter fault",
+       "displayPath": "Pilot/FLT-1",
+       "priority": "High",
+       "setpointA": 1.0
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "P1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "if(coalesce({[.]mnt/forceOn}, false), true, if(coalesce({[.]mnt/forceOff}, false), false, coalesce({[default]cadre_hmi_pilot/src/P1_RUN}, false)))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "reference",
+     "dataType": "Boolean",
+     "sourceTagPath": "[default]cadre_hmi_pilot/src/P1_OE"
+    },
+    {
+     "name": "forceBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]mnt/forceOn}, false) || coalesce({[.]mnt/forceOff}, false), 'manual', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "mnt",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "forceOn",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      },
+      {
+       "name": "forceOff",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      },
+      {
+       "name": "errorMask",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "P2",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "XV1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "if(coalesce({[.]mnt/forceMode}, false), coalesce({[.]mnt/forceValue}, false), coalesce({[default]cadre_hmi_pilot/src/XV1_ZSO}, false))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "reference",
+     "dataType": "Boolean",
+     "sourceTagPath": "[default]cadre_hmi_pilot/src/XV1_OE"
+    },
+    {
+     "name": "forceBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]mnt/forceMode}, false), 'manual', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "mnt",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "forceMode",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      },
+      {
+       "name": "forceValue",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      },
+      {
+       "name": "errorMask",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "PIC1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]value}, 50) + (coalesce({[.]out}, 50) - coalesce({[.]value}, 50)) * 0.1",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "sp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 50.0,
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "out",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]manual}, false), coalesce({[.]manOut}, 0), if((coalesce({[.]sp}, 50) + coalesce({[.]gain}, 1) * (coalesce({[.]sp}, 50) - coalesce({[.]value}, 50))) > 100, 100, if((coalesce({[.]sp}, 50) + coalesce({[.]gain}, 1) * (coalesce({[.]sp}, 50) - coalesce({[.]value}, 50))) < 0, 0, (coalesce({[.]sp}, 50) + coalesce({[.]gain}, 1) * (coalesce({[.]sp}, 50) - coalesce({[.]value}, 50))))))",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "manual",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    },
+    {
+     "name": "manOut",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 40.0
+    },
+    {
+     "name": "gain",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 1.5
+    },
+    {
+     "name": "ti",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 20000.0
+    },
+    {
+     "name": "td",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 0.0
+    }
+   ]
+  },
+  {
+   "name": "DI1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "if(coalesce({[.]mnt/forceOn}, false), true, if(coalesce({[.]mnt/forceOff}, false), false, coalesce({[default]cadre_hmi_pilot/src/LSL1}, false)))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "forceBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]mnt/forceOn}, false) || coalesce({[.]mnt/forceOff}, false), 'manual', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "mnt",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "forceOn",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      },
+      {
+       "name": "forceOff",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Boolean",
+       "value": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "FT1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_pilot/P1/state}, false), 12.5, 0.0) + if(coalesce({[default]cadre_hmi_pilot/P2/state}, false), 12.5, 0.0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "SQ1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "trigger",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "eventScripts": [
+      {
+       "eventid": "valueChanged",
+       "script": "\tif currentValue.value and not initialChange:\n\t\tsystem.tag.writeBlocking(['[default]cadre_hmi_pilot/SQ1/started', '[default]cadre_hmi_pilot/SQ1/trigger'],\n\t\t\t[system.date.toMillis(system.date.now()), False])\n"
+      }
+     ]
+    },
+    {
+     "name": "started",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int8",
+     "value": 0
+    },
+    {
+     "name": "step",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Int4",
+     "expression": "if(coalesce({[default]cadre_hmi_pilot/src/SQ1_FLT}, false), 4, if(coalesce({[.]started}, 0) = 0, 1, if((toMillis(now(1000)) - coalesce({[.]started}, 0)) < 5000, 2, if((toMillis(now(1000)) - coalesce({[.]started}, 0)) < 10000, 3, 1))))",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "stepText",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case(coalesce({[.]step}, 0), 1, 'Standby', 2, 'Drive Out', 3, 'Drive Back', 4, 'Fault', '')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "reference",
+     "dataType": "Boolean",
+     "sourceTagPath": "[default]cadre_hmi_pilot/src/SQ1_FLT"
+    }
+   ]
+  },
+  {
+   "name": "TST1",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Critical test",
+       "label": "TST-1 Critical test",
+       "displayPath": "Pilot/TST-1",
+       "priority": "Critical",
+       "shelvingAllowed": false,
+       "setpointA": 1.0
+      },
+      {
+       "name": "High test",
+       "label": "TST-1 High test",
+       "displayPath": "Pilot/TST-1",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      },
+      {
+       "name": "Medium test",
+       "label": "TST-1 Medium test",
+       "displayPath": "Pilot/TST-1",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      },
+      {
+       "name": "Low test",
+       "label": "TST-1 Low test",
+       "displayPath": "Pilot/TST-1",
+       "priority": "Low",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      },
+      {
+       "name": "Diagnostic test",
+       "label": "TST-1 Diagnostic test",
+       "displayPath": "Pilot/TST-1",
+       "priority": "Diagnostic",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    }
+   ]
+  }
+ ]
+}

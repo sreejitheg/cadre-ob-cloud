@@ -1,0 +1,2240 @@
+{
+ "name": "cadre_hmi_wtp",
+ "tagType": "Folder",
+ "tags": [
+  {
+   "name": "sim",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "reset",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    }
+   ]
+  },
+  {
+   "name": "XV101",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 0
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce(if({[.]mode} = 0, if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), true, if(coalesce({[default]cadre_hmi_wtp/TK101/level}, 50) < 50, true, if(coalesce({[default]cadre_hmi_wtp/TK101/level}, 50) > 80, false, coalesce({[.]state}, true)))), {[.]cmd}), false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK101",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 90
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 15
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 500
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 65, if((coalesce({[.]level}, 65) + ((if(coalesce({[default]cadre_hmi_wtp/XV101/state}, false), 120, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 65) + ((if(coalesce({[default]cadre_hmi_wtp/XV101/state}, false), 120, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 65) + ((if(coalesce({[default]cadre_hmi_wtp/XV101/state}, false), 120, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-101 High level",
+       "displayPath": "WTP/Intake/TK-101",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-101 Low level",
+       "displayPath": "WTP/Intake/TK-101",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((if(coalesce({[default]cadre_hmi_wtp/XV101/state}, false), 120, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0))) > 5, 'rising', if(((if(coalesce({[default]cadre_hmi_wtp/XV101/state}, false), 120, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "P101",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 80
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "P-101 Fault",
+       "displayPath": "WTP/Intake/P-101",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false) && if(coalesce({[.]state}, false), !coalesce({[.]ilk/interlocked}, false), coalesce({[.]ilk/permitted}, true) && !coalesce({[.]ilk/interlocked}, false))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "ilk",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "C01",
+       "tagType": "Folder",
+       "tags": [
+        {
+         "name": "kind",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "permissive"
+        },
+        {
+         "name": "text",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Raw water tank level at least 20 %"
+        },
+        {
+         "name": "action",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Fill TK-101: open XV-101, or wait for the level to rise"
+        },
+        {
+         "name": "ok",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce(coalesce({[default]cadre_hmi_wtp/TK101/level}, 50) >= 20, false)",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "liveText",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "String",
+         "expression": "numberFormat(coalesce({[default]cadre_hmi_wtp/TK101/level}, 50), '0.0') + ' %'",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "requiredText",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "at least 20 %"
+        },
+        {
+         "name": "bypassed",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "bypassable",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": true
+        },
+        {
+         "name": "latched",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "notMetAt",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Int8",
+         "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(!coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false), toMillis(now()), coalesce({[.]notMetAt}, 0)))",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "resetRequired",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce({[.]latched}, false) && coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false) && coalesce({[.]notMetAt}, 0) > coalesce({[default]cadre_hmi_wtp/P101/ilk/resetSeen}, 0)",
+         "executionMode": "FixedRate"
+        }
+       ]
+      },
+      {
+       "name": "C02",
+       "tagType": "Folder",
+       "tags": [
+        {
+         "name": "kind",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "trip"
+        },
+        {
+         "name": "text",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Clarified water tank level below 95 %"
+        },
+        {
+         "name": "action",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Stop the feed until TK-202 draws down"
+        },
+        {
+         "name": "ok",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce(coalesce({[default]cadre_hmi_wtp/TK202/level}, 50) < 95, false)",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "liveText",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "String",
+         "expression": "numberFormat(coalesce({[default]cadre_hmi_wtp/TK202/level}, 50), '0.0') + ' %'",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "requiredText",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "below 95 %"
+        },
+        {
+         "name": "bypassed",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "bypassable",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "latched",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": true
+        },
+        {
+         "name": "notMetAt",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Int8",
+         "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(!coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false), toMillis(now()), coalesce({[.]notMetAt}, 0)))",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "resetRequired",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce({[.]latched}, false) && coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false) && coalesce({[.]notMetAt}, 0) > coalesce({[default]cadre_hmi_wtp/P101/ilk/resetSeen}, 0)",
+         "executionMode": "FixedRate"
+        }
+       ]
+      },
+      {
+       "name": "permitted",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "!((!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false)) || coalesce({[.]C01/resetRequired}, false))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "interlocked",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "((!coalesce({[.]C02/ok}, true) && !coalesce({[.]C02/bypassed}, false)) || coalesce({[.]C02/resetRequired}, false))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "bypassed",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/bypassed}, false) || coalesce({[.]C02/bypassed}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "unsatisfied",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int4",
+       "expression": "if(!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false), 1, 0) + if(!coalesce({[.]C02/ok}, true) && !coalesce({[.]C02/bypassed}, false), 1, 0)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetRequired",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/resetRequired}, false) || coalesce({[.]C02/resetRequired}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetAt",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Int8",
+       "value": 0
+      },
+      {
+       "name": "resetSeen",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int8",
+       "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(coalesce({[.]resetAt}, 0) > coalesce({[.]resetSeen}, 0), coalesce({[.]resetAt}, 0), coalesce({[.]resetSeen}, 0)))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "badge",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "String",
+       "expression": "if(!coalesce({[.]permitted}, true) || coalesce({[.]interlocked}, false), 'interlock', if(coalesce({[.]bypassed}, false), 'interlock-inhibit', 'none'))",
+       "executionMode": "FixedRate"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "FIT101",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/P101/state}, false), (coalesce({[default]cadre_hmi_wtp/P101/speed}, 0) * 1.25) + (0 + 0.6 * sin(toMillis(now()) / 5888.6)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "AIT101",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "(8.0 + 1.5 * sin(toMillis(now()) / 14323.5))",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "M201",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 60
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "M-201 Fault",
+       "displayPath": "WTP/Intake/M-201",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "DP201",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 40
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "DP-201 Fault",
+       "displayPath": "WTP/Intake/DP-201",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK201",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 95
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 20
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 10
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 72, if((coalesce({[.]level}, 72) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), 0.5, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 72) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), 0.5, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 72) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), 0.5, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-201 High level",
+       "displayPath": "WTP/Intake/TK-201",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-201 Low level",
+       "displayPath": "WTP/Intake/TK-201",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), 0.5, 0))) > 5, 'rising', if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), 0.5, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "P202",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 60
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "P-202 Fault",
+       "displayPath": "WTP/Intake/P-202",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK202",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 90
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 10
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 300
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 55, if((coalesce({[.]level}, 55) + ((coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0) * 0.98 - if(coalesce({[default]cadre_hmi_wtp/P202/state}, false), 8, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 55) + ((coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0) * 0.98 - if(coalesce({[default]cadre_hmi_wtp/P202/state}, false), 8, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 55) + ((coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0) * 0.98 - if(coalesce({[default]cadre_hmi_wtp/P202/state}, false), 8, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-202 High level",
+       "displayPath": "WTP/Intake/TK-202",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-202 Low level",
+       "displayPath": "WTP/Intake/TK-202",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0) * 0.98 - if(coalesce({[default]cadre_hmi_wtp/P202/state}, false), 8, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0))) > 5, 'rising', if(((coalesce({[default]cadre_hmi_wtp/FIT101/value}, 0) * 0.98 - if(coalesce({[default]cadre_hmi_wtp/P202/state}, false), 8, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "P301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 0
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 80
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "P-301 Fault",
+       "displayPath": "WTP/Filtration/P-301",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce(if({[.]mode} = 0, if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), false, if(coalesce({[default]cadre_hmi_wtp/TK202/level}, 50) > 30, true, if(coalesce({[default]cadre_hmi_wtp/TK202/level}, 50) < 15, false, coalesce({[.]state}, false)))), {[.]cmd}), false) && if(coalesce({[.]state}, false), !coalesce({[.]ilk/interlocked}, false), coalesce({[.]ilk/permitted}, true) && !coalesce({[.]ilk/interlocked}, false))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "ilk",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "C01",
+       "tagType": "Folder",
+       "tags": [
+        {
+         "name": "kind",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "permissive"
+        },
+        {
+         "name": "text",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "A filter inlet valve is open"
+        },
+        {
+         "name": "action",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Open XV-301, XV-302 or XV-303"
+        },
+        {
+         "name": "ok",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce((coalesce({[default]cadre_hmi_wtp/XV301/state}, false) || coalesce({[default]cadre_hmi_wtp/XV302/state}, false) || coalesce({[default]cadre_hmi_wtp/XV303/state}, false)), false)",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "liveText",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "String",
+         "expression": "if((coalesce({[default]cadre_hmi_wtp/XV301/state}, false) || coalesce({[default]cadre_hmi_wtp/XV302/state}, false) || coalesce({[default]cadre_hmi_wtp/XV303/state}, false)), 'Open', 'Closed')",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "requiredText",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Open"
+        },
+        {
+         "name": "bypassed",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "bypassable",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": true
+        },
+        {
+         "name": "latched",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "notMetAt",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Int8",
+         "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(!coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false), toMillis(now()), coalesce({[.]notMetAt}, 0)))",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "resetRequired",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce({[.]latched}, false) && coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false) && coalesce({[.]notMetAt}, 0) > coalesce({[default]cadre_hmi_wtp/P301/ilk/resetSeen}, 0)",
+         "executionMode": "FixedRate"
+        }
+       ]
+      },
+      {
+       "name": "permitted",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "!((!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false)) || coalesce({[.]C01/resetRequired}, false))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "interlocked",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "false",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "bypassed",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/bypassed}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "unsatisfied",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int4",
+       "expression": "if(!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false), 1, 0)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetRequired",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/resetRequired}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetAt",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Int8",
+       "value": 0
+      },
+      {
+       "name": "resetSeen",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int8",
+       "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(coalesce({[.]resetAt}, 0) > coalesce({[.]resetSeen}, 0), coalesce({[.]resetAt}, 0), coalesce({[.]resetSeen}, 0)))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "badge",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "String",
+       "expression": "if(!coalesce({[.]permitted}, true) || coalesce({[.]interlocked}, false), 'interlock', if(coalesce({[.]bypassed}, false), 'interlock-inhibit', 'none'))",
+       "executionMode": "FixedRate"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "PIT301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/P301/state}, false), (310 + 6 * sin(toMillis(now()) / 8435.0)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "XV301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "XV302",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "XV303",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "F301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_wtp/XV301/state}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "F302",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_wtp/XV302/state}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "F303",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_wtp/XV303/state}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "DPIT301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/XV301/state}, false) && coalesce({[default]cadre_hmi_wtp/P301/state}, false), (38 + 3 * sin(toMillis(now()) / 33580.7)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "DPIT302",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/XV302/state}, false) && coalesce({[default]cadre_hmi_wtp/P301/state}, false), (44 + 3 * sin(toMillis(now()) / 37082.0)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "DPIT303",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/XV303/state}, false) && coalesce({[default]cadre_hmi_wtp/P301/state}, false), (31 + 3 * sin(toMillis(now()) / 31352.6)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "FIT301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if((coalesce({[default]cadre_hmi_wtp/XV301/state}, false) || coalesce({[default]cadre_hmi_wtp/XV302/state}, false) || coalesce({[default]cadre_hmi_wtp/XV303/state}, false)) && coalesce({[default]cadre_hmi_wtp/P301/state}, false), (coalesce({[default]cadre_hmi_wtp/P301/speed}, 0) * 1.25) + (0 + 0.5 * sin(toMillis(now()) / 6525.2)), 0)",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "AIT301",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/DP201/state}, false), (0.15 + 0.03 * sin(toMillis(now()) / 11140.5)), (1.35 + 0.1 * sin(toMillis(now()) / 11140.5)))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High turbidity",
+       "label": "AIT-301 High turbidity",
+       "displayPath": "WTP/Filtration/AIT-301",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue",
+       "timeOnDelaySeconds": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimitDelay}"
+       }
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 1.0
+    },
+    {
+     "name": "hiLimitDelay",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 0.0
+    }
+   ]
+  },
+  {
+   "name": "DP401",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 35
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "DP-401 Fault",
+       "displayPath": "WTP/Disinfection/DP-401",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK401",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 95
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 20
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 8
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 64, if((coalesce({[.]level}, 64) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), 0.4, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 64) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), 0.4, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 64) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), 0.4, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-401 High level",
+       "displayPath": "WTP/Disinfection/TK-401",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-401 Low level",
+       "displayPath": "WTP/Disinfection/TK-401",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), 0.4, 0))) > 5, 'rising', if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), 0.4, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "DP402",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 25
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "DP-402 Fault",
+       "displayPath": "WTP/Disinfection/DP-402",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK402",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 95
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 20
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 8
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 58, if((coalesce({[.]level}, 58) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), 0.3, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 58) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), 0.3, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 58) + ((0) - (if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), 0.3, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-402 High level",
+       "displayPath": "WTP/Disinfection/TK-402",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-402 Low level",
+       "displayPath": "WTP/Disinfection/TK-402",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), 0.3, 0))) > 5, 'rising', if(((0) - (if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), 0.3, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "TK501",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 95
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 20
+    },
+    {
+     "name": "capacity",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 800
+    },
+    {
+     "name": "level",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 60, if((coalesce({[.]level}, 60) + ((coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT501/value}, 0))) * 0.004) > 100, 100, if((coalesce({[.]level}, 60) + ((coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT501/value}, 0))) * 0.004) < 0, 0, (coalesce({[.]level}, 60) + ((coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT501/value}, 0))) * 0.004))))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "High level",
+       "label": "TK-501 High level",
+       "displayPath": "WTP/Disinfection/TK-501",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "mode": "AboveValue"
+      },
+      {
+       "name": "Low level",
+       "label": "TK-501 Low level",
+       "displayPath": "WTP/Disinfection/TK-501",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "volume",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[.]level}, 0) * coalesce({[.]capacity}, 0) / 100",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "trend",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(((coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT501/value}, 0))) > 5, 'rising', if(((coalesce({[default]cadre_hmi_wtp/FIT301/value}, 0)) - (coalesce({[default]cadre_hmi_wtp/FIT501/value}, 0))) < -5, 'falling', 'stable'))",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "P501",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 1
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 70
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": false,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "P-501 Fault",
+       "displayPath": "WTP/Disinfection/P-501",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce({[.]cmd}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "P502",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true
+    },
+    {
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Int4",
+     "value": 0
+    },
+    {
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 70
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Boolean",
+     "value": true,
+     "alarms": [
+      {
+       "name": "Fault",
+       "label": "P-502 Fault",
+       "displayPath": "WTP/Disinfection/P-502",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": 1.0
+      }
+     ]
+    },
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[.]fault}, false) && coalesce(if({[.]mode} = 0, if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), false, if(coalesce({[default]cadre_hmi_wtp/TK501/level}, 50) > 85, true, if(coalesce({[default]cadre_hmi_wtp/TK501/level}, 50) < 60, false, coalesce({[.]state}, false)))), {[.]cmd}), false) && if(coalesce({[.]state}, false), !coalesce({[.]ilk/interlocked}, false), coalesce({[.]ilk/permitted}, true) && !coalesce({[.]ilk/interlocked}, false))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "case({[.]mode}, 0, 'auto', 1, 'manual', 2, 'local', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alertMode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[.]fault/Alarms/Fault.isActive}, false), if(coalesce({[.]fault/Alarms/Fault.isAcked}, false), 'acked-active', 'unacked-active'), if(coalesce({[.]fault/Alarms/Fault.isAcked}, true), 'none', 'unacked-rectified'))",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "alert",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[.]alertMode}, 'none') != 'none'",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "ilk",
+     "tagType": "Folder",
+     "tags": [
+      {
+       "name": "C01",
+       "tagType": "Folder",
+       "tags": [
+        {
+         "name": "kind",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "trip"
+        },
+        {
+         "name": "text",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Pump fault clear"
+        },
+        {
+         "name": "action",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Find the cause, then press Reset fault"
+        },
+        {
+         "name": "ok",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce(!coalesce({[default]cadre_hmi_wtp/P502/fault}, false), false)",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "liveText",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "String",
+         "expression": "if(coalesce({[default]cadre_hmi_wtp/P502/fault}, false), 'Fault', 'Normal')",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "requiredText",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "String",
+         "value": "Normal"
+        },
+        {
+         "name": "bypassed",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "bypassable",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": false
+        },
+        {
+         "name": "latched",
+         "tagType": "AtomicTag",
+         "valueSource": "memory",
+         "dataType": "Boolean",
+         "value": true
+        },
+        {
+         "name": "notMetAt",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Int8",
+         "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(!coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false), toMillis(now()), coalesce({[.]notMetAt}, 0)))",
+         "executionMode": "FixedRate"
+        },
+        {
+         "name": "resetRequired",
+         "tagType": "AtomicTag",
+         "valueSource": "expr",
+         "dataType": "Boolean",
+         "expression": "coalesce({[.]latched}, false) && coalesce({[.]ok}, true) && !coalesce({[.]bypassed}, false) && coalesce({[.]notMetAt}, 0) > coalesce({[default]cadre_hmi_wtp/P502/ilk/resetSeen}, 0)",
+         "executionMode": "FixedRate"
+        }
+       ]
+      },
+      {
+       "name": "permitted",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "true",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "interlocked",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "((!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false)) || coalesce({[.]C01/resetRequired}, false))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "bypassed",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/bypassed}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "unsatisfied",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int4",
+       "expression": "if(!coalesce({[.]C01/ok}, true) && !coalesce({[.]C01/bypassed}, false), 1, 0)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetRequired",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Boolean",
+       "expression": "coalesce({[.]C01/resetRequired}, false)",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "resetAt",
+       "tagType": "AtomicTag",
+       "valueSource": "memory",
+       "dataType": "Int8",
+       "value": 0
+      },
+      {
+       "name": "resetSeen",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "Int8",
+       "expression": "if(coalesce({[default]cadre_hmi_wtp/sim/reset}, false), 0, if(coalesce({[.]resetAt}, 0) > coalesce({[.]resetSeen}, 0), coalesce({[.]resetAt}, 0), coalesce({[.]resetSeen}, 0)))",
+       "executionMode": "FixedRate"
+      },
+      {
+       "name": "badge",
+       "tagType": "AtomicTag",
+       "valueSource": "expr",
+       "dataType": "String",
+       "expression": "if(!coalesce({[.]permitted}, true) || coalesce({[.]interlocked}, false), 'interlock', if(coalesce({[.]bypassed}, false), 'interlock-inhibit', 'none'))",
+       "executionMode": "FixedRate"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "FIT501",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "((coalesce({[default]cadre_hmi_wtp/P501/speed}, 0) * 1.1) + (coalesce({[default]cadre_hmi_wtp/P502/speed}, 0) * 1.1))",
+     "executionMode": "FixedRate",
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    }
+   ]
+  },
+  {
+   "name": "AIT401",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/DP401/state}, false), (1.2 + 0.08 * sin(toMillis(now()) / 17506.5)), (0.25 + 0.03 * sin(toMillis(now()) / 17506.5)))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "Low chlorine",
+       "label": "AIT-401 Low free chlorine",
+       "displayPath": "WTP/Disinfection/AIT-401",
+       "priority": "High",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 0.5
+    }
+   ]
+  },
+  {
+   "name": "AIT402",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "if(coalesce({[default]cadre_hmi_wtp/DP402/state}, false), (7.4 + 0.05 * sin(toMillis(now()) / 23872.5)), (6.6 + 0.05 * sin(toMillis(now()) / 23872.5)))",
+     "executionMode": "FixedRate",
+     "alarms": [
+      {
+       "name": "Low pH",
+       "label": "AIT-402 Low pH",
+       "displayPath": "WTP/Disinfection/AIT-402",
+       "priority": "Medium",
+       "shelvingAllowed": true,
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "mode": "BelowValue"
+      }
+     ],
+     "historyEnabled": true,
+     "historyProvider": "Sample_SQLite_Database"
+    },
+    {
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "valueSource": "memory",
+     "dataType": "Float8",
+     "value": 6.8
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "zoom": {
+      "type": "number",
+      "default": 1,
+      "description": "The canvas scale, written by the component and bound two ways to the view's zoom property."
+    },
+    "min": {
+      "type": "number",
+      "default": 0.5,
+      "description": "The smallest zoom."
+    },
+    "max": {
+      "type": "number",
+      "default": 4,
+      "description": "The largest zoom."
+    },
+    "targetDomId": {
+      "type": "string",
+      "default": "cadre-canvas",
+      "description": "The DOM id of the scrolling canvas the gestures act on (a Perspective component's domId)."
+    },
+    "guardBrowserZoom": {
+      "type": "boolean",
+      "default": true,
+      "description": "Prevent the same gestures anywhere else on the document, so the browser never zooms the frame; on touch devices the viewport meta gains maximum-scale=1."
+    },
+    "viewWidth": {
+      "type": "number",
+      "default": 0,
+      "description": "The target's measured width in px, written by the component when it changes (0 until measured); the page's fit reads it, so a docked faceplate or a reload needs no session flag."
+    },
+    "viewHeight": {
+      "type": "number",
+      "default": 0,
+      "description": "The target's measured height in px, written by the component when it changes (0 until measured)."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

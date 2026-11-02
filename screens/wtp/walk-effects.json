@@ -1,0 +1,123 @@
+{
+ "schema": "cadre-hmi-walk-effects/1",
+ "about": "What the simulation of tools/plants/wtp.py does after a command, for the generated walk (tools/compare/walk.py). A pump or a motor in manual runs while its command is true and it has no fault; its speed is its speed setpoint while it runs and 0 otherwise; FIT-101 reads 1.25 times P-101's speed, within 0.6, and 0 while P-101 is stopped; a filter follows its inlet valve, and its differential pressure reads 0 while the valve is closed.",
+ "tagRoot": "[default]cadre_hmi_wtp",
+ "choose": [
+  {
+   "kind": "valve",
+   "path": "W1",
+   "device": "XV301",
+   "why": "XV-101, the first valve, is in automatic: its state follows the raw water tank's level, not its command"
+  }
+ ],
+ "effects": [
+  {
+   "device": "P101",
+   "path": "W1",
+   "value": false,
+   "within": 8,
+   "expect": [
+    {
+     "member": "P101/state",
+     "value": false
+    },
+    {
+     "member": "FIT101/value",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "device": "P101",
+   "path": "W1",
+   "value": true,
+   "within": 8,
+   "expect": [
+    {
+     "member": "P101/state",
+     "value": true
+    },
+    {
+     "member": "FIT101/value",
+     "min": 1
+    }
+   ]
+  },
+  {
+   "device": "P101",
+   "path": "W3",
+   "within": 8,
+   "expect": [
+    {
+     "member": "P101/speed",
+     "written": true
+    },
+    {
+     "member": "FIT101/value",
+     "min": 1
+    }
+   ]
+  },
+  {
+   "device": "M201",
+   "path": "W1",
+   "value": false,
+   "within": 8,
+   "expect": [
+    {
+     "member": "M201/state",
+     "value": false
+    }
+   ]
+  },
+  {
+   "device": "M201",
+   "path": "W1",
+   "value": true,
+   "within": 8,
+   "expect": [
+    {
+     "member": "M201/state",
+     "value": true
+    }
+   ]
+  },
+  {
+   "device": "XV301",
+   "path": "W1",
+   "value": false,
+   "within": 8,
+   "expect": [
+    {
+     "member": "XV301/state",
+     "value": false
+    },
+    {
+     "member": "F301/state",
+     "value": false
+    },
+    {
+     "member": "DPIT301/value",
+     "value": 0
+    }
+   ]
+  },
+  {
+   "device": "XV301",
+   "path": "W1",
+   "value": true,
+   "within": 8,
+   "expect": [
+    {
+     "member": "XV301/state",
+     "value": true
+    },
+    {
+     "member": "F301/state",
+     "value": true
+    }
+   ]
+  }
+ ],
+ "alarmScenes": []
+}

@@ -1,0 +1,400 @@
+{
+  "custom": {
+    "alarmScope": "*cadre_hmi_wtp*",
+    "deviceModel": false,
+    "devices": [
+      {
+        "folder": "[default]cadre_hmi_wtp/AIT101",
+        "kind": "instrument-field",
+        "label": "Raw water turbidity",
+        "title": "AIT-101",
+        "unit": "NTU"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/AIT301",
+        "kind": "instrument-field",
+        "label": "Filtered water turbidity",
+        "title": "AIT-301",
+        "unit": "NTU"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/AIT401",
+        "kind": "instrument-field",
+        "label": "Free chlorine",
+        "title": "AIT-401",
+        "unit": "mg/L"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/AIT402",
+        "kind": "instrument-field",
+        "label": "Treated water pH",
+        "title": "AIT-402",
+        "unit": "pH"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DP201",
+        "kind": "pump",
+        "label": "Coagulant dosing pump",
+        "title": "DP-201",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DP401",
+        "kind": "pump",
+        "label": "Hypochlorite dosing pump",
+        "title": "DP-401",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DP402",
+        "kind": "pump",
+        "label": "Caustic dosing pump",
+        "title": "DP-402",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DPIT301",
+        "kind": "readout",
+        "label": "Filter 1 differential pressure",
+        "title": "DPIT-301",
+        "unit": "kPa"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DPIT302",
+        "kind": "readout",
+        "label": "Filter 2 differential pressure",
+        "title": "DPIT-302",
+        "unit": "kPa"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/DPIT303",
+        "kind": "readout",
+        "label": "Filter 3 differential pressure",
+        "title": "DPIT-303",
+        "unit": "kPa"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/FIT101",
+        "kind": "instrument-field",
+        "label": "Raw water flow",
+        "title": "FIT-101",
+        "unit": "m³/h"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/FIT301",
+        "kind": "instrument-field",
+        "label": "Filtered water flow",
+        "title": "FIT-301",
+        "unit": "m³/h"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/FIT501",
+        "kind": "instrument-field",
+        "label": "Distribution flow",
+        "title": "FIT-501",
+        "unit": "m³/h"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/M201",
+        "kind": "motor",
+        "label": "Flash mixer",
+        "title": "M-201",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/P101",
+        "kind": "pump",
+        "label": "Raw water feed pump",
+        "title": "P-101",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/P202",
+        "kind": "pump",
+        "label": "Sludge pump",
+        "title": "P-202",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/P301",
+        "kind": "pump",
+        "label": "Filter feed pump",
+        "title": "P-301",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/P501",
+        "kind": "pump",
+        "label": "Distribution pump 1",
+        "title": "P-501",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/P502",
+        "kind": "pump",
+        "label": "Distribution pump 2",
+        "title": "P-502",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/PIT301",
+        "kind": "readout",
+        "label": "Filter feed pressure",
+        "title": "PIT-301",
+        "unit": "kPa"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK101",
+        "kind": "tank",
+        "label": "Raw water tank",
+        "title": "TK-101",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK201",
+        "kind": "tank",
+        "label": "Coagulant tank",
+        "title": "TK-201",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK202",
+        "kind": "tank",
+        "label": "Clarified water tank",
+        "title": "TK-202",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK401",
+        "kind": "tank",
+        "label": "Hypochlorite tank",
+        "title": "TK-401",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK402",
+        "kind": "tank",
+        "label": "Caustic tank",
+        "title": "TK-402",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/TK501",
+        "kind": "tank",
+        "label": "Potable water tank",
+        "title": "TK-501",
+        "unit": "m³"
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/XV101",
+        "kind": "valve",
+        "label": "Raw water inlet valve",
+        "title": "XV-101",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/XV301",
+        "kind": "valve",
+        "label": "Filter 1 inlet valve",
+        "title": "XV-301",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/XV302",
+        "kind": "valve",
+        "label": "Filter 2 inlet valve",
+        "title": "XV-302",
+        "unit": ""
+      },
+      {
+        "folder": "[default]cadre_hmi_wtp/XV303",
+        "kind": "valve",
+        "label": "Filter 3 inlet valve",
+        "title": "XV-303",
+        "unit": ""
+      }
+    ],
+    "nav": {
+      "footer": [
+        {
+          "icon": "alert-list",
+          "label": "Alerts",
+          "path": "/alerts"
+        }
+      ],
+      "items": [
+        {
+          "icon": "dashboard",
+          "label": "Plant Overview",
+          "path": "/"
+        },
+        {
+          "icon": "tank",
+          "label": "Intake and Clarification",
+          "path": "/intake"
+        },
+        {
+          "icon": "filter",
+          "label": "Filtration",
+          "path": "/filtration"
+        },
+        {
+          "icon": "sensor-water-drop-google",
+          "label": "Disinfection and Storage",
+          "path": "/disinfection"
+        },
+        {
+          "icon": "trend",
+          "label": "Trends",
+          "path": "/trends"
+        }
+      ]
+    },
+    "palette": "day",
+    "selectedDevice": "",
+    "selectedKind": "",
+    "selectedLabel": "",
+    "selectedTitle": "",
+    "trends": [
+      {
+        "deviceId": "[default]cadre_hmi_wtp/AIT101",
+        "kind": "instrument-field",
+        "label": "Raw water turbidity",
+        "member": "value",
+        "title": "AIT-101",
+        "unit": "NTU"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/AIT301",
+        "kind": "instrument-field",
+        "label": "Filtered water turbidity",
+        "member": "value",
+        "title": "AIT-301",
+        "unit": "NTU"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/AIT401",
+        "kind": "instrument-field",
+        "label": "Free chlorine",
+        "member": "value",
+        "title": "AIT-401",
+        "unit": "mg/L"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/AIT402",
+        "kind": "instrument-field",
+        "label": "Treated water pH",
+        "member": "value",
+        "title": "AIT-402",
+        "unit": "pH"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/DPIT301",
+        "kind": "readout",
+        "label": "Filter 1 differential pressure",
+        "member": "value",
+        "title": "DPIT-301",
+        "unit": "kPa"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/DPIT302",
+        "kind": "readout",
+        "label": "Filter 2 differential pressure",
+        "member": "value",
+        "title": "DPIT-302",
+        "unit": "kPa"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/DPIT303",
+        "kind": "readout",
+        "label": "Filter 3 differential pressure",
+        "member": "value",
+        "title": "DPIT-303",
+        "unit": "kPa"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/FIT101",
+        "kind": "instrument-field",
+        "label": "Raw water flow",
+        "member": "value",
+        "title": "FIT-101",
+        "unit": "m³/h"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/FIT301",
+        "kind": "instrument-field",
+        "label": "Filtered water flow",
+        "member": "value",
+        "title": "FIT-301",
+        "unit": "m³/h"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/FIT501",
+        "kind": "instrument-field",
+        "label": "Distribution flow",
+        "member": "value",
+        "title": "FIT-501",
+        "unit": "m³/h"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/PIT301",
+        "kind": "readout",
+        "label": "Filter feed pressure",
+        "member": "value",
+        "title": "PIT-301",
+        "unit": "kPa"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK101",
+        "kind": "tank",
+        "label": "Raw water tank",
+        "member": "level",
+        "title": "TK-101",
+        "unit": "%"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK201",
+        "kind": "tank",
+        "label": "Coagulant tank",
+        "member": "level",
+        "title": "TK-201",
+        "unit": "%"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK202",
+        "kind": "tank",
+        "label": "Clarified water tank",
+        "member": "level",
+        "title": "TK-202",
+        "unit": "%"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK401",
+        "kind": "tank",
+        "label": "Hypochlorite tank",
+        "member": "level",
+        "title": "TK-401",
+        "unit": "%"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK402",
+        "kind": "tank",
+        "label": "Caustic tank",
+        "member": "level",
+        "title": "TK-402",
+        "unit": "%"
+      },
+      {
+        "deviceId": "[default]cadre_hmi_wtp/TK501",
+        "kind": "tank",
+        "label": "Potable water tank",
+        "member": "level",
+        "title": "TK-501",
+        "unit": "%"
+      }
+    ]
+  },
+  "props": {
+    "theme": "light-cool"
+  }
+}

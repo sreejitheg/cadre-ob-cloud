@@ -1,0 +1,454 @@
+{
+ "unit": {
+  "id": "PumpStation",
+  "kind": "page",
+  "windows": [
+   "PumpStation"
+  ]
+ },
+ "purpose": "Shows the pump station and its duty pumps.",
+ "layout": "diagram",
+ "regions": [
+  {
+   "id": "r0",
+   "title": "Pump station",
+   "kind": "process-diagram",
+   "bbox": {
+    "x": 20,
+    "y": 60,
+    "w": 980,
+    "h": 520
+   },
+   "ans": [
+    "PumpStation:1",
+    "PumpStation:2",
+    "PumpStation:3",
+    "PumpStation:4",
+    "PumpStation:5",
+    "PumpStation:6",
+    "PumpStation:7",
+    "PumpStation:8",
+    "PumpStation:9",
+    "PumpStation:10",
+    "PumpStation:11",
+    "PumpStation:12"
+   ]
+  }
+ ],
+ "devices": [
+  {
+   "id": "d_tank",
+   "type": "tank",
+   "tag": "TANK01",
+   "label": "Wet well",
+   "bbox": {
+    "x": 60,
+    "y": 300,
+    "w": 140,
+    "h": 200
+   },
+   "ans": [
+    "PumpStation:1"
+   ],
+   "states": [],
+   "faceplate": null,
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_p1",
+   "type": "pump",
+   "tag": "PUMP01",
+   "label": "Pump 1",
+   "bbox": {
+    "x": 320,
+    "y": 330,
+    "w": 48,
+    "h": 48
+   },
+   "ans": [
+    "PumpStation:2"
+   ],
+   "states": [],
+   "faceplate": "pump",
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_p2",
+   "type": "pump",
+   "tag": "PUMP02",
+   "label": "Pump 2",
+   "bbox": {
+    "x": 320,
+    "y": 450,
+    "w": 48,
+    "h": 48
+   },
+   "ans": [
+    "PumpStation:3"
+   ],
+   "states": [],
+   "faceplate": "pump",
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_v1",
+   "type": "valve",
+   "tag": "VALVE01",
+   "label": "Outlet valve",
+   "bbox": {
+    "x": 520,
+    "y": 390,
+    "w": 48,
+    "h": 48
+   },
+   "ans": [
+    "PumpStation:4"
+   ],
+   "states": [],
+   "faceplate": null,
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_sq",
+   "type": "sequence",
+   "tag": "SEQ01",
+   "label": "Duty sequence",
+   "bbox": {
+    "x": 700,
+    "y": 330,
+    "w": 144,
+    "h": 72
+   },
+   "ans": [
+    "PumpStation:5"
+   ],
+   "states": [],
+   "faceplate": "sequence",
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "d_ups",
+   "type": "ups",
+   "tag": "UPS01",
+   "label": "Station UPS",
+   "bbox": {
+    "x": 700,
+    "y": 450,
+    "w": 96,
+    "h": 48
+   },
+   "ans": [
+    "PumpStation:6"
+   ],
+   "states": [],
+   "faceplate": null,
+   "click": "",
+   "basis": {
+    "type": "inventory:Text",
+    "states": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "flows": [
+  {
+   "id": "f1",
+   "medium": "waste",
+   "path": [
+    {
+     "x": 200,
+     "y": 354
+    },
+    {
+     "x": 320,
+     "y": 354
+    }
+   ],
+   "from": "d_tank",
+   "to": "d_p1",
+   "ans": [
+    "PumpStation:7"
+   ],
+   "basis": {
+    "medium": "picture",
+    "direction": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "f2",
+   "medium": "waste",
+   "path": [
+    {
+     "x": 200,
+     "y": 474
+    },
+    {
+     "x": 320,
+     "y": 474
+    }
+   ],
+   "from": "d_tank",
+   "to": "d_p2",
+   "ans": [
+    "PumpStation:8"
+   ],
+   "basis": {
+    "medium": "picture",
+    "direction": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "f3",
+   "medium": "waste",
+   "path": [
+    {
+     "x": 368,
+     "y": 354
+    },
+    {
+     "x": 520,
+     "y": 354
+    },
+    {
+     "x": 520,
+     "y": 414
+    }
+   ],
+   "from": "d_p1",
+   "to": "d_v1",
+   "ans": [
+    "PumpStation:9"
+   ],
+   "basis": {
+    "medium": "inferred",
+    "direction": "inventory:Text"
+   },
+   "inferred": true
+  }
+ ],
+ "readouts": [
+  {
+   "id": "v1",
+   "label": "Well level",
+   "expr": "TANK01_LEVEL",
+   "format": "0.00",
+   "units": "m",
+   "bbox": {
+    "x": 60,
+    "y": 520,
+    "w": 120,
+    "h": 30
+   },
+   "ans": [
+    "PumpStation:10"
+   ],
+   "region": "r0",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "v2",
+   "label": "Pump 1 current",
+   "expr": "PUMP01_IAMP",
+   "format": "0.0",
+   "units": "A",
+   "bbox": {
+    "x": 320,
+    "y": 290,
+    "w": 90,
+    "h": 30
+   },
+   "ans": [
+    "PumpStation:11"
+   ],
+   "region": "r0",
+   "basis": {
+    "units": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "indicators": [
+  {
+   "id": "i1",
+   "label": "Pump 1 running",
+   "expr": "PUMP01_IRUN",
+   "on": "Running",
+   "off": "Stopped",
+   "bbox": {
+    "x": 380,
+    "y": 330,
+    "w": 24,
+    "h": 24
+   },
+   "ans": [
+    "PumpStation:12"
+   ],
+   "basis": {
+    "on": "inventory:Text",
+    "off": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "i2",
+   "label": "High level",
+   "expr": "TANK01_HIGH",
+   "on": "High",
+   "off": "Normal",
+   "bbox": {
+    "x": 60,
+    "y": 226,
+    "w": 24,
+    "h": 24
+   },
+   "ans": [
+    "PumpStation:13"
+   ],
+   "basis": {
+    "on": "inventory:Text",
+    "off": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "navigation": [
+  {
+   "id": "n1",
+   "label": "Overview",
+   "kind": "page",
+   "target": "Overview",
+   "priv": null,
+   "bbox": {
+    "x": 700,
+    "y": 80,
+    "w": 140,
+    "h": 36
+   },
+   "ans": [
+    "PumpStation:14"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "n2",
+   "label": "Pump 1",
+   "kind": "faceplate",
+   "target": "PUMP01_FP",
+   "priv": null,
+   "bbox": {
+    "x": 320,
+    "y": 390,
+    "w": 60,
+    "h": 24
+   },
+   "ans": [
+    "PumpStation:15"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "n3",
+   "label": "Sequence",
+   "kind": "popup",
+   "target": "SEQ01_SP",
+   "priv": 2,
+   "bbox": {
+    "x": 700,
+    "y": 410,
+    "w": 100,
+    "h": 24
+   },
+   "ans": [
+    "PumpStation:16"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  },
+  {
+   "id": "n4",
+   "label": "Reports",
+   "kind": "page",
+   "target": "Reports",
+   "priv": null,
+   "bbox": {
+    "x": 700,
+    "y": 520,
+    "w": 100,
+    "h": 24
+   },
+   "ans": [
+    "PumpStation:17"
+   ],
+   "basis": {
+    "kind": "inventory:Text",
+    "target": "inventory:Text"
+   },
+   "inferred": false
+  }
+ ],
+ "static": [
+  {
+   "ans": [
+    "PumpStation:18"
+   ],
+   "what": "Pump station heading",
+   "class": "heading"
+  }
+ ],
+ "dropped": [
+  {
+   "ans": [
+    "PumpStation:19"
+   ],
+   "reason": "outside the page",
+   "reason_class": "offpage"
+  }
+ ],
+ "modernise": [
+  {
+   "what": "the cluttered outlet manifold",
+   "why": "fewer crossings"
+  }
+ ]
+}

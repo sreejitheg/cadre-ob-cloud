@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "description": "An alert row was clicked. event.ids holds its alert id; event.tagId is the device folder of the alarm.",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "description": "The alert ids of the event."
+    },
+    "id": {
+      "type": "string"
+    },
+    "tagId": {
+      "type": "string",
+      "description": "The device folder."
+    },
+    "source": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    }
+  }
+}

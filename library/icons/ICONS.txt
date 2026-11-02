@@ -1,0 +1,15 @@
+energy-battery tank standby pump-on-horizontal pump-on-vertical pump-off-vertical pump-off-horizontal pump-static-horizontal pump-static-vertical
+arrow-right-google arrow-up-google arrow-left-google arrow-down-google
+twoway-digital-open twoway-digital-closed twoway-analog-closed
+motor-on-vertical motor-on-horizontal motor-off-vertical motor-off-horizontal motor-static-horizontal motor-static-vertical
+fan-on fan-off damper-horizontal-on damper-horizontal-off filter-1-on filter-1-off switch-horizontal-on switch-horizontal-off
+heatpump heatexhanger hydraulic-separator
+manual manual-only local local-only auto duty command-locked-f alert-off-filled off on
+forward forward-stopped forward-fast backward backward-stopped backward-fast
+chevron-up-google chevron-down-google chevron-double-up-google chevron-double-down-google chevron-left-google chevron-right-google
+menu home alerts alert-list notification notification-filled palette-day palette-dusk palette-night palette-day-bright palette-dimming display-brilliance-low
+user user-google close-google more-google more-vertical-google search filter check-google trend trend-up trend-down
+alarm-badge warning-badge caution-badge alarm-acknowledged-outlined warning-unacknowledged-outlined warning-rectified-outlined
+dashboard placeholder media-play media-stop support-google speed
+sensor-water-drop-google sensor-water-ph-google
+generator

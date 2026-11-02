@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "description": "The ACK button of an alert was clicked. event.ids holds its alert id; event.id, event.tagId, event.source and event.text describe it.",
+  "properties": {
+    "ids": {
+      "type": "array",
+      "description": "The alert ids of the event."
+    },
+    "id": {
+      "type": "string"
+    },
+    "tagId": {
+      "type": "string",
+      "description": "The device folder."
+    },
+    "source": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    }
+  }
+}

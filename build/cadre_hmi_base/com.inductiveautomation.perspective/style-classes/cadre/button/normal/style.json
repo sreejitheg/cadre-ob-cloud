@@ -1,0 +1,19 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--normal-enabled-background-color)",
+      "border": "1px solid var(--normal-enabled-border-color)",
+      "borderRadius": "6px",
+      "color": "var(--on-normal-active-color)",
+      "cursor": "pointer"
+    }
+  },
+  "variants": [
+    {
+      "pseudo": "hover",
+      "style": {
+        "backgroundColor": "var(--normal-hover-background-color)"
+      }
+    }
+  ]
+}

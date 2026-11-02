@@ -1,0 +1,388 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "PilotSupply",
+  "route": "/supply",
+  "title": "Supply",
+  "view": "Screens/PilotSupply",
+  "layout": "diagram",
+  "width": 1580,
+  "height": 600,
+  "icon": "dashboard",
+  "node": "Pilot"
+ },
+ "tagRoot": "[default]cadre_hmi_pilot",
+ "tagModel": "external",
+ "toolbar": true,
+ "showTags": true,
+ "sections": [
+  {
+   "id": "Supply",
+   "x": 40,
+   "y": 60,
+   "w": 880,
+   "h": 440,
+   "label": "Supply"
+  },
+  {
+   "id": "Pressure",
+   "x": 960,
+   "y": 60,
+   "w": 240,
+   "h": 440,
+   "label": "Pressure control"
+  },
+  {
+   "id": "Inputs",
+   "x": 1240,
+   "y": 60,
+   "w": 300,
+   "h": 440,
+   "label": "Inputs"
+  }
+ ],
+ "labels": [
+  {
+   "id": "from",
+   "x": 56,
+   "y": 116,
+   "w": 120,
+   "h": 20,
+   "text": "From the well",
+   "style": "label"
+  },
+  {
+   "id": "to",
+   "x": 780,
+   "y": 140,
+   "w": 120,
+   "h": 20,
+   "text": "To the header",
+   "align": "right",
+   "style": "label"
+  }
+ ],
+ "symbols": [
+  {
+   "id": "P1",
+   "kind": "pump",
+   "x": 300,
+   "y": 160,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Supply pump 1",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "P-1"
+   },
+   "bind": {
+    "on": "P1/state",
+    "alert": "P1/fault",
+    "badgeControl": "P1/forceBadge"
+   }
+  },
+  {
+   "id": "P2",
+   "kind": "pump",
+   "x": 300,
+   "y": 340,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Supply pump 2",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "SupplyPump_No2"
+   },
+   "bind": {
+    "on": "P2/state"
+   }
+  },
+  {
+   "id": "FT1",
+   "kind": "readout",
+   "x": 520,
+   "y": 164,
+   "w": 130,
+   "h": 40,
+   "device": true,
+   "label": "Supply flow",
+   "params": {
+    "unit": "L/s",
+    "format": "0.0",
+    "tag": "SupplyFlow_FT01",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "FT1/value"
+   }
+  },
+  {
+   "id": "XV1",
+   "kind": "valve",
+   "x": 700,
+   "y": 160,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Supply header valve",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "XV-1"
+   },
+   "bind": {
+    "open": "XV1/state",
+    "alert": "XV1/fault",
+    "badgeControl": "XV1/forceBadge"
+   }
+  },
+  {
+   "id": "PIC1",
+   "kind": "controller",
+   "x": 1020,
+   "y": 130,
+   "w": 120,
+   "h": 96,
+   "device": true,
+   "label": "Header pressure control",
+   "params": {
+    "unit": "kPa",
+    "format": "0.0",
+    "tag": "PIC-1",
+    "hasSetpoint": true,
+    "hasOutput": true
+   },
+   "bind": {
+    "value": "PIC1/value",
+    "setpoint": "PIC1/sp",
+    "output": "PIC1/out",
+    "manual": "PIC1/manual"
+   }
+  },
+  {
+   "id": "PIC1_PV",
+   "kind": "instrument-field",
+   "x": 1032,
+   "y": 320,
+   "w": 96,
+   "h": 64,
+   "device": "PIC1",
+   "label": "Header pressure control",
+   "params": {
+    "unit": "kPa",
+    "format": "0.0",
+    "label": "Header",
+    "tag": "PIC-1",
+    "hasSetpoint": true,
+    "setpointFormat": "0.0",
+    "deviceKind": "controller"
+   },
+   "bind": {
+    "value": "PIC1/value",
+    "setpoint": "PIC1/sp"
+   }
+  },
+  {
+   "id": "DI1",
+   "kind": "indicator",
+   "x": 1366,
+   "y": 160,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Suction low level switch",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "showStatus": true,
+    "tag": "SuctionLowLvl_SW"
+   },
+   "bind": {
+    "on": "DI1/state",
+    "badgeControl": "DI1/forceBadge"
+   }
+  },
+  {
+   "id": "SQ1",
+   "kind": "sequence",
+   "x": 560,
+   "y": 330,
+   "w": 144,
+   "h": 72,
+   "device": true,
+   "label": "Self cleaning filter",
+   "params": {
+    "tag": "FLT-1",
+    "hasStep": true
+   },
+   "bind": {
+    "text": "SQ1/stepText",
+    "step": "SQ1/step"
+   }
+  },
+  {
+   "id": "BT1",
+   "kind": "tank",
+   "x": 88,
+   "y": 144,
+   "w": 96,
+   "h": 80,
+   "params": {
+    "static": true,
+    "tag": "Break tank"
+   }
+  },
+  {
+   "id": "TST1",
+   "kind": "indicator",
+   "x": 1366,
+   "y": 340,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Alarm test: one alarm of each priority",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "TST-1"
+   },
+   "bind": {
+    "on": "TST1/state"
+   }
+  }
+ ],
+ "junctions": [
+  {
+   "id": "J1",
+   "x": 200,
+   "y": 184
+  },
+  {
+   "id": "J2",
+   "x": 440,
+   "y": 184
+  }
+ ],
+ "pipes": [
+  {
+   "id": "p1",
+   "from": {
+    "ref": "BT1",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J1"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p2",
+   "from": {
+    "ref": "J1"
+   },
+   "to": {
+    "ref": "P1",
+    "side": "left"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p3",
+   "from": {
+    "ref": "P1",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J2"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p4",
+   "from": {
+    "ref": "J1"
+   },
+   "to": {
+    "ref": "P2",
+    "side": "left"
+   },
+   "via": [
+    [
+     200,
+     364
+    ]
+   ],
+   "medium": "cold"
+  },
+  {
+   "id": "p5",
+   "from": {
+    "ref": "P2",
+    "side": "right"
+   },
+   "to": {
+    "ref": "J2"
+   },
+   "via": [
+    [
+     440,
+     364
+    ]
+   ],
+   "medium": "cold"
+  },
+  {
+   "id": "p6",
+   "from": {
+    "ref": "J2"
+   },
+   "to": {
+    "ref": "FT1",
+    "side": "left"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p7",
+   "from": {
+    "ref": "FT1",
+    "side": "right"
+   },
+   "to": {
+    "ref": "XV1",
+    "side": "left"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p8",
+   "from": {
+    "ref": "XV1",
+    "side": "right"
+   },
+   "to": {
+    "x": 880,
+    "y": 184,
+    "end": "arrow-out"
+   },
+   "medium": "cold"
+  },
+  {
+   "id": "p9",
+   "from": {
+    "x": 56,
+    "y": 184,
+    "end": "arrow-in"
+   },
+   "to": {
+    "ref": "BT1",
+    "side": "left"
+   },
+   "medium": "cold"
+  }
+ ]
+}

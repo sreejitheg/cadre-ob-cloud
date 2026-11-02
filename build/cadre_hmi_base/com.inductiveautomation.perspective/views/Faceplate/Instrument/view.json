@@ -1,0 +1,1171 @@
+{
+  "custom": {
+    "alarmCount": 0,
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "delayRows": [],
+    "dev": {
+      "allowed": {
+        "W1": true,
+        "W16": true,
+        "W17": true,
+        "W18": true,
+        "W19": true,
+        "W3": true,
+        "W5": true
+      },
+      "bad": [],
+      "config": 0,
+      "force": "",
+      "has": {
+        "value": false
+      },
+      "maintain": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "mnt": false,
+      "owned": false,
+      "owner": {
+        "name": "",
+        "owner": "",
+        "text": ""
+      },
+      "pulses": {},
+      "quality": "",
+      "reason": "",
+      "release": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "take": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "value": {
+        "value": 0.0
+      },
+      "writable": {
+        "force": false,
+        "value": false
+      },
+      "write": {
+        "force": false,
+        "value": false
+      }
+    },
+    "historyTags": [
+      {
+        "alias": "value",
+        "path": ""
+      }
+    ],
+    "hours": 1,
+    "limitRows": [],
+    "message": "",
+    "pending": {
+      "active": false,
+      "device": "",
+      "member": "",
+      "path": "",
+      "text": "",
+      "value": 0
+    },
+    "source": "",
+    "tab": "values",
+    "unit": ""
+  },
+  "params": {
+    "deviceId": "",
+    "tab": ""
+  },
+  "propConfig": {
+    "custom.alarmCount": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alarm_count(self.session.custom.alarmScope, cadre.hmi.device_sources(self.session, value))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.delayRows": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.delay_rows(value, self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.dev": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(1000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.device_read(self.session, value, ['value'])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.historyTags": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.history_tags(value, 'value')",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.limitRows": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn [dict(r, valueMember='value', high=r['member'].startswith('hi')) for r in cadre.hmi.limit_rows(value, 'value', self.session)]",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.source": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn ','.join(cadre.hmi.device_sources(self.session, value))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.unit": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.device_unit(self.session, value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.tab = 'values'\n\twant = self.params.tab\n\tif want in ('values', 'trend', 'alarms'):\n\t\tself.custom.tab = want\n\tself.custom.message = ''\n\tself.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tab": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.tab = 'values'\n\twant = currentValue.value\n\tif want in ('values', 'trend', 'alarms'):\n\t\tself.custom.tab = want"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 720,
+      "width": 400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'values'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_values"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'values', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Values"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'trend'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_trend"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.value}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'trend', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Trend"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'alarms'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_alarms"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'alarms', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "'Alarms' + if({view.custom.alarmCount} > 0, ' (' + toStr({view.custom.alarmCount}) + ')', '')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Alarms"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Tabs"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "gap": "4px",
+            "marginBottom": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Quality"
+        },
+        "position": {
+          "basis": "32px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.dev.quality}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.dev.quality}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/font/body-active cadre/alert/badge-warning",
+            "padding": "4px 8px",
+            "whiteSpace": "normal"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "ConfirmText"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.pending.text}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tp = self.view.custom.pending\n\tmsg = cadre.hmi.command(self.session, p.path, self.view.params.deviceId, p.member, p.value)\n\tself.view.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}\n\tself.view.custom.message = msg"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "ConfirmYes"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "case({view.custom.pending.path}, 'W1', {view.custom.can.W1}, 'W2', {view.custom.can.W2}, 'W5', {view.custom.can.W5}, 'W11', {view.custom.can.W11}, 'W13', {view.custom.can.W13}, 'W16', {view.custom.can.W16}, 'W17', {view.custom.can.W17}, 'W18', {view.custom.can.W18}, false)"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Confirm"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "ConfirmNo"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Cancel"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Confirm"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.pending.active} && {view.custom.pending.device} = {view.params.deviceId}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/alert/badge-caution",
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "ValueTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.value}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "VALUE"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Value"
+            },
+            "position": {
+              "basis": "56px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.value}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "numberFormat({view.custom.dev.value.value}, '0.00') + ' ' + {view.custom.unit}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/instrument-value-enhanced-active cadre/text/active"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "LimitTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.limitRows}) > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "ALARM LIMITS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Limits"
+            },
+            "position": {
+              "basis": "180px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.limitRows}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "44px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Faceplate/LimitRow",
+              "useDefaultViewHeight": true,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "meta": {
+              "name": "Delays"
+            },
+            "position": {
+              "basis": "0px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.basis": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr(len({view.custom.delayRows}) * 44) + 'px'"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.delayRows}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "44px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Faceplate/SetpointRow",
+              "useDefaultViewHeight": true,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          }
+        ],
+        "meta": {
+          "name": "Pane_values"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'values'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.hours = 1"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Range_1h"
+                },
+                "position": {
+                  "basis": "72px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.hours} = 1, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/flat cadre/font/button",
+                    "height": "32px"
+                  },
+                  "text": "1 h"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.hours = 8"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Range_8h"
+                },
+                "position": {
+                  "basis": "72px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.hours} = 8, 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/flat cadre/font/button",
+                    "height": "32px"
+                  },
+                  "text": "8 h"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "Ranges"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Chart"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.plots[0].trends[1].visible": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.deviceId}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\treturn len(cadre.hmi.limit_rows(value)) > 0",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              },
+              "props.series[0].data": {
+                "binding": {
+                  "config": {
+                    "aggregate": "Average",
+                    "avoidScanClassValidation": true,
+                    "dateRange": {
+                      "mostRecent": "{view.custom.hours}",
+                      "mostRecentUnits": "HOUR"
+                    },
+                    "ignoreBadQuality": false,
+                    "polling": {
+                      "enabled": true,
+                      "rate": "10"
+                    },
+                    "preventInterpolation": false,
+                    "returnFormat": "Wide",
+                    "returnSize": {
+                      "numRows": "300",
+                      "type": "FIXED"
+                    },
+                    "tags": "{view.custom.historyTags}",
+                    "valueFormat": "DATASET"
+                  },
+                  "type": "tag-history"
+                }
+              },
+              "props.series[1].data": {
+                "binding": {
+                  "config": {
+                    "expression": "if(toMillis(now(10000)) > 0, {view.params.deviceId} + '|' + toStr({view.custom.hours}), '')"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tparts = (value or '').split('|')\n\treturn cadre.hmi.limit_series(parts[0], int(parts[1]) if len(parts) > 1 and parts[1] else 1)",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "plots": [
+                {
+                  "axes": [
+                    {
+                      "alignment": "left",
+                      "name": "value",
+                      "tick": {
+                        "count": 5,
+                        "label": {
+                          "format": ".3~g"
+                        }
+                      }
+                    }
+                  ],
+                  "markers": [],
+                  "trends": [
+                    {
+                      "axis": "value",
+                      "baselines": [],
+                      "columns": [
+                        {
+                          "key": "value"
+                        }
+                      ],
+                      "series": "value",
+                      "type": "line",
+                      "visible": true
+                    },
+                    {
+                      "axis": "value",
+                      "baselines": [],
+                      "columns": [
+                        {
+                          "key": "hiLimit",
+                          "styles": {
+                            "highlighted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "muted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "normal": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "key": "loLimit",
+                          "styles": {
+                            "highlighted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "muted": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            },
+                            "normal": {
+                              "fill": {
+                                "color": "",
+                                "opacity": null
+                              },
+                              "stroke": {
+                                "color": "",
+                                "dashArray": "6 4",
+                                "opacity": null,
+                                "width": null
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "series": "limits",
+                      "type": "line",
+                      "visible": true
+                    }
+                  ]
+                }
+              ],
+              "series": [
+                {
+                  "data": [],
+                  "name": "value"
+                },
+                {
+                  "data": [],
+                  "name": "limits"
+                }
+              ],
+              "timeAxis": {
+                "tick": {
+                  "label": {
+                    "format": "HH:mm"
+                  }
+                },
+                "tickCount": 4
+              },
+              "timeRange": {
+                "dateFormat": "D-M-YYYY",
+                "timeFormat": "HH:mm",
+                "visible": true
+              },
+              "title": {}
+            },
+            "type": "ia.chart.timeseries"
+          }
+        ],
+        "meta": {
+          "name": "Pane_trend"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'trend'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AlarmList"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.params.deviceId": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.deviceId}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.params.source": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.source}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "params": {
+                "deviceId": "",
+                "source": ""
+              },
+              "path": "Faceplate/Alarms",
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "Pane_alarms"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'alarms'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "4px",
+        "overflow": "hidden",
+        "padding": "4px 16px 16px 16px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

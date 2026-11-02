@@ -1,0 +1,23 @@
+{
+ "name": "dashboard",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M11 5L5 5V19H11V5ZM5 21C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5ZM19 12V19H13V12H19ZM19 10V5H13V10H19Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-dashboard.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

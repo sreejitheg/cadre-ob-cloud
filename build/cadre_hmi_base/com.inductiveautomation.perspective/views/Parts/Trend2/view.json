@@ -1,0 +1,334 @@
+{
+  "custom": {
+    "pen1": [
+      {
+        "alias": "p1",
+        "path": ""
+      }
+    ],
+    "pen2": [
+      {
+        "alias": "p2",
+        "path": ""
+      }
+    ]
+  },
+  "params": {
+    "label1": "",
+    "label2": "",
+    "minutes": 10,
+    "tag1": "",
+    "tag2": "",
+    "title": "",
+    "unit1": "",
+    "unit2": ""
+  },
+  "propConfig": {
+    "custom.pen1": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.tag1}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn [{'path': value or '', 'alias': 'p1'}]",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.pen2": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.tag2}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn [{'path': value or '', 'alias': 'p2'}]",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.label1": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.label2": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.minutes": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag1": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tag2": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.title": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit1": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.unit2": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 130,
+      "width": 340
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.title}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/active",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Legend"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.label1} + if(len({view.params.unit1}) > 0, ' (' + {view.params.unit1} + ')', '') + if(len({view.params.tag2}) > 0, '   ' + {view.params.label2} + if(len({view.params.unit2}) > 0, ' (' + {view.params.unit2} + ')', ''), '')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Head"
+        },
+        "position": {
+          "basis": "20px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Chart"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.plots[0].trends[1].visible": {
+            "binding": {
+              "config": {
+                "expression": "len({view.params.tag2}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.series[0].data": {
+            "binding": {
+              "config": {
+                "aggregate": "Average",
+                "avoidScanClassValidation": true,
+                "dateRange": {
+                  "mostRecent": "{view.params.minutes}",
+                  "mostRecentUnits": "MIN"
+                },
+                "ignoreBadQuality": false,
+                "polling": {
+                  "enabled": true,
+                  "rate": "10"
+                },
+                "preventInterpolation": false,
+                "returnFormat": "Wide",
+                "returnSize": {
+                  "numRows": "300",
+                  "type": "FIXED"
+                },
+                "tags": "{view.custom.pen1}",
+                "valueFormat": "DATASET"
+              },
+              "type": "tag-history"
+            }
+          },
+          "props.series[1].data": {
+            "binding": {
+              "config": {
+                "aggregate": "Average",
+                "avoidScanClassValidation": true,
+                "dateRange": {
+                  "mostRecent": "{view.params.minutes}",
+                  "mostRecentUnits": "MIN"
+                },
+                "ignoreBadQuality": false,
+                "polling": {
+                  "enabled": true,
+                  "rate": "10"
+                },
+                "preventInterpolation": false,
+                "returnFormat": "Wide",
+                "returnSize": {
+                  "numRows": "300",
+                  "type": "FIXED"
+                },
+                "tags": "{view.custom.pen2}",
+                "valueFormat": "DATASET"
+              },
+              "type": "tag-history"
+            }
+          }
+        },
+        "props": {
+          "plots": [
+            {
+              "axes": [
+                {
+                  "alignment": "left",
+                  "name": "value",
+                  "tick": {
+                    "count": 5,
+                    "label": {
+                      "format": ".3~g"
+                    }
+                  }
+                }
+              ],
+              "markers": [],
+              "trends": [
+                {
+                  "axis": "value",
+                  "baselines": [],
+                  "columns": [
+                    {
+                      "key": "p1"
+                    }
+                  ],
+                  "series": "value",
+                  "type": "line",
+                  "visible": true
+                },
+                {
+                  "axis": "value",
+                  "baselines": [],
+                  "columns": [
+                    {
+                      "key": "p2"
+                    }
+                  ],
+                  "series": "p2",
+                  "type": "line",
+                  "visible": true
+                }
+              ]
+            }
+          ],
+          "series": [
+            {
+              "data": [],
+              "name": "value"
+            },
+            {
+              "data": [],
+              "name": "p2"
+            }
+          ],
+          "timeAxis": {
+            "tick": {
+              "label": {
+                "format": "HH:mm"
+              }
+            },
+            "tickCount": 4
+          },
+          "timeRange": {
+            "dateFormat": "D-M-YYYY",
+            "timeFormat": "HH:mm",
+            "visible": true
+          },
+          "title": {}
+        },
+        "type": "ia.chart.timeseries"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/card cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "2px",
+        "overflow": "hidden",
+        "padding": "4px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,1290 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.chart.pie.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A Pie Chart component",
+  "properties": {
+    "colors": {
+      "description": "Colors that correspond to each pie section, respective of order in data",
+      "example": [
+        "#3366CC",
+        "#EC4B3D",
+        "#4FC86C",
+        "#00A9C6",
+        "#E69300"
+      ],
+      "items": {
+        "description": "Color for a single pie section",
+        "format": "color",
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "cutoutRadius": {
+      "default": 0,
+      "description": "Percent of total radius to cut out of center of chart. If greater than zero, chart becomes ring-style instead of pie.",
+      "exclusiveMaximum": true,
+      "maximum": 100,
+      "minimum": 0,
+      "type": "number"
+    },
+    "data": {
+      "description": "Data source for this chart. Each object within array defines the name and value for a single pie section.",
+      "example": [
+        {
+          "count": 36,
+          "flavor": "Pumpkin"
+        },
+        {
+          "count": 17,
+          "flavor": "Pecan"
+        },
+        {
+          "count": 14,
+          "flavor": "Apple"
+        },
+        {
+          "count": 10,
+          "flavor": "Sweet Potato"
+        },
+        {
+          "count": 9,
+          "flavor": "Chocolate"
+        }
+      ],
+      "items": {
+        "properties": {
+          "label": {
+            "description": "Name of subject of current pie section",
+            "type": "string"
+          },
+          "value": {
+            "description": "Value which determines percentage of chart current pie section occupies",
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "type": [
+        "array",
+        "dataset"
+      ]
+    },
+    "enableTransitions": {
+      "default": true,
+      "description": "Whether chart has visual transition effects for changes in chart data",
+      "type": "boolean"
+    },
+    "labels": {
+      "properties": {
+        "align": {
+          "default": true,
+          "description": "Whether the labels should be aligned in vertical columns",
+          "type": "boolean",
+          "visibleWhen": {
+            "equals": false,
+            "property": "bent"
+          }
+        },
+        "bent": {
+          "default": false,
+          "description": "Bend labels around slices. Bending labels will disable the align and wrap properties",
+          "type": "boolean"
+        },
+        "color": {
+          "default": "",
+          "description": "The color of the labels",
+          "format": "color",
+          "type": "string"
+        },
+        "inside": {
+          "properties": {
+            "color": {
+              "default": "#FFFFFF",
+              "description": "Label color for labels while they are displayed inside the chart",
+              "format": "color",
+              "type": "string"
+            },
+            "enabled": {
+              "default": false,
+              "description": "Whether the labels should show inside of the chart slices, based on if the value percentage is below the percentLimit threshold. Displaying labels inside the chart will disable bent and align properties",
+              "type": "boolean"
+            },
+            "percentLimit": {
+              "default": 10,
+              "description": "Value that determines at what value percentage to place label on outside of chart instead of inside",
+              "type": "number"
+            },
+            "radius": {
+              "default": 80,
+              "description": "Distance in percentage towards center of pie chart while inside is enabled. 0 represents outside edge while 100 would be directly in the middle",
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "showName": {
+          "default": true,
+          "description": "Whether to show the name on the label",
+          "type": "boolean"
+        },
+        "showValue": {
+          "default": true,
+          "description": "Whether to show the value on the label. Hiding values will disable any value formats set",
+          "type": "boolean"
+        },
+        "wrap": {
+          "description": "Label text wrapping configuration.",
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Enables label text wrapping.",
+              "type": "boolean"
+            },
+            "maxWidth": {
+              "default": 200,
+              "description": "The max allowable label width.",
+              "type": "number"
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": false,
+            "property": "bent"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "legend": {
+      "properties": {
+        "fontSize": {
+          "default": 16,
+          "description": "Font size for legend labels",
+          "type": "number"
+        },
+        "icon": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Value that determines whether to show the legend icons or hide them",
+              "type": "boolean"
+            },
+            "height": {
+              "default": 25,
+              "description": "Height value of legend icon",
+              "type": "number",
+              "visibleWhen": {
+                "equals": true,
+                "property": "enabled"
+              }
+            },
+            "width": {
+              "default": 25,
+              "description": "Width value of legend icon",
+              "type": "number",
+              "visibleWhen": {
+                "equals": true,
+                "property": "enabled"
+              }
+            }
+          },
+          "type": "object"
+        },
+        "position": {
+          "default": "bottom",
+          "description": "Aligns legend to specified direction",
+          "enum": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "legendLabelColor": {
+      "default": "",
+      "description": "The color of the legend labels",
+      "format": "color",
+      "type": "string"
+    },
+    "sectionOutline": {
+      "additionalProperties": false,
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Color of border around each pie section",
+          "format": "color",
+          "type": "string"
+        },
+        "opacity": {
+          "default": 1,
+          "description": "Opacity of border around each pie section. 0 is fully transparent, 1 is fully opaque.",
+          "exclusiveMaximum": false,
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "width": {
+          "default": 0,
+          "description": "Thickness of border around each pie section",
+          "type": "number"
+        }
+      },
+      "required": [
+        "width",
+        "color",
+        "opacity"
+      ],
+      "type": "object"
+    },
+    "selection": {
+      "description": "An object that contains selection related properties.",
+      "properties": {
+        "data": {
+          "default": [],
+          "description": "A read-only list of currently selected pie chart slice",
+          "type": "array"
+        },
+        "enabled": {
+          "default": false,
+          "description": "Enables selection of pie chart slices.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "showLabels": {
+      "default": true,
+      "description": "Whether to show labels for each section of this chart",
+      "type": "boolean"
+    },
+    "showLegend": {
+      "default": true,
+      "description": "Value that determines whether to show a legend for this chart or hide it",
+      "type": "boolean"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema"
+    },
+    "threeDimensional": {
+      "default": false,
+      "description": "Whether chart has a depth effect to look three-dimensional",
+      "type": "boolean"
+    },
+    "title": {
+      "default": "",
+      "description": "Name to display for this chart",
+      "example": "Favorite Pie Flavors",
+      "type": "string"
+    },
+    "titleColor": {
+      "default": "",
+      "description": "The color of the title",
+      "format": "color",
+      "type": "string"
+    },
+    "tooltipFormat": {
+      "default": "{category} : {value.percent.formatNumber('#.0')}%",
+      "description": "Value that determines the format of the tooltips.",
+      "suggestions": [
+        "{category}",
+        "{value.value}",
+        "{category}: {value.value}",
+        "{category} : {value.percent.formatNumber('#.0')}%",
+        "[bold]{category}[/] : [font-size: 30px red]{value.value}[/]"
+      ],
+      "type": "string"
+    },
+    "valueFormat": {
+      "default": {
+        "showPercentSymbol": true,
+        "showValueAsPercent": true
+      },
+      "description": "Label and legend value format configuration",
+      "properties": {
+        "showPercentSymbol": {
+          "default": true,
+          "description": "Whether to show the percent symbol next to the percent value",
+          "type": "boolean",
+          "visibleWhen": {
+            "equals": true,
+            "property": "showValueAsPercent"
+          }
+        },
+        "showValueAsPercent": {
+          "default": true,
+          "description": "Whether to show the value as a percent of total or the raw value",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "data",
+    "colors",
+    "title",
+    "showLabels",
+    "showLegend",
+    "cutoutRadius",
+    "sectionOutline",
+    "enableTransitions",
+    "threeDimensional",
+    "style"
+  ],
+  "title": "Pie Chart",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.chart.pie",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveAmCharts",
+    "palette_category": "chart",
+    "registry_file": "perspective-amcharts.components.json",
+    "registry_hash": "d5b97edc50994e8cbeaa"
+  }
+}

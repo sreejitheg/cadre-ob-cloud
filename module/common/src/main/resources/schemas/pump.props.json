@@ -1,0 +1,285 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vertical": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-pump` property `vertical`."
+    },
+    "on": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-pump` property `on`."
+    },
+    "speedInPercent": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-pump` property `speedInPercent`."
+    },
+    "speed": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "OpenBridge `obc-pump` property `speed`."
+    },
+    "speedUnit": {
+      "type": "string",
+      "default": "%",
+      "description": "OpenBridge `obc-pump` property `speedUnit`."
+    },
+    "speedMaxDigits": {
+      "type": "number",
+      "default": 3,
+      "description": "OpenBridge `obc-pump` property `speedMaxDigits`."
+    },
+    "labelDirection": {
+      "type": "string",
+      "enum": [
+        "up",
+        "down",
+        "left",
+        "right",
+        "none"
+      ],
+      "default": "right",
+      "description": "OpenBridge `obc-pump` property `labelDirection`."
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "double",
+        "forward",
+        "flat",
+        "flat-forward"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-pump` property `variant`."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "forward",
+        "forward-fast",
+        "forward-stopped",
+        "backward",
+        "backward-fast",
+        "backward-stopped",
+        "standby"
+      ],
+      "default": "forward",
+      "description": "Available when variant in [double, forward, flatForward]."
+    },
+    "readoutPosition": {
+      "type": "string",
+      "enum": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "default": "bottom",
+      "description": "Available when showReadoutStack==true."
+    },
+    "readoutSize": {
+      "type": "string",
+      "enum": [
+        "small",
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "Available when showReadoutStack==true."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "Available when showReadoutStack==true."
+    },
+    "positioning": {
+      "type": "string",
+      "enum": [
+        "point",
+        "symbol",
+        "button"
+      ],
+      "default": "point",
+      "description": "OpenBridge `obc-pump` property `positioning`."
+    },
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enables the activated background color, used to indicate that the button is activated/selected."
+    },
+    "alert": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-pump` property `alert`."
+    },
+    "alertFrameType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "small-side-flip",
+        "large-side-flip",
+        "bottom-flip",
+        "top-flip"
+      ],
+      "default": "small-side-flip",
+      "description": "Available when alert==true."
+    },
+    "alertFrameThickness": {
+      "type": "string",
+      "enum": [
+        "small",
+        "large"
+      ],
+      "default": "small",
+      "description": "Available when alert==true."
+    },
+    "alertFrameStatus": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "alarm",
+      "description": "Available when alert==true."
+    },
+    "alertFrameMode": {
+      "type": "string",
+      "enum": [
+        "acked-active",
+        "unacked-active",
+        "unacked-rectified"
+      ],
+      "default": "acked-active",
+      "description": "Available when alert==true."
+    },
+    "showAlertIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when alert==true."
+    },
+    "progress": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a progress indicator, used to indicate that an user action is in progress"
+    },
+    "progressMode": {
+      "type": "string",
+      "enum": [
+        "determinate",
+        "indeterminate",
+        "progressive-indeterminate"
+      ],
+      "default": "indeterminate",
+      "description": "Available when progress==true."
+    },
+    "progressValue": {
+      "type": "number",
+      "default": 0,
+      "description": "Available when progress==true && progressMode in [determinate, progressiveIndeterminate]."
+    },
+    "badgeControl": {
+      "type": "string",
+      "enum": [
+        "none",
+        "local",
+        "local-only",
+        "manual",
+        "manual-only",
+        "auto"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-pump` property `badgeControl`."
+    },
+    "badgeCommandLocked": {
+      "type": "string",
+      "enum": [
+        "none",
+        "command-locked"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-pump` property `badgeCommandLocked`."
+    },
+    "badgeInterlock": {
+      "type": "string",
+      "enum": [
+        "none",
+        "interlock",
+        "interlock-inhibit"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-pump` property `badgeInterlock`."
+    },
+    "badgeAlert": {
+      "type": "string",
+      "enum": [
+        "none",
+        "silence",
+        "caution",
+        "warning",
+        "alarm",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "none",
+      "description": "OpenBridge `obc-pump` property `badgeAlert`."
+    },
+    "hasSpeed": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the element prints a speed while it runs. False leaves the speed readout out (the state readout stays); the OpenBridge element has no such switch."
+    },
+    "showStatus": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the symbol draws its status readouts. False hides every status word, including the element's own Off, and the speed readout (the element's showStatus); the tag stays."
+    },
+    "statusText": {
+      "type": "string",
+      "default": "",
+      "description": "When not empty, the status word drawn in the element's status place (for example On or Off) in place of its own readout; empty keeps the element's own."
+    },
+    "badgeDuty": {
+      "type": "boolean",
+      "default": false,
+      "description": "The OpenBridge duty badge on the symbol, in the first free corner (bottom left, bottom right, top left, top right); not drawn while the interlock badge, which is the same icon, is."
+    },
+    "outOfService": {
+      "type": "boolean",
+      "default": false,
+      "description": "The symbol greyed and marked with the word OOS, as the stock library view draws an out of service symbol."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

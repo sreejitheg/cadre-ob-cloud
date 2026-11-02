@@ -1,0 +1,175 @@
+{
+  "custom": {},
+  "params": {
+    "counts": {
+      "Critical": 0,
+      "Diagnostic": 0,
+      "High": 0,
+      "Low": 0,
+      "Medium": 0,
+      "total": 0,
+      "unacked": 0
+    },
+    "first": true,
+    "last": false,
+    "name": "",
+    "nodeId": "",
+    "route": ""
+  },
+  "propConfig": {
+    "params.counts": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.first": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.last": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.name": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.nodeId": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.route": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 40,
+      "width": 220
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Chevron"
+        },
+        "position": {
+          "basis": "16px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "!{view.params.first}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "elements": [
+            {
+              "d": "M8.59009 7.41L10.0001 6L16.0001 12L10.0001 18L8.59009 16.59L13.1701 12L8.59009 7.41Z",
+              "fill": {
+                "paint": "var(--element-active-color)"
+              },
+              "type": "path"
+            }
+          ],
+          "viewBox": "0 0 24 24"
+        },
+        "type": "ia.shapes.svg"
+      },
+      {
+        "meta": {
+          "name": "Name"
+        },
+        "position": {
+          "shrink": 1
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.name}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Badges"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.params.counts": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.counts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "counts": {
+              "Critical": 0,
+              "Diagnostic": 0,
+              "High": 0,
+              "Low": 0,
+              "Medium": 0,
+              "total": 0,
+              "unacked": 0
+            }
+          },
+          "path": "Framework/Badges",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "events": {
+      "dom": {
+        "onClick": {
+          "config": {
+            "script": "\tx = 0\n\ttry:\n\t\tx = int(event.clientX)\n\texcept Exception:\n\t\tx = 48\n\tsystem.perspective.closePopup('crumbPopup')\n\tsystem.perspective.openPopup(id='crumbPopup', view='Framework/ASM/CrumbPopup', params={'nodeId': self.view.params.nodeId}, position={'top': 48, 'left': max(0, x - 24)}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+          },
+          "scope": "G",
+          "type": "script"
+        }
+      }
+    },
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "cursor": "pointer",
+        "gap": "6px",
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

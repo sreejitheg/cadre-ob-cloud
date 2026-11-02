@@ -1,0 +1,174 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 600,
+      "width": 450
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Description"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{session.custom.selectedLabel}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.session.custom.faceplateMode = 'dock'\n\tsystem.perspective.closePopup('faceplatePopup')\n\tsystem.perspective.openDock(id='faceplate')\n\tself.session.custom.faceplateDocked = True"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Dock"
+            },
+            "position": {
+              "basis": "72px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Dock"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Bar"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px 0 16px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Faceplate"
+            },
+            "position": {
+              "basis": "720px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.params.deviceId": {
+                "binding": {
+                  "config": {
+                    "expression": "{session.custom.selectedDevice}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.params.tab": {
+                "binding": {
+                  "config": {
+                    "expression": "coalesce({session.custom.selectedTab}, '')"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.path": {
+                "binding": {
+                  "config": {
+                    "expression": "if(coalesce({session.custom.selectedStyle}, '') = 'asm', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/ASM/Pump', 'motor', 'Faceplate/ASM/Pump', 'fan', 'Faceplate/ASM/Pump', 'valve', 'Faceplate/ASM/Valve', 'analogvalve', 'Faceplate/ASM/Valve', 'damper', 'Faceplate/ASM/Valve', 'instrument', 'Faceplate/ASM/Instrument', 'readout', 'Faceplate/ASM/Instrument', 'instrument-field', 'Faceplate/ASM/Instrument', 'sequence', 'Faceplate/ASM/Sequence', 'generator', 'Faceplate/ASM/Generator', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty')), case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty'))"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "params": {
+                "deviceId": "",
+                "tab": ""
+              },
+              "path": "Faceplate/Empty",
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "Scroll"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/menu cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

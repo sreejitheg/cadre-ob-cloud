@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-alarm-probe/1",
+  "title": "Cadre HMI alarm chain probe, version 1",
+  "description": "The result of tools/compare/alarm_probe.py: per priority rank, one alarm raised by a one-tag import, read through the four states of an alarm (Active Unacked, Active Acked, Cleared Unacked, Cleared Acked) on the alert list, its banner read on the page of the alarm's device and on one page of another branch, then acknowledged and cleared (COB-200). A dry run holds the plan and no step; a model with no alarm on a Boolean source tag holds `skipped` and no step. The test login and the gateway token never appear. `rows` and `ranks` are additive to the first form of this document: a reader of `steps`, `restored` and `plan.page` is unchanged.",
+  "type": "object",
+  "required": [
+    "schema",
+    "dry_run",
+    "plan",
+    "steps",
+    "rows",
+    "ranks",
+    "restored",
+    "provenance"
+  ],
+  "properties": {
+    "schema": {
+      "const": "cadre-hmi-alarm-probe/1"
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "plan": {
+      "type": "object",
+      "required": [
+        "base",
+        "window",
+        "alarm",
+        "page",
+        "other",
+        "ranks",
+        "states",
+        "passes",
+        "skipped"
+      ],
+      "properties": {
+        "base": {
+          "type": "string",
+          "pattern": "^https?://[^/]+$"
+        },
+        "window": {
+          "type": "object",
+          "required": [
+            "w",
+            "h"
+          ]
+        },
+        "alarm": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "The first runnable rank's alarm (the first form's single alarm)."
+        },
+        "page": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "other": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ranks": {
+          "type": "array",
+          "description": "One entry per priority rank asked: {rank, alarm, page, other} for a rank to run, {rank, skipped} for one that cannot be driven.",
+          "items": {
+            "type": "object",
+            "required": [
+              "rank"
+            ],
+            "properties": {
+              "rank": {
+                "type": "string"
+              },
+              "skipped": {
+                "type": "string"
+              },
+              "alarm": {
+                "type": "object"
+              },
+              "page": {
+                "type": "string"
+              },
+              "other": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "passes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "order"
+            ]
+          }
+        },
+        "ack": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "skipped": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "action",
+          "expected",
+          "found",
+          "ok"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "ok": {
+            "type": "boolean"
+          },
+          "picture": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "restored": {
+      "type": "boolean"
+    },
+    "unrestored": {
+      "type": "array"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "skipped": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Why the probe did not run: the model has no alarm on a Boolean source tag (or none a built page shows). Null when it ran or was a dry run."
+    },
+    "rows": {
+      "type": "array",
+      "description": "One row per state read: the readable form of the four states per rank.",
+      "items": {
+        "type": "object",
+        "required": [
+          "rank",
+          "state",
+          "pass",
+          "alarm",
+          "observed",
+          "expected",
+          "ok"
+        ],
+        "properties": {
+          "rank": {
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "Active Unacked",
+              "Active Acked",
+              "Cleared Unacked",
+              "Cleared Acked"
+            ]
+          },
+          "pass": {
+            "enum": [
+              "acked_then_cleared",
+              "cleared_then_acked"
+            ]
+          },
+          "alarm": {
+            "type": "string"
+          },
+          "observed": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "string"
+          },
+          "ok": {
+            "type": "boolean"
+          },
+          "picture": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "ranks": {
+      "type": "array",
+      "description": "One entry per rank asked: the four states it covered, or why it was skipped.",
+      "items": {
+        "type": "object",
+        "required": [
+          "rank"
+        ],
+        "properties": {
+          "rank": {
+            "type": "string"
+          },
+          "skipped": {
+            "type": "string"
+          },
+          "alarm": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          },
+          "states": {
+            "type": "object"
+          },
+          "ok": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Source material: vendor documentation and demo captures. Third-party copyright, local only.
+reference/*
+!reference/README.md
+# Runtime state: probe artefacts, captures, scratch. Regenerable.
+workspace/*
+!workspace/README.md
+__pycache__/
+*.pyc
+# Generated projects: the parent and our own sample are deliverables; the vendor-derived demo
+# rebuild and the experiment lab are local only (decision COBD-007).
+build/cadre_hmi_demo/
+build/cadre_hmi_lab/
+# The rebuild pilot is client data (COBD-028); the test fixture's build is regenerable.
+build/cadre_hmi_bh*/
+build/cadre_hmi_pilot/

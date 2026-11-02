@@ -1,0 +1,470 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "Filtration",
+  "route": "/filtration",
+  "title": "Filtration",
+  "view": "Screens/Filtration",
+  "layout": "diagram",
+  "width": 1580,
+  "height": 600,
+  "icon": "filter",
+  "node": "WTP/Filtration"
+ },
+ "tagRoot": "[default]cadre_hmi_wtp",
+ "tagModel": "external",
+ "showTags": true,
+ "toolbar": true,
+ "sections": [
+  {
+   "id": "Feed",
+   "x": 20,
+   "y": 20,
+   "w": 380,
+   "h": 540,
+   "label": "Filter feed"
+  },
+  {
+   "id": "Filters",
+   "x": 420,
+   "y": 20,
+   "w": 560,
+   "h": 540,
+   "label": "Media filters"
+  },
+  {
+   "id": "Out",
+   "x": 1000,
+   "y": 20,
+   "w": 560,
+   "h": 540,
+   "label": "Filtered water"
+  }
+ ],
+ "symbols": [
+  {
+   "id": "P301",
+   "kind": "pump",
+   "x": 176,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Filter feed pump",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasSpeed": true,
+    "hasTag": true,
+    "tag": "P-301",
+    "alertFrameStatus": "alarm"
+   },
+   "bind": {
+    "on": "P301/state",
+    "speed": "P301/speed",
+    "alert": "P301/alert",
+    "alertFrameMode": "P301/alertMode",
+    "badgeControl": "P301/modeBadge",
+    "badgeInterlock": "P301/ilk/badge"
+   }
+  },
+  {
+   "id": "PIT301",
+   "kind": "readout",
+   "x": 260,
+   "y": 228,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filter feed pressure",
+   "params": {
+    "unit": "kPa",
+    "format": "0",
+    "tag": "PIT-301",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "PIT301/value"
+   }
+  },
+  {
+   "id": "XV301",
+   "kind": "valve",
+   "x": 516,
+   "y": 116,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Filter 1 inlet valve",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "XV-301",
+    "vertical": false
+   },
+   "bind": {
+    "open": "XV301/state",
+    "badgeControl": "XV301/modeBadge"
+   }
+  },
+  {
+   "id": "F301",
+   "kind": "filter",
+   "x": 676,
+   "y": 116,
+   "w": 48,
+   "h": 48,
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "F-301",
+    "statusText": ""
+   },
+   "bind": {
+    "on": "F301/state"
+   }
+  },
+  {
+   "id": "DPIT301",
+   "kind": "readout",
+   "x": 756,
+   "y": 74,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filter 1 differential pressure",
+   "params": {
+    "unit": "kPa",
+    "format": "0",
+    "tag": "DPIT-301",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "DPIT301/value"
+   }
+  },
+  {
+   "id": "XV302",
+   "kind": "valve",
+   "x": 516,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Filter 2 inlet valve",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "XV-302",
+    "vertical": false
+   },
+   "bind": {
+    "open": "XV302/state",
+    "badgeControl": "XV302/modeBadge"
+   }
+  },
+  {
+   "id": "F302",
+   "kind": "filter",
+   "x": 676,
+   "y": 276,
+   "w": 48,
+   "h": 48,
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "F-302",
+    "statusText": ""
+   },
+   "bind": {
+    "on": "F302/state"
+   }
+  },
+  {
+   "id": "DPIT302",
+   "kind": "readout",
+   "x": 756,
+   "y": 234,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filter 2 differential pressure",
+   "params": {
+    "unit": "kPa",
+    "format": "0",
+    "tag": "DPIT-302",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "DPIT302/value"
+   }
+  },
+  {
+   "id": "XV303",
+   "kind": "valve",
+   "x": 516,
+   "y": 436,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Filter 3 inlet valve",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "XV-303",
+    "vertical": false
+   },
+   "bind": {
+    "open": "XV303/state",
+    "badgeControl": "XV303/modeBadge"
+   }
+  },
+  {
+   "id": "F303",
+   "kind": "filter",
+   "x": 676,
+   "y": 436,
+   "w": 48,
+   "h": 48,
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "F-303",
+    "statusText": ""
+   },
+   "bind": {
+    "on": "F303/state"
+   }
+  },
+  {
+   "id": "DPIT303",
+   "kind": "readout",
+   "x": 756,
+   "y": 394,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filter 3 differential pressure",
+   "params": {
+    "unit": "kPa",
+    "format": "0",
+    "tag": "DPIT-303",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "DPIT303/value"
+   }
+  },
+  {
+   "id": "FIT301",
+   "kind": "readout",
+   "x": 1040,
+   "y": 236,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filtered water flow",
+   "params": {
+    "unit": "m³/h",
+    "format": "0.0",
+    "tag": "FIT-301",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "FIT301/value"
+   }
+  },
+  {
+   "id": "AIT301",
+   "kind": "readout",
+   "x": 1160,
+   "y": 236,
+   "w": 96,
+   "h": 40,
+   "device": true,
+   "label": "Filtered water turbidity",
+   "params": {
+    "unit": "NTU",
+    "format": "0.00",
+    "tag": "AIT-301",
+    "hasTag": true
+   },
+   "bind": {
+    "value": "AIT301/value"
+   }
+  }
+ ],
+ "junctions": [
+  {
+   "id": "Jin",
+   "x": 440,
+   "y": 300
+  },
+  {
+   "id": "Jout",
+   "x": 880,
+   "y": 300
+  }
+ ],
+ "pipes": [
+  {
+   "id": "f1",
+   "from": {
+    "x": 40,
+    "y": 300,
+    "end": "arrow-in"
+   },
+   "to": {
+    "ref": "P301",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f2",
+   "from": {
+    "ref": "P301",
+    "side": "right"
+   },
+   "to": {
+    "ref": "Jin"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f1a",
+   "from": {
+    "ref": "Jin"
+   },
+   "to": {
+    "ref": "XV301",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f1b",
+   "from": {
+    "ref": "XV301",
+    "side": "right"
+   },
+   "to": {
+    "ref": "F301",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f1c",
+   "from": {
+    "ref": "F301",
+    "side": "right"
+   },
+   "to": {
+    "ref": "Jout"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f2a",
+   "from": {
+    "ref": "Jin"
+   },
+   "to": {
+    "ref": "XV302",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f2b",
+   "from": {
+    "ref": "XV302",
+    "side": "right"
+   },
+   "to": {
+    "ref": "F302",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f2c",
+   "from": {
+    "ref": "F302",
+    "side": "right"
+   },
+   "to": {
+    "ref": "Jout"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f3a",
+   "from": {
+    "ref": "Jin"
+   },
+   "to": {
+    "ref": "XV303",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f3b",
+   "from": {
+    "ref": "XV303",
+    "side": "right"
+   },
+   "to": {
+    "ref": "F303",
+    "side": "left"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f3c",
+   "from": {
+    "ref": "F303",
+    "side": "right"
+   },
+   "to": {
+    "ref": "Jout"
+   },
+   "medium": "fresh-water"
+  },
+  {
+   "id": "f9",
+   "from": {
+    "ref": "Jout"
+   },
+   "to": {
+    "x": 1550,
+    "y": 300,
+    "end": "arrow-out"
+   },
+   "medium": "fresh-water"
+  }
+ ],
+ "labels": [
+  {
+   "id": "From",
+   "x": 36,
+   "y": 236,
+   "w": 220,
+   "h": 24,
+   "text": "From clarified water tank",
+   "align": "left",
+   "style": "label"
+  },
+  {
+   "id": "To",
+   "x": 1420,
+   "y": 264,
+   "w": 136,
+   "h": 24,
+   "text": "To disinfection",
+   "align": "right",
+   "style": "label"
+  }
+ ]
+}

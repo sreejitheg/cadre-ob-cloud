@@ -1,0 +1,1219 @@
+{
+  "custom": {
+    "g_C_P101": false,
+    "g_C_P301": false,
+    "g_C_P501": false,
+    "g_C_P502": false
+  },
+  "params": {},
+  "propConfig": {
+    "custom.g_C_P101": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P101/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_C_P301": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P301/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_C_P501": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P501/state"
+        },
+        "type": "tag"
+      }
+    },
+    "custom.g_C_P502": {
+      "binding": {
+        "config": {
+          "mode": "direct",
+          "tagPath": "[default]cadre_hmi_wtp/P502/state"
+        },
+        "type": "tag"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 852,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "events": {
+                  "dom": {
+                    "onClick": {
+                      "config": {
+                        "script": "\tsystem.perspective.navigate('/intake')"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Title"
+                },
+                "position": {
+                  "basis": "40px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "cursor": "pointer",
+                    "justifyContent": "center"
+                  },
+                  "text": "Production  ›",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/FIT101",
+                      "deviceKind": "instrument",
+                      "label": "Raw water flow",
+                      "title": "FIT-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_FIT101"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/FIT101/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 1,
+                      "size": "enhanced",
+                      "tag": "Raw water",
+                      "unit": "m³/h"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/FIT301",
+                      "deviceKind": "instrument",
+                      "label": "Filtered water flow",
+                      "title": "FIT-301"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_FIT301"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/FIT301/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 1,
+                      "size": "enhanced",
+                      "tag": "Filtered water",
+                      "unit": "m³/h"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/FIT501",
+                      "deviceKind": "instrument",
+                      "label": "Distribution flow",
+                      "title": "FIT-501"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_FIT501"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/FIT501/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 1,
+                      "size": "enhanced",
+                      "tag": "Distribution",
+                      "unit": "m³/h"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  }
+                ],
+                "meta": {
+                  "name": "Body"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "props": {
+                  "alignItems": "stretch",
+                  "direction": "row",
+                  "justify": "flex-start",
+                  "style": {
+                    "gap": "4px",
+                    "overflow": "hidden",
+                    "padding": "0 8px 8px 8px"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "Card_Production"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "cadre/surface/card",
+                "margin": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "dom": {
+                    "onClick": {
+                      "config": {
+                        "script": "\tsystem.perspective.navigate('/disinfection')"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Title"
+                },
+                "position": {
+                  "basis": "40px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "cursor": "pointer",
+                    "justifyContent": "center"
+                  },
+                  "text": "Water quality  ›",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/AIT101",
+                      "deviceKind": "instrument",
+                      "label": "Raw water turbidity",
+                      "title": "AIT-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_AIT101"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/AIT101/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 1,
+                      "size": "enhanced",
+                      "tag": "Raw turbidity",
+                      "unit": "NTU"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/AIT301",
+                      "deviceKind": "instrument",
+                      "label": "Filtered water turbidity",
+                      "title": "AIT-301"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_AIT301"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/AIT301/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 2,
+                      "size": "enhanced",
+                      "tag": "Filtered turbidity",
+                      "unit": "NTU"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/AIT401",
+                      "deviceKind": "instrument",
+                      "label": "Free chlorine",
+                      "title": "AIT-401"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_AIT401"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/AIT401/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 2,
+                      "size": "enhanced",
+                      "tag": "Free chlorine",
+                      "unit": "mg/L"
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/AIT402",
+                      "deviceKind": "instrument",
+                      "label": "Treated water pH",
+                      "title": "AIT-402"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "F_AIT402"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/AIT402/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "center": true,
+                      "fractionDigits": 2,
+                      "size": "enhanced",
+                      "tag": "pH",
+                      "unit": ""
+                    },
+                    "type": "cadre.ob.instrumentfield"
+                  }
+                ],
+                "meta": {
+                  "name": "Body"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "props": {
+                  "alignItems": "stretch",
+                  "direction": "row",
+                  "justify": "flex-start",
+                  "style": {
+                    "gap": "4px",
+                    "overflow": "hidden",
+                    "padding": "0 8px 8px 8px"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "Card_Quality"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "cadre/surface/card",
+                "margin": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Row0"
+        },
+        "position": {
+          "basis": "128px",
+          "grow": 0,
+          "shrink": 0
+        },
+        "props": {
+          "direction": "row",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Title"
+                },
+                "position": {
+                  "basis": "40px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "justifyContent": "center"
+                  },
+                  "text": "Storage",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK101",
+                      "deviceKind": "tank",
+                      "label": "Raw water tank",
+                      "title": "TK-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_TK101"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK101/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK101/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": false,
+                      "hasCapacity": true,
+                      "max": 500,
+                      "tag": "TK-101",
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK202",
+                      "deviceKind": "tank",
+                      "label": "Clarified water tank",
+                      "title": "TK-202"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_TK202"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK202/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK202/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": false,
+                      "hasCapacity": true,
+                      "max": 300,
+                      "tag": "TK-202",
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK501",
+                      "deviceKind": "tank",
+                      "label": "Potable water tank",
+                      "title": "TK-501"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_TK501"
+                    },
+                    "position": {
+                      "basis": "0px",
+                      "grow": 1,
+                      "shrink": 1
+                    },
+                    "propConfig": {
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK501/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK501/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": false,
+                      "hasCapacity": true,
+                      "max": 800,
+                      "tag": "TK-501",
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  }
+                ],
+                "meta": {
+                  "name": "Body"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "props": {
+                  "alignItems": "stretch",
+                  "direction": "row",
+                  "justify": "flex-start",
+                  "style": {
+                    "gap": "4px",
+                    "overflow": "hidden",
+                    "padding": "0 8px 8px 8px"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "Card_Storage"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "cadre/surface/card",
+                "margin": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Title"
+                },
+                "position": {
+                  "basis": "40px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "justifyContent": "center"
+                  },
+                  "text": "Pumps",
+                  "textStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "children": [
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P101",
+                      "deviceKind": "pump",
+                      "label": "Raw water feed pump",
+                      "title": "P-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_P101"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeInterlock": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/ilk/badge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_C_P101}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/speed"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom",
+                      "tag": "P-101"
+                    },
+                    "type": "cadre.ob.pump"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P301",
+                      "deviceKind": "pump",
+                      "label": "Filter feed pump",
+                      "title": "P-301"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_P301"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P301/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P301/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P301/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeInterlock": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P301/ilk/badge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_C_P301}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P301/speed"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom",
+                      "tag": "P-301"
+                    },
+                    "type": "cadre.ob.pump"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P501",
+                      "deviceKind": "pump",
+                      "label": "Distribution pump 1",
+                      "title": "P-501"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_P501"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P501/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P501/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P501/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_C_P501}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P501/speed"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom",
+                      "tag": "P-501"
+                    },
+                    "type": "cadre.ob.pump"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P502",
+                      "deviceKind": "pump",
+                      "label": "Distribution pump 2",
+                      "title": "P-502"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "C_P502"
+                    },
+                    "position": {
+                      "shrink": 0
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P502/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P502/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P502/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeInterlock": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P502/ilk/badge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_C_P502}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P502/speed"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom",
+                      "tag": "P-502"
+                    },
+                    "type": "cadre.ob.pump"
+                  }
+                ],
+                "meta": {
+                  "name": "Body"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "props": {
+                  "alignItems": "stretch",
+                  "direction": "row",
+                  "justify": "space-around",
+                  "style": {
+                    "gap": "4px",
+                    "overflow": "hidden",
+                    "padding": "0 8px 8px 8px"
+                  }
+                },
+                "type": "ia.container.flex"
+              }
+            ],
+            "meta": {
+              "name": "Card_Pumps"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "classes": "cadre/surface/card",
+                "margin": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Row1"
+        },
+        "position": {
+          "basis": "280px",
+          "grow": 0,
+          "shrink": 0
+        },
+        "props": {
+          "direction": "row",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "auto",
+        "padding": "4px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

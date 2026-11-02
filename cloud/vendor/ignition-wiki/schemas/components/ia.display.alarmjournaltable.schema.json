@@ -1,0 +1,1658 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.display.alarmjournaltable.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "definitions": {
+    "columnConfig": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "description": "Toggle visibility of column.",
+          "type": "boolean"
+        },
+        "order": {
+          "default": 0,
+          "description": "The index position of this column relative to other columns.",
+          "type": "number"
+        },
+        "sort": {
+          "default": "none",
+          "description": "Default sort order of this column.",
+          "enum": [
+            "none",
+            "ascending",
+            "descending"
+          ],
+          "type": "string"
+        },
+        "strictWidth": {
+          "default": false,
+          "description": "If enabled, the width of the column becomes fixed.",
+          "type": "boolean"
+        },
+        "width": {
+          "default": "",
+          "description": "The column's width which, when not strict, represents a proportion of the available space, i.e. flex grow. If strictWidth is enabled, will be fixed and static.",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "prioritiesStyles": {
+      "properties": {
+        "critical": {
+          "$ref": "#/$defs/style-properties.schema"
+        },
+        "diagnostic": {
+          "$ref": "#/$defs/style-properties.schema"
+        },
+        "high": {
+          "$ref": "#/$defs/style-properties.schema"
+        },
+        "low": {
+          "$ref": "#/$defs/style-properties.schema"
+        },
+        "medium": {
+          "$ref": "#/$defs/style-properties.schema"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "description": "Props contract for the Perspective component ia.display.alarmjournaltable. Ignition 8.3, Perspective module 3.3.6, registry ia.components.json hash e4dad85e3a1108251d7c.",
+  "properties": {
+    "columns": {
+      "description": "Used only for determining what columns to show on load.",
+      "properties": {
+        "ackNotes": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 12,
+            "sort": "none",
+            "strictWidth": false,
+            "width": ""
+          }
+        },
+        "ackUser": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 11,
+            "sort": "none",
+            "strictWidth": false,
+            "width": ""
+          }
+        },
+        "displayPath": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 7,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 200
+          }
+        },
+        "eventId": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": true,
+            "order": 1,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 200
+          }
+        },
+        "eventState": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": true,
+            "order": 4,
+            "sort": "descending",
+            "strictWidth": false,
+            "width": 110
+          }
+        },
+        "eventTime": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": true,
+            "order": 0,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 150
+          }
+        },
+        "eventValue": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 9,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 150
+          }
+        },
+        "isSystemEvent": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 10,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 200
+          }
+        },
+        "label": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 8,
+            "sort": "none",
+            "strictWidth": false,
+            "width": ""
+          }
+        },
+        "name": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 2,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 200
+          }
+        },
+        "priority": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": true,
+            "order": 5,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 100
+          }
+        },
+        "source": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": true,
+            "order": 3,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 150
+          }
+        },
+        "state": {
+          "$ref": "#/definitions/columnConfig",
+          "default": {
+            "enabled": false,
+            "order": 6,
+            "sort": "none",
+            "strictWidth": false,
+            "width": 150
+          }
+        }
+      },
+      "type": "object"
+    },
+    "columnsAssociated": {
+      "description": "A list of columns and their configurations used in the retrieval and display of associated alarm data.",
+      "items": {
+        "additionalProperties": false,
+        "description": "Associated alarm data column configurations.",
+        "properties": {
+          "enabled": {
+            "default": true,
+            "description": "Toggles the visibility of the column.",
+            "type": "boolean"
+          },
+          "field": {
+            "default": "",
+            "description": "The name of the associated alarm data property.  It must not match any of the common properties listed in the 'columns' property.",
+            "not": {
+              "enum": [
+                "eventTime",
+                "eventId",
+                "name",
+                "source",
+                "eventState",
+                "priority",
+                "state",
+                "displayPath",
+                "label",
+                "eventValue",
+                "isSystemEvent",
+                "ackUser",
+                "ackNotes"
+              ]
+            },
+            "type": "string"
+          },
+          "order": {
+            "default": 0,
+            "description": "The index position of this column relative to other columns.",
+            "type": "number"
+          },
+          "sort": {
+            "default": "none",
+            "description": "Default sort order of this column.",
+            "enum": [
+              "none",
+              "ascending",
+              "descending"
+            ],
+            "type": "string"
+          },
+          "strictWidth": {
+            "default": false,
+            "description": "If enabled, the width of the column becomes fixed.",
+            "type": "boolean"
+          },
+          "width": {
+            "default": "",
+            "description": "The column's width which, when not strict, represents a proportion of the available space, i.e. flex grow. If strictWidth is enabled, will be fixed and static.",
+            "type": [
+              "number",
+              "string"
+            ]
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "dateFormat": {
+      "default": "MM/DD/YYYY HH:mm:ss",
+      "description": "A date format string to be applied against dates.",
+      "suggestions": {
+        "date [10/15/2018]": "MM/DD/YYYY",
+        "date time [10/15/2018 15:59:00]": "MM/DD/YYYY HH:mm:ss",
+        "none": "none",
+        "time [3:59:00 PM]": "h:mm:ss a"
+      },
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "dateRange": {
+      "description": "Date range state.",
+      "properties": {
+        "historical": {
+          "description": "Historical mode state.",
+          "properties": {
+            "endDate": {
+              "default": null,
+              "description": "Date or timestamp in milliseconds.",
+              "type": [
+                "number",
+                "null",
+                "date"
+              ]
+            },
+            "startDate": {
+              "default": null,
+              "description": "Date or timestamp in milliseconds.",
+              "type": [
+                "number",
+                "null",
+                "date"
+              ]
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "historical"
+            ],
+            "property": "mode"
+          }
+        },
+        "mode": {
+          "default": "realtime",
+          "description": "The current mode, realtime or historical.",
+          "enum": [
+            "realtime",
+            "historical"
+          ],
+          "type": "string"
+        },
+        "realtime": {
+          "description": "Realtime mode state.",
+          "properties": {
+            "interval": {
+              "default": 8,
+              "description": "The realtime interval as an integer.",
+              "type": [
+                "number"
+              ]
+            },
+            "unit": {
+              "default": "hours",
+              "description": "The realtime interval unit.",
+              "enum": [
+                "seconds",
+                "minutes",
+                "hours",
+                "days",
+                "weeks",
+                "months",
+                "years"
+              ],
+              "type": [
+                "string"
+              ]
+            }
+          },
+          "type": "object",
+          "visibleWhen": {
+            "equals": [
+              "realtime"
+            ],
+            "property": "mode"
+          }
+        }
+      },
+      "type": "object"
+    },
+    "dragOrderable": {
+      "default": true,
+      "description": "Users may drag column headers to reorder columns of the table.",
+      "type": "boolean"
+    },
+    "enableDetails": {
+      "default": true,
+      "description": "Enable details action.",
+      "type": "boolean"
+    },
+    "enableHeader": {
+      "default": true,
+      "description": "Enable table header.",
+      "type": "boolean"
+    },
+    "filter": {
+      "properties": {
+        "conditions": {
+          "description": "Gateway side alarm query conditions.",
+          "properties": {
+            "displayPath": {
+              "default": "",
+              "description": "Filter alarms by alarm display path, falling back to the source path if a custom display path isn't set. Specify multiple paths by separating them with commas. Supports the wildcard ✷.",
+              "type": "string"
+            },
+            "provider": {
+              "default": "",
+              "description": "Filter alarms by alarm provider.",
+              "type": "string"
+            },
+            "source": {
+              "default": "",
+              "description": "Filter alarms by alarm source path. Specify multiple paths by separating them with commas. Supports the wildcard ✷",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "events": {
+          "description": "Alarm event types.",
+          "properties": {
+            "acked": {
+              "default": true,
+              "type": "boolean"
+            },
+            "active": {
+              "default": true,
+              "type": "boolean"
+            },
+            "cleared": {
+              "default": true,
+              "type": "boolean"
+            },
+            "disabled": {
+              "default": false,
+              "type": "boolean"
+            },
+            "enabled": {
+              "default": false,
+              "type": "boolean"
+            },
+            "system": {
+              "default": false,
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "priorities": {
+          "description": "Alarm event priority pre-filters.",
+          "properties": {
+            "critical": {
+              "default": true,
+              "type": "boolean"
+            },
+            "diagnostic": {
+              "default": false,
+              "type": "boolean"
+            },
+            "high": {
+              "default": true,
+              "type": "boolean"
+            },
+            "low": {
+              "default": true,
+              "type": "boolean"
+            },
+            "medium": {
+              "default": true,
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "results": {
+          "description": "Alarm event filtering results configuration and data.",
+          "properties": {
+            "data": {
+              "default": [],
+              "description": "An array of objects representing the current filtered data. If enabled and active.",
+              "items": {
+                "properties": {},
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "enabled": {
+              "default": false,
+              "description": "Enable filter results to be written back to props.  Warning, doing so may cause performance decline.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "text": {
+          "default": "",
+          "description": "The alarm events filter text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "name": {
+      "default": "Journal",
+      "description": "The name of the alarm journal to query.",
+      "type": "string"
+    },
+    "pager": {
+      "description": "",
+      "properties": {
+        "activePage": {
+          "default": 1,
+          "description": "Represents the current active page and corresponds to the value of the page jump input field.",
+          "type": "number"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Enable pager.",
+          "type": "boolean"
+        },
+        "hide": {
+          "default": false,
+          "description": "Visually hides the pager from view.  Useful when pager is manipulated in a controlled fashion via the activePage prop.",
+          "type": "boolean"
+        },
+        "initialOption": {
+          "default": 25,
+          "description": "The initial option to use when the table first loads. It must exist as an available option.",
+          "type": "number"
+        },
+        "options": {
+          "default": [
+            5,
+            10,
+            25,
+            50,
+            100
+          ],
+          "description": "Rows to show per pager option.",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "refreshRate": {
+      "default": 30000,
+      "description": "The rate at which the table will poll for updates in milliseconds.",
+      "type": "number"
+    },
+    "responsive": {
+      "description": "Responsive layout configuration.  Rows are converted to cards. While in responsive layout, disables or removes certain table features that are no longer applicable.",
+      "properties": {
+        "breakpoint": {
+          "default": 500,
+          "description": "Width, in pixels, that triggers change in responsive layout.",
+          "type": "number"
+        },
+        "enabled": {
+          "default": false,
+          "description": "Enables responsive layout.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "rowStyles": {
+      "description": "Styles to apply to rows given their alarm event and designated priority.",
+      "properties": {
+        "acked": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#F3F6C6",
+                "classes": "",
+                "color": "#222222"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        },
+        "active": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#FDAFAF",
+                "classes": "",
+                "color": "#222222",
+                "fontWeight": "500"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        },
+        "cleared": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#BEDFFE",
+                "classes": "",
+                "color": "#222222",
+                "fontWeight": "500"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        },
+        "disabled": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#FFFFFF",
+                "classes": "",
+                "color": "#222222"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#FFFFFF",
+                "classes": "",
+                "color": "#222222"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        },
+        "system": {
+          "properties": {
+            "base": {
+              "$ref": "#/$defs/style-properties.schema",
+              "default": {
+                "backgroundColor": "#FFFFFF",
+                "classes": "",
+                "color": "#222222"
+              }
+            },
+            "priorities": {
+              "$ref": "#/definitions/prioritiesStyles"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "sortOrder": {
+      "default": [],
+      "description": "The default weighted order in which columns and their contents are sorted relative to other columns and their contents. Used when the component first loads. Columns need to have sort configured in order for this to work.",
+      "type": "array"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema"
+    },
+    "toolbar": {
+      "properties": {
+        "enableConfiguration": {
+          "default": true,
+          "description": "Enables the visibility of the configuration toggle.",
+          "type": "boolean"
+        },
+        "enableDateRange": {
+          "default": true,
+          "description": "Enables the visibility of the date range toggle.",
+          "type": "boolean"
+        },
+        "enableFilter": {
+          "default": true,
+          "description": "Enables the visibility of the text filter toggle.",
+          "type": "boolean"
+        },
+        "enableFilterResults": {
+          "default": true,
+          "description": "Enables the visibility of the filters results count message.",
+          "type": "boolean"
+        },
+        "enablePreFilters": {
+          "default": true,
+          "description": "Enables the visibility of the pre filter toggle.",
+          "type": "boolean"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Enables the visibility of the table toolbar.",
+          "type": "boolean"
+        },
+        "toggleableFilter": {
+          "default": true,
+          "description": "If false, the text filter will not require user interaction to open, and instead will remain open.",
+          "type": "boolean",
+          "visibleWhen": {
+            "equals": true,
+            "property": "enableFilter"
+          }
+        }
+      },
+      "type": "object"
+    }
+  },
+  "title": "Alarm Journal Table",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.display.alarmjournaltable",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveComponents",
+    "palette_category": "display",
+    "registry_file": "ia.components.json",
+    "registry_hash": "e4dad85e3a1108251d7c"
+  }
+}

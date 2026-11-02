@@ -1,0 +1,789 @@
+{
+  "default": {
+    "inputType": "primitive",
+    "mappings": [],
+    "outputType": "primitive"
+  },
+  "definitions": {
+    "arrayOfExpressionToColor": {
+      "items": {
+        "$ref": "#/definitions/expressionToColor"
+      },
+      "type": "array"
+    },
+    "arrayOfExpressionToExpression": {
+      "items": {
+        "$ref": "#/definitions/expressionToExpression"
+      },
+      "type": "array"
+    },
+    "arrayOfExpressionToPrimitive": {
+      "items": {
+        "$ref": "#/definitions/expressionToPrimitive"
+      },
+      "type": "array"
+    },
+    "arrayOfExpressionToStyle": {
+      "items": {
+        "$ref": "#/definitions/expressionToStyle"
+      },
+      "type": "array"
+    },
+    "arrayOfExpressionToStyleNames": {
+      "items": {
+        "$ref": "#/definitions/expressionToStyleNames"
+      },
+      "type": "array"
+    },
+    "arrayOfPrimitiveToColor": {
+      "items": {
+        "$ref": "#/definitions/primitiveToColor"
+      },
+      "type": "array"
+    },
+    "arrayOfPrimitiveToExpression": {
+      "items": {
+        "$ref": "#/definitions/primitiveToExpression"
+      },
+      "type": "array"
+    },
+    "arrayOfPrimitiveToPrimitive": {
+      "items": {
+        "$ref": "#/definitions/primitiveToPrimitive"
+      },
+      "type": "array"
+    },
+    "arrayOfPrimitiveToStyle": {
+      "items": {
+        "$ref": "#/definitions/primitiveToStyle"
+      },
+      "type": "array"
+    },
+    "arrayOfPrimitiveToStyleNames": {
+      "items": {
+        "$ref": "#/definitions/primitiveToStyleNames"
+      },
+      "type": "array"
+    },
+    "arrayOfRangeToColor": {
+      "items": {
+        "$ref": "#/definitions/rangeToColor"
+      },
+      "type": "array"
+    },
+    "arrayOfRangeToExpression": {
+      "items": {
+        "$ref": "#/definitions/rangeToExpression"
+      },
+      "type": "array"
+    },
+    "arrayOfRangeToPrimitive": {
+      "items": {
+        "$ref": "#/definitions/rangeToPrimitive"
+      },
+      "type": "array"
+    },
+    "arrayOfRangeToStyle": {
+      "items": {
+        "$ref": "#/definitions/rangeToStyle"
+      },
+      "type": "array"
+    },
+    "arrayOfRangeToStyleNames": {
+      "items": {
+        "$ref": "#/definitions/rangeToStyleNames"
+      },
+      "type": "array"
+    },
+    "color": {
+      "default": "#FFFFFF",
+      "description": "A color",
+      "format": "color",
+      "type": "string"
+    },
+    "expression": {
+      "description": "An expression",
+      "format": "expression",
+      "type": "string"
+    },
+    "expressionToColor": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/expression"
+        },
+        "output": {
+          "$ref": "#/definitions/color"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "expressionToColorMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/color"
+        },
+        "inputType": {
+          "const": "expression",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfExpressionToColor"
+        },
+        "outputType": {
+          "const": "color",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "expressionToExpression": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/expression"
+        },
+        "output": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "expressionToExpressionMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/expression"
+        },
+        "inputType": {
+          "const": "expression",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfExpressionToExpression"
+        },
+        "outputType": {
+          "const": "expression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "expressionToPrimitive": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/expression"
+        },
+        "output": {
+          "$ref": "#/definitions/primitive"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "expressionToPrimitiveMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/primitive"
+        },
+        "inputType": {
+          "const": "expression",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfExpressionToPrimitive"
+        },
+        "outputType": {
+          "const": "primitive",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "expressionToStyle": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/expression"
+        },
+        "output": {
+          "$ref": "#/definitions/style"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "expressionToStyleMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/style"
+        },
+        "inputType": {
+          "const": "expression",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfExpressionToStyle"
+        },
+        "outputType": {
+          "const": "inline-style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "expressionToStyleNames": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/expression"
+        },
+        "output": {
+          "$ref": "#/definitions/styleNames"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "expressionToStyleNamesMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/styleNames"
+        },
+        "inputType": {
+          "const": "expression",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfExpressionToStyleNames"
+        },
+        "outputType": {
+          "const": "style-list",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "primitive": {
+      "default": null,
+      "description": "An arbitrary primitive value",
+      "type": [
+        "boolean",
+        "null",
+        "number",
+        "string"
+      ]
+    },
+    "primitiveToColor": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/primitive"
+        },
+        "output": {
+          "$ref": "#/definitions/color"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "primitiveToColorMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/color"
+        },
+        "inputType": {
+          "const": "primitive",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfPrimitiveToColor"
+        },
+        "outputType": {
+          "const": "color",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "primitiveToExpression": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/primitive"
+        },
+        "output": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "primitiveToExpressionMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/expression"
+        },
+        "inputType": {
+          "const": "primitive",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfPrimitiveToExpression"
+        },
+        "outputType": {
+          "const": "expression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "primitiveToPrimitive": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/primitive"
+        },
+        "output": {
+          "$ref": "#/definitions/primitive"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "primitiveToPrimitiveMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/primitive"
+        },
+        "inputType": {
+          "const": "primitive",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfPrimitiveToPrimitive"
+        },
+        "outputType": {
+          "const": "primitive",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "primitiveToStyle": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/primitive"
+        },
+        "output": {
+          "$ref": "#/definitions/style"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "primitiveToStyleMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/style"
+        },
+        "inputType": {
+          "const": "primitive",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfPrimitiveToStyle"
+        },
+        "outputType": {
+          "const": "inline-style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "primitiveToStyleNames": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/primitive"
+        },
+        "output": {
+          "$ref": "#/definitions/styleNames"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "primitiveToStyleNamesMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/styleNames"
+        },
+        "inputType": {
+          "const": "primitive",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfPrimitiveToStyleNames"
+        },
+        "outputType": {
+          "const": "style-list",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "range": {
+      "additionalProperties": false,
+      "default": {
+        "max": 100,
+        "min": 0
+      },
+      "description": "A range is a numerical interval from min to max. The min and max values are inclusive by default unless their respective exclusive* flags are set to true",
+      "format": "range",
+      "properties": {
+        "exclusiveMax": {
+          "type": "boolean"
+        },
+        "exclusiveMin": {
+          "type": "boolean"
+        },
+        "max": {
+          "type": "number"
+        },
+        "min": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "rangeToColor": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/range"
+        },
+        "output": {
+          "$ref": "#/definitions/color"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "rangeToColorMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/color"
+        },
+        "inputType": {
+          "const": "range",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfRangeToColor"
+        },
+        "outputType": {
+          "const": "color",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "rangeToExpression": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/range"
+        },
+        "output": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "rangeToExpressionMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/expression"
+        },
+        "inputType": {
+          "const": "range",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfRangeToExpression"
+        },
+        "outputType": {
+          "const": "expression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "rangeToPrimitive": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/range"
+        },
+        "output": {
+          "$ref": "#/definitions/primitive"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "rangeToPrimitiveMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/primitive"
+        },
+        "inputType": {
+          "const": "range",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfRangeToPrimitive"
+        },
+        "outputType": {
+          "const": "primitive",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "rangeToStyle": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/range"
+        },
+        "output": {
+          "$ref": "#/definitions/style"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "rangeToStyleMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/style"
+        },
+        "inputType": {
+          "const": "range",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfRangeToStyle"
+        },
+        "outputType": {
+          "const": "inline-style",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "rangeToStyleNames": {
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/range"
+        },
+        "output": {
+          "$ref": "#/definitions/styleNames"
+        }
+      },
+      "required": [
+        "input",
+        "output"
+      ],
+      "type": "object"
+    },
+    "rangeToStyleNamesMap": {
+      "properties": {
+        "fallback": {
+          "$ref": "#/definitions/styleNames"
+        },
+        "inputType": {
+          "const": "range",
+          "type": "string"
+        },
+        "mappings": {
+          "$ref": "#/definitions/arrayOfRangeToStyleNames"
+        },
+        "outputType": {
+          "const": "style-list",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mappings",
+        "inputType",
+        "outputType"
+      ],
+      "type": "object"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "An inline style object"
+    },
+    "styleNames": {
+      "default": "",
+      "description": "An array or string of delimited style names",
+      "format": "style-list",
+      "type": [
+        "array",
+        "string"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/definitions/primitiveToPrimitiveMap"
+    },
+    {
+      "$ref": "#/definitions/primitiveToColorMap"
+    },
+    {
+      "$ref": "#/definitions/primitiveToStyleMap"
+    },
+    {
+      "$ref": "#/definitions/primitiveToStyleNamesMap"
+    },
+    {
+      "$ref": "#/definitions/primitiveToExpressionMap"
+    },
+    {
+      "$ref": "#/definitions/rangeToPrimitiveMap"
+    },
+    {
+      "$ref": "#/definitions/rangeToColorMap"
+    },
+    {
+      "$ref": "#/definitions/rangeToStyleMap"
+    },
+    {
+      "$ref": "#/definitions/rangeToStyleNamesMap"
+    },
+    {
+      "$ref": "#/definitions/rangeToExpressionMap"
+    },
+    {
+      "$ref": "#/definitions/expressionToPrimitiveMap"
+    },
+    {
+      "$ref": "#/definitions/expressionToColorMap"
+    },
+    {
+      "$ref": "#/definitions/expressionToStyleMap"
+    },
+    {
+      "$ref": "#/definitions/expressionToStyleNamesMap"
+    },
+    {
+      "$ref": "#/definitions/expressionToExpressionMap"
+    }
+  ]
+}

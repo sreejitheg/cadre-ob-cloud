@@ -1,0 +1,4770 @@
+{
+  "custom": {
+    "alarmCount": 0,
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "dev": {
+      "allowed": {
+        "W1": true,
+        "W16": true,
+        "W17": true,
+        "W18": true,
+        "W19": true,
+        "W3": true,
+        "W5": true
+      },
+      "bad": [],
+      "config": 0,
+      "force": "",
+      "has": {
+        "cmd": false,
+        "fault": false,
+        "mnt_alarmSuppress": false,
+        "mnt_errorMask": false,
+        "mnt_forceMode": false,
+        "mnt_forceOff": false,
+        "mnt_forceOn": false,
+        "mnt_forceValue": false,
+        "mnt_manualMode": false,
+        "mnt_simulated": false,
+        "mode": false,
+        "speed": false,
+        "speedSp": false,
+        "state": false
+      },
+      "maintain": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "mnt": false,
+      "owned": false,
+      "owner": {
+        "name": "",
+        "owner": "",
+        "text": ""
+      },
+      "pulses": {},
+      "quality": "",
+      "reason": "",
+      "release": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "take": {
+        "name": "",
+        "offered": false,
+        "value": 0
+      },
+      "value": {
+        "cmd": false,
+        "fault": false,
+        "mnt_alarmSuppress": false,
+        "mnt_errorMask": false,
+        "mnt_forceMode": false,
+        "mnt_forceOff": false,
+        "mnt_forceOn": false,
+        "mnt_forceValue": false,
+        "mnt_manualMode": false,
+        "mnt_simulated": false,
+        "mode": 0,
+        "speed": 0.0,
+        "speedSp": 0.0,
+        "state": false
+      },
+      "writable": {
+        "cmd": false,
+        "fault": false,
+        "force": false,
+        "mnt_alarmSuppress": false,
+        "mnt_errorMask": false,
+        "mnt_forceMode": false,
+        "mnt_forceOff": false,
+        "mnt_forceOn": false,
+        "mnt_forceValue": false,
+        "mnt_manualMode": false,
+        "mnt_simulated": false,
+        "mode": false,
+        "speed": false,
+        "speedSp": false,
+        "state": false
+      },
+      "write": {
+        "cmd": false,
+        "fault": false,
+        "force": false,
+        "mnt_alarmSuppress": false,
+        "mnt_errorMask": false,
+        "mnt_forceMode": false,
+        "mnt_forceOff": false,
+        "mnt_forceOn": false,
+        "mnt_forceValue": false,
+        "mnt_manualMode": false,
+        "mnt_simulated": false,
+        "mode": false,
+        "speed": false,
+        "speedSp": false,
+        "state": false
+      }
+    },
+    "ilk": {
+      "bypassed": false,
+      "holding": 0,
+      "interlocked": false,
+      "permitted": true,
+      "present": false,
+      "resetRequired": false,
+      "resetWritable": false,
+      "unsatisfied": 0
+    },
+    "ilkRows": [],
+    "message": "",
+    "pending": {
+      "active": false,
+      "device": "",
+      "member": "",
+      "path": "",
+      "text": "",
+      "value": 0
+    },
+    "refused": false,
+    "source": "",
+    "tab": "home"
+  },
+  "params": {
+    "deviceId": "",
+    "tab": ""
+  },
+  "propConfig": {
+    "custom.alarmCount": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alarm_count(self.session.custom.alarmScope, cadre.hmi.device_sources(self.session, value))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.dev": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(1000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.device_read(self.session, value, ['state', 'cmd', 'mode', 'fault', 'speed', 'speedSp', 'mnt/forceOn', 'mnt/forceOff', 'mnt/forceMode', 'mnt/forceValue', 'mnt/errorMask', 'mnt/simulated', 'mnt/alarmSuppress', 'mnt/manualMode'])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.ilk": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(1000)) > 0, {view.params.deviceId}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.interlock_summary(value, self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.ilkRows": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.interlock_rows(value, self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.source": {
+      "binding": {
+        "config": {
+          "expression": "{view.params.deviceId}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn ','.join(cadre.hmi.device_sources(self.session, value))",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.deviceId": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.tab = 'home'\n\twant = self.params.tab\n\tif want in ('home', 'config', 'diagnostics', 'alarms', 'interlocks', 'info'):\n\t\tself.custom.tab = want\n\tself.custom.message = ''\n\tself.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}\n\tself.custom.refused = False"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.tab": {
+      "onChange": {
+        "enabled": null,
+        "script": "\tself.custom.tab = 'home'\n\twant = currentValue.value\n\tif want in ('home', 'config', 'diagnostics', 'alarms', 'interlocks', 'info'):\n\t\tself.custom.tab = want"
+      },
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 720,
+      "width": 400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "HeadState"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.state}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.dev.value.state}, 'Running', 'Stopped')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/text/active",
+                "padding": "2px 8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "HeadMode"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mode}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.dev.owned}, {view.custom.dev.owner.name}, case({view.custom.dev.value.mode}, 0, 'Auto', 1, 'Manual', 2, 'Local', 'Unknown'))"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body cadre/text/neutral",
+                "padding": "2px 8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "HeadFault"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.fault} && {view.custom.dev.value.fault}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "'Fault'"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-alarm",
+                "padding": "2px 8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "HeadInterlock"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ilk.present} && (!{view.custom.ilk.permitted} || {view.custom.ilk.interlocked})"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.ilk.interlocked}, 'Interlocked', 'Not permitted')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-warning",
+                "padding": "2px 8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "HeadAlarms"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarmCount} > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr({view.custom.alarmCount}) + if({view.custom.alarmCount} = 1, ' alarm', ' alarms')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-alarm",
+                "padding": "2px 8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "gap": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'home'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_home"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'home', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Home"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'config'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_config"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.mnt} || {view.custom.dev.config} > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'config', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Config"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'diagnostics'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_diagnostics"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'diagnostics', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Diagnostics"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'alarms'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_alarms"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'alarms', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "'Alarms' + if({view.custom.alarmCount} > 0, ' (' + toStr({view.custom.alarmCount}) + ')', '')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Alarms"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'interlocks'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_interlocks"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ilk.present}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'interlocks', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "'Interlock' + if({view.custom.ilk.holding} > 0, ' (' + toStr({view.custom.ilk.holding}) + ')', '')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Interlock"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.tab = 'info'"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tab_info"
+            },
+            "position": {
+              "basis": "112px",
+              "grow": 1,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.tab} = 'info', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "40px"
+              },
+              "text": "Info"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Tabs"
+        },
+        "position": {
+          "basis": "92px",
+          "shrink": 0
+        },
+        "props": {
+          "alignContent": "center",
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "gap": "4px",
+            "marginBottom": "4px",
+            "overflow": "hidden"
+          },
+          "wrap": "wrap"
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Quality"
+        },
+        "position": {
+          "basis": "32px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.dev.quality}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.dev.quality}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/font/body-active cadre/alert/badge-warning",
+            "padding": "4px 8px",
+            "whiteSpace": "normal"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "ConfirmText"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.pending.text}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tp = self.view.custom.pending\n\tmsg = cadre.hmi.command(self.session, p.path, self.view.params.deviceId, p.member, p.value)\n\tself.view.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}\n\tself.view.custom.message = msg"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "ConfirmYes"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "case({view.custom.pending.path}, 'W1', {view.custom.can.W1}, 'W2', {view.custom.can.W2}, 'W5', {view.custom.can.W5}, 'W11', {view.custom.can.W11}, 'W13', {view.custom.can.W13}, 'W16', {view.custom.can.W16}, 'W17', {view.custom.can.W17}, 'W18', {view.custom.can.W18}, false)"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Confirm"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.pending = {'active': False, 'device': '', 'path': '', 'member': '', 'value': 0, 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "ConfirmNo"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Cancel"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Confirm"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.pending.active} && {view.custom.pending.device} = {view.params.deviceId}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/alert/badge-caution",
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "HeldText"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.refused}, 'Start refused: ', if({view.custom.ilk.interlocked}, 'Interlocked: ', 'Start not permitted: ')) + if({view.custom.ilk.unsatisfied} > 0, toStr({view.custom.ilk.unsatisfied}) + ' condition' + if({view.custom.ilk.unsatisfied} = 1, '', 's') + ' not met', 'reset required')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "borderRadius": "4px",
+                    "classes": "cadre/font/body-active cadre/alert/badge-warning",
+                    "overflow": "hidden",
+                    "padding": "4px 8px",
+                    "textOverflow": "ellipsis",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.tab = 'interlocks'"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ToInterlocks"
+                },
+                "position": {
+                  "basis": "128px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "36px"
+                  },
+                  "text": "Interlocks ›"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "HeldRow"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ilk.present} && (!{view.custom.ilk.permitted} || {view.custom.ilk.interlocked})"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "marginTop": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "StatusTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.state} || {view.custom.dev.has.mode} || {view.custom.dev.has.fault} || {view.custom.dev.has.speed}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "STATUS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "StateLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "State"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "StateValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.state}, 'Running', 'Stopped')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "StateRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.state}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "ModeLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Control mode"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "ModeValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.owned}, {view.custom.dev.owner.name}, case({view.custom.dev.value.mode}, 0, 'Auto', 1, 'Manual', 2, 'Local', 'Unknown'))"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "ModeRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "OwnerLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Owner"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "OwnerValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.dev.owner.text}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "OwnerRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mode} && {view.custom.dev.owned}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "FaultLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Fault"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "FaultValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.fault}, 'cadre/font/body-active cadre/alert/badge-alarm', 'cadre/font/body-active cadre/text/active')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.fault}, 'Fault', 'Normal')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "FaultRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.fault}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "SpeedLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Speed"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "SpeedValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "numberFormat({view.custom.dev.value.speed}, '0.0') + ' %'"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/instrument-value-regular-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "SpeedRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.speed}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "CommandTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.cmd} || {view.custom.dev.writable.mode} || {view.custom.dev.has.speedSp} || ({view.custom.dev.value.fault} && {view.custom.dev.writable.fault})"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "COMMANDS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "OwnerReason"
+            },
+            "position": {
+              "basis": "32px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.dev.reason}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.reason}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-caution",
+                "padding": "4px 8px",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tif cadre.hmi.start_permitted(self.view.params.deviceId):\n\t\tself.view.custom.refused = False\n\t\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W1', 'member': 'cmd', 'value': True, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}\n\telse:\n\t\tself.view.custom.refused = True"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "On"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W1} && {view.custom.dev.write.cmd} && {view.custom.dev.allowed.W1}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.state}, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Start"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W1', 'member': 'cmd', 'value': False, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Off"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W1} && {view.custom.dev.write.cmd} && {view.custom.dev.allowed.W1}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(!{view.custom.dev.value.state}, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Stop"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "Commands"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.cmd}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': 0, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Auto"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mode} = 0, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Auto"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': 1, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Manual"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mode} = 1, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Manual"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': 2, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Local"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mode} = 2, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Local"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "Modes"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.mode} && !{view.custom.dev.owned}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tm = self.view.custom.dev.take\n\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': m.value, 'text': 'Take control: ' + m.name + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Move_take"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.dev.take.offered}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Take control"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tm = self.view.custom.dev.release\n\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': m.value, 'text': 'Release: ' + m.name + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Move_release"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.dev.release.offered}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Release"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tm = self.view.custom.dev.maintain\n\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W2', 'member': 'mode', 'value': m.value, 'text': 'Maintenance: ' + m.name + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Move_maintain"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.dev.maintain.offered}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W2} && {view.custom.dev.write.mode}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Maintenance"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "Ownership"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.mode} && {view.custom.dev.owned}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "SpeedSp"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.speedSp}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.dev.has.speedSp}, {view.params.deviceId} + '|' + if({view.custom.dev.writable.speedSp} && {view.custom.dev.allowed.W3}, '1', '0') + '|' + '', '')"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tparts = (value or '').split('|')\n\tif len(parts) < 3 or not parts[0]:\n\t\treturn []\n\treturn [dict({'member': 'speedSp', 'label': 'Speed setpoint (%)', 'path': 'W3', 'format': '0.0', 'minimum': 0, 'maximum': 100}, deviceId=parts[0], enabled=parts[1] == '1', unit=parts[2])]",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "44px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Faceplate/SetpointRow",
+              "useDefaultViewHeight": true,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W5', 'member': 'fault', 'value': False, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Reset"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.value.fault} && {view.custom.dev.writable.fault}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W5} && {view.custom.dev.write.fault} && {view.custom.dev.allowed.W5}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button"
+              },
+              "text": "Reset fault"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "meta": {
+              "name": "Message"
+            },
+            "position": {
+              "basis": "32px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.message}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.message}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-warning",
+                "marginTop": "8px",
+                "padding": "4px 8px",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Pane_home"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'home'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "ConfigTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.config} > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "CONFIGURATION"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "ConfigRows"
+            },
+            "position": {
+              "basis": "0px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.basis": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr({view.custom.dev.config} * 44) + 'px'"
+                  },
+                  "type": "expr"
+                }
+              },
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.config} > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.deviceId} + '|' + if({view.custom.dev.allowed.W19}, '1', '0')"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\tparts = (value or '').split('|')\n\treturn cadre.hmi.config_rows(self.session, parts[0], len(parts) > 1 and parts[1] == '1')",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "44px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Faceplate/SetpointRow",
+              "useDefaultViewHeight": true,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "meta": {
+              "name": "ForceTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.dev.force}) > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "FORCE"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "ForceLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Force"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "ForceValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.force} = 'on' || {view.custom.dev.force} = 'off', 'cadre/font/body-active cadre/alert/badge-caution', 'cadre/font/body-active cadre/text/active')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "case({view.custom.dev.force}, 'on', 'Forced on', 'off', 'Forced off', 'Automatic')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "ForceRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.dev.force}) > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W16', 'member': 'force', 'value': 'on', 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ForceOn"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W16} && {view.custom.dev.write.force} && {view.custom.dev.allowed.W16}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.force} = 'on', 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Force on"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W16', 'member': 'force', 'value': 'off', 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ForceOff"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W16} && {view.custom.dev.write.force} && {view.custom.dev.allowed.W16}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.force} = 'off', 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Force off"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W16', 'member': 'force', 'value': 'auto', 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ForceAuto"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W16} && {view.custom.dev.write.force} && {view.custom.dev.allowed.W16}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.force} = 'auto', 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Automatic"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "ForceCommands"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.force}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "MaskTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_errorMask}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "OBJECT ERROR MASK"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "MaskLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Object error mask"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "MaskValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_errorMask}, 'cadre/font/body-active cadre/alert/badge-caution', 'cadre/font/body-active cadre/text/active')"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_errorMask}, 'Masked', 'Automatic')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "MaskRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_errorMask}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W17', 'member': 'mnt/errorMask', 'value': True, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "MaskOn"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W17} && {view.custom.dev.write.mnt_errorMask} && {view.custom.dev.allowed.W17}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_errorMask}, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Mask"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W17', 'member': 'mnt/errorMask', 'value': False, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "MaskAuto"
+                },
+                "position": {
+                  "basis": "0px",
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W17} && {view.custom.dev.write.mnt_errorMask} && {view.custom.dev.allowed.W17}"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.style.classes": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(!{view.custom.dev.value.mnt_errorMask}, 'cadre/button/selected cadre/font/button', 'cadre/button/normal cadre/font/button')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "40px"
+                  },
+                  "text": "Automatic"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "MaskCommands"
+            },
+            "position": {
+              "basis": "44px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.writable.mnt_errorMask}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "FlagTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_simulated} || {view.custom.dev.has.mnt_alarmSuppress} || {view.custom.dev.has.mnt_manualMode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "FLAGS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Flag0Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Simulated"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Flag0Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_simulated}, 'Yes', 'No')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Flag0Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_simulated}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Flag1Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Alarms suppressed"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Flag1Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_alarmSuppress}, 'Yes', 'No')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Flag1Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_alarmSuppress}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Flag2Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Manual mode"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Flag2Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.value.mnt_manualMode}, 'Yes', 'No')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "Flag2Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_manualMode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Message"
+            },
+            "position": {
+              "basis": "32px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.message}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.message}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-warning",
+                "marginTop": "8px",
+                "padding": "4px 8px",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Pane_config"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'config'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "DiagStatusTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.state} || {view.custom.dev.has.mode} || {view.custom.dev.has.fault} || {view.custom.dev.has.speed}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "STATUS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagStatus0Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "state"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagStatus0Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.state})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagStatus0Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.state}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagStatus1Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mode"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagStatus1Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mode})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagStatus1Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagStatus2Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "fault"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagStatus2Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.fault})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagStatus2Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.fault}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagStatus3Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "speed"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagStatus3Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.speed})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagStatus3Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.speed}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "DiagCommandTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.cmd} || {view.custom.dev.has.speedSp}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "COMMAND"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagCommand0Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "cmd"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagCommand0Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.cmd})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagCommand0Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.cmd}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagCommand1Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "speedSp"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagCommand1Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.speedSp})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagCommand1Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.speedSp}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "DiagMaintenanceTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_forceOn} || {view.custom.dev.has.mnt_forceOff} || {view.custom.dev.has.mnt_forceMode} || {view.custom.dev.has.mnt_forceValue} || {view.custom.dev.has.mnt_errorMask} || {view.custom.dev.has.mnt_simulated} || {view.custom.dev.has.mnt_alarmSuppress} || {view.custom.dev.has.mnt_manualMode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "MAINTENANCE"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance0Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/forceOn"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance0Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_forceOn})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance0Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_forceOn}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance1Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/forceOff"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance1Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_forceOff})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance1Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_forceOff}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance2Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/forceMode"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance2Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_forceMode})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance2Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_forceMode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance3Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/forceValue"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance3Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_forceValue})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance3Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_forceValue}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance4Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/errorMask"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance4Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_errorMask})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance4Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_errorMask}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance5Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/simulated"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance5Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_simulated})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance5Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_simulated}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance6Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/alarmSuppress"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance6Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_alarmSuppress})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance6Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_alarmSuppress}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "DiagMaintenance7Label"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "mnt/manualMode"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "DiagMaintenance7Value"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "toStr({view.custom.dev.value.mnt_manualMode})"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "DiagMaintenance7Row"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.dev.has.mnt_manualMode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Pane_diagnostics"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'diagnostics'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AlarmList"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.params.deviceId": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.deviceId}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.params.source": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.source}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "params": {
+                "deviceId": "",
+                "source": ""
+              },
+              "path": "Faceplate/Alarms",
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.view"
+          }
+        ],
+        "meta": {
+          "name": "Pane_alarms"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'alarms'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "IlkTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "PERMISSIVES AND TRIPS"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "ResetText"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body cadre/text/active",
+                    "overflow": "hidden",
+                    "textOverflow": "ellipsis",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "A latched trip has cleared"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.pending = {'active': True, 'device': self.view.params.deviceId, 'path': 'W11', 'member': 'ilk/resetAt', 'value': True, 'text': self.props.text + ': ' + self.session.custom.selectedTitle + '?'}"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ResetInterlocks"
+                },
+                "position": {
+                  "basis": "112px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W11} && {view.custom.ilk.resetWritable}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "36px"
+                  },
+                  "text": "Reset"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "ResetRow"
+            },
+            "position": {
+              "basis": "48px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ilk.resetRequired}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "Message"
+            },
+            "position": {
+              "basis": "32px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.message}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.message}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "borderRadius": "4px",
+                "classes": "cadre/font/body-active cadre/alert/badge-warning",
+                "marginTop": "8px",
+                "padding": "4px 8px",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Conditions"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ilkRows}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column",
+              "elementPosition": {
+                "basis": "112px",
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Faceplate/InterlockRow",
+              "useDefaultViewHeight": true,
+              "useDefaultViewWidth": false
+            },
+            "type": "ia.display.flex-repeater"
+          }
+        ],
+        "meta": {
+          "name": "Pane_interlocks"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'interlocks'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "InfoTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "IDENTITY"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "InfoNameLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Name"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "InfoNameValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{session.custom.selectedTitle}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "InfoNameRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "InfoLabelLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Description"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "InfoLabelValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{session.custom.selectedLabel}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "InfoLabelRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "InfoKindLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Kind"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "InfoKindValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{session.custom.selectedKind}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "InfoKindRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "InfoFolderLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Tag folder"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "InfoFolderValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.params.deviceId}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "InfoFolderRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "InfoOwnerLabel"
+                },
+                "position": {
+                  "basis": "132px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  },
+                  "text": "Owner"
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "InfoOwnerValue"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "if({view.custom.dev.owned}, {view.custom.dev.owner.text}, 'Not gated by mode')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "InfoOwnerRow"
+            },
+            "position": {
+              "basis": "36px",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "InfoSourceTitle"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/overline cadre/text/neutral",
+                "marginTop": "12px",
+                "whiteSpace": "nowrap"
+              },
+              "text": "ALARM SOURCES"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "InfoSources"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "replace({view.custom.source}, ',', ', ')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body cadre/text/active",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Pane_info"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tab} = 'info'"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "4px",
+        "overflow": "hidden",
+        "padding": "4px 16px 16px 16px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

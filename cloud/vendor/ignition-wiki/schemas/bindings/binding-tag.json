@@ -1,0 +1,40 @@
+{
+  "additionalProperties": false,
+  "default": {
+    "bidirectional": false,
+    "mode": "direct",
+    "tagPath": ""
+  },
+  "properties": {
+    "bidirectional": {
+      "default": false,
+      "description": "Whether or not changes to the bound property should write back to the tag.",
+      "type": "boolean"
+    },
+    "mode": {
+      "default": "direct",
+      "description": "The mode in which the tag binding will operate. Three modes: Direct, Indirect, and Expression. See documentation for details.",
+      "enum": [
+        "direct",
+        "indirect",
+        "expression"
+      ],
+      "type": "string"
+    },
+    "references": {
+      "additionalProperties": true,
+      "default": {},
+      "description": "The references map for indirect mode. Ignored if the mode is not set to Indirect.",
+      "type": "object"
+    },
+    "tagPath": {
+      "default": "",
+      "description": "The tag path",
+      "type": "string"
+    }
+  },
+  "required": [
+    "tagPath"
+  ],
+  "type": "object"
+}

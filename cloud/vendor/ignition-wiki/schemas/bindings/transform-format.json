@@ -1,0 +1,104 @@
+{
+  "anyOf": [
+    {
+      "properties": {
+        "formatType": {
+          "constant": "datetime",
+          "type": "string"
+        },
+        "formatValue": {
+          "$ref": "#/definitions/date-time-format-value"
+        },
+        "locale": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "properties": {
+        "formatType": {
+          "constant": "numeric",
+          "type": "string"
+        },
+        "formatValue": {
+          "anyOf": [
+            {
+              "description": "Common numeric formats. See Java's NumberFormat#get*Instance where * can be replaced with one of the enum values in this definition",
+              "enum": [
+                "currency",
+                "integer",
+                "number",
+                "percent"
+              ],
+              "type": "string"
+            },
+            {
+              "description": "Custom user-defined numeric format string which follows the pattern rules of Java's DecimalFormat",
+              "type": "string"
+            }
+          ]
+        },
+        "locale": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "default": {
+    "formatType": "datetime",
+    "formatValue": "yyyy-MM-dd h:mm:ss aa"
+  },
+  "definitions": {
+    "date-time-enum": {
+      "enum": [
+        "full",
+        "long",
+        "medium",
+        "short"
+      ],
+      "type": "string"
+    },
+    "date-time-format-value": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "date"
+              ]
+            },
+            {
+              "required": [
+                "time"
+              ]
+            }
+          ],
+          "description": "Common date-time formats. See Java's DateFormat#get*Instance where * can be replaced with Date, Time, or DateTime based on the presence of the respective properties in the instance of this definition",
+          "properties": {
+            "date": {
+              "$ref": "#/definitions/date-time-enum"
+            },
+            "time": {
+              "$ref": "#/definitions/date-time-enum"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "description": "Custom user-defined date-time format string which follows the pattern rules of Java's SimpleDateFormat",
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "description": "JSON Schema for the Format Transform",
+  "format": "format",
+  "required": [
+    "formatType",
+    "formatValue"
+  ],
+  "type": "object"
+}

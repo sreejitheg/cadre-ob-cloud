@@ -1,0 +1,133 @@
+{
+  "custom": {},
+  "params": {
+    "alertsPath": "/alerts",
+    "appName": "App",
+    "clockLabel": "UTC",
+    "showUser": true,
+    "siteNote": ""
+  },
+  "propConfig": {
+    "params.alertsPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.appName": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.clockLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showUser": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.siteNote": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 84,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "TopBar"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.params.alertsPath": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.alertsPath}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.appName": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.appName}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.clockLabel": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.clockLabel}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.showUser": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showUser}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.params.siteNote": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.siteNote}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "params": {
+            "alertsPath": "/alerts",
+            "appName": "App",
+            "clockLabel": "UTC",
+            "showUser": true,
+            "siteNote": ""
+          },
+          "path": "Framework/ASM/TopBar",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      },
+      {
+        "meta": {
+          "name": "PageHeader"
+        },
+        "position": {
+          "basis": "36px",
+          "shrink": 0
+        },
+        "props": {
+          "params": {},
+          "path": "Framework/ASM/PageHeader",
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": false
+        },
+        "type": "ia.display.view"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

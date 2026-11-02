@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasShelved": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-alert-list-page-small` property `hasShelved`."
+    },
+    "selectedMode": {
+      "type": "string",
+      "enum": [
+        "unacked",
+        "all",
+        "shelved"
+      ],
+      "default": "all",
+      "description": "OpenBridge `obc-alert-list-page-small` property `selectedMode`."
+    },
+    "showTime": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-alert-list-page-small` property `showTime`."
+    },
+    "alerts": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      },
+      "description": "Alert records (OpenBridge types.d.ts Alert): id, tagId, source, text, note, acknowledged, active, type, time (epoch milliseconds), shelved."
+    },
+    "selectable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether each row starts with a tick box (the OpenBridge checkbox) that selects it. A click on the tick toggles only the selection; a click elsewhere on the row is the row click as before."
+    },
+    "selectedIds": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "description": "The ids of the selected rows. Written by the component when a tick is toggled (bind it two ways); ticks show the ids in it, and an id of an alert the list no longer shows is dropped."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

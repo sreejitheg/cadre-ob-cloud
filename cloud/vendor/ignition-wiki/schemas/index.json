@@ -1,0 +1,876 @@
+{
+  "components": [
+    {
+      "component": "embr.chart.apex-charts",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.chart.apex-charts.schema.json",
+      "shared_refs": [
+        "components/events-dom.json",
+        "components/events-lifecycle.json",
+        "components/javascript-function.json",
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.chart.chart-js",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.chart.chart-js.schema.json",
+      "shared_refs": [
+        "components/events-dom.json",
+        "components/events-lifecycle.json",
+        "components/javascript-function.json",
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.flex-repeater",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.flex-repeater.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.json-view",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.json-view.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.portal",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.portal.schema.json",
+      "shared_refs": [
+        "components/events-dom.json",
+        "components/events-lifecycle.json",
+        "components/javascript-function.json",
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.react",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.react.schema.json",
+      "shared_refs": [
+        "components/events-dom.json",
+        "components/events-lifecycle.json",
+        "components/javascript-function.json",
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.swiper",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.swiper.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "embr.periscope.embedding.view",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/embr.periscope.embedding.view.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    },
+    {
+      "component": "ia.chart.chartrangeselector",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.chartrangeselector.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "trend-style.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.gauge",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.gauge.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.pie",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.pie.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.powerchart",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.powerchart.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "trend-style.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.simple-gauge",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.simple-gauge.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.timeseries",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.timeseries.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "trend-style.schema.json"
+      ]
+    },
+    {
+      "component": "ia.chart.xy",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.chart.xy.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.breakpt",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.breakpt.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.column",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.column.schema.json",
+      "shared_refs": [
+        "css-length.schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.coord",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.coord.schema.json",
+      "shared_refs": [
+        "css-length.schema.json",
+        "css-rotation.schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.drawing",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.drawing.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.flex",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.flex.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.split",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.split.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.container.tab",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.container.tab.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.accordion",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.accordion.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.alarmjournaltable",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.alarmjournaltable.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.alarmstatustable",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.alarmstatustable.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.audio",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.audio.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.carousel",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.carousel.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.cylindrical-tank",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.cylindrical-tank.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.dashboard",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.dashboard.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.equipmentschedule",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.equipmentschedule.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.flex-repeater",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.flex-repeater.schema.json",
+      "shared_refs": [
+        "css-length.schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.google-map",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.google-map.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.icon",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.icon.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.iframe",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.iframe.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.image",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.image.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.label",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.label.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.led-display",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.led-display.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.linear-scale",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.linear-scale.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.map",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.map.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.markdown",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.markdown.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.moving-analog-indicator",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.moving-analog-indicator.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.pdf-viewer",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.pdf-viewer.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.progress",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.progress.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.sparkline",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.sparkline.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.table",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.table.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.tag-browse-tree",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.tag-browse-tree.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.thermometer",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.thermometer.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.tree",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.tree.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.video-player",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.video-player.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.view",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.view.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.display.viewcanvas",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.display.viewcanvas.schema.json",
+      "shared_refs": [
+        "css-length.schema.json",
+        "css-time.schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.barcodescannerinput",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.barcodescannerinput.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.button",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.button.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.checkbox",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.checkbox.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.date-time-input",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.date-time-input.schema.json",
+      "shared_refs": [
+        "css-length.schema.json",
+        "css-props.schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.date-time-picker",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.date-time-picker.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.dropdown",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.dropdown.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.fileupload",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.fileupload.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.form",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.form.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.multi-state-button",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.multi-state-button.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.numeric-entry-field",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.numeric-entry-field.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.oneshotbutton",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.oneshotbutton.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.password-field",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.password-field.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.radio-group",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.radio-group.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.signature-pad",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.signature-pad.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.slider",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.slider.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.text-area",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.text-area.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.text-field",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.text-field.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.input.toggle-switch",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.input.toggle-switch.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.navigation.horizontalmenu",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.navigation.horizontalmenu.schema.json",
+      "shared_refs": [
+        "optional-icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.navigation.link",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.navigation.link.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.navigation.menutree",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.navigation.menutree.schema.json",
+      "shared_refs": [
+        "icon-schema.json",
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.navigation.navlinks",
+      "deprecated": true,
+      "is_container": false,
+      "schema": "components/ia.navigation.navlinks.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.reporting.report-viewer",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.reporting.report-viewer.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.circle",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.circle.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.ellipse",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.ellipse.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.group",
+      "deprecated": false,
+      "is_container": true,
+      "schema": "components/ia.shapes.group.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.line",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.line.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.path",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.path.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.polygon",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.polygon.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.polyline",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.polyline.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.rect",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.rect.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.svg",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.svg.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.shapes.text",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.shapes.text.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json",
+        "svg-fill.json",
+        "svg-stroke.json"
+      ]
+    },
+    {
+      "component": "ia.symbol.motor",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.symbol.motor.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.symbol.pump",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.symbol.pump.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.symbol.sensor",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.symbol.sensor.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.symbol.valve",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.symbol.valve.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "ia.symbol.vessel",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/ia.symbol.vessel.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ]
+    },
+    {
+      "component": "kyvislabs.display.apexchart",
+      "deprecated": false,
+      "is_container": false,
+      "schema": "components/kyvislabs.display.apexchart.schema.json",
+      "shared_refs": [
+        "style-properties.schema.json"
+      ],
+      "vendor": "embr"
+    }
+  ],
+  "ignition_version": "8.3",
+  "perspective_module": "3.3.6"
+}

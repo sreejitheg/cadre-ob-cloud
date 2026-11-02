@@ -1,0 +1,458 @@
+{
+  "custom": {
+    "head": {
+      "level": "",
+      "mimicRoute": "",
+      "mode": "mimic",
+      "next": {
+        "enabled": false,
+        "route": "",
+        "title": ""
+      },
+      "nodeId": "",
+      "previous": {
+        "enabled": false,
+        "route": "",
+        "title": ""
+      },
+      "tabs": [],
+      "title": ""
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.head": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.contentNode}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.page_header(self.session, (value or '').split('|')[0])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 36,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "Title"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.head.title}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "marginLeft": "8px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Level"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.head.level}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.head.level}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/label cadre/text/neutral",
+            "marginLeft": "12px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tif self.view.custom.head.mimicRoute:\n\t\tsystem.perspective.navigate(self.view.custom.head.mimicRoute)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Pivot_mimic"
+            },
+            "position": {
+              "basis": "84px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.head.mimicRoute}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.head.mode} = 'mimic', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px",
+                "margin": "0 2px"
+              },
+              "text": "Mimic"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.session.custom.contentNode = self.view.custom.head.nodeId\n\tsystem.perspective.navigate('/node/alarms')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Pivot_alarms"
+            },
+            "position": {
+              "basis": "84px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "true"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.head.mode} = 'alarms', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px",
+                "margin": "0 2px"
+              },
+              "text": "Alarms"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.session.custom.contentNode = self.view.custom.head.nodeId\n\tsystem.perspective.navigate('/node/trend')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Pivot_trend"
+            },
+            "position": {
+              "basis": "84px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "true"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.classes": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.head.mode} = 'trend', 'cadre/button/selected cadre/font/button', 'cadre/button/flat cadre/font/button')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px",
+                "margin": "0 2px"
+              },
+              "text": "Trend"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "Pivot"
+        },
+        "position": {
+          "basis": "268px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.head.nodeId}) > 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "marginLeft": "16px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Tabs"
+        },
+        "position": {
+          "shrink": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.head.tabs}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.head.tabs}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "row",
+          "elementPosition": {
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Framework/ASM/PageTab",
+          "style": {
+            "gap": "4px",
+            "marginLeft": "16px"
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": true
+        },
+        "type": "ia.display.flex-repeater"
+      },
+      {
+        "meta": {
+          "name": "Spacer"
+        },
+        "position": {
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tif self.view.custom.head.previous.route:\n\t\tsystem.perspective.navigate(self.view.custom.head.previous.route)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Previous"
+        },
+        "position": {
+          "basis": "200px",
+          "shrink": 1
+        },
+        "propConfig": {
+          "props.enabled": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.head.previous.enabled}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if({view.custom.head.previous.enabled}, '‹ ' + {view.custom.head.previous.title}, '‹')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat cadre/font/button",
+            "height": "28px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          },
+          "text": ""
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tif self.view.custom.head.next.route:\n\t\tsystem.perspective.navigate(self.view.custom.head.next.route)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Next"
+        },
+        "position": {
+          "basis": "200px",
+          "shrink": 1
+        },
+        "propConfig": {
+          "props.enabled": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.head.next.enabled}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "if({view.custom.head.next.enabled}, {view.custom.head.next.title} + ' ›', '›')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat cadre/font/button",
+            "height": "28px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "textOverflow": "ellipsis",
+            "whiteSpace": "nowrap"
+          },
+          "text": ""
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/bar cadre/divider/bottom cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "overflow": "hidden",
+        "padding": "0 8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

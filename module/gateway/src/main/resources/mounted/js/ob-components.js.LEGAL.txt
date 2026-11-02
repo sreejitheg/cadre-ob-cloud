@@ -1,0 +1,96 @@
+Bundled license information:
+
+@lit/reactive-element/css-tag.js:
+  /**
+   * @license
+   * Copyright 2019 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/reactive-element/reactive-element.js:
+lit-html/lit-html.js:
+lit-element/lit-element.js:
+@lit/reactive-element/decorators/custom-element.js:
+@lit/reactive-element/decorators/property.js:
+@lit/reactive-element/decorators/state.js:
+@lit/reactive-element/decorators/event-options.js:
+@lit/reactive-element/decorators/base.js:
+@lit/reactive-element/decorators/query.js:
+@lit/reactive-element/decorators/query-all.js:
+@lit/reactive-element/decorators/query-async.js:
+@lit/reactive-element/decorators/query-assigned-nodes.js:
+lit-html/directive.js:
+lit-html/async-directive.js:
+lit-html/directives/repeat.js:
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+lit-html/is-server.js:
+  /**
+   * @license
+   * Copyright 2022 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/reactive-element/decorators/query-assigned-elements.js:
+@lit/localize/internal/locale-status-event.js:
+@lit/localize/internal/str-tag.js:
+@lit/localize/internal/types.js:
+@lit/localize/internal/default-msg.js:
+@lit/localize/internal/localized-controller.js:
+@lit/localize/internal/localized-decorator.js:
+@lit/localize/internal/runtime-msg.js:
+@lit/localize/init/runtime.js:
+@lit/localize/init/transform.js:
+lit-html/directives/map.js:
+  /**
+   * @license
+   * Copyright 2021 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+lit-html/directives/class-map.js:
+lit-html/directives/if-defined.js:
+  /**
+   * @license
+   * Copyright 2018 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/localize/internal/deferred.js:
+@lit/localize/internal/id-generation.js:
+@lit/localize/lit-localize.js:
+lit-html/static.js:
+lit-html/directive-helpers.js:
+  /**
+   * @license
+   * Copyright 2020 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/localize/internal/fnv1a64.js:
+  /**
+   * @license
+   * Copyright 2014 Travis Webb
+   * SPDX-License-Identifier: MIT
+   */
+
+@kurkle/color/dist/color.esm.js:
+  /*!
+   * @kurkle/color v0.3.4
+   * https://github.com/kurkle/color#readme
+   * (c) 2024 Jukka Kurkela
+   * Released under the MIT License
+   */
+
+chart.js/dist/chunks/helpers.dataset.js:
+chart.js/dist/chart.js:
+  /*!
+   * Chart.js v4.5.1
+   * https://www.chartjs.org
+   * (c) 2025 Chart.js Contributors
+   * Released under the MIT License
+   */

@@ -1,0 +1,121 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "AsmSample",
+  "route": "/asm",
+  "title": "ASM devices",
+  "view": "Screens/AsmSample",
+  "layout": "diagram",
+  "width": 1580,
+  "height": 600,
+  "icon": "dashboard",
+  "node": "Plant/Unit"
+ },
+ "tagRoot": "[default]cadre_hmi_asmtest",
+ "tagModel": "generated",
+ "toolbar": true,
+ "showTags": true,
+ "tagValues": {
+  "SQ1/ilk/C01/kind": "permissive",
+  "SQ1/ilk/C01/text": "At least one unit available",
+  "SQ1/ilk/C01/ok": true,
+  "SQ1/ilk/permitted": true,
+  "SQ1/ilk/C01/action": "Make a unit available",
+  "SQ1/ilk/C01/liveText": "1",
+  "SQ1/ilk/C01/requiredText": "1",
+  "SQ1/stepText": "Normal",
+  "GEN1/runText": "Ready",
+  "GEN1/switchText": "Auto",
+  "GEN1/fuelLevel": 62.0,
+  "GEN1/fuelLowLimit": 40.0
+ },
+ "sections": [
+  {
+   "id": "Units",
+   "x": 40,
+   "y": 40,
+   "w": 1500,
+   "h": 500,
+   "label": "Units"
+  }
+ ],
+ "labels": [],
+ "symbols": [
+  {
+   "id": "GEN1",
+   "kind": "generator",
+   "x": 100,
+   "y": 120,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Standby generator",
+   "params": {
+    "readoutPosition": "bottom",
+    "hasTag": true,
+    "tag": "GEN-1"
+   },
+   "bind": {
+    "on": "GEN1/state"
+   }
+  },
+  {
+   "id": "GEN2",
+   "kind": "generator",
+   "x": 400,
+   "y": 100,
+   "w": 240,
+   "h": 150,
+   "device": true,
+   "label": "Second generator",
+   "params": {
+    "picture": "genset",
+    "hasTag": true,
+    "tag": "GEN-2"
+   },
+   "bind": {
+    "on": "GEN2/state"
+   }
+  },
+  {
+   "id": "SQ1",
+   "kind": "sequence",
+   "x": 760,
+   "y": 120,
+   "w": 144,
+   "h": 72,
+   "device": true,
+   "label": "Duty sequence",
+   "params": {
+    "tag": "SQ-1",
+    "hasStep": true
+   },
+   "bind": {
+    "text": "SQ1/stepText",
+    "step": "SQ1/step"
+   }
+  },
+  {
+   "id": "TT1",
+   "kind": "readout",
+   "x": 1000,
+   "y": 130,
+   "w": 130,
+   "h": 40,
+   "device": true,
+   "label": "Winding temperature",
+   "params": {
+    "unit": "deg C",
+    "format": "0.0",
+    "tag": "TT-1",
+    "hasTag": true,
+    "deviceKind": "instrument"
+   },
+   "bind": {
+    "value": "TT1/value"
+   }
+  }
+ ],
+ "junctions": [],
+ "pipes": []
+}

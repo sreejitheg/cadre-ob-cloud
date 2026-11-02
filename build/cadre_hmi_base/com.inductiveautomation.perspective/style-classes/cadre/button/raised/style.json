@@ -1,0 +1,19 @@
+{
+  "base": {
+    "style": {
+      "backgroundColor": "var(--raised-enabled-background-color)",
+      "border": "1px solid var(--raised-enabled-border-color)",
+      "borderRadius": "6px",
+      "color": "var(--on-raised-active-color)",
+      "cursor": "pointer"
+    }
+  },
+  "variants": [
+    {
+      "pseudo": "hover",
+      "style": {
+        "backgroundColor": "var(--raised-hover-background-color)"
+      }
+    }
+  ]
+}

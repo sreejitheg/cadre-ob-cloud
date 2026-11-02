@@ -1,0 +1,306 @@
+{
+  "custom": {
+    "alarms": {
+      "alerts": [],
+      "rectified": 0
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.alarms": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, '', '')"
+        },
+        "transforms": [
+          {
+            "code": "\talerts = cadre.hmi.alarm_list(self.session.custom.alarmScope, value, no_ack=not cadre.hmi.allowed(self.session, 'W8'), session=self.session)\n\treturn {'alerts': alerts, 'rectified': len([a for a in alerts if a['active'] is not True])}",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 468,
+      "width": 640
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "nowrap"
+              },
+              "text": "Alerts"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 24,
+                  "x": 8,
+                  "y": 8
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z",
+                      "fill": {
+                        "paint": "var(--element-active-color)"
+                      },
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 24 24"
+                },
+                "type": "ia.shapes.svg"
+              }
+            ],
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.closePopup('alertMenu')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Close"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat",
+                "height": "40px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "width": "40px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "overflow": "hidden",
+            "padding": "0 0 0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "component": {
+            "onAckAllClick": {
+              "config": {
+                "script": "\tcadre.hmi.ack_event(event, self.session, path='W9')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onAckClick": {
+              "config": {
+                "script": "\tcadre.hmi.ack_event(event, self.session, path='W8')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onRowClick": {
+              "config": {
+                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tsystem.perspective.openDock(id='faceplate')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Panel"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 2
+        },
+        "propConfig": {
+          "props.alerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.alerts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alerts": [],
+          "selectedMode": "all",
+          "showTime": true
+        },
+        "type": "cadre.ob.alertpanel"
+      },
+      {
+        "meta": {
+          "name": "RectifiedTitle"
+        },
+        "position": {
+          "basis": "24px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.rectified} > 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/overline cadre/text/neutral",
+            "whiteSpace": "nowrap"
+          },
+          "text": "CLEARED, NOT ACKNOWLEDGED"
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "events": {
+          "component": {
+            "onAckClick": {
+              "config": {
+                "script": "\tcadre.hmi.ack_event(event, self.session, path='W8')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onRowClick": {
+              "config": {
+                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tsystem.perspective.openDock(id='faceplate')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Rectified"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.rectified} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.alerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarms.alerts}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alerts": [],
+          "selectedMode": "rectified",
+          "showTime": true,
+          "small": true
+        },
+        "type": "cadre.ob.alertlist"
+      },
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tsystem.perspective.closePopup('alertMenu')\n\tsystem.perspective.navigate('/alerts')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "AllAlerts"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat cadre/font/button"
+          },
+          "text": "Alerts ›"
+        },
+        "type": "ia.input.button"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/card cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "8px",
+        "overflow": "hidden",
+        "padding": "8px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

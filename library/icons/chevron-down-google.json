@@ -1,0 +1,23 @@
+{
+ "name": "chevron-down-google",
+ "viewBox": "0 0 24 24",
+ "mode": "iconCss",
+ "vars": [
+  "--element-active-color"
+ ],
+ "elements": [
+  {
+   "type": "path",
+   "d": "M18 9.41L16.59 8L12 12.58L7.41 8L6 9.41L12 15.41L18 9.41Z",
+   "fill": {
+    "paint": "var(--element-active-color)",
+    "rule": "evenodd"
+   }
+  }
+ ],
+ "source": {
+  "file": "src/icons/icon-chevron-down-google.ts",
+  "commit": "2c98dda1ac33b2a931bea2532fc78961f097e548",
+  "licence": "Apache-2.0"
+ }
+}

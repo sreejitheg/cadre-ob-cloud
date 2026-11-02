@@ -1,0 +1,922 @@
+{
+  "custom": {
+    "alarm": {
+      "count": 0,
+      "highest": "",
+      "topLabel": "",
+      "topTime": "",
+      "unacked": 0
+    },
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "crumbs": []
+  },
+  "params": {
+    "alertsPath": "/alerts",
+    "appName": "App",
+    "clockLabel": "UTC",
+    "showUser": true,
+    "siteNote": ""
+  },
+  "propConfig": {
+    "custom.alarm": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alarm_summary(self.session.custom.alarmScope)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.crumbs": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.contentNode}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.frame_crumbs(self.session, (value or '').split('|')[0])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.alertsPath": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.appName": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.clockLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showUser": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.siteNote": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 48,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "height": 24,
+              "width": 24,
+              "x": 8,
+              "y": 8
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M19 19V21H6V19H19ZM19 5H6V21L5.7959 20.9893C4.85435 20.8938 4.1062 20.1457 4.01074 19.2041L4 19V5C4 3.89543 4.89543 3 6 3H19C20.1046 3 21 3.89543 21 5V19C21 20.0357 20.2128 20.887 19.2041 20.9893L19 21V5Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                },
+                {
+                  "d": "M8 7H17V9H8V7Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                },
+                {
+                  "d": "M8 11H17V13H8V11Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                },
+                {
+                  "d": "M8 15H17V17H8V15Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tself.session.custom.navPanel = 'pages'\n\tsystem.perspective.openDock(id='nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "MenuButton"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat",
+            "height": "40px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "width": "40px"
+          }
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "height": 24,
+              "width": 24,
+              "x": 8,
+              "y": 8
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M11 5L5 5V19H11V5ZM5 21C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5ZM19 12V19H13V12H19ZM19 10V5H13V10H19Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)",
+                    "rule": "evenodd"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tself.session.custom.navPanel = 'support'\n\tsystem.perspective.openDock(id='nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "SupportButton"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat",
+            "height": "40px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "width": "40px"
+          }
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AppName"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.appName}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "SiteNote"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len(coalesce({view.params.siteNote}, '')) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.params.siteNote}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Titles"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "props": {
+          "direction": "column",
+          "justify": "center",
+          "style": {
+            "marginLeft": "8px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "PageName"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.crumbs}) = 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "path": "page.props.path"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.page_title(self.session, value)",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "marginLeft": "8px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "meta": {
+          "name": "Crumbs"
+        },
+        "position": {
+          "shrink": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "len({view.custom.crumbs}) > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.instances": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.crumbs}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "direction": "row",
+          "elementPosition": {
+            "shrink": 0
+          },
+          "instances": [],
+          "path": "Framework/ASM/Crumb",
+          "style": {
+            "gap": "4px",
+            "marginLeft": "8px"
+          },
+          "useDefaultViewHeight": false,
+          "useDefaultViewWidth": true
+        },
+        "type": "ia.display.flex-repeater"
+      },
+      {
+        "meta": {
+          "name": "Spacer"
+        },
+        "position": {
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tif len(self.session.custom.searchQuery or '') > 0:\n\t\tself.session.custom.searchOpen = True"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onKeyDown": {
+              "config": {
+                "script": "\tk = ''\n\ttry:\n\t\tk = event.key\n\texcept Exception:\n\t\tk = ''\n\tif k == 'Escape':\n\t\tself.session.custom.searchQuery = ''\n\t\tself.session.custom.searchOpen = False\n\telif k == 'Enter':\n\t\tr = cadre.hmi.search_first(self.session, self.session.custom.searchQuery)\n\t\tif r is not None:\n\t\t\tif r['action'] == 'alarms' or r['action'] == 'trend':\n\t\t\t\tself.session.custom.contentNode = r['nodeId']\n\t\t\t\tsystem.perspective.navigate('/node/' + r['action'])\n\t\t\telif r['route']:\n\t\t\t\tsystem.perspective.navigate(r['route'])\n\t\t\tif r['deviceId']:\n\t\t\t\tcadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'])\n\t\t\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\t\telse:\n\t\t\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\telse:\n\t\t\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\t\t\tself.session.custom.faceplateDocked = True\n\t\t\tif r['close'] == 'nav':\n\t\t\t\tsystem.perspective.closeDock('nav')\n\t\t\telif r['close'] == 'search':\n\t\t\t\tself.session.custom.searchQuery = ''\n\t\t\t\tself.session.custom.searchOpen = False\n\t\t\telif r['close']:\n\t\t\t\tsystem.perspective.closePopup(r['close'])\n\telse:\n\t\tself.session.custom.searchOpen = True"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "SearchField"
+        },
+        "position": {
+          "basis": "300px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "bidirectional": true,
+                "path": "session.custom.searchQuery"
+              },
+              "type": "property"
+            },
+            "onChange": {
+              "enabled": null,
+              "script": "\tif currentValue is not None and currentValue.value:\n\t\tself.session.custom.searchOpen = True"
+            }
+          }
+        },
+        "props": {
+          "deferUpdates": false,
+          "placeholder": "Search pages, devices, tags",
+          "rejectUpdatesWhileFocused": false,
+          "style": {
+            "height": "32px",
+            "margin": "0 8px"
+          },
+          "text": ""
+        },
+        "type": "ia.input.text-field"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "basis": "20px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.elements[0].fill.paint": {
+                "binding": {
+                  "config": {
+                    "expression": "case({view.custom.alarm.highest}, 'Critical', 'var(--alert-critical-color)', 'High', 'var(--alert-alarm-color)', 'Medium', 'var(--alert-warning-color)', 'Low', 'var(--alert-caution-color)', 'var(--element-neutral-color)')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M10 2L19 18H1Z",
+                  "fill": {
+                    "paint": "var(--alert-alarm-color)"
+                  },
+                  "name": "tri",
+                  "type": "path"
+                },
+                {
+                  "d": "M9.2 7H10.8V12.5H9.2ZM9.2 13.8H10.8V15.4H9.2Z",
+                  "fill": {
+                    "paint": "var(--on-alarm-color)"
+                  },
+                  "name": "mark",
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 20 20"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Text"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarm.topLabel}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Time"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarm.topTime}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tcadre.hmi.ack_top(self.session.custom.alarmScope, self.session)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Ack"
+            },
+            "position": {
+              "basis": "56px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarm.unacked} > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W6}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "28px"
+              },
+              "text": "ACK"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "AlertMessage"
+        },
+        "position": {
+          "basis": "420px",
+          "shrink": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarm.count} > 0"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "backgroundColor": "var(--normal-enabled-background-color)",
+            "border": "1px solid var(--border-outline-color)",
+            "borderRadius": "6px",
+            "gap": "8px",
+            "height": "32px",
+            "margin": "0 8px",
+            "overflow": "hidden",
+            "padding": "0 4px 0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Bell"
+            },
+            "position": {
+              "basis": "20px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.elements[0].fill.paint": {
+                "binding": {
+                  "config": {
+                    "expression": "case({view.custom.alarm.highest}, 'Critical', 'var(--alert-critical-color)', 'High', 'var(--alert-alarm-color)', 'Medium', 'var(--alert-warning-color)', 'Low', 'var(--alert-caution-color)', 'var(--element-neutral-color)')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M8 17H6.2C5.0799 17 4.51984 17 4.09202 16.782C3.71569 16.5903 3.40973 16.2843 3.21799 15.908C3 15.4802 3 14.9201 3 13.8L3 6.2C3 5.0799 3 4.51984 3.21799 4.09202C3.40973 3.71569 3.71569 3.40973 4.09202 3.21799C4.51984 3 5.0799 3 6.2 3H17.8C18.9201 3 19.4802 3 19.908 3.21799C20.2843 3.40973 20.5903 3.71569 20.782 4.09202C21 4.51984 21 5.0799 21 6.2V13.8C21 14.9201 21 15.4802 20.782 15.908C20.5903 16.2843 20.2843 16.5903 19.908 16.782C19.4802 17 18.9201 17 17.8 17H16L12 21L8 17Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          },
+          {
+            "meta": {
+              "name": "Count"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr({view.custom.alarm.count})"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tsystem.perspective.openPopup('alertMenu', 'Framework/AlertMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "AlertButton"
+        },
+        "position": {
+          "basis": "56px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.style.classes": {
+            "binding": {
+              "config": {
+                "expression": "'cadre/button/normal' + if({view.custom.alarm.unacked} > 0, ' cadre/alert/flash-alarm', '')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "justify": "center",
+          "style": {
+            "classes": "cadre/button/normal",
+            "cursor": "pointer",
+            "gap": "2px",
+            "height": "32px",
+            "margin": "0 4px",
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "height": 24,
+              "width": 24,
+              "x": 8,
+              "y": 8
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M11.7 17C10.3167 17 9.13755 16.5125 8.16255 15.5375C7.18755 14.5625 6.70005 13.3833 6.70005 12C6.70005 10.6166 7.18755 9.43745 8.16255 8.46245C9.13755 7.48745 10.3167 6.99995 11.7 6.99995C12.0667 6.99995 12.425 7.03745 12.775 7.11245C13.125 7.18745 13.4667 7.29995 13.8 7.44995C12.9 7.86662 12.1875 8.48328 11.6625 9.29995C11.1375 10.1166 10.875 11.0166 10.875 12C10.875 12.9833 11.1375 13.8833 11.6625 14.7C12.1875 15.5166 12.9 16.1333 13.8 16.55C13.4667 16.7 13.125 16.8125 12.775 16.8875C12.425 16.9625 12.0667 17 11.7 17ZM12 23.3L15.35 20H20V15.35L23.3 12L20 8.64995V3.99995H15.35L12 0.699951L8.65005 3.99995H4.00005V8.64995L0.700048 12L4.00005 15.35V20H8.65005L12 23.3ZM12 20.5L9.50005 18H6.00005V14.5L3.50005 12L6.00005 9.49995V5.99995H9.50005L12 3.49995L14.5 5.99995H18V9.49995L20.5 12L18 14.5V18H14.5L12 20.5Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tsystem.perspective.openPopup('brilliance', 'Framework/BrillianceMenu', params={}, position={'top': 48, 'right': 56}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "BrillianceButton"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat",
+            "height": "40px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "width": "40px"
+          }
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Icon"
+            },
+            "position": {
+              "height": 24,
+              "width": 24,
+              "x": 8,
+              "y": 8
+            },
+            "props": {
+              "elements": [
+                {
+                  "d": "M5.85 17.1C6.7 16.45 7.65 15.9375 8.7 15.5625C9.75 15.1875 10.85 15 12 15C13.15 15 14.25 15.1875 15.3 15.5625C16.35 15.9375 17.3 16.45 18.15 17.1C18.7333 16.4167 19.1875 15.6417 19.5125 14.775C19.8375 13.9083 20 12.9833 20 12C20 9.78333 19.2208 7.89583 17.6625 6.3375C16.1042 4.77917 14.2167 4 12 4C9.78333 4 7.89583 4.77917 6.3375 6.3375C4.77917 7.89583 4 9.78333 4 12C4 12.9833 4.1625 13.9083 4.4875 14.775C4.8125 15.6417 5.26667 16.4167 5.85 17.1ZM12 13C11.0167 13 10.1875 12.6625 9.5125 11.9875C8.8375 11.3125 8.5 10.4833 8.5 9.5C8.5 8.51667 8.8375 7.6875 9.5125 7.0125C10.1875 6.3375 11.0167 6 12 6C12.9833 6 13.8125 6.3375 14.4875 7.0125C15.1625 7.6875 15.5 8.51667 15.5 9.5C15.5 10.4833 15.1625 11.3125 14.4875 11.9875C13.8125 12.6625 12.9833 13 12 13ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z",
+                  "fill": {
+                    "paint": "var(--element-active-color)"
+                  },
+                  "type": "path"
+                }
+              ],
+              "viewBox": "0 0 24 24"
+            },
+            "type": "ia.shapes.svg"
+          }
+        ],
+        "events": {
+          "dom": {
+            "onClick": {
+              "config": {
+                "script": "\tsystem.perspective.openPopup('userMenu', 'Framework/UserMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "UserButton"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showUser}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/button/flat",
+            "height": "40px",
+            "margin": "0 2px",
+            "overflow": "hidden",
+            "width": "40px"
+          }
+        },
+        "type": "ia.container.coord"
+      },
+      {
+        "meta": {
+          "name": "Clock"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "config": {
+                "expression": "dateFormat(now(1000), 'HH:mm') + ' ' + {view.params.clockLabel}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "style": {
+            "classes": "cadre/font/body-active cadre/text/active",
+            "margin": "0 12px 0 8px",
+            "whiteSpace": "nowrap"
+          }
+        },
+        "type": "ia.display.label"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/bar cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "alignItems": "center",
+      "direction": "row",
+      "style": {
+        "overflow": "hidden",
+        "padding": "0 4px"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

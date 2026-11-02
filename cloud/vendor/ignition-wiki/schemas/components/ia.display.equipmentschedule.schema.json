@@ -1,0 +1,1501 @@
+{
+  "$defs": {
+    "icon-schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "color": "",
+        "path": "",
+        "style": {}
+      },
+      "oneOf": [
+        {
+          "required": [
+            "path"
+          ]
+        },
+        {
+          "required": [
+            "library",
+            "name"
+          ]
+        }
+      ],
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Color of the icon. Here for convenience, may instead assign 'fill' in the styles prop.",
+          "format": "color",
+          "type": "string"
+        },
+        "library": {
+          "description": "Optional alternative to 'path', name of library where icon is located. Must also supply 'name'.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Optional alternative to 'path', name of icon. Must also supply 'library'.",
+          "type": "string"
+        },
+        "path": {
+          "default": "",
+          "description": "Shorthand path to icon source, in format: library/iconName",
+          "format": "icon-path",
+          "type": "string"
+        },
+        "style": {
+          "$ref": "#/$defs/style-properties.schema",
+          "default": {}
+        }
+      },
+      "title": "Icon Schema",
+      "type": "object"
+    },
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.display.equipmentschedule.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Props contract for the Perspective component ia.display.equipmentschedule. Ignition 8.3, Perspective module 3.3.6, registry ia.components.json hash e4dad85e3a1108251d7c.",
+  "properties": {
+    "addEnabled": {
+      "default": true,
+      "description": "Enables or disables the UI interaction and event handling of adding events.",
+      "type": "boolean"
+    },
+    "bodyStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Style that is applied to the body of the grid space. This will only affect the back drop."
+    },
+    "breakEventStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Base style that is applied to all break events."
+    },
+    "breakEvents": {
+      "default": [],
+      "description": "List of break events. These are scheduled breaks that are applied to all events.",
+      "items": {
+        "properties": {
+          "endDate": {
+            "default": null,
+            "description": "Defines the end date of the break event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "startDate": {
+            "default": null,
+            "description": "Defines the start date of the break event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "style": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the break event."
+          }
+        },
+        "type": "object"
+      },
+      "type": [
+        "array",
+        "dataset"
+      ]
+    },
+    "clickEnabled": {
+      "default": true,
+      "description": "Enables or disables the UI interaction and event handling of clicking events.",
+      "type": "boolean"
+    },
+    "currentTimeIndicator": {
+      "properties": {
+        "color": {
+          "default": "#0C7BB3",
+          "description": "The color of the time indicator.",
+          "format": "color",
+          "type": "string"
+        },
+        "opacity": {
+          "default": 1,
+          "description": "The opacity of the time indicator.",
+          "type": "number"
+        },
+        "width": {
+          "default": 2,
+          "description": "The width of the time indicator.",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "dateRange": {
+      "description": "The visible date range of the equipment schedule. If a non-valid range is provided, will default a week from today.",
+      "properties": {
+        "endDate": {
+          "default": null,
+          "type": [
+            "date",
+            "number",
+            "null"
+          ]
+        },
+        "startDate": {
+          "default": null,
+          "type": [
+            "date",
+            "number",
+            "null"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "defaultZoom": {
+      "default": "hours",
+      "description": "Defines the default zoom level on load. Will be restricted to the maximum possible zoom level.",
+      "enum": [
+        "month",
+        "day",
+        "12-hr",
+        "8-hr",
+        "6-hr",
+        "3-hr",
+        "hours",
+        "minutes"
+      ]
+    },
+    "deleteEnabled": {
+      "default": true,
+      "description": "Enables or disables the UI interaction and event handling of deleting events.",
+      "type": "boolean"
+    },
+    "downtimeEventStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Base style that is applied to all downtime events."
+    },
+    "downtimeEvents": {
+      "default": [],
+      "items": {
+        "properties": {
+          "color": {
+            "default": "",
+            "description": "Defines the color of the downtime event.",
+            "format": "color",
+            "type": "string"
+          },
+          "endDate": {
+            "default": null,
+            "description": "The end date of the downtime event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "itemId": {
+            "default": "",
+            "description": "The item identifier that is associated with this downtime event.",
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "opacity": {
+            "default": 1,
+            "description": "Defines the opacity of the downtime event.",
+            "type": "number"
+          },
+          "startDate": {
+            "default": null,
+            "description": "The start date of the downtime event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "style": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the downtime event."
+          },
+          "underlay": {
+            "default": false,
+            "descriptions": "Defines whether this downtime even should display above or below other events.",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "type": [
+        "array",
+        "dataset"
+      ]
+    },
+    "headerStyles": {
+      "properties": {
+        "primaryHeaderStyle": {
+          "$ref": "#/$defs/style-properties.schema",
+          "description": "Style applied to the primary, top-level header."
+        },
+        "secondaryHeaderStyle": {
+          "$ref": "#/$defs/style-properties.schema",
+          "description": "Style applied to the secondary, grouping header. This will only style the backdrop."
+        },
+        "tertiaryHeaderStyle": {
+          "$ref": "#/$defs/style-properties.schema",
+          "description": "Style applied to the tertiary, unit header. This will only style the backdrop."
+        }
+      },
+      "type": "object"
+    },
+    "items": {
+      "items": {
+        "properties": {
+          "headerBackgroundColor": {
+            "description": "The background color of the label used for the item.",
+            "format": "color",
+            "type": "string"
+          },
+          "headerFontColor": {
+            "description": "The font color of the label used for the item.",
+            "format": "color",
+            "type": "string"
+          },
+          "headerFontSize": {
+            "description": "The font size of the label used for the item.",
+            "type": "number"
+          },
+          "headerStyle": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the label header."
+          },
+          "iconConfig": {
+            "$ref": "#/$defs/icon-schema",
+            "description": "Icon to be displayed in the item next to the label."
+          },
+          "id": {
+            "default": "",
+            "description": "Item identifier that is used to map scheduled events and downtime. If no id is specified, then no row is created in the schedule.",
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "label": {
+            "default": "New Item",
+            "description": "The label to be used as the title of the row. Uses the ID if empty.",
+            "type": "string"
+          },
+          "rowBackgroundColor": {
+            "description": "The background color for the item.",
+            "format": "color",
+            "type": "string"
+          },
+          "rowBottomBorderColor": {
+            "description": "The border bottom color for the item.",
+            "format": "color",
+            "type": "string"
+          },
+          "rowBottomBorderStyle": {
+            "description": "The border bottom style for the item.",
+            "type": "string"
+          },
+          "rowBottomBorderWidth": {
+            "description": "The border bottom width for the item.",
+            "type": "string"
+          },
+          "rowStyle": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the item."
+          }
+        },
+        "type": "object"
+      },
+      "type": [
+        "array",
+        "dataset"
+      ]
+    },
+    "moveEnabled": {
+      "default": true,
+      "description": "Enables or disables the UI interaction and event handling of moving events.",
+      "type": "boolean"
+    },
+    "progressBar": {
+      "description": "Style to be applied to all progress bars of scheduled events.",
+      "properties": {
+        "bar": {
+          "properties": {
+            "color": {
+              "default": "#323232",
+              "format": "color",
+              "type": "string"
+            },
+            "style": {
+              "$ref": "#/$defs/style-properties.schema"
+            }
+          },
+          "type": "object"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Determines if progress bars should display on scheduled events.",
+          "type": "boolean"
+        },
+        "track": {
+          "properties": {
+            "color": {
+              "default": "#FFFFFF",
+              "format": "color",
+              "type": "string"
+            },
+            "style": {
+              "$ref": "#/$defs/style-properties.schema"
+            }
+          },
+          "type": "object"
+        },
+        "valueDisplay": {
+          "properties": {
+            "enabled": {
+              "default": false,
+              "description": "Determines whether or not to show the value along the progress bar.",
+              "type": "boolean"
+            },
+            "format": {
+              "default": "0,0.##",
+              "description": "Determines the format of the displayed value.",
+              "suggestions": {
+                "currency [$1,000.12]": "$0,0.00",
+                "duration [24:01:00]": "00:00:00",
+                "integer [1,200]": "0,0",
+                "none": "none",
+                "percent [10.12%]": "0.##%"
+              },
+              "type": "string"
+            },
+            "justify": {
+              "default": "center",
+              "description": "Determines the location of the value display.",
+              "enum": [
+                "left",
+                "center",
+                "right"
+              ],
+              "type": "string"
+            },
+            "style": {
+              "$ref": "#/$defs/style-properties.schema",
+              "description": "Style applied to the value display."
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "resizeEnabled": {
+      "default": true,
+      "description": "Enables or disables the UI interaction and event handling of resizing events.",
+      "type": "boolean"
+    },
+    "rowHeight": {
+      "default": 46,
+      "description": "Defined the row item height, as well as the grid size.",
+      "type": "number"
+    },
+    "rowStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Base style that is applied to all items."
+    },
+    "scheduledEventStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Base style that is applied to all scheduled events."
+    },
+    "scheduledEvents": {
+      "default": [],
+      "description": "List of scheduled events.",
+      "items": {
+        "properties": {
+          "backgroundColor": {
+            "description": "The background color for the scheduled event.",
+            "format": "color",
+            "type": "string"
+          },
+          "borderColor": {
+            "description": "The border color for the scheduled event.",
+            "format": "color",
+            "type": "string"
+          },
+          "borderStyle": {
+            "description": "The border color for the scheduled event.",
+            "type": "string"
+          },
+          "borderWidth": {
+            "description": "The border width for the scheduled event.",
+            "type": "number"
+          },
+          "endDate": {
+            "default": null,
+            "description": "The end date of this event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "eventId": {
+            "default": "",
+            "description": "The identifier that used to distinguish this event. Should be unique among other events.",
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "fontColor": {
+            "description": "The font color for the label in the scheduled event.",
+            "format": "color",
+            "type": "string"
+          },
+          "fontWeight": {
+            "description": "The font weight for the label in the scheduled event.",
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "itemId": {
+            "default": "",
+            "description": "The item identifier that is this event associates with.",
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "label": {
+            "default": "Scheduled Event",
+            "description": "The label to be used as the title of the event. Uses the ID if empty.",
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "leadBackgroundColor": {
+            "description": "The background color of the lead time. Will be overwritten by the lead style.",
+            "format": "color",
+            "type": "string"
+          },
+          "leadStyle": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the lead time"
+          },
+          "leadTime": {
+            "default": 0,
+            "description": "The lead time of this event defined in seconds.",
+            "type": "number"
+          },
+          "percentDone": {
+            "default": 0,
+            "description": "The percent completion of the event.",
+            "type": "number"
+          },
+          "startDate": {
+            "default": null,
+            "description": "The start date of this event.",
+            "type": [
+              "date",
+              "number",
+              "null"
+            ]
+          },
+          "style": {
+            "$ref": "#/$defs/style-properties.schema",
+            "description": "Style applied to the scheduled event."
+          }
+        },
+        "type": "object"
+      },
+      "type": [
+        "array",
+        "dataset"
+      ]
+    },
+    "selectedEvent": {
+      "description": "The last selected scheduled event.",
+      "properties": {
+        "eventId": {
+          "default": "",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "itemId": {
+          "default": "",
+          "type": [
+            "number",
+            "string"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "selectedEventStyle": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Style that is applied on the selected event. This will override any styling applied to the scheduled event."
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema",
+      "description": "Style that is applied to the equipment schedule."
+    }
+  },
+  "title": "Equipment Schedule",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.display.equipmentschedule",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveComponents",
+    "palette_category": "display",
+    "registry_file": "ia.components.json",
+    "registry_hash": "e4dad85e3a1108251d7c"
+  }
+}

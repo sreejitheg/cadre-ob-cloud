@@ -1,0 +1,15 @@
+{
+  "name": "cadre-ob-web",
+  "private": true,
+  "description": "Browser bundle of the OpenBridge components the Cadre OpenBridge module wraps (pump and tank for the spike)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@oicl/openbridge-webcomponents": "2.0.0-next.155"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  },
+  "scripts": {
+    "build": "esbuild entry.js --bundle --format=iife --minify --legal-comments=linked --outfile=dist/ob-components.js"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "base": {
+    "style": {
+      "animation": {
+        "duration": "1.6s",
+        "keyframes": {
+          "0%": {
+            "opacity": "1"
+          },
+          "100%": {
+            "opacity": "0"
+          },
+          "11.5%": {
+            "opacity": "1"
+          },
+          "12.5%": {
+            "opacity": "0"
+          }
+        }
+      }
+    }
+  }
+}

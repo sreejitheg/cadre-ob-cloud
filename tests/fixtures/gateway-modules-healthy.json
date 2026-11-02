@@ -1,0 +1,55 @@
+{
+ "items": [
+  {
+   "id": "com.inductiveautomation.perspective",
+   "onStartup": "enabled",
+   "shouldUpgrade": false,
+   "name": "Perspective",
+   "version": "3.3.6 (b2026042713)",
+   "vendorId": -1,
+   "vendorName": "Inductive Automation, LLC",
+   "selfSigned": false,
+   "state": "ACTIVE",
+   "licenseState": "Activated",
+   "restrictions": {
+    "browser": "true",
+    "mobile": "true",
+    "edition": "standard",
+    "workstation": "true"
+   }
+  },
+  {
+   "id": "com.inductiveautomation.alarm-notification",
+   "onStartup": "enabled",
+   "shouldUpgrade": false,
+   "name": "Alarm Notification",
+   "version": "7.3.6 (b2026042713)",
+   "vendorId": -1,
+   "vendorName": "Inductive Automation, LLC",
+   "selfSigned": false,
+   "state": "ACTIVE",
+   "licenseState": "Activated",
+   "restrictions": {
+    "edition": "standard"
+   }
+  },
+  {
+   "id": "cadre.hmi.ob",
+   "onStartup": "enabled",
+   "shouldUpgrade": false,
+   "name": "Cadre OpenBridge",
+   "version": "0.4.2 (b0)",
+   "vendorId": -1,
+   "vendorName": "Cadre HMI OpenBridge development",
+   "selfSigned": true,
+   "state": "ACTIVE",
+   "licenseState": "Free"
+  }
+ ],
+ "metadata": {
+  "total": 3,
+  "matching": 3,
+  "limit": -1,
+  "offset": 0
+ }
+}

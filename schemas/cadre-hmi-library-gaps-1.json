@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-library-gaps/1",
+  "title": "Cadre HMI library gaps, version 1",
+  "description": "The kinds the page designs of a migration use, who draws each (the Cadre OpenBridge module, the library, or nobody) and the gaps that remain, written by tools/hmi/library_gaps.py (ARCH-WFB-01 revision B8 Table 105). Wiki page 04.",
+  "type": "object",
+  "required": ["schema", "kinds", "gaps", "open_count", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-library-gaps/1"},
+    "kinds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "count", "pages", "resolution", "audit"],
+        "properties": {
+          "kind": {"type": "string"},
+          "count": {"type": "integer", "minimum": 1},
+          "pages": {"type": "array", "items": {"type": "string"}},
+          "resolution": {"enum": ["module", "library", "gap"]},
+          "part": {"type": ["string", "null"]},
+          "audit": {
+            "type": "object",
+            "required": ["module_part", "library_part", "choice", "reason"],
+            "properties": {
+              "module_part": {"type": ["string", "null"]},
+              "library_part": {"type": ["string", "null"]},
+              "choice": {"enum": ["module", "library", "gap"]},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "item", "library_today", "needed", "status", "reason", "mapping_rows"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"type": "string"},
+          "item": {"type": "string"},
+          "library_today": {"type": "string"},
+          "needed": {"type": "string"},
+          "status": {"enum": ["open", "partial", "closed", "accepted"]},
+          "reason": {"type": "string", "minLength": 1},
+          "mapping_rows": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "open_count": {"type": "integer", "minimum": 0},
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

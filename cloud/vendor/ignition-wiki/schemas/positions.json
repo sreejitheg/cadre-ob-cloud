@@ -1,0 +1,175 @@
+{
+  "containers": {
+    "ia.container.breakpt": {
+      "additionalProperties": false,
+      "properties": {
+        "size": {
+          "default": "small",
+          "enum": [
+            "small",
+            "large"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "size"
+      ],
+      "type": "object"
+    },
+    "ia.container.column": {
+      "additionalProperties": false,
+      "properties": {
+        "breakpoints": {
+          "default": [],
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "colIndex": {
+                "default": 0,
+                "description": "Column number upon which the child's span should begin unless forced to wrap.",
+                "type": "number"
+              },
+              "name": {
+                "description": "Name of a breakpoint defined in container. If this matches the currently applied breakpoint, these rules determine child layout.",
+                "type": "string"
+              },
+              "order": {
+                "description": "Where component is placed among its siblings within its row. Ordering is independent per row.",
+                "type": "number"
+              },
+              "rowIndex": {
+                "default": 0,
+                "description": "Row index (starting from 0) in which to place child. Children may wrap lines within a row. Children in separate rows don't affect each other's layout",
+                "type": "number"
+              },
+              "span": {
+                "description": "Number of columns the child's width will span.",
+                "type": "number"
+              }
+            },
+            "required": [
+              "name",
+              "span",
+              "rowIndex",
+              "colIndex",
+              "order"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "height": {
+          "$ref": "#/$defs/css-length.schema",
+          "description": "Component height. Rows adjust height to accommodate components. Use 'auto' to let component content (such as text) dictate height."
+        }
+      },
+      "required": [
+        "breakpoints"
+      ],
+      "type": "object"
+    },
+    "ia.container.coord": {
+      "additionalProperties": false,
+      "default": {
+        "rotate": {
+          "anchor": "50% 50%",
+          "angle": "0deg"
+        },
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "height": {
+          "$ref": "#/$defs/css-length.schema"
+        },
+        "rotate": {
+          "$ref": "#/$defs/css-rotation.schema"
+        },
+        "width": {
+          "$ref": "#/$defs/css-length.schema"
+        },
+        "x": {
+          "$ref": "#/$defs/css-length.schema"
+        },
+        "y": {
+          "$ref": "#/$defs/css-length.schema"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ],
+      "type": "object"
+    },
+    "ia.container.drawing": {
+      "default": {},
+      "type": "object"
+    },
+    "ia.container.flex": {
+      "additionalProperties": false,
+      "properties": {
+        "align": {
+          "description": "Allow a single flex child to position itself along the cross-axis (Ex: If layout direction is 'row', this adjusts 'y' relatively).",
+          "enum": [
+            "auto",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline",
+            "stretch"
+          ],
+          "type": "string"
+        },
+        "basis": {
+          "default": "auto",
+          "description": "Space filled by component by default, before 'grow', 'shrink' and sibling considerations are evaluated. It's the component's base width, if 'direction' is 'row', or 'height' if 'column'.",
+          "type": "string"
+        },
+        "display": {
+          "default": true,
+          "description": "If false, this child will be excluded from flex container layout",
+          "type": "boolean"
+        },
+        "grow": {
+          "default": 0,
+          "description": "Ability to grow in 'direction' dimension as needed, relative to siblings. If space is available and grow is not zero, it may stretch, depending on sibling rules.",
+          "type": "number"
+        },
+        "shrink": {
+          "default": 1,
+          "description": "Ability to shrink in 'direction' dimension as needed, relative to siblings. If space is available and shrink is not zero, it may be compressed, depending on sibling rules.",
+          "type": "number"
+        }
+      },
+      "require": [
+        "grow",
+        "shrink",
+        "basis"
+      ],
+      "type": "object"
+    },
+    "ia.container.split": {
+      "default": {},
+      "type": "object"
+    },
+    "ia.container.tab": {
+      "additionalProperties": false,
+      "properties": {
+        "tabIndex": {
+          "default": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "tabIndex"
+      ],
+      "type": "object"
+    },
+    "ia.shapes.group": {
+      "default": {},
+      "type": "object"
+    }
+  },
+  "note": "The child position contract per container. A child's position object is governed by its PARENT container, not by itself."
+}

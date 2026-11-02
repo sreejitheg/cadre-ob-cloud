@@ -1,0 +1,31 @@
+{
+ "site": "Plant",
+ "areas": [
+  {
+   "id": "a1",
+   "name": "Pumping",
+   "pages": [
+    "PumpStation"
+   ],
+   "children": []
+  },
+  {
+   "id": "a2",
+   "name": "Aeration",
+   "pages": [
+    "Aeration"
+   ],
+   "children": []
+  }
+ ],
+ "pages": [
+  {
+   "id": "Overview",
+   "next": "PumpStation"
+  },
+  {
+   "id": "PumpStation",
+   "prev": "Overview"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "bidirectional": {
+      "default": false,
+      "type": "boolean"
+    },
+    "path": {
+      "default": "",
+      "description": "Path to the property that drives this binding.",
+      "type": "string"
+    }
+  },
+  "required": [
+    "path"
+  ],
+  "type": "object"
+}

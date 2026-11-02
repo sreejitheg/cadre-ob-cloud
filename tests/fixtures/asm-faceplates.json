@@ -1,0 +1,63 @@
+{
+ "faceplates": [
+  {
+   "id": "PUMP01",
+   "kind": "pump",
+   "device_tag": "PUMP01",
+   "owner_page": "PumpStation",
+   "tabs": [
+    {
+     "name": "Home",
+     "source_popups": [
+      "PUMP01_FP"
+     ],
+     "content_refs": [
+      "PUMP01_FP:r1"
+     ]
+    }
+   ],
+   "openers": [
+    {
+     "page": "PumpStation",
+     "an": 15,
+     "command": "PopUp(PUMP01_FP)",
+     "device_arg": "PUMP01"
+    },
+    {
+     "page": "Overview",
+     "an": 7,
+     "command": "PopUp(PUMP01_FP)",
+     "device_arg": "PUMP01"
+    }
+   ]
+  },
+  {
+   "id": "SEQ01",
+   "kind": "sequence",
+   "device_tag": "SEQ01",
+   "owner_page": "PumpStation",
+   "tabs": [
+    {
+     "name": "Config",
+     "source_popups": [
+      "SEQ01_SP"
+     ],
+     "content_refs": [
+      "SEQ01_SP:r1"
+     ]
+    }
+   ],
+   "openers": [
+    {
+     "page": "PumpStation",
+     "an": 16,
+     "command": "PopUp(SEQ01_SP)",
+     "device_arg": "SEQ01"
+    }
+   ]
+  }
+ ],
+ "ambiguous": [],
+ "unplaced": [],
+ "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+}

@@ -1,0 +1,4 @@
+# Generated project files must stay byte identical to the generator output (LF).
+* text=auto eol=lf
+*.png binary
+*.jpg binary

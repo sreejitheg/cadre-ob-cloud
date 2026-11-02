@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wfb.migration.faceplates/1",
+  "title": "The pop-ups grouped into faceplates: each pop-up in exactly one tab of one faceplate, every row of its understanding in one tab, no pop-up a page",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "faceplates",
+    "ambiguous",
+    "unplaced",
+    "draft_sha256"
+  ],
+  "properties": {
+    "faceplates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "device_tag",
+          "owner_page",
+          "tabs",
+          "openers"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "device_tag": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "owner_page": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "tabs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "source_popups",
+                "content_refs"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source_popups": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "content_refs": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          "openers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "page",
+                "an",
+                "command",
+                "device_arg"
+              ],
+              "properties": {
+                "page": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "an": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "command": {
+                  "type": "string"
+                },
+                "device_arg": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ambiguous": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "popup",
+          "candidates",
+          "decision",
+          "basis"
+        ],
+        "properties": {
+          "popup": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "decision": {
+            "type": "string"
+          },
+          "basis": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "unplaced": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "draft_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

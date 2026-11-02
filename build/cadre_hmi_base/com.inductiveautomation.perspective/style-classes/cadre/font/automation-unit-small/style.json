@@ -1,0 +1,9 @@
+{
+  "base": {
+    "style": {
+      "fontFamily": "var(--font-family-main)",
+      "fontSize": "var(--automation-components-typography-unit-small-font-size)",
+      "fontWeight": "var(--automation-components-typography-unit-small-font-weight)"
+    }
+  }
+}

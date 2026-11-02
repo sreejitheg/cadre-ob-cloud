@@ -1,0 +1,4615 @@
+{
+  "$defs": {
+    "style-properties.schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "default": {
+        "classes": ""
+      },
+      "definitions": {
+        "borderStyle": {
+          "enum": [
+            "none",
+            "hidden",
+            "dotted",
+            "dashed",
+            "solid",
+            "double",
+            "groove",
+            "ridge",
+            "inset",
+            "outset"
+          ],
+          "type": "string"
+        },
+        "css-length-unit": {
+          "oneOf": [
+            {
+              "pattern": "^(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc|rem)$",
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        },
+        "length": {
+          "properties": {
+            "unit": {
+              "default": "px",
+              "enum": [
+                "px",
+                "em",
+                "%"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "overflow": {
+          "enum": [
+            "visible",
+            "scroll",
+            "hidden",
+            "auto"
+          ],
+          "type": "string"
+        },
+        "time": {
+          "properties": {
+            "unit": {
+              "default": "s",
+              "enum": [
+                "s",
+                "ms"
+              ],
+              "type": "string"
+            },
+            "value": {
+              "default": "2",
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "format": "inline-style",
+      "properties": {
+        "alignContent": {
+          "enum": [
+            "stretch",
+            "space-between",
+            "space-around",
+            "flex-start",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignItems": {
+          "enum": [
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "alignSelf": {
+          "enum": [
+            "auto",
+            "stretch",
+            "flex-start",
+            "flex-end",
+            "center",
+            "baseline"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "all": {
+          "enum": [
+            "initial",
+            "unset",
+            "inherit"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDelay": {
+          "$ref": "#/definitions/time"
+        },
+        "animationDirection": {
+          "enum": [
+            "normal",
+            "reverse",
+            "alternate-reverse",
+            "alternate"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationDuration": {
+          "type": "string"
+        },
+        "animationFillMode": {
+          "enum": [
+            "none",
+            "forwards",
+            "both",
+            "backwards"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "animationPlayMode": {
+          "enum": [
+            "running",
+            "paused"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backfaceVisibility": {
+          "enum": [
+            "visible",
+            "hidden"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundAttachment": {
+          "enum": [
+            "scroll",
+            "local",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundClip": {
+          "enum": [
+            "border-box",
+            "padding-box",
+            "content-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundColor": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "background-color",
+          "type": "string"
+        },
+        "backgroundOrigin": {
+          "enum": [
+            "padding-box",
+            "content-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundRepeat": {
+          "enum": [
+            "repeat",
+            "space",
+            "round",
+            "repeat-y",
+            "repeat-x",
+            "repeat no-repeat",
+            "no-repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "backgroundSize": {
+          "required": true,
+          "type": "string"
+        },
+        "borderCollapse": {
+          "enum": [
+            "separate",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderImageRepeat": {
+          "enum": [
+            "stretch",
+            "space",
+            "round",
+            "repeat"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "borderStyle": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "borderStyleTop": {
+          "$ref": "#/definitions/borderStyle"
+        },
+        "boxDecorationBreak": {
+          "enum": [
+            "slice",
+            "clone"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "boxSizing": {
+          "enum": [
+            "content-box",
+            "padding-box",
+            "border-box"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "page",
+            "left",
+            "column",
+            "avoid-page",
+            "avoid-column",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "breakInside": {
+          "enum": [
+            "auto",
+            "avoid-page",
+            "avoid-column",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "captionSide": {
+          "enum": [
+            "top",
+            "bottom"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "classes": {
+          "default": "",
+          "description": "Styles defined in the project to be applied to this component",
+          "format": "style-list",
+          "title": "Style Class Names",
+          "type": [
+            "array",
+            "string"
+          ]
+        },
+        "clear": {
+          "enum": [
+            "none",
+            "right",
+            "left",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "clearAfter": {
+          "enum": [
+            "none",
+            "top",
+            "start",
+            "right",
+            "outside",
+            "left",
+            "inside",
+            "end",
+            "descendants",
+            "bottom",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "color": {
+          "default": "#ffa500",
+          "format": "color",
+          "title": "color",
+          "type": "string"
+        },
+        "columnFill": {
+          "enum": [
+            "balance",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnRuleStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "hidden",
+            "groove",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "columnSpan": {
+          "enum": [
+            "none",
+            "all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "display": {
+          "enum": [
+            "inline",
+            "table-row-group",
+            "table-row",
+            "table-header-group",
+            "table-footer-group",
+            "table-column-group",
+            "table-column",
+            "table-cell",
+            "table-caption",
+            "table",
+            "run-in",
+            "none",
+            "list-item",
+            "inline-table",
+            "inline-flex",
+            "inline-block",
+            "flex",
+            "compact",
+            "block"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "emptyCells": {
+          "enum": [
+            "show",
+            "hide"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fill": {
+          "format": "color",
+          "title": "fill",
+          "type": "string"
+        },
+        "flexDirection": {
+          "enum": [
+            "row",
+            "row-reverse",
+            "column-reverse",
+            "column"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "flexWrap": {
+          "enum": [
+            "nowrap",
+            "wrap-reverse",
+            "wrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "float": {
+          "enum": [
+            "none",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontFamily": {
+          "title": "font-family",
+          "type": "string"
+        },
+        "fontKerning": {
+          "enum": [
+            "auto",
+            "normal",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSize": {
+          "required": false,
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "fontStretch": {
+          "enum": [
+            "normal",
+            "ultra-expanded",
+            "ultra-condensed",
+            "semi-expanded",
+            "semi-condensed",
+            "extra-expanded",
+            "extra-condensed",
+            "expanded",
+            "condensed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontStyle": {
+          "enum": [
+            "normal",
+            "oblique",
+            "italic"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontSynthesis": {
+          "enum": [
+            "weight style",
+            "weight",
+            "style",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariant": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontVariantCaps": {
+          "enum": [
+            "normal",
+            "unicase",
+            "titling-caps",
+            "small-caps",
+            "petite-caps",
+            "all-small-caps",
+            "all-petite-caps"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "fontWeight": {
+          "enum": [
+            "normal",
+            "lighter",
+            "bolder",
+            "bold",
+            "900",
+            "800",
+            "700",
+            "600",
+            "500",
+            "400",
+            "300",
+            "200",
+            "100"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hangingPunctuation": {
+          "enum": [
+            "none",
+            "last force-end",
+            "last allow-end",
+            "last",
+            "force-end",
+            "first force-end",
+            "first allow-end",
+            "first",
+            "allow-end"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "hyphens": {
+          "enum": [
+            "manual",
+            "none",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "imageResolution": {
+          "enum": [
+            "1dppx",
+            "from-image"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "justifyContent": {
+          "enum": [
+            "flex-start",
+            "space-between",
+            "space-around",
+            "flex-end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "lineBreak": {
+          "enum": [
+            "auto",
+            "strict",
+            "normal",
+            "loose"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStylePosition": {
+          "enum": [
+            "outside",
+            "inside"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "listStyleType": {
+          "enum": [
+            "disc",
+            "upper-roman",
+            "upper-latin",
+            "upper-alpha",
+            "square",
+            "none",
+            "lower-roman",
+            "lower-latin",
+            "lower-greek",
+            "lower-alpha",
+            "georgian",
+            "decimal-leading-zero",
+            "decimal",
+            "circle",
+            "armenian"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "marginBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "marginTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "objectFit": {
+          "enum": [
+            "fill",
+            "scale-down",
+            "none",
+            "cover",
+            "contain"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "opacity": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "outlineStyle": {
+          "enum": [
+            "none",
+            "solid",
+            "ridge",
+            "outset",
+            "inset",
+            "groove",
+            "double",
+            "dotted",
+            "dashed",
+            "auto"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflow": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "overflowX": {
+          "$ref": "#/definitions/overflow"
+        },
+        "overflowY": {
+          "$ref": "#/definitions/overflow"
+        },
+        "paddingBottom": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingLeft": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingRight": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "paddingTop": {
+          "$ref": "#/definitions/css-length-unit"
+        },
+        "pageBreakAfter": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakBefore": {
+          "enum": [
+            "auto",
+            "right",
+            "left",
+            "avoid",
+            "always"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pageBreakInside": {
+          "enum": [
+            "auto",
+            "avoid"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "pointerEvents": {
+          "enum": [
+            "auto",
+            "none"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "position": {
+          "enum": [
+            "static",
+            "sticky  ",
+            "relative",
+            "page",
+            "fixed",
+            "center",
+            "absolute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "resize": {
+          "enum": [
+            "none",
+            "vertical",
+            "horizontal",
+            "both"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "tableLayout": {
+          "enum": [
+            "auto",
+            "fixed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textAlignLast": {
+          "enum": [
+            "auto",
+            "start",
+            "right",
+            "left",
+            "justify",
+            "end",
+            "center"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationLine": {
+          "enum": [
+            "none",
+            "underline",
+            "overline",
+            "line-through",
+            "blink"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationPosition": {
+          "enum": [
+            "auto",
+            "under right",
+            "under left",
+            "under",
+            "right",
+            "left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationSkip": {
+          "enum": [
+            "none",
+            "spaces",
+            "objects",
+            "ink",
+            "edges",
+            "box-decoration"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textDecorationStyle": {
+          "enum": [
+            "solid",
+            "wavy",
+            "double",
+            "dotted",
+            "dashed"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textEmphasisPosition": {
+          "enum": [
+            "over right",
+            "over left",
+            "below right",
+            "below left"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textJustify": {
+          "enum": [
+            "auto",
+            "none",
+            "inter-word",
+            "distribute"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textOrientation": {
+          "enum": [
+            "mixed",
+            "use-glyph-orientation",
+            "upright",
+            "sideways-right",
+            "sideways-left",
+            "sideways"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "textTransform": {
+          "enum": [
+            "none",
+            "uppercase",
+            "lowercase",
+            "full-width",
+            "capitalize"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "transformStyle": {
+          "enum": [
+            "flat",
+            "preserve-3d"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "unicodeBidi": {
+          "enum": [
+            "normal",
+            "embed",
+            "bidi-override"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "visibility": {
+          "enum": [
+            "visible",
+            "hidden",
+            "collapse"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "whiteSpace": {
+          "enum": [
+            "normal",
+            "pre-wrap",
+            "pre-line",
+            "pre",
+            "nowrap"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordBreak": {
+          "enum": [
+            "normal",
+            "keep-all",
+            "break-all"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "wordWrap": {
+          "enum": [
+            "normal",
+            "break-word"
+          ],
+          "required": true,
+          "type": "string"
+        },
+        "writingMode": {
+          "enum": [
+            "horizontal-tb",
+            "vertical-rl",
+            "vertical-lr"
+          ],
+          "required": true,
+          "type": "string"
+        }
+      },
+      "title": "Perspective Style Object Properties",
+      "type": "object"
+    }
+  },
+  "$id": "https://ignition-wiki.local/components/ia.chart.xy.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "definitions": {
+    "axis": {
+      "default": {
+        "appearance": {
+          "font": {
+            "size": "",
+            "weight": 500
+          },
+          "grid": {
+            "color": "",
+            "dashArray": "",
+            "minDistance": null,
+            "opacity": 1,
+            "position": 0.5
+          },
+          "inside": false,
+          "labels": {
+            "color": "",
+            "horizontalCenter": "middle",
+            "opacity": 1,
+            "rotation": 0,
+            "verticalCenter": "middle"
+          },
+          "opposite": false
+        },
+        "category": {
+          "break": {
+            "enabled": false,
+            "endCategory": "",
+            "size": 0.05,
+            "startCategory": ""
+          }
+        },
+        "date": {
+          "baseInterval": {
+            "count": 1,
+            "enabled": false,
+            "skipEmptyPeriods": false,
+            "timeUnit": "hour"
+          },
+          "break": {
+            "enabled": false,
+            "endDate": "",
+            "size": 0.05,
+            "startDate": ""
+          },
+          "format": "M/d/yyyy HH:mm:ss",
+          "inputFormat": "yyyy-MM-dd kk:mm:ss",
+          "range": {
+            "max": "",
+            "min": "",
+            "useStrict": false
+          }
+        },
+        "inversed": false,
+        "label": {
+          "color": "",
+          "enabled": true,
+          "text": ""
+        },
+        "name": "",
+        "render": "category",
+        "tooltip": {
+          "background": {
+            "color": "",
+            "opacity": 1
+          },
+          "cornerRadius": 3,
+          "enabled": true,
+          "pointerLength": 4,
+          "text": ""
+        },
+        "value": {
+          "break": {
+            "enabled": false,
+            "endValue": 100,
+            "size": 0.05,
+            "startValue": 0
+          },
+          "format": "#,###.##",
+          "logarithmic": false,
+          "range": {
+            "max": "",
+            "min": "",
+            "useStrict": false
+          }
+        },
+        "visible": true
+      },
+      "description": "Chart axis configuration, an underlying AxisRenderer object.",
+      "properties": {
+        "appearance": {
+          "properties": {
+            "font": {
+              "description": "Axis font configuration.",
+              "properties": {
+                "size": {
+                  "default": "",
+                  "description": "Axis font size.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "weight": {
+                  "default": 500,
+                  "description": "Axis font weight.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "size",
+                "weight"
+              ],
+              "type": "object"
+            },
+            "grid": {
+              "description": "Axis grid line configuration.",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Axis label color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "default": "",
+                  "description": "SVG dashed array, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray",
+                  "type": "string"
+                },
+                "minDistance": {
+                  "default": null,
+                  "description": "The minimum distance between grid lines.",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "opacity": {
+                  "default": 1,
+                  "description": "Axis label opacity.",
+                  "type": "number"
+                },
+                "position": {
+                  "default": 0.5,
+                  "description": "Defines the grids relative position within the chart. A range from 0 to 1, 0 meaning start and 1 meaning end.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "opacity",
+                "dashArray",
+                "minDistance",
+                "position"
+              ],
+              "type": "object"
+            },
+            "inside": {
+              "default": false,
+              "description": "Enables axis labels to be rendered inside of axis.",
+              "type": "boolean"
+            },
+            "labels": {
+              "description": "Axis label configuration.",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Axis label color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "horizontalCenter": {
+                  "default": "middle",
+                  "description": "Axis label horizontal center.",
+                  "enum": [
+                    "left",
+                    "middle",
+                    "right"
+                  ],
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 1,
+                  "description": "Axis label opacity.",
+                  "type": "number"
+                },
+                "rotation": {
+                  "default": 0,
+                  "description": "Axis label rotation.",
+                  "type": "number"
+                },
+                "verticalCenter": {
+                  "default": "middle",
+                  "description": "Axis label vertical center.",
+                  "enum": [
+                    "top",
+                    "middle",
+                    "bottom"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "color",
+                "opacity",
+                "rotation",
+                "verticalCenter",
+                "horizontalCenter"
+              ],
+              "type": "object"
+            },
+            "opposite": {
+              "default": false,
+              "description": "Renders this axis on the opposite side.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "opposite",
+            "inside",
+            "labels",
+            "grid",
+            "font"
+          ],
+          "type": "object"
+        },
+        "category": {
+          "description": "Category axis configuration, applied when category is selected as this axis render mode. Groups data items in categories and allots equal space for each.",
+          "properties": {
+            "break": {
+              "description": "Tells the category axis to remove a certain range from it's scale.",
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "description": "Enable axis break",
+                  "type": "boolean"
+                },
+                "endCategory": {
+                  "default": "",
+                  "description": "End category.",
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "size": {
+                  "default": 0.05,
+                  "description": "The break size as a decimal percent of the removed values.",
+                  "type": "number"
+                },
+                "startCategory": {
+                  "default": "",
+                  "description": "Start category.",
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                }
+              },
+              "required": [
+                "enabled",
+                "startCategory",
+                "endCategory",
+                "size"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "break"
+          ],
+          "title": "Category",
+          "type": "object"
+        },
+        "date": {
+          "description": "Date axis configuration, applied when date is selected as this axis render mode. Uses data and time scale.",
+          "properties": {
+            "baseInterval": {
+              "description": "Optionally adjusts the granularity of the time scale.  Otherwise, will adjust intelligently by default.",
+              "properties": {
+                "count": {
+                  "default": 1,
+                  "description": "Specifies how many time units each data item was collected.",
+                  "type": "number"
+                },
+                "enabled": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "skipEmptyPeriods": {
+                  "default": false,
+                  "description": "Removes empty time units from display. Using this feature affects performance.  Will reset the use of axis breaks if true.",
+                  "type": "boolean"
+                },
+                "timeUnit": {
+                  "default": "hour",
+                  "description": "Specifies the base time unit to apply to this time scale.",
+                  "enum": [
+                    "minute",
+                    "second",
+                    "hour",
+                    "day",
+                    "week",
+                    "year"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "enabled",
+                "timeUnit",
+                "count",
+                "skipEmptyPeriods"
+              ],
+              "type": "object"
+            },
+            "break": {
+              "description": "Tells the date axis to remove a certain range from it's scale.",
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "description": "Enable axis break",
+                  "type": "boolean"
+                },
+                "endDate": {
+                  "default": "",
+                  "description": "End date.",
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "size": {
+                  "default": 0.05,
+                  "description": "The break size as a decimal percent of the removed values.",
+                  "type": "number"
+                },
+                "startDate": {
+                  "default": "",
+                  "description": "Start date.",
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                }
+              },
+              "required": [
+                "enabled",
+                "startDate",
+                "endDate",
+                "size"
+              ],
+              "type": "object"
+            },
+            "format": {
+              "default": "M/d/yyyy HH:mm:ss",
+              "description": "Date format for axis labels.",
+              "suggestions": {
+                "date [10/15/2018]": "M/d/yyyy",
+                "date time [10/15/2018 15:59:00]": "M/d/yyyy HH:mm:ss",
+                "time [3:59:00 PM]": "HH:mm:ss a"
+              },
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "inputFormat": {
+              "default": "yyyy-MM-dd kk:mm:ss",
+              "description": "Date format of axis value from dataSource.",
+              "suggestions": {
+                "date [10/15/2018]": "M/d/yyyy",
+                "date time [10/15/2018 15:59:00]": "M/d/yyyy HH:mm:ss",
+                "time [3:59:00 PM]": "HH:mm:ss a"
+              },
+              "type": "string"
+            },
+            "range": {
+              "description": "Optionally adjusts the range.  Otherwise, will auto range by default.",
+              "properties": {
+                "max": {
+                  "default": "",
+                  "description": "The maximum date in this range.",
+                  "type": "string"
+                },
+                "min": {
+                  "default": "",
+                  "description": "The minimum date in this range.",
+                  "type": "string"
+                },
+                "useStrict": {
+                  "default": false,
+                  "description": "Strictly enforces start and end values.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "max",
+                "min",
+                "useStrict"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "baseInterval",
+            "range",
+            "break",
+            "inputFormat",
+            "format"
+          ],
+          "title": "Date",
+          "type": "object"
+        },
+        "inversed": {
+          "default": false,
+          "description": "Indicates if the scale of the axis should be flipped.",
+          "type": "boolean"
+        },
+        "label": {
+          "properties": {
+            "color": {
+              "default": "",
+              "description": "Label color.",
+              "format": "color",
+              "type": "string"
+            },
+            "enabled": {
+              "default": true,
+              "description": "Enables a label drawn alongside this axis.",
+              "type": "boolean"
+            },
+            "text": {
+              "default": "",
+              "description": "Label text.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "text",
+            "color"
+          ],
+          "type": "object"
+        },
+        "name": {
+          "default": "",
+          "description": "A unique name to help identify this axis configuration object. This is required in order to configure series.",
+          "type": "string"
+        },
+        "render": {
+          "default": "category",
+          "description": "Dictates the axis type to render.",
+          "enum": [
+            "category",
+            "date",
+            "value"
+          ],
+          "type": "string"
+        },
+        "tooltip": {
+          "description": "Tooltip configuration for axis.",
+          "properties": {
+            "background": {
+              "description": "Tooltip background configuration.",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Background color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 1,
+                  "description": "Background opacity.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "opacity"
+              ],
+              "type": "object"
+            },
+            "cornerRadius": {
+              "default": 3,
+              "description": "Corner radius.",
+              "type": "number"
+            },
+            "enabled": {
+              "default": true,
+              "description": "Enable tooltip.",
+              "type": "boolean"
+            },
+            "getFillFromObject": {
+              "default": true,
+              "description": "Get fill from object.",
+              "type": "boolean"
+            },
+            "pointerLength": {
+              "default": 4,
+              "description": "Pointer length.",
+              "type": "number"
+            },
+            "text": {
+              "default": "",
+              "description": "Tooltip text. See: https://www.amcharts.com/docs/v4/concepts/formatters/formatting-strings/.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "text",
+            "cornerRadius",
+            "pointerLength",
+            "background"
+          ],
+          "type": "object"
+        },
+        "value": {
+          "description": "Value axis configuration, applied when value is selected as this axis render mode.",
+          "properties": {
+            "break": {
+              "description": "Tells the value axis to remove a certain range from it's scale.",
+              "properties": {
+                "enabled": {
+                  "default": false,
+                  "description": "Enable axis break",
+                  "type": "boolean"
+                },
+                "endValue": {
+                  "default": 100,
+                  "description": "End value.",
+                  "type": "number"
+                },
+                "size": {
+                  "default": 0.05,
+                  "description": "The break size as a decimal percent of the removed values.",
+                  "type": "number"
+                },
+                "startValue": {
+                  "default": 0,
+                  "description": "Start value.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "enabled",
+                "startValue",
+                "endValue",
+                "size"
+              ],
+              "type": "object"
+            },
+            "format": {
+              "default": "#,###.##",
+              "description": "A number format string to be applied against numbers if in number rendering mode.",
+              "suggestions": {
+                "abbreviation [1.2k]": "#.0a",
+                "currency (rounded) [$1,012]": "$#,###",
+                "currency [$1,000.12]": "$#,###.00",
+                "four decimal precision [1.1200]": "#,###.0000",
+                "integer [1,200]": "#,###",
+                "number [1,000.12]": "#,###.##",
+                "percent [10.12%]": "###.##%",
+                "scientific [1.01E+03]": "#.##e"
+              },
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "logarithmic": {
+              "default": false,
+              "description": "Use logarithmic scale. Useful if data varies greatly within the relevant series.",
+              "type": "boolean"
+            },
+            "range": {
+              "description": "Optionally adjusts the range.  Otherwise, will auto range by default.",
+              "properties": {
+                "max": {
+                  "default": "",
+                  "description": "Sets the ending value.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "min": {
+                  "default": "",
+                  "description": "Sets the starting value.",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "useStrict": {
+                  "default": false,
+                  "description": "Strictly enforces start and end values.",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "max",
+                "min",
+                "useStrict"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "range",
+            "logarithmic",
+            "break",
+            "format"
+          ],
+          "title": "Value",
+          "type": "object"
+        },
+        "visible": {
+          "default": true,
+          "description": "Show axis?",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "inversed",
+        "visible",
+        "tooltip",
+        "render",
+        "category",
+        "date",
+        "value",
+        "appearance"
+      ],
+      "type": "object"
+    },
+    "bullets": {
+      "default": {
+        "deriveFieldsFromData": {
+          "fill": {
+            "color": "",
+            "opacity": ""
+          },
+          "rotation": "",
+          "stroke": {
+            "color": "",
+            "opacity": "",
+            "width": ""
+          }
+        },
+        "enabled": true,
+        "fill": {
+          "color": "",
+          "opacity": 1
+        },
+        "heatRules": {
+          "dataField": "",
+          "enabled": false,
+          "max": 100,
+          "min": 2
+        },
+        "label": {
+          "position": {
+            "dx": 0,
+            "dy": 0
+          },
+          "text": "{value}"
+        },
+        "render": "circle",
+        "rotation": 0,
+        "stroke": {
+          "color": "",
+          "opacity": 1,
+          "width": 1
+        },
+        "tooltip": {
+          "background": {
+            "color": "",
+            "opacity": 1
+          },
+          "cornerRadius": 3,
+          "enabled": true,
+          "getFillFromObject": true,
+          "pointerLength": 4,
+          "text": "{name}: [bold]{valueY}[/]"
+        }
+      },
+      "properties": {
+        "deriveFieldsFromData": {
+          "description": "",
+          "properties": {
+            "fill": {
+              "properties": {
+                "color": {
+                  "default": "",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "color",
+                "opacity"
+              ],
+              "type": "object"
+            },
+            "rotation": {
+              "default": "",
+              "description": "",
+              "type": "string"
+            },
+            "stroke": {
+              "properties": {
+                "color": {
+                  "default": "",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": "",
+                  "type": "string"
+                },
+                "width": {
+                  "default": "",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "color",
+                "opacity",
+                "width"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "fill",
+            "stroke",
+            "rotation"
+          ],
+          "type": "object"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Enables bullets.",
+          "type": "boolean"
+        },
+        "fill": {
+          "properties": {
+            "color": {
+              "default": "",
+              "description": "Bullet fill color.",
+              "format": "color",
+              "type": "string"
+            },
+            "opacity": {
+              "default": 1,
+              "description": "Bullet fill opacity.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "color",
+            "opacity"
+          ],
+          "type": "object"
+        },
+        "heatRules": {
+          "description": "These heat rules apply to the radius of a circular bullet.",
+          "properties": {
+            "dataField": {
+              "default": "",
+              "description": "",
+              "type": "string"
+            },
+            "enabled": {
+              "default": false,
+              "description": "",
+              "type": "boolean"
+            },
+            "max": {
+              "default": 100,
+              "description": "",
+              "type": "number"
+            },
+            "min": {
+              "default": 2,
+              "description": "",
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "max",
+            "min",
+            "dataField"
+          ],
+          "type": "object"
+        },
+        "label": {
+          "properties": {
+            "hideOversized": {
+              "default": true,
+              "description": "Hide the label if it is too long.",
+              "type": "boolean"
+            },
+            "position": {
+              "properties": {
+                "dx": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "dy": {
+                  "default": -20,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "dx",
+                "dy"
+              ],
+              "type": "object"
+            },
+            "text": {
+              "default": "{value}",
+              "type": "string"
+            },
+            "truncate": {
+              "default": true,
+              "description": "Truncate text if it does not fit.",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "text",
+            "position"
+          ],
+          "type": "object"
+        },
+        "radius": {
+          "default": 5,
+          "description": "Bullet radius.",
+          "type": "number"
+        },
+        "render": {
+          "default": "circle",
+          "description": "The type of bullet to render.",
+          "enum": [
+            "circle",
+            "label"
+          ],
+          "type": "string"
+        },
+        "rotation": {
+          "default": 0,
+          "description": "Bullet rotation (0-360).",
+          "type": "number"
+        },
+        "stroke": {
+          "properties": {
+            "color": {
+              "default": "",
+              "description": "Bullet stroke color.",
+              "format": "color",
+              "type": "string"
+            },
+            "opacity": {
+              "default": 1,
+              "description": "Bullet stroke opacity.",
+              "type": "number"
+            },
+            "width": {
+              "default": 1,
+              "description": "Bullet stroke width.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "color",
+            "width",
+            "opacity"
+          ],
+          "type": "object"
+        },
+        "tooltip": {
+          "description": "Tooltip configuration.",
+          "properties": {
+            "background": {
+              "description": "Tooltip background configuration.",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Background color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 1,
+                  "description": "Background opacity.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "opacity"
+              ],
+              "type": "object"
+            },
+            "cornerRadius": {
+              "default": 3,
+              "description": "Corner radius.",
+              "type": "number"
+            },
+            "enabled": {
+              "default": true,
+              "description": "Enable tooltip.",
+              "type": "boolean"
+            },
+            "getFillFromObject": {
+              "default": true,
+              "description": "Get fill from object.",
+              "type": "boolean"
+            },
+            "pointerLength": {
+              "default": 4,
+              "description": "Pointer length.",
+              "type": "number"
+            },
+            "text": {
+              "default": "{name}: [bold]{valueY}[/]",
+              "description": "Tooltip text. Can be a format string.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "text",
+            "cornerRadius",
+            "pointerLength",
+            "background"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "enabled",
+        "render",
+        "label",
+        "tooltip",
+        "fill",
+        "stroke",
+        "rotation",
+        "deriveFieldsFromData",
+        "heatRules"
+      ],
+      "type": "object"
+    }
+  },
+  "description": "A XY Chart component.",
+  "properties": {
+    "background": {
+      "description": "Chart background configuration, and underlying chart container background element.",
+      "properties": {
+        "color": {
+          "default": "",
+          "description": "Single color to be used as chart background if color is chosen as render mode.",
+          "format": "color",
+          "type": "string"
+        },
+        "gradient": {
+          "description": "Chart background gradient configuration",
+          "properties": {
+            "colors": {
+              "default": [],
+              "description": "Colors to be used with gradient.",
+              "items": {
+                "default": "",
+                "format": "color",
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "direction": {
+              "default": "linear",
+              "enum": [
+                "linear",
+                "radial"
+              ],
+              "type": "string"
+            },
+            "rotation": {
+              "default": 0,
+              "description": "Gradient rotation, applied only to linear gradient.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "direction",
+            "rotation",
+            "colors"
+          ],
+          "type": "object"
+        },
+        "opacity": {
+          "default": 1,
+          "description": "Chart background opacity.",
+          "type": "number"
+        },
+        "render": {
+          "default": "none",
+          "description": "Render mode for chart background.",
+          "enum": [
+            "none",
+            "gradient",
+            "color"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "render",
+        "gradient",
+        "color",
+        "opacity"
+      ],
+      "type": "object"
+    },
+    "cursor": {
+      "description": "The chart cursor configuration, and underlying XYCursor object.",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "description": "Enables all chart cursors that are set to show.",
+          "type": "boolean"
+        },
+        "lineX": {
+          "description": "The chart cursor configuration for the line that intersects the x axis.",
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enables the lineX cursor.",
+              "type": "boolean"
+            },
+            "stroke": {
+              "description": "",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Cursor line stroke color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "default": "",
+                  "description": "SVG dashed array, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 0.4,
+                  "description": "Cursor line opacity.",
+                  "type": "number"
+                },
+                "width": {
+                  "default": 1,
+                  "description": "Cursor line stroke width.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "width",
+                "opacity",
+                "dashArray"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "enabled",
+            "stroke"
+          ],
+          "type": "object"
+        },
+        "lineY": {
+          "description": "The chart cursor configuration for the line that intersects the y axis.",
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enables the lineX cursor.",
+              "type": "boolean"
+            },
+            "stroke": {
+              "description": "",
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Cursor line stroke color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "dashArray": {
+                  "default": "",
+                  "description": "SVG dashed array, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 0.4,
+                  "description": "Cursor line opacity.",
+                  "type": "number"
+                },
+                "width": {
+                  "default": 1,
+                  "description": "Cursor line stroke width.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "width",
+                "opacity",
+                "dashArray"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "enabled",
+            "stroke"
+          ],
+          "type": "object"
+        },
+        "series": {
+          "default": "",
+          "description": "Binds the chart cursor to the specified series' data source.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "series",
+        "lineX",
+        "lineY"
+      ],
+      "type": "object"
+    },
+    "dataSources": {
+      "additionalProperties": {
+        "description": "A dataset, array of objects, or an array of arrays.",
+        "type": [
+          "array",
+          "dataset"
+        ]
+      },
+      "description": "An object of data sources for this chart.",
+      "example": {
+        "example": [
+          {
+            "output_temp": 38,
+            "process_temp": 63,
+            "t_stamp": "Tue Aug 07 2018"
+          },
+          {
+            "output_temp": 39,
+            "process_temp": 59,
+            "t_stamp": "Tue Aug 08 2018"
+          },
+          {
+            "output_temp": 41,
+            "process_temp": 62,
+            "t_stamp": "Tue Aug 09 2018"
+          },
+          {
+            "output_temp": 37,
+            "process_temp": 63,
+            "t_stamp": "Tue Aug 10 2018"
+          },
+          {
+            "output_temp": 31,
+            "process_temp": 48,
+            "t_stamp": "Tue Aug 11 2018"
+          },
+          {
+            "output_temp": 42,
+            "process_temp": 54,
+            "t_stamp": "Tue Aug 12 2018"
+          },
+          {
+            "output_temp": 38,
+            "process_temp": 49,
+            "t_stamp": "Tue Aug 13 2018"
+          },
+          {
+            "output_temp": 34,
+            "process_temp": 69,
+            "t_stamp": "Tue Aug 14 2018"
+          },
+          {
+            "output_temp": 56,
+            "process_temp": 73,
+            "t_stamp": "Tue Aug 15 2018"
+          },
+          {
+            "output_temp": 32,
+            "process_temp": 61,
+            "t_stamp": "Tue Aug 16 2018"
+          },
+          {
+            "output_temp": 62,
+            "process_temp": 73,
+            "t_stamp": "Tue Aug 17 2018"
+          }
+        ]
+      },
+      "type": "object"
+    },
+    "enableTransitions": {
+      "default": false,
+      "description": "Enable transition animations on chart.",
+      "type": "boolean"
+    },
+    "legend": {
+      "description": "Chart legend configuration, and underlying Legend object.",
+      "properties": {
+        "absolute": {
+          "description": "Used to position legend when position is absolute.",
+          "properties": {
+            "x": {
+              "default": 0,
+              "description": "The x coordinate position relative to chart.",
+              "type": "number"
+            },
+            "y": {
+              "default": 0,
+              "description": "The y coordinate position relative to chart.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Enables the chart legend.",
+          "type": "boolean"
+        },
+        "labels": {
+          "properties": {
+            "font": {
+              "properties": {
+                "color": {
+                  "default": "",
+                  "format": "color",
+                  "type": "string"
+                },
+                "size": {
+                  "default": 16,
+                  "type": "number"
+                },
+                "weight": {
+                  "default": 400,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "weight",
+                "size",
+                "color"
+              ],
+              "type": "object"
+            },
+            "text": {
+              "default": "[bold]{name}[/]",
+              "description": "A template string which is applied to all labels.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "text",
+            "font"
+          ],
+          "type": "object"
+        },
+        "markers": {
+          "properties": {
+            "cornerRadius": {
+              "description": "Corner radius applied to the rectangle marker.",
+              "properties": {
+                "bottomLeft": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "bottomRight": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "topLeft": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "topRight": {
+                  "default": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "topLeft",
+                "topRight",
+                "bottomLeft",
+                "bottomRight"
+              ],
+              "type": "object"
+            },
+            "enabled": {
+              "default": true,
+              "description": "Enables all series markers used in legend.",
+              "type": "boolean"
+            },
+            "height": {
+              "default": 20,
+              "description": "The height of each marker.",
+              "type": "number"
+            },
+            "icon": {
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Color of the icon.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "height": {
+                  "default": 20,
+                  "description": "The height of the icon.",
+                  "type": "number"
+                },
+                "horizontalCenter": {
+                  "default": "left",
+                  "description": "The horizontal anchor point for the icon.",
+                  "enum": [
+                    "none",
+                    "left",
+                    "middle",
+                    "right"
+                  ],
+                  "type": "string"
+                },
+                "path": {
+                  "default": "",
+                  "description": "Shorthand path to icon source, in format: library/iconName",
+                  "type": "string"
+                },
+                "verticalCenter": {
+                  "default": "top",
+                  "description": "The vertical anchor point for the icon.",
+                  "enum": [
+                    "none",
+                    "top",
+                    "middle",
+                    "bottom"
+                  ],
+                  "type": "string"
+                },
+                "width": {
+                  "default": 20,
+                  "description": "The width of the icon.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "path",
+                "color",
+                "verticalCenter",
+                "horizontalCenter",
+                "width",
+                "height"
+              ],
+              "type": "object"
+            },
+            "mirrorLookOfSeries": {
+              "default": true,
+              "description": "Markers will be drawn to mirror the look of the series elements.  Important, customizing markers beyond width and height requires that this value is false.",
+              "type": "boolean"
+            },
+            "stroke": {
+              "properties": {
+                "color": {
+                  "default": "",
+                  "description": "Marker line stroke color.",
+                  "format": "color",
+                  "type": "string"
+                },
+                "opacity": {
+                  "default": 0,
+                  "description": "Marker line opacity.",
+                  "type": "number"
+                },
+                "width": {
+                  "default": 1,
+                  "description": "Marker line stroke width.",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "color",
+                "width",
+                "opacity"
+              ],
+              "type": "object"
+            },
+            "width": {
+              "default": 20,
+              "description": "The width of each marker.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "enabled",
+            "width",
+            "height",
+            "mirrorLookOfSeries",
+            "stroke",
+            "cornerRadius",
+            "icon"
+          ],
+          "type": "object"
+        },
+        "position": {
+          "default": "bottom",
+          "description": "Position of the chart legend.",
+          "enum": [
+            "left",
+            "right",
+            "top",
+            "bottom",
+            "absolute"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "enabled",
+        "position",
+        "absolute",
+        "markers",
+        "labels"
+      ],
+      "type": "object"
+    },
+    "scrollBars": {
+      "description": "Chart scroll bar configuration, and underlying XYChartScrollbar object.",
+      "properties": {
+        "horizontal": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enables the horizontal scroll bar on the chart.",
+              "type": "boolean"
+            },
+            "series": {
+              "default": "",
+              "description": "Binds this horizontal scroll bar to a series.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "series"
+          ],
+          "type": "object"
+        },
+        "vertical": {
+          "properties": {
+            "enabled": {
+              "default": true,
+              "description": "Enables the vertical scroll bar on the chart.",
+              "type": "boolean"
+            },
+            "series": {
+              "default": "",
+              "description": "Binds this vertical scroll bar to a series.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "enabled",
+            "series"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "horizontal",
+        "vertical"
+      ],
+      "type": "object"
+    },
+    "selection": {
+      "description": "An object containing selection related properties.",
+      "properties": {
+        "data": {
+          "default": [],
+          "description": "a read-only list of currently selected data points",
+          "type": "array"
+        },
+        "enabled": {
+          "default": false,
+          "description": "Enables selection of bullets, columns, and candlesticks.",
+          "type": "boolean"
+        },
+        "selectedHighlightColor": {
+          "default": "",
+          "description": "The color of a data point while actively selected",
+          "format": "color",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "series": {
+      "description": "An array of series configurations to apply to this chart, and underlying XYSeries object.",
+      "example": [
+        {
+          "candlestick": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              }
+            },
+            "high": {
+              "x": "",
+              "y": ""
+            },
+            "low": {
+              "x": "",
+              "y": ""
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "column": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "height": null,
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              },
+              "width": null
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "data": {
+            "source": "example",
+            "x": "t_stamp",
+            "y": "process_temp"
+          },
+          "defaultState": {
+            "visible": true
+          },
+          "hiddenInLegend": false,
+          "label": {
+            "text": "Process Temp"
+          },
+          "line": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": false,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "name": "process temp",
+          "render": "line",
+          "stepLine": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": "{name}: [bold]{valueY}[/]"
+          },
+          "visible": true,
+          "xAxis": "time",
+          "yAxis": "process temp",
+          "zIndex": 0
+        },
+        {
+          "candlestick": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              }
+            },
+            "high": {
+              "x": "",
+              "y": ""
+            },
+            "low": {
+              "x": "",
+              "y": ""
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "column": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "height": null,
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              },
+              "width": null
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "data": {
+            "source": "example",
+            "x": "t_stamp",
+            "y": "output_temp"
+          },
+          "defaultState": {
+            "visible": true
+          },
+          "hiddenInLegend": false,
+          "label": {
+            "text": "Output Temp"
+          },
+          "line": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": false,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "name": "output temp",
+          "render": "line",
+          "stepLine": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": "{name}: [bold]{valueY}[/]"
+          },
+          "visible": true,
+          "xAxis": "time",
+          "yAxis": "output temp",
+          "zIndex": 0
+        }
+      ],
+      "items": {
+        "default": {
+          "candlestick": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              }
+            },
+            "high": {
+              "x": "",
+              "y": ""
+            },
+            "low": {
+              "x": "",
+              "y": ""
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "column": {
+            "appearance": {
+              "deriveFieldsFromData": {
+                "fill": {
+                  "color": "",
+                  "opacity": ""
+                },
+                "stroke": {
+                  "color": "",
+                  "opacity": "",
+                  "width": ""
+                }
+              },
+              "fill": {
+                "color": "",
+                "opacity": 1
+              },
+              "heatRules": {
+                "dataField": "",
+                "enabled": false,
+                "max": "",
+                "min": ""
+              },
+              "height": null,
+              "stacked": false,
+              "stroke": {
+                "color": "",
+                "opacity": 1,
+                "width": 1
+              },
+              "width": null
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "data": {
+            "source": "",
+            "x": "",
+            "y": ""
+          },
+          "defaultState": {
+            "visible": true
+          },
+          "hiddenInLegend": false,
+          "label": {
+            "text": ""
+          },
+          "line": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": false,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "name": "",
+          "render": "line",
+          "stepLine": {
+            "appearance": {
+              "bullets": [
+                {
+                  "deriveFieldsFromData": {
+                    "fill": {
+                      "color": "",
+                      "opacity": ""
+                    },
+                    "rotation": "",
+                    "stroke": {
+                      "color": "",
+                      "opacity": "",
+                      "width": ""
+                    }
+                  },
+                  "enabled": true,
+                  "fill": {
+                    "color": "",
+                    "opacity": 1
+                  },
+                  "heatRules": {
+                    "dataField": "",
+                    "enabled": false,
+                    "max": 100,
+                    "min": 2
+                  },
+                  "label": {
+                    "hideOversized": true,
+                    "position": {
+                      "dx": 0,
+                      "dy": 0
+                    },
+                    "text": "{value}",
+                    "truncate": true
+                  },
+                  "radius": 5,
+                  "render": "circle",
+                  "rotation": 0,
+                  "stroke": {
+                    "color": "",
+                    "opacity": 1,
+                    "width": 1
+                  },
+                  "tooltip": {
+                    "background": {
+                      "color": "",
+                      "opacity": 1
+                    },
+                    "cornerRadius": 3,
+                    "enabled": true,
+                    "getFillFromObject": true,
+                    "pointerLength": 4,
+                    "text": "{name}: [bold]{valueY}[/]"
+                  }
+                }
+              ],
+              "connect": true,
+              "fill": {
+                "color": "",
+                "opacity": 0
+              },
+              "minDistance": 0.5,
+              "stroke": {
+                "color": "",
+                "dashArray": "",
+                "opacity": 1,
+                "width": 3
+              },
+              "tensionX": 1,
+              "tensionY": 1
+            },
+            "open": {
+              "x": "",
+              "y": ""
+            }
+          },
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": "{name}: [bold]{valueY}[/]"
+          },
+          "visible": true,
+          "xAxis": "",
+          "yAxis": "",
+          "zIndex": 0
+        },
+        "properties": {
+          "candlestick": {
+            "properties": {
+              "appearance": {
+                "properties": {
+                  "deriveFieldsFromData": {
+                    "description": "",
+                    "properties": {
+                      "fill": {
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "opacity": {
+                            "default": "",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "opacity"
+                        ],
+                        "type": "object"
+                      },
+                      "stroke": {
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "opacity": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "width": {
+                            "default": "",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "opacity",
+                          "width"
+                        ],
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "fill",
+                      "stroke"
+                    ],
+                    "type": "object"
+                  },
+                  "fill": {
+                    "description": "",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 0,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity"
+                    ],
+                    "type": "object"
+                  },
+                  "heatRules": {
+                    "description": "These heat rules apply to the fill of the columns.",
+                    "properties": {
+                      "dataField": {
+                        "default": "",
+                        "description": "",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "default": false,
+                        "description": "",
+                        "type": "boolean"
+                      },
+                      "max": {
+                        "default": "",
+                        "description": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "min": {
+                        "default": "",
+                        "description": "",
+                        "format": "color",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "max",
+                      "min",
+                      "dataField"
+                    ],
+                    "type": "object"
+                  },
+                  "stacked": {
+                    "default": false,
+                    "description": "Stacks this column series.",
+                    "type": "boolean"
+                  },
+                  "stroke": {
+                    "description": "Series stroke configuration.",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "description": "Stroke color.",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "description": "Stoke opacity.",
+                        "type": "number"
+                      },
+                      "width": {
+                        "default": 3,
+                        "description": "Stroke width",
+                        "type": [
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity",
+                      "width"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "fill",
+                  "stroke",
+                  "stacked",
+                  "deriveFieldsFromData",
+                  "heatRules"
+                ],
+                "type": "object"
+              },
+              "high": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the high data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the high data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              },
+              "low": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the low data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the low data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              },
+              "open": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "open",
+              "high",
+              "low",
+              "appearance"
+            ],
+            "type": "object",
+            "visibleWhen": {
+              "equals": "candlestick",
+              "property": "render"
+            }
+          },
+          "column": {
+            "properties": {
+              "appearance": {
+                "properties": {
+                  "deriveFieldsFromData": {
+                    "description": "",
+                    "properties": {
+                      "fill": {
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "opacity": {
+                            "default": "",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "opacity"
+                        ],
+                        "type": "object"
+                      },
+                      "stroke": {
+                        "properties": {
+                          "color": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "opacity": {
+                            "default": "",
+                            "type": "string"
+                          },
+                          "width": {
+                            "default": "",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "opacity",
+                          "width"
+                        ],
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "fill",
+                      "stroke"
+                    ],
+                    "type": "object"
+                  },
+                  "fill": {
+                    "description": "",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity"
+                    ],
+                    "type": "object"
+                  },
+                  "heatRules": {
+                    "description": "These heat rules apply to the fill of the columns.",
+                    "properties": {
+                      "dataField": {
+                        "default": "",
+                        "description": "",
+                        "type": "string"
+                      },
+                      "enabled": {
+                        "default": false,
+                        "description": "",
+                        "type": "boolean"
+                      },
+                      "max": {
+                        "default": "",
+                        "description": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "min": {
+                        "default": "",
+                        "description": "",
+                        "format": "color",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "max",
+                      "min",
+                      "dataField"
+                    ],
+                    "type": "object"
+                  },
+                  "height": {
+                    "default": null,
+                    "description": "Percent",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "stacked": {
+                    "default": false,
+                    "description": "Stacks this column series.",
+                    "type": "boolean"
+                  },
+                  "stroke": {
+                    "description": "Series stroke configuration.",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "description": "Stroke color.",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "description": "Stoke opacity.",
+                        "type": "number"
+                      },
+                      "width": {
+                        "default": 3,
+                        "description": "Stroke width",
+                        "type": [
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity",
+                      "width"
+                    ],
+                    "type": "object"
+                  },
+                  "width": {
+                    "default": null,
+                    "description": "Percent",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "fill",
+                  "stroke",
+                  "width",
+                  "height",
+                  "stacked",
+                  "deriveFieldsFromData",
+                  "heatRules"
+                ],
+                "type": "object"
+              },
+              "open": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "open",
+              "appearance"
+            ],
+            "type": "object",
+            "visibleWhen": {
+              "equals": "column",
+              "property": "render"
+            }
+          },
+          "data": {
+            "properties": {
+              "source": {
+                "default": "",
+                "description": "The name of the data source to bind to this series.",
+                "type": "string"
+              },
+              "x": {
+                "default": "",
+                "description": "The x-value key from the specified data source to be used in this series. A string value if the data source is a dataset or an array of objects.  An index if the data source is an array of arrays.",
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "y": {
+                "default": "",
+                "description": "The y-value key from the specified data source to be used in this series. A string value if the data source is a dataset or an array of objects.  An index if the data source is an array of arrays.",
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "required": [
+              "source",
+              "x",
+              "y"
+            ],
+            "type": "object"
+          },
+          "defaultState": {
+            "description": "Series default state configuration.",
+            "properties": {
+              "visible": {
+                "default": true,
+                "description": "",
+                "type": "boolean"
+              }
+            },
+            "type": "object"
+          },
+          "hiddenInLegend": {
+            "default": false,
+            "description": "Hides series in legend.",
+            "type": "boolean"
+          },
+          "label": {
+            "description": "Series label to use with legend.",
+            "properties": {
+              "text": {
+                "default": "",
+                "description": "Label text",
+                "type": "string"
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "type": "object"
+          },
+          "line": {
+            "properties": {
+              "appearance": {
+                "properties": {
+                  "bullets": {
+                    "default": [],
+                    "description": "Series bullet configuration",
+                    "items": {
+                      "$ref": "#/definitions/bullets"
+                    },
+                    "type": "array"
+                  },
+                  "connect": {
+                    "default": true,
+                    "description": "Connect the lines over empty data points?",
+                    "type": "boolean"
+                  },
+                  "fill": {
+                    "description": "",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity"
+                    ],
+                    "type": "object"
+                  },
+                  "minDistance": {
+                    "default": 0.5,
+                    "description": "Minimum distance in pixels between two adjacent points.",
+                    "type": "number"
+                  },
+                  "stroke": {
+                    "description": "Series stroke configuration.",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "description": "Stroke color.",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "dashArray": {
+                        "default": "",
+                        "description": "SVG dashed array, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "description": "Stoke opacity.",
+                        "type": "number"
+                      },
+                      "width": {
+                        "default": 3,
+                        "description": "Stroke width",
+                        "type": [
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "width",
+                      "color",
+                      "opacity",
+                      "dashArray"
+                    ],
+                    "type": "object"
+                  },
+                  "tensionX": {
+                    "default": 1,
+                    "description": "Horizontal tension setting of line as a range of 0 to 1. Used to create smooth or sharp lines. 1 meaning that the tension is very high, so the line is maximally attracted to the points it connects, hence straight line. O meaning the opposite.",
+                    "type": "number"
+                  },
+                  "tensionY": {
+                    "default": 1,
+                    "description": "Vertical tension setting of line as a range of 0 to 1. Used to create smooth or sharp lines. 1 meaning that the tension is very high, so the line is maximally attracted to the points it connects, hence straight line. O meaning the opposite.",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "connect",
+                  "tensionX",
+                  "tensionY",
+                  "minDistance",
+                  "stroke",
+                  "fill",
+                  "bullets"
+                ],
+                "type": "object"
+              },
+              "open": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "open",
+              "appearance"
+            ],
+            "type": "object",
+            "visibleWhen": {
+              "equals": "line",
+              "property": "render"
+            }
+          },
+          "name": {
+            "description": "A unique name to help identify the application of this series.",
+            "type": "string"
+          },
+          "render": {
+            "default": "line",
+            "description": "Then series render mode. Specifies the series type.",
+            "enum": [
+              "candlestick",
+              "column",
+              "line",
+              "step line"
+            ],
+            "type": "string"
+          },
+          "stepLine": {
+            "description": "Stepline series configuration.",
+            "properties": {
+              "appearance": {
+                "properties": {
+                  "bullets": {
+                    "default": [],
+                    "description": "Series bullet configuration",
+                    "items": {
+                      "$ref": "#/definitions/bullets"
+                    },
+                    "type": "array"
+                  },
+                  "connect": {
+                    "default": true,
+                    "description": "Connect the lines over empty data points?",
+                    "type": "boolean"
+                  },
+                  "fill": {
+                    "description": "",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "color",
+                      "opacity"
+                    ],
+                    "type": "object"
+                  },
+                  "minDistance": {
+                    "default": 0.5,
+                    "description": "Minimum distance in pixels between two adjacent points.",
+                    "type": "number"
+                  },
+                  "stroke": {
+                    "description": "Series stroke configuration.",
+                    "properties": {
+                      "color": {
+                        "default": "",
+                        "description": "Stroke color.",
+                        "format": "color",
+                        "type": "string"
+                      },
+                      "dashArray": {
+                        "default": "",
+                        "description": "SVG dashed array, see https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray",
+                        "type": "string"
+                      },
+                      "opacity": {
+                        "default": 1,
+                        "description": "Stoke opacity.",
+                        "type": "number"
+                      },
+                      "width": {
+                        "default": 3,
+                        "description": "Stroke width",
+                        "type": [
+                          "number",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "width",
+                      "color",
+                      "opacity",
+                      "dashArray"
+                    ],
+                    "type": "object"
+                  },
+                  "tensionX": {
+                    "default": 1,
+                    "description": "Horizontal tension setting of line as a range of 0 to 1. Used to create smooth or sharp lines. 1 meaning that the tension is very high, so the line is maximally attracted to the points it connects, hence straight line. O meaning the opposite.",
+                    "type": "number"
+                  },
+                  "tensionY": {
+                    "default": 1,
+                    "description": "Vertical tension setting of line as a range of 0 to 1. Used to create smooth or sharp lines. 1 meaning that the tension is very high, so the line is maximally attracted to the points it connects, hence straight line. O meaning the opposite.",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "connect",
+                  "tensionX",
+                  "tensionY",
+                  "minDistance",
+                  "stroke",
+                  "fill",
+                  "bullets"
+                ],
+                "type": "object"
+              },
+              "open": {
+                "properties": {
+                  "x": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the horizontal axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  },
+                  "y": {
+                    "default": "",
+                    "description": "Name of the field that holds the open data for the vertical axis.",
+                    "type": [
+                      "string",
+                      "number"
+                    ]
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "open",
+              "appearance"
+            ],
+            "type": "object",
+            "visibleWhen": {
+              "equals": "step line",
+              "property": "render"
+            }
+          },
+          "tooltip": {
+            "description": "Tooltip configuration.",
+            "properties": {
+              "background": {
+                "description": "Tooltip background configuration.",
+                "properties": {
+                  "color": {
+                    "default": "",
+                    "description": "Background color.",
+                    "format": "color",
+                    "type": "string"
+                  },
+                  "opacity": {
+                    "default": 1,
+                    "description": "Background opacity.",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "color",
+                  "opacity"
+                ],
+                "type": "object"
+              },
+              "cornerRadius": {
+                "default": 3,
+                "description": "Corner radius.",
+                "type": "number"
+              },
+              "enabled": {
+                "default": true,
+                "description": "Enable tooltip.",
+                "type": "boolean"
+              },
+              "pointerLength": {
+                "default": 4,
+                "description": "Pointer length.",
+                "type": "number"
+              },
+              "text": {
+                "default": "{name}: [bold]{valueY}[/]",
+                "description": "A format string to apply to the tooltip text. See: https://www.amcharts.com/docs/v4/concepts/formatters/formatting-strings/.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "enabled",
+              "text",
+              "cornerRadius",
+              "pointerLength",
+              "background"
+            ],
+            "type": "object"
+          },
+          "visible": {
+            "default": true,
+            "description": "Enables series visibility.",
+            "type": "boolean"
+          },
+          "xAxis": {
+            "default": "",
+            "description": "The name of the x-axis configuration object to be used with this series.",
+            "type": "string"
+          },
+          "yAxis": {
+            "default": "",
+            "description": "The name of the y-axis configuration object to be used with this series.",
+            "type": "string"
+          },
+          "zIndex": {
+            "default": 0,
+            "description": "Sets the series stack order relative to other series.",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "visible",
+          "hiddenInLegend",
+          "defaultState",
+          "data",
+          "xAxis",
+          "yAxis",
+          "zIndex",
+          "tooltip",
+          "render",
+          "candlestick",
+          "column",
+          "line",
+          "stepLine"
+        ],
+        "type": "object"
+      },
+      "title": "Series",
+      "type": "array"
+    },
+    "style": {
+      "$ref": "#/$defs/style-properties.schema"
+    },
+    "subtitle": {
+      "description": "Chart subtitle configuration, and underlying Label object.",
+      "properties": {
+        "appearance": {
+          "properties": {
+            "color": {
+              "default": "",
+              "format": "color",
+              "type": "string"
+            },
+            "font": {
+              "properties": {
+                "size": {
+                  "default": "",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "weight": {
+                  "default": 500,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "size",
+                "weight"
+              ],
+              "type": "object"
+            },
+            "padding": {
+              "properties": {
+                "bottom": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "left": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "right": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "top": {
+                  "default": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "top",
+                "right",
+                "bottom",
+                "left"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "color",
+            "font",
+            "padding"
+          ],
+          "type": "object"
+        },
+        "text": {
+          "default": "",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "appearance"
+      ],
+      "type": "object"
+    },
+    "title": {
+      "description": "Chart title configuration, and underlying Label object.",
+      "properties": {
+        "appearance": {
+          "properties": {
+            "color": {
+              "default": "",
+              "format": "color",
+              "type": "string"
+            },
+            "font": {
+              "properties": {
+                "size": {
+                  "default": "",
+                  "type": [
+                    "number",
+                    "string"
+                  ]
+                },
+                "weight": {
+                  "default": 700,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "size",
+                "weight"
+              ],
+              "type": "object"
+            },
+            "padding": {
+              "properties": {
+                "bottom": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "left": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "right": {
+                  "default": 0,
+                  "type": "number"
+                },
+                "top": {
+                  "default": 0,
+                  "type": "number"
+                }
+              },
+              "required": [
+                "top",
+                "bottom",
+                "left",
+                "right"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "color",
+            "font",
+            "padding"
+          ],
+          "type": "object"
+        },
+        "text": {
+          "default": "",
+          "description": "The chart title text.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "appearance"
+      ],
+      "type": "object"
+    },
+    "xAxes": {
+      "example": [
+        {
+          "appearance": {
+            "font": {
+              "size": "",
+              "weight": 500
+            },
+            "grid": {
+              "color": "",
+              "dashArray": "",
+              "minDistance": 60,
+              "opacity": 1,
+              "position": 0.5
+            },
+            "inside": false,
+            "labels": {
+              "color": "",
+              "horizontalCenter": "middle",
+              "opacity": 1,
+              "rotation": 0,
+              "verticalCenter": "middle"
+            },
+            "opposite": false
+          },
+          "category": {
+            "break": {
+              "enabled": false,
+              "endCategory": "",
+              "size": 0.05,
+              "startCategory": ""
+            }
+          },
+          "date": {
+            "baseInterval": {
+              "count": 1,
+              "enabled": false,
+              "skipEmptyPeriods": false,
+              "timeUnit": "hour"
+            },
+            "break": {
+              "enabled": false,
+              "endDate": "",
+              "size": 0.05,
+              "startDate": ""
+            },
+            "format": "M/d",
+            "inputFormat": "yyyy-MM-dd kk:mm:ss",
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "inversed": false,
+          "label": {
+            "color": "",
+            "enabled": true,
+            "text": "Time"
+          },
+          "name": "time",
+          "render": "date",
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": ""
+          },
+          "value": {
+            "break": {
+              "enabled": false,
+              "endValue": 100,
+              "size": 0.05,
+              "startValue": 0
+            },
+            "format": "#,###.##",
+            "logarithmic": false,
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "visible": true
+        }
+      ],
+      "items": {
+        "$ref": "#/definitions/axis"
+      },
+      "type": "array"
+    },
+    "yAxes": {
+      "example": [
+        {
+          "appearance": {
+            "font": {
+              "size": "",
+              "weight": 500
+            },
+            "grid": {
+              "color": "",
+              "dashArray": "",
+              "minDistance": null,
+              "opacity": 1,
+              "position": 0.5
+            },
+            "inside": false,
+            "labels": {
+              "color": "",
+              "horizontalCenter": "middle",
+              "opacity": 1,
+              "rotation": 0,
+              "verticalCenter": "middle"
+            },
+            "opposite": false
+          },
+          "category": {
+            "break": {
+              "enabled": false,
+              "endCategory": "",
+              "size": 0.05,
+              "startCategory": ""
+            }
+          },
+          "date": {
+            "baseInterval": {
+              "count": 1,
+              "enabled": false,
+              "skipEmptyPeriods": false,
+              "timeUnit": "hour"
+            },
+            "break": {
+              "enabled": false,
+              "endDate": "",
+              "size": 0.05,
+              "startDate": ""
+            },
+            "format": "M/d/yyyy HH:mm:ss",
+            "inputFormat": "yyyy-MM-dd kk:mm:ss",
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "inversed": false,
+          "label": {
+            "color": "",
+            "enabled": true,
+            "text": "Process Temp"
+          },
+          "name": "process temp",
+          "render": "value",
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": ""
+          },
+          "value": {
+            "break": {
+              "enabled": false,
+              "endValue": 100,
+              "size": 0.05,
+              "startValue": 0
+            },
+            "format": "#,###.##",
+            "logarithmic": false,
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "visible": true
+        },
+        {
+          "appearance": {
+            "font": {
+              "size": "",
+              "weight": 500
+            },
+            "grid": {
+              "color": "",
+              "dashArray": "4,4",
+              "minDistance": null,
+              "opacity": 1,
+              "position": 0.5
+            },
+            "inside": false,
+            "labels": {
+              "color": "",
+              "horizontalCenter": "middle",
+              "opacity": 1,
+              "rotation": 0,
+              "verticalCenter": "middle"
+            },
+            "opposite": true
+          },
+          "category": {
+            "break": {
+              "enabled": false,
+              "endCategory": "",
+              "size": 0.05,
+              "startCategory": ""
+            }
+          },
+          "date": {
+            "baseInterval": {
+              "count": 1,
+              "enabled": false,
+              "skipEmptyPeriods": false,
+              "timeUnit": "hour"
+            },
+            "break": {
+              "enabled": false,
+              "endDate": "",
+              "size": 0.05,
+              "startDate": ""
+            },
+            "format": "M/d/yyyy",
+            "inputFormat": "yyyy-MM-dd kk:mm:ss",
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "inversed": false,
+          "label": {
+            "color": "",
+            "enabled": true,
+            "text": "Output Temp"
+          },
+          "name": "output temp",
+          "render": "value",
+          "tooltip": {
+            "background": {
+              "color": "",
+              "opacity": 1
+            },
+            "cornerRadius": 3,
+            "enabled": true,
+            "pointerLength": 4,
+            "text": ""
+          },
+          "value": {
+            "break": {
+              "enabled": false,
+              "endValue": 100,
+              "size": 0.05,
+              "startValue": 0
+            },
+            "format": "#,###.##",
+            "logarithmic": false,
+            "range": {
+              "max": "",
+              "min": "",
+              "useStrict": false
+            }
+          },
+          "visible": true
+        }
+      ],
+      "items": {
+        "$ref": "#/definitions/axis"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "dataSources",
+    "title",
+    "subtitle",
+    "legend",
+    "cursor",
+    "enableTransitions",
+    "scrollBars",
+    "background",
+    "xAxes",
+    "yAxes",
+    "series",
+    "style"
+  ],
+  "title": "XY Chart",
+  "type": "object",
+  "x-ignition": {
+    "component": "ia.chart.xy",
+    "deprecated": false,
+    "is_container": false,
+    "library": "PerspectiveAmCharts",
+    "palette_category": "chart",
+    "registry_file": "perspective-amcharts.components.json",
+    "registry_hash": "d5b97edc50994e8cbeaa"
+  }
+}
