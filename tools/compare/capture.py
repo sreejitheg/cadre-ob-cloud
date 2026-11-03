@@ -26,6 +26,19 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 
 
+def settle_badges(page, cap_ms: int = 60000, step_ms: int = 1000):
+    """Wait while the page still shows view state badges, at most `cap_ms`: an embedded view that is still loading
+    shows the same badge (`.view-state-display`) as one that failed, and on a large page (the component test page of
+    T2, 2372 tags) the loading badges outlast the fixed wait (82 after 6 s, none after 26 s, measured 2026-11-03). A
+    badge that is still shown at the cap is counted by the verdict as before. Returns the extra wait in ms, or None when
+    the badges did not clear."""
+    waited = 0
+    while page.locator(".view-state-display").count() and waited < cap_ms:
+        page.wait_for_timeout(step_ms)
+        waited += step_ms
+    return waited if not page.locator(".view-state-display").count() else None
+
+
 def capture(base: str, route: str, out: Path, width: int = 1600, height: int = 900,
             settle_ms: int = 6000) -> dict:
     from playwright.sync_api import sync_playwright
@@ -37,6 +50,7 @@ def capture(base: str, route: str, out: Path, width: int = 1600, height: int = 9
         page = ctx.new_page()
         page.goto(base.rstrip("/") + route, wait_until="networkidle", timeout=60000)
         page.wait_for_timeout(settle_ms)
+        loading_ms = settle_badges(page)
         body = page.inner_text("body")
         verdict = {
             "trial_expired": "Trial Expired" in body,
@@ -46,6 +60,7 @@ def capture(base: str, route: str, out: Path, width: int = 1600, height: int = 9
             # A binding with bad quality draws an ERROR or NOTICES overlay (class ia_qualityOverlay):
             # the page renders and is still broken (measured on the first plant build, 2026-10-08).
             "quality_overlays": page.locator(".ia_qualityOverlay").count(),
+            "badges_cleared_after_ms": loading_ms,
         }
         verdict["ok"] = (not verdict["trial_expired"] and not verdict["view_not_found"]
                          and verdict["view_error_badges"] == 0 and verdict["components"] > 0
