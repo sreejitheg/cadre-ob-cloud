@@ -308,6 +308,8 @@ the element's enumerations (section 5.1) and map or except each mismatch. No `AL
    checks adapted to it, and existing projects change only when switched over.
 6. **All 33 frame components** of the pinned release are wrapped, not only the set the current frame uses.
 7. The bars and graphs and the building blocks are module-only kinds, display only, as in T1.
+8. The new frame comes in both variants (OpenBridge and ASM), keeps the Cadre crumb and the Cadre alert strip, and hides
+   the silence control (`cloud/FRAME-DESIGN.md`, Owner's Answers).
 
 ## 7. The T1 Survey
 
@@ -514,3 +516,26 @@ size (give the entry in `gen_module_assets.py` the size the symbol should have o
    An attribute of the element that has the name of a symbol property (the indicators' `variant`) is allowed by the "carries none of
    the symbol's properties" test through the row's attribute set.
 4. An element's click event on a module-only kind is left unwired (display only, no device kind); record it as an open item.
+
+### 8.12 A Note from C1: Lists of Objects and Charts
+
+1. A property that is a list of objects or strings is declared in `data` of the entry (`"data": {"data": "segments"}`); the value is the
+   key of `DATA_SCHEMA` (`points`, `datasets`, `yaxes`, `labels`, `colors`, `segments`, `piesegments`, `rings`, `numbers`, `alerts`), which
+   carries the item schema and the description, and `CONVERT` holds the wrapper's conversion. A new shape is one entry in each table.
+   The name of the property must be the element's field, because the wrapper sets `el[name]`. A chart's series are fields without an
+   attribute in the manifest, so `schema_for` never sees them: name each one in `data`, and read the element's `dist/` source for its shape.
+2. The wrapper copies a list with `JSON.parse(JSON.stringify(v))` (`toRecords`) before it reaches the element: Chart.js writes to its
+   arrays and the property tree holds immutable data. A symbol binds a list with `bind` like any property (a Document tag), or states a
+   fixed list as a parameter.
+3. An element that reads a CSS variable by name from the computed style (`getComputedStyle(el).getPropertyValue('--x')`) needs that
+   variable in `cadre-ob.css`; `scoped_css` keeps a variable the bundle writes as `var(--x)` or names in a string. Check a new
+   element with a stand-in page that carries `class="psc-cadre/palette/day"` on its body: a chart that draws black has lost its palette.
+4. A nullable enumeration (`borderRadiusPosition`, undefined by default, where any value changes the drawing) cannot be carried: the
+   contract gives an enumeration its first value as default. Leave such an attribute out with `exclude` and record why.
+5. A chart's box: `testbench.glyph_cases` takes the box from the properties `width` and `height` where both exist (the line charts);
+   the other charts size themselves from `fixedHeight` (320 square, wider with a legend or outer labels), and the entry gives them 480 by 320.
+   `GLYPH_DATA` states a kind's sample in every case but the default, `GLYPH_EXTRA` adds named cases, and the number pairs go in
+   `GLYPH_NUMBER_VALUES` (the first is the element's default).
+6. In `tests/test_module.py` the manifest test compares the contract with the attributes only: a chart's fields go in `CHART_DATA` and
+   its excluded attributes in `CHART_LEFT_OUT`. The page's count test serialises a list value with `json.dumps`.
+
