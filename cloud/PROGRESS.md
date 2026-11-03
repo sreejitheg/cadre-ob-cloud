@@ -250,3 +250,8 @@
   stays still fails (tests added); G8 then PASS, 5160 components. Every chart and block found and drawn except
   `obc-instrument-radial`: 42 found, all of size 0 (the element sits as a block of zero size in its flex box; a real
   defect of C2, to fix). The line graph and the donut chart draw their data, in greys (for the owner's visual review).
+- 2026-11-03 08:45: Gateway check of F1 and the radial fix (test build 0.6.2 from a clean worktree at `278d4a9`,
+  "Registered 62 Cadre OpenBridge components", 2374 tags): G8 PASS, 5328 components, no overlay or error badge; the 42
+  radial instruments now draw with a size; the seven frame leaves all found and drawn (tooltip 13, toggletip 14, clock
+  15, user button 14, app button 7, notification button 11, badge button 9), no console error. On the test page the
+  toggletips float over the row above them (cosmetic).
