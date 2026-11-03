@@ -336,6 +336,55 @@ class ButtonTests(GeneratorCase):
         self.assertEqual(doc["custom"]["pend_reset"], False)
         self.assertIn("custom.can", doc["propConfig"])
 
+    def module_sample(self, render="module"):
+        d = sample()
+        d["buttons"][0]["render"] = "module"
+        return self.build(d, render=render)
+
+    def test_the_module_button_asks_and_the_same_confirm_makes_the_pulse(self):
+        """Spike T0 wrap W3: `render: module` under the module rendering draws the question button as `cadre.ob.button`.
+        Its `onPress` only asks; the Confirm button, unchanged, calls `page_pulse` (write path W18, the role check,
+        the declared tag) with `enabled` bound to the permission of W18; so nothing new writes."""
+        doc, info = self.module_sample()
+        self.assertEqual(info["errors"], [])
+        n = self.nodes(doc)
+        press, yes = n["Press"], n["Confirm"]
+        self.assertEqual(press["type"], "cadre.ob.button")
+        self.assertEqual(list(press["events"]), ["component"])
+        self.assertEqual(list(press["events"]["component"]), ["onPress"])
+        script = press["events"]["component"]["onPress"]["config"]["script"]
+        self.assertNotIn("cadre.hmi", script)                       # a press writes nothing: it asks
+        self.assertIn("pend_reset = True", script)
+        self.assertEqual(gates._paths_called(script), [])
+        confirm = yes["events"]["component"]["onActionPerformed"]["config"]["script"]
+        self.assertIn("cadre.hmi.page_pulse(self.session, '[default]cadre_hmi_parts/sim/reset')", confirm)
+        self.assertEqual(gates._paths_called(confirm), ["W18"])
+        self.assertTrue(gates._follows_permissions(yes, "props.enabled", "W18"))
+        # the component has no `enabled`: it is static while the session lacks the permission of W18, and shows the label or the answer
+        self.assertEqual(self.expr(press, "props.static"), "!{view.custom.can.W18}")
+        self.assertNotIn("props.enabled", press["propConfig"])
+        self.assertIn("{view.custom.msg_reset}", self.expr(press, "props.tag"))
+        self.assertEqual(press["props"]["tag"], "PLANTWIDE RESET")
+        self.assertEqual(self.expr(press, "position.display"), "!{view.custom.pend_reset}")
+        # the command list the pulse is checked against is the descriptor's, as for the library's button
+        self.assertEqual(parts.command_tags(sample())[0]["path"], "[default]cadre_hmi_parts/sim/reset")
+
+    def test_the_module_button_is_drawn_only_under_the_module_rendering(self):
+        stock, _ = self.module_sample(render="stock")
+        self.assertEqual(self.nodes(stock)["Press"]["type"], "ia.input.button")
+        self.assertEqual(self.expr(self.nodes(stock)["Press"], "props.enabled"), "{view.custom.can.W18}")
+        plain, _ = self.build(render="module")                       # a pulse that does not ask for it keeps the library's button
+        self.assertEqual(self.nodes(plain)["Press"]["type"], "ia.input.button")
+
+    def test_render_module_is_for_a_pulse(self):
+        d = sample()
+        d["buttons"][1]["render"] = "module"
+        self.assertEqual(d["buttons"][1]["action"]["type"], "faceplate")
+        _, info = self.build(d, render="module")
+        self.assertTrue(any("render: module" in e for e in info["errors"]), info["errors"])
+        d["buttons"][1]["render"] = "other"
+        self.assertTrue(screen.schema_errors([d], ["d"]))
+
     def test_a_default_question_is_the_label(self):
         d = sample()
         d["buttons"][0]["action"].pop("confirm")

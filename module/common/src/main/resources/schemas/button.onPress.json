@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The button was pressed. The event carries nothing; the page's script decides what it commands (the library's confirmed pulse, write path W18).",
+  "properties": {}
+}

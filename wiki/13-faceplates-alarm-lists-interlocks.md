@@ -1264,7 +1264,9 @@ one alarm of each priority, or all five, and sets the pump's fault or the input 
 lamp: raise it (the frame flashes: active, unacknowledged), acknowledge it on the faceplate Alarms tab or on the alert
 banner (steady: active, acknowledged), or let the minute pass without acknowledging (dashed: cleared, unacknowledged). The
 faceplate buttons open each device's faceplate on its Alarms tab; a symbol opens the faceplate in the project's mode (dock),
-and the pin on the faceplate floats it.
+and the pin on the faceplate floats it. Under the module rendering the page also has "Start generator", a pulse button drawn as
+the module's `cadre.ob.button` (page 12 section 17.12): it asks first and holds `TB_GEN/cmdStart` true for 60 s through the same
+`page_pulse`, and the test generator, whose state latches on that command, then runs.
 
 ### 13.5 Adding the Page to a Migration
 

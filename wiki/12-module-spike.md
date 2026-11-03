@@ -862,6 +862,52 @@ Tests: `GeneratorComponent` in `tests/test_module.py` (six tests) and one in `Fi
 check with a stand in for the Perspective client drew each case as expected (`on` off and on, the frame at each level and mode,
 the four readout sides, no readout). Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
 
+### 17.12 Wrap W3: the Button (`cadre.ob.button`)
+
+Spike T0 wrap W3 adds `cadre.ob.button`, the shared control, from `obc-automation-button` (manifest path
+`src/automation/automation-button/automation-button.ts`). The wrap changes the sources only; the module is not built or installed by it.
+
+The element can carry what the row needs. It draws a round button with an icon holder, an identifier and readout stack, an alert
+frame and a progress ring, and it has one event, `click` ("Fired when the button is clicked"). The click reaches the host from the
+button inside its shadow root (a Chromium check dispatched it, with `static` on and off), so the wrapper's listener on the element
+sees it.
+
+Properties. The twenty attributes of the manifest (`variant`, `state`, `static`, `activated`, `tag`, `readoutPosition`, `readoutSize`,
+`alert`, `alertFrameType`, `alertFrameThickness`, `alertFrameStatus`, `alertFrameMode`, `showAlertIcon`, `progress`, `progressMode`,
+`progressValue`, `direction`, `positioning`, `orientation`, `hasBadgeSpacer`); the enumerations are those of the element's own
+declarations and the defaults are measured (`module/web/defaults.json`). The wrapper adds nothing: the element is complete. The
+fields without an attribute (`readouts`, `showReadoutStack`, `showAlertCategoryIcon`) are not properties of the component.
+
+Event. As the alert lists (measured fact GF-37): the generator's `ALERT_EVENTS` gains `click`, carried as the component event
+`onPress` with an empty payload (`schemas/button.onPress.json`, `ComponentEventDescriptor` in `CadreOb.java`), fired by the wrapper
+through `componentEvents.fireComponentEvent`. The name is not `onClick`, which Perspective already uses for the DOM event of a
+component.
+
+The write path. No new path. The library's page command button (COB-159, `parts.button_node`) pulses a tag the descriptor declared
+through `cadre.hmi.page_pulse`, write path W18 (wiki page 05 section 5.1): the role `Administrator` is asked first (COBD-024, GF-43),
+a tag that is not in `session.custom.commands` is refused, `true` is written and `false` follows after the declared length. That path
+asks first: the "Press" button only sets a pending flag, and the Confirm button makes the one checked write, with `enabled` bound
+to the permission of W18 (gate G7 commands requires it of any control that names a checked write). The module button takes the
+place of the Press button, so that it keeps the confirmation, the role check and the refusal when nobody is signed in exactly as they
+are; a component event that called `page_pulse` itself would need an `enabled` property, which the element lacks, and would drop the
+confirmation that every command of the library has. The descriptor's pulse button takes `render: module` (schema
+`screen-descriptor.schema.json`; an error on any other action). Under `--render module` its Press is `cadre.ob.button` with the label
+as `tag`, `positioning` `button` and the identifier on the right; `onPress` sets the pending flag; `static` is bound to the negation
+of `{view.custom.can.W18}`, so that the button looks inert while the session lacks the permission (the check itself is Confirm's and
+`page_pulse`'s). The answer of a refused command shows in place of the label, as for the library's button. Under the stock rendering
+the library's button is drawn as before.
+
+Test page. Section 13.4 of page 13 gains "Start generator" (`TB_press_GEN_start`, `render: module`) on the test generator's pulse
+member `_componentTest/TB_GEN/cmdStart`, a memory Boolean held true for 60 s (`PULSE_MS`) by `page_pulse`; the generator's `state`
+expression tag latches true on it (`latch("cmdStart", "cmdStop", "state")`), so the press is visible as the test generator running.
+The library's own buttons stay. Gateway check, signed in with `Administrator`: press, Confirm; `cmdStart` reads true for 60 s and
+`TB_GEN/state` true. Signed out: the button is static, Confirm is disabled, and the tag does not change.
+
+Tests: `ButtonComponent` in `tests/test_module.py` (five tests: contract, event, enumerations, Java and bundle, the test page's
+button) and three in `ButtonTests` of `tests/test_asm_parts.py` (the Press only asks, Confirm calls `page_pulse` with W18 and its
+`enabled`; the stock rendering and an unmarked pulse keep the library's button; `render: module` on another action is an error).
+Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

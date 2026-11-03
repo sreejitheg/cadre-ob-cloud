@@ -1139,7 +1139,9 @@ def diagram_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict
     custom = {"colorMode": False, "showTag": tags_shown_at_start(desc), "showReadout": True}
     custom_cfg = {}
     limits = embed_limits(desc.get("symbols", []), contracts)
-    extra = parts.diagram_parts(desc, contracts, limits, rep)   # COB-159: lines, bars, trends, buttons
+    # COB-159: lines, bars, trends, buttons; a pulse button may be the module's (W3) where the page is built for the module
+    extra = parts.diagram_parts(desc, contracts, limits, rep,
+                                module=RENDER["target"] == "module" and bool(module_props("cadre.ob.button")))
     kids += extra["under"]
     for s in desc.get("symbols", []):
         node, c_def, c_cfg = embed_symbol(s, contracts, tag_root, rep, toolbar=toolbar, limit=limits.get(s["id"]))

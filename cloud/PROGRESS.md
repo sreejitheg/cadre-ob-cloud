@@ -66,3 +66,9 @@
   (tested from scratch on a throwaway gateway on port 8089: 48 s to a gateway whose token answers 200; a second
   run changes nothing and does not restart) and `trust-module`. `dockerd` started by the session works and is
   recorded in the script.
+- 2026-11-03 01:20: W3 `obc-automation-button` done in a Sonnet 5.5 subagent at medium effort: 186,858 tokens,
+  57 tool calls, 9 min 3 s. Component `cadre.ob.button`, element event `click` as component event `onPress`; a pulse
+  button with `render: module` draws its Press as the module button under `--render module`, and Confirm and
+  `page_pulse` (W18, `Administrator`) are unchanged, so the press asks and Confirm writes; test page button
+  `TB_press_GEN_start` on `TB_GEN/cmdStart`. Tests 1093 to 1101, all passing; G0 to G7 pass (19 devices, 21
+  device symbols).

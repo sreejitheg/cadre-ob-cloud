@@ -46,6 +46,9 @@ ALERT_EVENTS = {
     "silence-click": ("onSilenceClick", "none", "The Silence button was clicked."),
     "ack-all-visible-click": ("onAckAllClick", "visible", "The ACK visible button was clicked. event.mode is the "
                                                           "list mode; event.ids holds the unacknowledged alerts it shows."),
+    # The command button (spike T0 wrap W3): the element's own `click`, with no detail to carry.
+    "click": ("onPress", "none", "The button was pressed. The event carries nothing; the page's script decides what it "
+                                 "commands (the library's confirmed pulse, write path W18)."),
 }
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
@@ -77,6 +80,9 @@ COMPONENTS = [
      "describe": {"showStatus": "Whether the symbol draws its status word (On or Off, or statusText). False hides the "
                                "word; the identifier stays. The diagram toolbar's Readout button binds it.",
                   "statusText": "When not empty, the status word drawn beside the symbol in place of On or Off."}},
+    {"tag": "obc-automation-button", "type": "cadre.ob.button", "name": "button", "title": "OB Button",
+     "palette": "OpenBridge automation button: a command button with identifier, state, progress and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "events": ["click"]},
     {"tag": "obc-transmitter", "type": "cadre.ob.readout", "name": "readout", "title": "OB Readout",
      "palette": "OpenBridge transmitter: value chip with unit and an identifier beneath it",
      "size": {"width": 72, "height": 24}, "exclude": ["data", "lineType"], "extra": ["stretch"], "sheet": "readout",

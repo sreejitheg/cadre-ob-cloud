@@ -16,7 +16,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parents[1]
 BUNDLE = HERE / "web/dist/ob-components.js"
 MANIFEST = HERE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json"
-TAGS = ["obc-pump", "obc-automation-tank", "obc-motor", "obc-fan", "obc-digital-valve", "obc-analog-valve", "obc-filter", "obc-indicator-generator", "obc-transmitter", "obc-instrument-field", "obc-alert-list-details", "obc-alert-list-page-small"]
+TAGS = ["obc-pump", "obc-automation-tank", "obc-motor", "obc-fan", "obc-digital-valve", "obc-analog-valve", "obc-filter", "obc-indicator-generator", "obc-automation-button", "obc-transmitter", "obc-instrument-field", "obc-alert-list-details", "obc-alert-list-page-small"]
 
 
 def fields(tag: str) -> list[str]:

@@ -428,6 +428,13 @@
               "flat"
             ]
           },
+          "render": {
+            "enum": [
+              "view",
+              "module"
+            ],
+            "description": "A pulse button only: module draws the question button as the Cadre OpenBridge module's cadre.ob.button (wiki page 12 section 17.12) when the page is built with --render module; view (the default) keeps the library's button. The Confirm and Cancel buttons and the pulse are the same."
+          },
           "action": {
             "oneOf": [
               {

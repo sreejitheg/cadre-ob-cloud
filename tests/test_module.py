@@ -370,6 +370,77 @@ class GeneratorComponent(unittest.TestCase):
                          ["level-critical", "level-high", "level-medium", "level-low", "level-diagnostic"])
 
 
+class ButtonComponent(unittest.TestCase):
+    """The automation button (spike T0, wrap W3): `obc-automation-button`, whose one event `click` the wrapper carries to the
+    Perspective component event `onPress`. The command is the page's script (the library's confirmed pulse, W18)."""
+    ctype = "cadre.ob.button"
+    MANIFEST_ATTRIBUTES = {"variant", "state", "static", "activated", "tag", "readoutPosition", "readoutSize", "alert",
+                           "alertFrameType", "alertFrameThickness", "alertFrameStatus", "alertFrameMode", "showAlertIcon",
+                           "progress", "progressMode", "progressValue", "direction", "positioning", "orientation",
+                           "hasBadgeSpacer"}
+
+    def decl(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        return next(d for m in manifest["modules"] if m["path"] == "src/automation/automation-button/automation-button.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-automation-button")
+
+    def test_the_contract_names_the_element_and_its_attributes(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-automation-button")
+        self.assertEqual(set(c["props"]) - {"componentSize"}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual({a["fieldName"] for a in self.decl()["attributes"]}, self.MANIFEST_ATTRIBUTES)
+
+    def test_the_click_event_is_carried_as_on_press(self):
+        self.assertEqual([e["name"] for e in self.decl()["events"]], ["click"])
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["events"], {"onPress": {"element": "click", "schema": "schemas/button.onPress.json"}})
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/button.onPress.json").exists())
+        self.assertIn('"events":[{"dom":"click","name":"onPress","payload":"none"}]', JS)
+        # the wrapper listens on the element and fires through Perspective's componentEvents (GF-37), as for the alert lists
+        self.assertIn("el.addEventListener(ev.dom, f)", JS)
+        self.assertIn("ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el))", JS)
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["variant"]["enum"], ["regular", "double", "forward", "square", "flat", "flat-forward"])
+        self.assertEqual(props["state"]["enum"], ["closed", "open"])
+        self.assertEqual(props["readoutPosition"]["enum"], ["top", "bottom", "left", "right"])
+        self.assertEqual(props["positioning"]["enum"], ["point", "symbol", "button"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual((props["variant"]["default"], props["state"]["default"], props["static"]["default"],
+                          props["positioning"]["default"]), ("regular", "open", False, "point"))
+        for name in ("alertFrameStatus", "alertFrameMode"):
+            self.assertEqual(props[name]["enum"], COMPONENTS["cadre.ob.filter"]["props"][name]["enum"], name)
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.button", "button"')
+        self.assertIn('event("button", "onPress"', java)
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/button.props.json").exists())
+        self.assertIn("automation/automation-button/automation-button.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.button","tag":"obc-automation-button"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-automation-button"\)\]')
+        self.assertIn('"@oicl/openbridge-webcomponents": "2.0.0-next.155"', (MODULE / "web/package.json").read_text(encoding="utf-8"))
+
+    def test_the_component_test_page_commands_the_test_generator_through_the_confirmed_pulse(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "tools"))
+        from hmi import library_profile, screen, testbench
+        contracts = screen.load_contracts()
+        bench = testbench.build(contracts, library_profile.build(contracts), "[default]cadre_hmi_ctest")
+        by_id = {b["id"]: b for b in bench.descriptor["buttons"]}
+        b = by_id["TB_press_GEN_start"]
+        self.assertEqual((b["render"], b["action"]["type"], b["action"]["tag"], b["action"]["ms"]),
+                         ("module", "pulse", f"{testbench.FOLDER}/TB_GEN/cmdStart", testbench.PULSE_MS))
+        self.assertEqual(testbench.PULSE_MS, 60000)
+        self.assertIn(b["action"]["tag"], bench.pulse_tags)
+        gen = next(k for k in bench.tags["tags"] if k["name"] == "TB_GEN")
+        self.assertIn(("cmdStart", "Boolean"), [(t["name"], t["dataType"]) for t in gen["tags"]])   # the tag exists, a memory Boolean
+        # the library's own pulse buttons of the page stay as they were
+        self.assertNotIn("render", by_id["TB_pulse_TB_PUMP"])
+
+
 class Release(unittest.TestCase):
     def test_the_version_is_plain_and_0_4_3(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")

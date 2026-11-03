@@ -821,6 +821,17 @@ def devices_block(specs: dict, contracts: dict) -> tuple[Block, list[str]]:
                                             "Maintenance are on the faceplate;", bx, py + 40, 840, 16, style="body", align="left"))
     block.add("labels", label("TB_modes_2", "a command a mode does not allow is refused with its reason.",
                               bx, py + 58, 840, 16, style="body", align="left"))
+    # the module's command button (spike T0 wrap W3, wiki page 12 section 17.12): the same confirmed pulse of the library
+    # (`page_pulse`, write path W18) on the test generator's Start command, which its state tag latches; drawn as the
+    # module's `cadre.ob.button` under `--render module` and as the library's button otherwise
+    tag = f"{FOLDER}/TB_GEN/cmdStart"
+    pulses.append(tag)
+    block.add("buttons", {**button("TB_press_GEN_start", "Start generator", bx, y2 + 270, 220,
+                                   {"type": "pulse", "tag": tag, "ms": PULSE_MS,
+                                    "confirm": "Start the test generator?"}, h=56), "render": "module"})
+    block.add("labels", label("TB_press_GEN_start_c", "OB button: Start generator pulses TB_GEN/cmdStart for a minute; the "
+                                                      "generator then runs.", bx + 230, y2 + 288, 600, 16,
+                              style="body", align="left"))
     block.w, block.h = 1500, y2 + 365
     return block, pulses
 
