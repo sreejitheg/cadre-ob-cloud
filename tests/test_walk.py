@@ -642,6 +642,17 @@ class FaceplateStylePlanTests(unittest.TestCase):
         self.assertIn(("XV-1", "Maintenance"), self.tabs(own))
 
 
+class ModulePropTests(unittest.TestCase):
+    """Every kind the module draws has a row in the walk's `MODULE_PROP`, so that the walk reads its state from the
+    element and not from a library view it does not have (spike T0: the module filter F301 read as empty, C-10)."""
+
+    def test_every_module_kind_has_a_walk_row(self):
+        sys.path.insert(0, str(ROOT / "tools" / "compare"))
+        import walk_plan
+        from hmi import screen
+        self.assertEqual(sorted(set(screen.MODULE_KIND) - set(walk_plan.MODULE_PROP)), [])
+
+
 class TopBarPathTests(unittest.TestCase):
     """The glass finds the top bar's alarm button by its component path, and the path follows the order in which
     `framework.top_bar` lays out the root's children (spike T0, 2026-11-03: the alert message moved the button
