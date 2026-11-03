@@ -1791,7 +1791,7 @@ class FrameMechanisms(unittest.TestCase):
         self.assertRegex(JS, r'"dom":"to-sub-menu-click","name":"onSubMenuClick","payload":"none","write":"activeSubMenu","from":"@element"')
         # a link switch changes no property of the component, so it writes nothing
         self.assertNotRegex(JS, r'"dom":"link-palette-changed"[^}]*"write"')
-        self.assertIn("if (v !== undefined) this.put(ev.write, v);", JS)
+        self.assertIn("if (v !== undefined) this.put(ev.write, Array.isArray(v) ? v.slice() : v);", JS)
         rows = self.gen.event_fields({"tag": "x", "eventFields": {"e": [("a", "string", "A"), ("b", "number", "B", "detailKey")]}}, "e")
         self.assertEqual(rows, [{"name": "a", "type": "string", "text": "A"}, {"name": "b", "type": "number", "text": "B", "from": "detailKey"}])
         # the payload of a detail event is built from the fields and coerced to their types (a detail that is no object is the one value)
@@ -2029,6 +2029,46 @@ class FrameComponents(unittest.TestCase):
                              "onUserButtonClick": "user-button-clicked", "onEmergencyBrightnessStart": "emergency-brightness-start",
                              "onEmergencyBrightnessStop": "emergency-brightness-stop", "onAlertClick": "click-alert",
                              "onSilenceClick": "click-silence", "onBack": "back", "onClose": "close", "onBreadcrumbClick": "breadcrumb-click"}),
+        # batch F5: tabs, pivots, the modal window, the context menu input and the notification items
+        "cadre.ob.tabitem": ("obc-tab-item", "src/components/tab-item/tab-item.ts",
+                             {"hug", "centerContent", "checked", "hasClose", "hasLeadingIcon", "hasTitle", "hasDivider", "hasBadge", "icon",
+                              "title", "showSubtitle", "subtitle", "disabled", "badgeType", "badgeSize", "badgeCount",
+                              "showLeadingBadgeIcon"}, set(), {"leadingIconName", "badgeIconName"},
+                             {"onTabClick": "tab-click", "onTabClose": "tab-close"}),
+        "cadre.ob.tabrow": ("obc-tab-row", "src/components/tab-row/tab-row.ts",
+                            {"tabs", "selectedTabId", "hasClose", "centerContent", "hug", "showSubtitle", "hasAddNewTab"}, set(), set(),
+                            {"onTabSelected": "tab-selected", "onTabClosed": "tab-closed", "onAddNewTab": "add-new-tab"}),
+        "cadre.ob.pivotitem": ("obc-pivot-item", "src/components/pivot-item/pivot-item.ts",
+                               {"value", "selected", "direction", "hasLeadingIcon", "hasLabel", "label", "disabled"}, set(), {"iconName"},
+                               {"onSelected": "selected"}),
+        "cadre.ob.pivotitemgroup": ("obc-pivot-item-group", "src/components/pivot-item-group/pivot-item-group.ts",
+                                    {"direction", "selectedValue", "allowDeselect"}, set(), set(), {"onChange": "change"}),
+        "cadre.ob.modalwindow": ("obc-modal-window", "src/components/modal-window/modal-window.ts",
+                                 {"size", "hasOptionalAction", "hasLeadingIcon"}, {"hasCancelAction", "hasCloseAction"},
+                                 {"leadingIconName", "title", "content", "optionLabel", "cancelLabel", "doneLabel"},
+                                 {"onCloseClick": "close-click", "onCancelClick": "cancel-click", "onDoneClick": "done-click",
+                                  "onOptionClick": "option-click"}),
+        "cadre.ob.contextmenuinput": ("obc-context-menu-input", "src/components/context-menu-input/context-menu-input.ts",
+                                      {"type", "options", "selectedValues", "hasTitleBar", "title", "columnGroups", "itemsPerColumn",
+                                       "multiSelect", "selectPerGroup"}, set(), set(),
+                                      {"onClose": "close", "onItemClick": "item-click", "onChange": "change"}),
+        "cadre.ob.notificationmenuitem": ("obc-notification-menu-item", "src/components/notification-menu-item/notification-menu-item.ts",
+                                          {"hasIcon", "title", "description", "day", "time", "open", "size", "primaryActionLabel",
+                                           "secondaryActionLabel"}, set(), {"iconName"},
+                                          {"onItemClick": "item-click", "onPrimaryActionClick": "primary-action-click",
+                                           "onSecondaryActionClick": "secondary-action-click"}),
+        "cadre.ob.notificationmessageitem": ("obc-notification-message-item",
+                                             "src/components/notification-message-item/notification-message-item.ts",
+                                             {"title", "description", "time", "timeSecondary", "actionLabel", "type", "size", "hasTimestamp2",
+                                              "hasSecondaryIcon", "large", "empty", "emptyText"}, {"showTitle", "showDescription", "showTimestamp"},
+                                             {"secondaryIconName"},
+                                             {"onMessageClick": "message-click", "onActionClick": "action-click"}),
+        "cadre.ob.notificationfloatingitem": ("obc-notification-floating-item",
+                                              "src/components/notification-floating-item/notification-floating-item.ts",
+                                              {"type", "direction", "hasTimestamp", "hasDay", "action", "action2", "lineType"}, set(),
+                                              {"primaryIconName", "title", "description", "time", "day", "actionLabel", "action2Label"},
+                                              {"onActionClick": "action-click", "onAction2Click": "action2-click",
+                                               "onDismissClick": "dismiss-click"}),
     }
     # the properties of the nested elements a composite renders itself (the top bar's alert button and clock), and their tags
     PARTS = {"cadre.ob.topbar": {"nAlerts", "counter", "alertType", "blinking", "showSilenceButton", "date", "showSeconds", "timeZoneOffsetHours"}}
@@ -2039,11 +2079,15 @@ class FrameComponents(unittest.TestCase):
                 # the user menu: no credential, no recent users, no signed in actions (see test_the_user_menu_carries_no_credential)
                 "cadre.ob.usermenu": {"username", "password", "usernameError", "passwordError", "hasRecentlySignedIn", "primaryActionId"},
                 # the top bar's own `showDate` is unused by the element (its clock is slotted)
-                "cadre.ob.topbar": {"showDate"}}
+                "cadre.ob.topbar": {"showDate"},
+                # the tab item's `icon` attribute is never read by the element; its `badges` field has no attribute and is not carried
+                "cadre.ob.tabitem": {"icon"}}
     # the properties that are plain data (a list read as JSON, not child elements): the breadcrumb's own array
     DATA = {"cadre.ob.breadcrumb": {"items"}, "cadre.ob.topbar": {"breadcrumbItems"},
             # the system menu's four sections: fields without an attribute, carried as state objects
-            "cadre.ob.systemmenu": {"wifiState", "audioState", "microphoneState", "batteryState"}}
+            "cadre.ob.systemmenu": {"wifiState", "audioState", "microphoneState", "batteryState"},
+            "cadre.ob.tabrow": {"tabs"},
+            "cadre.ob.contextmenuinput": {"options", "columnGroups", "selectedValues"}}
     # the `items` properties of a frame component (a list of child elements), with the tags each allows at the top level
     ITEMS = {"cadre.ob.alertmenuitem": {"alertIcon": ["obc-alert-icon"]}, "cadre.ob.alertmenu": {"items": ["obc-alert-menu-item"]},
              "cadre.ob.navigationitemgroup": {"items": ["obc-navigation-item", "obc-navigation-item-group"]},
@@ -2051,7 +2095,8 @@ class FrameComponents(unittest.TestCase):
                                          "footerItems": ["obc-navigation-item", "obc-navigation-item-group"]},
              "cadre.ob.treenavigationgroup": {"items": ["obc-tree-navigation-item", "obc-tree-navigation-group"]},
              "cadre.ob.treenavigation": {"items": ["obc-tree-navigation-group", "obc-tree-navigation-item"]},
-             "cadre.ob.appmenu": {"items": ["obc-app-button"]}}
+             "cadre.ob.appmenu": {"items": ["obc-app-button"]},
+             "cadre.ob.pivotitemgroup": {"items": ["obc-pivot-item"]}}
 
     @classmethod
     def setUpClass(cls):
@@ -2133,7 +2178,21 @@ class FrameComponents(unittest.TestCase):
                             ("topbar.onMoreButtonClick", {}), ("topbar.onUserButtonClick", {}), ("topbar.onEmergencyBrightnessStart", {}),
                             ("topbar.onEmergencyBrightnessStop", {}), ("topbar.onAlertClick", {}), ("topbar.onSilenceClick", {}),
                             ("topbar.onBack", {}), ("topbar.onClose", {}),
-                            ("topbar.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"}), ("appmenu.onSearch", {"query": "string"}), ("appmenu.onAppClick", {"id": "string", "tag": "string"})):
+                            ("topbar.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"}), ("appmenu.onSearch", {"query": "string"}), ("appmenu.onAppClick", {"id": "string", "tag": "string"}),
+                            ("tabitem.onTabClick", {"title": "string"}), ("tabitem.onTabClose", {"title": "string"}),
+                            ("tabrow.onTabSelected", {"id": "string", "index": "number", "title": "string"}),
+                            ("tabrow.onTabClosed", {"id": "string", "index": "number", "title": "string"}), ("tabrow.onAddNewTab", {}),
+                            ("pivotitem.onSelected", {"value": "string"}),
+                            ("pivotitemgroup.onChange", {"selectedValue": "string"}),
+                            ("modalwindow.onCloseClick", {}), ("modalwindow.onCancelClick", {}), ("modalwindow.onDoneClick", {}),
+                            ("modalwindow.onOptionClick", {}),
+                            ("contextmenuinput.onClose", {}), ("contextmenuinput.onItemClick", {"value": "string", "label": "string"}),
+                            ("contextmenuinput.onChange", {"selectedValues": "array"}),
+                            ("notificationmenuitem.onItemClick", {"open": "boolean"}), ("notificationmenuitem.onPrimaryActionClick", {}),
+                            ("notificationmenuitem.onSecondaryActionClick", {}),
+                            ("notificationmessageitem.onMessageClick", {}), ("notificationmessageitem.onActionClick", {}),
+                            ("notificationfloatingitem.onActionClick", {}), ("notificationfloatingitem.onAction2Click", {}),
+                            ("notificationfloatingitem.onDismissClick", {})):
             schema = json.loads((MODULE / f"common/src/main/resources/schemas/{name}.json").read_text(encoding="utf-8"))
             self.assertEqual({k: v["type"] for k, v in schema["properties"].items()}, props, name)
 
@@ -2325,6 +2384,88 @@ class FrameComponents(unittest.TestCase):
             self.assertTrue(set(b) - {"tag", "id", "children"} <= known, b)
             self.assertEqual([(c["tag"][4:] in icons, c["slot"]) for c in b["children"]], [(True, "icon")], b)
 
+    def test_the_arrays_of_batch_f5_are_data_with_the_fields_of_the_pinned_declarations(self):
+        """Tabs, context menu options and column groups are the element's own array attributes: data, not child elements."""
+        tabs = schema_of("cadre.ob.tabrow")["properties"]["tabs"]
+        self.assertEqual(tabs["type"], "array")
+        dts = (MODULE / "web/node_modules/@oicl/openbridge-webcomponents/dist/components/tab-row/tab-row.d.ts").read_text(encoding="utf-8")
+        declared = set(re.findall(r"^    (\w+)\??:", re.search(r"export interface TabData \{(.*?)\n\}", dts, re.S).group(1), re.M))
+        # every field of the pinned TabData but the `badges` list, plus the module's own `iconName`
+        self.assertEqual(set(tabs["items"]["properties"]), (declared - {"badges"}) | {"iconName"})
+        self.assertEqual(tabs["items"]["required"], ["id", "title"])
+        self.assertEqual(tabs["items"]["properties"]["badgeType"]["enum"][:3], ["alarm", "warning", "caution"])
+        self.assertEqual(tabs["items"]["properties"]["badgeSize"]["enum"], ["regular", "large"])
+        self.assertRegex(JS, r'"type":"cadre.ob.tabrow".*?"tabIcons":true.*?"data":\[\{"name":"tabs","kind":"tabs"\}\]')
+        self.assertEqual(JS.count('"tabIcons":true'), 1)         # only the tab row builds icons into per tab slots
+        menu = COMPONENTS["cadre.ob.contextmenuinput"]
+        self.assertEqual({n: menu["props"][n]["type"] for n in ("options", "columnGroups", "selectedValues")}, {n: "array" for n in ("options", "columnGroups", "selectedValues")})
+        self.assertNotIn("items", menu)
+        opts = schema_of("cadre.ob.contextmenuinput")["properties"]
+        self.assertEqual(set(opts["options"]["items"]["properties"]), {"value", "label", "level", "children"})      # the icon (a template) is not carried
+        self.assertEqual(set(opts["columnGroups"]["items"]["properties"]), {"title", "columns", "options"})
+        for name in ("tabs", "menuoptions", "columngroups", "strings"):
+            self.assertRegex(JS, name + r"[:,]")
+
+    def test_the_tri_state_flags_of_the_context_menu_are_unset_by_default(self):
+        """`multiSelect` and `selectPerGroup` are undefined in the element, which then decides from `type`."""
+        props = schema_of("cadre.ob.contextmenuinput")["properties"]
+        for name in ("multiSelect", "selectPerGroup"):
+            self.assertEqual(props[name]["type"], ["boolean", "null"], name)
+            self.assertIsNone(props[name]["default"], name)
+            self.assertRegex(JS, rf'"name":"{name}","kind":"nboolean","def":null')
+        self.assertEqual(props["type"]["enum"], ["regular", "checkboxes", "nested-checkboxes", "flyout", "multi", "multi-with-subtitles"])
+
+    def test_a_selection_event_writes_the_components_selection_back_and_a_list_is_copied(self):
+        for dom, name, field in (("tab-selected", "onTabSelected", "selectedTabId"), ("tab-closed", "onTabClosed", "selectedTabId"),
+                                 ("change", "onChange", "selectedValue"), ("change", "onChange", "selectedValues"),
+                                 ("item-click", "onItemClick", "open")):
+            self.assertRegex(JS, rf'"dom":"{dom}","name":"{name}","payload":"detail","fields":\[[^\]]*\],"write":"{field}"')
+        self.assertRegex(JS, r'"dom":"tab-closed","name":"onTabClosed","payload":"detail","fields":\[[^\]]*\],"write":"selectedTabId","from":"@element"')
+        # a field of the detail may be read by a dotted path (the tab of a tab event), and a field may be a list of texts
+        self.assertRegex(JS, r'\{"name":"title","type":"string","from":"tab.title"\}')
+        self.assertRegex(JS, r'\{"name":"selectedValues","type":"array"\}')
+        self.assertIn("(f.from || f.name).split('.')", JS)
+        schema = json.loads((MODULE / "common/src/main/resources/schemas/contextmenuinput.onChange.json").read_text(encoding="utf-8"))
+        self.assertEqual(schema["properties"]["selectedValues"], {"type": "array", "items": {"type": "string"}, "description": schema["properties"]["selectedValues"]["description"]})
+        # no event of batch F5 writes a tag: the only writes are to the component's own properties
+        self.assertNotIn("writeTag", JS)
+
+    def test_the_modal_window_carries_text_and_events_and_is_not_a_command_dialogue(self):
+        c = COMPONENTS["cadre.ob.modalwindow"]
+        self.assertEqual(set(c["slots"]), {"leadingIconName", "title", "content", "optionLabel", "cancelLabel", "doneLabel"})
+        self.assertEqual({n: c["slots"][n]["kind"] for n in c["slots"]}, {"leadingIconName": "icon", "title": "text", "content": "text",
+                         "optionLabel": "text", "cancelLabel": "text", "doneLabel": "text"})
+        props = schema_of("cadre.ob.modalwindow")["properties"]
+        self.assertEqual(props["size"]["enum"], ["small", "medium", "large"])
+        self.assertIs(props["hasCancelAction"]["default"], True)
+        self.assertIs(props["hasCloseAction"]["default"], True)
+        self.assertEqual(props["content"]["type"], "string")        # the content slot is text: a Perspective component cannot hold another
+        self.assertNotIn("items", c)
+        self.assertEqual(set(c["events"]), {"onCloseClick", "onCancelClick", "onDoneClick", "onOptionClick"})
+
+    def test_the_floating_item_names_its_two_labels_apart_from_the_flags_that_draw_the_buttons(self):
+        props = schema_of("cadre.ob.notificationfloatingitem")["properties"]
+        for flag in ("action", "action2"):
+            self.assertEqual(props[flag]["type"], "boolean", flag)
+        for label in ("actionLabel", "action2Label", "title", "description", "time", "day"):
+            self.assertEqual(props[label]["type"], "string", label)
+        self.assertEqual(props["type"]["enum"], ["regular", "application"])
+        self.assertEqual(props["direction"]["enum"], ["horizontal", "vertical"])
+        self.assertEqual(props["lineType"]["enum"], ["single-line", "multi-line"])
+        self.assertEqual(COMPONENTS["cadre.ob.notificationfloatingitem"]["slots"]["primaryIconName"], {"slot": "primary-icon", "kind": "icon"})
+
+    def test_all_thirty_three_frame_components_of_the_pinned_release_are_wrapped(self):
+        wrapped = {c["element"] for c in COMPONENTS.values()}
+        frame = {"obc-top-bar", "obc-alert-button", "obc-alert-button-item", "obc-alert-menu", "obc-alert-menu-item", "obc-app-button",
+                 "obc-app-menu", "obc-breadcrumb", "obc-brilliance-menu", "obc-clock", "obc-command-menu", "obc-context-menu-input",
+                 "obc-modal-window", "obc-navigation-item", "obc-navigation-item-group", "obc-navigation-menu", "obc-notification-badge-button",
+                 "obc-notification-button", "obc-notification-floating-item", "obc-notification-menu-item", "obc-notification-message-item",
+                 "obc-pivot-item", "obc-pivot-item-group", "obc-system-menu", "obc-tab-item", "obc-tab-row", "obc-toggletip", "obc-tooltip",
+                 "obc-tree-navigation", "obc-tree-navigation-group", "obc-tree-navigation-item", "obc-user-button", "obc-user-menu"}
+        self.assertEqual(len(frame), 33)
+        self.assertEqual(frame - wrapped, set())
+        self.assertEqual({c["element"] for c in map(COMPONENTS.get, self.ROWS)}, frame)
+
     def test_the_components_are_registered_in_java_imported_and_wrapped(self):
         java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
         entry = (MODULE / "web/entry.js").read_text(encoding="utf-8")
@@ -2364,7 +2505,8 @@ class FrameComponents(unittest.TestCase):
                                   "alert-button-item": 26, "alert-button": 31, "alert-menu-item": 22, "alert-menu": 8,
                                   "navigation-item": 17, "navigation-item-group": 15, "navigation-menu": 11,
                                   "tree-navigation-item": 12, "tree-navigation-group": 9, "tree-navigation": 3, "breadcrumb": 4,
-                                  "brilliance-menu": 23, "user-menu": 8, "system-menu": 12, "app-menu": 3, "command-menu": 4, "top-bar": 39})
+                                  "brilliance-menu": 23, "user-menu": 8, "system-menu": 12, "app-menu": 3, "command-menu": 4, "top-bar": 39,
+                                  "tab-item": 34, "tab-row": 10, "pivot-item": 9, "pivot-item-group": 6, "modal-window": 11, "context-menu-input": 18, "notification-menu-item": 7, "notification-message-item": 15, "notification-floating-item": 13})
         stock = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="stock")
         self.assertNotIn("FrameComponents", [s["id"] for s in stock.descriptor["sections"]])
         self.assertEqual(self.testbench.check(bench.descriptor, contracts), [])

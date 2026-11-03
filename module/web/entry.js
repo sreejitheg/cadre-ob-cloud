@@ -82,4 +82,14 @@ import '@oicl/openbridge-webcomponents/dist/components/system-menu/system-menu.j
 import '@oicl/openbridge-webcomponents/dist/components/app-menu/app-menu.js';
 import '@oicl/openbridge-webcomponents/dist/components/command-menu/command-menu.js';
 import '@oicl/openbridge-webcomponents/dist/components/top-bar/top-bar.js';
+// tranche T2, batch F5: tabs, pivots, the modal window, the context menu input and the notification items, each child before its parent
+import '@oicl/openbridge-webcomponents/dist/components/tab-item/tab-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/tab-row/tab-row.js';
+import '@oicl/openbridge-webcomponents/dist/components/pivot-item/pivot-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/pivot-item-group/pivot-item-group.js';
+import '@oicl/openbridge-webcomponents/dist/components/modal-window/modal-window.js';
+import '@oicl/openbridge-webcomponents/dist/components/context-menu-input/context-menu-input.js';
+import '@oicl/openbridge-webcomponents/dist/components/notification-menu-item/notification-menu-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/notification-message-item/notification-message-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/notification-floating-item/notification-floating-item.js';
 import './icons.js';

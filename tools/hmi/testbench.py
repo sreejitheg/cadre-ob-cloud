@@ -809,6 +809,25 @@ TREE_ROWS = [
     {"tag": "obc-tree-navigation-item", "id": "tree-shore", "label": "Shore link", "hasLeadingIcon": False, "disabled": True},
 ]
 CRUMBS = [{"label": "Vessel", "href": "/vessel"}, {"label": "Engine room", "href": "/engine"}, {"label": "Pump P-101"}]
+# Sample tabs of our own for the tab row (F5): ids are unique, the icons are bundled ones
+TABS = [{"id": "t-overview", "title": "Overview", "iconName": "dashboard"},
+        {"id": "t-alarms", "title": "Alarms", "iconName": "alarm", "hasBadge": True, "badgeCount": 3, "badgeType": "alarm"},
+        {"id": "t-trends", "title": "Trends", "iconName": "info"},
+        {"id": "t-reports", "title": "Reports", "iconName": "help", "disabled": True}]
+PIVOTS = [{"tag": "obc-pivot-item", "id": "pv-alarms", "value": "alarms", "hasLabel": True, "label": "Alarms", "hasLeadingIcon": True,
+           "children": [{"tag": "obi-alarm", "slot": "icon"}]},
+          {"tag": "obc-pivot-item", "id": "pv-trends", "value": "trends", "hasLabel": True, "label": "Trends", "hasLeadingIcon": True,
+           "children": [{"tag": "obi-info", "slot": "icon"}]},
+          {"tag": "obc-pivot-item", "id": "pv-reports", "value": "reports", "hasLabel": True, "label": "Reports", "disabled": True}]
+# Sample options of our own for the context menu input (F5): values are unique
+MENU_OPTIONS = [{"value": "show-alarms", "label": "Alarms"}, {"value": "show-trends", "label": "Trends"},
+                {"value": "show-faceplate", "label": "Faceplate"}, {"value": "show-notes", "label": "Notes"}]
+MENU_NESTED = [{"value": "area-engine", "label": "Engine room", "level": 0,
+                "children": [{"value": "area-pumps", "label": "Pumps", "level": 1}, {"value": "area-tanks", "label": "Tanks", "level": 1}]},
+               {"value": "area-deck", "label": "Deck", "level": 0}]
+MENU_COLUMNS = [{"title": "Show", "columns": 1, "options": MENU_OPTIONS[:3]},
+                {"title": "Areas", "columns": 1, "options": [{"value": "area-engine", "label": "Engine room"},
+                                                              {"value": "area-deck", "label": "Deck"}]}]
 FRAME_SAMPLE = {
     "tooltip": {"base": {"label": "Pump P-101 running"},
                 "extra": [("icon only", {"type": "icon", "iconName": "info"}),
@@ -892,6 +911,51 @@ FRAME_SAMPLE = {
                                                     "batteryState": {**SYSTEM_STATES["batteryState"], "charging": True}})]},
     "user-menu": {"base": {"type": "signed-in", "userInitials": "AB", "userLabel": "Alex Bravo", "userRole": "Operator"},
                   "extra": [("sign in, small", {"type": "sign-in", "size": "small"})]},
+    # tabs, pivots, the modal window, the context menu input and the notification items (F5)
+    "tab-item": {"base": {"hasTitle": True, "title": "Engine room", "hasLeadingIcon": True, "hasBadge": True, "badgeCount": 3,
+                          "leadingIconName": "dashboard", "badgeIconName": "info"},
+                 "extra": [("subtitle", {"showSubtitle": True, "subtitle": "Pumps and tanks"}),
+                           ("close and divider", {"hasClose": True, "hasDivider": True}),
+                           ("badge with icon", {"badgeType": "alarm", "showLeadingBadgeIcon": True})]},
+    "tab-row": {"base": {"tabs": TABS, "selectedTabId": "t-overview"},
+                "extra": [("with subtitles", {"showSubtitle": True, "tabs": [dict(t, subtitle="Plant " + str(i + 1)) for i, t in enumerate(TABS)]}),
+                          ("second tab selected", {"selectedTabId": "t-alarms"}),
+                          ("no icons", {"tabs": [dict(t, hasLeadingIcon=False) for t in TABS]}),
+                          ("no tabs", {"tabs": []})]},
+    "pivot-item": {"base": {"value": "alarms", "hasLabel": True, "label": "Alarms", "hasLeadingIcon": True, "iconName": "alarm"},
+                   "extra": [("icon only", {"hasLabel": False}), ("label only", {"hasLeadingIcon": False})]},
+    "pivot-item-group": {"base": {"items": PIVOTS, "selectedValue": "alarms"},
+                         "extra": [("second selected", {"selectedValue": "trends"}), ("no pivots", {"items": []})]},
+    "modal-window": {"base": {"title": "Release command", "content": "The bridge wing gives up command. Machinery control moves to the engine "
+                                                                      "control room.",
+                              "optionLabel": "Details", "cancelLabel": "Keep command", "doneLabel": "Release", "leadingIconName": "info"},
+                     "extra": [("optional action", {"hasOptionalAction": True}), ("leading icon", {"hasLeadingIcon": True}),
+                               ("medium with action", {"size": "medium", "hasOptionalAction": True})]},
+    "context-menu-input": {"base": {"options": MENU_OPTIONS, "selectedValues": ["show-trends"], "title": "Show", "itemsPerColumn": 5},
+                           "extra": [("title bar", {"hasTitleBar": True}),
+                                     ("checkboxes", {"type": "checkboxes", "selectedValues": ["show-alarms", "show-notes"]}),
+                                     ("nested checkboxes", {"type": "nested-checkboxes", "options": MENU_NESTED,
+                                                            "selectedValues": ["area-pumps"]}),
+                                     ("flyout", {"type": "flyout", "options": MENU_NESTED, "selectedValues": []}),
+                                     ("two column groups", {"type": "multi-with-subtitles", "options": [], "columnGroups": MENU_COLUMNS,
+                                                            "selectedValues": ["show-alarms", "area-deck"]}),
+                                     ("several selected", {"multiSelect": True, "selectedValues": ["show-alarms", "show-notes"]}),
+                                     ("one for each group", {"type": "multi", "selectPerGroup": True, "options": [],
+                                                             "columnGroups": MENU_COLUMNS, "selectedValues": ["show-alarms", "area-deck"]}),
+                                     ("no options", {"options": [], "selectedValues": []})]},
+    "notification-menu-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator from the engine control room",
+                                        "day": "Today", "time": "09:41", "primaryActionLabel": "View", "secondaryActionLabel": "Dismiss",
+                                        "iconName": "info"},
+                               "extra": [("opened with actions", {"open": True, "size": "double-line"}), ("source icon", {"hasIcon": True})]},
+    "notification-message-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator", "time": "09:41",
+                                           "timeSecondary": "09:52", "actionLabel": "View", "emptyText": "No active notification",
+                                           "secondaryIconName": "info", "type": "with-button"},
+                                  "extra": [("secondary icon and time", {"hasSecondaryIcon": True, "hasTimestamp2": True})]},
+    "notification-floating-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator", "time": "09:41", "day": "Today",
+                                            "hasTimestamp": True, "action": True, "actionLabel": "View", "action2": True,
+                                            "action2Label": "Dismiss", "primaryIconName": "info"},
+                                  "extra": [("application with day", {"type": "application", "hasDay": True}),
+                                            ("vertical, multi line", {"direction": "vertical", "lineType": "multi-line"})]},
 }
 # Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
 FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),
@@ -899,7 +963,7 @@ FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),
                           "appIconBreakpointPx"),      # a breakpoint depends on the viewport
               "alert-button": ("flatMaxBreakpointPx", "silenceButtonMinBreakpointPx")}     # a breakpoint depends on the viewport
 GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5), "brightness": (20, 80), "brightnessMax": (100, 200),
-                            "brightnessMinorStep": (5, 10), "brightnessMajorStep": (25, 50)})
+                            "brightnessMinorStep": (5, 10), "brightnessMajorStep": (25, 50), "badgeCount": (0, 12), "itemsPerColumn": (2, 8)})
 
 
 def frame_cases(kind: str, contract: dict) -> list[Case]:

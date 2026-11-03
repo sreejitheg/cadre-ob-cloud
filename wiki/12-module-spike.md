@@ -1745,6 +1745,94 @@ eight apps).
 shows its bell with a count and its clock; the brilliance menu's palette buttons and the command switch change what they show at once; the
 sign in form has no input box. None is wired. The registered components (the log line of the gateway hook) move from 73 to 79.
 
+### 17.27 Batch F5: Tabs, Pivots, the Modal Window, the Context Menu Input and the Notification Items (`cadre.ob.tabitem`, `tabrow`, `pivotitem`, `pivotitemgroup`, `modalwindow`, `contextmenuinput`, `notificationmenuitem`, `notificationmessageitem`, `notificationfloatingitem`)
+
+Batch F5 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2 and 3), the last of the frame batches. It wraps nine components, each child
+before its parent, by the entries of recipe section 9, and adds five small things to the generator (17.27.1). The components are kinds of
+the table `FRAME_ONLY`; the page shows them in the section "Frame components". Every event is carried as a Perspective component event
+(GF-37) and none is wired; no event writes a tag. The only writes are to the component's own properties, where the element changes its own
+state (17.27.2).
+
+17.27.1 Generator additions. (a) The element's own array attributes are data properties, read as plain JSON (GF-38) and converted for the
+element, with a schema kind and a converter for each: `tabs` (the pinned `TabData` less the `badges` list), `menuoptions` (the pinned
+`ContextMenuOption` without its icon, a template function), `columngroups` (`ColumnGroup`) and `strings`. The converters keep only the fields
+the element reads and copy them, so the element never writes into the property tree. (b) The entry key `tabIcons` builds an `obi-` element in the
+slot `tab-<id>-icon` for each tab that states `iconName` (an icon the module bundles); the row draws a placeholder icon in a tab's slot
+otherwise, so a tab without an icon states `hasLeadingIcon` false. (c) `undefinedWhenEmpty` on a nullable boolean gives the field kind
+`nboolean` (the schema type `boolean` or `null`, default null, the element sees `undefined`): the context menu's `multiSelect` and
+`selectPerGroup` are tri-state, and an unset flag leaves the choice to `type`. (d) A field of an event of the kind `detail` may be a list of
+texts (`array`) and its detail key may be a dotted path (`tab.title`, `option.label`). (e) After the wrapper builds a list of `items`, it
+asks the element to mark its children when the element has `updateChildItems`, which is what the pivot group does only when its own selection
+changes. A write back of a list copies it. No Perspective property, enumeration or event is from memory: the badge enumerations are
+`BadgeType` and `BadgeSize`, the others are those of the pinned `d.ts` files.
+
+17.27.2 The components. Counts are properties, including slot properties and `componentSize`, in the contract.
+
+| Component | Element | Properties | Slots and items | Events (the element's event) | Not carried |
+|---|---|---|---|---|---|
+| `cadre.ob.tabitem` | `obc-tab-item` | 19: 16 attributes (`icon` excluded) | `leadingIconName`, `badgeIconName` | `onTabClick`, `onTabClose` (each with `title`) | the `icon` attribute (the element never reads it), the `badges` field, the `title` slot (the attribute is the title) |
+| `cadre.ob.tabrow` | `obc-tab-row` | 8: `tabs` as data, six attributes | none; each tab's `iconName` builds its icon | `onTabSelected`, `onTabClosed` (each with `id`, `index`, `title`), `onAddNewTab` | the `badges` of a tab and its badge icon slots |
+| `cadre.ob.pivotitem` | `obc-pivot-item` | 9 | `iconName` | `onSelected` (`value`) | none |
+| `cadre.ob.pivotitemgroup` | `obc-pivot-item-group` | 5 | `items` (`obc-pivot-item`, each with an `obi-` child in the slot `icon`) | `onChange` (`selectedValue`) | none |
+| `cadre.ob.modalwindow` | `obc-modal-window` | 12: `size`, `hasOptionalAction`, `hasLeadingIcon`, fields `hasCancelAction`, `hasCloseAction` | `leadingIconName`, `title`, `content`, `optionLabel`, `cancelLabel`, `doneLabel` | `onCloseClick`, `onCancelClick`, `onDoneClick`, `onOptionClick` (none carries a payload) | arbitrary content in the `content` slot (17.27.3) |
+| `cadre.ob.contextmenuinput` | `obc-context-menu-input` | 10: `options`, `columnGroups` and `selectedValues` as data, six attributes (`multiSelect` and `selectPerGroup` unset by default) | none | `onClose`, `onItemClick` (`value`, `label`), `onChange` (`selectedValues`) | an option's icon and the default slot of custom icons |
+| `cadre.ob.notificationmenuitem` | `obc-notification-menu-item` | 11 | `iconName` | `onItemClick` (`open`), `onPrimaryActionClick`, `onSecondaryActionClick` | none |
+| `cadre.ob.notificationmessageitem` | `obc-notification-message-item` | 17: 12 attributes, fields `showTitle`, `showDescription`, `showTimestamp` | `secondaryIconName` | `onMessageClick`, `onActionClick` | none |
+| `cadre.ob.notificationfloatingitem` | `obc-notification-floating-item` | 15 | `primaryIconName`, `title`, `description`, `time`, `day`, `actionLabel`, `action2Label` | `onActionClick`, `onAction2Click`, `onDismissClick` | none |
+
+The elements that change their own state write the component's property back on a press, as the brilliance menu does (17.26.1): the tab
+row's `selectedTabId` (a pressed tab, and the neighbour the row picks after a close), the pivot group's `selectedValue`, the context menu's
+`selectedValues` and the notification menu item's `open`. A closed tab stays in the component's `tabs` until the page drops it, because the
+row removes it from its own list only. A standalone pivot item does not select itself (its group does), and the pivot ignores a press while
+it is selected, so `allowDeselect` has no effect through the interface in this release (measured). The floating item's `action` and
+`action2` are the flags that draw the buttons, so the two button texts are `actionLabel` and `action2Label`. The tab item takes its title,
+and the tab row its tabs' titles, from the attributes; the element draws the title in a span of its own.
+
+17.27.3 The modal window is not used for commands. Its `content` slot takes any content, which a Perspective component cannot hold (the
+module has no container component), so `content` is a text property and the window carries its title and labels as text and its four
+buttons as events. The command dialogue of the library stays the Confirm row (`custom.pending`, confirmed through the existing path with the
+`Administrator` check); a frame that wants a window with other content than text needs a container component, which no wrap provides. The
+window is a plain block of the box it is given: it draws no scrim and no overlay of its own, and its position is the view's.
+
+17.27.4 Bundle size of `cadre-ob.js`: 2,664,735 bytes before F5, then 2,682,430 (tab item, with the F5 generator additions), 2,688,758 (tab
+row), 2,698,730 (pivot item), 2,701,463 (pivot group), 2,709,627 (modal window), 2,710,714 (context menu input), 2,713,752 (notification
+menu item), 2,736,717 (notification message item) and 2,753,601 (notification floating item). The growth is the elements the new ones
+import (badge, button, icon button, the topbar message item, the floating item).
+
+17.27.5 Measured sizes in Chromium (module defaults in brackets). Tab item 48 high, as wide as its box (200 by 48). Tab row 48 high, as
+wide as its box (480 by 48). Pivot item 127 by 48 with a label, 48 by 48 icon only (128 by 48). Pivot group 207 by 48 for two labelled
+pivots, 106 by 96 vertical (240 by 144). Modal window 540 wide in the large and medium sizes and 349 in the small, 133 to 229 high with one
+line of content (540 by 240). Context menu input 160 wide for the regular, nested and flyout types, 248 for eight options in columns, as
+wide as its box with two column groups; 104 to 153 high with four options (480 by 240). Notification menu item 57 high single line, 81
+double line, 105 opened with its actions, as wide as its box once a stylesheet rule says so (it collapsed to 32 wide without: 360 by 112).
+Notification message item 640 by 48 (64 tall; 640 by 64). Notification floating item 640 wide, 73 high with a title alone, 129 with two
+actions (640 by 136).
+
+17.27.6 The test page. The section "Frame components" gains `obc-tab-item` 34, `obc-tab-row` 10, `obc-pivot-item` 9, `obc-pivot-item-group` 6,
+`obc-modal-window` 11, `obc-context-menu-input` 18, `obc-notification-menu-item` 7, `obc-notification-message-item` 15 and
+`obc-notification-floating-item` 13 elements (123 more; 453 in all). The tab row's cases also build one `obc-tab-item` for each tab, and
+the context menu's and the notification items' cases build rows of their own. The samples are of our own (four tabs, three pivots, four
+menu options and two column groups, a pump notification).
+
+17.27.7 Tests and gateway checks. `tests.test_module` holds 171 tests (165 before; the class `FrameComponents` gained nine rows, the maps
+`DATA` and `EXCLUDED` and six tests); `module/tools/harness/frame.mjs` holds 123 checks (82 before) and `items.mjs` 11, all passing in
+Chromium. The component test page passes G0 to G7 with 19 devices and 21 device symbols. What the gateway step finds on `/component-test`,
+in the section "Frame components": the nine counts of 17.27.6, each with a non-zero box and no console error; the tab row shows four tabs
+with icons, a badge on the second and a dimmed last one; the pivot group shows the selected pivot marked; the context menu shows its
+selected options; the opened notification menu item shows its two actions; the modal window shows its title, text and buttons. None is
+wired. The registered components (the log line of the gateway hook) move from 79 to 88.
+
+17.27.8 All 33 frame components of the pinned release are now wrapped; none is left out, and what a component does not carry is recorded in
+the table of its batch. F1 (17.23): the mechanisms and `tooltip`, `toggletip`, `clock`, `user-button`, `app-button`, `notification-button`
+and `notification-badge-button`. F2 (17.24): `alert-button-item`, `alert-button`, `alert-menu-item` and `alert-menu`. F3 (17.25):
+`navigation-item`, `navigation-item-group`, `navigation-menu`, `tree-navigation-item`, `tree-navigation-group`, `tree-navigation` and
+`breadcrumb`. F4 (17.26): `brilliance-menu`, `user-menu`, `system-menu`, `app-menu`, `command-menu` and `top-bar`. F5 (17.27): `tab-item`,
+`tab-row`, `pivot-item`, `pivot-item-group`, `modal-window`, `context-menu-input`, `notification-menu-item`, `notification-message-item` and
+`notification-floating-item`. That is 7, 4, 7, 6 and 9, 33 in all. The parts recorded as not carried are the `logo` slot of the navigation
+menu, the `battery-status` slot of the system menu, the credential fields and recent users of the user menu, the icons of crumbs and menu
+options (template functions), the `badges` list of a tab, and the free `content` of the modal window and the toggletip. The next step is
+F6, the frame option, which wires the events to the existing navigation, login, logout and acknowledge paths.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

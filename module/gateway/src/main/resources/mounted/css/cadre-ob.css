@@ -269,9 +269,33 @@
   --app-components-topbar-label-spacing: 8px;
   --app-components-alert-button-item-padding-counter-right: 2px;
   --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-topbar-message-item-visual-target: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-topbar-message-item-label-spacing: 8px;
+  --app-components-topbar-message-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-message-item-touch-target-size-tall: var(
     --app-components-topbar-touch-target-tall
   );
+  --app-components-topbar-message-item-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-topbar-message-item-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-topbar-message-item-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
+  --app-components-topbar-message-item-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-topbar-message-item-padding-horizontal: 8px;
+  --app-components-topbar-message-item-label-padding: 4px;
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -328,6 +352,22 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --menu-navigation-components-pivot-item-icon-pivot-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-horizontal: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-horizontal: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius-active-tab: 2px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-height-active-tab: 2px;
   --ui-components-toggle-switch-item-touch-target-size-two-story: var(
     --global-size-spacing-touch-target-min-two-story
   );
@@ -348,13 +388,22 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 20px;
+  --app-components-notification-menu-item-label-spacing: 8px;
   --app-components-notification-menu-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-alert-menu-border-radius: var(
     --global-border-radius-border-radius-floating
   );
+  --app-components-floating-message-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
   --global-size-spacing-icon-icon-size-large: 32px;
+  --app-components-floating-message-item-label-spacing: 8px;
+  --app-components-floating-message-item-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-floating-message-item-padding-horizontal-left: 16px;
   --app-components-user-menu-padding-vertical: 8px;
   --app-components-user-menu-padding-horizontal: 8px;
   --ui-components-user-button-touch-target-size: var(
@@ -397,6 +446,15 @@
   --app-components-user-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
   );
+  --app-components-modal-margin-vertical: 24px;
+  --app-components-modal-button-spacing: 8px;
+  --app-components-modal-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-modal-padding-vertical-button-container: 8px;
+  --app-components-modal-padding-divider: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-bottom-horizontal-stack: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-active-tab: 8px;
   --app-components-system-menu-padding-horizontal: 8px;
   --app-components-system-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-menu
@@ -465,6 +523,7 @@
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-modal-label-spacing: 8px;
   --menu-navigation-components-table-header-row-margin: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
@@ -519,6 +578,8 @@
   );
   --app-components-notification-button-padding-horizontal: 4px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-topbar-message-item-cta-button-width: 64px;
+  --app-components-topbar-message-item-icon-spacing: 4px;
   --app-components-alert-button-tall-padding-vertical: var(
     --app-components-topbar-message-item-tall-padding-vertical
   );
@@ -530,6 +591,13 @@
   --app-components-alert-menu-width: var(
     --app-components-topbar-message-item-width
   );
+  --app-components-floating-message-item-padding-vertical-single: 8px;
+  --app-components-floating-message-item-padding-vertical-text-container: 4px;
+  --app-components-floating-message-item-padding-horizontal-right: 8px;
+  --app-components-floating-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-floating-message-item-icon-container-width: 40px;
   --app-components-alert-menu-button-spacing: 8px;
   --app-components-alert-button-padding-horizontal: 8px;
   --app-components-message-menu-item-icon-size-regular: var(
@@ -583,6 +651,9 @@
   --app-components-alert-frame-border-radius-bottom-left: var(
     --button-border-radius-bottom-left
   );
+  --app-components-floating-message-item-component-width: 640px;
+  --app-components-floating-message-item-icon-container-height: 48px;
+  --app-components-floating-message-item-max-height-text-container: 192px;
   --automation-components-typography-label-font-size: var(--font-size-075);
   --automation-components-typography-label-line-height: var(--line-height-075);
   --automation-components-typography-label-font-weight: var(
@@ -615,6 +686,7 @@
   --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
     --input-field-border-radius-bottom-right
   );
+  --menu-navigation-components-tab-action-button-divider-height: 24px;
   --ui-components-input-fields-number-input-field-stroke-weight-left: var(
     --input-field-stroke-weight-left
   );
@@ -1038,9 +1110,33 @@
   --app-components-topbar-label-spacing: 8px;
   --app-components-alert-button-item-padding-counter-right: 2px;
   --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-topbar-message-item-visual-target: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-topbar-message-item-label-spacing: 8px;
+  --app-components-topbar-message-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-message-item-touch-target-size-tall: var(
     --app-components-topbar-touch-target-tall
   );
+  --app-components-topbar-message-item-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-topbar-message-item-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-topbar-message-item-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
+  --app-components-topbar-message-item-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-topbar-message-item-padding-horizontal: 8px;
+  --app-components-topbar-message-item-label-padding: 4px;
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -1099,6 +1195,22 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --menu-navigation-components-pivot-item-icon-pivot-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-horizontal: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-horizontal: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius-active-tab: 2px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-height-active-tab: 3px;
   --ui-components-toggle-switch-item-touch-target-size-two-story: var(
     --global-size-spacing-touch-target-min-two-story
   );
@@ -1119,13 +1231,22 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 24px;
+  --app-components-notification-menu-item-label-spacing: 8px;
   --app-components-notification-menu-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-alert-menu-border-radius: var(
     --global-border-radius-border-radius-floating
   );
+  --app-components-floating-message-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
   --global-size-spacing-icon-icon-size-large: 40px;
+  --app-components-floating-message-item-label-spacing: 8px;
+  --app-components-floating-message-item-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-floating-message-item-padding-horizontal-left: 20px;
   --app-components-user-menu-padding-vertical: 8px;
   --app-components-user-menu-padding-horizontal: 8px;
   --ui-components-user-button-touch-target-size: var(
@@ -1170,6 +1291,15 @@
   --app-components-user-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
   );
+  --app-components-modal-margin-vertical: 24px;
+  --app-components-modal-button-spacing: 8px;
+  --app-components-modal-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-modal-padding-vertical-button-container: 8px;
+  --app-components-modal-padding-divider: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-bottom-horizontal-stack: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-active-tab: 8px;
   --app-components-system-menu-padding-horizontal: 8px;
   --app-components-system-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-menu
@@ -1238,6 +1368,7 @@
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-modal-label-spacing: 8px;
   --menu-navigation-components-table-header-row-margin: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
@@ -1290,6 +1421,8 @@
   );
   --app-components-notification-button-padding-horizontal: 4px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-topbar-message-item-cta-button-width: 80px;
+  --app-components-topbar-message-item-icon-spacing: 4px;
   --app-components-alert-button-tall-padding-vertical: var(
     --app-components-topbar-message-item-tall-padding-vertical
   );
@@ -1301,6 +1434,13 @@
   --app-components-alert-menu-width: var(
     --app-components-topbar-message-item-width
   );
+  --app-components-floating-message-item-padding-vertical-single: 8px;
+  --app-components-floating-message-item-padding-vertical-text-container: 4px;
+  --app-components-floating-message-item-padding-horizontal-right: 8px;
+  --app-components-floating-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-floating-message-item-icon-container-width: 48px;
   --app-components-alert-menu-button-spacing: 8px;
   --app-components-alert-button-padding-horizontal: 8px;
   --app-components-message-menu-item-icon-size-regular: var(
@@ -1354,6 +1494,9 @@
   --app-components-alert-frame-border-radius-bottom-left: var(
     --button-border-radius-bottom-left
   );
+  --app-components-floating-message-item-component-width: 720px;
+  --app-components-floating-message-item-icon-container-height: 60px;
+  --app-components-floating-message-item-max-height-text-container: 256px;
   --automation-components-typography-label-font-size: var(--font-size-100);
   --automation-components-typography-label-line-height: var(--line-height-100);
   --automation-components-typography-label-font-weight: var(
@@ -1386,6 +1529,7 @@
   --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
     --input-field-border-radius-bottom-right
   );
+  --menu-navigation-components-tab-action-button-divider-height: 24px;
   --ui-components-input-fields-number-input-field-stroke-weight-left: var(
     --input-field-stroke-weight-left
   );
@@ -1801,9 +1945,33 @@
   --app-components-topbar-label-spacing: 12px;
   --app-components-alert-button-item-padding-counter-right: 3px;
   --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-topbar-message-item-visual-target: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-topbar-message-item-label-spacing: 12px;
+  --app-components-topbar-message-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-message-item-touch-target-size-tall: var(
     --app-components-topbar-touch-target-tall
   );
+  --app-components-topbar-message-item-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-topbar-message-item-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-topbar-message-item-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
+  --app-components-topbar-message-item-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-topbar-message-item-padding-horizontal: 12px;
+  --app-components-topbar-message-item-label-padding: 6px;
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -1862,6 +2030,22 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --menu-navigation-components-pivot-item-icon-pivot-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-horizontal: 12px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-horizontal: 12px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius-active-tab: 3px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-height-active-tab: 4px;
   --ui-components-toggle-switch-item-touch-target-size-two-story: var(
     --global-size-spacing-touch-target-min-two-story
   );
@@ -1882,13 +2066,22 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 32px;
+  --app-components-notification-menu-item-label-spacing: 12px;
   --app-components-notification-menu-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-alert-menu-border-radius: var(
     --global-border-radius-border-radius-floating
   );
+  --app-components-floating-message-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
   --global-size-spacing-icon-icon-size-large: 48px;
+  --app-components-floating-message-item-label-spacing: 12px;
+  --app-components-floating-message-item-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-floating-message-item-padding-horizontal-left: 24px;
   --app-components-user-menu-padding-vertical: 12px;
   --app-components-user-menu-padding-horizontal: 12px;
   --ui-components-user-button-touch-target-size: var(
@@ -1933,6 +2126,15 @@
   --app-components-user-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
   );
+  --app-components-modal-margin-vertical: 32px;
+  --app-components-modal-button-spacing: 12px;
+  --app-components-modal-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-modal-padding-vertical-button-container: 12px;
+  --app-components-modal-padding-divider: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-bottom-horizontal-stack: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-active-tab: 12px;
   --app-components-system-menu-padding-horizontal: 12px;
   --app-components-system-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-menu
@@ -2001,6 +2203,7 @@
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-modal-label-spacing: 12px;
   --menu-navigation-components-table-header-row-margin: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
@@ -2053,6 +2256,8 @@
   );
   --app-components-notification-button-padding-horizontal: 8px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-topbar-message-item-cta-button-width: 96px;
+  --app-components-topbar-message-item-icon-spacing: 6px;
   --app-components-alert-button-tall-padding-vertical: var(
     --app-components-topbar-message-item-tall-padding-vertical
   );
@@ -2064,6 +2269,13 @@
   --app-components-alert-menu-width: var(
     --app-components-topbar-message-item-width
   );
+  --app-components-floating-message-item-padding-vertical-single: 12px;
+  --app-components-floating-message-item-padding-vertical-text-container: 6px;
+  --app-components-floating-message-item-padding-horizontal-right: 12px;
+  --app-components-floating-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-floating-message-item-icon-container-width: 64px;
   --app-components-alert-menu-button-spacing: 12px;
   --app-components-alert-button-padding-horizontal: 12px;
   --app-components-message-menu-item-icon-size-regular: var(
@@ -2117,6 +2329,9 @@
   --app-components-alert-frame-border-radius-bottom-left: var(
     --button-border-radius-bottom-left
   );
+  --app-components-floating-message-item-component-width: 960px;
+  --app-components-floating-message-item-icon-container-height: 80px;
+  --app-components-floating-message-item-max-height-text-container: 384px;
   --automation-components-typography-label-font-size: var(--font-size-150);
   --automation-components-typography-label-line-height: var(--line-height-150);
   --automation-components-typography-label-font-weight: var(
@@ -2149,6 +2364,7 @@
   --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
     --input-field-border-radius-bottom-right
   );
+  --menu-navigation-components-tab-action-button-divider-height: 32px;
   --ui-components-input-fields-number-input-field-stroke-weight-left: var(
     --input-field-stroke-weight-left
   );
@@ -2564,9 +2780,33 @@
   --app-components-topbar-label-spacing: 16px;
   --app-components-alert-button-item-padding-counter-right: 4px;
   --app-components-alert-button-item-counter-spacing: 4px;
+  --app-components-topbar-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-topbar-message-item-visual-target: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-topbar-message-item-label-spacing: 16px;
+  --app-components-topbar-message-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-message-item-touch-target-size-tall: var(
     --app-components-topbar-touch-target-tall
   );
+  --app-components-topbar-message-item-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-topbar-message-item-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-topbar-message-item-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
+  --app-components-topbar-message-item-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-topbar-message-item-padding-horizontal: 16px;
+  --app-components-topbar-message-item-label-padding: 8px;
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -2625,6 +2865,22 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --menu-navigation-components-pivot-item-icon-pivot-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-horizontal: 16px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-horizontal: 16px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --menu-navigation-components-pivot-item-icon-pivot-item-border-radius-active-tab: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-height-active-tab: 6px;
   --ui-components-toggle-switch-item-touch-target-size-two-story: var(
     --global-size-spacing-touch-target-min-two-story
   );
@@ -2645,13 +2901,22 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 40px;
+  --app-components-notification-menu-item-label-spacing: 16px;
   --app-components-notification-menu-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-alert-menu-border-radius: var(
     --global-border-radius-border-radius-floating
   );
+  --app-components-floating-message-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
   --global-size-spacing-icon-icon-size-large: 64px;
+  --app-components-floating-message-item-label-spacing: 16px;
+  --app-components-floating-message-item-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-floating-message-item-padding-horizontal-left: 32px;
   --app-components-user-menu-padding-vertical: 16px;
   --app-components-user-menu-padding-horizontal: 16px;
   --ui-components-user-button-touch-target-size: var(
@@ -2696,6 +2961,15 @@
   --app-components-user-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
   );
+  --app-components-modal-margin-vertical: 48px;
+  --app-components-modal-button-spacing: 16px;
+  --app-components-modal-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-modal-padding-vertical-button-container: 16px;
+  --app-components-modal-padding-divider: 8px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-padding-bottom-horizontal-stack: 4px;
+  --menu-navigation-components-pivot-item-icon-pivot-item-margin-active-tab: 16px;
   --app-components-system-menu-padding-horizontal: 16px;
   --app-components-system-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-menu
@@ -2764,6 +3038,7 @@
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-modal-label-spacing: 16px;
   --menu-navigation-components-table-header-row-margin: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
@@ -2822,6 +3097,8 @@
   );
   --app-components-notification-button-padding-horizontal: 8px;
   --app-components-notification-button-counter-spacing: 4px;
+  --app-components-topbar-message-item-cta-button-width: 128px;
+  --app-components-topbar-message-item-icon-spacing: 8px;
   --app-components-alert-button-tall-padding-vertical: var(
     --app-components-topbar-message-item-tall-padding-vertical
   );
@@ -2833,6 +3110,13 @@
   --app-components-alert-menu-width: var(
     --app-components-topbar-message-item-width
   );
+  --app-components-floating-message-item-padding-vertical-single: 16px;
+  --app-components-floating-message-item-padding-vertical-text-container: 8px;
+  --app-components-floating-message-item-padding-horizontal-right: 16px;
+  --app-components-floating-message-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-floating-message-item-icon-container-width: 80px;
   --app-components-alert-menu-button-spacing: 16px;
   --app-components-alert-button-padding-horizontal: 16px;
   --app-components-message-menu-item-icon-size-regular: var(
@@ -2886,6 +3170,9 @@
   --app-components-alert-frame-border-radius-bottom-left: var(
     --button-border-radius-bottom-left
   );
+  --app-components-floating-message-item-component-width: 1280px;
+  --app-components-floating-message-item-icon-container-height: 96px;
+  --app-components-floating-message-item-max-height-text-container: 384px;
   --automation-components-typography-label-font-size: var(--font-size-075);
   --automation-components-typography-label-line-height: var(--line-height-075);
   --automation-components-typography-label-font-weight: var(
@@ -2918,6 +3205,7 @@
   --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
     --input-field-border-radius-bottom-right
   );
+  --menu-navigation-components-tab-action-button-divider-height: 48px;
   --ui-components-input-fields-number-input-field-stroke-weight-left: var(
     --input-field-stroke-weight-left
   );
@@ -4530,6 +4818,12 @@
 }
 /* The top bar fills the width of its component box; its height stays its own. */
 .cadre-ob > obc-top-bar {
+  flex: 1 1 auto;
+  width: 100%;
+}
+/* A notification menu row fills the width of its component box. */
+.cadre-ob > obc-notification-menu-item {
+  align-self: stretch;
   flex: 1 1 auto;
   width: 100%;
 }

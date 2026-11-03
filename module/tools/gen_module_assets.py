@@ -115,6 +115,24 @@ ALERT_EVENTS = {
                           "open it itself). The event carries nothing."),
     "wifi-options-click": ("onWifiOptionsClick", "none", "The Wi-Fi Options button was pressed. The event carries nothing."),
     "wifi-disconnect-click": ("onWifiDisconnectClick", "none", "The Wi-Fi Disconnect button was pressed. The event carries nothing."),
+    # Tabs, pivots, the modal window, the context menu and the notification items (T2, batch F5). The kind `detail` takes its fields
+    # from the entry's `eventFields` (a `from` with a dot reads a field of a nested object of the detail).
+    "tab-click": ("onTabClick", "detail", "The tab was pressed. event.title is the title of the tab."),
+    "tab-close": ("onTabClose", "detail", "The close button of the tab was pressed. event.title is the title of the tab."),
+    "tab-selected": ("onTabSelected", "detail", "A tab was pressed. event.id, event.index and event.title name the tab."),
+    "tab-closed": ("onTabClosed", "detail", "The close button of a tab was pressed. event.id, event.index and event.title name the tab."),
+    "add-new-tab": ("onAddNewTab", "none", "The button that adds a tab was pressed. The event carries nothing."),
+    "selected": ("onSelected", "detail", "The pivot was pressed while enabled and not selected. event.value is its value."),
+    "close-click": ("onCloseClick", "none", "The close button of the window was pressed. The event carries nothing."),
+    "cancel-click": ("onCancelClick", "none", "The cancel button of the window was pressed. The event carries nothing."),
+    "done-click": ("onDoneClick", "none", "The done button of the window was pressed. The event carries nothing."),
+    "option-click": ("onOptionClick", "none", "The optional action button of the window was pressed. The event carries nothing."),
+    "message-click": ("onMessageClick", "none", "The item was pressed outside its action. The event carries nothing."),
+    "action-click": ("onActionClick", "none", "The (primary) action of the item was pressed. The event carries nothing."),
+    "action2-click": ("onAction2Click", "none", "The secondary action of the item was pressed. The event carries nothing."),
+    "dismiss-click": ("onDismissClick", "none", "The dismiss button of the item was pressed. The event carries nothing."),
+    "primary-action-click": ("onPrimaryActionClick", "none", "The primary action of the item was pressed. The event carries nothing."),
+    "secondary-action-click": ("onSecondaryActionClick", "none", "The secondary action of the item was pressed. The event carries nothing."),
 }
 # The properties of the object a Perspective component event carries, by payload kind (the wrapper's `payload` builds the
 # object from the element's event detail). A kind a later wrap needs is one entry here and one branch of `payload`.
@@ -643,6 +661,150 @@ COMPONENTS = [
                               "of the menu button and the page name. The frame does not use it.",
                   "breadcrumbItems": "The crumbs of the settings mode, one object each: `label` and `href`. A crumb's icon (a template "
                                      "function) is not carried. Drawn only while `settings` is true; the frame keeps its own crumb row."}},
+    # batch F5 (T2): tabs, pivots, the modal window, the context menu input and the notification items, each child before its parent.
+    # The tab item draws its title from `title` (the `title` slot is not carried: it would repeat the attribute), a leading icon and a
+    # badge icon as icon slot properties. Not carried: the unused `icon` attribute (the element never reads it) and the `badges` list
+    # (an object list whose entries name icon slots). The tab row builds its own items from `tabs`.
+    {"tag": "obc-tab-item", "type": "cadre.ob.tabitem", "name": "tabitem", "title": "OB Tab Item",
+     "palette": "OpenBridge tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
+     "size": {"width": 200, "height": 48}, "exclude": ["icon"], "events": ["tab-click", "tab-close"],
+     "enums": {"badgeType": "BadgeType", "badgeSize": "BadgeSize"},
+     "eventFields": {"tab-click": [("title", "string", "The title of the tab.")], "tab-close": [("title", "string", "The title of the tab.")]},
+     "slots": [{"slot": "leading-icon", "kind": "icon"}, {"slot": "badge-icon", "kind": "icon"}],
+     "describe": {"hasTitle": "Whether the tab draws its title (and subtitle). The tab row always sets it.",
+                  "badgeType": "The type of the badge drawn while `hasBadge` is true.",
+                  "badgeCount": "The number in the badge while `hasBadge` is true."}},
+    # The tab row builds its tabs from `tabs` (the element's own array attribute, TabData[]), not from child elements. The leading icon of
+    # a tab is the module's `iconName` of the tab object (an `obi-` element in the row's slot `tab-<id>-icon`, built by the wrapper).
+    # The row selects a pressed tab itself and removes a closed tab from its own list, so the events write the component's
+    # `selectedTabId` back (the closed tab stays in the component's `tabs` until the page drops it). Not carried: the `badges` list of a
+    # tab and the per tab badge icon slots.
+    {"tag": "obc-tab-row", "type": "cadre.ob.tabrow", "name": "tabrow", "title": "OB Tab Row",
+     "palette": "OpenBridge tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
+     "size": {"width": 480, "height": 48}, "exclude": [], "data": {"tabs": "tabs"}, "tabIcons": True,
+     "events": ["tab-selected", "tab-closed", "add-new-tab"],
+     "eventFields": {"tab-selected": [("id", "string", "The `id` of the tab that was pressed."),
+                                      ("index", "number", "The position of the tab in `tabs`, from 0."),
+                                      ("title", "string", "The title of the tab.", "tab.title")],
+                     "tab-closed": [("id", "string", "The `id` of the tab whose close button was pressed."),
+                                    ("index", "number", "The position the tab had in `tabs`, from 0."),
+                                    ("title", "string", "The title of the tab.", "tab.title")]},
+     "writeBack": {"tab-selected": ("selectedTabId", "id"), "tab-closed": ("selectedTabId", "@element")},
+     "eventText": {"tab-selected": "A tab was pressed. event.id, event.index and event.title name the tab. The row shows it selected at once "
+                                   "and the component's `selectedTabId` follows the press.",
+                   "tab-closed": "The close button of a tab was pressed. event.id, event.index and event.title name the tab. The row "
+                                 "removes the tab from its own list and selects a neighbour if it was selected; the component's "
+                                 "`selectedTabId` follows, and its `tabs` list keeps the tab until the page drops it."},
+     "describe": {"selectedTabId": "The `id` of the selected tab."}},
+    # The pivot item is selected by its group (the group sets `selected` and `direction` on the items it holds), so a standalone item
+    # only reports a press of an enabled item that is not selected; the page sets `selected`. Its leading icon is an icon slot property.
+    {"tag": "obc-pivot-item", "type": "cadre.ob.pivotitem", "name": "pivotitem", "title": "OB Pivot Item",
+     "palette": "OpenBridge pivot item: one pivot with an optional icon and label, selected by its group",
+     "size": {"width": 128, "height": 48}, "exclude": [], "types": {"direction": "ObcPivotItemDirection"}, "events": ["selected"],
+     "eventFields": {"selected": [("value", "string", "The `value` of the pivot.")]},
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "eventText": {"selected": "The pivot was pressed while enabled and not selected. event.value is the `value` of the pivot. The pivot "
+                               "does not select itself; the page sets `selected`."}},
+    # The pivot group holds its pivots as `items`. It selects the pressed pivot itself (it sets `selected` on its children), so `change`
+    # writes the component's `selectedValue` back; the wrapper asks the group to mark its children after the list is built.
+    {"tag": "obc-pivot-item-group", "type": "cadre.ob.pivotitemgroup", "name": "pivotitemgroup", "title": "OB Pivot Item Group",
+     "palette": "OpenBridge pivot item group: a horizontal or vertical set of pivots, one of them selected",
+     "size": {"width": 240, "height": 144}, "exclude": [], "events": ["change"],
+     "eventFields": {"change": [("selectedValue", "string", "The `value` of the selected pivot (empty if the selection was removed).")]},
+     "writeBack": {"change": ("selectedValue", "selectedValue")},
+     "eventText": {"change": "A pivot was pressed. event.selectedValue is its `value` (empty when `allowDeselect` and the selected pivot was "
+                             "pressed). The group shows the selection at once and the component's `selectedValue` follows the press."},
+     "items": {"items": {"tags": ["obc-pivot-item"], "slot": "",
+                         "describe": "The pivots of the group, one `obc-pivot-item` for each (a pivot's icon is an `obi-` child in the slot `icon`)"}}},
+    # The modal window carries its title and its labels as text, its leading icon as an icon and its four buttons as events. Its `content`
+    # slot takes arbitrary content, which a Perspective component cannot hold (the module has no container), so `content` is a text
+    # property and the window is not used for commands: the command dialogue of the library stays the Confirm row (wiki 12 section 17.27).
+    # The window is a plain block of the box it is given and draws no scrim or overlay of its own.
+    {"tag": "obc-modal-window", "type": "cadre.ob.modalwindow", "name": "modalwindow", "title": "OB Modal Window",
+     "palette": "OpenBridge modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
+     "size": {"width": 540, "height": 240}, "exclude": [], "types": {"size": "ObcModalWindowSize"},
+     "properties": ["hasCancelAction", "hasCloseAction"],
+     "events": ["close-click", "cancel-click", "done-click", "option-click"],
+     "slots": [{"slot": "leading-icon", "kind": "icon"}, {"slot": "title", "kind": "text"}, {"slot": "content", "kind": "text"},
+               {"slot": "option-label", "kind": "text", "property": "optionLabel"},
+               {"slot": "cancel-label", "kind": "text", "property": "cancelLabel"},
+               {"slot": "done-label", "kind": "text", "property": "doneLabel"}],
+     "describe": {"content": "The text in the content area; empty leaves it blank. The element's `content` slot takes any content, which "
+                             "the module cannot hold, so only text is carried.",
+                  "optionLabel": "The label of the optional action button, drawn while `hasOptionalAction` is true; empty keeps the "
+                                 "element's own word, Option.",
+                  "cancelLabel": "The label of the Cancel button, drawn while `hasCancelAction` is true; empty keeps the element's own "
+                                 "word, Cancel.",
+                  "doneLabel": "The label of the Done button; empty keeps the element's own word, Done.",
+                  "title": "The title of the window; empty keeps the element's own word, Title."}},
+    # The context menu input takes its `options`, `columnGroups` and `selectedValues` as array attributes (data, no child elements). An
+    # option's icon is a template function in the element and is not carried, as is the element's default slot (custom option icons).
+    # `multiSelect` and `selectPerGroup` are tri-state in the element (unset: it decides from `type`), so they are empty by default and
+    # the element's own rule applies. The element selects an option itself, so `change` writes the component's `selectedValues` back.
+    {"tag": "obc-context-menu-input", "type": "cadre.ob.contextmenuinput", "name": "contextmenuinput", "title": "OB Context Menu Input",
+     "palette": "OpenBridge context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
+     "size": {"width": 480, "height": 240}, "exclude": [],
+     "data": {"options": "menuoptions", "columnGroups": "columngroups", "selectedValues": "strings"},
+     "undefinedWhenEmpty": ["multiSelect", "selectPerGroup"], "events": ["close", "item-click", "change"],
+     "eventKinds": {"item-click": "detail"},
+     "eventFields": {"item-click": [("value", "string", "The `value` of the option that was pressed."),
+                                    ("label", "string", "The `label` of the option that was pressed.", "option.label")],
+                     "change": [("selectedValues", "array", "The `value` of each option now selected, in order.")]},
+     "writeBack": {"change": ("selectedValues", "selectedValues")},
+     "eventText": {"close": "The menu asks to close (the Escape key, or the close button of the title bar). The event carries nothing.",
+                   "item-click": "An option was pressed (also an option that opens a flyout). event.value and event.label name it.",
+                   "change": "The selection changed. event.selectedValues holds the `value` of each option now selected. The menu shows "
+                             "the selection at once and the component's `selectedValues` follows."},
+     "describe": {"multiSelect": "Whether several options can be selected. Empty leaves the choice to `type` (the checkbox and multi "
+                                 "types select several).",
+                  "selectPerGroup": "Whether one option is selected for each group or column. Empty leaves the choice to `type` "
+                                    "(the flyout type selects one for each group).",
+                  "title": "The title of the title bar, drawn while `hasTitleBar` is true."}},
+    # The notification items (batch F5) are display rows of a notification list; no Cadre frame part uses them and no event writes a tag.
+    # The menu item opens and closes itself on a press, so `item-click` writes the component's `open` back.
+    {"tag": "obc-notification-menu-item", "type": "cadre.ob.notificationmenuitem", "name": "notificationmenuitem",
+     "title": "OB Notification Menu Item",
+     "palette": "OpenBridge notification menu item: one notification row with a title, description, day and time, opened by a press",
+     "size": {"width": 360, "height": 112}, "exclude": [], "events": ["item-click", "primary-action-click", "secondary-action-click"],
+     "eventKinds": {"item-click": "detail"}, "eventFields": {"item-click": [("open", "boolean", "The state of the row after the press: true opened.")]},
+     "writeBack": {"item-click": ("open", "open")},
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "eventText": {"item-click": "The row was pressed. event.open is the state of the row after the press. The row opens or closes at once "
+                                 "and the component's `open` follows the press.",
+                   "primary-action-click": "The primary action of the opened row was pressed. The event carries nothing.",
+                   "secondary-action-click": "The secondary action of the opened row was pressed. The event carries nothing."}},
+    # The message item draws the row of the top bar's notification list. Its press and its action are separate events. Its three
+    # `show...` fields have no attribute (they hide the title, the description and the time); the module carries them at the element's
+    # own default (shown).
+    {"tag": "obc-notification-message-item", "type": "cadre.ob.notificationmessageitem", "name": "notificationmessageitem",
+     "title": "OB Notification Message Item",
+     "palette": "OpenBridge notification message item: one message with a title, description, time and an optional action",
+     "size": {"width": 640, "height": 64}, "exclude": [], "properties": ["showTitle", "showDescription", "showTimestamp"],
+     "events": ["message-click", "action-click"], "slots": [{"slot": "secondary-icon", "kind": "icon"}],
+     "describe": {"actionLabel": "The text of the action button, drawn by the `with-button` type.",
+                  "emptyText": "The text drawn while `empty` is true (or the type is `inactive`).",
+                  "timeSecondary": "The second time, drawn while `hasTimestamp2` is true."},
+     "eventText": {"message-click": "The message was pressed outside its action. The event carries nothing.",
+                   "action-click": "The action button (or the action icon) was pressed. The event carries nothing."}},
+    # The floating item is a transient notification (a toast). Its title, description, time, day and the two action labels are text slot
+    # properties (`actionLabel` and `action2Label`, because `action` and `action2` are the flags that draw the buttons); its primary icon
+    # (drawn only by the `application` type) is an icon property. The item is dismissed by the page, which hides it on `onDismissClick`.
+    {"tag": "obc-notification-floating-item", "type": "cadre.ob.notificationfloatingitem", "name": "notificationfloatingitem",
+     "title": "OB Notification Floating Item",
+     "palette": "OpenBridge notification floating item: a transient notification with a title, description, time and up to two actions",
+     "size": {"width": 640, "height": 136}, "exclude": [],
+     "types": {"type": "ObcFloatingItemType", "direction": "ObcFloatingItemDirection", "lineType": "ObcFloatingItemLineType"},
+     "events": ["action-click", "action2-click", "dismiss-click"],
+     "slots": [{"slot": "primary-icon", "kind": "icon"}, {"slot": "title", "kind": "text"}, {"slot": "description", "kind": "text"},
+               {"slot": "time", "kind": "text"}, {"slot": "day", "kind": "text"},
+               {"slot": "action", "kind": "text", "property": "actionLabel"}, {"slot": "action2", "kind": "text", "property": "action2Label"}],
+     "describe": {"time": "The time of the notification, drawn while `hasTimestamp` is true.",
+                  "day": "The day of the notification, drawn while `hasDay` is true.",
+                  "actionLabel": "The label of the primary action button, drawn while `action` is true.",
+                  "action2Label": "The label of the secondary action button, drawn while `action2` is true."},
+     "eventText": {"action-click": "The primary action was pressed. The event carries nothing.",
+                   "action2-click": "The secondary action was pressed. The event carries nothing.",
+                   "dismiss-click": "The dismiss button was pressed. The event carries nothing; the page's script hides the item."}},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -667,7 +829,32 @@ CANVAS_ZOOM = {
                        "The target's measured height in px, written by the component when it changes (0 until measured)."},
     },
 }
-DATA_SCHEMA = {"crumbs": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+DATA_SCHEMA = {"tabs": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                            "id": {"type": "string"}, "title": {"type": "string"}, "subtitle": {"type": "string"},
+                            "showSubtitle": {"type": "boolean"}, "hasLeadingIcon": {"type": "boolean"}, "iconName": {"type": "string"},
+                            "hasBadge": {"type": "boolean"}, "badgeCount": {"type": "number"}, "badgeType": {"type": "string"},
+                            "badgeSize": {"type": "string"}, "badgeShowNumber": {"type": "boolean"},
+                            "showLeadingBadgeIcon": {"type": "boolean"}, "disabled": {"type": "boolean"}},
+                            "required": ["id", "title"]},
+                        "description": "The tabs, one object each: `id` (unique; the events report it), `title`, `subtitle`, `showSubtitle`, "
+                                       "`hasLeadingIcon`, `iconName` (an OpenBridge icon the module bundles, in the tab's leading icon slot; "
+                                       "the element draws a placeholder icon where a tab has none, so a tab without an icon states "
+                                       "`hasLeadingIcon` false), `hasBadge`, `badgeCount`, `badgeType`, `badgeSize`, `badgeShowNumber`, "
+                                       "`showLeadingBadgeIcon` and `disabled`. The element's `badges` list is not carried."},
+               "menuoptions": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                                   "value": {"type": "string"}, "label": {"type": "string"}, "level": {"type": "number"},
+                                   "children": {"type": "array", "items": {"type": "object"}}}, "required": ["value", "label"]},
+                               "description": "The options of the menu, one object each: `value` (unique; the events report it), `label`, `level` "
+                                              "(the depth of the option, from 0) and `children` (objects of the same form, for the flyout and "
+                                              "nested types). An option's icon (a template function in the element) is not carried."},
+               "columngroups": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                                    "title": {"type": "string"}, "columns": {"type": "number"},
+                                    "options": {"type": "array", "items": {"type": "object"}}}, "required": ["title", "options"]},
+                                "description": "The column groups of the multi column types, one object each: `title`, `columns` (the least number "
+                                               "of columns the group draws) and `options` (objects with `value` and `label`)."},
+               "strings": {"type": "array", "default": [], "items": {"type": "string"},
+                           "description": "A list of values as plain text, in order."},
+               "crumbs": {"type": "array", "default": [], "items": {"type": "object", "properties": {
                               "label": {"type": "string"}, "href": {"type": "string"}}, "required": ["label"]},
                           "description": "The crumbs from the first to the current page, one object each: `label` and `href`. A crumb's "
                                          "icon (a template function in the element) is not carried. The last crumb is the current page."},
@@ -813,6 +1000,12 @@ PROPERTIES = {
     "showPalette": {"type": "boolean", "default": True, "description": "Whether the menu draws the palette (day and night) section."},
     "showLocation": {"type": "boolean", "default": True, "description":
                      "Whether the menu draws the location of the command (the `command-location` text) beside its description."},
+    # the modal window and the notification message item (F5): fields without an attribute, at the element's own default (true)
+    "hasCancelAction": {"type": "boolean", "default": True, "description": "Whether the window draws its Cancel button (and its label)."},
+    "hasCloseAction": {"type": "boolean", "default": True, "description": "Whether the window draws the close button of its title bar."},
+    "showTitle": {"type": "boolean", "default": True, "description": "Whether the item draws its title."},
+    "showDescription": {"type": "boolean", "default": True, "description": "Whether the item draws its description."},
+    "showTimestamp": {"type": "boolean", "default": True, "description": "Whether the item draws its time."},
     "iconOnly": {"type": "boolean", "default": False, "description":
                  "Draws the crumbs before the last as their icon alone. The module carries no crumb icon (a crumb's icon is a "
                  "template function), so a crumb with only an icon is not possible; true hides every label but the last."},
@@ -1067,7 +1260,10 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         default = defaults.get(name)
         base = ttext.replace(" | undefined", "").replace(" | null", "")
         nullable = ttext != base
-        if base == "boolean":
+        if base == "boolean" and nullable and name in spec.get("undefinedWhenEmpty", []):
+            # a tri-state flag: unset means the element decides from another property (the context menu's `multiSelect`)
+            p, kind = {"type": ["boolean", "null"], "default": None}, "nboolean"
+        elif base == "boolean":
             p, kind = {"type": "boolean", "default": bool(default)}, "boolean"
         elif base == "number" and not nullable:
             p, kind = {"type": "number", "default": default if isinstance(default, (int, float)) else 0}, "number"
@@ -1107,7 +1303,10 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
                        "description": STATE_OBJECTS[base][0]}
         fields.append({"name": name, "kind": "object", "def": {}})
     for name, kind in spec.get("data", {}).items():
-        props[name] = dict(DATA_SCHEMA[kind])
+        props[name] = json.loads(json.dumps(DATA_SCHEMA[kind]))
+        if kind == "tabs":      # the badge enumerations of the pinned package (`BadgeType`, `BadgeSize`)
+            tp = props[name]["items"]["properties"]
+            tp["badgeType"]["enum"], tp["badgeSize"]["enum"] = enum_map["BadgeType"], enum_map["BadgeSize"]
     for pt in part_specs(spec, enum_map):
         for name, pp in pt["props"].items():
             if name in props:
@@ -1262,7 +1461,10 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                "  width: 100%;\n}\n"
                # The top bar is as wide as its content when centred; it is meant to span its dock (F4, measured in Chromium). Its height is its own (48).
                "/* The top bar fills the width of its component box; its height stays its own. */\n"
-               ".cadre-ob > obc-top-bar {\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
+               ".cadre-ob > obc-top-bar {\n  flex: 1 1 auto;\n  width: 100%;\n}\n"
+               # A notification row has no width of its own and collapses to its icon when centred (F5, measured in Chromium).
+               "/* A notification menu row fills the width of its component box. */\n"
+               ".cadre-ob > obc-notification-menu-item {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
     return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
 
 
@@ -1288,6 +1490,7 @@ WRAPPER = r"""
       case 'array': return tree.readArray(f.name, f.def);
       case 'nnumber': { var v = tree.read(f.name); return (v === null || v === undefined || v === '') ? undefined : Number(v); }
       case 'nvalue': { var q = tree.read(f.name); return (q === null || q === undefined || q === '') ? null : (typeof q === 'number' ? q : String(q)); }
+      case 'nboolean': { var b = tree.read(f.name); return (b === null || b === undefined || b === '') ? undefined : !!b; }
       case 'nstring': { var s = tree.readString(f.name, ''); return s === '' ? null : s; }
       case 'ustring': { var u = tree.readString(f.name, ''); return u === '' ? undefined : u; }
       case 'object': { var o = tree.read(f.name); return (o && typeof o === 'object' && Object.keys(o).length) ? JSON.parse(JSON.stringify(o)) : undefined; }
@@ -1320,7 +1523,34 @@ WRAPPER = r"""
     return Array.isArray(v) ? v.filter(function (c) { return c && typeof c === 'object'; })
       .map(function (c) { return { label: String(c.label === undefined || c.label === null ? '' : c.label), href: c.href ? String(c.href) : undefined }; }) : [];
   }
-  var CONVERT = { alerts: toAlerts, crumbs: toCrumbs, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
+  // The tabs of the tab row (TabData): the fields the element reads, as plain values (`iconName` is the module's own, see applyTabIcons).
+  function toTabs(v) {
+    var str = ['id', 'title', 'subtitle', 'badgeType', 'badgeSize'], bool = ['showSubtitle', 'hasLeadingIcon', 'hasBadge', 'badgeShowNumber',
+      'showLeadingBadgeIcon', 'disabled'];
+    return Array.isArray(v) ? v.filter(function (t) { return t && typeof t === 'object' && t.id !== undefined && t.id !== null && t.id !== ''; })
+      .map(function (t) {
+        var o = { id: String(t.id), title: String(t.title === undefined || t.title === null ? '' : t.title) };
+        str.slice(2).forEach(function (k) { if (t[k] !== undefined && t[k] !== null && t[k] !== '') o[k] = String(t[k]); });
+        bool.forEach(function (k) { if (t[k] !== undefined && t[k] !== null) o[k] = !!t[k]; });
+        if (t.badgeCount !== undefined && t.badgeCount !== null) o.badgeCount = Number(t.badgeCount) || 0;
+        return o;
+      }) : [];
+  }
+  // The options of the context menu (ContextMenuOption without its icon, a template function) and its column groups (ColumnGroup).
+  function toOptions(v) {
+    return Array.isArray(v) ? v.filter(function (o) { return o && typeof o === 'object'; }).map(function (o) {
+      var r = { value: String(o.value === undefined || o.value === null ? '' : o.value), label: String(o.label === undefined || o.label === null ? '' : o.label) };
+      if (o.level !== undefined && o.level !== null) r.level = Number(o.level) || 0;
+      if (Array.isArray(o.children) && o.children.length) r.children = toOptions(o.children);
+      return r;
+    }) : [];
+  }
+  function toColumnGroups(v) {
+    return Array.isArray(v) ? v.filter(function (g) { return g && typeof g === 'object'; })
+      .map(function (g) { return { title: String(g.title === undefined || g.title === null ? '' : g.title), columns: Number(g.columns) || 1, options: toOptions(g.options) }; }) : [];
+  }
+  var CONVERT = { alerts: toAlerts, crumbs: toCrumbs, tabs: toTabs, menuoptions: toOptions, columngroups: toColumnGroups,
+                  strings: function (v) { return Array.isArray(v) ? v.map(String) : []; }, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
                   points: toRecords, datasets: toRecords, yaxes: toRecords, labels: toRecords, colors: toRecords,
                   segments: toRecords, piesegments: toRecords, linearadvices: toRecords, radialadvices: toRecords,
                   rings: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
@@ -1361,8 +1591,14 @@ WRAPPER = r"""
       // when that is not an object (a search field reports its text)
       var out = {}, raw = e ? e.detail : undefined;
       ((ev && ev.fields) || []).forEach(function (f) {
-        var v = (raw !== null && typeof raw === 'object') ? raw[f.from || f.name] : raw;
-        out[f.name] = f.type === 'boolean' ? !!v : (f.type === 'number' ? (Number(v) || 0) : String(v === undefined || v === null ? '' : v));
+        // a `from` with dots reads a field of a nested object of the detail (the tab row's `tab.title`)
+        var v = raw;
+        if (raw !== null && typeof raw === 'object') {
+          v = raw;
+          (f.from || f.name).split('.').forEach(function (k) { v = (v !== null && typeof v === 'object') ? v[k] : undefined; });
+        }
+        out[f.name] = f.type === 'boolean' ? !!v : (f.type === 'number' ? (Number(v) || 0)
+          : (f.type === 'array' ? (Array.isArray(v) ? v.map(String) : []) : String(v === undefined || v === null ? '' : v)));
       });
       return out;
     }
@@ -1493,7 +1729,7 @@ WRAPPER = r"""
           // `from` names the key of the event detail; the word @element says the event carries nothing and the element's own property is the value
           var v = ev.from === '@element' ? (this.el ? this.el[ev.write] : undefined)
             : ((raw !== null && typeof raw === 'object') ? raw[ev.from || ev.write] : raw);
-          if (v !== undefined) this.put(ev.write, v);
+          if (v !== undefined) this.put(ev.write, Array.isArray(v) ? v.slice() : v);
         }
       }
       // A nested element of a composite (spec.parts): its node is kept, its properties are set from the component's, and its events
@@ -1544,6 +1780,7 @@ WRAPPER = r"""
           if (this.applied[d.name] !== key) { this.applied[d.name] = key; el[d.name] = CONVERT[d.kind](p[d.name]); }
         });
         this.applyItems(el, p);
+        if (spec.tabIcons) this.applyTabIcons(el, p);
         if (spec.selection) this.applySelection(p);
       }
       // An event of an item that does not bubble (the alert menu's rows fire plain CustomEvents) is heard on the item itself;
@@ -1566,11 +1803,13 @@ WRAPPER = r"""
       // The children an `items` property builds (module 0.7.0): rebuilt when the list changes, marked data-cadre-item so that
       // they never mix with the children React draws for the slot properties.
       applyItems(el, p) {
+        var rebuilt = false;
         (spec.items || []).forEach((it) => {
           var list = p[it.name];
           var key = JSON.stringify(list === undefined ? null : list);
           if (this.applied['items:' + it.name] === key) return;
           this.applied['items:' + it.name] = key;
+          rebuilt = true;
           (this.itemNodes[it.name] || []).forEach(function (n) { n.remove(); });
           var nodes = [];
           (Array.isArray(list) ? list : []).forEach((o) => {
@@ -1578,6 +1817,27 @@ WRAPPER = r"""
             if (n) { n.setAttribute('data-cadre-item', ''); nodes.push(n); el.appendChild(n); this.listenItem(n); }
           });
           this.itemNodes[it.name] = nodes;
+        });
+        // a group that selects among its children (the pivot group) marks them only when its own selection changes, so it is asked to
+        // mark the children that were just built
+        if (rebuilt && typeof el.updateChildItems === 'function') el.updateChildItems();
+      }
+      // The icon of each tab of the tab row (batch F5): the row draws a placeholder icon in the slot `tab-<id>-icon` unless a child of the
+      // host stands in it, so a tab's `iconName` (a bundled icon) becomes an `obi-` element in that slot. Rebuilt when the tabs change.
+      applyTabIcons(el, p) {
+        var tabs = Array.isArray(p.tabs) ? p.tabs : [];
+        var key = JSON.stringify(tabs.map(function (t) { return t && [t.id, t.iconName]; }));
+        if (this.applied.tabIcons === key) return;
+        this.applied.tabIcons = key;
+        (this.tabIconNodes || []).forEach(function (n) { n.remove(); });
+        this.tabIconNodes = [];
+        tabs.forEach((t) => {
+          if (!t || t.id === undefined || t.id === null || t.id === '' || typeof t.iconName !== 'string' || ICONS.indexOf(t.iconName) < 0) return;
+          var n = document.createElement('obi-' + t.iconName);
+          n.setAttribute('slot', 'tab-' + t.id + '-icon');
+          n.setAttribute('data-cadre-item', '');
+          el.appendChild(n);
+          this.tabIconNodes.push(n);
         });
       }
       // ---- Row selection of the two alarm lists (module 0.4.2). OpenBridge's table draws the tick column (an
@@ -1825,7 +2085,7 @@ def js_spec(spec: dict, fields: list[dict], events: list[dict], slots: list[dict
                       + [{"name": sl["name"], "kind": "string", "def": ""} for sl in slots],
             "speedless": bool(spec.get("speedless")), "generator": bool(spec.get("generator")), "tankSlots": bool(spec.get("tankSlots")),
             "sheet": spec.get("sheet", ""), "chipSheet": spec.get("chipSheet", ""),
-            "selection": bool(spec.get("selection")),
+            "selection": bool(spec.get("selection")), "tabIcons": bool(spec.get("tabIcons")),
             "status": bool(spec.get("status")), "endAligned": bool(spec.get("endAligned")),
             "data": [{"name": n, "kind": k} for n, k in spec.get("data", {}).items()],
             "events": events,
@@ -1885,7 +2145,8 @@ def main() -> int:
             props = PAYLOAD_PROPS[kind]
             if kind == "detail":
                 rows = event_fields(spec, dom)
-                props = {r["name"]: {"type": r["type"], "description": r["text"]} for r in rows}
+                props = {r["name"]: {"type": r["type"], **({"items": {"type": "string"}} if r["type"] == "array" else {}),
+                                     "description": r["text"]} for r in rows}
                 ev["fields"] = [{"name": r["name"], "type": r["type"], **({"from": r["from"]} if "from" in r else {})} for r in rows]
             if dom in spec.get("writeBack", {}):      # the component's own property follows the press (the element changes itself)
                 field, key = spec["writeBack"][dom]

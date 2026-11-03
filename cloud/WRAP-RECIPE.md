@@ -653,3 +653,17 @@ registration, regeneration, module test); sections 2.6 to 2.10 are replaced by t
     (`toogle-...`) is renamed with `"property"`. A manifest event that is no event (the system menu's `eventName`, a helper's parameter) is
     left out and said so in the wiki. Measure sizes in Chromium with the harness page; a test of the harness for each property that writes
     back uses `probeStore` of `frame.mjs`, which records the writes of the store.
+12. **Arrays, tabs, tri-state flags, selection (F5).** An element's own array attribute is a `data` entry (`"data": {"tabs": "tabs"}`) with a
+    `DATA_SCHEMA` kind and a `CONVERT` function, as the breadcrumb's `crumbs` (item 10): the kinds added are `tabs` (the pinned `TabData` less
+    `badges`, plus the module's `iconName`; its badge enumerations are filled from the package), `menuoptions`, `columngroups` and `strings`.
+    A converter keeps the fields the element reads and copies them. `"tabIcons": True` (the tab row only) builds an `obi-` element in the slot
+    `tab-<id>-icon` for each tab that states `iconName`. A nullable boolean in `"undefinedWhenEmpty"` is the field kind `nboolean` (schema type
+    `["boolean", "null"]`, default null: unset, the element decides). An event of the kind `detail` may state a field of the type `"array"` (a list
+    of texts) and a detail key with dots (`("title", "string", "...", "tab.title")`). The wrapper asks an element with `updateChildItems` (the pivot
+    group) to mark its children after it builds an `items` list. A slot whose name is also a flag (`action`, `action2` of the floating item) is
+    renamed with `"property"` (`actionLabel`). A `PROPERTIES` row serves any element whose manifest lists the field (`hasCancelAction`,
+    `hasCloseAction`, `showTitle`, `showDescription`, `showTimestamp`). A row-like element with no width of its own (the notification menu item)
+    gets a rule in `scoped_css`. A selection that the element makes itself (a tab, a pivot, an option, an opened row) is carried by `writeBack`;
+    for a list the value is copied; `"@element"` takes the element's own value when the event carries nothing the key can name (the tab row after
+    a close). The modal window carries text and events only (its `content` slot is a text property): it is not used for commands. All 33 frame
+    components are wrapped with this batch; what each does not carry is in the wiki subsection of its batch (12, 17.23 to 17.27).

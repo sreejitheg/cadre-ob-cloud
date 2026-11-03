@@ -1,0 +1,150 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "Title or heading for the notification. Shown in the title slot if showTitle is true. Available when showTitle==true && type!=Inactive && empty==false."
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "Detailed message text for the notification. Shown in the description slot if showDescription is true. Available when showDescription==true && type!=Inactive && empty==false."
+    },
+    "time": {
+      "type": "string",
+      "default": "",
+      "description": "Primary timestamp to display (e.g., \"09:12:46\"). Shown in the time slot if showTimestamp is true. Available when showTimestamp==true && type!=Inactive && empty==false."
+    },
+    "timeSecondary": {
+      "type": "string",
+      "default": "",
+      "description": "The second time, drawn while `hasTimestamp2` is true."
+    },
+    "actionLabel": {
+      "type": "string",
+      "default": "View",
+      "description": "The text of the action button, drawn by the `with-button` type."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "simple",
+        "with-button",
+        "with-icon-button",
+        "inactive"
+      ],
+      "default": "simple",
+      "description": "Display type of the notification. - simple: Basic notification (default). - with-button: Includes a text action button. - with-icon-button: Includes an icon action. - inactive: Shows empty/inactive state."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "tall"
+      ],
+      "default": "regular",
+      "description": "Size variant of the notification. - regular: Standard compact layout (default). - tall: Expanded layout for longer content."
+    },
+    "hasTimestamp2": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show the secondary timestamp. If false, the time-secondary slot is omitted. Available when type!=Inactive && empty==false."
+    },
+    "hasSecondaryIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show the secondary icon overlay. If true, renders the secondary-icon slot. Available when type!=Inactive && empty==false."
+    },
+    "large": {
+      "type": "boolean",
+      "default": false,
+      "description": "**DEPRECATED** \u2013 Use size=\"tall\" instead. If true, uses the tall layout."
+    },
+    "empty": {
+      "type": "boolean",
+      "default": false,
+      "description": "**DEPRECATED** \u2013 Use type=\"inactive\" instead. If true, shows the empty/inactive state."
+    },
+    "emptyText": {
+      "type": "string",
+      "default": "No active notification",
+      "description": "The text drawn while `empty` is true (or the type is `inactive`)."
+    },
+    "showTitle": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the item draws its title."
+    },
+    "showDescription": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the item draws its description."
+    },
+    "showTimestamp": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the item draws its time."
+    },
+    "secondaryIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `secondary-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Additional icon for status/priority (shown when hasSecondaryIcon is true)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "A pivot was pressed. event.selectedValue is its `value` (empty when `allowDeselect` and the selected pivot was pressed). The group shows the selection at once and the component's `selectedValue` follows the press.",
+  "properties": {
+    "selectedValue": {
+      "type": "string",
+      "description": "The `value` of the selected pivot (empty if the selection was removed)."
+    }
+  }
+}

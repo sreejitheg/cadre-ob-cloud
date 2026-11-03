@@ -1278,5 +1278,97 @@
   "appIconBreakpointPx": 500,
   "settings": false,
   "breadcrumbItems": []
+ },
+ "obc-tab-item": {
+  "hug": false,
+  "centerContent": false,
+  "checked": false,
+  "hasClose": false,
+  "hasLeadingIcon": false,
+  "hasTitle": false,
+  "hasDivider": false,
+  "hasBadge": false,
+  "icon": "placeholder",
+  "title": "Tab title",
+  "showSubtitle": false,
+  "subtitle": "",
+  "disabled": false,
+  "badgeType": "regular",
+  "badgeSize": "regular",
+  "badgeCount": 0,
+  "showLeadingBadgeIcon": false
+ },
+ "obc-tab-row": {
+  "tabs": [],
+  "selectedTabId": "",
+  "hasClose": false,
+  "centerContent": false,
+  "hug": false,
+  "showSubtitle": false,
+  "hasAddNewTab": false
+ },
+ "obc-pivot-item": {
+  "value": "",
+  "selected": false,
+  "direction": "horizontal",
+  "hasLeadingIcon": false,
+  "hasLabel": false,
+  "label": "",
+  "disabled": false
+ },
+ "obc-pivot-item-group": {
+  "direction": "horizontal",
+  "selectedValue": "",
+  "allowDeselect": false
+ },
+ "obc-modal-window": {
+  "size": "large",
+  "hasOptionalAction": false,
+  "hasLeadingIcon": false
+ },
+ "obc-context-menu-input": {
+  "type": "regular",
+  "options": [],
+  "selectedValues": [],
+  "hasTitleBar": false,
+  "title": "",
+  "columnGroups": [],
+  "itemsPerColumn": 5,
+  "multiSelect": "__undefined__",
+  "selectPerGroup": "__undefined__"
+ },
+ "obc-notification-menu-item": {
+  "hasIcon": false,
+  "title": "",
+  "description": "",
+  "day": "",
+  "time": "",
+  "open": false,
+  "size": "single-line",
+  "primaryActionLabel": "",
+  "secondaryActionLabel": ""
+ },
+ "obc-notification-message-item": {
+  "title": "",
+  "description": "",
+  "time": "",
+  "timeSecondary": "",
+  "actionLabel": "View",
+  "type": "simple",
+  "size": "regular",
+  "hasTimestamp2": false,
+  "hasSecondaryIcon": false,
+  "large": false,
+  "empty": false,
+  "emptyText": "No active notification"
+ },
+ "obc-notification-floating-item": {
+  "type": "regular",
+  "direction": "horizontal",
+  "hasTimestamp": false,
+  "hasDay": false,
+  "action": false,
+  "action2": false,
+  "lineType": "single-line"
  }
 }

@@ -370,6 +370,161 @@ r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', { wifiState: sys.
      ${settle} return [el.activeSubMenu, wrote]; }`);
 check('system menu: the press of a heading writes the sub menu the element opened, so a later update keeps it open', r[0] === 'wifi' && JSON.stringify(r[1]) === JSON.stringify([['activeSubMenu', 'wifi']]), r);
 
+// ---- batch F5: tabs, pivots, the modal window, the context menu input and the notification items
+r = await probeStore('cadre.ob.tabitem', 'obc-tab-item', { hasTitle: true, title: 'Engine', hasLeadingIcon: true, leadingIconName: 'dashboard', hasBadge: true, badgeCount: 3, showLeadingBadgeIcon: true, badgeIconName: 'info' }, kids);
+check('tab item: the leading icon and the badge icon are icons in their slots', r.sort().join() === 'obi-dashboard[leading-icon],obi-info[badge-icon]', r);
+r = await probeStore('cadre.ob.tabitem', 'obc-tab-item', { hasTitle: true, title: 'Engine', subtitle: 'Pumps', showSubtitle: true, hasBadge: true, badgeCount: 7, badgeType: 'alarm' },
+  `(el) => [el.shadowRoot.querySelector('.title').textContent.trim(), el.shadowRoot.querySelector('.subtitle').textContent.trim(), el.shadowRoot.querySelectorAll('obc-badge').length, el.shadowRoot.querySelector('obc-badge').number, el.shadowRoot.querySelector('obc-badge').type]`);
+check('tab item: the title, subtitle and badge come from the attributes', JSON.stringify(r) === JSON.stringify(['Engine', 'Pumps', 1, 7, 'alarm']), r);
+r = await probeStore('cadre.ob.tabitem', 'obc-tab-item', { hasTitle: true, title: 'Engine', hasClose: true },
+  `async (el) => { el.shadowRoot.querySelector('[role=tab]').click(); el.shadowRoot.querySelector('.close-button').click(); ${settle} return window.fired; }`);
+check('tab item: a press carries onTabClick and the close button onTabClose (not also a tab press), each with the title',
+  JSON.stringify(r) === JSON.stringify([['onTabClick', { title: 'Engine' }], ['onTabClose', { title: 'Engine' }]]), r);
+r = await probeStore('cadre.ob.tabitem', 'obc-tab-item', { hasTitle: true, title: 'Engine', disabled: true }, `async (el) => { el.shadowRoot.querySelector('[role=tab]').click(); ${settle} return window.fired; }`);
+check('tab item: a disabled tab carries no press', r.length === 0, r);
+
+const tabs = [{ id: 'a', title: 'Overview', iconName: 'dashboard' }, { id: 'b', title: 'Alarms', iconName: 'alarm', hasBadge: true, badgeCount: 3, badgeType: 'alarm' },
+  { id: 'c', title: 'Trends', hasLeadingIcon: false }, { id: 'd', title: 'Reports', disabled: true }];
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs, selectedTabId: 'a' },
+  `async (el) => { ${settle} const t = [...el.shadowRoot.querySelectorAll('obc-tab-item')];
+     return [t.map(x => x.title + ':' + x.checked + ':' + x.hasLeadingIcon + ':' + x.disabled).join(), [...el.children].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join()]; }`);
+check('tab row: one tab for each entry, the selected one checked; a tab\'s icon is an icon in its slot (none where the tab has no icon)',
+  r[0] === 'Overview:true:true:false,Alarms:false:true:false,Trends:false:false:false,Reports:false:true:true' && r[1] === 'obi-dashboard[tab-a-icon],obi-alarm[tab-b-icon]', r);
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs, selectedTabId: 'a' },
+  `async (el) => { const t = [...el.shadowRoot.querySelectorAll('obc-tab-item')]; t[1].shadowRoot.querySelector('[role=tab]').click(); ${settle}
+     return [window.fired, window.writes, el.selectedTabId]; }`);
+check('tab row: a press carries onTabSelected with the id, the position and the title, and writes the component\'s selectedTabId',
+  JSON.stringify(r) === JSON.stringify([[['onTabSelected', { id: 'b', index: 1, title: 'Alarms' }]], [['selectedTabId', 'b']], 'b']), r);
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs, selectedTabId: 'b', hasClose: true },
+  `async (el) => { const t = [...el.shadowRoot.querySelectorAll('obc-tab-item')]; t[1].shadowRoot.querySelector('.close-button').click(); ${settle}
+     return [window.fired, window.writes, el.tabs.length]; }`);
+check('tab row: a close press carries onTabClosed, the row drops the tab and the component\'s selectedTabId follows its choice',
+  JSON.stringify(r) === JSON.stringify([[['onTabClosed', { id: 'b', index: 1, title: 'Alarms' }]], [['selectedTabId', 'c']], 3]), r);
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs, selectedTabId: 'a', hasAddNewTab: true },
+  `async (el) => { el.shadowRoot.querySelector('.add-new-tab').click(); ${settle} return window.fired; }`);
+check('tab row: the add button carries onAddNewTab with no detail', JSON.stringify(r) === JSON.stringify([['onAddNewTab', {}]]), r);
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs, selectedTabId: 'a' },
+  `async (el) => { window.h.rerender({ tabs: ${JSON.stringify(tabs.slice(0, 2).map(t => ({ ...t, iconName: 'info' })))}, selectedTabId: 'b' }); ${settle}
+     return [el.tabs.length, el.selectedTabId, [...el.children].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join()]; }`);
+check('tab row: a later update replaces the tabs, the selection and the icons, which are not built twice',
+  JSON.stringify(r) === JSON.stringify([2, 'b', 'obi-info[tab-a-icon],obi-info[tab-b-icon]']), r);
+r = await probeStore('cadre.ob.tabrow', 'obc-tab-row', { tabs: [{ id: 'a', title: 'A', iconName: 'no-such-icon' }, { title: 'No id' }, 'x'] },
+  '(el) => [el.tabs.map(t => t.id).join(), el.children.length]');
+check('tab row: an entry with no id is dropped, and an icon name outside the bundled list draws no child', JSON.stringify(r) === JSON.stringify(['a', 0]), r);
+
+r = await probeStore('cadre.ob.pivotitem', 'obc-pivot-item', { value: 'alarms', hasLabel: true, label: 'Alarms', hasLeadingIcon: true, iconName: 'alarm' }, kids);
+check('pivot item: the icon is an icon in the icon slot', r.join() === 'obi-alarm[icon]', r);
+r = await probeStore('cadre.ob.pivotitem', 'obc-pivot-item', { value: 'alarms', hasLabel: true, label: 'Alarms' },
+  `async (el) => { el.shadowRoot.querySelector('button').click(); ${settle} return [window.fired, window.writes, el.selected]; }`);
+check('pivot item: a press carries onSelected with the value and writes nothing (the item does not select itself)',
+  JSON.stringify(r) === JSON.stringify([[['onSelected', { value: 'alarms' }]], [], false]), r);
+r = await probeStore('cadre.ob.pivotitem', 'obc-pivot-item', { value: 'alarms', hasLabel: true, label: 'Alarms', selected: true },
+  `async (el) => { el.shadowRoot.querySelector('button').click(); ${settle} return window.fired; }`);
+check('pivot item: a selected item carries no press', r.length === 0, r);
+
+const pivots = [{ tag: 'obc-pivot-item', id: 'pv-a', value: 'alarms', hasLabel: true, label: 'Alarms' }, { tag: 'obc-pivot-item', id: 'pv-t', value: 'trends', hasLabel: true, label: 'Trends', children: [{ tag: 'obi-info', slot: 'icon' }], hasLeadingIcon: true },
+  { tag: 'obc-pivot-item', value: 'reports', hasLabel: true, label: 'Reports', disabled: true }];
+r = await probeStore('cadre.ob.pivotitemgroup', 'obc-pivot-item-group', { items: pivots, selectedValue: 'trends' },
+  `async (el) => { ${settle} return [[...el.children].map(n => n.tagName.toLowerCase() + ':' + n.value + ':' + n.selected + ':' + n.direction + ':' + n.children.length).join(), [...el.children].map(n => n.getAttribute('data-item-id') || '').join()]; }`);
+check('pivot group: the items are pivots, the group marks the one it selects', r[0] === 'obc-pivot-item:alarms:false:horizontal:0,obc-pivot-item:trends:true:horizontal:1,obc-pivot-item:reports:false:horizontal:0' && r[1] === 'pv-a,pv-t,', r);
+r = await probeStore('cadre.ob.pivotitemgroup', 'obc-pivot-item-group', { items: pivots, selectedValue: 'trends' },
+  `async (el) => { el.children[0].shadowRoot.querySelector('button').click(); ${settle} return [window.fired, window.writes, el.selectedValue, [...el.children].map(n => n.selected).join()]; }`);
+check('pivot group: a press carries onChange with the value, shows the selection and writes the component\'s selectedValue (the pivot\'s own event does not reach the host)',
+  JSON.stringify(r) === JSON.stringify([[['onChange', { selectedValue: 'alarms' }]], [['selectedValue', 'alarms']], 'alarms', 'true,false,false']), r);
+r = await probeStore('cadre.ob.pivotitemgroup', 'obc-pivot-item-group', { items: pivots, selectedValue: 'trends', allowDeselect: true },
+  `async (el) => { el.children[1].shadowRoot.querySelector('button').click(); ${settle} return [window.fired, el.selectedValue]; }`);
+check('pivot group: pressing the selected pivot carries nothing, even with allowDeselect (the pivot ignores a press while selected, in this release)', JSON.stringify(r) === JSON.stringify([[], 'trends']), r);
+r = await probeStore('cadre.ob.pivotitemgroup', 'obc-pivot-item-group', { items: pivots.slice(0, 1), selectedValue: 'alarms' },
+  `async (el) => { window.h.rerender({ items: ${JSON.stringify(pivots)}, selectedValue: 'trends', direction: 'vertical' }); ${settle}
+     return [[...el.children].map(n => n.selected + ':' + n.direction).join(), el.children.length]; }`);
+check('pivot group: a later update rebuilds the pivots, marks the selected one and gives them the direction', JSON.stringify(r) === JSON.stringify(['false:vertical,true:vertical,false:vertical', 3]), r);
+
+r = await probeStore('cadre.ob.modalwindow', 'obc-modal-window', { title: 'Release command', content: 'Body text', optionLabel: 'Details', cancelLabel: 'Keep', doneLabel: 'Release', hasLeadingIcon: true, hasOptionalAction: true, leadingIconName: 'info' }, kids);
+check('modal window: the title, content and the three labels are spans in their slots and the icon is in the leading icon slot',
+  r.sort().join() === 'obi-info[leading-icon],span[cancel-label],span[content],span[done-label],span[option-label],span[title]', r);
+r = await probeStore('cadre.ob.modalwindow', 'obc-modal-window', {}, kids);
+check('modal window: with no text the element keeps its own words (Title, Cancel, Done) and draws no child', r.length === 0, r);
+r = await probeStore('cadre.ob.modalwindow', 'obc-modal-window', { title: 'T', hasOptionalAction: true },
+  `async (el) => { const b = [...el.shadowRoot.querySelectorAll('obc-button, obc-icon-button')]; b.forEach(x => x.click()); ${settle} return [b.length, window.fired]; }`);
+check('modal window: the close, option, cancel and done buttons carry their four events, with no detail',
+  r[0] === 4 && JSON.stringify(r[1].map(x => x[0]).sort()) === JSON.stringify(['onCancelClick', 'onCloseClick', 'onDoneClick', 'onOptionClick']) && r[1].every(x => Object.keys(x[1]).length === 0), r);
+r = await probeStore('cadre.ob.modalwindow', 'obc-modal-window', { title: 'T', hasCancelAction: false, hasCloseAction: false },
+  `(el) => [el.shadowRoot.querySelectorAll('obc-button').length, el.shadowRoot.querySelectorAll('obc-icon-button').length, el.hasCancelAction, el.hasCloseAction]`);
+check('modal window: hasCancelAction and hasCloseAction false leave the Cancel and close buttons out', JSON.stringify(r) === JSON.stringify([1, 0, false, false]), r);
+r = await probeStore('cadre.ob.modalwindow', 'obc-modal-window', { title: 'T' }, `async (el) => { ${settle} const b = el.getBoundingClientRect(); return [b.width, b.height]; }`);
+check('modal window: a plain block of its own width (540, large) that draws no overlay', r[0] === 540 && r[1] > 100 && r[1] < 300, r);
+
+const opts = [{ value: 'a', label: 'Alpha' }, { value: 'b', label: 'Beta' }, { value: 'c', label: 'Gamma' }];
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { options: opts, selectedValues: ['b'] },
+  '(el) => [[...el.shadowRoot.querySelectorAll("[data-menu-item]")].map(x => x.getAttribute("data-menu-value") + ":" + x.getAttribute("aria-selected")).join(), el.multiSelect === undefined, el.selectPerGroup === undefined, el.options.length, el.selectedValues.join()]');
+check('context menu: one row for each option, the selected one marked; multiSelect and selectPerGroup stay undefined (the element decides from type)',
+  r[0] === 'a:false,b:true,c:false' && r[1] === true && r[2] === true && r[3] === 3 && r[4] === 'b', r);
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { options: opts, selectedValues: ['b'] },
+  `async (el) => { el.shadowRoot.querySelector('[data-menu-value=a]').click(); ${settle} return [window.fired, window.writes, el.selectedValues]; }`);
+check('context menu: a press carries onItemClick with the value and label, then onChange with the selection, and writes the component\'s selectedValues',
+  JSON.stringify(r) === JSON.stringify([[['onItemClick', { value: 'a', label: 'Alpha' }], ['onChange', { selectedValues: ['a'] }]], [['selectedValues', ['a']]], ['a']]), r);
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { type: 'checkboxes', options: opts, selectedValues: ['b'] },
+  `async (el) => { const c = [...el.shadowRoot.querySelectorAll('obc-checkbox-item')]; c[0].dispatchEvent(new CustomEvent('change', { detail: { status: 'checked' } }));
+     c[2].dispatchEvent(new CustomEvent('change', { detail: { status: 'checked' } })); ${settle} return [window.fired, window.writes.map(w => w[1].join()), el.selectedValues]; }`);
+check('context menu: the checkbox type selects several, each change carries onChange with the whole selection and writes it',
+  JSON.stringify(r) === JSON.stringify([[['onChange', { selectedValues: ['b', 'a'] }], ['onChange', { selectedValues: ['b', 'a', 'c'] }]], ['b,a', 'b,a,c'], ['b', 'a', 'c']]), r);
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { options: opts, hasTitleBar: true, title: 'Show' },
+  `async (el) => { el.shadowRoot.querySelector('.title-container obc-icon-button').click(); el.shadowRoot.querySelector('[role=menu]').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); ${settle}
+     return [el.shadowRoot.querySelector('.title-text').textContent.trim(), window.fired]; }`);
+check('context menu: the title bar shows the title, and its close button and the Escape key carry onClose with no detail',
+  r[0] === 'Show' && JSON.stringify(r[1]) === JSON.stringify([['onClose', {}], ['onClose', {}]]), r);
+const groups = [{ title: 'Show', columns: 1, options: [opts[0], opts[1]] }, { title: 'Areas', columns: 1, options: [opts[2]] }];
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { type: 'multi-with-subtitles', columnGroups: groups, selectedValues: ['a', 'c'] },
+  '(el) => [el.columnGroups.length, el.columnGroups[0].options.length, [...el.shadowRoot.querySelectorAll("[data-menu-value]")].map(x => x.getAttribute("data-menu-value")).join(), el.shadowRoot.innerHTML.indexOf("Areas") >= 0]');
+check('context menu: the column groups draw their titles and options', JSON.stringify(r) === JSON.stringify([2, 2, 'a,b,c', true]), r);
+r = await probeStore('cadre.ob.contextmenuinput', 'obc-context-menu-input', { options: [{ value: 'x', label: 'X', icon: 'no', children: [{ value: 'y', label: 'Y', level: 1 }] }, 'bad'], multiSelect: true },
+  '(el) => [el.options.length, JSON.stringify(el.options[0]), el.multiSelect]');
+check('context menu: an option carries value, label, level and children only (no icon), and multiSelect true reaches the element',
+  JSON.stringify(r) === JSON.stringify([1, '{"value":"x","label":"X","children":[{"value":"y","label":"Y","level":1}]}', true]), r);
+
+r = await probeStore('cadre.ob.notificationmenuitem', 'obc-notification-menu-item', { title: 'Pump stopped', description: 'By the operator', day: 'Today', time: '09:41', hasIcon: true, iconName: 'info', open: true, primaryActionLabel: 'View', secondaryActionLabel: 'Dismiss' },
+  `async (el) => { ${settle} const m = el.shadowRoot.querySelector('obc-message-menu-item'); return [[...el.children].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join(), m.title, m.day, m.time, m.primaryActionLabel, m.open]; }`);
+check('notification menu item: the texts reach the row it draws, the icon is an icon in the icon slot', JSON.stringify(r) === JSON.stringify(['obi-info[icon]', 'Pump stopped', 'Today', '09:41', 'View', true]), r);
+r = await probeStore('cadre.ob.notificationmenuitem', 'obc-notification-menu-item', { title: 'Pump stopped' },
+  `async (el) => { const m = el.shadowRoot.querySelector('obc-message-menu-item'); m.dispatchEvent(new CustomEvent('message-click', { detail: { open: true }, bubbles: true, composed: true })); ${settle} return [window.fired, window.writes, el.open]; }`);
+check('notification menu item: a press carries onItemClick with the state after the press and writes the component\'s open',
+  JSON.stringify(r) === JSON.stringify([[['onItemClick', { open: true }]], [['open', true]], true]), r);
+r = await probeStore('cadre.ob.notificationmenuitem', 'obc-notification-menu-item', { title: 'Pump stopped', open: true, primaryActionLabel: 'View', secondaryActionLabel: 'Dismiss' },
+  `async (el) => { ${settle} const m = el.shadowRoot.querySelector('obc-message-menu-item'); await m.updateComplete; const b = [...m.shadowRoot.querySelectorAll('obc-button')]; b.forEach(x => x.click()); ${settle} return [b.length, window.fired]; }`);
+check('notification menu item: the two actions carry onPrimaryActionClick and onSecondaryActionClick with no detail',
+  r[0] === 2 && JSON.stringify(r[1].map(x => x[0]).sort()) === JSON.stringify(['onPrimaryActionClick', 'onSecondaryActionClick']) && r[1].every(x => Object.keys(x[1]).length === 0), r);
+r = await probeStore('cadre.ob.notificationmenuitem', 'obc-notification-menu-item', { title: 'Pump stopped' }, `async (el) => { ${settle} return [el.getBoundingClientRect().width, el.parentElement.parentElement.getBoundingClientRect().width]; }`);
+check('notification menu item: it fills the width of its component box', r[0] === r[1] && r[0] === 480, r);
+
+r = await probeStore('cadre.ob.notificationmessageitem', 'obc-notification-message-item', { title: 'Pump stopped', description: 'By the operator', time: '09:41', type: 'with-button', actionLabel: 'View', hasSecondaryIcon: true, secondaryIconName: 'info' },
+  `async (el) => { ${settle} const t = el.shadowRoot.querySelector('obc-topbar-message-item'); return [[...el.children].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join(), [...t.children].map(n => n.getAttribute('slot') + ':' + n.textContent.trim()).filter(x => /^(title|description|time|action-text):/.test(x)).join()]; }`);
+check('notification message item: the texts reach the row it draws, the icon is an icon in the secondary icon slot',
+  r[0] === 'obi-info[secondary-icon]' && r[1] === 'title:Pump stopped,description:By the operator,time:09:41,action-text:View', r);
+r = await probeStore('cadre.ob.notificationmessageitem', 'obc-notification-message-item', { title: 'Pump stopped', type: 'with-button', showTitle: false, showTimestamp: false, time: '09:41' },
+  `async (el) => { ${settle} const t = el.shadowRoot.querySelector('obc-topbar-message-item'); return [[...t.children].filter(n => n.getAttribute('slot') === 'title' || n.getAttribute('slot') === 'time').length, el.showTitle, el.showTimestamp, el.showDescription]; }`);
+check('notification message item: showTitle and showTimestamp false leave the title and the time out', JSON.stringify(r) === JSON.stringify([0, false, false, true]), r);
+r = await probeStore('cadre.ob.notificationmessageitem', 'obc-notification-message-item', { title: 'Pump stopped', type: 'with-button', actionLabel: 'View' },
+  `async (el) => { ${settle} const t = el.shadowRoot.querySelector('obc-topbar-message-item'); await t.updateComplete; t.dispatchEvent(new CustomEvent('message-click')); t.dispatchEvent(new CustomEvent('action-click')); ${settle} return window.fired; }`);
+check('notification message item: a press carries onMessageClick and the action carries onActionClick, with no detail, once each',
+  JSON.stringify(r) === JSON.stringify([['onMessageClick', {}], ['onActionClick', {}]]), r);
+r = await probeStore('cadre.ob.notificationmessageitem', 'obc-notification-message-item', { empty: true, emptyText: 'Nothing to show' },
+  `async (el) => { ${settle} const t = el.shadowRoot.querySelector('obc-topbar-message-item'); return [t.type, [...t.children].filter(n => n.getAttribute('slot') === 'empty').map(n => n.textContent).join()]; }`);
+check('notification message item: empty draws the inactive row with the empty text', JSON.stringify(r) === JSON.stringify(['inactive', 'Nothing to show']), r);
+r = await probeStore('cadre.ob.notificationmessageitem', 'obc-notification-message-item', { title: 'T' }, `async (el) => { ${settle} const b = el.getBoundingClientRect(); return [b.width, b.height]; }`);
+check('notification message item: 640 wide and 48 high in the regular size', JSON.stringify(r) === JSON.stringify([640, 48]), r);
+
+r = await probeStore('cadre.ob.notificationfloatingitem', 'obc-notification-floating-item', { type: 'application', title: 'Pump stopped', description: 'By the operator', time: '09:41', day: 'Today', hasTimestamp: true, hasDay: true, action: true, actionLabel: 'View', action2: true, action2Label: 'Dismiss', primaryIconName: 'info' }, kids);
+check('notification floating item: the five texts and the two labels are spans in their slots and the primary icon is an icon',
+  r.sort().join() === 'obi-info[primary-icon],span[action2],span[action],span[day],span[description],span[time],span[title]'.split(',').sort().join(), r);
+r = await probeStore('cadre.ob.notificationfloatingitem', 'obc-notification-floating-item', { title: 'Pump stopped', action: true, actionLabel: 'View', action2: true, action2Label: 'Dismiss' },
+  `async (el) => { ${settle} const f = el.shadowRoot.querySelector('obc-floating-item'); await f.updateComplete; const b = [...f.shadowRoot.querySelectorAll('obc-button, obc-icon-button')]; b.forEach(x => x.click()); ${settle} return [b.length, window.fired]; }`);
+check('notification floating item: the two actions and the dismiss button carry their three events with no detail',
+  r[0] >= 3 && JSON.stringify(r[1].map(x => x[0]).sort()) === JSON.stringify(['onAction2Click', 'onActionClick', 'onDismissClick']) && r[1].every(x => Object.keys(x[1]).length === 0), r);
+r = await probeStore('cadre.ob.notificationfloatingitem', 'obc-notification-floating-item', { title: 'T', direction: 'vertical', lineType: 'multi-line' }, '(el) => [el.direction, el.lineType, el.type]');
+check('notification floating item: the enumerations reach the element', JSON.stringify(r) === JSON.stringify(['vertical', 'multi-line', 'regular']), r);
+r = await probeStore('cadre.ob.notificationfloatingitem', 'obc-notification-floating-item', { title: 'T' }, `async (el) => { ${settle} const b = el.getBoundingClientRect(); return [b.width, b.height]; }`);
+check('notification floating item: 640 wide and 73 high with a title alone', JSON.stringify(r) === JSON.stringify([640, 73]), r);
+
 const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem') && !e.includes('item tag not allowed here: obc-navigation-item') && !e.includes('obc-app-button has no item attribute bogus'));      // provoked above
 check('no console error or warning', unexpected.length === 0, unexpected);
 for (const [s, n, d] of results) console.log(s, n, d);

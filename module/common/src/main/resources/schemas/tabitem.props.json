@@ -1,0 +1,208 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shrinks the tab width to fit its content instead of using the default fixed width. When enabled, the tab will use width: fit-content and a minimum width. Default: false"
+    },
+    "centerContent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Centers the content (icon, title, badge) horizontally within the tab. When enabled, content is centered rather than left-aligned. Default: false"
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Marks the tab as selected/active. Only one tab in a group should have checked set to true. Default: false"
+    },
+    "hasClose": {
+      "type": "boolean",
+      "default": false,
+      "description": "Displays a close button at the end of the tab. Use for tabs that can be removed by the user. Default: false"
+    },
+    "hasLeadingIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a leading icon at the start of the tab. Supply icon content via the leading-icon slot. Default: false"
+    },
+    "hasTitle": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the tab draws its title (and subtitle). The tab row always sets it."
+    },
+    "hasDivider": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows a vertical divider on the left edge of the tab (except when checked). Useful for visually separating tabs. Default: false Available when checked==false."
+    },
+    "hasBadge": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-tab-item` property `hasBadge`."
+    },
+    "title": {
+      "type": "string",
+      "default": "Tab title",
+      "description": "The tab's title/label text. Can be overridden by slotting content into the title slot. Default: 'Tab title'"
+    },
+    "showSubtitle": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows contextual text below the tab title. Default: false"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "",
+      "description": "Contextual text shown below the tab title when showSubtitle is true. Default: ''"
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the tab, preventing user interaction and applying disabled styles. Default: false"
+    },
+    "badgeType": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic",
+        "running",
+        "notification",
+        "enhance",
+        "regular",
+        "empty",
+        "automation",
+        "outline"
+      ],
+      "default": "regular",
+      "description": "The type of the badge drawn while `hasBadge` is true."
+    },
+    "badgeSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "large"
+      ],
+      "default": "regular",
+      "description": "Available when hasBadge==true."
+    },
+    "badgeCount": {
+      "type": "number",
+      "default": 0,
+      "description": "The number in the badge while `hasBadge` is true."
+    },
+    "showLeadingBadgeIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when hasBadge==true."
+    },
+    "leadingIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `leading-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Slot for the leading icon (shown when hasLeadingIcon is true)"
+    },
+    "badgeIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `badge-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Slot for an icon inside the badge (shown when hasBadge and showLeadingBadgeIcon are true)"
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

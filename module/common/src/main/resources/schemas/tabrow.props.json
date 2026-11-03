@@ -1,0 +1,127 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "selectedTabId": {
+      "type": "string",
+      "default": "",
+      "description": "The `id` of the selected tab."
+    },
+    "hasClose": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display a close button on each tab. When enabled, users can remove tabs individually. Default: false."
+    },
+    "centerContent": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-tab-row` property `centerContent`."
+    },
+    "hug": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enables \"hug\" mode for a more compact tab layout with reduced padding. Default: false."
+    },
+    "showSubtitle": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display subtitle text for each tab. Individual tabs can override this with tab.showSubtitle. Default: false."
+    },
+    "hasAddNewTab": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display an \"add new tab\" button at the end of the tab row. When clicked, emits the add-new-tab event. Default: false."
+    },
+    "tabs": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "subtitle": {
+            "type": "string"
+          },
+          "showSubtitle": {
+            "type": "boolean"
+          },
+          "hasLeadingIcon": {
+            "type": "boolean"
+          },
+          "iconName": {
+            "type": "string"
+          },
+          "hasBadge": {
+            "type": "boolean"
+          },
+          "badgeCount": {
+            "type": "number"
+          },
+          "badgeType": {
+            "type": "string",
+            "enum": [
+              "alarm",
+              "warning",
+              "caution",
+              "level-critical",
+              "level-high",
+              "level-medium",
+              "level-low",
+              "level-diagnostic",
+              "running",
+              "notification",
+              "enhance",
+              "regular",
+              "empty",
+              "automation",
+              "outline"
+            ]
+          },
+          "badgeSize": {
+            "type": "string",
+            "enum": [
+              "regular",
+              "large"
+            ]
+          },
+          "badgeShowNumber": {
+            "type": "boolean"
+          },
+          "showLeadingBadgeIcon": {
+            "type": "boolean"
+          },
+          "disabled": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "title"
+        ]
+      },
+      "description": "The tabs, one object each: `id` (unique; the events report it), `title`, `subtitle`, `showSubtitle`, `hasLeadingIcon`, `iconName` (an OpenBridge icon the module bundles, in the tab's leading icon slot; the element draws a placeholder icon where a tab has none, so a tab without an icon states `hasLeadingIcon` false), `hasBadge`, `badgeCount`, `badgeType`, `badgeSize`, `badgeShowNumber`, `showLeadingBadgeIcon` and `disabled`. The element's `badges` list is not carried."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

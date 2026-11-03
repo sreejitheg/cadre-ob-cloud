@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "application"
+      ],
+      "default": "regular",
+      "description": "Defines the notification type. - regular: Standard notification appearance. - application: Application-level notification with additional icon. Default is regular."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal",
+      "description": "Sets the layout direction of the notification. - horizontal: Content and actions are arranged side-by-side. - vertical: Content and actions are stacked. Default is horizontal."
+    },
+    "hasTimestamp": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays a timestamp label (e.g., \"09:12:46\") in the notification. Default is false."
+    },
+    "hasDay": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true (and hasTimestamp is also true), displays a day label (e.g., \"Yesterday\") in the notification. Default is false."
+    },
+    "action": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays a primary action button (e.g., \"Close\"). Default is false."
+    },
+    "action2": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays a secondary action button (e.g., \"Undo\"). Only available if action is also true. Default is false."
+    },
+    "lineType": {
+      "type": "string",
+      "enum": [
+        "single-line",
+        "multi-line"
+      ],
+      "default": "single-line",
+      "description": "Sets the line type for the notification content. - singleLine: Compact, single-line layout. - multiLine: Supports longer, multi-line descriptions. Default is singleLine."
+    },
+    "primaryIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `primary-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Custom main icon, projected into the child only when type=\"application\" (the built-in notification icon is used otherwise)."
+    },
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `title` slot; empty puts none. Title or heading of the notification."
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `description` slot; empty puts none. Detailed message text."
+    },
+    "time": {
+      "type": "string",
+      "default": "",
+      "description": "The time of the notification, drawn while `hasTimestamp` is true."
+    },
+    "day": {
+      "type": "string",
+      "default": "",
+      "description": "The day of the notification, drawn while `hasDay` is true."
+    },
+    "actionLabel": {
+      "type": "string",
+      "default": "",
+      "description": "The label of the primary action button, drawn while `action` is true."
+    },
+    "action2Label": {
+      "type": "string",
+      "default": "",
+      "description": "The label of the secondary action button, drawn while `action2` is true."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The close button of the window was pressed. The event carries nothing.",
+  "properties": {}
+}

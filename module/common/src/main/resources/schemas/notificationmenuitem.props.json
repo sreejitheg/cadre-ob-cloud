@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, renders the icon slot for a secondary icon."
+    },
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `title`."
+    },
+    "description": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `description`."
+    },
+    "day": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `day`."
+    },
+    "time": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `time`."
+    },
+    "open": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-notification-menu-item` property `open`."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "single-line",
+        "double-line"
+      ],
+      "default": "single-line",
+      "description": "Layout size: single-line (default) or double-line."
+    },
+    "primaryActionLabel": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `primaryActionLabel`."
+    },
+    "secondaryActionLabel": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-notification-menu-item` property `secondaryActionLabel`."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Secondary icon (shown when hasIcon is true)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

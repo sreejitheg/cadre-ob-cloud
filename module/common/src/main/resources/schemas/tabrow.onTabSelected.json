@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "A tab was pressed. event.id, event.index and event.title name the tab. The row shows it selected at once and the component's `selectedTabId` follows the press.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The `id` of the tab that was pressed."
+    },
+    "index": {
+      "type": "number",
+      "description": "The position of the tab in `tabs`, from 0."
+    },
+    "title": {
+      "type": "string",
+      "description": "The title of the tab."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The menu asks to close (the Escape key, or the close button of the title bar). The event carries nothing.",
+  "properties": {}
+}

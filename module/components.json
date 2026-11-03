@@ -11435,6 +11435,1269 @@
    }
   }
  },
+ "cadre.ob.tabitem": {
+  "element": "obc-tab-item",
+  "title": "OB Tab Item",
+  "palette": "OpenBridge tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
+  "schema": "schemas/tabitem.props.json",
+  "defaultSize": {
+   "width": 200,
+   "height": 48
+  },
+  "props": {
+   "hug": {
+    "type": "boolean",
+    "default": false
+   },
+   "centerContent": {
+    "type": "boolean",
+    "default": false
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasClose": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasLeadingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasTitle": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasDivider": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasBadge": {
+    "type": "boolean",
+    "default": false
+   },
+   "title": {
+    "type": "string",
+    "default": "Tab title"
+   },
+   "showSubtitle": {
+    "type": "boolean",
+    "default": false
+   },
+   "subtitle": {
+    "type": "string",
+    "default": ""
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "badgeType": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic",
+     "running",
+     "notification",
+     "enhance",
+     "regular",
+     "empty",
+     "automation",
+     "outline"
+    ],
+    "default": "regular"
+   },
+   "badgeSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "large"
+    ],
+    "default": "regular"
+   },
+   "badgeCount": {
+    "type": "number",
+    "default": 0
+   },
+   "showLeadingBadgeIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "leadingIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "badgeIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "leadingIconName": {
+    "slot": "leading-icon",
+    "kind": "icon"
+   },
+   "badgeIconName": {
+    "slot": "badge-icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onTabClick": {
+    "element": "tab-click",
+    "schema": "schemas/tabitem.onTabClick.json"
+   },
+   "onTabClose": {
+    "element": "tab-close",
+    "schema": "schemas/tabitem.onTabClose.json"
+   }
+  }
+ },
+ "cadre.ob.tabrow": {
+  "element": "obc-tab-row",
+  "title": "OB Tab Row",
+  "palette": "OpenBridge tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
+  "schema": "schemas/tabrow.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 48
+  },
+  "props": {
+   "selectedTabId": {
+    "type": "string",
+    "default": ""
+   },
+   "hasClose": {
+    "type": "boolean",
+    "default": false
+   },
+   "centerContent": {
+    "type": "boolean",
+    "default": false
+   },
+   "hug": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSubtitle": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasAddNewTab": {
+    "type": "boolean",
+    "default": false
+   },
+   "tabs": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "title": {
+       "type": "string"
+      },
+      "subtitle": {
+       "type": "string"
+      },
+      "showSubtitle": {
+       "type": "boolean"
+      },
+      "hasLeadingIcon": {
+       "type": "boolean"
+      },
+      "iconName": {
+       "type": "string"
+      },
+      "hasBadge": {
+       "type": "boolean"
+      },
+      "badgeCount": {
+       "type": "number"
+      },
+      "badgeType": {
+       "type": "string",
+       "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic",
+        "running",
+        "notification",
+        "enhance",
+        "regular",
+        "empty",
+        "automation",
+        "outline"
+       ]
+      },
+      "badgeSize": {
+       "type": "string",
+       "enum": [
+        "regular",
+        "large"
+       ]
+      },
+      "badgeShowNumber": {
+       "type": "boolean"
+      },
+      "showLeadingBadgeIcon": {
+       "type": "boolean"
+      },
+      "disabled": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "id",
+      "title"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onTabSelected": {
+    "element": "tab-selected",
+    "schema": "schemas/tabrow.onTabSelected.json"
+   },
+   "onTabClosed": {
+    "element": "tab-closed",
+    "schema": "schemas/tabrow.onTabClosed.json"
+   },
+   "onAddNewTab": {
+    "element": "add-new-tab",
+    "schema": "schemas/tabrow.onAddNewTab.json"
+   }
+  }
+ },
+ "cadre.ob.pivotitem": {
+  "element": "obc-pivot-item",
+  "title": "OB Pivot Item",
+  "palette": "OpenBridge pivot item: one pivot with an optional icon and label, selected by its group",
+  "schema": "schemas/pivotitem.props.json",
+  "defaultSize": {
+   "width": 128,
+   "height": 48
+  },
+  "props": {
+   "value": {
+    "type": "string",
+    "default": ""
+   },
+   "selected": {
+    "type": "boolean",
+    "default": false
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "vertical"
+    ],
+    "default": "horizontal"
+   },
+   "hasLeadingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasLabel": {
+    "type": "boolean",
+    "default": false
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onSelected": {
+    "element": "selected",
+    "schema": "schemas/pivotitem.onSelected.json"
+   }
+  }
+ },
+ "cadre.ob.pivotitemgroup": {
+  "element": "obc-pivot-item-group",
+  "title": "OB Pivot Item Group",
+  "palette": "OpenBridge pivot item group: a horizontal or vertical set of pivots, one of them selected",
+  "schema": "schemas/pivotitemgroup.props.json",
+  "defaultSize": {
+   "width": 240,
+   "height": 144
+  },
+  "props": {
+   "direction": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "vertical"
+    ],
+    "default": "horizontal"
+   },
+   "selectedValue": {
+    "type": "string",
+    "default": ""
+   },
+   "allowDeselect": {
+    "type": "boolean",
+    "default": false
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-pivot-item"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-pivot-item"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onChange": {
+    "element": "change",
+    "schema": "schemas/pivotitemgroup.onChange.json"
+   }
+  }
+ },
+ "cadre.ob.modalwindow": {
+  "element": "obc-modal-window",
+  "title": "OB Modal Window",
+  "palette": "OpenBridge modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
+  "schema": "schemas/modalwindow.props.json",
+  "defaultSize": {
+   "width": 540,
+   "height": 240
+  },
+  "props": {
+   "size": {
+    "type": "string",
+    "enum": [
+     "small",
+     "medium",
+     "large"
+    ],
+    "default": "large"
+   },
+   "hasOptionalAction": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasLeadingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasCancelAction": {
+    "type": "boolean",
+    "default": true
+   },
+   "hasCloseAction": {
+    "type": "boolean",
+    "default": true
+   },
+   "leadingIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "content": {
+    "type": "string",
+    "default": ""
+   },
+   "optionLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "cancelLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "doneLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "leadingIconName": {
+    "slot": "leading-icon",
+    "kind": "icon"
+   },
+   "title": {
+    "slot": "title",
+    "kind": "text"
+   },
+   "content": {
+    "slot": "content",
+    "kind": "text"
+   },
+   "optionLabel": {
+    "slot": "option-label",
+    "kind": "text"
+   },
+   "cancelLabel": {
+    "slot": "cancel-label",
+    "kind": "text"
+   },
+   "doneLabel": {
+    "slot": "done-label",
+    "kind": "text"
+   }
+  },
+  "events": {
+   "onCloseClick": {
+    "element": "close-click",
+    "schema": "schemas/modalwindow.onCloseClick.json"
+   },
+   "onCancelClick": {
+    "element": "cancel-click",
+    "schema": "schemas/modalwindow.onCancelClick.json"
+   },
+   "onDoneClick": {
+    "element": "done-click",
+    "schema": "schemas/modalwindow.onDoneClick.json"
+   },
+   "onOptionClick": {
+    "element": "option-click",
+    "schema": "schemas/modalwindow.onOptionClick.json"
+   }
+  }
+ },
+ "cadre.ob.contextmenuinput": {
+  "element": "obc-context-menu-input",
+  "title": "OB Context Menu Input",
+  "palette": "OpenBridge context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
+  "schema": "schemas/contextmenuinput.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 240
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "checkboxes",
+     "nested-checkboxes",
+     "flyout",
+     "multi",
+     "multi-with-subtitles"
+    ],
+    "default": "regular"
+   },
+   "hasTitleBar": {
+    "type": "boolean",
+    "default": false
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "itemsPerColumn": {
+    "type": "number",
+    "default": 5
+   },
+   "multiSelect": {
+    "type": [
+     "boolean",
+     "null"
+    ],
+    "default": null
+   },
+   "selectPerGroup": {
+    "type": [
+     "boolean",
+     "null"
+    ],
+    "default": null
+   },
+   "options": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "value": {
+       "type": "string"
+      },
+      "label": {
+       "type": "string"
+      },
+      "level": {
+       "type": "number"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "value",
+      "label"
+     ]
+    }
+   },
+   "columnGroups": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "title": {
+       "type": "string"
+      },
+      "columns": {
+       "type": "number"
+      },
+      "options": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "title",
+      "options"
+     ]
+    }
+   },
+   "selectedValues": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onClose": {
+    "element": "close",
+    "schema": "schemas/contextmenuinput.onClose.json"
+   },
+   "onItemClick": {
+    "element": "item-click",
+    "schema": "schemas/contextmenuinput.onItemClick.json"
+   },
+   "onChange": {
+    "element": "change",
+    "schema": "schemas/contextmenuinput.onChange.json"
+   }
+  }
+ },
+ "cadre.ob.notificationmenuitem": {
+  "element": "obc-notification-menu-item",
+  "title": "OB Notification Menu Item",
+  "palette": "OpenBridge notification menu item: one notification row with a title, description, day and time, opened by a press",
+  "schema": "schemas/notificationmenuitem.props.json",
+  "defaultSize": {
+   "width": 360,
+   "height": 112
+  },
+  "props": {
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "description": {
+    "type": "string",
+    "default": ""
+   },
+   "day": {
+    "type": "string",
+    "default": ""
+   },
+   "time": {
+    "type": "string",
+    "default": ""
+   },
+   "open": {
+    "type": "boolean",
+    "default": false
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "single-line",
+     "double-line"
+    ],
+    "default": "single-line"
+   },
+   "primaryActionLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "secondaryActionLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onItemClick": {
+    "element": "item-click",
+    "schema": "schemas/notificationmenuitem.onItemClick.json"
+   },
+   "onPrimaryActionClick": {
+    "element": "primary-action-click",
+    "schema": "schemas/notificationmenuitem.onPrimaryActionClick.json"
+   },
+   "onSecondaryActionClick": {
+    "element": "secondary-action-click",
+    "schema": "schemas/notificationmenuitem.onSecondaryActionClick.json"
+   }
+  }
+ },
+ "cadre.ob.notificationmessageitem": {
+  "element": "obc-notification-message-item",
+  "title": "OB Notification Message Item",
+  "palette": "OpenBridge notification message item: one message with a title, description, time and an optional action",
+  "schema": "schemas/notificationmessageitem.props.json",
+  "defaultSize": {
+   "width": 640,
+   "height": 64
+  },
+  "props": {
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "description": {
+    "type": "string",
+    "default": ""
+   },
+   "time": {
+    "type": "string",
+    "default": ""
+   },
+   "timeSecondary": {
+    "type": "string",
+    "default": ""
+   },
+   "actionLabel": {
+    "type": "string",
+    "default": "View"
+   },
+   "type": {
+    "type": "string",
+    "enum": [
+     "simple",
+     "with-button",
+     "with-icon-button",
+     "inactive"
+    ],
+    "default": "simple"
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "tall"
+    ],
+    "default": "regular"
+   },
+   "hasTimestamp2": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasSecondaryIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "large": {
+    "type": "boolean",
+    "default": false
+   },
+   "empty": {
+    "type": "boolean",
+    "default": false
+   },
+   "emptyText": {
+    "type": "string",
+    "default": "No active notification"
+   },
+   "showTitle": {
+    "type": "boolean",
+    "default": true
+   },
+   "showDescription": {
+    "type": "boolean",
+    "default": true
+   },
+   "showTimestamp": {
+    "type": "boolean",
+    "default": true
+   },
+   "secondaryIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "secondaryIconName": {
+    "slot": "secondary-icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onMessageClick": {
+    "element": "message-click",
+    "schema": "schemas/notificationmessageitem.onMessageClick.json"
+   },
+   "onActionClick": {
+    "element": "action-click",
+    "schema": "schemas/notificationmessageitem.onActionClick.json"
+   }
+  }
+ },
+ "cadre.ob.notificationfloatingitem": {
+  "element": "obc-notification-floating-item",
+  "title": "OB Notification Floating Item",
+  "palette": "OpenBridge notification floating item: a transient notification with a title, description, time and up to two actions",
+  "schema": "schemas/notificationfloatingitem.props.json",
+  "defaultSize": {
+   "width": 640,
+   "height": 136
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "application"
+    ],
+    "default": "regular"
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "vertical"
+    ],
+    "default": "horizontal"
+   },
+   "hasTimestamp": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasDay": {
+    "type": "boolean",
+    "default": false
+   },
+   "action": {
+    "type": "boolean",
+    "default": false
+   },
+   "action2": {
+    "type": "boolean",
+    "default": false
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "single-line",
+     "multi-line"
+    ],
+    "default": "single-line"
+   },
+   "primaryIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "description": {
+    "type": "string",
+    "default": ""
+   },
+   "time": {
+    "type": "string",
+    "default": ""
+   },
+   "day": {
+    "type": "string",
+    "default": ""
+   },
+   "actionLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "action2Label": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "primaryIconName": {
+    "slot": "primary-icon",
+    "kind": "icon"
+   },
+   "title": {
+    "slot": "title",
+    "kind": "text"
+   },
+   "description": {
+    "slot": "description",
+    "kind": "text"
+   },
+   "time": {
+    "slot": "time",
+    "kind": "text"
+   },
+   "day": {
+    "slot": "day",
+    "kind": "text"
+   },
+   "actionLabel": {
+    "slot": "action",
+    "kind": "text"
+   },
+   "action2Label": {
+    "slot": "action2",
+    "kind": "text"
+   }
+  },
+  "events": {
+   "onActionClick": {
+    "element": "action-click",
+    "schema": "schemas/notificationfloatingitem.onActionClick.json"
+   },
+   "onAction2Click": {
+    "element": "action2-click",
+    "schema": "schemas/notificationfloatingitem.onAction2Click.json"
+   },
+   "onDismissClick": {
+    "element": "dismiss-click",
+    "schema": "schemas/notificationfloatingitem.onDismissClick.json"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

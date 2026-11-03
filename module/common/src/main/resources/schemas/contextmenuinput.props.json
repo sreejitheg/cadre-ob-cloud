@@ -1,0 +1,130 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "checkboxes",
+        "nested-checkboxes",
+        "flyout",
+        "multi",
+        "multi-with-subtitles"
+      ],
+      "default": "regular",
+      "description": "The variant type of context menu to display. - 'regular': Single-select navigation menu. - 'checkboxes': Multi-select with checkboxes. - 'nested-checkboxes': Multi-select with nested/hierarchical checkboxes. -..."
+    },
+    "hasTitleBar": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show a title bar with close button at the top of the menu. If true, displays the title property and a close icon button."
+    },
+    "title": {
+      "type": "string",
+      "default": "",
+      "description": "The title of the title bar, drawn while `hasTitleBar` is true."
+    },
+    "itemsPerColumn": {
+      "type": "number",
+      "default": 5,
+      "description": "Number of items per column in multi-column layouts. Used in multi and multi-with-subtitles variants to control column splitting. Available when type in [Multi, MultiWithSubtitles]."
+    },
+    "multiSelect": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "default": null,
+      "description": "Whether several options can be selected. Empty leaves the choice to `type` (the checkbox and multi types select several)."
+    },
+    "selectPerGroup": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "default": null,
+      "description": "Whether one option is selected for each group or column. Empty leaves the choice to `type` (the flyout type selects one for each group)."
+    },
+    "options": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "level": {
+            "type": "number"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "value",
+          "label"
+        ]
+      },
+      "description": "The options of the menu, one object each: `value` (unique; the events report it), `label`, `level` (the depth of the option, from 0) and `children` (objects of the same form, for the flyout and nested types). An option's icon (a template function in the element) is not carried."
+    },
+    "columnGroups": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "number"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "options"
+        ]
+      },
+      "description": "The column groups of the multi column types, one object each: `title`, `columns` (the least number of columns the group draws) and `options` (objects with `value` and `label`)."
+    },
+    "selectedValues": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of values as plain text, in order."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}
