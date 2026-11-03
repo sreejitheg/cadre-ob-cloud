@@ -90,3 +90,12 @@
 - 2026-11-03 01:45: Section 5 report `cloud/REPORT-T0.md` written (environment, baseline, wraps, extrapolation,
   merge back). Wraps total 554,947 subagent tokens and 32 min; main session estimated at about 0.3 M tokens by the
   same measure (about 150 turns). Spike T0 ends here; T1 and T2 wait for the owner's word.
+- 2026-11-03 02:02: Session resumed after a pause: `/root/.cadre`, the container `cadre-gw`, its volume, module 0.4.4
+  ACTIVE and the five projects all survived; only the Docker daemon had stopped. `setup.sh environment` restarted
+  it in 9 s and `setup.sh gateway` brought the gateway back in 1 min 41 s.
+- 2026-11-03 02:10: The G10 defect fixed at its cause: `glass.button` takes the page of its scope as
+  `getattr(scope, "page", scope)`, since a Playwright `Page` has no `page`; new test
+  `ConfirmedPressTests.test_a_button_of_the_page_itself_is_pressed_on_that_page` reproduces the AttributeError
+  without the fix and passes with it. `cadre_hmi_wtp` and `cadre_hmi_wtpob` rebuilt from the current tree (G0 to G7
+  pass; `/filtration` of the module rendering now draws 3 `cadre.ob.filter`) and deployed; `wtp_suite.py` started
+  on both renderings.

@@ -221,9 +221,12 @@ def dock(page, side):
 
 
 def button(scope, text):
-    """The first button of `scope` captioned `text`, pressed as a confirmed command (`Confirmed`, F029)."""
+    """The first button of `scope` captioned `text`, pressed as a confirmed command (`Confirmed`, F029). `scope` is
+    a locator (a dock, a faceplate) or the page itself (the frame's toolbar, `functional.frame_steps`); a Playwright
+    page has no `page` of its own, so the page of a page is itself. A button that asks nothing (a toolbar toggle) is
+    pressed once and `answer` finds no question."""
     loc = scope.locator('[data-component="ia.input.button"]', has_text=re.compile(rf"^\s*{text}\s*$")).first
-    return Confirmed(loc, scope.page)
+    return Confirmed(loc, getattr(scope, "page", scope))
 
 
 # ---------------------------------------------------------------------------------------

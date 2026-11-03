@@ -715,6 +715,24 @@ class ConfirmedPressTests(unittest.TestCase):
         g.Confirmed(self.dock.buttons[0], self.page).click()
         self.assertEqual(self.dock.pressed, ["Cancel", "Start", "Confirm"])
 
+    def test_a_button_of_the_page_itself_is_pressed_on_that_page(self):
+        """`functional.frame_steps` finds the toolbar's toggles on the page, which has no `page` attribute (the
+        G10 stop of spike T0, 2026-11-03): the press is made on the page and a toggle that asks nothing is
+        pressed once."""
+        g, B = self.glass, self.Button
+
+        class PageScope(self.Page):
+            def locator(self, selector, has_text=None):   # the page's buttons, or (no caption) its dock
+                return self.dock if has_text is None else self.dock.locator(selector, has_text=has_text)
+
+        page = PageScope(self.dock)
+        self.dock.page = page
+        self.dock.buttons = [B(self.dock, "Readout"), B(self.dock, "Confirm", shown=False)]
+        press = g.button(page, "Readout")
+        self.assertIs(press._page, page)
+        press.click()
+        self.assertEqual(self.dock.pressed, ["Readout"])
+
     def test_a_press_that_asks_nothing_and_an_entry(self):
         g, B = self.glass, self.Button
         self.dock.buttons = [B(self.dock, "Start"), B(self.dock, "Confirm", shown=False)]
