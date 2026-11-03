@@ -128,7 +128,14 @@
         "chevron-right-google",
         "close-google",
         "check-google",
-        "placeholder"
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
       ],
       "default": "",
       "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon slot (optional, shown if provided). Set hasIcon to true to show the icon."
@@ -163,7 +170,14 @@
         "chevron-right-google",
         "close-google",
         "check-google",
-        "placeholder"
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
       ],
       "default": "",
       "description": "The icon in the `trailing-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Trailing icon slot (optional, shown if provided). Set hasTrailingIcon to true to show."

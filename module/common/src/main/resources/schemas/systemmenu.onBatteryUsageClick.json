@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The battery usage button was pressed. event.usage is true.",
+  "properties": {
+    "usage": {
+      "type": "boolean",
+      "description": "True: the usage button was pressed."
+    }
+  }
+}

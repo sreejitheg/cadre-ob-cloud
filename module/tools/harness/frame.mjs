@@ -199,7 +199,178 @@ check('breadcrumb carries a press as onBreadcrumbClick with label, href and inde
 r = await probe('cadre.ob.breadcrumb', 'obc-breadcrumb', { items: crumbs, iconOnly: true }, '(el) => [...el.shadowRoot.querySelectorAll(".label")].map(l => l.textContent).join()');
 check('breadcrumb iconOnly hides every label but the last', r === 'Pump P-101', r);
 
-const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem') && !e.includes('item tag not allowed here: obc-navigation-item'));      // provoked above
+// batch F4: the menus and the top bar. `probeStore` mounts with a store that records the component's own property writes.
+async function probeStore(type, tag, raw, fn) {
+  return page.evaluate(async ([type, tag, raw, fn]) => {
+    const st = document.getElementById('stage');
+    st.innerHTML = '<div id="m" style="width:480px;height:360px"></div>';
+    window.fired = [];
+    window.writes = [];
+    window.h = window.mount(type, raw, document.getElementById('m'), { props: { write: (n, v) => window.writes.push([n, v]) } });
+    await new Promise(r => setTimeout(r, 300));
+    const el = document.querySelector('#m ' + tag);
+    await el.updateComplete;
+    return eval(fn)(el);
+  }, [type, tag, raw, fn]);
+}
+const settle = 'await new Promise(r => setTimeout(r, 150));';
+
+r = await probeStore('cadre.ob.brilliancemenu', 'obc-brilliance-menu', { palette: 'day', brightness: 60 },
+  `async (el) => { el.shadowRoot.querySelectorAll('.icon-button-container obc-button')[2].click(); ${settle} return [window.fired, window.writes, el.brightness]; }`);
+check('brilliance menu: the increase button carries onBrightnessChanged with the new value and writes the component\'s brightness',
+  JSON.stringify(r) === JSON.stringify([[['onBrightnessChanged', { value: 65 }]], [['brightness', 65]], 65]), r);
+r = await probeStore('cadre.ob.brilliancemenu', 'obc-brilliance-menu', { palette: 'day', brightness: 60 },
+  `async (el) => { el.nextPalette(); ${settle} return [window.fired, window.writes, el.palette]; }`);
+check('brilliance menu: a palette press carries onPaletteChanged with the palette and writes the component\'s palette',
+  JSON.stringify(r) === JSON.stringify([[['onPaletteChanged', { value: 'bright' }]], [['palette', 'bright']], 'bright']), r);
+r = await probeStore('cadre.ob.brilliancemenu', 'obc-brilliance-menu', { palette: 'day', showLinkBrightness: true, showLinkPalette: true },
+  `async (el) => { const t = [...el.shadowRoot.querySelectorAll('obc-toggle-switch')]; t.forEach(x => { x.checked = true; x.dispatchEvent(new Event('input')); }); ${settle} return [t.length, window.fired]; }`);
+check('brilliance menu: the two link switches carry their state and write nothing',
+  r[0] === 2 && JSON.stringify(r[1]) === JSON.stringify([['onLinkBrightnessChanged', { value: true }], ['onLinkPaletteChanged', { value: true }]]), r);
+r = await probeStore('cadre.ob.brilliancemenu', 'obc-brilliance-menu', { palette: 'day' },
+  `(el) => [el.shadowRoot.querySelectorAll('obc-toggle-switch').length, el.showLinkBrightness, el.showLinkPalette, el.showScreenControlLink]`);
+check('brilliance menu: the link switches and the screen control link are off by default', r[0] === 0 && r[1] === false && r[2] === false && r[3] === false, r);
+r = await probeStore('cadre.ob.brilliancemenu', 'obc-brilliance-menu', { palette: 'day', showBrightness: false },
+  `(el) => [el.shadowRoot.querySelectorAll('.content-container.brilliance').length, el.shadowRoot.querySelectorAll('.content-container.palette').length]`);
+check('brilliance menu: showBrightness false leaves the brightness section out', r[0] === 0 && r[1] === 1, r);
+
+r = await probeStore('cadre.ob.usermenu', 'obc-user-menu', { type: 'sign-in' },
+  `async (el) => { const b = [...el.shadowRoot.querySelectorAll('obc-button')]; b[0].click(); ${settle}
+     return [el.shadowRoot.querySelectorAll('obc-text-input-field').length, b.map(x => x.textContent.trim()).join(), el.showUsername, el.showPassword, window.fired, el.username, el.password]; }`);
+check('user menu: the sign in form is the title and the Sign in button (no input box), and the press carries nothing',
+  r[0] === 0 && r[1] === 'Sign in' && r[2] === false && r[3] === false && JSON.stringify(r[4]) === JSON.stringify([['onSignInClick', {}]]) && r[5] === '' && r[6] === '', r);
+r = await probeStore('cadre.ob.usermenu', 'obc-user-menu', { type: 'signed-in', userInitials: 'AB', userLabel: 'Alex Bravo', userRole: 'Operator' },
+  `async (el) => { const b = [...el.shadowRoot.querySelectorAll('obc-button')]; b[b.length - 1].click(); ${settle}
+     const u = el.shadowRoot.querySelector('obc-user-button');
+     return [b.map(x => x.textContent.trim()).join(), u.initials, u.label, u.sublabel, window.fired]; }`);
+check('user menu: the signed in form shows the user and a Sign out button that carries onSignOutClick',
+  r[0] === 'Sign out' && r[1] === 'AB' && r[2] === 'Alex Bravo' && r[3] === 'Operator' && JSON.stringify(r[4]) === JSON.stringify([['onSignOutClick', {}]]), r);
+r = await probeStore('cadre.ob.usermenu', 'obc-user-menu', { type: 'user-sign-in', userInitials: 'AB', userLabel: 'Alex Bravo' },
+  `async (el) => { const b = [...el.shadowRoot.querySelectorAll('obc-button')]; b[1].click(); ${settle} return [b.map(x => x.textContent.trim()).join(), el.shadowRoot.querySelectorAll('obc-text-input-field').length, window.fired]; }`);
+check('user menu: the user sign in form has no password box, and Use another account carries its event',
+  r[0] === 'Sign in,Use another account' && r[1] === 0 && JSON.stringify(r[2]) === JSON.stringify([['onUseAnotherAccountClick', {}]]), r);
+r = await probeStore('cadre.ob.usermenu', 'obc-user-menu', { userInitials: '', userLabel: '' }, '(el) => [el.userInitials === undefined, el.userLabel === undefined, el.userRole === undefined]');
+check('user menu: initials, label and role are undefined while empty', r.every(Boolean), r);
+
+const sys = { wifiState: { enabled: true, connected: true, networkName: 'Bridge network', strength: 3, status: 'Connected', networks: [{ name: 'Bridge network', signalStrength: 3 }], otherNetworks: [] },
+  audioState: { muted: false, volume: 40, outputs: [{ name: 'Speakers' }], selectedOutput: 'Speakers' },
+  microphoneState: { muted: true, currentLevel: 30, inputs: [{ name: 'Handset' }], selectedInput: 'Handset', pushToTalk: false },
+  batteryState: { level: 80, charging: false, hasUsageButton: true, modes: [{ name: 'Normal' }], selectedMode: 'Normal' } };
+r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', {},
+  '(el) => [el.wifiState === undefined, el.audioState === undefined, el.microphoneState === undefined, el.batteryState === undefined, el.shadowRoot.querySelectorAll(".group").length]');
+check('system menu: the four sections are undefined and nothing is drawn while their objects are empty', r.slice(0, 4).every(Boolean) && r[4] === 0, r);
+r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', { ...sys, showSettingsButton: true },
+  `async (el) => { ${settle} return [el.shadowRoot.querySelectorAll('.group').length, el.wifiState.networkName, el.shadowRoot.querySelectorAll('.title').length]; }`);
+check('system menu: the four state objects draw their four sections and the settings button (five groups)', r[0] === 5 && r[1] === 'Bridge network', r);
+r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', { ...sys, showSettingsButton: true },
+  `async (el) => { const root = el.shadowRoot;
+     root.querySelector('obc-icon-check-button').dispatchEvent(new CustomEvent('icon-check-button-click', { detail: { checked: false } }));
+     el.shadowRoot.querySelector('obc-slider').dispatchEvent(new CustomEvent('value', { detail: 55 }));
+     el.dispatchEvent(new CustomEvent('wifi-network-change', { detail: { network: 'Engine room link' } }));
+     el.dispatchEvent(new CustomEvent('audio-output-change', { detail: { output: 'Headset' } }));
+     el.dispatchEvent(new CustomEvent('battery-mode-change', { detail: { mode: 'Saving' } }));
+     el.dispatchEvent(new CustomEvent('battery-usage-click', { detail: { usage: true } }));
+     el.dispatchEvent(new CustomEvent('push-to-talk-change', { detail: { pushToTalk: true } }));
+     el.dispatchEvent(new CustomEvent('microphone-click', { detail: { muted: false } }));
+     el.dispatchEvent(new CustomEvent('settings-click'));
+     el.dispatchEvent(new CustomEvent('to-sub-menu-click'));
+     ${settle} return window.fired; }`);
+check('system menu: the events carry their fields (wifi switch, volume, network, output, mode, usage, push to talk, microphone, settings, sub menu)',
+  JSON.stringify(r) === JSON.stringify([['onWifiClick', { enabled: false }], ['onAudioVolumeChange', { volume: 55 }],
+    ['onWifiNetworkChange', { network: 'Engine room link' }], ['onAudioOutputChange', { output: 'Headset' }], ['onBatteryModeChange', { mode: 'Saving' }],
+    ['onBatteryUsageClick', { usage: true }], ['onPushToTalkChange', { pushToTalk: true }], ['onMicrophoneClick', { muted: false }],
+    ['onSettingsClick', {}], ['onSubMenuClick', {}]]), r);
+r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', { ...sys, activeSubMenu: 'wifi' },
+  `async (el) => { ${settle} const names = [...el.shadowRoot.querySelectorAll('.title')].map(t => t.textContent.trim()); return [names.join(), el.activeSubMenu]; }`);
+check('system menu: the wifi sub menu draws when activeSubMenu is wifi', r[1] === 'wifi' && /Wi-Fi/.test(r[0]), r);
+
+const apps = [{ tag: 'obc-app-button', id: 'app-home', label: 'Home', children: [{ tag: 'obi-home', slot: 'icon' }] },
+  { tag: 'obc-app-button', id: 'app-help', label: 'Help', children: [{ tag: 'obi-help', slot: 'icon' }] }];
+r = await probeStore('cadre.ob.appmenu', 'obc-app-menu', { items: apps },
+  `async (el) => { const kids = [...el.children].map(n => n.tagName.toLowerCase() + ':' + n.label + ':' + n.firstElementChild.tagName.toLowerCase() + '[' + n.firstElementChild.getAttribute('slot') + ']');
+     el.children[1].click(); el.children[0].click(); ${settle} return [kids, window.fired]; }`);
+check('app menu: the items are app buttons with their icon in the icon slot, and a press carries onAppClick with the button\'s id, once',
+  JSON.stringify(r[0]) === JSON.stringify(['obc-app-button:Home:obi-home[icon]', 'obc-app-button:Help:obi-help[icon]']) &&
+  JSON.stringify(r[1]) === JSON.stringify([['onAppClick', { id: 'app-help', tag: 'obc-app-button' }], ['onAppClick', { id: 'app-home', tag: 'obc-app-button' }]]), r);
+r = await probeStore('cadre.ob.appmenu', 'obc-app-menu', { items: apps },
+  `async (el) => { const f = el.shadowRoot.querySelector('obc-text-input-field'); f.value = 'hel'; f.dispatchEvent(new Event('input', { bubbles: true, composed: true })); ${settle} return window.fired; }`);
+check('app menu: the search field carries onSearch with its text', JSON.stringify(r) === JSON.stringify([['onSearch', { query: 'hel' }]]), r);
+r = await probeStore('cadre.ob.appmenu', 'obc-app-menu', { items: [apps[0], { tag: 'obc-navigation-item' }, { tag: 'obc-app-button', id: 'x', bogus: 1 }] }, '(el) => el.children.length');
+check('app menu: a tag that is not an app button is dropped', r === 2, r);
+
+const cmd = { commandIconName: 'joystick', commandStatus: 'Joystick', commandDescription: 'Bridge wing', commandLocation: 'Bridge', takeCommandLabel: 'Take command',
+  releaseCommandLabel: 'Release command', inCommandLabel: 'In command', noCommandLabel: 'No command', inCommandIconName: 'command-in' };
+r = await probeStore('cadre.ob.commandmenu', 'obc-command-menu', cmd, kids);
+check('command menu: the nine slot properties are text in their slots and icons in theirs',
+  r.sort().join() === ['obi-command-in[toogle-state-in-command-icon]', 'obi-joystick[command-icon]', 'span[command-description]', 'span[command-location]',
+    'span[command-status]', 'span[toogle-action-to-in-command-label]', 'span[toogle-action-to-no-command-label]', 'span[toogle-state-in-command-label]',
+    'span[toogle-state-no-command-label]'].sort().join(), r);
+r = await probeStore('cadre.ob.commandmenu', 'obc-command-menu', cmd,
+  `async (el) => { const sw = el.shadowRoot.querySelector('obc-start-stop-switch'); sw.dispatchEvent(new CustomEvent('change', { detail: { checked: true } })); ${settle}
+     return [window.fired, window.writes, el.inCommand, el.shadowRoot.querySelector('.card').className]; }`);
+check('command menu: the switch carries onCommandChange with the state asked for, and the component\'s inCommand follows (no tag is written)',
+  JSON.stringify(r[0]) === JSON.stringify([['onCommandChange', { inCommand: true }]]) && JSON.stringify(r[1]) === JSON.stringify([['inCommand', true]]) &&
+  r[2] === true && /in-command/.test(r[3]), r);
+r = await probeStore('cadre.ob.commandmenu', 'obc-command-menu', { ...cmd, showLocation: false }, '(el) => el.shadowRoot.querySelectorAll(".command-location").length');
+check('command menu: showLocation false leaves the location out', r === 0, r);
+
+const bar = { appTitle: 'Cadre HMI', pageName: 'Engine room', showClock: true, showUserButton: true, showDimmingButton: true, showAppsButton: true,
+  date: '2026-01-01T09:30:45Z', showSeconds: true, nAlerts: 3, alertType: 'alarm', appIconName: 'dashboard', showAppIcon: true, commandButtonText: 'Command' };
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar,
+  `async (el) => { await new Promise(r => setTimeout(r, 200)); const a = el.querySelector('obc-alert-button'), c = el.querySelector('obc-clock');
+     return [[...el.children].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join(),
+             [a.nAlerts, a.counter, a.alertType, a.showSilenceButton], [c.date, c.showSeconds, c.isClickable], c.shadowRoot.querySelector('.clock').textContent.replace(/\\s+/g, '')]; }`);
+check('top bar: the alert button stands in the alerts slot, the clock in the clock slot, the app icon and command text in theirs, with the carried properties',
+  r[0].split(',').sort().join() === 'obc-alert-button[alerts],obc-clock[clock],obi-dashboard[app-icon],span[command-button]' &&
+  JSON.stringify(r[1]) === JSON.stringify([3, true, 'alarm', false]) && JSON.stringify(r[2]) === JSON.stringify(['2026-01-01T09:30:45Z', true, false]) && r[3] === '093045', r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', { showClock: true },
+  '(el) => { const a = el.querySelector("obc-alert-button"); return [a.alertType === undefined, a.nAlerts, a.counter, a.blinking, a.showSilenceButton, el.shadowRoot.querySelectorAll(".silence-button").length]; }');
+check('top bar: an empty alert type is undefined (idle), the silence control is off and the count is shown by default', r[0] && r[1] === 0 && r[2] === true && r[3] === false && r[4] === false && r[5] === 0, r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar,
+  `async (el) => { window.h.rerender({ ...${JSON.stringify(bar)}, nAlerts: 7, blinking: true, alertType: 'level-critical', showSilenceButton: true, date: '2026-01-01T10:00:00Z' });
+     await new Promise(r => setTimeout(r, 300)); const a = el.querySelector('obc-alert-button'), c = el.querySelector('obc-clock');
+     return [a.nAlerts, a.blinking, a.alertType, a.showSilenceButton, c.date, el.children.length]; }`);
+check('top bar: a later update reaches the alert button and the clock, and the children are not built twice',
+  JSON.stringify(r) === JSON.stringify([7, true, 'level-critical', true, '2026-01-01T10:00:00Z', 4]), r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', { ...bar, showSilenceButton: true },
+  `async (el) => { await new Promise(r => setTimeout(r, 200)); const a = el.querySelector('obc-alert-button'); await a.updateComplete;
+     a.shadowRoot.querySelector('obc-alert-button-item').click(); a.shadowRoot.querySelector('.silence-button').click(); ${settle} return window.fired; }`);
+check('top bar: the bell and the silence control of its alert button carry onAlertClick and onSilenceClick, once each',
+  JSON.stringify(r) === JSON.stringify([['onAlertClick', {}], ['onSilenceClick', {}]]), r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar,
+  `async (el) => { const q = (s) => el.shadowRoot.querySelector(s); q('.dimming-button').click(); q('.user-button').click(); q('.apps-button').click(); q('.left-more-button').click();
+     const m = q('.menu-button obc-icon-button'); m.dispatchEvent(new Event('pointerdown')); m.dispatchEvent(new Event('pointerup')); ${settle} return window.fired; }`);
+check('top bar: the dimming, user, apps, more and menu buttons carry their events and nothing else',
+  JSON.stringify(r) === JSON.stringify([['onDimmingButtonClick', {}], ['onUserButtonClick', {}], ['onAppsButtonClick', {}], ['onMoreButtonClick', {}], ['onMenuButtonClick', {}]]), r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar,
+  `async (el) => { const m = el.shadowRoot.querySelector('.menu-button obc-icon-button'); m.dispatchEvent(new Event('pointerdown')); await new Promise(r => setTimeout(r, 650));
+     m.dispatchEvent(new Event('pointerup')); ${settle} return window.fired; }`);
+check('top bar: holding the menu button carries the emergency brightness start and stop, and no menu press',
+  JSON.stringify(r) === JSON.stringify([['onEmergencyBrightnessStart', {}], ['onEmergencyBrightnessStop', {}]]), r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', { appTitle: 'Cadre HMI', settings: true, breadcrumbItems: [{ label: 'Vessel', href: '/vessel', icon: 'x' }, { label: 'Engine room', href: '/engine' }, { label: 'Pump' }] },
+  `async (el) => { await new Promise(r => setTimeout(r, 200)); const bc = el.shadowRoot.querySelector('obc-breadcrumb'); await bc.updateComplete;
+     bc.shadowRoot.querySelector('button').click(); const back = [...el.shadowRoot.querySelectorAll('obc-icon-button')].find(b => b.getAttribute('aria-label') === 'Back'); back.click();
+     const close = el.shadowRoot.querySelector('.menu-button obc-icon-button'); close.dispatchEvent(new Event('pointerdown')); close.dispatchEvent(new Event('pointerup')); ${settle}
+     return [window.fired, 'icon' in el.breadcrumbItems[0]]; }`);
+check('top bar: the settings mode carries a crumb press (label, href, index), Back and Close; the crumbs carry no icon',
+  JSON.stringify(r[0]) === JSON.stringify([['onBreadcrumbClick', { label: 'Vessel', href: '/vessel', index: 0 }], ['onBack', {}], ['onClose', {}]]) && r[1] === false, r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', { ...bar, showClock: false, showAppIcon: false, showUserButton: false },
+  '(el) => [el.shadowRoot.querySelectorAll(".user-button").length, el.shadowRoot.querySelectorAll("slot[name=clock]").length, el.shadowRoot.querySelectorAll(".app-icon").length]');
+check('top bar: the show flags hide the user button, the clock slot and the app icon', JSON.stringify(r) === JSON.stringify([0, 0, 0]), r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar, `async (el) => { await new Promise(r => setTimeout(r, 200)); return [el.getBoundingClientRect().height, el.shadowRoot.querySelector('nav').getBoundingClientRect().height]; }`);
+check('top bar: its height is 48 (the frame\'s top dock)', r[0] === 48 && r[1] === 48, r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', bar, `async (el) => { await new Promise(r => setTimeout(r, 200)); return [el.getBoundingClientRect().width, el.parentElement.parentElement.getBoundingClientRect().width]; }`);
+check('top bar: it spans the width of its component box', r[0] === r[1] && r[0] === 480, r);
+r = await probeStore('cadre.ob.topbar', 'obc-top-bar', { ...bar, tall: true }, `async (el) => { await new Promise(r => setTimeout(r, 200)); return el.getBoundingClientRect().height; }`);
+check('top bar: tall draws a taller bar', r > 48, r);
+
+r = await probeStore('cadre.ob.systemmenu', 'obc-system-menu', { wifiState: sys.wifiState, audioState: sys.audioState },
+  `async (el) => { el.shadowRoot.querySelector('button.title-container').click(); ${settle}
+     const wrote = window.writes.slice(); window.h.rerender({ wifiState: ${JSON.stringify(sys.wifiState)}, audioState: ${JSON.stringify({ ...sys.audioState, volume: 41 })}, activeSubMenu: wrote[0][1] });
+     ${settle} return [el.activeSubMenu, wrote]; }`);
+check('system menu: the press of a heading writes the sub menu the element opened, so a later update keeps it open', r[0] === 'wifi' && JSON.stringify(r[1]) === JSON.stringify([['activeSubMenu', 'wifi']]), r);
+
+const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem') && !e.includes('item tag not allowed here: obc-navigation-item') && !e.includes('obc-app-button has no item attribute bogus'));      // provoked above
 check('no console error or warning', unexpected.length === 0, unexpected);
 for (const [s, n, d] of results) console.log(s, n, d);
 await browser.close();

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The menu button was held for half a second, which asks for the emergency brightness. The event carries nothing.",
+  "properties": {}
+}

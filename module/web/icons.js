@@ -29,3 +29,11 @@ import '@oicl/openbridge-webcomponents/dist/icons/icon-chevron-right-google.js';
 import '@oicl/openbridge-webcomponents/dist/icons/icon-close-google.js';
 import '@oicl/openbridge-webcomponents/dist/icons/icon-check-google.js';
 import '@oicl/openbridge-webcomponents/dist/icons/icon-placeholder.js';
+// the command menu's icon slots (T2, batch F4): the command states
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-in.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-no.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-take.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-request.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-shared.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-command-locked.js';
+import '@oicl/openbridge-webcomponents/dist/icons/icon-joystick.js';

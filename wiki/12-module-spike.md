@@ -1642,6 +1642,109 @@ symbols. What the gateway step finds on `/component-test`, in the section "Frame
 non-zero box and no console error; the tree rows with a badge (`countAlarm`) draw it; a click on a nested navigation item, a nested tree row
 or a crumb fires its event with the identity; none is wired. The registered components (the log line of the gateway hook) move from 66 to 73.
 
+### 17.26 Batch F4: The Menus and the Top Bar (`cadre.ob.brilliancemenu`, `usermenu`, `systemmenu`, `appmenu`, `commandmenu`, `topbar`)
+
+Batch F4 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2 and 3, and the owner's answers). The six are module-only kinds of
+`FRAME_ONLY`, wrapped one after another by generator entries, Java descriptors and table rows (`cloud/WRAP-RECIPE.md` section 9, item 11).
+No event is wired and none writes a tag; F6 binds them. Four additions to the generator carry the cases that F1 to F3 did not meet.
+
+17.26.1 Mechanism additions. (a) The payload kind `detail` builds an event payload from the entry's `eventFields` (name, type, text and
+an optional detail key for each field); a detail that is not an object is the value of the one field, so the search field of the app menu
+(a string) and the volume of the system menu are carried by the same code. (b) `writeBack` names the property that follows a press, for an
+element that changes its own state (the command menu's switch, the brilliance menu's palette and brightness, the system menu's sub menu):
+the wrapper writes the new value to the component's own property (`store.props.write`, as the alert list does for `selectedIds`), so that
+the next update does not set the element back. The value is a key of the event detail, or `@element` when the event carries nothing (the
+system menu's `to-sub-menu-click`). A property bound one way is set again by its binding. (c) `fixed` sets fields on the element that no
+property carries (the user menu's two credential fields, switched off). (d) `parts` makes a composite (17.26.4): nested elements the
+wrapper renders in slots, with the carried properties, the fixed fields, the carried events (heard on the node, since the alert button's
+events do not bubble) and an optional default of the composite's own. The entry key `objects` carries the four state objects of the
+system menu as the field kind `object` (17.26.3).
+
+17.26.2 The components.
+
+| Component | Element | Properties | Slots and items | Events (the element's event) | Not carried |
+|---|---|---|---|---|---|
+| `cadre.ob.brilliancemenu` | `obc-brilliance-menu` | 11 attributes, fields `showBrightness`, `showPalette` | none | `onPaletteChanged` (`value`), `onBrightnessChanged` (`value`), `onLinkPaletteChanged`, `onLinkBrightnessChanged` (`value`), `onScreenControlLinkClick` | the four `show*Palette` fields |
+| `cadre.ob.usermenu` | `obc-user-menu` | `type`, `size`, `userInitials`, `userLabel`, `userRole` | none | `onSignInClick`, `onSignOutClick`, `onUseAnotherAccountClick` (none carries a payload) | see 17.26.5 |
+| `cadre.ob.systemmenu` | `obc-system-menu` | 5 attributes, state objects `wifiState`, `audioState`, `microphoneState`, `batteryState` | none | 15 events (17.26.3) | the `battery-status` slot, the literal event `eventName` |
+| `cadre.ob.appmenu` | `obc-app-menu` | none | `items` (`obc-app-button`, each with an `obi-` icon child in the slot `icon`) | `onSearch` (`query`), `onAppClick` (`id`, `tag`) | none |
+| `cadre.ob.commandmenu` | `obc-command-menu` | `inCommand`, field `showLocation` | `commandIconName`, `commandStatus`, `commandDescription`, `commandLocation`, `takeCommandLabel`, `releaseCommandLabel`, `inCommandLabel`, `noCommandLabel`, `inCommandIconName` | `onCommandChange` (`inCommand`) | none |
+| `cadre.ob.topbar` | `obc-top-bar` | 23 attributes (`showDate` excluded), `breadcrumbItems` as data, the alert button's `nAlerts`, `counter`, `alertType`, `blinking`, `showSilenceButton` and the clock's `date`, `showSeconds`, `timeZoneOffsetHours` | `appIconName`, `commandButtonText` | 12 events (17.26.4) | `showDate`, a crumb's icon |
+
+The brilliance menu's payloads: `value` is the palette (`night`, `dusk`, `day`, `bright`, the same four as the Cadre palettes), the new
+brightness, or the state of a link switch. The element changes its own palette and brightness on a press and the menu writes both back to
+its properties; Cadre has no brightness function, so the frame hides that section (`showBrightness` false) or ignores the event. The two link
+switches and the screen control link are off by default (the element's own default). The command menu names the element's four `toogle-`
+slots (a misspelling of the pinned release) as the properties `takeCommandLabel`, `releaseCommandLabel`, `inCommandLabel` and
+`noCommandLabel`; `event.inCommand` is the state the press asks for, the menu shows it at once, and the page's script decides what to do
+(a command stays the Confirm row). The app menu reports a press of one of its buttons once, with the button's `id`.
+
+17.26.3 The system menu. It carries Wi-Fi, audio, microphone and battery, which are not process state, so it is display only: 15 events
+(`onWifiClick` with `enabled`, `onAudioClick` and `onMicrophoneClick` with `muted`, `onAudioVolumeChange` with `volume`,
+`onPushToTalkChange` with `pushToTalk`, `onBatterySavingModeChange` with `batterySavingMode`, `onBatteryUsageClick` with `usage`,
+`onWifiNetworkChange` with `network`, `onAudioOutputChange` with `output`, `onMicrophoneInputChange` with `input`, `onBatteryModeChange` with
+`mode`, and `onSettingsClick`, `onSubMenuClick`, `onWifiOptionsClick`, `onWifiDisconnectClick` with none) and the four state objects, each a
+section drawn only while its object is set (empty draws nothing). Their fields are those of the pinned `system-menu.d.ts`; a test holds the
+schema to the declaration. The element writes to the object it is given, so the wrapper hands it a copy. The manifest lists 16 events; the
+sixteenth, `eventName`, is the parameter name of a private helper of the element (`dispatchClickEvent(eventName)`) and not an event it fires,
+so it is not carried (measured: the source never creates a `CustomEvent` of that name). The `d.ts` types the volume event as a number but the
+element sends `{volume}`; the payload code accepts either. With `externalControl` false the menu opens its sub menus itself, and the wrapper
+writes `activeSubMenu` back from the element on `onSubMenuClick`, because an update of any other property would otherwise close the sub menu
+(measured in Chromium before the fix).
+
+17.26.4 The top bar. It is a composite: it renders an `obc-alert-button` in its `alerts` slot and an `obc-clock` in its `clock` slot
+itself, and the wrapper sets their properties from the component's. The alert button carries `nAlerts`, `counter`, `alertType`, `blinking`
+and `showSilenceButton`; `counter` is carried because the bell shows no count without it, and the top bar's default for it is true (the
+element's is false). `showSilenceButton` is false (owner's answer 4). `alertType` follows the mapping of 17.24.1; empty is the idle state.
+The clock carries `date` (ISO text in UTC, to be bound to a ticking time), `showSeconds` and `timeZoneOffsetHours`, and is a plain block
+(`isClickable` false: it has no event). The bar's own `showClock` must be true for the clock to draw. The events of the bar:
+`onMenuButtonClick` (the menu button, on release), `onDimmingButtonClick`, `onAppsButtonClick`, `onMoreButtonClick`, `onUserButtonClick`,
+`onEmergencyBrightnessStart` and `onEmergencyBrightnessStop` (the menu button held for half a second, then released: no menu press is
+carried then), `onAlertClick` and `onSilenceClick` (the nested alert button), and, in the settings mode only, `onBack`, `onClose` and
+`onBreadcrumbClick` (`label`, `href`, `index`). The slot `app-icon` is the icon property `appIconName` (drawn while `showAppIcon` is
+true) and `command-button` is the text property `commandButtonText`: a text in the slot, not a button (the element draws whatever the slot
+holds, and a button is an element a property cannot carry). The element's `showDate` is not used (its clock is slotted), so it is not carried.
+The five `*BreakpointPx` attributes hide a part below a viewport width (default 500 px); the page's cases leave them out. A stylesheet rule
+makes the bar span its component box.
+
+The bar's own breadcrumb is not used by the frame. The owner decided (`cloud/FRAME-DESIGN.md`, owner's answer 2) that the frame keeps the
+Cadre `Framework/Crumb` view with its node badges, and (answer 3) a Cadre alert message strip beside the bar; the bar draws its breadcrumb
+only in the settings mode, which the frame does not use. `settings` and `breadcrumbItems` (label and href, no icon) are carried and drawn on
+the test page, so the component is complete, and nothing in the frame binds them. The frame's top dock height is the bar's height: 48 px
+(64 px with `tall`), measured in Chromium (17.26.7).
+
+17.26.5 What is excluded from the user menu, and why. Credentials never enter a property (`CLAUDE.md` section 2, item 6; design section 2.3).
+Excluded attributes: `username`, `password`, `usernameError`, `passwordError` (the credential fields and their messages), `hasRecentlySignedIn`
+and `primaryActionId`. Fixed by the wrapper and never a property: `showUsername` and `showPassword`, both false, so the sign in form is the title
+and the Sign in button (no input box exists to type into). Not carried at all: `recentUsers` and `signedInActions` (Cadre has neither) and the
+slots `signed-in-action-icon-<id>`. The detail of the element's `sign-in-click` holds the typed values; the payload kind is `none`, so the
+wrapper builds the event without reading the detail. The signed in form shows the user (`userInitials`, `userLabel`, `userRole`) and a Sign
+out button. F6 binds `onSignInClick` to `system.perspective.login()` and `onSignOutClick` to `system.perspective.logout()` (GF-44). A test
+holds that no property or payload names a credential.
+
+17.26.6 Bundle size of `cadre-ob.js`: 2,314,333 bytes before F4, then 2,407,567 (brilliance menu, with the F4 wrapper additions), 2,477,933
+(user menu), 2,589,342 (system menu), 2,591,299 (app menu), 2,645,652 (command menu, seven command icons) and 2,664,462 (top bar); 2,664,735
+after the system menu's write back. The growth is the elements the menus import (slider, toggle buttons, text input, switches, battery and
+audio parts).
+
+17.26.7 Measured sizes in Chromium (module defaults in brackets). Brilliance menu 320 by 457 in the normal variant, 257 compact, 216 tabbed
+(320 by 460). User menu 320 wide, 112 high for sign in, 247 signed in, 278 user sign in, 176 signed in small (320 by 280). System menu 320 by
+476 with the four sections and the settings button, 375 on a small screen, 129 condensed (320 by 480). App menu 360 by 272 with six or
+eight buttons in two rows of four, 321 by 80 with none (360 by 280). Command menu 360 by 256 (360 by 260). Top bar 48 high with every part
+drawn, 64 high with `tall`, as wide as its box (960 by 48). The menus are as wide as their content, not their box.
+
+17.26.8 The test page. The section "Frame components" gains `obc-brilliance-menu` 23, `obc-user-menu` 8, `obc-system-menu` 12, `obc-app-menu` 3,
+`obc-command-menu` 4 and `obc-top-bar` 39 elements (89 more; 330 in all). The top bar's cases also build an `obc-alert-button` and an
+`obc-clock` each, and the app menu's cases build 11 `obc-app-button` elements. The samples are of our own (a network, an output, a user,
+eight apps).
+
+17.26.9 Tests and gateway checks. `tests.test_module` holds 165 tests (158 before; the class `FrameComponents` gained six rows, the maps
+`PARTS` and `PART_TAGS` and five tests, `FrameMechanisms` two); `module/tools/harness/frame.mjs` holds 82 checks (51 before) and `items.mjs`
+11, all passing in Chromium. The component test page passes G0 to G7 with 19 devices and 21 device symbols. What the gateway step finds on
+`/component-test`, in the section "Frame components": the six counts of 17.26.8, each with a non-zero box and no console error; every top bar
+shows its bell with a count and its clock; the brilliance menu's palette buttons and the command switch change what they show at once; the
+sign in form has no input box. None is wired. The registered components (the log line of the gateway hook) move from 73 to 79.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The held menu button was released. The event carries nothing.",
+  "properties": {}
+}

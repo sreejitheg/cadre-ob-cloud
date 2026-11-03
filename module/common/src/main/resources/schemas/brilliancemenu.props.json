@@ -1,0 +1,103 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "palette": {
+      "type": "string",
+      "enum": [
+        "night",
+        "dusk",
+        "day",
+        "bright"
+      ],
+      "default": "day",
+      "description": "The currently selected palette. Possible values: 'night', 'dusk', 'day', 'bright'. Defaults to 'day'."
+    },
+    "brightness": {
+      "type": "number",
+      "default": 50,
+      "description": "The current brightness value (0\u2013100). Defaults to 50."
+    },
+    "showLinkBrightness": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the menu draws the switch that links the brightness to other screens. False by default: Cadre links nothing."
+    },
+    "showLinkPalette": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the menu draws the switch that links the palette to other screens. False by default: Cadre links nothing."
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "compact",
+        "tabbed"
+      ],
+      "default": "normal",
+      "description": "The variant of the menu. Possible values: 'normal', 'compact', 'tabbed'. Defaults to 'normal'."
+    },
+    "brightnessUnit": {
+      "type": "string",
+      "default": "%",
+      "description": "The unit of the brightness value."
+    },
+    "brightnessMax": {
+      "type": "number",
+      "default": 100,
+      "description": "The maximum value of the brightness slider."
+    },
+    "brightnessMinorStep": {
+      "type": "number",
+      "default": 5,
+      "description": "The minor step of the brightness slider."
+    },
+    "brightnessMajorStep": {
+      "type": "number",
+      "default": 25,
+      "description": "The major step of the brightness slider."
+    },
+    "brightnessInputVariant": {
+      "type": "string",
+      "enum": [
+        "buttons",
+        "slider"
+      ],
+      "default": "buttons",
+      "description": "The variant of the brightness input."
+    },
+    "showScreenControlLink": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays the screen control link."
+    },
+    "showBrightness": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the menu draws the brightness section."
+    },
+    "showPalette": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the menu draws the palette (day and night) section."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

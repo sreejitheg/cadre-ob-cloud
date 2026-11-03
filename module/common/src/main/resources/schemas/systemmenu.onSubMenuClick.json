@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "A heading that opens a sub menu was pressed (with `externalControl` the menu does not open it itself). The event carries nothing.",
+  "properties": {}
+}

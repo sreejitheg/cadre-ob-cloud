@@ -9,7 +9,13 @@
   --ui-components-button-padding-horizontal: 4px;
   --global-size-spacing-selection-size-min: 24px;
   --global-size-spacing-target-padding: 4px;
+  --ui-components-toggle-switch-thumb-size: 12px;
+  --ui-components-toggle-switch-selection-padding: 6px;
+  --ui-components-toggle-switch-selection-width: 48px;
   --global-size-spacing-border-weight-focusframe: 2px;
+  --ui-components-toggle-switch-item-border-radius: var(
+    --border-radius-br-round
+  );
   --global-typography-ui-button-font-size: var(--font-size-100);
   --global-typography-ui-button-line-height: var(--line-height-100);
   --global-typography-ui-button-font-weight: var(--font-weight-semibold);
@@ -51,8 +57,15 @@
   --ui-components-checkbox-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --ui-components-toggle-switch-item-label-spacing: 8px;
+  --ui-components-toggle-switch-selection-height: var(
+    --global-size-spacing-selection-size-min
+  );
   --ui-components-icon-button-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
   );
   --app-components-alert-frame-icon-size: var(
     --global-size-spacing-icon-icon-size-small
@@ -71,7 +84,22 @@
   --menu-navigation-components-navigation-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-radio-button-label-spacing: 8px;
+  --ui-components-radio-button-selection-size: var(
+    --global-size-spacing-selection-size-min
+  );
+  --ui-components-radio-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-checkbox-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-toggle-switch-item-padding-horizontal: 8px;
+  --ui-components-radio-button-thumb-size: 8px;
+  --ui-components-toggle-switch-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-radio-button-padding-horizontal: var(
     --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
   );
   --ui-components-button-visual-size: var(
@@ -101,12 +129,62 @@
   --app-components-alert-frame-large-flip-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --global-size-spacing-touch-target-min-two-story: 56px;
   --global-size-spacing-border-weight-alertframe: 4px;
   --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item: 12px;
   --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item: 0px;
+  --ui-components-radio-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-start-stop-switch-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-start-stop-switch-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-start-stop-switch-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-state-toggle-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-description-spacing: 0px;
+  --ui-components-start-stop-switch-label-spacing: 8px;
+  --ui-components-check-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-check-button-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-check-button-padding-horizontal: 4px;
+  --ui-components-icon-check-button-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-check-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-toggle-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-icon-button-padding-left: var(--icon-button-padding-left);
   --ui-components-icon-button-padding-right: var(--icon-button-padding-right);
   --ui-components-icon-button-padding-horizontal: 8px;
+  --ui-components-input-fields-text-input-field-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-text-input-field-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-input-fields-text-input-field-label-spacing: 8px;
+  --ui-components-input-fields-text-input-field-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-button-border-radius-top-left: var(
     --button-border-radius-top-left
   );
@@ -118,6 +196,23 @@
   );
   --ui-components-button-border-radius-bottom-right: var(
     --button-border-radius-bottom-right
+  );
+  --ui-components-input-fields-text-input-field-stroke-weight: 1px;
+  --ui-components-toggle-button-toggle-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-toggle-button-toggle-button-item-label-spacing: 8px;
+  --ui-components-toggle-button-toggle-button-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --app-components-topbar-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
   );
   --menu-navigation-components-table-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -144,6 +239,9 @@
   --ui-components-checkbox-list-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-toggle-button-icon-toggle-button-horizontal-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-context-menu-title-label-spacing: 16px;
   --menu-navigation-components-navigation-item-touch-target-size-large: 64px;
   --menu-navigation-components-navigation-item-flyout-icon-container-size: 16px;
@@ -168,6 +266,7 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 2px;
+  --app-components-topbar-label-spacing: 8px;
   --app-components-alert-button-item-padding-counter-right: 2px;
   --app-components-alert-button-item-counter-spacing: 2px;
   --app-components-topbar-message-item-touch-target-size-tall: var(
@@ -183,6 +282,7 @@
   --menu-navigation-components-tree-navigation-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-system-button-label-spacing: 8px;
   --global-size-spacing-icon-icon-size-small: 16px;
   --app-components-breadcrumb-item-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
@@ -200,13 +300,24 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-touch-target-size-double: 64px;
+  --app-components-topbar-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-touch-target-tall: 64px;
+  --app-components-topbar-margin-global: 4px;
+  --app-components-topbar-padding-left-small: 16px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-navigation-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-context-menu
   );
+  --ui-components-accordion-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-accordion-item-label-spacing: 8px;
+  --ui-components-accordion-item-padding-horizontal: 16px;
+  --ui-components-accordion-item-border-radius: var(--border-radius-br-0);
   --menu-navigation-components-scroll-bar-visual-target-size-large: var(
     --global-size-spacing-visual-target-min
   );
@@ -217,10 +328,21 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --ui-components-toggle-switch-item-touch-target-size-two-story: var(
+    --global-size-spacing-touch-target-min-two-story
+  );
   --ui-components-app-button-touch-target-size-enhanced: 72px;
   --ui-components-app-button-visual-size-enhanced: 64px;
   --ui-components-app-button-icon-size-enhanced: 48px;
   --ui-components-app-button-padding-vertical-enhanced: 8px;
+  --app-components-app-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-dimming-menu-icon-size: 48px;
+  --app-components-dimming-menu-padding-vertical: 8px;
+  --app-components-dimming-menu-label-spacing: 8px;
+  --menu-navigation-components-page-indicator-indicator-size: 8px;
+  --menu-navigation-components-page-indicator-indicator-spacing: 8px;
   --menu-navigation-components-terminal-padding-aggregated-icon: 4px;
   --menu-navigation-components-table-item-icon-size-large: var(
     --global-size-spacing-icon-icon-size-large
@@ -233,6 +355,8 @@
     --global-border-radius-border-radius-floating
   );
   --global-size-spacing-icon-icon-size-large: 32px;
+  --app-components-user-menu-padding-vertical: 8px;
+  --app-components-user-menu-padding-horizontal: 8px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -255,21 +379,69 @@
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --ui-components-toggle-switch-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu: 4px;
   --menu-navigation-components-navigation-item-margin-horizontal-list-item: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item
   );
+  --global-size-spacing-nav-item-and-menus-margin-vertical-menu: 16px;
+  --global-size-spacing-nav-item-and-menus-margin-horizontal-menu: 16px;
+  --app-components-app-menu-app-button-spacing: 8px;
+  --app-components-app-menu-padding-vertical: 8px;
+  --app-components-app-menu-padding-horizontal: 8px;
+  --app-components-dimming-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-user-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-padding-horizontal: 8px;
+  --app-components-system-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-system-menu-spacing-large: 16px;
+  --app-components-system-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-system-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-spacing: 8px;
+  --app-components-system-menu-padding-vertical: 8px;
+  --ui-components-audio-output-height: 24px;
+  --ui-components-audio-output-width: 12px;
+  --ui-components-audio-output-spacing: 8px;
   --app-components-navigation-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --app-components-system-menu-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --menu-navigation-components-tab-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --menu-navigation-components-tab-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --menu-navigation-components-tab-item-label-spacing: 8px;
   --menu-navigation-components-tab-item-padding-horizontal: 16px;
+  --app-components-command-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-command-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-command-menu-padding-vertical: 8px;
+  --app-components-command-menu-padding-horizontal: 8px;
+  --app-components-command-menu-icon-size-large: 64px;
+  --ui-components-divider-height-small: 16px;
+  --global-size-spacing-column-width: 320px;
+  --ui-components-start-stop-switch-padding-horizontal: 8px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -326,6 +498,7 @@
   --instrument-components-readout-icon-spacing: 4px;
   --instrument-components-readout-padding-horizontal: 4px;
   --instrument-components-readout-padding-vertical: 2px;
+  --app-components-user-menu-label-spacing: 8px;
   --app-components-topbar-message-item-tall-padding-vertical: 4px;
   --app-components-alert-button-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -398,6 +571,18 @@
     --ui-components-toggletip-header-padding-vertical-top
   );
   --infographic-components-legend-item-indicator-border-radius: 2px;
+  --app-components-alert-frame-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-alert-frame-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-alert-frame-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-alert-frame-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
   --automation-components-typography-label-font-size: var(--font-size-075);
   --automation-components-typography-label-line-height: var(--line-height-075);
   --automation-components-typography-label-font-weight: var(
@@ -418,6 +603,40 @@
   );
   --automation-components-tanks-state-container-padding: 4px;
   --automation-components-tanks-specialty-tanks-icon-size: 24px;
+  --ui-components-input-fields-number-input-field-border-radius-top-left: var(
+    --input-field-border-radius-top-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-top-right: var(
+    --input-field-border-radius-top-right
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-left: var(
+    --input-field-border-radius-bottom-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
+    --input-field-border-radius-bottom-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-left: var(
+    --input-field-stroke-weight-left
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-top: var(
+    --input-field-stroke-weight-top
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-right: var(
+    --input-field-stroke-weight-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-bottom: var(
+    --input-field-stroke-weight-bottom
+  );
+  --ui-components-input-fields-text-input-field-required-dot-size: 6px;
+  --ui-components-input-fields-text-input-field-required-dot-spacer: 4px;
+  --ui-components-input-fields-number-input-field-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-input-fields-number-input-field-visual-size-large: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-number-input-field-padding-vertical: 4px;
+  --ui-components-input-fields-number-input-field-vertical-spacer: 4px;
   --ui-components-tag-icon-size: var(
     --global-size-spacing-icon-icon-size-small
   );
@@ -427,6 +646,8 @@
     --global-border-radius-border-radius-tag
   );
   --global-border-radius-border-radius-tag: var(--border-radius-br-4);
+  --ui-components-input-fields-number-input-field-padding-horizontal: 8px;
+  --ui-components-input-fields-number-input-field-label-spacing-title: 4px;
   --global-typography-instrument-value-large-padding-bottom: 2px;
   --global-typography-instrument-value-large-letter-spacing: -0.5px;
   --global-typography-instrument-value-regular-container-height: 20px;
@@ -557,7 +778,13 @@
   --ui-components-button-padding-horizontal: 4px;
   --global-size-spacing-selection-size-min: 32px;
   --global-size-spacing-target-padding: 4px;
+  --ui-components-toggle-switch-thumb-size: 16px;
+  --ui-components-toggle-switch-selection-padding: 8px;
+  --ui-components-toggle-switch-selection-width: 64px;
   --global-size-spacing-border-weight-focusframe: 2px;
+  --ui-components-toggle-switch-item-border-radius: var(
+    --border-radius-br-round
+  );
   --global-typography-ui-button-font-size: var(--font-size-150);
   --global-typography-ui-button-line-height: var(--line-height-150);
   --global-typography-ui-button-font-weight: var(--font-weight-semibold);
@@ -599,8 +826,15 @@
   --ui-components-checkbox-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --ui-components-toggle-switch-item-label-spacing: 8px;
+  --ui-components-toggle-switch-selection-height: var(
+    --global-size-spacing-selection-size-min
+  );
   --ui-components-icon-button-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
   );
   --app-components-alert-frame-icon-size: var(
     --global-size-spacing-icon-icon-size-small
@@ -619,7 +853,22 @@
   --menu-navigation-components-navigation-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-radio-button-label-spacing: 12px;
+  --ui-components-radio-button-selection-size: var(
+    --global-size-spacing-selection-size-min
+  );
+  --ui-components-radio-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-checkbox-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-toggle-switch-item-padding-horizontal: 8px;
+  --ui-components-radio-button-thumb-size: 10px;
+  --ui-components-toggle-switch-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-radio-button-padding-horizontal: var(
     --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
   );
   --ui-components-button-visual-size: var(
@@ -649,12 +898,62 @@
   --app-components-alert-frame-large-flip-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --global-size-spacing-touch-target-min-two-story: 64px;
   --global-size-spacing-border-weight-alertframe: 4px;
   --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item: 12px;
   --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item: 0px;
+  --ui-components-radio-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-start-stop-switch-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-start-stop-switch-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-start-stop-switch-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-state-toggle-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-description-spacing: 0px;
+  --ui-components-start-stop-switch-label-spacing: 8px;
+  --ui-components-check-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-check-button-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-check-button-padding-horizontal: 4px;
+  --ui-components-icon-check-button-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-check-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-toggle-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-icon-button-padding-left: var(--icon-button-padding-left);
   --ui-components-icon-button-padding-right: var(--icon-button-padding-right);
   --ui-components-icon-button-padding-horizontal: 8px;
+  --ui-components-input-fields-text-input-field-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-text-input-field-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-input-fields-text-input-field-label-spacing: 8px;
+  --ui-components-input-fields-text-input-field-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-button-border-radius-top-left: var(
     --button-border-radius-top-left
   );
@@ -666,6 +965,23 @@
   );
   --ui-components-button-border-radius-bottom-right: var(
     --button-border-radius-bottom-right
+  );
+  --ui-components-input-fields-text-input-field-stroke-weight: 1px;
+  --ui-components-toggle-button-toggle-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-toggle-button-toggle-button-item-label-spacing: 8px;
+  --ui-components-toggle-button-toggle-button-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --app-components-topbar-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
   );
   --menu-navigation-components-table-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -692,6 +1008,9 @@
   --ui-components-checkbox-list-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-toggle-button-icon-toggle-button-horizontal-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-context-menu-title-label-spacing: 16px;
   --menu-navigation-components-navigation-item-touch-target-size-large: 72px;
   --menu-navigation-components-navigation-item-flyout-icon-container-size: 20px;
@@ -716,6 +1035,7 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 2px;
+  --app-components-topbar-label-spacing: 8px;
   --app-components-alert-button-item-padding-counter-right: 2px;
   --app-components-alert-button-item-counter-spacing: 2px;
   --app-components-topbar-message-item-touch-target-size-tall: var(
@@ -731,6 +1051,7 @@
   --menu-navigation-components-tree-navigation-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-system-button-label-spacing: 8px;
   --global-size-spacing-icon-icon-size-small: 20px;
   --app-components-breadcrumb-item-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
@@ -748,13 +1069,26 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-touch-target-size-double: 80px;
+  --app-components-topbar-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-touch-target-tall: 80px;
+  --app-components-topbar-margin-global: 4px;
+  --app-components-topbar-padding-left-small: 16px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-navigation-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-context-menu
   );
+  --ui-components-accordion-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-accordion-item-label-spacing: 8px;
+  --ui-components-accordion-item-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-accordion-item-border-radius: var(--border-radius-br-0);
   --menu-navigation-components-scroll-bar-visual-target-size-large: var(
     --global-size-spacing-visual-target-min
   );
@@ -765,10 +1099,21 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --ui-components-toggle-switch-item-touch-target-size-two-story: var(
+    --global-size-spacing-touch-target-min-two-story
+  );
   --ui-components-app-button-touch-target-size-enhanced: 88px;
   --ui-components-app-button-visual-size-enhanced: 72px;
   --ui-components-app-button-icon-size-enhanced: 56px;
   --ui-components-app-button-padding-vertical-enhanced: 8px;
+  --app-components-app-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-dimming-menu-icon-size: 56px;
+  --app-components-dimming-menu-padding-vertical: 8px;
+  --app-components-dimming-menu-label-spacing: 8px;
+  --menu-navigation-components-page-indicator-indicator-size: 10px;
+  --menu-navigation-components-page-indicator-indicator-spacing: 10px;
   --menu-navigation-components-terminal-padding-aggregated-icon: 4px;
   --menu-navigation-components-table-item-icon-size-large: var(
     --global-size-spacing-icon-icon-size-large
@@ -781,6 +1126,8 @@
     --global-border-radius-border-radius-floating
   );
   --global-size-spacing-icon-icon-size-large: 40px;
+  --app-components-user-menu-padding-vertical: 8px;
+  --app-components-user-menu-padding-horizontal: 8px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -805,21 +1152,69 @@
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --ui-components-toggle-switch-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu: 4px;
   --menu-navigation-components-navigation-item-margin-horizontal-list-item: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item
   );
+  --global-size-spacing-nav-item-and-menus-margin-vertical-menu: 16px;
+  --global-size-spacing-nav-item-and-menus-margin-horizontal-menu: 16px;
+  --app-components-app-menu-app-button-spacing: 8px;
+  --app-components-app-menu-padding-vertical: 8px;
+  --app-components-app-menu-padding-horizontal: 8px;
+  --app-components-dimming-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-user-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-padding-horizontal: 8px;
+  --app-components-system-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-system-menu-spacing-large: 16px;
+  --app-components-system-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-system-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-spacing: 8px;
+  --app-components-system-menu-padding-vertical: 8px;
+  --ui-components-audio-output-height: 24px;
+  --ui-components-audio-output-width: 12px;
+  --ui-components-audio-output-spacing: 8px;
   --app-components-navigation-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --app-components-system-menu-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --menu-navigation-components-tab-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --menu-navigation-components-tab-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --menu-navigation-components-tab-item-label-spacing: 8px;
   --menu-navigation-components-tab-item-padding-horizontal: 16px;
+  --app-components-command-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-command-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-command-menu-padding-vertical: 8px;
+  --app-components-command-menu-padding-horizontal: 8px;
+  --app-components-command-menu-icon-size-large: 72px;
+  --ui-components-divider-height-small: 16px;
+  --global-size-spacing-column-width: 400px;
+  --ui-components-start-stop-switch-padding-horizontal: 8px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -874,6 +1269,7 @@
   --instrument-components-readout-icon-spacing: 8px;
   --instrument-components-readout-padding-horizontal: 8px;
   --instrument-components-readout-padding-vertical: 4px;
+  --app-components-user-menu-label-spacing: 8px;
   --app-components-topbar-message-item-tall-padding-vertical: 4px;
   --app-components-alert-button-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -946,6 +1342,18 @@
     --ui-components-toggletip-header-padding-vertical-top
   );
   --infographic-components-legend-item-indicator-border-radius: 2px;
+  --app-components-alert-frame-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-alert-frame-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-alert-frame-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-alert-frame-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
   --automation-components-typography-label-font-size: var(--font-size-100);
   --automation-components-typography-label-line-height: var(--line-height-100);
   --automation-components-typography-label-font-weight: var(
@@ -966,6 +1374,40 @@
   );
   --automation-components-tanks-state-container-padding: 8px;
   --automation-components-tanks-specialty-tanks-icon-size: 32px;
+  --ui-components-input-fields-number-input-field-border-radius-top-left: var(
+    --input-field-border-radius-top-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-top-right: var(
+    --input-field-border-radius-top-right
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-left: var(
+    --input-field-border-radius-bottom-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
+    --input-field-border-radius-bottom-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-left: var(
+    --input-field-stroke-weight-left
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-top: var(
+    --input-field-stroke-weight-top
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-right: var(
+    --input-field-stroke-weight-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-bottom: var(
+    --input-field-stroke-weight-bottom
+  );
+  --ui-components-input-fields-text-input-field-required-dot-size: 6px;
+  --ui-components-input-fields-text-input-field-required-dot-spacer: 4px;
+  --ui-components-input-fields-number-input-field-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-input-fields-number-input-field-visual-size-large: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-number-input-field-padding-vertical: 4px;
+  --ui-components-input-fields-number-input-field-vertical-spacer: 4px;
   --ui-components-tag-icon-size: var(
     --global-size-spacing-icon-icon-size-small
   );
@@ -975,6 +1417,8 @@
     --global-border-radius-border-radius-tag
   );
   --global-border-radius-border-radius-tag: var(--border-radius-br-4);
+  --ui-components-input-fields-number-input-field-padding-horizontal: 8px;
+  --ui-components-input-fields-number-input-field-label-spacing-title: 4px;
   --global-typography-instrument-value-large-padding-bottom: 4px;
   --global-typography-instrument-value-large-letter-spacing: -0.5px;
   --global-typography-instrument-value-regular-container-height: 24px;
@@ -1097,7 +1541,13 @@
   --ui-components-button-padding-horizontal: 6px;
   --global-size-spacing-selection-size-min: 40px;
   --global-size-spacing-target-padding: 4px;
+  --ui-components-toggle-switch-thumb-size: 20px;
+  --ui-components-toggle-switch-selection-padding: 10px;
+  --ui-components-toggle-switch-selection-width: 80px;
   --global-size-spacing-border-weight-focusframe: 4px;
+  --ui-components-toggle-switch-item-border-radius: var(
+    --border-radius-br-round
+  );
   --global-typography-ui-button-font-size: var(--font-size-200);
   --global-typography-ui-button-line-height: var(--line-height-200);
   --global-typography-ui-button-font-weight: var(--font-weight-semibold);
@@ -1139,8 +1589,15 @@
   --ui-components-checkbox-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --ui-components-toggle-switch-item-label-spacing: 12px;
+  --ui-components-toggle-switch-selection-height: var(
+    --global-size-spacing-selection-size-min
+  );
   --ui-components-icon-button-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
   );
   --app-components-alert-frame-icon-size: var(
     --global-size-spacing-icon-icon-size-small
@@ -1159,7 +1616,22 @@
   --menu-navigation-components-navigation-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-radio-button-label-spacing: 12px;
+  --ui-components-radio-button-selection-size: var(
+    --global-size-spacing-selection-size-min
+  );
+  --ui-components-radio-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-checkbox-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-toggle-switch-item-padding-horizontal: 12px;
+  --ui-components-radio-button-thumb-size: 12px;
+  --ui-components-toggle-switch-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-radio-button-padding-horizontal: var(
     --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
   );
   --ui-components-button-visual-size: var(
@@ -1189,12 +1661,62 @@
   --app-components-alert-frame-large-flip-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --global-size-spacing-touch-target-min-two-story: 84px;
   --global-size-spacing-border-weight-alertframe: 4px;
   --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item: 16px;
   --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item: 0px;
+  --ui-components-radio-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-start-stop-switch-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-start-stop-switch-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-start-stop-switch-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-state-toggle-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-description-spacing: 8px;
+  --ui-components-start-stop-switch-label-spacing: 12px;
+  --ui-components-check-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-check-button-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-check-button-padding-horizontal: 8px;
+  --ui-components-icon-check-button-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-check-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-toggle-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-icon-button-padding-left: var(--icon-button-padding-left);
   --ui-components-icon-button-padding-right: var(--icon-button-padding-right);
   --ui-components-icon-button-padding-horizontal: 12px;
+  --ui-components-input-fields-text-input-field-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-text-input-field-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-input-fields-text-input-field-label-spacing: 12px;
+  --ui-components-input-fields-text-input-field-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-button-border-radius-top-left: var(
     --button-border-radius-top-left
   );
@@ -1206,6 +1728,23 @@
   );
   --ui-components-button-border-radius-bottom-right: var(
     --button-border-radius-bottom-right
+  );
+  --ui-components-input-fields-text-input-field-stroke-weight: 1px;
+  --ui-components-toggle-button-toggle-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-toggle-button-toggle-button-item-label-spacing: 12px;
+  --ui-components-toggle-button-toggle-button-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --app-components-topbar-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
   );
   --menu-navigation-components-table-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -1232,6 +1771,9 @@
   --ui-components-checkbox-list-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-toggle-button-icon-toggle-button-horizontal-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-context-menu-title-label-spacing: 24px;
   --menu-navigation-components-navigation-item-touch-target-size-large: 96px;
   --menu-navigation-components-navigation-item-flyout-icon-container-size: 24px;
@@ -1256,6 +1798,7 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 3px;
+  --app-components-topbar-label-spacing: 12px;
   --app-components-alert-button-item-padding-counter-right: 3px;
   --app-components-alert-button-item-counter-spacing: 2px;
   --app-components-topbar-message-item-touch-target-size-tall: var(
@@ -1271,6 +1814,7 @@
   --menu-navigation-components-tree-navigation-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-system-button-label-spacing: 12px;
   --global-size-spacing-icon-icon-size-small: 24px;
   --app-components-breadcrumb-item-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
@@ -1288,13 +1832,26 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-touch-target-size-double: 96px;
+  --app-components-topbar-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-touch-target-tall: 96px;
+  --app-components-topbar-margin-global: 6px;
+  --app-components-topbar-padding-left-small: 18px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-navigation-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-context-menu
   );
+  --ui-components-accordion-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-accordion-item-label-spacing: 12px;
+  --ui-components-accordion-item-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-accordion-item-border-radius: var(--border-radius-br-0);
   --menu-navigation-components-scroll-bar-visual-target-size-large: var(
     --global-size-spacing-visual-target-min
   );
@@ -1305,10 +1862,21 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --ui-components-toggle-switch-item-touch-target-size-two-story: var(
+    --global-size-spacing-touch-target-min-two-story
+  );
   --ui-components-app-button-touch-target-size-enhanced: 112px;
   --ui-components-app-button-visual-size-enhanced: 96px;
   --ui-components-app-button-icon-size-enhanced: 72px;
   --ui-components-app-button-padding-vertical-enhanced: 12px;
+  --app-components-app-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-dimming-menu-icon-size: 72px;
+  --app-components-dimming-menu-padding-vertical: 12px;
+  --app-components-dimming-menu-label-spacing: 12px;
+  --menu-navigation-components-page-indicator-indicator-size: 12px;
+  --menu-navigation-components-page-indicator-indicator-spacing: 12px;
   --menu-navigation-components-terminal-padding-aggregated-icon: 6px;
   --menu-navigation-components-table-item-icon-size-large: var(
     --global-size-spacing-icon-icon-size-large
@@ -1321,6 +1889,8 @@
     --global-border-radius-border-radius-floating
   );
   --global-size-spacing-icon-icon-size-large: 48px;
+  --app-components-user-menu-padding-vertical: 12px;
+  --app-components-user-menu-padding-horizontal: 12px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1345,21 +1915,69 @@
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --ui-components-toggle-switch-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu: 6px;
   --menu-navigation-components-navigation-item-margin-horizontal-list-item: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item
   );
+  --global-size-spacing-nav-item-and-menus-margin-vertical-menu: 24px;
+  --global-size-spacing-nav-item-and-menus-margin-horizontal-menu: 24px;
+  --app-components-app-menu-app-button-spacing: 12px;
+  --app-components-app-menu-padding-vertical: 12px;
+  --app-components-app-menu-padding-horizontal: 12px;
+  --app-components-dimming-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-user-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-padding-horizontal: 12px;
+  --app-components-system-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-system-menu-spacing-large: 24px;
+  --app-components-system-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-system-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-spacing: 12px;
+  --app-components-system-menu-padding-vertical: 12px;
+  --ui-components-audio-output-height: 32px;
+  --ui-components-audio-output-width: 16px;
+  --ui-components-audio-output-spacing: 12px;
   --app-components-navigation-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --app-components-system-menu-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --menu-navigation-components-tab-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --menu-navigation-components-tab-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --menu-navigation-components-tab-item-label-spacing: 12px;
   --menu-navigation-components-tab-item-padding-horizontal: 24px;
+  --app-components-command-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-command-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-command-menu-padding-vertical: 12px;
+  --app-components-command-menu-padding-horizontal: 12px;
+  --app-components-command-menu-icon-size-large: 96px;
+  --ui-components-divider-height-small: 24px;
+  --global-size-spacing-column-width: 480px;
+  --ui-components-start-stop-switch-padding-horizontal: 12px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1414,6 +2032,7 @@
   --instrument-components-readout-icon-spacing: 0px;
   --instrument-components-readout-padding-horizontal: 0px;
   --instrument-components-readout-padding-vertical: 0px;
+  --app-components-user-menu-label-spacing: 12px;
   --app-components-topbar-message-item-tall-padding-vertical: 4px;
   --app-components-alert-button-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -1486,6 +2105,18 @@
     --ui-components-toggletip-header-padding-vertical-top
   );
   --infographic-components-legend-item-indicator-border-radius: 3px;
+  --app-components-alert-frame-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-alert-frame-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-alert-frame-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-alert-frame-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
   --automation-components-typography-label-font-size: var(--font-size-150);
   --automation-components-typography-label-line-height: var(--line-height-150);
   --automation-components-typography-label-font-weight: var(
@@ -1506,6 +2137,40 @@
   );
   --automation-components-tanks-state-container-padding: 12px;
   --automation-components-tanks-specialty-tanks-icon-size: 48px;
+  --ui-components-input-fields-number-input-field-border-radius-top-left: var(
+    --input-field-border-radius-top-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-top-right: var(
+    --input-field-border-radius-top-right
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-left: var(
+    --input-field-border-radius-bottom-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
+    --input-field-border-radius-bottom-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-left: var(
+    --input-field-stroke-weight-left
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-top: var(
+    --input-field-stroke-weight-top
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-right: var(
+    --input-field-stroke-weight-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-bottom: var(
+    --input-field-stroke-weight-bottom
+  );
+  --ui-components-input-fields-text-input-field-required-dot-size: 9px;
+  --ui-components-input-fields-text-input-field-required-dot-spacer: 6px;
+  --ui-components-input-fields-number-input-field-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-input-fields-number-input-field-visual-size-large: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-number-input-field-padding-vertical: 6px;
+  --ui-components-input-fields-number-input-field-vertical-spacer: 6px;
   --ui-components-tag-icon-size: var(
     --global-size-spacing-icon-icon-size-small
   );
@@ -1515,6 +2180,8 @@
     --global-border-radius-border-radius-tag
   );
   --global-border-radius-border-radius-tag: var(--border-radius-br-6);
+  --ui-components-input-fields-number-input-field-padding-horizontal: 12px;
+  --ui-components-input-fields-number-input-field-label-spacing-title: 6px;
   --global-typography-instrument-value-large-padding-bottom: 4px;
   --global-typography-instrument-value-large-letter-spacing: -1px;
   --global-typography-instrument-value-regular-container-height: 40px;
@@ -1637,7 +2304,13 @@
   --ui-components-button-padding-horizontal: 8px;
   --global-size-spacing-selection-size-min: 48px;
   --global-size-spacing-target-padding: 4px;
+  --ui-components-toggle-switch-thumb-size: 24px;
+  --ui-components-toggle-switch-selection-padding: 12px;
+  --ui-components-toggle-switch-selection-width: 96px;
   --global-size-spacing-border-weight-focusframe: 4px;
+  --ui-components-toggle-switch-item-border-radius: var(
+    --border-radius-br-round
+  );
   --global-typography-ui-button-font-size: var(--font-size-200);
   --global-typography-ui-button-line-height: var(--line-height-200);
   --global-typography-ui-button-font-weight: var(--font-weight-semibold);
@@ -1679,8 +2352,15 @@
   --ui-components-checkbox-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --ui-components-toggle-switch-item-label-spacing: 16px;
+  --ui-components-toggle-switch-selection-height: var(
+    --global-size-spacing-selection-size-min
+  );
   --ui-components-icon-button-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
   );
   --app-components-alert-frame-icon-size: var(
     --global-size-spacing-icon-icon-size-small
@@ -1699,7 +2379,22 @@
   --menu-navigation-components-navigation-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-radio-button-label-spacing: 16px;
+  --ui-components-radio-button-selection-size: var(
+    --global-size-spacing-selection-size-min
+  );
+  --ui-components-radio-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-checkbox-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-toggle-switch-item-padding-horizontal: 16px;
+  --ui-components-radio-button-thumb-size: 16px;
+  --ui-components-toggle-switch-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-radio-button-padding-horizontal: var(
     --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
   );
   --ui-components-button-visual-size: var(
@@ -1729,12 +2424,62 @@
   --app-components-alert-frame-large-flip-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --global-size-spacing-touch-target-min-two-story: 112px;
   --global-size-spacing-border-weight-alertframe: 8px;
   --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item: 8px;
   --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item: 0px;
+  --ui-components-radio-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-start-stop-switch-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-start-stop-switch-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-start-stop-switch-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-state-toggle-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-start-stop-switch-description-spacing: 8px;
+  --ui-components-start-stop-switch-label-spacing: 16px;
+  --ui-components-check-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-check-button-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-check-button-padding-horizontal: 8px;
+  --ui-components-icon-check-button-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-icon-check-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --ui-components-toggle-button-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-icon-button-padding-left: var(--icon-button-padding-left);
   --ui-components-icon-button-padding-right: var(--icon-button-padding-right);
   --ui-components-icon-button-padding-horizontal: 16px;
+  --ui-components-input-fields-text-input-field-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-text-input-field-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-input-fields-text-input-field-label-spacing: 16px;
+  --ui-components-input-fields-text-input-field-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --ui-components-button-border-radius-top-left: var(
     --button-border-radius-top-left
   );
@@ -1746,6 +2491,23 @@
   );
   --ui-components-button-border-radius-bottom-right: var(
     --button-border-radius-bottom-right
+  );
+  --ui-components-input-fields-text-input-field-stroke-weight: 1px;
+  --ui-components-toggle-button-toggle-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-toggle-button-toggle-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --ui-components-toggle-button-toggle-button-item-label-spacing: 16px;
+  --ui-components-toggle-button-toggle-button-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
+  --app-components-topbar-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
   );
   --menu-navigation-components-table-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -1772,6 +2534,9 @@
   --ui-components-checkbox-list-item-border-radius: var(
     --global-border-radius-border-radius-base
   );
+  --ui-components-toggle-button-icon-toggle-button-horizontal-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-context-menu-title-label-spacing: 32px;
   --menu-navigation-components-navigation-item-touch-target-size-large: 128px;
   --menu-navigation-components-navigation-item-flyout-icon-container-size: 32px;
@@ -1796,6 +2561,7 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 4px;
+  --app-components-topbar-label-spacing: 16px;
   --app-components-alert-button-item-padding-counter-right: 4px;
   --app-components-alert-button-item-counter-spacing: 4px;
   --app-components-topbar-message-item-touch-target-size-tall: var(
@@ -1811,6 +2577,7 @@
   --menu-navigation-components-tree-navigation-item-touch-target: var(
     --global-size-spacing-touch-target-min
   );
+  --app-components-system-button-label-spacing: 16px;
   --global-size-spacing-icon-icon-size-small: 32px;
   --app-components-breadcrumb-item-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
@@ -1828,13 +2595,26 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-touch-target-size-double: 128px;
+  --app-components-topbar-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --app-components-topbar-touch-target-tall: 128px;
+  --app-components-topbar-margin-global: 8px;
+  --app-components-topbar-padding-left-small: 24px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
   --app-components-navigation-menu-margin-vertical: var(
     --global-size-spacing-nav-item-and-menus-margin-vertical-context-menu
   );
+  --ui-components-accordion-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-accordion-item-label-spacing: 16px;
+  --ui-components-accordion-item-padding-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-padding-horizontal-list-item
+  );
+  --ui-components-accordion-item-border-radius: var(--border-radius-br-0);
   --menu-navigation-components-scroll-bar-visual-target-size-large: var(
     --global-size-spacing-visual-target-min
   );
@@ -1845,10 +2625,21 @@
   --menu-navigation-components-scroll-bar-border-radius: var(
     --global-border-radius-border-radius-round
   );
+  --ui-components-toggle-switch-item-touch-target-size-two-story: var(
+    --global-size-spacing-touch-target-min-two-story
+  );
   --ui-components-app-button-touch-target-size-enhanced: 144px;
   --ui-components-app-button-visual-size-enhanced: 128px;
   --ui-components-app-button-icon-size-enhanced: 96px;
   --ui-components-app-button-padding-vertical-enhanced: 16px;
+  --app-components-app-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-dimming-menu-icon-size: 96px;
+  --app-components-dimming-menu-padding-vertical: 16px;
+  --app-components-dimming-menu-label-spacing: 16px;
+  --menu-navigation-components-page-indicator-indicator-size: 16px;
+  --menu-navigation-components-page-indicator-indicator-spacing: 16px;
   --menu-navigation-components-terminal-padding-aggregated-icon: 8px;
   --menu-navigation-components-table-item-icon-size-large: var(
     --global-size-spacing-icon-icon-size-large
@@ -1861,6 +2652,8 @@
     --global-border-radius-border-radius-floating
   );
   --global-size-spacing-icon-icon-size-large: 64px;
+  --app-components-user-menu-padding-vertical: 16px;
+  --app-components-user-menu-padding-horizontal: 16px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1885,21 +2678,69 @@
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --ui-components-toggle-switch-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
   --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu: 8px;
   --menu-navigation-components-navigation-item-margin-horizontal-list-item: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-list-item
   );
+  --global-size-spacing-nav-item-and-menus-margin-vertical-menu: 8px;
+  --global-size-spacing-nav-item-and-menus-margin-horizontal-menu: 32px;
+  --app-components-app-menu-app-button-spacing: 16px;
+  --app-components-app-menu-padding-vertical: 16px;
+  --app-components-app-menu-padding-horizontal: 16px;
+  --app-components-dimming-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-user-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-padding-horizontal: 16px;
+  --app-components-system-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-system-menu-spacing-large: 32px;
+  --app-components-system-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
+  --app-components-system-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-system-menu-spacing: 16px;
+  --app-components-system-menu-padding-vertical: 16px;
+  --ui-components-audio-output-height: 48px;
+  --ui-components-audio-output-width: 24px;
+  --ui-components-audio-output-spacing: 16px;
   --app-components-navigation-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --app-components-system-menu-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
   --menu-navigation-components-tab-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
+  --menu-navigation-components-tab-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --menu-navigation-components-tab-item-label-spacing: 16px;
   --menu-navigation-components-tab-item-padding-horizontal: 32px;
+  --app-components-command-menu-margin-vertical: var(
+    --global-size-spacing-nav-item-and-menus-margin-vertical-menu
+  );
+  --app-components-command-menu-margin-horizontal: var(
+    --global-size-spacing-nav-item-and-menus-margin-horizontal-menu
+  );
+  --app-components-command-menu-padding-vertical: 16px;
+  --app-components-command-menu-padding-horizontal: 16px;
+  --app-components-command-menu-icon-size-large: 128px;
+  --ui-components-divider-height-small: 32px;
+  --global-size-spacing-column-width: 640px;
+  --ui-components-start-stop-switch-padding-horizontal: 16px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1960,6 +2801,7 @@
   --instrument-components-readout-icon-spacing: 4px;
   --instrument-components-readout-padding-horizontal: 4px;
   --instrument-components-readout-padding-vertical: 2px;
+  --app-components-user-menu-label-spacing: 16px;
   --app-components-topbar-message-item-tall-padding-vertical: 8px;
   --app-components-alert-button-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -2032,6 +2874,18 @@
     --ui-components-toggletip-header-padding-vertical-top
   );
   --infographic-components-legend-item-indicator-border-radius: 4px;
+  --app-components-alert-frame-border-radius-top-left: var(
+    --button-border-radius-top-left
+  );
+  --app-components-alert-frame-border-radius-top-right: var(
+    --button-border-radius-top-right
+  );
+  --app-components-alert-frame-border-radius-bottom-right: var(
+    --button-border-radius-bottom-right
+  );
+  --app-components-alert-frame-border-radius-bottom-left: var(
+    --button-border-radius-bottom-left
+  );
   --automation-components-typography-label-font-size: var(--font-size-075);
   --automation-components-typography-label-line-height: var(--line-height-075);
   --automation-components-typography-label-font-weight: var(
@@ -2052,6 +2906,40 @@
   );
   --automation-components-tanks-state-container-padding: 12px;
   --automation-components-tanks-specialty-tanks-icon-size: 24px;
+  --ui-components-input-fields-number-input-field-border-radius-top-left: var(
+    --input-field-border-radius-top-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-top-right: var(
+    --input-field-border-radius-top-right
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-left: var(
+    --input-field-border-radius-bottom-left
+  );
+  --ui-components-input-fields-number-input-field-border-radius-bottom-right: var(
+    --input-field-border-radius-bottom-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-left: var(
+    --input-field-stroke-weight-left
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-top: var(
+    --input-field-stroke-weight-top
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-right: var(
+    --input-field-stroke-weight-right
+  );
+  --ui-components-input-fields-number-input-field-stroke-weight-bottom: var(
+    --input-field-stroke-weight-bottom
+  );
+  --ui-components-input-fields-text-input-field-required-dot-size: 12px;
+  --ui-components-input-fields-text-input-field-required-dot-spacer: 8px;
+  --ui-components-input-fields-number-input-field-visual-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --ui-components-input-fields-number-input-field-visual-size-large: var(
+    --global-size-spacing-touch-target-min
+  );
+  --ui-components-input-fields-number-input-field-padding-vertical: 8px;
+  --ui-components-input-fields-number-input-field-vertical-spacer: 8px;
   --ui-components-tag-icon-size: var(
     --global-size-spacing-icon-icon-size-small
   );
@@ -2061,6 +2949,8 @@
     --global-border-radius-border-radius-tag
   );
   --global-border-radius-border-radius-tag: var(--border-radius-br-8);
+  --ui-components-input-fields-number-input-field-padding-horizontal: 16px;
+  --ui-components-input-fields-number-input-field-label-spacing-title: 8px;
   --global-typography-instrument-value-large-padding-bottom: 0px;
   --global-typography-instrument-value-large-letter-spacing: 0px;
   --global-typography-instrument-value-regular-container-height: 0px;
@@ -2208,7 +3098,32 @@
   --icon-button-padding-right: var(
     --ui-components-icon-button-padding-horizontal
   );
+  --input-field-border-radius-top-left: var(
+    --ui-components-input-fields-text-input-field-border-radius
+  );
+  --input-field-border-radius-top-right: var(
+    --ui-components-input-fields-text-input-field-border-radius
+  );
+  --input-field-border-radius-bottom-right: var(
+    --ui-components-input-fields-text-input-field-border-radius
+  );
+  --input-field-border-radius-bottom-left: var(
+    --ui-components-input-fields-text-input-field-border-radius
+  );
+  --input-field-stroke-weight-left: var(
+    --ui-components-input-fields-text-input-field-stroke-weight
+  );
+  --input-field-stroke-weight-top: var(
+    --ui-components-input-fields-text-input-field-stroke-weight
+  );
+  --input-field-stroke-weight-right: var(
+    --ui-components-input-fields-text-input-field-stroke-weight
+  );
+  --input-field-stroke-weight-bottom: var(
+    --ui-components-input-fields-text-input-field-stroke-weight
+  );
   --border-radius-br-round: 1000px;
+  --border-radius-br-0: 0px;
   --border-radius-br-2: 2px;
   --border-radius-br-4: 4px;
   --border-radius-br-6: 6px;
@@ -2318,6 +3233,7 @@
   --amplified-disabled-background-color: rgb(255, 255, 255, 0);
   --amplified-disabled-border-color: rgb(190, 190, 190);
   --on-amplified-active-color: rgb(29, 60, 103);
+  --on-amplified-neutral-color: rgb(45, 84, 139);
   --on-amplified-disabled-color: rgb(190, 190, 190);
   --alarm-enabled-background-color: rgb(227, 0, 25);
   --alarm-enabled-border-color: rgb(171, 0, 0);
@@ -2404,7 +3320,24 @@
   --border-focus-color: rgb(66, 113, 179);
   --automation-pipe-primary-color: rgb(255, 255, 255);
   --automation-pipe-tertiary-color: rgb(83, 83, 83);
+  --thumb-enabled-background-color: rgb(255, 255, 255);
+  --thumb-enabled-border-color: rgb(190, 190, 190);
+  --thumb-hover-background-color: rgb(240, 240, 240);
+  --thumb-hover-border-color: rgb(190, 190, 190);
+  --thumb-pressed-background-color: rgb(221, 221, 221);
+  --thumb-pressed-border-color: rgb(190, 190, 190);
+  --thumb-disabled-background-color: rgb(190, 190, 190);
+  --thumb-disabled-border-color: rgb(190, 190, 190);
+  --thumb-activated-background-color: rgb(221, 221, 221);
+  --thumb-activated-border-color: rgb(190, 190, 190);
+  --on-thumb-active-color: rgb(31, 31, 31);
+  --on-thumb-disabled-color: rgb(255, 255, 255);
+  --running-enabled-background-color: rgb(0, 131, 0);
+  --running-enabled-border-color: rgb(0, 98, 0);
+  --running-disabled-background-color: rgb(0, 131, 0);
+  --running-disabled-border-color: rgb(0, 131, 0);
   --on-running-active-color: rgb(255, 255, 255);
+  --on-running-disabled-color: rgb(143, 206, 138);
   --alert-caution-outline-color: rgb(179, 135, 0);
   --alert-warning-outline-color: rgb(233, 103, 0);
   --notification-enabled-background-color: rgb(45, 84, 139);
@@ -2493,6 +3426,8 @@
   --alert-low-integrity-background-color: rgb(253, 242, 165);
   --alert-invalid-background-color: rgb(255, 210, 203);
   --element-symbol-color: rgb(142, 142, 142);
+  --alert-error-color: rgb(175, 86, 85);
+  --alert-error-outline-color: rgb(151, 71, 70);
   --alert-low-integrity-border-color: rgb(107, 79, 0);
   --alert-invalid-border-color: rgb(127, 0, 0);
   --integration-flat-activated-background-color: rgb(
@@ -2609,6 +3544,7 @@
   --amplified-disabled-background-color: rgb(52, 52, 52);
   --amplified-disabled-border-color: rgb(52, 52, 52);
   --on-amplified-active-color: rgb(169, 209, 255);
+  --on-amplified-neutral-color: rgb(128, 174, 234);
   --on-amplified-disabled-color: rgb(77, 77, 77);
   --alarm-enabled-background-color: rgb(219, 0, 7);
   --alarm-enabled-border-color: rgb(244, 27, 36);
@@ -2695,7 +3631,24 @@
   --border-focus-color: rgb(128, 174, 234);
   --automation-pipe-primary-color: rgb(171, 171, 171);
   --automation-pipe-tertiary-color: rgb(171, 171, 171);
+  --thumb-enabled-background-color: rgb(77, 77, 77);
+  --thumb-enabled-border-color: rgb(91, 91, 91);
+  --thumb-hover-background-color: rgb(91, 91, 91);
+  --thumb-hover-border-color: rgb(108, 108, 108);
+  --thumb-pressed-background-color: rgb(108, 108, 108);
+  --thumb-pressed-border-color: rgb(124, 124, 124);
+  --thumb-disabled-background-color: rgb(77, 77, 77);
+  --thumb-disabled-border-color: rgb(77, 77, 77);
+  --thumb-activated-background-color: rgb(52, 52, 52);
+  --thumb-activated-border-color: rgb(77, 77, 77);
+  --on-thumb-active-color: rgb(255, 255, 255);
+  --on-thumb-disabled-color: rgb(0, 0, 0);
+  --running-enabled-background-color: rgb(20, 126, 0);
+  --running-enabled-border-color: rgb(45, 142, 25);
+  --running-disabled-background-color: rgb(20, 126, 0);
+  --running-disabled-border-color: rgb(20, 126, 0);
   --on-running-active-color: rgb(255, 255, 255);
+  --on-running-disabled-color: rgb(38, 38, 38);
   --alert-caution-outline-color: rgb(215, 164, 0);
   --alert-warning-outline-color: rgb(250, 125, 0);
   --notification-enabled-background-color: rgb(128, 174, 234);
@@ -2794,6 +3747,8 @@
   --alert-low-integrity-background-color: rgb(54, 38, 0);
   --alert-invalid-background-color: rgb(90, 0, 0);
   --element-symbol-color: rgb(108, 108, 108);
+  --alert-error-color: rgb(187, 118, 112);
+  --alert-error-outline-color: rgb(187, 118, 112);
   --alert-low-integrity-border-color: rgb(138, 103, 0);
   --alert-invalid-border-color: rgb(160, 0, 0);
   --integration-flat-activated-background-color: rgb(
@@ -2910,6 +3865,7 @@
   --amplified-disabled-background-color: rgb(0, 0, 0, 0);
   --amplified-disabled-border-color: rgb(25, 17, 9);
   --on-amplified-active-color: rgb(88, 200, 162);
+  --on-amplified-neutral-color: rgb(56, 167, 132);
   --on-amplified-disabled-color: rgb(72, 52, 31);
   --alarm-enabled-background-color: rgb(185, 0, 0);
   --alarm-enabled-border-color: rgb(185, 0, 0);
@@ -2996,7 +3952,24 @@
   --border-focus-color: rgb(44, 131, 102);
   --automation-pipe-primary-color: rgb(199, 136, 66);
   --automation-pipe-tertiary-color: rgb(199, 136, 66);
+  --thumb-enabled-background-color: rgb(39, 27, 16);
+  --thumb-enabled-border-color: rgb(120, 83, 44);
+  --thumb-hover-background-color: rgb(39, 27, 16);
+  --thumb-hover-border-color: rgb(140, 96, 48);
+  --thumb-pressed-background-color: rgb(39, 27, 16);
+  --thumb-pressed-border-color: rgb(72, 52, 31);
+  --thumb-disabled-background-color: rgb(0, 0, 0);
+  --thumb-disabled-border-color: rgb(39, 27, 16);
+  --thumb-activated-background-color: rgb(0, 0, 0);
+  --thumb-activated-border-color: rgb(72, 52, 31);
+  --on-thumb-active-color: rgb(234, 167, 94);
+  --on-thumb-disabled-color: rgb(72, 52, 31);
+  --running-enabled-background-color: rgb(0, 106, 0);
+  --running-enabled-border-color: rgb(0, 106, 0);
+  --running-disabled-background-color: rgb(0, 66, 0);
+  --running-disabled-border-color: rgb(0, 66, 0);
   --on-running-active-color: rgb(0, 0, 0);
+  --on-running-disabled-color: rgb(0, 0, 0, 0.27000001072883606);
   --alert-caution-outline-color: rgb(107, 89, 0);
   --alert-warning-outline-color: rgb(147, 68, 0);
   --notification-enabled-background-color: rgb(40, 101, 80);
@@ -3080,6 +4053,8 @@
   --alert-low-integrity-background-color: rgb(24, 19, 0);
   --alert-invalid-background-color: rgb(90, 0, 0);
   --element-symbol-color: rgb(120, 83, 44);
+  --alert-error-color: rgb(41, 25, 28);
+  --alert-error-outline-color: rgb(129, 75, 87);
   --alert-low-integrity-border-color: rgb(67, 55, 0);
   --alert-invalid-border-color: rgb(160, 0, 0);
   --integration-flat-activated-background-color: rgb(230, 175, 112, 0);
@@ -3191,6 +4166,7 @@
   --amplified-disabled-background-color: rgb(255, 255, 255, 0);
   --amplified-disabled-border-color: rgb(186, 186, 186);
   --on-amplified-active-color: rgb(2, 18, 40);
+  --on-amplified-neutral-color: rgb(7, 35, 70);
   --on-amplified-disabled-color: rgb(108, 108, 108);
   --alarm-enabled-background-color: rgb(216, 17, 28);
   --alarm-enabled-border-color: rgb(112, 0, 0);
@@ -3277,7 +4253,24 @@
   --border-focus-color: rgb(7, 35, 70);
   --automation-pipe-primary-color: rgb(255, 255, 255);
   --automation-pipe-tertiary-color: rgb(52, 52, 52);
+  --thumb-enabled-background-color: rgb(255, 255, 255);
+  --thumb-enabled-border-color: rgb(108, 108, 108);
+  --thumb-hover-background-color: rgb(211, 211, 211);
+  --thumb-hover-border-color: rgb(108, 108, 108);
+  --thumb-pressed-background-color: rgb(186, 186, 186);
+  --thumb-pressed-border-color: rgb(108, 108, 108);
+  --thumb-disabled-background-color: rgb(136, 136, 136);
+  --thumb-disabled-border-color: rgb(136, 136, 136);
+  --thumb-activated-background-color: rgb(186, 186, 186);
+  --thumb-activated-border-color: rgb(108, 108, 108);
+  --on-thumb-active-color: rgb(0, 0, 0);
+  --on-thumb-disabled-color: rgb(79, 79, 80);
+  --running-enabled-background-color: rgb(0, 93, 0);
+  --running-enabled-border-color: rgb(0, 42, 0);
+  --running-disabled-background-color: rgb(0, 93, 0);
+  --running-disabled-border-color: rgb(0, 93, 0);
   --on-running-active-color: rgb(255, 255, 255);
+  --on-running-disabled-color: rgb(64, 155, 48);
   --alert-caution-outline-color: rgb(138, 103, 0);
   --alert-warning-outline-color: rgb(178, 79, 0);
   --notification-enabled-background-color: rgb(7, 35, 70);
@@ -3366,6 +4359,8 @@
   --alert-low-integrity-background-color: rgb(255, 206, 52);
   --alert-invalid-background-color: rgb(255, 162, 151);
   --element-symbol-color: rgb(79, 79, 80);
+  --alert-error-color: rgb(92, 32, 40);
+  --alert-error-outline-color: rgb(78, 25, 33);
   --alert-low-integrity-border-color: rgb(102, 75, 0);
   --alert-invalid-border-color: rgb(216, 17, 28);
   --integration-flat-activated-background-color: rgb(
@@ -3530,6 +4525,11 @@
 .cadre-ob > obc-tree-navigation-group,
 .cadre-ob > obc-tree-navigation {
   align-self: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+}
+/* The top bar fills the width of its component box; its height stays its own. */
+.cadre-ob > obc-top-bar {
   flex: 1 1 auto;
   width: 100%;
 }

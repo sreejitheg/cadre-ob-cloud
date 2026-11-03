@@ -75,4 +75,11 @@ import '@oicl/openbridge-webcomponents/dist/components/tree-navigation-item/tree
 import '@oicl/openbridge-webcomponents/dist/components/tree-navigation-group/tree-navigation-group.js';
 import '@oicl/openbridge-webcomponents/dist/components/tree-navigation/tree-navigation.js';
 import '@oicl/openbridge-webcomponents/dist/components/breadcrumb/breadcrumb.js';
+// tranche T2, batch F4: the menus and the top bar, each child before its parent
+import '@oicl/openbridge-webcomponents/dist/components/brilliance-menu/brilliance-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/user-menu/user-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/system-menu/system-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/app-menu/app-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/command-menu/command-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/top-bar/top-bar.js';
 import './icons.js';

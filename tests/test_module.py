@@ -1687,7 +1687,7 @@ class ButtonComponent(unittest.TestCase):
         self.assertIn('"events":[{"dom":"click","name":"onPress","payload":"none"}]', JS)
         # the wrapper listens on the element and fires through Perspective's componentEvents (GF-37), as for the alert lists
         self.assertIn("el.addEventListener(ev.dom, f)", JS)
-        self.assertIn("ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node))", JS)
+        self.assertIn("ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node, ev))", JS)
 
     def test_the_enumerations_come_from_the_element(self):
         props = schema_of(self.ctype)["properties"]
@@ -1743,6 +1743,89 @@ class FrameMechanisms(unittest.TestCase):
         cls.manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
                                   .read_text(encoding="utf-8"))
 
+    def test_a_composite_renders_nested_elements_and_carries_their_properties_and_events(self):
+        """The parts of the top bar (T2, batch F4): the entry key `parts`, checked against the manifest, and the wrapper."""
+        g = self.gen
+        top = next(c for c in g.COMPONENTS if c["tag"] == "obc-top-bar")
+        enum_map = g.enums()
+        g.MANIFEST.clear()
+        g.MANIFEST.update(self.manifest)
+        g.DEFAULTS.clear()
+        g.DEFAULTS.update(json.loads((MODULE / "web/defaults.json").read_text(encoding="utf-8")))
+        parts = g.part_specs(top, enum_map)
+        self.assertEqual([(p["tag"], p["slot"]) for p in parts], [("obc-alert-button", "alerts"), ("obc-clock", "clock")])
+        self.assertEqual([f["name"] for f in parts[0]["fields"]], ["nAlerts", "counter", "alertType", "blinking", "showSilenceButton"])
+        self.assertEqual({f["name"]: f["kind"] for f in parts[0]["fields"]}["alertType"], "ustring")      # empty is idle
+        self.assertIs(parts[0]["props"]["showSilenceButton"]["default"], False)
+        self.assertIs(parts[0]["props"]["counter"]["default"], True)      # the composite's own default (the element's is false)
+        self.assertEqual(parts[1]["fixed"], {"isClickable": False})
+        # a property the element does not carry, a slot the host does not declare, a field that is no field and an event that is
+        # not the element's are all refused
+        for bad in ({"tag": "obc-alert-button", "slot": "alerts", "fields": ["noSuchProperty"]},
+                    {"tag": "obc-alert-button", "slot": "no-such-slot", "fields": ["nAlerts"]},
+                    {"tag": "obc-clock", "slot": "clock", "fields": ["date"], "fixed": {"noSuchField": True}},
+                    {"tag": "obc-alert-button", "slot": "alerts", "fields": ["nAlerts"], "events": ["no-such-event"]},
+                    {"tag": "obc-alert-button", "slot": "alerts", "fields": ["nAlerts"], "defaults": {"large": True}}):
+            with self.assertRaises(SystemExit, msg=str(bad)):
+                g.part_specs({"tag": "obc-top-bar", "parts": [bad]}, enum_map)
+        # a carried property that the host already has is refused (the top bar's own `showDate` and the clock's)
+        defaults = {k: (None if v == "__undefined__" else v) for k, v in g.DEFAULTS["obc-top-bar"].items()}
+        clash = {**top, "exclude": [], "parts": [{"tag": "obc-clock", "slot": "clock", "fields": ["date", "showDate"]}]}
+        with self.assertRaises(SystemExit):
+            g.schema_for(clash, g.declaration(self.manifest, "obc-top-bar"), enum_map, defaults)
+        # a field fixed by the wrapper cannot also be a property
+        with self.assertRaises(SystemExit):
+            g.schema_for({**top, "fixed": {"appTitle": "x"}}, g.declaration(self.manifest, "obc-top-bar"), enum_map, defaults)
+        # an event of the kind detail needs its fields
+        with self.assertRaises(SystemExit):
+            g.event_fields({"tag": "obc-app-menu"}, "search")
+        # the wrapper: refs for the parts, their listeners and their properties
+        for text in ("this.partRefs = (spec.parts || []).map(", "setPart(i, n) {", "applyPart(i) {", "ev.part === i",
+                     "(spec.parts || []).forEach((pt, i) => kids.push(h(pt.tag, { slot: pt.slot, key: 'part:' + i, ref: this.partRefs[i] })))"):
+            self.assertIn(text, JS)
+
+    def test_an_element_that_changes_itself_writes_its_property_back_and_a_detail_event_states_its_fields(self):
+        self.assertRegex(JS, r'"dom":"palette-changed","name":"onPaletteChanged","payload":"detail","fields":\[\{"name":"value","type":"string"\}\],"write":"palette","from":"value"')
+        self.assertRegex(JS, r'"dom":"brightness-changed","name":"onBrightnessChanged","payload":"detail","fields":\[\{"name":"value","type":"number"\}\],"write":"brightness","from":"value"')
+        self.assertRegex(JS, r'"dom":"change","name":"onCommandChange","payload":"detail","fields":\[\{"name":"inCommand","type":"boolean"\}\],"write":"inCommand","from":"inCommand"')
+        self.assertRegex(JS, r'"dom":"to-sub-menu-click","name":"onSubMenuClick","payload":"none","write":"activeSubMenu","from":"@element"')
+        # a link switch changes no property of the component, so it writes nothing
+        self.assertNotRegex(JS, r'"dom":"link-palette-changed"[^}]*"write"')
+        self.assertIn("if (v !== undefined) this.put(ev.write, v);", JS)
+        rows = self.gen.event_fields({"tag": "x", "eventFields": {"e": [("a", "string", "A"), ("b", "number", "B", "detailKey")]}}, "e")
+        self.assertEqual(rows, [{"name": "a", "type": "string", "text": "A"}, {"name": "b", "type": "number", "text": "B", "from": "detailKey"}])
+        # the payload of a detail event is built from the fields and coerced to their types (a detail that is no object is the one value)
+        for text in ("if (kind === 'detail') {", "(ev && ev.fields) || []", "f.type === 'boolean' ? !!v"):
+            self.assertIn(text, JS)
+
+    def test_the_stylesheet_stretches_the_top_bar_to_its_box_and_not_its_height(self):
+        css = (MODULE / "gateway/src/main/resources/mounted/css/cadre-ob.css").read_text(encoding="utf-8")
+        self.assertRegex(css, r"\.cadre-ob > obc-top-bar \{\s*flex: 1 1 auto;\s*width: 100%;\s*\}")
+        self.assertNotRegex(css, r"\.cadre-ob > obc-top-bar \{[^}]*height")
+
+    def test_the_top_bar_carries_the_alert_button_and_the_clock_and_not_its_own_breadcrumb(self):
+        c = COMPONENTS["cadre.ob.topbar"]
+        self.assertEqual(c["parts"], {"obc-alert-button": {"slot": "alerts", "props": ["nAlerts", "counter", "alertType", "blinking",
+                                                                                      "showSilenceButton"]},
+                                      "obc-clock": {"slot": "clock", "props": ["date", "showSeconds", "timeZoneOffsetHours"]}})
+        props = schema_of("cadre.ob.topbar")["properties"]
+        self.assertIs(props["showSilenceButton"]["default"], False)      # owner's answer 4
+        self.assertEqual(props["alertType"]["enum"][0], "")
+        self.assertEqual(c["slots"], {"appIconName": {"slot": "app-icon", "kind": "icon"}, "commandButtonText": {"slot": "command-button", "kind": "text"}})
+        self.assertNotIn("showDate", props)
+        # the events of the nested alert button are listened to on the node (they do not bubble); the rest on the host
+        self.assertRegex(JS, r'"dom":"click-alert","name":"onAlertClick","payload":"none","part":0')
+        self.assertRegex(JS, r'"dom":"click-silence","name":"onSilenceClick","payload":"none","part":0')
+        self.assertRegex(JS, r'"dom":"menu-button-clicked","name":"onMenuButtonClick","payload":"none"\}')
+        self.assertRegex(JS, r'"parts":\[\{"tag":"obc-alert-button","slot":"alerts"')
+        self.assertRegex(JS, r'"fixed":\{"isClickable":false\}')
+        # the breadcrumb of the settings mode is data (label and href); the frame keeps the Cadre crumb and does not use it
+        crumbs = props["breadcrumbItems"]
+        self.assertEqual(set(crumbs["items"]["properties"]), {"label", "href"})
+        self.assertIn("frame does not use", props["settings"]["description"])
+        self.assertIn("frame keeps its own crumb row", crumbs["description"])
+        self.assertIs(props["settings"]["default"], False)
+
     def test_the_icon_list_is_the_imports_of_icons_js_and_each_is_an_icon_of_the_pinned_package(self):
         names = self.gen.icon_names()
         text = (MODULE / "web/icons.js").read_text(encoding="utf-8")
@@ -1795,7 +1878,8 @@ class FrameMechanisms(unittest.TestCase):
             self.gen.ITEM_CHILDREN["obc-app-button"] = ["obc-notification-badge-button"]
             table = self.gen.build_item_table(self.manifest, [spec])
             self.assertEqual(set(table), {"obc-app-button", "obc-notification-badge-button"})
-            self.assertEqual(table["obc-app-button"], {"props": ["label", "checked", "integration", "size", "disabled"],
+            self.assertEqual(table["obc-app-button"], {"props": ["label", "checked", "integration", "size", "disabled",
+                                                                  "showLabel"],      # the field `showLabel` is a row of ITEM_FIELDS (F4)
                                                        "kids": ["obc-notification-badge-button"]})
             with self.assertRaises(SystemExit):
                 self.gen.build_item_table(self.manifest, [{"items": {"items": {"tags": ["obc-no-such-element"]}}}])
@@ -1906,19 +1990,68 @@ class FrameComponents(unittest.TestCase):
                                     {"onItemClick": "click", "onExpandToggle": "expand-toggle"}),
         "cadre.ob.breadcrumb": ("obc-breadcrumb", "src/components/breadcrumb/breadcrumb.ts", set(), {"iconOnly"}, set(),
                                 {"onBreadcrumbClick": "breadcrumb-click"}),
+        # batch F4: the menus and the top bar
+        "cadre.ob.brilliancemenu": ("obc-brilliance-menu", "src/components/brilliance-menu/brilliance-menu.ts",
+                                    {"palette", "brightness", "showLinkBrightness", "showLinkPalette", "variant", "brightnessUnit",
+                                     "brightnessMax", "brightnessMinorStep", "brightnessMajorStep", "brightnessInputVariant",
+                                     "showScreenControlLink"}, {"showBrightness", "showPalette"}, set(),
+                                    {"onPaletteChanged": "palette-changed", "onBrightnessChanged": "brightness-changed",
+                                     "onLinkPaletteChanged": "link-palette-changed", "onLinkBrightnessChanged": "link-brightness-changed",
+                                     "onScreenControlLinkClick": "screen-control-link-clicked"}),
+        "cadre.ob.usermenu": ("obc-user-menu", "src/components/user-menu/user-menu.ts",
+                              {"type", "size", "hasRecentlySignedIn", "username", "password", "usernameError", "passwordError",
+                               "userInitials", "userLabel", "userRole", "primaryActionId"}, set(), set(),
+                              {"onSignInClick": "sign-in-click", "onSignOutClick": "sign-out-click",
+                               "onUseAnotherAccountClick": "use-another-account-click"}),
+        "cadre.ob.systemmenu": ("obc-system-menu", "src/components/system-menu/system-menu.ts",
+                                {"condensed", "showSettingsButton", "activeSubMenu", "externalControl", "smallScreen"}, set(), set(),
+                                {"onWifiClick": "wifi-click", "onAudioClick": "audio-click", "onAudioVolumeChange": "audio-volume-change",
+                                 "onMicrophoneClick": "microphone-click", "onPushToTalkChange": "push-to-talk-change",
+                                 "onBatterySavingModeChange": "battery-saving-mode-change", "onBatteryUsageClick": "battery-usage-click",
+                                 "onWifiNetworkChange": "wifi-network-change", "onAudioOutputChange": "audio-output-change",
+                                 "onMicrophoneInputChange": "microphone-input-change", "onBatteryModeChange": "battery-mode-change",
+                                 "onSettingsClick": "settings-click", "onSubMenuClick": "to-sub-menu-click",
+                                 "onWifiOptionsClick": "wifi-options-click", "onWifiDisconnectClick": "wifi-disconnect-click"}),
+        "cadre.ob.appmenu": ("obc-app-menu", "src/components/app-menu/app-menu.ts", set(), set(), set(),
+                             {"onSearch": "search", "onAppClick": "click"}),
+        "cadre.ob.commandmenu": ("obc-command-menu", "src/components/command-menu/command-menu.ts", {"inCommand"}, {"showLocation"},
+                                 {"commandIconName", "commandStatus", "commandDescription", "commandLocation", "takeCommandLabel",
+                                  "releaseCommandLabel", "inCommandLabel", "noCommandLabel", "inCommandIconName"},
+                                 {"onCommandChange": "change"}),
+        "cadre.ob.topbar": ("obc-top-bar", "src/components/top-bar/top-bar.ts",
+                            {"appTitle", "pageName", "menuButtonIcon", "menuButtonActivated", "dimmingButtonActivated", "appsButtonActivated",
+                             "leftMoreButtonActivated", "userButtonActivated", "userButtonDisabled", "tall", "wideMenuButton", "showAppsButton",
+                             "showDimmingButton", "showUserButton", "showClock", "showDate", "showAppIcon", "inactive", "appButtonBreakpointPx",
+                             "dimmingButtonBreakpointPx", "appTitleBreakpointPx", "userButtonBreakpointPx", "appIconBreakpointPx", "settings",
+                             "breadcrumbItems"}, set(), {"appIconName", "commandButtonText"},
+                            {"onMenuButtonClick": "menu-button-clicked", "onDimmingButtonClick": "dimming-button-clicked",
+                             "onAppsButtonClick": "apps-button-clicked", "onMoreButtonClick": "left-more-button-clicked",
+                             "onUserButtonClick": "user-button-clicked", "onEmergencyBrightnessStart": "emergency-brightness-start",
+                             "onEmergencyBrightnessStop": "emergency-brightness-stop", "onAlertClick": "click-alert",
+                             "onSilenceClick": "click-silence", "onBack": "back", "onClose": "close", "onBreadcrumbClick": "breadcrumb-click"}),
     }
+    # the properties of the nested elements a composite renders itself (the top bar's alert button and clock), and their tags
+    PARTS = {"cadre.ob.topbar": {"nAlerts", "counter", "alertType", "blinking", "showSilenceButton", "date", "showSeconds", "timeZoneOffsetHours"}}
+    PART_TAGS = {"cadre.ob.topbar": ["obc-alert-button", "obc-clock"]}
     # the attributes the container computes, left out of the contract (the navigation menu in the tree variant, the tree navigation)
     EXCLUDED = {"cadre.ob.navigationitem": {"treeBranches"}, "cadre.ob.navigationitemgroup": {"treeBranches"},
-                "cadre.ob.treenavigationitem": {"branches"}, "cadre.ob.treenavigationgroup": {"branches"}}
+                "cadre.ob.treenavigationitem": {"branches"}, "cadre.ob.treenavigationgroup": {"branches"},
+                # the user menu: no credential, no recent users, no signed in actions (see test_the_user_menu_carries_no_credential)
+                "cadre.ob.usermenu": {"username", "password", "usernameError", "passwordError", "hasRecentlySignedIn", "primaryActionId"},
+                # the top bar's own `showDate` is unused by the element (its clock is slotted)
+                "cadre.ob.topbar": {"showDate"}}
     # the properties that are plain data (a list read as JSON, not child elements): the breadcrumb's own array
-    DATA = {"cadre.ob.breadcrumb": {"items"}}
+    DATA = {"cadre.ob.breadcrumb": {"items"}, "cadre.ob.topbar": {"breadcrumbItems"},
+            # the system menu's four sections: fields without an attribute, carried as state objects
+            "cadre.ob.systemmenu": {"wifiState", "audioState", "microphoneState", "batteryState"}}
     # the `items` properties of a frame component (a list of child elements), with the tags each allows at the top level
     ITEMS = {"cadre.ob.alertmenuitem": {"alertIcon": ["obc-alert-icon"]}, "cadre.ob.alertmenu": {"items": ["obc-alert-menu-item"]},
              "cadre.ob.navigationitemgroup": {"items": ["obc-navigation-item", "obc-navigation-item-group"]},
              "cadre.ob.navigationmenu": {"items": ["obc-navigation-item", "obc-navigation-item-group"],
                                          "footerItems": ["obc-navigation-item", "obc-navigation-item-group"]},
              "cadre.ob.treenavigationgroup": {"items": ["obc-tree-navigation-item", "obc-tree-navigation-group"]},
-             "cadre.ob.treenavigation": {"items": ["obc-tree-navigation-group", "obc-tree-navigation-item"]}}
+             "cadre.ob.treenavigation": {"items": ["obc-tree-navigation-group", "obc-tree-navigation-item"]},
+             "cadre.ob.appmenu": {"items": ["obc-app-button"]}}
 
     @classmethod
     def setUpClass(cls):
@@ -1940,7 +2073,7 @@ class FrameComponents(unittest.TestCase):
             self.assertEqual({a["fieldName"] for a in self.decl(path, tag).get("attributes", [])}, attrs, ctype)
             self.assertEqual(set(c["props"]) - {"componentSize"},
                              (attrs - self.EXCLUDED.get(ctype, set())) | fields | slots | set(self.ITEMS.get(ctype, {}))
-                             | self.DATA.get(ctype, set()), ctype)
+                             | self.DATA.get(ctype, set()) | self.PARTS.get(ctype, set()), ctype)
             self.assertEqual(set(c.get("slots", {})), slots, ctype)
             self.assertEqual({n: i["tags"] for n, i in c.get("items", {}).items()}, self.ITEMS.get(ctype, {}), ctype)
 
@@ -1948,7 +2081,7 @@ class FrameComponents(unittest.TestCase):
         for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
             c = COMPONENTS[ctype]
             declared = {e["name"] for e in self.decl(path, tag).get("events", [])}
-            for tags in self.ITEMS.get(ctype, {}).values():      # an event of a row is declared by the row's element
+            for tags in list(self.ITEMS.get(ctype, {}).values()) + [self.PART_TAGS.get(ctype, [])]:      # an event of a row or a nested element
                 for t in tags:
                     declared |= {e["name"] for m in self.manifest["modules"] for d in m.get("declarations", [])
                                  if d.get("tagName") == t for e in d.get("events", [])}
@@ -1980,7 +2113,27 @@ class FrameComponents(unittest.TestCase):
                             ("treenavigationgroup.onExpandToggle", {"expanded": "boolean"}),
                             ("treenavigation.onItemClick", {"id": "string", "tag": "string"}),
                             ("treenavigation.onExpandToggle", {"id": "string", "tag": "string", "expanded": "boolean"}),
-                            ("breadcrumb.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"})):
+                            ("breadcrumb.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"}),
+                            ("brilliancemenu.onPaletteChanged", {"value": "string"}), ("brilliancemenu.onBrightnessChanged", {"value": "number"}),
+                            ("brilliancemenu.onLinkPaletteChanged", {"value": "boolean"}),
+                            ("brilliancemenu.onLinkBrightnessChanged", {"value": "boolean"}),
+                            ("brilliancemenu.onScreenControlLinkClick", {}),
+                            ("usermenu.onSignInClick", {}), ("usermenu.onSignOutClick", {}), ("usermenu.onUseAnotherAccountClick", {}),
+                            ("systemmenu.onWifiClick", {"enabled": "boolean"}), ("systemmenu.onAudioClick", {"muted": "boolean"}),
+                            ("systemmenu.onAudioVolumeChange", {"volume": "number"}), ("systemmenu.onMicrophoneClick", {"muted": "boolean"}),
+                            ("systemmenu.onPushToTalkChange", {"pushToTalk": "boolean"}),
+                            ("systemmenu.onBatterySavingModeChange", {"batterySavingMode": "boolean"}),
+                            ("systemmenu.onBatteryUsageClick", {"usage": "boolean"}), ("systemmenu.onWifiNetworkChange", {"network": "string"}),
+                            ("systemmenu.onAudioOutputChange", {"output": "string"}),
+                            ("systemmenu.onMicrophoneInputChange", {"input": "string"}), ("systemmenu.onBatteryModeChange", {"mode": "string"}),
+                            ("systemmenu.onSettingsClick", {}), ("systemmenu.onSubMenuClick", {}), ("systemmenu.onWifiOptionsClick", {}),
+                            ("systemmenu.onWifiDisconnectClick", {}),
+                            ("commandmenu.onCommandChange", {"inCommand": "boolean"}),
+                            ("topbar.onMenuButtonClick", {}), ("topbar.onDimmingButtonClick", {}), ("topbar.onAppsButtonClick", {}),
+                            ("topbar.onMoreButtonClick", {}), ("topbar.onUserButtonClick", {}), ("topbar.onEmergencyBrightnessStart", {}),
+                            ("topbar.onEmergencyBrightnessStop", {}), ("topbar.onAlertClick", {}), ("topbar.onSilenceClick", {}),
+                            ("topbar.onBack", {}), ("topbar.onClose", {}),
+                            ("topbar.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"}), ("appmenu.onSearch", {"query": "string"}), ("appmenu.onAppClick", {"id": "string", "tag": "string"})):
             schema = json.loads((MODULE / f"common/src/main/resources/schemas/{name}.json").read_text(encoding="utf-8"))
             self.assertEqual({k: v["type"] for k, v in schema["properties"].items()}, props, name)
 
@@ -2112,6 +2265,66 @@ class FrameComponents(unittest.TestCase):
         for r in rows:
             self.assertTrue(set(r) - {"tag", "id", "children"} <= known, r)
 
+    def test_the_user_menu_carries_no_credential(self):
+        """Credentials never enter a property or an event (CLAUDE.md, the frame design section 2.3)."""
+        schema = schema_of("cadre.ob.usermenu")
+        names = set(schema["properties"])
+        self.assertEqual(names, {"type", "size", "userInitials", "userLabel", "userRole", "componentSize", "style"})
+        for word in ("username", "password", "Error", "recent", "Recent", "primaryAction"):
+            self.assertFalse([n for n in names if word in n], word)
+        # the two fields that draw the input boxes are fixed off by the wrapper, and the contract does not list them
+        self.assertRegex(JS, r'"fixed":\{"showUsername":false,"showPassword":false\}')
+        self.assertNotIn("showUsername", COMPONENTS["cadre.ob.usermenu"]["props"])
+        # the sign in event carries nothing, and the wrapper builds its payload without reading the detail
+        self.assertRegex(JS, r'"dom":"sign-in-click","name":"onSignInClick","payload":"none"')
+        schema = json.loads((MODULE / "common/src/main/resources/schemas/usermenu.onSignInClick.json").read_text(encoding="utf-8"))
+        self.assertEqual(schema["properties"], {})
+        for event in ("onSignInClick", "onSignOutClick", "onUseAnotherAccountClick"):
+            text = (MODULE / f"common/src/main/resources/schemas/usermenu.{event}.json").read_text(encoding="utf-8")
+            self.assertNotRegex(text.lower(), r'"(user ?name|password)"')
+
+    def test_the_system_menu_carries_fifteen_events_and_four_state_objects_of_the_pinned_declaration(self):
+        tag, path = self.ROWS["cadre.ob.systemmenu"][:2]
+        listed = {e["name"] for e in self.decl(path, tag)["events"]}
+        self.assertEqual(len(listed), 16)
+        # `eventName` is the parameter of a private helper of the element, not an event it fires
+        self.assertIn("eventName", listed)
+        self.assertNotIn("eventName", {e["element"] for e in COMPONENTS["cadre.ob.systemmenu"]["events"].values()})
+        text = (MODULE / "web/node_modules/@oicl/openbridge-webcomponents/dist/components/system-menu/system-menu.js").read_text(encoding="utf-8")
+        self.assertNotRegex(text, r'CustomEvent\("eventName"')
+        self.assertRegex(text, r"dispatchClickEvent\(eventName\)")
+        self.assertEqual(len(COMPONENTS["cadre.ob.systemmenu"]["events"]), 15)
+        # the battery status slot is not carried
+        self.assertNotIn("slots", COMPONENTS["cadre.ob.systemmenu"])
+        # each state object has the fields of the interface in the pinned declaration
+        dts = (MODULE / "web/node_modules/@oicl/openbridge-webcomponents/dist/components/system-menu/system-menu.d.ts").read_text(encoding="utf-8")
+        for prop, name in (("wifiState", "WifiState"), ("audioState", "AudioState"), ("microphoneState", "MicrophoneState"),
+                           ("batteryState", "BatteryState")):
+            body = re.search(r"export interface " + name + r" \{(.*?)\n\}", dts, re.S).group(1)
+            fields = set(re.findall(r"^ {4}(\w+)\??:", body, re.M))      # the fields of the interface, not of its inline object types
+            self.assertEqual(set(schema_of("cadre.ob.systemmenu")["properties"][prop]["properties"]), fields, name)
+            self.assertEqual(schema_of("cadre.ob.systemmenu")["properties"][prop]["type"], "object")
+        self.assertRegex(JS, r'"name":"wifiState","kind":"object"')
+
+    def test_the_app_menu_holds_app_buttons_whose_press_reports_the_button(self):
+        menu = COMPONENTS["cadre.ob.appmenu"]
+        self.assertEqual(menu["items"], {"items": {"tags": ["obc-app-button"], "slot": ""}})
+        self.assertRegex(JS, r'"dom":"click","name":"onAppClick","payload":"item","onItems":true')
+        self.assertRegex(JS, r'"dom":"search","name":"onSearch","payload":"detail","fields":\[\{"name":"query","type":"string"\}\]')
+        self.assertNotRegex(JS, r'"dom":"click","name":"onAppClick","payload":"item"\}')      # no listener on the host for a button's press
+        # the sample buttons use only attributes the item table lists, an icon of the bundled list in the slot `icon`, and unique ids
+        import sys
+        sys.path.insert(0, str(MODULE / "tools"))
+        import gen_module_assets
+        known = {a["fieldName"] for a in self.decl("src/components/app-button/app-button.ts", "obc-app-button")["attributes"]}
+        known |= set(gen_module_assets.ITEM_FIELDS["obc-app-button"])
+        icons = set(self.gen_icons())
+        ids = [b["id"] for b in self.testbench.APP_BUTTONS]
+        self.assertEqual(len(ids), len(set(ids)))
+        for b in self.testbench.APP_BUTTONS:
+            self.assertTrue(set(b) - {"tag", "id", "children"} <= known, b)
+            self.assertEqual([(c["tag"][4:] in icons, c["slot"]) for c in b["children"]], [(True, "icon")], b)
+
     def test_the_components_are_registered_in_java_imported_and_wrapped(self):
         java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
         entry = (MODULE / "web/entry.js").read_text(encoding="utf-8")
@@ -2150,7 +2363,8 @@ class FrameComponents(unittest.TestCase):
                                   "notification-button": 11, "notification-badge-button": 9,
                                   "alert-button-item": 26, "alert-button": 31, "alert-menu-item": 22, "alert-menu": 8,
                                   "navigation-item": 17, "navigation-item-group": 15, "navigation-menu": 11,
-                                  "tree-navigation-item": 12, "tree-navigation-group": 9, "tree-navigation": 3, "breadcrumb": 4})
+                                  "tree-navigation-item": 12, "tree-navigation-group": 9, "tree-navigation": 3, "breadcrumb": 4,
+                                  "brilliance-menu": 23, "user-menu": 8, "system-menu": 12, "app-menu": 3, "command-menu": 4, "top-bar": 39})
         stock = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="stock")
         self.assertNotIn("FrameComponents", [s["id"] for s in stock.descriptor["sections"]])
         self.assertEqual(self.testbench.check(bench.descriptor, contracts), [])

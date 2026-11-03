@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The silence control of the alert button was pressed. The control is hidden by default (`showSilenceButton`); the event carries nothing.",
+  "properties": {}
+}

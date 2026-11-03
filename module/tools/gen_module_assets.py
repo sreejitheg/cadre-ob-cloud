@@ -74,11 +74,53 @@ ALERT_EVENTS = {
                       "press asks for; the group applies it itself."),
     "breadcrumb-click": ("onBreadcrumbClick", "crumb", "A crumb was pressed. event.label and event.href are the crumb's, event.index is "
                          "its position in `items` (the last crumb is the current page and is not a button)."),
+    # The menus and the top bar (T2, batch F4). The kind `detail` builds the payload from the entry's `eventFields` (the fields of
+    # the element's event detail, by name and type), so a component states its own fields; the rows give the name and the text.
+    "search": ("onSearch", "detail", "The text of the search field changed. event.query is the text now in the field."),
+    "change": ("onChange", "detail", "The element reports a change."),
+    "palette-changed": ("onPaletteChanged", "detail", "A palette was chosen. event.value is the palette: night, dusk, day or bright."),
+    "brightness-changed": ("onBrightnessChanged", "detail", "The brightness was changed. event.value is the new brightness."),
+    "link-palette-changed": ("onLinkPaletteChanged", "detail", "The link palette switch was changed. event.value is the state of the switch."),
+    "link-brightness-changed": ("onLinkBrightnessChanged", "detail",
+                                "The link brightness switch was changed. event.value is the state of the switch."),
+    "screen-control-link-clicked": ("onScreenControlLinkClick", "none", "The screen control link was pressed. The event carries nothing."),
+    "sign-in-click": ("onSignInClick", "none", "The Sign in button was pressed. The event carries nothing: the module never reads a user "
+                      "name or a password, and the page's script opens the gateway's own login."),
+    "sign-out-click": ("onSignOutClick", "none", "The Sign out button was pressed. The event carries nothing."),
+    "use-another-account-click": ("onUseAnotherAccountClick", "none", "The Use another account button was pressed. The event carries nothing."),
+    "menu-button-clicked": ("onMenuButtonClick", "none", "The menu button was released. The event carries nothing."),
+    "dimming-button-clicked": ("onDimmingButtonClick", "none", "The dimming button was pressed. The event carries nothing."),
+    "apps-button-clicked": ("onAppsButtonClick", "none", "The apps button was pressed. The event carries nothing."),
+    "left-more-button-clicked": ("onMoreButtonClick", "none", "The more button was pressed. The event carries nothing."),
+    "user-button-clicked": ("onUserButtonClick", "none", "The user button was pressed. The event carries nothing."),
+    "emergency-brightness-start": ("onEmergencyBrightnessStart", "none",
+                                   "The menu button was held for half a second, which asks for the emergency brightness. The event carries nothing."),
+    "emergency-brightness-stop": ("onEmergencyBrightnessStop", "none", "The held menu button was released. The event carries nothing."),
+    "back": ("onBack", "none", "The Back button of the settings mode was pressed. The event carries nothing."),
+    "close": ("onClose", "none", "The Close button of the settings mode was pressed. The event carries nothing."),
+    "wifi-click": ("onWifiClick", "detail", "The Wi-Fi switch was changed. event.enabled is the state the switch asks for."),
+    "audio-click": ("onAudioClick", "detail", "The audio mute button was pressed. event.muted is the state the button asks for."),
+    "audio-volume-change": ("onAudioVolumeChange", "detail", "The audio volume was changed. event.volume is the new volume."),
+    "microphone-click": ("onMicrophoneClick", "detail", "The microphone mute button was pressed. event.muted is the state it asks for."),
+    "push-to-talk-change": ("onPushToTalkChange", "detail", "The push to talk switch was changed. event.pushToTalk is its state."),
+    "battery-saving-mode-change": ("onBatterySavingModeChange", "detail",
+                                   "The battery saving mode switch was changed. event.batterySavingMode is its state."),
+    "battery-usage-click": ("onBatteryUsageClick", "detail", "The battery usage button was pressed. event.usage is true."),
+    "wifi-network-change": ("onWifiNetworkChange", "detail", "A Wi-Fi network was chosen. event.network is its name."),
+    "audio-output-change": ("onAudioOutputChange", "detail", "An audio output was chosen. event.output is its name."),
+    "microphone-input-change": ("onMicrophoneInputChange", "detail", "A microphone input was chosen. event.input is its name."),
+    "battery-mode-change": ("onBatteryModeChange", "detail", "A battery mode was chosen. event.mode is its name."),
+    "settings-click": ("onSettingsClick", "none", "The Settings button was pressed. The event carries nothing."),
+    "to-sub-menu-click": ("onSubMenuClick", "none", "A heading that opens a sub menu was pressed (with `externalControl` the menu does not "
+                          "open it itself). The event carries nothing."),
+    "wifi-options-click": ("onWifiOptionsClick", "none", "The Wi-Fi Options button was pressed. The event carries nothing."),
+    "wifi-disconnect-click": ("onWifiDisconnectClick", "none", "The Wi-Fi Disconnect button was pressed. The event carries nothing."),
 }
 # The properties of the object a Perspective component event carries, by payload kind (the wrapper's `payload` builds the
 # object from the element's event detail). A kind a later wrap needs is one entry here and one branch of `payload`.
 PAYLOAD_PROPS = {
     "none": {},
+    "detail": {},      # built from the entry's `eventFields` (see `event_payload_props`)
     "alert": {"ids": {"type": "array", "description": "The alert ids of the event."},
               "id": {"type": "string"}, "tagId": {"type": "string", "description": "The device folder."},
               "source": {"type": "string"}, "text": {"type": "string"}},
@@ -132,6 +174,38 @@ ALERTS_TEXT = ("The active alerts at or beneath the row, as a badge for each sev
 ALERTS_SCHEMA = {"type": "object", "default": {},
                  "properties": {**{f: {"type": "number"} for f in ALERT_COUNT_FIELDS}, "combine": {"type": "boolean"}},
                  "description": ALERTS_TEXT}
+# The state objects of the system menu (`WifiState`, `AudioState`, `MicrophoneState`, `BatteryState` of the pinned `system-menu.d.ts`),
+# carried as plain objects (the field kind `object`, like the alert counts). The menu draws a section only while its object is
+# present, and it writes to the object it is given, so the wrapper hands it a copy. The wording is our own.
+CONTROL_MODES = ["mute-button", "icon-only", "hidden"]
+STATE_OBJECTS = {
+    "WifiState": ("The Wi-Fi section: whether it is on and connected, the network joined and its strength, a status word, and the networks "
+                  "to choose from (`networks`, then `otherNetworks`). Empty draws no Wi-Fi section.",
+                  {"enabled": {"type": "boolean"}, "connected": {"type": "boolean"}, "networkName": {"type": "string"},
+                   "strength": {"type": "number"}, "status": {"type": "string"},
+                   "networks": {"type": "array", "items": {"type": "object", "properties": {
+                       "name": {"type": "string"}, "signalStrength": {"type": "number"}}}},
+                   "otherNetworks": {"type": "array", "items": {"type": "object", "properties": {
+                       "name": {"type": "string"}, "signalStrength": {"type": "number"}}}}}),
+    "AudioState": ("The audio section: whether it is muted, the volume, the outputs to choose from, the output chosen and how the mute "
+                   "control is drawn (`controlMode`: mute-button, icon-only or hidden). Empty draws no audio section.",
+                   {"muted": {"type": "boolean"}, "volume": {"type": "number"},
+                    "outputs": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string"}}}},
+                    "selectedOutput": {"type": "string"}, "controlMode": {"type": "string", "enum": CONTROL_MODES}}),
+    "MicrophoneState": ("The microphone section: whether it is muted, the level now heard, the inputs to choose from, the input chosen, the "
+                        "push to talk state and how the mute control is drawn (`controlMode`). Empty draws no microphone section.",
+                        {"muted": {"type": "boolean"}, "currentLevel": {"type": "number"},
+                         "inputs": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string"}}}},
+                         "selectedInput": {"type": "string"}, "pushToTalk": {"type": "boolean"},
+                         "controlMode": {"type": "string", "enum": CONTROL_MODES}}),
+    "BatteryState": ("The battery section: the charge level, whether it charges, whether the device is powered and not charging, a "
+                     "notification flag, the battery saving mode, whether a usage button is drawn, and the modes to choose from. "
+                     "Empty draws no battery section.",
+                     {"level": {"type": "number"}, "charging": {"type": "boolean"}, "poweredNotCharging": {"type": "boolean"},
+                      "notification": {"type": "boolean"}, "batterySavingMode": {"type": "boolean"}, "hasUsageButton": {"type": "boolean"},
+                      "modes": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string"}}}},
+                      "selectedMode": {"type": "string"}}),
+}
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
      "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
@@ -459,6 +533,116 @@ COMPONENTS = [
      "palette": "OpenBridge breadcrumb: the crumbs from the first to the current page",
      "size": {"width": 320, "height": 48}, "exclude": [], "data": {"items": "crumbs"}, "properties": ["iconOnly"],
      "events": ["breadcrumb-click"]},
+    # batch F4 (T2): the menus and the top bar. The brilliance menu changes its own palette and brightness on a press, so the events
+    # write the component's property back (`writeBack`); the frame wires the palette to the existing theme path (F6). The link switches
+    # keep their own state, and are hidden by default as the element has them.
+    {"tag": "obc-brilliance-menu", "type": "cadre.ob.brilliancemenu", "name": "brilliancemenu", "title": "OB Brilliance Menu",
+     "palette": "OpenBridge brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
+     "size": {"width": 320, "height": 460}, "exclude": [], "properties": ["showBrightness", "showPalette"],
+     "types": {"variant": "ObcBrillianceMenuVariant", "brightnessInputVariant": "ObcBrillianceInputVariant"},
+     "events": ["palette-changed", "brightness-changed", "link-palette-changed", "link-brightness-changed", "screen-control-link-clicked"],
+     "eventFields": {"palette-changed": [("value", "string", "The palette chosen: night, dusk, day or bright.")],
+                     "brightness-changed": [("value", "number", "The new brightness, from 0 to `brightnessMax`.")],
+                     "link-palette-changed": [("value", "boolean", "The state of the link palette switch.")],
+                     "link-brightness-changed": [("value", "boolean", "The state of the link brightness switch.")]},
+     "writeBack": {"palette-changed": ("palette", "value"), "brightness-changed": ("brightness", "value")},
+     "eventText": {"palette-changed": "A palette was chosen. event.value is the palette: night, dusk, day or bright. The menu shows the "
+                                      "palette at once and the component's `palette` follows the press; the page's script sets the "
+                                      "Cadre palette.",
+                   "brightness-changed": "The brightness was changed. event.value is the new brightness. The component's `brightness` "
+                                         "follows the press; Cadre has no brightness function, so the frame hides the section."},
+     "describe": {"showLinkPalette": "Whether the menu draws the switch that links the palette to other screens. False by default: Cadre "
+                                     "links nothing.",
+                  "showLinkBrightness": "Whether the menu draws the switch that links the brightness to other screens. False by "
+                                        "default: Cadre links nothing."}},
+    # The user menu shows who is signed in with a Sign out button, or a Sign in button. The gateway's own login does the signing in
+    # (GF-44), so no credential is ever a property: the user name, the password and their errors are excluded, the two fields that
+    # draw the input boxes are fixed off (`fixed`: the form is the title and the Sign in button), and the event of the Sign in button
+    # carries nothing (the element's detail holds the typed values, and the wrapper does not read it). The list of recent users and the
+    # signed in actions (with the primary action and the icon slots of the actions) are not carried: Cadre has none.
+    {"tag": "obc-user-menu", "type": "cadre.ob.usermenu", "name": "usermenu", "title": "OB User Menu",
+     "palette": "OpenBridge user menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
+     "size": {"width": 320, "height": 280},
+     "exclude": ["username", "password", "usernameError", "passwordError", "hasRecentlySignedIn", "primaryActionId"],
+     "fixed": {"showUsername": False, "showPassword": False}, "undefinedWhenEmpty": ["userInitials", "userLabel", "userRole"],
+     "events": ["sign-in-click", "sign-out-click", "use-another-account-click"]},
+    # The system menu is display only here: Wi-Fi, audio, microphone and battery are not process state, so its fifteen events are
+    # carried and nothing is wired. The four state objects are the menu's sections (a section is drawn only while its object is
+    # set). Not carried: the `battery-status` slot (free content; the menu falls back to its own text), and the literal event
+    # `eventName` that the manifest lists, which is the parameter name of a private helper of the element (`dispatchClickEvent`) and
+    # not an event the element fires. With `externalControl` false the menu opens its sub menus itself, and the press of a heading
+    # writes the component's `activeSubMenu` back from the element (the event has no detail), so that an update does not close the sub menu.
+    {"tag": "obc-system-menu", "type": "cadre.ob.systemmenu", "name": "systemmenu", "title": "OB System Menu",
+     "palette": "OpenBridge system menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
+     "size": {"width": 320, "height": 480}, "exclude": [], "objects": ["wifiState", "audioState", "microphoneState", "batteryState"],
+     "writeBack": {"to-sub-menu-click": ("activeSubMenu", "@element")},      # the menu opens its sub menu itself (no detail): keep it open
+     "events": ["wifi-click", "audio-click", "audio-volume-change", "microphone-click", "push-to-talk-change", "battery-saving-mode-change",
+                "battery-usage-click", "wifi-network-change", "audio-output-change", "microphone-input-change", "battery-mode-change",
+                "settings-click", "to-sub-menu-click", "wifi-options-click", "wifi-disconnect-click"],
+     "eventFields": {
+         "wifi-click": [("enabled", "boolean", "The state the Wi-Fi switch asks for.")],
+         "audio-click": [("muted", "boolean", "The state the audio mute button asks for.")],
+         "audio-volume-change": [("volume", "number", "The new volume.")],
+         "microphone-click": [("muted", "boolean", "The state the microphone mute button asks for.")],
+         "push-to-talk-change": [("pushToTalk", "boolean", "The state of the push to talk switch.")],
+         "battery-saving-mode-change": [("batterySavingMode", "boolean", "The state of the battery saving mode switch.")],
+         "battery-usage-click": [("usage", "boolean", "True: the usage button was pressed.")],
+         "wifi-network-change": [("network", "string", "The name of the network chosen.")],
+         "audio-output-change": [("output", "string", "The name of the output chosen.")],
+         "microphone-input-change": [("input", "string", "The name of the input chosen.")],
+         "battery-mode-change": [("mode", "string", "The name of the mode chosen.")]}},
+    # The app menu holds its app buttons as `items` (an `obc-app-button` with an `obi-` icon child in the slot `icon`). A press of a
+    # button is the button's own `click`, which bubbles; the menu reports the button's `id` and tag, and the search field its text.
+    {"tag": "obc-app-menu", "type": "cadre.ob.appmenu", "name": "appmenu", "title": "OB App Menu",
+     "palette": "OpenBridge app menu: a search field above a grid of app buttons",
+     "size": {"width": 360, "height": 280}, "exclude": [], "events": ["search", "click"], "itemEvents": ["click"],
+     "eventKinds": {"click": "item"}, "eventNames": {"click": "onAppClick"},
+     "eventFields": {"search": [("query", "string", "The text now in the search field.")]},
+     "items": {"items": {"tags": ["obc-app-button"], "slot": "",
+                         "describe": "The app buttons of the menu, one `obc-app-button` for each"}},
+     "eventText": {"click": "An app button was pressed. event.id is the button's `id` (empty if it has none) and event.tag its tag."}},
+    # The command menu shows who has command (the status, description and location texts and the command icon) and a switch that takes
+    # or releases it. The switch changes the menu's own state, so the event writes the component's `inCommand` back; the frame does not
+    # use the switch to command anything (a command stays the Confirm row), and the menu writes no tag. The nine slots are text or
+    # icon properties. The element's `toogle-` slot names carry the typo of the pinned release; the properties are spelled correctly.
+    {"tag": "obc-command-menu", "type": "cadre.ob.commandmenu", "name": "commandmenu", "title": "OB Command Menu",
+     "palette": "OpenBridge command menu: the command status, its description and location, and a switch that takes or releases command",
+     "size": {"width": 360, "height": 260}, "exclude": [], "properties": ["showLocation"], "events": ["change"],
+     "eventNames": {"change": "onCommandChange"},
+     "eventFields": {"change": [("inCommand", "boolean", "The state the switch asks for: true takes command, false releases it.")]},
+     "writeBack": {"change": ("inCommand", "inCommand")},
+     "eventText": {"change": "The command switch was pressed. event.inCommand is the state the press asks for. The menu shows it at once "
+                             "and the component's `inCommand` follows the press; the menu writes no tag."},
+     "slots": [{"slot": "command-icon", "kind": "icon"}, {"slot": "command-status", "kind": "text"},
+               {"slot": "command-description", "kind": "text"}, {"slot": "command-location", "kind": "text"},
+               {"slot": "toogle-action-to-in-command-label", "kind": "text", "property": "takeCommandLabel"},
+               {"slot": "toogle-action-to-no-command-label", "kind": "text", "property": "releaseCommandLabel"},
+               {"slot": "toogle-state-in-command-label", "kind": "text", "property": "inCommandLabel"},
+               {"slot": "toogle-state-no-command-label", "kind": "text", "property": "noCommandLabel"},
+               {"slot": "toogle-state-in-command-icon", "kind": "icon", "property": "inCommandIconName"}]},
+    # The top bar is a composite: it renders an `obc-alert-button` in its `alerts` slot and an `obc-clock` in its `clock` slot itself
+    # (`parts`), carrying their properties and the alert button's two events. The count is shown by default (`counter`), the silence
+    # control is hidden (owner's answer 4), and the clock is a plain block (`isClickable` false: it has no event). The `app-icon`
+    # and `command-button` slots are an icon and a text property. The element's own `showDate` is not used by the element (the clock
+    # is slotted), so it is not carried. The breadcrumb is drawn only in the settings mode, where `breadcrumbItems` (label and href)
+    # and the events `back`, `close` and `breadcrumb-click` apply; the frame keeps its own crumb row and does not use that mode.
+    {"tag": "obc-top-bar", "type": "cadre.ob.topbar", "name": "topbar", "title": "OB Top Bar",
+     "palette": "OpenBridge top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
+     "size": {"width": 960, "height": 48}, "exclude": ["showDate"], "types": {"menuButtonIcon": "ObcTopBarMenuButtonIcon"},
+     "data": {"breadcrumbItems": "crumbs"},
+     "events": ["menu-button-clicked", "dimming-button-clicked", "apps-button-clicked", "left-more-button-clicked", "user-button-clicked",
+                "emergency-brightness-start", "emergency-brightness-stop", "click-alert", "click-silence", "back", "close", "breadcrumb-click"],
+     "parts": [{"tag": "obc-alert-button", "slot": "alerts", "fields": ["nAlerts", "counter", "alertType", "blinking", "showSilenceButton"],
+                "events": ["click-alert", "click-silence"], "defaults": {"counter": True}},
+               {"tag": "obc-clock", "slot": "clock", "fields": ["date", "showSeconds", "timeZoneOffsetHours"],
+                "fixed": {"isClickable": False}}],
+     "slots": [{"slot": "app-icon", "kind": "icon"}, {"slot": "command-button", "kind": "text", "property": "commandButtonText"}],
+     "describe": {"showClock": "Whether the bar draws its clock (the `date`, `showSeconds` and `timeZoneOffsetHours` below).",
+                  "showAppIcon": "Whether the bar draws the app icon (`appIconName`) before the application title.",
+                  "settings": "The settings mode: Close and Back buttons, the application title and the breadcrumb (`breadcrumbItems`) in place "
+                              "of the menu button and the page name. The frame does not use it.",
+                  "breadcrumbItems": "The crumbs of the settings mode, one object each: `label` and `href`. A crumb's icon (a template "
+                                     "function) is not carried. Drawn only while `settings` is true; the frame keeps its own crumb row."}},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -624,6 +808,11 @@ PROPERTIES = {
     "hasIcon": {"type": "boolean", "default": True, "description":
                 "Whether the group header reserves and draws the leading icon (the `icon` slot). A group with no icon is drawn "
                 "without the space when this is false."},
+    # the menus (F4): fields without an attribute, at the element's own default (true)
+    "showBrightness": {"type": "boolean", "default": True, "description": "Whether the menu draws the brightness section."},
+    "showPalette": {"type": "boolean", "default": True, "description": "Whether the menu draws the palette (day and night) section."},
+    "showLocation": {"type": "boolean", "default": True, "description":
+                     "Whether the menu draws the location of the command (the `command-location` text) beside its description."},
     "iconOnly": {"type": "boolean", "default": False, "description":
                  "Draws the crumbs before the last as their icon alone. The module carries no crumb icon (a crumb's icon is a "
                  "template function), so a crumb with only an icon is not possible; true hides every label but the last."},
@@ -654,7 +843,8 @@ ITEM_CHILDREN: dict[str, list[str]] = {
     "obc-alert-menu-item": ["obc-alert-icon"],
     "obc-navigation-item-group": ["obc-navigation-item", "obc-navigation-item-group"],
     "obc-tree-navigation-group": ["obc-tree-navigation-item", "obc-tree-navigation-group"]}
-ITEM_FIELDS: dict[str, list[str]] = {"obc-tree-navigation-item": ["hasLeadingIcon"], "obc-tree-navigation-group": ["hasIcon"]}
+ITEM_FIELDS: dict[str, list[str]] = {"obc-tree-navigation-item": ["hasLeadingIcon"], "obc-tree-navigation-group": ["hasIcon"],
+                                     "obc-app-button": ["showLabel"]}
 ITEM_PLAIN = ["span"]          # elements that are not custom elements and may hold text anywhere below a top level item
 ITEM_DEPTH = 8                 # the deepest nesting of `children` the wrapper builds
 
@@ -811,6 +1001,57 @@ def clean(text: str | None) -> str:
     return t if len(t) <= 220 else t[:217].rsplit(" ", 1)[0] + "..."
 
 
+MANIFEST: dict = {}      # set by `main`: the pinned custom elements manifest
+DEFAULTS: dict = {}      # set by `main`: the measured defaults (web/defaults.json)
+
+
+def part_specs(spec: dict, enum_map: dict) -> list[dict]:
+    """The nested elements a composite renders itself (T2, batch F4: the top bar's alert button and clock). An entry
+    `"parts": [{"tag": ..., "slot": ..., "fields": [...], "events": [...], "fixed": {...}}]` names an element of the manifest,
+    the slot it stands in, the properties of that element the composite carries (their schemas, defaults and types are the
+    element's own, as its own entry in `COMPONENTS` states them), the DOM events of that element the composite carries and
+    the fields the wrapper sets on it and the page never does (`fixed`)."""
+    out = []
+    for pt in spec.get("parts", []):
+        pspec = next((c for c in COMPONENTS if c["tag"] == pt["tag"]), None)
+        if pspec is None:
+            raise SystemExit(f"{spec['tag']}: part {pt['tag']} has no entry of its own in COMPONENTS")
+        decl = declaration(MANIFEST, pt["tag"])
+        if pt["slot"] not in {sl.get("name", "") for sl in declaration(MANIFEST, spec["tag"]).get("slots", [])}:
+            raise SystemExit(f"{spec['tag']} declares no slot {pt['slot']!r} for the part {pt['tag']}")
+        d = {k: (None if v == "__undefined__" else v) for k, v in DEFAULTS[pt["tag"]].items()}
+        schema, fields = schema_for(pspec, decl, enum_map, d)
+        by = {f["name"]: f for f in fields}
+        members = {m["name"] for m in decl.get("members", []) if m.get("kind") == "field"}
+        for n in pt["fields"]:
+            if n not in by:
+                raise SystemExit(f"{pt['tag']} has no carried property {n!r} for the part of {spec['tag']}")
+        for n, v in pt.get("defaults", {}).items():      # the composite's own default for a carried property
+            if n not in pt["fields"]:
+                raise SystemExit(f"{pt['tag']}: {n!r} is not a carried property of the part, so it has no default to give")
+            by[n]["def"] = v
+            schema["properties"][n]["default"] = v
+        for n in pt.get("fixed", {}):
+            if n not in members:
+                raise SystemExit(f"{pt['tag']} declares no field {n!r} for the part of {spec['tag']}")
+        for e in pt.get("events", []):
+            if e not in {x.get("name") for x in decl.get("events", [])}:
+                raise SystemExit(f"{pt['tag']} declares no event {e!r} for the part of {spec['tag']}")
+        out.append({"tag": pt["tag"], "slot": pt["slot"], "fields": [by[n] for n in pt["fields"]],
+                    "props": {n: schema["properties"][n] for n in pt["fields"]}, "fixed": dict(pt.get("fixed", {})),
+                    "events": list(pt.get("events", []))})
+    return out
+
+
+def event_fields(spec: dict, dom: str) -> list[dict]:
+    """The fields of an event of the kind `detail`, from the entry's `eventFields`: (name, type, text) or (name, type, text, from),
+    where `from` is the key of the event detail (a detail that is not an object is the value of the one field)."""
+    rows = spec.get("eventFields", {}).get(dom)
+    if not rows:
+        raise SystemExit(f"{spec['tag']}: the event {dom!r} is of the kind detail and has no eventFields")
+    return [{"name": r[0], "type": r[1], "text": r[2], **({"from": r[3]} if len(r) > 3 else {})} for r in rows]
+
+
 def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[dict, list[dict]]:
     members = {m["name"]: m for m in decl.get("members", []) if m.get("kind") == "field"}
     props: dict[str, dict] = {}
@@ -858,8 +1099,25 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
             raise SystemExit(f"{spec['tag']} declares no {want['type']} field {name!r} in the manifest")
         props[name] = dict(want)
         fields.append({"name": name, "kind": want["type"], "def": want["default"]})
+    for name in spec.get("objects", []):      # a state object that is a field and not an attribute (the system menu, T2 batch F4)
+        base = (((members.get(name) or {}).get("type") or {}).get("text") or "").replace(" | undefined", "")
+        if base not in STATE_OBJECTS:
+            raise SystemExit(f"{spec['tag']}: field {name!r} is of type {base!r}, which has no state object schema")
+        props[name] = {"type": "object", "default": {}, "properties": json.loads(json.dumps(STATE_OBJECTS[base][1])),
+                       "description": STATE_OBJECTS[base][0]}
+        fields.append({"name": name, "kind": "object", "def": {}})
     for name, kind in spec.get("data", {}).items():
         props[name] = dict(DATA_SCHEMA[kind])
+    for pt in part_specs(spec, enum_map):
+        for name, pp in pt["props"].items():
+            if name in props:
+                raise SystemExit(f"{spec['tag']}: the part {pt['tag']} carries {name!r}, which is already a property")
+            props[name] = dict(pp)
+    for name in spec.get("fixed", {}):      # a field the wrapper sets and the page never does (a credential field is switched off)
+        if name not in members:
+            raise SystemExit(f"{spec['tag']} declares no field {name!r} to fix")
+        if name in props:
+            raise SystemExit(f"{spec['tag']}: {name!r} is fixed and also a property")
     slots = slot_specs(spec, decl, set(props) | set(spec.get("data", {})) | set(spec.get("extra", [])) | set(spec.get("items", {})))
     if slots:
         icons = icon_names()
@@ -1001,7 +1259,10 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                "/* A navigation or tree row, and the tree, fill the width of their component box. */\n"
                ".cadre-ob > obc-navigation-item,\n.cadre-ob > obc-navigation-item-group,\n.cadre-ob > obc-tree-navigation-item,\n"
                ".cadre-ob > obc-tree-navigation-group,\n.cadre-ob > obc-tree-navigation {\n  align-self: stretch;\n  flex: 1 1 auto;\n"
-               "  width: 100%;\n}\n")
+               "  width: 100%;\n}\n"
+               # The top bar is as wide as its content when centred; it is meant to span its dock (F4, measured in Chromium). Its height is its own (48).
+               "/* The top bar fills the width of its component box; its height stays its own. */\n"
+               ".cadre-ob > obc-top-bar {\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
     return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
 
 
@@ -1065,7 +1326,7 @@ WRAPPER = r"""
                   rings: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
 
   // The payload of a Perspective component event, from the element's event detail.
-  function payload(kind, e, el, node) {
+  function payload(kind, e, el, node, ev) {
     var d = (e && e.detail) || {};
     if (kind === 'alert') {
       var a = d.alert || {};
@@ -1095,10 +1356,20 @@ WRAPPER = r"""
       return o;
     }
     if (kind === 'expanded') return { expanded: !!(e && e.detail) };
+    if (kind === 'detail') {
+      // the fields the entry states (`eventFields`): from the detail object by the field's name (or its `from`), or the detail itself
+      // when that is not an object (a search field reports its text)
+      var out = {}, raw = e ? e.detail : undefined;
+      ((ev && ev.fields) || []).forEach(function (f) {
+        var v = (raw !== null && typeof raw === 'object') ? raw[f.from || f.name] : raw;
+        out[f.name] = f.type === 'boolean' ? !!v : (f.type === 'number' ? (Number(v) || 0) : String(v === undefined || v === null ? '' : v));
+      });
+      return out;
+    }
     if (kind === 'crumb') {
       var c = (e && e.detail) || {};
       return { label: String(c.label === undefined || c.label === null ? '' : c.label), href: c.href ? String(c.href) : '',
-               index: el && Array.isArray(el.items) ? el.items.indexOf(c) : -1 };
+               index: el && Array.isArray(el.items || el.breadcrumbItems) ? (el.items || el.breadcrumbItems).indexOf(c) : -1 };
     }
     return {};
   }
@@ -1150,6 +1421,10 @@ WRAPPER = r"""
         this.table = null;
         this.selHost = null;
         this.tableKey = null;
+        // the elements the component renders itself (the top bar's alert button and clock): the node, and the listeners on it
+        this.partNodes = [];
+        this.partListeners = [];
+        this.partRefs = (spec.parts || []).map((pt, i) => (n) => this.setPart(i, n));
         this.onTick = (e) => {
           var t = this.table;
           if (!t) return;
@@ -1166,7 +1441,7 @@ WRAPPER = r"""
           this.itemNodes = {};
           if (el && spec.sheet) this.sheets();
           if (el) {
-            (spec.events || []).filter((ev) => !ev.onItems).forEach((ev) => {
+            (spec.events || []).filter((ev) => !ev.onItems && ev.part === undefined).forEach((ev) => {
               var f = (e) => this.fire(ev, e);
               el.addEventListener(ev.dom, f);
               this.handlers.push([el, ev.dom, f]);
@@ -1176,7 +1451,7 @@ WRAPPER = r"""
         };
       }
       componentDidUpdate() { this.apply(); }
-      componentWillUnmount() { this.unlisten(); this.selDetach(); }
+      componentWillUnmount() { this.unlisten(); this.selDetach(); (this.partNodes || []).forEach((n, i) => this.setPart(i, null)); }
       // Rules added to the shadow root of the element, and of the chip inside a readout (spec.chipSheet). The
       // shadow root exists once the element is connected and has drawn once, so the work waits for that; it
       // runs again after each update, because an alert frame around a readout draws a new chip.
@@ -1210,7 +1485,36 @@ WRAPPER = r"""
         // reaches the host as well, also for a disabled row)
         if (ev.custom && typeof MouseEvent === 'function' && e instanceof MouseEvent) return;
         var ce = this.props.componentEvents;
-        if (ce && typeof ce.fireComponentEvent === 'function') ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node));
+        if (ce && typeof ce.fireComponentEvent === 'function') ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node, ev));
+        // an element that changes its own state on a press (the command menu, the brilliance menu): the component's property follows
+        // the press, so that the next update does not set the element back. A property bound one way is set by its binding again.
+        if (ev.write) {
+          var raw = e ? e.detail : undefined;
+          // `from` names the key of the event detail; the word @element says the event carries nothing and the element's own property is the value
+          var v = ev.from === '@element' ? (this.el ? this.el[ev.write] : undefined)
+            : ((raw !== null && typeof raw === 'object') ? raw[ev.from || ev.write] : raw);
+          if (v !== undefined) this.put(ev.write, v);
+        }
+      }
+      // A nested element of a composite (spec.parts): its node is kept, its properties are set from the component's, and its events
+      // are carried as the component's own. The events of such an element do not bubble, so they are heard on the node itself.
+      setPart(i, n) {
+        (this.partListeners[i] || []).forEach(function (l) { l[0].removeEventListener(l[1], l[2]); });
+        this.partListeners[i] = [];
+        this.partNodes[i] = n;
+        if (!n) return;
+        (spec.events || []).filter((ev) => ev.part === i).forEach((ev) => {
+          var f = (e) => this.fire(ev, e);
+          n.addEventListener(ev.dom, f);
+          this.partListeners[i].push([n, ev.dom, f]);
+        });
+        this.applyPart(i);
+      }
+      applyPart(i) {
+        var n = this.partNodes[i], pt = (spec.parts || [])[i], p = this.props.props;
+        if (!n || !pt) return;
+        pt.fields.forEach(function (f) { if (n[f.name] !== p[f.name]) n[f.name] = p[f.name]; });
+        Object.keys(pt.fixed || {}).forEach(function (k) { if (n[k] !== pt.fixed[k]) n[k] = pt.fixed[k]; });
       }
       apply() {
         var el = this.el;
@@ -1229,6 +1533,8 @@ WRAPPER = r"""
           }
           if (el[n] !== p[n]) el[n] = p[n];
         }
+        Object.keys(spec.fixed || {}).forEach(function (k) { if (el[k] !== spec.fixed[k]) el[k] = spec.fixed[k]; });
+        (spec.parts || []).forEach((pt, i) => this.applyPart(i));
         if (spec.endAligned) el.toggleAttribute('data-center', !!p.center);
         if (spec.chipSheet) { el.toggleAttribute('data-stretch', !!p.stretch); this.sheets(); }
         if (spec.status) this.applyStatus(el, p);
@@ -1476,6 +1782,8 @@ WRAPPER = r"""
             if (ICONS.indexOf(v) >= 0) kids.push(h('obi-' + v, { slot: sl.slot || undefined, key: 'slot:' + sl.name }));
           } else kids.push(sl.slot ? h('span', { slot: sl.slot, key: 'slot:' + sl.name }, v) : v);
         });
+        // the elements a composite renders itself, each in its slot; their properties are set in `applyPart`
+        (spec.parts || []).forEach((pt, i) => kids.push(h(pt.tag, { slot: pt.slot, key: 'part:' + i, ref: this.partRefs[i] })));
         // an out of service symbol: the library view's veil of the page colour and the word OOS, over the symbol
         var oos = (spec.status && p.outOfService) ? h('div', { className: 'cadre-ob-oos', key: 'oos' }, 'OOS') : null;
         // an element that sits at the end of its box unless the symbol is centred
@@ -1498,6 +1806,7 @@ WRAPPER = r"""
         var out = { componentSize: tree.readString('componentSize', 'regular') };
         spec.fields.forEach(function (f) { out[f.name] = read(tree, f); });
         (spec.extras || []).forEach(function (f) { out[f.name] = read(tree, f); });
+        (spec.parts || []).forEach(function (pt) { pt.fields.forEach(function (f) { out[f.name] = read(tree, f); }); });
         (spec.data || []).forEach(function (d) { out[d.name] = tree.readArray(d.name, []); });
         (spec.items || []).forEach(function (d) { out[d.name] = tree.readArray(d.name, []); });
         return out;
@@ -1508,7 +1817,8 @@ WRAPPER = r"""
 """
 
 
-def js_spec(spec: dict, fields: list[dict], events: list[dict], slots: list[dict], items: list[dict]) -> dict:
+def js_spec(spec: dict, fields: list[dict], events: list[dict], slots: list[dict], items: list[dict],
+            parts: list[dict] | None = None) -> dict:
     """What the browser wrapper needs of one component (the JSON in `COMPONENTS` of `WRAPPER`)."""
     return {"type": spec["type"], "tag": spec["tag"], "size": spec["size"], "fields": fields,
             "extras": [{"name": n, "kind": EXTRA[n]["kind"], "def": EXTRA[n]["def"]} for n in spec.get("extra", [])]
@@ -1520,7 +1830,9 @@ def js_spec(spec: dict, fields: list[dict], events: list[dict], slots: list[dict
             "data": [{"name": n, "kind": k} for n, k in spec.get("data", {}).items()],
             "events": events,
             **({"slots": [{"slot": sl["slot"], "kind": sl["kind"], "name": sl["name"]} for sl in slots]} if slots else {}),
-            **({"items": items} if items else {})}
+            **({"items": items} if items else {}),
+            **({"parts": [{"tag": pt["tag"], "slot": pt["slot"], "fields": pt["fields"], "fixed": pt["fixed"]} for pt in parts]} if parts else {}),
+            **({"fixed": spec["fixed"]} if spec.get("fixed") else {})}
 
 
 def wrapper_script(js_specs: list[dict]) -> str:
@@ -1536,6 +1848,10 @@ def main() -> int:
     manifest = json.loads((PKG / "custom-elements.json").read_text(encoding="utf-8"))
     defaults = json.loads((HERE / "web/defaults.json").read_text(encoding="utf-8"))
     enum_map = enums()
+    MANIFEST.clear()
+    MANIFEST.update(manifest)
+    DEFAULTS.clear()
+    DEFAULTS.update(defaults)
     ITEM_TABLE.clear()
     ITEM_TABLE.update(build_item_table(manifest, COMPONENTS))
     bundle_js = (HERE / "web/dist/ob-components.js").read_text(encoding="utf-8")
@@ -1553,22 +1869,35 @@ def main() -> int:
                        for t in ITEM_TABLE if t != spec["tag"]):
                 raise SystemExit(f"{spec['tag']}: item event {e!r} is declared by no item element")
             declared.add(e)
+        parts = part_specs(spec, enum_map)
+        part_of = {e: i for i, pt in enumerate(parts) for e in pt["events"]}      # the events of a nested element
         events = []
         for dom in spec.get("events", []):
-            if dom not in declared:
+            if dom not in declared and dom not in part_of:
                 raise SystemExit(f"{spec['tag']} declares no event {dom!r} in the manifest")
             name, kind, text = ALERT_EVENTS[dom]
             name = spec.get("eventNames", {}).get(dom, name)     # and name it (the navigation menu's `click` is `onItemClick`)
             text = spec.get("eventText", {}).get(dom, text)      # a component may word the event for itself
             kind = spec.get("eventKinds", {}).get(dom, kind)     # and change its payload (the alert menu's rows report their `id`)
-            events.append({"dom": dom, "name": name, "payload": kind, **({"onItems": True} if dom in spec.get("itemEvents", []) else {}),
-                           **({"custom": True} if dom in spec.get("customEvents", []) else {})})
+            ev = {"dom": dom, "name": name, "payload": kind, **({"onItems": True} if dom in spec.get("itemEvents", []) else {}),
+                  **({"custom": True} if dom in spec.get("customEvents", []) else {}),
+                  **({"part": part_of[dom]} if dom in part_of else {})}
             props = PAYLOAD_PROPS[kind]
+            if kind == "detail":
+                rows = event_fields(spec, dom)
+                props = {r["name"]: {"type": r["type"], "description": r["text"]} for r in rows}
+                ev["fields"] = [{"name": r["name"], "type": r["type"], **({"from": r["from"]} if "from" in r else {})} for r in rows]
+            if dom in spec.get("writeBack", {}):      # the component's own property follows the press (the element changes itself)
+                field, key = spec["writeBack"][dom]
+                if field not in schema["properties"]:
+                    raise SystemExit(f"{spec['tag']}: writeBack names {field!r}, which is not a property")
+                ev["write"], ev["from"] = field, key
+            events.append(ev)
             (SCHEMAS / f"{spec['name']}.{name}.json").write_text(json.dumps(
                 {"type": "object", "description": text, "properties": props}, indent=2) + "\n", encoding="utf-8")
         slots = slot_specs(spec, decl, set())      # the names were checked against the properties by `schema_for`
         items = [{"name": n, "tags": e["tags"], "slot": e.get("slot", "")} for n, e in spec.get("items", {}).items()]
-        js_specs.append(js_spec(spec, fields, events, slots, items))
+        js_specs.append(js_spec(spec, fields, events, slots, items, parts))
         contract[spec["type"]] = {"element": spec["tag"], "title": spec["title"], "palette": spec["palette"],
                                   "schema": f"schemas/{spec['name']}.props.json",
                                   "defaultSize": spec["size"],
@@ -1578,6 +1907,8 @@ def main() -> int:
             contract[spec["type"]]["slots"] = {sl["name"]: {"slot": sl["slot"], "kind": sl["kind"]} for sl in slots}
         if items:
             contract[spec["type"]]["items"] = {i["name"]: {"tags": i["tags"], "slot": i["slot"]} for i in items}
+        if parts:      # the nested elements the component renders itself, and the properties each carries
+            contract[spec["type"]]["parts"] = {pt["tag"]: {"slot": pt["slot"], "props": [f["name"] for f in pt["fields"]]} for pt in parts}
         if events:
             contract[spec["type"]]["events"] = {e["name"]: {"element": e["dom"], "schema": f"schemas/{spec['name']}.{e['name']}.json"}
                                                 for e in events}

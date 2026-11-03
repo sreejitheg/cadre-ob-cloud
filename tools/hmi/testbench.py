@@ -756,6 +756,21 @@ ALERT_MENU_ROWS = [
      "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "caution", "active": True, "acknowledged": False},
                   {"tag": "obi-info", "slot": "icon"}]},
 ]
+# The system menu's four sections (F4), of our own: a network, an audio output, a microphone input and a battery mode to choose from
+SYSTEM_STATES = {
+    "wifiState": {"enabled": True, "connected": True, "networkName": "Bridge network", "strength": 3, "status": "Connected",
+                  "networks": [{"name": "Bridge network", "signalStrength": 3}, {"name": "Engine room link", "signalStrength": 2}],
+                  "otherNetworks": [{"name": "Shore link", "signalStrength": 1}]},
+    "audioState": {"muted": False, "volume": 40, "outputs": [{"name": "Speakers"}, {"name": "Headset"}], "selectedOutput": "Speakers"},
+    "microphoneState": {"muted": True, "currentLevel": 30, "inputs": [{"name": "Handset"}, {"name": "Headset"}], "selectedInput": "Handset",
+                        "pushToTalk": False},
+    "batteryState": {"level": 80, "charging": False, "hasUsageButton": True, "modes": [{"name": "Normal"}, {"name": "Saving"}],
+                     "selectedMode": "Normal"},
+}
+# The app menu's buttons (F4), of our own: eight, so that the grid of four columns shows two rows
+APP_BUTTONS = [{"tag": "obc-app-button", "id": f"app-{name}", "label": label, "children": [{"tag": f"obi-{name}", "slot": "icon"}]}
+               for name, label in (("home", "Home"), ("dashboard", "Overview"), ("alerts", "Alerts"), ("alarm", "Alarms"),
+                                   ("time", "Trends"), ("help", "Help"), ("user", "Users"), ("settings-default-iec", "Settings"))]
 # The navigation and tree samples (F3), of our own: the nesting is two levels in the navigation menu (a group holding a group) and
 # three in the tree (a group holding a group holding rows), the first nesting of more than one level on the test page.
 NAV_ITEMS = [
@@ -856,11 +871,35 @@ FRAME_SAMPLE = {
                               "extra": [("with alerts", {"alerts": {"countAlarm": 2, "countCaution": 1}})]},
     "tree-navigation": {"base": {"items": TREE_ROWS}, "extra": [("one group", {"items": TREE_ROWS[:1]}), ("no rows", {"items": []})]},
     "breadcrumb": {"base": {"items": CRUMBS}, "extra": [("one crumb", {"items": CRUMBS[:1]}), ("no crumbs", {"items": []})]},
+    # the menus and the top bar (F4)
+    "brilliance-menu": {"base": {"palette": "day", "brightness": 60}, "extra": []},
+    "app-menu": {"base": {"items": APP_BUTTONS}, "extra": [("three apps", {"items": APP_BUTTONS[:3]}), ("no apps", {"items": []})]},
+    "command-menu": {"base": {"commandIconName": "joystick", "commandStatus": "Joystick", "commandDescription": "Bridge wing, port",
+                              "commandLocation": "Bridge", "takeCommandLabel": "Take command", "releaseCommandLabel": "Release command",
+                              "inCommandLabel": "In command", "noCommandLabel": "No command", "inCommandIconName": "command-in"},
+                     "extra": [("no command", {"commandIconName": "command-no", "commandStatus": "NO CMD", "commandDescription": "Not assigned",
+                                               "commandLocation": ""})]},
+    "top-bar": {"base": {"appTitle": "Cadre HMI", "pageName": "Engine room", "showClock": True, "showUserButton": True,
+                         "showDimmingButton": True, "date": "2026-01-01T09:30:45Z", "showSeconds": True, "nAlerts": 3,
+                         "alertType": "alarm", "appIconName": "dashboard", "showAppIcon": True, "commandButtonText": "Command"},
+                "extra": [("apps button and no clock", {"showAppsButton": True, "showClock": False}),
+                          ("critical, blinking", {"alertType": "level-critical", "blinking": True, "nAlerts": 12}),
+                          ("silence shown", {"showSilenceButton": True}),
+                          ("settings mode", {"settings": True, "breadcrumbItems": CRUMBS})]},
+    "system-menu": {"base": dict(SYSTEM_STATES),
+                    "extra": [("wifi only", {"audioState": {}, "microphoneState": {}, "batteryState": {}, "showSettingsButton": True}),
+                              ("battery charging", {"wifiState": {}, "audioState": {}, "microphoneState": {},
+                                                    "batteryState": {**SYSTEM_STATES["batteryState"], "charging": True}})]},
+    "user-menu": {"base": {"type": "signed-in", "userInitials": "AB", "userLabel": "Alex Bravo", "userRole": "Operator"},
+                  "extra": [("sign in, small", {"type": "sign-in", "size": "small"})]},
 }
 # Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
 FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),
+              "top-bar": ("appButtonBreakpointPx", "dimmingButtonBreakpointPx", "appTitleBreakpointPx", "userButtonBreakpointPx",
+                          "appIconBreakpointPx"),      # a breakpoint depends on the viewport
               "alert-button": ("flatMaxBreakpointPx", "silenceButtonMinBreakpointPx")}     # a breakpoint depends on the viewport
-GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5)})
+GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5), "brightness": (20, 80), "brightnessMax": (100, 200),
+                            "brightnessMinorStep": (5, 10), "brightnessMajorStep": (25, 50)})
 
 
 def frame_cases(kind: str, contract: dict) -> list[Case]:

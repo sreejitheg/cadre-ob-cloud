@@ -192,7 +192,12 @@ FRAME_ONLY = {"tooltip": "cadre.ob.tooltip", "toggletip": "cadre.ob.toggletip", 
               "navigation-item": "cadre.ob.navigationitem", "navigation-item-group": "cadre.ob.navigationitemgroup",
               "navigation-menu": "cadre.ob.navigationmenu", "tree-navigation-item": "cadre.ob.treenavigationitem",
               "tree-navigation-group": "cadre.ob.treenavigationgroup", "tree-navigation": "cadre.ob.treenavigation",
-              "breadcrumb": "cadre.ob.breadcrumb"}
+              "breadcrumb": "cadre.ob.breadcrumb", "brilliance-menu": "cadre.ob.brilliancemenu",
+              "user-menu": "cadre.ob.usermenu",
+              "system-menu": "cadre.ob.systemmenu",
+              "app-menu": "cadre.ob.appmenu",
+              "command-menu": "cadre.ob.commandmenu",
+              "top-bar": "cadre.ob.topbar"}
 MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
                "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
                "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway",

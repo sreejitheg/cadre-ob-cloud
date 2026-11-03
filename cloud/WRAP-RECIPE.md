@@ -635,3 +635,21 @@ registration, regeneration, module test); sections 2.6 to 2.10 are replaced by t
     `CONVERT` function (`crumbs`: label and href only, because the element calls a crumb's `icon`). A row component has no width of its own:
     add its tag to the stretch rule of `scoped_css`. Measure in Chromium with the harness page (`module/tools/harness/harness.html`), where
     a menu's flyout opens outside the component box.
+11. **Menus and the composite top bar (F4).** Entry keys added: `"eventFields": {dom: [(name, type, text), (name, type, text, from)]}` for an
+    event of the payload kind `detail` (the kind is set in `ALERT_EVENTS`; the fields come from the entry, so the same DOM name can carry
+    other fields in another component; a detail that is not an object is the value of the one field); `"writeBack": {dom: (property,
+    key)}` for an element that changes its own state on a press (the wrapper writes the value of the detail key to the component's own
+    property, or the element's property when the key is `"@element"`, so that an update does not set the element back); `"fixed": {field:
+    value}` for fields the wrapper sets and no property carries (the user menu's `showUsername` and `showPassword`, false); `"objects":
+    ["wifiState"]` for a field without an attribute whose type is a row of `STATE_OBJECTS` (a plain object, the field kind `object`); and
+    `"parts": [{"tag", "slot", "fields", "events", "fixed", "defaults"}]` for a composite that renders an element of the manifest in a slot
+    itself (the top bar's `obc-alert-button` in `alerts` and `obc-clock` in `clock`). A part's property schemas, types and defaults are those
+    of the element's own entry in `COMPONENTS` (so that entry must exist, before the composite's), a part's `defaults` replace the element's
+    default for the composite, and the property names must not collide with the host's (the generator stops). A part's events are listed in
+    the host's `events` and in the part's `events` and are heard on the node (a plain `CustomEvent` does not bubble). The rows of `PROPERTIES`
+    gain `showBrightness`, `showPalette` and `showLocation`; `ITEM_FIELDS` gains `showLabel` for `obc-app-button`. An icon slot's allow list
+    grows by an import line in `module/web/icons.js` (seven command icons in F4). A composite or a menu that is as wide as its content gets a
+    rule in `scoped_css` (`obc-top-bar` spans its box; its height is its own). A slot of the element that is misspelt in the pinned release
+    (`toogle-...`) is renamed with `"property"`. A manifest event that is no event (the system menu's `eventName`, a helper's parameter) is
+    left out and said so in the wiki. Measure sizes in Chromium with the harness page; a test of the harness for each property that writes
+    back uses `probeStore` of `frame.mjs`, which records the writes of the store.

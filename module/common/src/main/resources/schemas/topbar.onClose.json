@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Close button of the settings mode was pressed. The event carries nothing.",
+  "properties": {}
+}

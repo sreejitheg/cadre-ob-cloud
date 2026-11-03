@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "A Wi-Fi network was chosen. event.network is its name.",
+  "properties": {
+    "network": {
+      "type": "string",
+      "description": "The name of the network chosen."
+    }
+  }
+}

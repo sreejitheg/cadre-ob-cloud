@@ -67,6 +67,7 @@ lit-html/directives/style-map.js:
 @lit/localize/lit-localize.js:
 lit-html/static.js:
 lit-html/directive-helpers.js:
+lit-html/directives/live.js:
   /**
    * @license
    * Copyright 2020 Google LLC

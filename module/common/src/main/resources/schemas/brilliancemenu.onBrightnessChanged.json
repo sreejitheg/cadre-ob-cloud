@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The brightness was changed. event.value is the new brightness. The component's `brightness` follows the press; Cadre has no brightness function, so the frame hides the section.",
+  "properties": {
+    "value": {
+      "type": "number",
+      "description": "The new brightness, from 0 to `brightnessMax`."
+    }
+  }
+}

@@ -1214,5 +1214,69 @@
   "href": "__undefined__"
  },
  "obc-tree-navigation": {},
- "obc-breadcrumb": {}
+ "obc-breadcrumb": {},
+ "obc-brilliance-menu": {
+  "palette": "day",
+  "brightness": 50,
+  "showLinkBrightness": false,
+  "showLinkPalette": false,
+  "variant": "normal",
+  "brightnessUnit": "%",
+  "brightnessMax": 100,
+  "brightnessMinorStep": 5,
+  "brightnessMajorStep": 25,
+  "brightnessInputVariant": "buttons",
+  "showScreenControlLink": false
+ },
+ "obc-user-menu": {
+  "type": "sign-in",
+  "size": "regular",
+  "hasRecentlySignedIn": false,
+  "username": "",
+  "password": "",
+  "usernameError": "",
+  "passwordError": "",
+  "userInitials": "__undefined__",
+  "userLabel": "__undefined__",
+  "userRole": "__undefined__",
+  "primaryActionId": "__undefined__"
+ },
+ "obc-system-menu": {
+  "condensed": false,
+  "showSettingsButton": false,
+  "activeSubMenu": "main",
+  "externalControl": false,
+  "smallScreen": false
+ },
+ "obc-app-menu": {},
+ "obc-command-menu": {
+  "inCommand": false
+ },
+ "obc-top-bar": {
+  "appTitle": "App",
+  "pageName": "Page",
+  "menuButtonIcon": "menu",
+  "menuButtonActivated": false,
+  "dimmingButtonActivated": false,
+  "appsButtonActivated": false,
+  "leftMoreButtonActivated": false,
+  "userButtonActivated": false,
+  "userButtonDisabled": false,
+  "tall": false,
+  "wideMenuButton": false,
+  "showAppsButton": false,
+  "showDimmingButton": false,
+  "showUserButton": false,
+  "showClock": false,
+  "showDate": false,
+  "showAppIcon": false,
+  "inactive": false,
+  "appButtonBreakpointPx": 500,
+  "dimmingButtonBreakpointPx": 500,
+  "appTitleBreakpointPx": 500,
+  "userButtonBreakpointPx": 500,
+  "appIconBreakpointPx": 500,
+  "settings": false,
+  "breadcrumbItems": []
+ }
 }

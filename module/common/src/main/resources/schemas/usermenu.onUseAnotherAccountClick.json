@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Use another account button was pressed. The event carries nothing.",
+  "properties": {}
+}

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The screen control link was pressed. The event carries nothing.",
+  "properties": {}
+}

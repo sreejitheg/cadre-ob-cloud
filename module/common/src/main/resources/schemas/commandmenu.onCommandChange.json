@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The command switch was pressed. event.inCommand is the state the press asks for. The menu shows it at once and the component's `inCommand` follows the press; the menu writes no tag.",
+  "properties": {
+    "inCommand": {
+      "type": "boolean",
+      "description": "The state the switch asks for: true takes command, false releases it."
+    }
+  }
+}

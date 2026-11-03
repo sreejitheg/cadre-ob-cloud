@@ -8203,7 +8203,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8317,7 +8324,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8351,7 +8365,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8562,7 +8583,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8652,7 +8680,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8745,7 +8780,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -8845,7 +8887,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -9189,7 +9238,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -9496,7 +9552,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -9530,7 +9593,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -9683,7 +9753,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -10003,7 +10080,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -10141,7 +10225,14 @@
      "chevron-right-google",
      "close-google",
      "check-google",
-     "placeholder"
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
     ],
     "default": ""
    },
@@ -10334,6 +10425,1013 @@
    "onBreadcrumbClick": {
     "element": "breadcrumb-click",
     "schema": "schemas/breadcrumb.onBreadcrumbClick.json"
+   }
+  }
+ },
+ "cadre.ob.brilliancemenu": {
+  "element": "obc-brilliance-menu",
+  "title": "OB Brilliance Menu",
+  "palette": "OpenBridge brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
+  "schema": "schemas/brilliancemenu.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 460
+  },
+  "props": {
+   "palette": {
+    "type": "string",
+    "enum": [
+     "night",
+     "dusk",
+     "day",
+     "bright"
+    ],
+    "default": "day"
+   },
+   "brightness": {
+    "type": "number",
+    "default": 50
+   },
+   "showLinkBrightness": {
+    "type": "boolean",
+    "default": false
+   },
+   "showLinkPalette": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "compact",
+     "tabbed"
+    ],
+    "default": "normal"
+   },
+   "brightnessUnit": {
+    "type": "string",
+    "default": "%"
+   },
+   "brightnessMax": {
+    "type": "number",
+    "default": 100
+   },
+   "brightnessMinorStep": {
+    "type": "number",
+    "default": 5
+   },
+   "brightnessMajorStep": {
+    "type": "number",
+    "default": 25
+   },
+   "brightnessInputVariant": {
+    "type": "string",
+    "enum": [
+     "buttons",
+     "slider"
+    ],
+    "default": "buttons"
+   },
+   "showScreenControlLink": {
+    "type": "boolean",
+    "default": false
+   },
+   "showBrightness": {
+    "type": "boolean",
+    "default": true
+   },
+   "showPalette": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onPaletteChanged": {
+    "element": "palette-changed",
+    "schema": "schemas/brilliancemenu.onPaletteChanged.json"
+   },
+   "onBrightnessChanged": {
+    "element": "brightness-changed",
+    "schema": "schemas/brilliancemenu.onBrightnessChanged.json"
+   },
+   "onLinkPaletteChanged": {
+    "element": "link-palette-changed",
+    "schema": "schemas/brilliancemenu.onLinkPaletteChanged.json"
+   },
+   "onLinkBrightnessChanged": {
+    "element": "link-brightness-changed",
+    "schema": "schemas/brilliancemenu.onLinkBrightnessChanged.json"
+   },
+   "onScreenControlLinkClick": {
+    "element": "screen-control-link-clicked",
+    "schema": "schemas/brilliancemenu.onScreenControlLinkClick.json"
+   }
+  }
+ },
+ "cadre.ob.usermenu": {
+  "element": "obc-user-menu",
+  "title": "OB User Menu",
+  "palette": "OpenBridge user menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
+  "schema": "schemas/usermenu.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 280
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "sign-in",
+     "user-sign-in",
+     "loading-sign-in",
+     "signed-in"
+    ],
+    "default": "sign-in"
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small"
+    ],
+    "default": "regular"
+   },
+   "userInitials": {
+    "type": "string",
+    "default": ""
+   },
+   "userLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "userRole": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onSignInClick": {
+    "element": "sign-in-click",
+    "schema": "schemas/usermenu.onSignInClick.json"
+   },
+   "onSignOutClick": {
+    "element": "sign-out-click",
+    "schema": "schemas/usermenu.onSignOutClick.json"
+   },
+   "onUseAnotherAccountClick": {
+    "element": "use-another-account-click",
+    "schema": "schemas/usermenu.onUseAnotherAccountClick.json"
+   }
+  }
+ },
+ "cadre.ob.systemmenu": {
+  "element": "obc-system-menu",
+  "title": "OB System Menu",
+  "palette": "OpenBridge system menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
+  "schema": "schemas/systemmenu.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 480
+  },
+  "props": {
+   "condensed": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSettingsButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "activeSubMenu": {
+    "type": "string",
+    "enum": [
+     "main",
+     "wifi",
+     "audio",
+     "microphone",
+     "battery"
+    ],
+    "default": "main"
+   },
+   "externalControl": {
+    "type": "boolean",
+    "default": false
+   },
+   "smallScreen": {
+    "type": "boolean",
+    "default": false
+   },
+   "wifiState": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "enabled": {
+      "type": "boolean"
+     },
+     "connected": {
+      "type": "boolean"
+     },
+     "networkName": {
+      "type": "string"
+     },
+     "strength": {
+      "type": "number"
+     },
+     "status": {
+      "type": "string"
+     },
+     "networks": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        },
+        "signalStrength": {
+         "type": "number"
+        }
+       }
+      }
+     },
+     "otherNetworks": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        },
+        "signalStrength": {
+         "type": "number"
+        }
+       }
+      }
+     }
+    }
+   },
+   "audioState": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "muted": {
+      "type": "boolean"
+     },
+     "volume": {
+      "type": "number"
+     },
+     "outputs": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "selectedOutput": {
+      "type": "string"
+     },
+     "controlMode": {
+      "type": "string",
+      "enum": [
+       "mute-button",
+       "icon-only",
+       "hidden"
+      ]
+     }
+    }
+   },
+   "microphoneState": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "muted": {
+      "type": "boolean"
+     },
+     "currentLevel": {
+      "type": "number"
+     },
+     "inputs": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "selectedInput": {
+      "type": "string"
+     },
+     "pushToTalk": {
+      "type": "boolean"
+     },
+     "controlMode": {
+      "type": "string",
+      "enum": [
+       "mute-button",
+       "icon-only",
+       "hidden"
+      ]
+     }
+    }
+   },
+   "batteryState": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "level": {
+      "type": "number"
+     },
+     "charging": {
+      "type": "boolean"
+     },
+     "poweredNotCharging": {
+      "type": "boolean"
+     },
+     "notification": {
+      "type": "boolean"
+     },
+     "batterySavingMode": {
+      "type": "boolean"
+     },
+     "hasUsageButton": {
+      "type": "boolean"
+     },
+     "modes": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "selectedMode": {
+      "type": "string"
+     }
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onWifiClick": {
+    "element": "wifi-click",
+    "schema": "schemas/systemmenu.onWifiClick.json"
+   },
+   "onAudioClick": {
+    "element": "audio-click",
+    "schema": "schemas/systemmenu.onAudioClick.json"
+   },
+   "onAudioVolumeChange": {
+    "element": "audio-volume-change",
+    "schema": "schemas/systemmenu.onAudioVolumeChange.json"
+   },
+   "onMicrophoneClick": {
+    "element": "microphone-click",
+    "schema": "schemas/systemmenu.onMicrophoneClick.json"
+   },
+   "onPushToTalkChange": {
+    "element": "push-to-talk-change",
+    "schema": "schemas/systemmenu.onPushToTalkChange.json"
+   },
+   "onBatterySavingModeChange": {
+    "element": "battery-saving-mode-change",
+    "schema": "schemas/systemmenu.onBatterySavingModeChange.json"
+   },
+   "onBatteryUsageClick": {
+    "element": "battery-usage-click",
+    "schema": "schemas/systemmenu.onBatteryUsageClick.json"
+   },
+   "onWifiNetworkChange": {
+    "element": "wifi-network-change",
+    "schema": "schemas/systemmenu.onWifiNetworkChange.json"
+   },
+   "onAudioOutputChange": {
+    "element": "audio-output-change",
+    "schema": "schemas/systemmenu.onAudioOutputChange.json"
+   },
+   "onMicrophoneInputChange": {
+    "element": "microphone-input-change",
+    "schema": "schemas/systemmenu.onMicrophoneInputChange.json"
+   },
+   "onBatteryModeChange": {
+    "element": "battery-mode-change",
+    "schema": "schemas/systemmenu.onBatteryModeChange.json"
+   },
+   "onSettingsClick": {
+    "element": "settings-click",
+    "schema": "schemas/systemmenu.onSettingsClick.json"
+   },
+   "onSubMenuClick": {
+    "element": "to-sub-menu-click",
+    "schema": "schemas/systemmenu.onSubMenuClick.json"
+   },
+   "onWifiOptionsClick": {
+    "element": "wifi-options-click",
+    "schema": "schemas/systemmenu.onWifiOptionsClick.json"
+   },
+   "onWifiDisconnectClick": {
+    "element": "wifi-disconnect-click",
+    "schema": "schemas/systemmenu.onWifiDisconnectClick.json"
+   }
+  }
+ },
+ "cadre.ob.appmenu": {
+  "element": "obc-app-menu",
+  "title": "OB App Menu",
+  "palette": "OpenBridge app menu: a search field above a grid of app buttons",
+  "schema": "schemas/appmenu.props.json",
+  "defaultSize": {
+   "width": 360,
+   "height": 280
+  },
+  "props": {
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-app-button"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-app-button"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onSearch": {
+    "element": "search",
+    "schema": "schemas/appmenu.onSearch.json"
+   },
+   "onAppClick": {
+    "element": "click",
+    "schema": "schemas/appmenu.onAppClick.json"
+   }
+  }
+ },
+ "cadre.ob.commandmenu": {
+  "element": "obc-command-menu",
+  "title": "OB Command Menu",
+  "palette": "OpenBridge command menu: the command status, its description and location, and a switch that takes or releases command",
+  "schema": "schemas/commandmenu.props.json",
+  "defaultSize": {
+   "width": 360,
+   "height": 260
+  },
+  "props": {
+   "inCommand": {
+    "type": "boolean",
+    "default": false
+   },
+   "showLocation": {
+    "type": "boolean",
+    "default": true
+   },
+   "commandIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "commandStatus": {
+    "type": "string",
+    "default": ""
+   },
+   "commandDescription": {
+    "type": "string",
+    "default": ""
+   },
+   "commandLocation": {
+    "type": "string",
+    "default": ""
+   },
+   "takeCommandLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "releaseCommandLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "inCommandLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "noCommandLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "inCommandIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "commandIconName": {
+    "slot": "command-icon",
+    "kind": "icon"
+   },
+   "commandStatus": {
+    "slot": "command-status",
+    "kind": "text"
+   },
+   "commandDescription": {
+    "slot": "command-description",
+    "kind": "text"
+   },
+   "commandLocation": {
+    "slot": "command-location",
+    "kind": "text"
+   },
+   "takeCommandLabel": {
+    "slot": "toogle-action-to-in-command-label",
+    "kind": "text"
+   },
+   "releaseCommandLabel": {
+    "slot": "toogle-action-to-no-command-label",
+    "kind": "text"
+   },
+   "inCommandLabel": {
+    "slot": "toogle-state-in-command-label",
+    "kind": "text"
+   },
+   "noCommandLabel": {
+    "slot": "toogle-state-no-command-label",
+    "kind": "text"
+   },
+   "inCommandIconName": {
+    "slot": "toogle-state-in-command-icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onCommandChange": {
+    "element": "change",
+    "schema": "schemas/commandmenu.onCommandChange.json"
+   }
+  }
+ },
+ "cadre.ob.topbar": {
+  "element": "obc-top-bar",
+  "title": "OB Top Bar",
+  "palette": "OpenBridge top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
+  "schema": "schemas/topbar.props.json",
+  "defaultSize": {
+   "width": 960,
+   "height": 48
+  },
+  "props": {
+   "appTitle": {
+    "type": "string",
+    "default": "App"
+   },
+   "pageName": {
+    "type": "string",
+    "default": "Page"
+   },
+   "menuButtonIcon": {
+    "type": "string",
+    "enum": [
+     "menu",
+     "home"
+    ],
+    "default": "menu"
+   },
+   "menuButtonActivated": {
+    "type": "boolean",
+    "default": false
+   },
+   "dimmingButtonActivated": {
+    "type": "boolean",
+    "default": false
+   },
+   "appsButtonActivated": {
+    "type": "boolean",
+    "default": false
+   },
+   "leftMoreButtonActivated": {
+    "type": "boolean",
+    "default": false
+   },
+   "userButtonActivated": {
+    "type": "boolean",
+    "default": false
+   },
+   "userButtonDisabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "tall": {
+    "type": "boolean",
+    "default": false
+   },
+   "wideMenuButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "showAppsButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "showDimmingButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "showUserButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "showClock": {
+    "type": "boolean",
+    "default": false
+   },
+   "showAppIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "inactive": {
+    "type": "boolean",
+    "default": false
+   },
+   "appButtonBreakpointPx": {
+    "type": "number",
+    "default": 500
+   },
+   "dimmingButtonBreakpointPx": {
+    "type": "number",
+    "default": 500
+   },
+   "appTitleBreakpointPx": {
+    "type": "number",
+    "default": 500
+   },
+   "userButtonBreakpointPx": {
+    "type": "number",
+    "default": 500
+   },
+   "appIconBreakpointPx": {
+    "type": "number",
+    "default": 500
+   },
+   "settings": {
+    "type": "boolean",
+    "default": false
+   },
+   "breadcrumbItems": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "href": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "label"
+     ]
+    }
+   },
+   "nAlerts": {
+    "type": "number",
+    "default": 0
+   },
+   "counter": {
+    "type": "boolean",
+    "default": true
+   },
+   "alertType": {
+    "type": "string",
+    "enum": [
+     "",
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": ""
+   },
+   "blinking": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSilenceButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "date": {
+    "type": "string",
+    "default": ""
+   },
+   "showSeconds": {
+    "type": "boolean",
+    "default": false
+   },
+   "timeZoneOffsetHours": {
+    "type": "number",
+    "default": 0
+   },
+   "appIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder",
+     "command-in",
+     "command-no",
+     "command-take",
+     "command-request",
+     "command-shared",
+     "command-locked",
+     "joystick"
+    ],
+    "default": ""
+   },
+   "commandButtonText": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "appIconName": {
+    "slot": "app-icon",
+    "kind": "icon"
+   },
+   "commandButtonText": {
+    "slot": "command-button",
+    "kind": "text"
+   }
+  },
+  "parts": {
+   "obc-alert-button": {
+    "slot": "alerts",
+    "props": [
+     "nAlerts",
+     "counter",
+     "alertType",
+     "blinking",
+     "showSilenceButton"
+    ]
+   },
+   "obc-clock": {
+    "slot": "clock",
+    "props": [
+     "date",
+     "showSeconds",
+     "timeZoneOffsetHours"
+    ]
+   }
+  },
+  "events": {
+   "onMenuButtonClick": {
+    "element": "menu-button-clicked",
+    "schema": "schemas/topbar.onMenuButtonClick.json"
+   },
+   "onDimmingButtonClick": {
+    "element": "dimming-button-clicked",
+    "schema": "schemas/topbar.onDimmingButtonClick.json"
+   },
+   "onAppsButtonClick": {
+    "element": "apps-button-clicked",
+    "schema": "schemas/topbar.onAppsButtonClick.json"
+   },
+   "onMoreButtonClick": {
+    "element": "left-more-button-clicked",
+    "schema": "schemas/topbar.onMoreButtonClick.json"
+   },
+   "onUserButtonClick": {
+    "element": "user-button-clicked",
+    "schema": "schemas/topbar.onUserButtonClick.json"
+   },
+   "onEmergencyBrightnessStart": {
+    "element": "emergency-brightness-start",
+    "schema": "schemas/topbar.onEmergencyBrightnessStart.json"
+   },
+   "onEmergencyBrightnessStop": {
+    "element": "emergency-brightness-stop",
+    "schema": "schemas/topbar.onEmergencyBrightnessStop.json"
+   },
+   "onAlertClick": {
+    "element": "click-alert",
+    "schema": "schemas/topbar.onAlertClick.json"
+   },
+   "onSilenceClick": {
+    "element": "click-silence",
+    "schema": "schemas/topbar.onSilenceClick.json"
+   },
+   "onBack": {
+    "element": "back",
+    "schema": "schemas/topbar.onBack.json"
+   },
+   "onClose": {
+    "element": "close",
+    "schema": "schemas/topbar.onClose.json"
+   },
+   "onBreadcrumbClick": {
+    "element": "breadcrumb-click",
+    "schema": "schemas/topbar.onBreadcrumbClick.json"
    }
   }
  },

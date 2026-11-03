@@ -111,7 +111,14 @@
         "chevron-right-google",
         "close-google",
         "check-google",
-        "placeholder"
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
       ],
       "default": "",
       "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon slot (shown when hasLeadingIcon is true)."
