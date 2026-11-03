@@ -134,7 +134,17 @@ public final class CadreOb {
         descriptor("cadre.ob.polarchart", "polarchart", "OB Polar Chart",
             "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only.", "obPolarChart", List.of()),
         descriptor("cadre.ob.radialbarchart", "radialbarchart", "OB Radial Bar Chart",
-            "OpenBridge radial bar chart: concentric rings, one for each value, display only.", "obRadialBarChart", List.of())
+            "OpenBridge radial bar chart: concentric rings, one for each value, display only.", "obRadialBarChart", List.of()),
+        descriptor("cadre.ob.barhorizontal", "barhorizontal", "OB Horizontal Bar",
+            "OpenBridge horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only.", "obBarHorizontal", List.of()),
+        descriptor("cadre.ob.barvertical", "barvertical", "OB Vertical Bar",
+            "OpenBridge vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only.", "obBarVertical", List.of()),
+        descriptor("cadre.ob.circularprogress", "circularprogress", "OB Circular Progress",
+            "OpenBridge circular progress: a ring that fills with a value, or spins while the wait has no end, display only.", "obCircularProgress", List.of()),
+        descriptor("cadre.ob.instrumentradial", "instrumentradial", "OB Radial Instrument",
+            "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only.", "obInstrumentRadial", List.of()),
+        descriptor("cadre.ob.readoutblock", "readoutblock", "OB Readout Block",
+            "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only.", "obReadoutBlock", List.of())
     );
 
     private CadreOb() {

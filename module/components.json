@@ -7226,6 +7226,914 @@
    }
   }
  },
+ "cadre.ob.barhorizontal": {
+  "element": "obc-bar-horizontal",
+  "title": "OB Horizontal Bar",
+  "palette": "OpenBridge horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+  "schema": "schemas/barhorizontal.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 128
+  },
+  "props": {
+   "minValue": {
+    "type": "number",
+    "default": 0
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100
+   },
+   "width": {
+    "type": "number",
+    "default": 320
+   },
+   "paddingLeft": {
+    "type": "number",
+    "default": 32
+   },
+   "paddingRight": {
+    "type": "number",
+    "default": 32
+   },
+   "side": {
+    "type": "string",
+    "enum": [
+     "left",
+     "right",
+     "top",
+     "bottom"
+    ],
+    "default": "bottom"
+   },
+   "fixedAspectRatio": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleReferenceSize": {
+    "type": "number",
+    "default": 384
+   },
+   "showMainTickmarkLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasBar": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleBackground": {
+    "type": "boolean",
+    "default": false
+   },
+   "barThickness": {
+    "type": "number",
+    "default": 24
+   },
+   "tickThickness": {
+    "type": "number",
+    "default": 24
+   },
+   "labelThickness": {
+    "type": "number",
+    "default": 60
+   },
+   "primaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "secondaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "tertiaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "scaleType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "condensed"
+    ],
+    "default": "regular"
+   },
+   "frameStyle": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "flat",
+     "framed",
+     "instrument"
+    ],
+    "default": "regular"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "fillMode": {
+    "type": "string",
+    "enum": [
+     "fill",
+     "tint"
+    ],
+    "default": "fill"
+   },
+   "fillMin": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "fillMax": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "value": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "state": {
+    "type": "string",
+    "enum": [
+     "active",
+     "loading",
+     "off"
+    ],
+    "default": "active"
+   },
+   "advicePosition": {
+    "type": "string",
+    "enum": [
+     "center",
+     "inner",
+     "outer"
+    ],
+    "default": "inner"
+   },
+   "highlightCurrentValue": {
+    "type": "boolean",
+    "default": false
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 1
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasScale": {
+    "type": "boolean",
+    "default": true
+   },
+   "showLabels": {
+    "type": "boolean",
+    "default": true
+   },
+   "advices": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "min": {
+       "type": "number"
+      },
+      "max": {
+       "type": "number"
+      },
+      "type": {
+       "type": "string",
+       "enum": [
+        "advice",
+        "caution"
+       ]
+      },
+      "hinted": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "min",
+      "max",
+      "type"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.barvertical": {
+  "element": "obc-bar-vertical",
+  "title": "OB Vertical Bar",
+  "palette": "OpenBridge vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+  "schema": "schemas/barvertical.props.json",
+  "defaultSize": {
+   "width": 128,
+   "height": 320
+  },
+  "props": {
+   "minValue": {
+    "type": "number",
+    "default": 0
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100
+   },
+   "height": {
+    "type": "number",
+    "default": 320
+   },
+   "paddingTop": {
+    "type": "number",
+    "default": 32
+   },
+   "paddingBottom": {
+    "type": "number",
+    "default": 32
+   },
+   "side": {
+    "type": "string",
+    "enum": [
+     "left",
+     "right",
+     "top",
+     "bottom"
+    ],
+    "default": "right"
+   },
+   "fixedAspectRatio": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleReferenceSize": {
+    "type": "number",
+    "default": 384
+   },
+   "showMainTickmarkLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasBar": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleBackground": {
+    "type": "boolean",
+    "default": false
+   },
+   "barThickness": {
+    "type": "number",
+    "default": 24
+   },
+   "tickThickness": {
+    "type": "number",
+    "default": 24
+   },
+   "labelThickness": {
+    "type": "number",
+    "default": 60
+   },
+   "primaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "secondaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "tertiaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "scaleType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "condensed"
+    ],
+    "default": "regular"
+   },
+   "frameStyle": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "flat",
+     "framed",
+     "instrument"
+    ],
+    "default": "regular"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "fillMode": {
+    "type": "string",
+    "enum": [
+     "fill",
+     "tint"
+    ],
+    "default": "fill"
+   },
+   "fillMin": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "fillMax": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "value": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "state": {
+    "type": "string",
+    "enum": [
+     "active",
+     "loading",
+     "off"
+    ],
+    "default": "active"
+   },
+   "advicePosition": {
+    "type": "string",
+    "enum": [
+     "center",
+     "inner",
+     "outer"
+    ],
+    "default": "inner"
+   },
+   "highlightCurrentValue": {
+    "type": "boolean",
+    "default": false
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 1
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasScale": {
+    "type": "boolean",
+    "default": true
+   },
+   "showLabels": {
+    "type": "boolean",
+    "default": true
+   },
+   "advices": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "min": {
+       "type": "number"
+      },
+      "max": {
+       "type": "number"
+      },
+      "type": {
+       "type": "string",
+       "enum": [
+        "advice",
+        "caution"
+       ]
+      },
+      "hinted": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "min",
+      "max",
+      "type"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.circularprogress": {
+  "element": "obc-circular-progress",
+  "title": "OB Circular Progress",
+  "palette": "OpenBridge circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
+  "schema": "schemas/circularprogress.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "mode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "strokeWidth": {
+    "type": "number",
+    "default": 4
+   },
+   "viewBoxSize": {
+    "type": "number",
+    "default": 42
+   },
+   "padding": {
+    "type": "number",
+    "default": 0
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.instrumentradial": {
+  "element": "obc-instrument-radial",
+  "title": "OB Radial Instrument",
+  "palette": "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
+  "schema": "schemas/instrumentradial.props.json",
+  "defaultSize": {
+   "width": 240,
+   "height": 240
+  },
+  "props": {
+   "state": {
+    "type": "string",
+    "enum": [
+     "active",
+     "loading",
+     "off"
+    ],
+    "default": "active"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100
+   },
+   "minValue": {
+    "type": "number",
+    "default": 0
+   },
+   "needleColor": {
+    "type": "string",
+    "default": ""
+   },
+   "barColor": {
+    "type": "string",
+    "default": ""
+   },
+   "showLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "primaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 50
+   },
+   "secondaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 10
+   },
+   "tertiaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "type": {
+    "type": "string",
+    "enum": [
+     "filled",
+     "bar",
+     "needle"
+    ],
+    "default": "filled"
+   },
+   "needleType": {
+    "type": "string",
+    "enum": [
+     "filled",
+     "bar",
+     "needle"
+    ],
+    "default": "filled"
+   },
+   "tickmarksInside": {
+    "type": "boolean",
+    "default": false
+   },
+   "tickmarkStyle": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "clipTop": {
+    "type": "number",
+    "default": 0
+   },
+   "clipBottom": {
+    "type": "number",
+    "default": 0
+   },
+   "clipLeft": {
+    "type": "number",
+    "default": 0
+   },
+   "clipRight": {
+    "type": "number",
+    "default": 0
+   },
+   "endLabelsMaxMin": {
+    "type": "boolean",
+    "default": false
+   },
+   "zoomToFitArc": {
+    "type": "boolean",
+    "default": false
+   },
+   "faceDiameter": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 2
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "advices": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "minValue": {
+       "type": "number"
+      },
+      "maxValue": {
+       "type": "number"
+      },
+      "type": {
+       "type": "string",
+       "enum": [
+        "advice",
+        "caution"
+       ]
+      },
+      "hinted": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "minValue",
+      "maxValue",
+      "type"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.readoutblock": {
+  "element": "obc-readout-block",
+  "title": "OB Readout Block",
+  "palette": "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only",
+  "schema": "schemas/readoutblock.props.json",
+  "defaultSize": {
+   "width": 144,
+   "height": 64
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "value",
+     "setpoint",
+     "advice"
+    ],
+    "default": "value"
+   },
+   "value": {
+    "type": [
+     "number",
+     "string",
+     "null"
+    ],
+    "default": null
+   },
+   "valueType": {
+    "type": "string",
+    "enum": [
+     "number",
+     "text"
+    ],
+    "default": "number"
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "small",
+     "medium",
+     "large"
+    ],
+    "default": "small"
+   },
+   "enhanced": {
+    "type": "boolean",
+    "default": false
+   },
+   "weight": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "semibold",
+     "bold"
+    ],
+    "default": "regular"
+   },
+   "hasDegree": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "fractionDigits": {
+    "type": "number",
+    "default": 0
+   },
+   "maxDigits": {
+    "type": "number",
+    "default": 0
+   },
+   "hintedZeros": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasSignSpacer": {
+    "type": "boolean",
+    "default": false
+   },
+   "spaceReserver": {
+    "type": "string",
+    "default": ""
+   },
+   "off": {
+    "type": "boolean",
+    "default": false
+   },
+   "offText": {
+    "type": "string",
+    "default": "OFF"
+   },
+   "alignment": {
+    "type": "string",
+    "enum": [
+     "left",
+     "center",
+     "right"
+    ],
+    "default": "right"
+   },
+   "category": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "optimal",
+     "eco",
+     "caution",
+     "warning",
+     "alarm",
+     "running"
+    ],
+    "default": "regular"
+   },
+   "active": {
+    "type": "boolean",
+    "default": false
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "hidePhase": {
+    "type": "string",
+    "enum": [
+     "none",
+     "hiding",
+     "hidden"
+    ],
+    "default": "none"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

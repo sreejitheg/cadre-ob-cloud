@@ -56,6 +56,10 @@ ALERT_EVENTS = {
 # a property the contract carries.
 LINE_FRAME = ["state", "frameStyle", "borderRadiusPosition", "borderRadiusPositionExternalScales", "instrumentMode",
               "borderRadius", "showDebugOverlay"]
+# The attributes of the two bars (C2) that the module leaves out: the two nullable enumerations (`barContainerStyle` and
+# `borderRadiusPosition` are undefined by default, and any explicit value overrides what the element derives), and the
+# instrument mode with the border radius it enables, which serve a bar placed inside another instrument.
+BAR_LEFT_OUT = ["barContainerStyle", "borderRadiusPosition", "instrumentMode", "borderRadius"]
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
      "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
@@ -223,6 +227,26 @@ COMPONENTS = [
      "palette": "OpenBridge radial bar chart: concentric rings, one for each value, display only",
      "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
      "data": {"data": "rings", "colors": "colors"}},
+    # batch C2: the building blocks (module-only, display only). The scale of a bar is drawn by the element itself.
+    {"tag": "obc-bar-horizontal", "type": "cadre.ob.barhorizontal", "name": "barhorizontal", "title": "OB Horizontal Bar",
+     "palette": "OpenBridge horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+     "size": {"width": 480, "height": 128}, "exclude": BAR_LEFT_OUT, "properties": ["hasScale", "showLabels"],
+     "data": {"advices": "linearadvices"}},
+    {"tag": "obc-bar-vertical", "type": "cadre.ob.barvertical", "name": "barvertical", "title": "OB Vertical Bar",
+     "palette": "OpenBridge vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+     "size": {"width": 128, "height": 320}, "exclude": BAR_LEFT_OUT, "properties": ["hasScale", "showLabels"],
+     "data": {"advices": "linearadvices"}},
+    {"tag": "obc-circular-progress", "type": "cadre.ob.circularprogress", "name": "circularprogress", "title": "OB Circular Progress",
+     "palette": "OpenBridge circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
+     "size": {"width": 48, "height": 48}, "exclude": []},
+    {"tag": "obc-instrument-radial", "type": "cadre.ob.instrumentradial", "name": "instrumentradial", "title": "OB Radial Instrument",
+     "palette": "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
+     "size": {"width": 240, "height": 240}, "exclude": [], "data": {"advices": "radialadvices"}},
+    # `valueSize` and `dataQuality` are nullable enumerations (undefined derives the size from `size`, or states the data fully
+    # trusted), and `alert` is a flag or a frame configuration object: none is a property the contract carries.
+    {"tag": "obc-readout-block", "type": "cadre.ob.readoutblock", "name": "readoutblock", "title": "OB Readout Block",
+     "palette": "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only",
+     "size": {"width": 144, "height": 64}, "exclude": ["valueSize", "dataQuality", "alert"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -279,6 +303,19 @@ DATA_SCHEMA = {"alerts": {"type": "array", "default": [], "items": {"type": "obj
              "rings": {"type": "array", "default": [], "items": {"type": "number"},
                        "description": "The value of each ring, outermost first, as plain numbers on the scale 0 to `max` "
                                       "(the element's `data`)."},
+             # Advice zones (C2): the pinned declarations `LinearAdvice` (a bar) and `GaugeRadialAdvice` (the radial instrument)
+             "linearadvices": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                                   "min": {"type": "number"}, "max": {"type": "number"},
+                                   "type": {"type": "string", "enum": ["advice", "caution"]}, "hinted": {"type": "boolean"}},
+                                   "required": ["min", "max", "type"]},
+                               "description": "Advice zones on the scale, one object each: `min` and `max` (scale values), `type` "
+                                              "(`advice` or `caution`) and `hinted` (drawn faint until the value reaches it)."},
+             "radialadvices": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                                   "minValue": {"type": "number"}, "maxValue": {"type": "number"},
+                                   "type": {"type": "string", "enum": ["advice", "caution"]}, "hinted": {"type": "boolean"}},
+                                   "required": ["minValue", "maxValue", "type"]},
+                               "description": "Advice zones on the dial, one object each: `minValue` and `maxValue` (scale values), "
+                                              "`type` (`advice` or `caution`) and `hinted` (drawn faint until the value reaches it)."},
              "segments": {"type": "array", "default": [], "items": {"type": "object", "properties": {
                               "label": {"type": "string"}, "value": {"type": "number"}}, "required": ["label", "value"]},
                           "description": "The segments, one object each: `label` and `value`."},
@@ -353,6 +390,9 @@ PROPERTIES = {
     "showStatus": {"type": "boolean", "default": True, "description":
                    "Whether the element draws its state readout (On or Off, the speed, the opening) beside the "
                    "symbol. The identifier stays. The diagram toolbar's Readout button binds it."},
+    # the bars' scale (C2): fields without an attribute, true by default in the element
+    "hasScale": {"type": "boolean", "default": True, "description": "Whether the bar draws its scale (tickmarks)."},
+    "showLabels": {"type": "boolean", "default": True, "description": "Whether the scale draws its value labels. Needs the scale."},
 }
 # Rules added to the shadow root of an element, where the element draws something a process diagram's box
 # cannot use as it stands (COB-127). The transmitter is built to hang from a line by a leader line: it
@@ -439,6 +479,8 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
             p, kind = {"type": "boolean", "default": bool(default)}, "boolean"
         elif base == "number" and not nullable:
             p, kind = {"type": "number", "default": default if isinstance(default, (int, float)) else 0}, "number"
+        elif base == "number | string":     # a readout's value: a number, or a text under `valueType` text
+            p, kind = {"type": ["number", "string", "null"], "default": None}, "nvalue"
         elif base == "number":
             p, kind = {"type": ["number", "null"], "default": default if isinstance(default, (int, float)) else None}, "nnumber"
         elif base == "string":
@@ -600,6 +642,7 @@ WRAPPER = r"""
       case 'number': return tree.readNumber(f.name, f.def);
       case 'array': return tree.readArray(f.name, f.def);
       case 'nnumber': { var v = tree.read(f.name); return (v === null || v === undefined || v === '') ? undefined : Number(v); }
+      case 'nvalue': { var q = tree.read(f.name); return (q === null || q === undefined || q === '') ? null : (typeof q === 'number' ? q : String(q)); }
       case 'nstring': { var s = tree.readString(f.name, ''); return s === '' ? null : s; }
       default: return tree.readString(f.name, f.def);
     }
@@ -627,7 +670,7 @@ WRAPPER = r"""
   function toRecords(v) { return Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; }
   var CONVERT = { alerts: toAlerts, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
                   points: toRecords, datasets: toRecords, yaxes: toRecords, labels: toRecords, colors: toRecords,
-                  segments: toRecords, piesegments: toRecords,
+                  segments: toRecords, piesegments: toRecords, linearadvices: toRecords, radialadvices: toRecords,
                   rings: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
 
   // The payload of a Perspective component event, from the element's event detail.

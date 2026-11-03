@@ -539,3 +539,16 @@ size (give the entry in `gen_module_assets.py` the size the symbol should have o
 6. In `tests/test_module.py` the manifest test compares the contract with the attributes only: a chart's fields go in `CHART_DATA` and
    its excluded attributes in `CHART_LEFT_OUT`. The page's count test serialises a list value with `json.dumps`.
 
+
+### 8.13 A Note from C2: Fields Without an Attribute, a Mixed Value, and an Element That Is Only a Container
+
+1. A boolean field that the manifest lists without an attribute (a bar's `hasScale` and `showLabels`) is added with `"properties": [...]` and
+   a row of `PROPERTIES` (`type`, `default`, `description`); the default must be the element's own (true for both), or the contract changes the
+   drawing. A list field (`advices`) goes in `data`; the zones of the bars (`min`, `max`) and of the radial instrument (`minValue`, `maxValue`)
+   have different item shapes and so two `DATA_SCHEMA` kinds.
+2. An attribute of the type `number | string` (the readout block's `value`) is mapped by `schema_for` to the types number, string and null and
+   the field kind `nvalue`; the page states it through `GLYPH_DATA` (every case but the default) and `GLYPH_EXTRA` (a text case).
+3. An element whose host is positioned absolutely at 100 percent (the circular progress, the radial instrument) draws as large as its box, so
+   the entry's `size` is the size on a diagram; the bars draw at their own `width` or `height` and the entry's size must cover the largest
+   drawing the page states (measure with a stand-in page; the bars needed 128 for the scale with thick bar, ticks and labels).
+4. An element with no attribute and no data property whose rows are slotted children (`obc-alert-list`) is not wrapped: see wiki 17.22.6.

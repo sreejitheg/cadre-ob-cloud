@@ -1023,10 +1023,29 @@ class GlyphComponents(unittest.TestCase):
     POLAR = {"priority", "monochrome", "discreteColorStops", "showSectorLabels", "showUnit", "showOuterLabels", "outerLabelUnit",
              "outerLabelMaxLength", "outerLabelDecimalPlaces", "fixedHeight", "legend"}
     RADIAL = {"priority", "max", "circumference", "legend", "fixedHeight", "minRingThickness"}
-    CHART_DATA = {"cadre.ob.areagraph": LINE_DATA, "cadre.ob.linegraph": LINE_DATA, "cadre.ob.donutchart": {"data", "colors"},
+    # batch C2: the building blocks. A bar's scale flags and advice zones are fields without an attribute (hasScale, showLabels,
+    # advices); the attributes left out are the nullable enumerations and the instrument mode (`gen_module_assets.BAR_LEFT_OUT`).
+    SCALE_EVENT = {"cadre.ob.barhorizontal", "cadre.ob.barvertical"}
+    FRAME_EVENT = {"cadre.ob.instrumentradial"}      # `frame-changed` reports the computed frame to a parent; nothing listens
+    BAR_FIELDS = {"hasScale", "showLabels", "advices"}
+    BAR_LEFT_OUT = {"barContainerStyle", "borderRadiusPosition", "instrumentMode", "borderRadius"}
+    BAR = {"minValue", "maxValue", "side", "fixedAspectRatio", "scaleReferenceSize", "showMainTickmarkLabels", "hasBar",
+           "scaleBackground", "barThickness", "tickThickness", "labelThickness", "primaryTickmarkInterval",
+           "secondaryTickmarkInterval", "tertiaryTickmarkInterval", "scaleType", "frameStyle", "priority", "fillMode", "fillMin",
+           "fillMax", "value", "state", "advicePosition", "highlightCurrentValue", "setpoint", "newSetpoint", "touching",
+           "autoAtSetpointDeadband", "setpointAtZeroDeadband", "setpointOverride", "animateSetpoint"} | BAR_FIELDS
+    RADIAL_INSTRUMENT = {"state", "priority", "value", "maxValue", "minValue", "needleColor", "barColor", "showLabels",
+                         "primaryTickmarkInterval", "secondaryTickmarkInterval", "tertiaryTickmarkInterval", "type", "needleType",
+                         "tickmarksInside", "tickmarkStyle", "clipTop", "clipBottom", "clipLeft", "clipRight", "endLabelsMaxMin",
+                         "zoomToFitArc", "faceDiameter", "setpoint", "newSetpoint", "touching", "autoAtSetpointDeadband",
+                         "setpointAtZeroDeadband", "setpointOverride", "animateSetpoint", "advices"}
+    READOUT_BLOCK = {"variant", "value", "valueType", "size", "enhanced", "weight", "hasDegree", "hasIcon", "fractionDigits",
+                     "maxDigits", "hintedZeros", "hasSignSpacer", "spaceReserver", "off", "offText", "alignment", "category",
+                     "active", "touching", "hidePhase"}
+    CHART_DATA = {"cadre.ob.instrumentradial": {"advices"}, "cadre.ob.barhorizontal": BAR_FIELDS, "cadre.ob.barvertical": BAR_FIELDS, "cadre.ob.areagraph": LINE_DATA, "cadre.ob.linegraph": LINE_DATA, "cadre.ob.donutchart": {"data", "colors"},
                   "cadre.ob.piechart": {"data", "colors"}, "cadre.ob.polarchart": {"data", "colors"},
                   "cadre.ob.radialbarchart": {"data", "colors"}}
-    CHART_LEFT_OUT = {"cadre.ob.areagraph": LINE_LEFT_OUT, "cadre.ob.linegraph": LINE_LEFT_OUT,
+    CHART_LEFT_OUT = {"cadre.ob.instrumentradial": set(), "cadre.ob.readoutblock": {"valueSize", "dataQuality", "alert"}, "cadre.ob.barhorizontal": BAR_LEFT_OUT, "cadre.ob.barvertical": BAR_LEFT_OUT, "cadre.ob.areagraph": LINE_LEFT_OUT, "cadre.ob.linegraph": LINE_LEFT_OUT,
                       "cadre.ob.donutchart": {"showDebugOverlay"}, "cadre.ob.piechart": {"showDebugOverlay"},
                       "cadre.ob.polarchart": {"showDebugOverlay"}, "cadre.ob.radialbarchart": {"showDebugOverlay"}}
     GLYPHS = {
@@ -1085,6 +1104,17 @@ class GlyphComponents(unittest.TestCase):
                                     RADIAL | {"data", "colors"}, {"width": 480, "height": 320}),
         "cadre.ob.linegraph": ("obc-line-graph", "src/bars-graphs/line-graph/line-graph.ts",
                                LINE | LINE_DATA, {"width": 480, "height": 320}),
+        # batch C2: the building blocks (module-only, display only)
+        "cadre.ob.barhorizontal": ("obc-bar-horizontal", "src/building-blocks/bar-horizontal/bar-horizontal.ts",
+                                   BAR | {"width", "paddingLeft", "paddingRight"}, {"width": 480, "height": 128}),
+        "cadre.ob.barvertical": ("obc-bar-vertical", "src/building-blocks/bar-vertical/bar-vertical.ts",
+                                 BAR | {"height", "paddingTop", "paddingBottom"}, {"width": 128, "height": 320}),
+        "cadre.ob.instrumentradial": ("obc-instrument-radial", "src/building-blocks/instrument-radial/instrument-radial.ts",
+                                      RADIAL_INSTRUMENT, {"width": 240, "height": 240}),
+        "cadre.ob.readoutblock": ("obc-readout-block", "src/building-blocks/readout-block/readout-block.ts",
+                                  READOUT_BLOCK, {"width": 144, "height": 64}),
+        "cadre.ob.circularprogress": ("obc-circular-progress", "src/building-blocks/circular-progress/circular-progress.ts",
+                                      {"mode", "value", "strokeWidth", "viewBoxSize", "padding"}, {"width": 48, "height": 48}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
              "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
@@ -1101,7 +1131,12 @@ class GlyphComponents(unittest.TestCase):
              "cadre.ob.donutchart": "donutchart",
              "cadre.ob.piechart": "piechart",
              "cadre.ob.polarchart": "polarchart",
-             "cadre.ob.radialbarchart": "radialbarchart"}
+             "cadre.ob.radialbarchart": "radialbarchart",
+             "cadre.ob.barhorizontal": "barhorizontal",
+             "cadre.ob.barvertical": "barvertical",
+             "cadre.ob.circularprogress": "circularprogress",
+             "cadre.ob.instrumentradial": "instrumentradial",
+             "cadre.ob.readoutblock": "readoutblock"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1124,8 +1159,11 @@ class GlyphComponents(unittest.TestCase):
             fields = {m["name"] for m in decl.get("members", []) if m.get("kind") == "field"}
             self.assertLessEqual(self.CHART_DATA.get(ctype, set()), fields, ctype)
             # a `click` is the only event among them, and it is not wired (display only, wiki 17.18 and 17.19)
+            # C2: a bar reports the size its scale needs to a parent chart (`scale-dimensions-changed`); nothing listens
             self.assertEqual([e["name"] for e in decl.get("events", [])],
-                             ["click"] if ctype in self.CLICK else ["position-selected"] if ctype in self.SELECTED else [], ctype)
+                             ["click"] if ctype in self.CLICK else ["position-selected"] if ctype in self.SELECTED
+                             else ["scale-dimensions-changed"] if ctype in self.SCALE_EVENT
+                             else ["frame-changed"] if ctype in self.FRAME_EVENT else [], ctype)
 
     def test_the_enumerations_and_defaults_come_from_the_element(self):
         badge = schema_of("cadre.ob.automationbadge")["properties"]
@@ -1214,6 +1252,40 @@ class GlyphComponents(unittest.TestCase):
         self.assertIn("rings: function (v)", JS)
         self.assertIn("points: toRecords, datasets: toRecords", JS)
 
+    def test_the_bars_carry_the_scale_flags_and_the_advice_zones_the_manifest_gives_as_fields(self):
+        # C2: `hasScale` and `showLabels` are true by default in the element and have no attribute; `advices` is a list of zones
+        for ctype in ("cadre.ob.barhorizontal", "cadre.ob.barvertical"):
+            props = schema_of(ctype)["properties"]
+            for flag in ("hasScale", "showLabels"):
+                self.assertEqual((props[flag]["type"], props[flag]["default"]), ("boolean", True), (ctype, flag))
+                self.assertIn(f'{{"name":"{flag}","kind":"boolean","def":true}}', self.spec_of(ctype), (ctype, flag))
+            self.assertEqual((props["advices"]["type"], props["advices"]["default"]), ("array", []), ctype)
+            self.assertEqual(props["advices"]["items"]["required"], ["min", "max", "type"], ctype)
+            self.assertEqual(props["advices"]["items"]["properties"]["type"]["enum"], ["advice", "caution"], ctype)
+            self.assertIn('{"name":"advices","kind":"linearadvices"}', self.spec_of(ctype), ctype)
+            for left_out in self.BAR_LEFT_OUT:
+                self.assertNotIn(left_out, props, (ctype, left_out))
+            # the setpoint and the value are nullable numbers: undefined (no marker, no fill) until a tag gives one
+            for name in ("value", "setpoint", "newSetpoint"):
+                self.assertEqual((props[name]["type"], props[name]["default"]), (["number", "null"], None), (ctype, name))
+        self.assertIn("linearadvices: toRecords", JS)
+        # the radial instrument names its zone limits `minValue` and `maxValue` (the pinned `GaugeRadialAdvice`)
+        radial = schema_of("cadre.ob.instrumentradial")["properties"]["advices"]
+        self.assertEqual(radial["items"]["required"], ["minValue", "maxValue", "type"])
+        self.assertIn('{"name":"advices","kind":"radialadvices"}', self.spec_of("cadre.ob.instrumentradial"))
+        self.assertIn("radialadvices: toRecords", JS)
+
+    def test_the_readout_block_carries_a_number_or_a_text_as_its_value(self):
+        # C2: the element's `value` is `number | string | null`, which no earlier element had; the wrapper hands it a number as a
+        # number, anything else as text, and a blank or missing value as null (the unavailable dash)
+        props = schema_of("cadre.ob.readoutblock")["properties"]
+        self.assertEqual((props["value"]["type"], props["value"]["default"]), (["number", "string", "null"], None))
+        self.assertIn('{"name":"value","kind":"nvalue","def":null}', self.spec_of("cadre.ob.readoutblock"))
+        self.assertIn("case 'nvalue':", JS)
+        # a frame configuration, the size of the number, and the data quality are not carried
+        for left_out in ("alert", "valueSize", "dataQuality"):
+            self.assertNotIn(left_out, props)
+
     @staticmethod
     def spec_of(ctype):
         start = JS.index('{"type":"%s"' % ctype)
@@ -1278,9 +1350,9 @@ class ModuleOnlyKinds(unittest.TestCase):
 
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
         self.assertEqual(sorted(self.glyph_kinds()), [
-            "area-graph", "automation-badge", "automation-readout", "donut-chart", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
+            "area-graph", "automation-badge", "automation-readout", "bar-horizontal", "bar-vertical", "circular-progress", "donut-chart", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
             "hydraulic-separator", "hydraulic-valve-4-3", "hydraulic-valve-x-2", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
-            "line-graph", "pie-chart", "polar-chart", "radial-bar-chart", "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+            "instrument-radial", "line-graph", "pie-chart", "polar-chart", "radial-bar-chart", "readout-block", "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
             c = self.contracts[self.screen.view_of({"kind": kind})]
@@ -1342,7 +1414,15 @@ class ModuleOnlyKinds(unittest.TestCase):
                                       "data": [{"label": "A", "value": 20}, {"label": "B", "value": 35}],
                                       "colors": ["#3a6ea5", "#2e8b57"]},
                       "radial-bar-chart": {"max": 200, "circumference": 360, "minRingThickness": 8, "data": [120, 80, 40],
-                                           "colors": ["#7a4aa8"]}}[kind]
+                                           "colors": ["#7a4aa8"]},
+                      "bar-horizontal": {"hasBar": True, "value": 42, "setpoint": 70, "width": 400, "showLabels": False,
+                                         "advices": [{"min": 60, "max": 80, "type": "advice", "hinted": False}]},
+                      "bar-vertical": {"hasBar": True, "value": 42, "setpoint": 70, "height": 240, "showLabels": False,
+                                       "advices": [{"min": 60, "max": 80, "type": "caution", "hinted": True}]},
+                      "circular-progress": {"mode": "determinate", "value": 65, "strokeWidth": 6},
+                      "instrument-radial": {"type": "needle", "value": 42, "showLabels": True, "setpoint": 70, "needleColor": "#7a4aa8",
+                                            "advices": [{"minValue": 60, "maxValue": 80, "type": "caution", "hinted": True}]},
+                      "readout-block": {"variant": "advice", "category": "caution", "active": True, "value": "AUTO", "valueType": "text"}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
@@ -1377,7 +1457,16 @@ class ModuleOnlyKinds(unittest.TestCase):
             "line-graph": ("data", "datasets", "labels", "colors", "yAxes", "legend", "unit"),
             "donut-chart": ("data", "colors", "max", "centerReadoutLabel", "centerReadoutUnit"),
             "pie-chart": ("data", "colors", "legend"), "polar-chart": ("data", "colors", "legend"),
-            "radial-bar-chart": ("data", "colors", "max", "legend")}
+            "radial-bar-chart": ("data", "colors", "max", "legend"),
+            # C2: the level, the setpoint marker and the advice zones of a bar (the scheme is `state`)
+            "bar-horizontal": ("value", "setpoint", "newSetpoint", "state", "priority", "advices"),
+            "bar-vertical": ("value", "setpoint", "newSetpoint", "state", "priority", "advices"),
+            # the ring fills with `value` (0 to 100) in the determinate and progressive modes
+            "circular-progress": ("value", "mode"),
+            # the needle or arc at `value`, the setpoint marker, the scheme and the advice zones of the dial
+            "instrument-radial": ("value", "setpoint", "newSetpoint", "state", "priority", "advices"),
+            # the block's number or text, whether it reads as off, its advice category and whether the advice is triggered
+            "readout-block": ("value", "off", "category", "active")}
 
     def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
         # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
@@ -1484,7 +1573,7 @@ class ModuleOnlyKinds(unittest.TestCase):
                 self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
                                          "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
-                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22, "area-graph": 39, "line-graph": 35, "donut-chart": 22, "pie-chart": 17, "polar-chart": 20, "radial-bar-chart": 15}[kind], kind)
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22, "area-graph": 39, "line-graph": 35, "donut-chart": 22, "pie-chart": 17, "polar-chart": 20, "radial-bar-chart": 15, "bar-horizontal": 58, "bar-vertical": 58, "circular-progress": 12, "instrument-radial": 42, "readout-block": 40}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)

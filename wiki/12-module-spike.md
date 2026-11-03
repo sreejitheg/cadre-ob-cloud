@@ -1329,6 +1329,80 @@ the "Module only" section: `obc-area-graph` 39, `obc-line-graph` 35, `obc-donut-
 returns a list of objects, not yet tried on the gateway; the charts' interactive tooltips and legend clicks are the element's own and are
 not wired to anything.
 
+### 17.22 Batch C2: Five Building Blocks (`cadre.ob.barhorizontal`, `barvertical`, `circularprogress`, `instrumentradial`, `readoutblock`); the Alert List Not Wrapped
+
+Batch C2 of tranche T2 wraps five of the six elements of the manifest group `building-blocks` as module-only kinds (section 17.13) of
+the glyph form (section 17.17.1), display only. None has a library kind. A descriptor binds the live attributes with `bind`
+(wiki 17.18.1); the registered components move from 50 to 55. The bundle grew from 2,007,401 bytes to 2,009,628 (horizontal bar),
+2,011,825 (vertical bar), 2,012,334 (circular progress), 2,021,791 (radial instrument) and 2,023,193 (readout block).
+
+17.22.1 Horizontal bar (`bar-horizontal.ts`; 38 attributes). A scale with an optional bar, a value fill, advice zones and a setpoint
+marker. Live: `value` (a nullable number: no fill while empty), `setpoint` and `newSetpoint` (nullable numbers: a marker only while
+set), `state` (`active`, `loading`, `off`) and `priority`. Presentation: the range (`minValue`, `maxValue`), `width` (320), the padding,
+`side`, the scale (`scaleType`, `frameStyle`, the three tick intervals, the three thicknesses, `showMainTickmarkLabels`,
+`scaleBackground`), the bar (`hasBar`, `fillMode`, `fillMin`, `fillMax`, `highlightCurrentValue`), the advice placement
+(`advicePosition`), `fixedAspectRatio` with `scaleReferenceSize`, and the setpoint settings (`touching`, the two deadbands,
+`setpointOverride`, `animateSetpoint`). Three fields without an attribute are carried: `hasScale` and `showLabels` (true by default in
+the element; the `PROPERTIES` table) and `advices`, a list of zones `{min, max, type, hinted}` (`type` is `advice` or `caution`; the
+data kind `linearadvices`, copied by `toRecords`). Left out (`BAR_LEFT_OUT`): `barContainerStyle` and `borderRadiusPosition`, nullable
+enumerations whose undefined default derives from other properties and which any explicit value overrides (recipe 8.12 item 4), and
+`instrumentMode` with `borderRadius`, which serve a bar placed inside another instrument. The field `mainTickmarks` (a list of
+numbers) is not carried: empty, the element marks the minimum, zero and the maximum. The event `scale-dimensions-changed` reports the
+scale's size to a parent chart; it is left unwired. Properties 38; page cases 58; default size 480 by 128 (a stand-in page in Chrome
+measured the drawing 84 to 124 pixels high at 320 to 480 wide, with no console message).
+
+17.22.2 Vertical bar (`bar-vertical.ts`; 38 attributes). The same attributes and fields as 17.22.1 with `height` (320), `paddingTop`
+and `paddingBottom` in place of `width`, `paddingLeft` and `paddingRight`; the same live attributes, left-out attributes and unwired
+event. Properties 38; page cases 58; default size 128 by 320 (the drawing measured 84 to 108 wide).
+
+17.22.3 Circular progress (`circular-progress.ts`; 5 attributes). A ring that fills with `value` (0 to 100) in the `determinate`
+and `progressive-indeterminate` modes, and spins in the default `indeterminate` mode. Live: `value` and `mode`. Presentation:
+`strokeWidth`, `viewBoxSize` and `padding`. The element fills its box (an absolutely positioned host), so the component's box is its
+size: default 48 by 48. Properties 6; page cases 12; no event.
+
+17.22.4 Radial instrument (`instrument-radial.ts`; 29 attributes). A dial with a needle or a filled arc, a scale, advice zones and a
+setpoint marker. Live: `value` (a number, 0 by default), `setpoint` and `newSetpoint` (nullable), `state` and `priority`.
+Presentation: the range, `type` and `needleType` (`filled`, `bar`, `needle`), `needleColor` and `barColor` (empty uses the scheme's
+colour), the scale (`showLabels`, the three tick intervals, `tickmarksInside`, `tickmarkStyle`, `endLabelsMaxMin`), the clip of the
+face (`clipTop`, `clipBottom`, `clipLeft`, `clipRight`, `zoomToFitArc`), `faceDiameter` and the setpoint settings as for the bars.
+`advices` is a list `{minValue, maxValue, type, hinted}` (the data kind `radialadvices`; the radial zones name their limits
+differently from the bars'). Nothing is left out. The event `frame-changed` reports the computed frame to a parent; it is left
+unwired. Properties 31; page cases 42; default size 240 by 240 (the element fills its box).
+
+17.22.5 Readout block (`readout-block.ts`; 23 attributes). A number or a text with a value, setpoint or advice marker. Live: `value`
+(the element declares `number | string | null`, which no earlier element had: the module carries it as a property of the types number,
+string and null, and the wrapper hands the element a number as a number, a blank or missing value as null, which draws the
+unavailable dash, and anything else as text), and for the advice variant `category` (`regular`, `optimal`, `eco`, `caution`,
+`warning`, `alarm`, `running`) and `active` (triggered), `off` and `dataQuality` (left out). Presentation: `variant`, `valueType`
+(`number` or `text`), `size`, `enhanced`, `weight`, `alignment`, `hasDegree`, `hasIcon`, the digits (`fractionDigits`, `maxDigits`,
+`hintedZeros`, `hasSignSpacer`, `spaceReserver`), `offText`, `touching` and `hidePhase`. Left out: `valueSize` and `dataQuality`
+(nullable enumerations whose undefined default is meaningful) and `alert`, which is a flag or an object of the element's own frame
+configuration (the generator cannot map it, and the library draws its alert frames in the wrapper, wiki 13 section 12). The slot
+`icon` is not carried. A text under `valueType` `number` throws in the element's own update (its documented contract), so a descriptor
+that binds a text tag sets `valueType` `text`. Properties 21; page cases 40; default size 144 by 64; no event.
+
+17.22.6 Alert list (`alert-list.ts`) is not wrapped. The element has no attribute and no data property: its rows are its slotted
+children (`obc-alert-list-item` elements, with the slots `empty-icon`, `empty-title` and `empty-description` for the empty state), it
+counts and animates them with a mutation observer, and its only property is `filter`, a function (`attribute: false`). A Perspective
+component here is a single wrapper that sets properties on one element, with no children of its own, so the list as such cannot take
+its rows from a binding. A wrapper that built the items from a list property would be a new list component beside the two the module
+already has for alarms (`obc-alert-list-details` and `obc-alert-list-page-small`, which take `alerts` as data); that is a design
+decision for the owner and is recorded as open, not taken here.
+
+17.22.7 Changes beyond table rows. First, `schema_for` maps an attribute of the type `number | string` (with or without `null`) to a
+property of the three types and the field kind `nvalue`, and the wrapper's `read` has the matching case (three lines). Second,
+nothing else: the scale flags, the advice zones and the stock rows are entries of `PROPERTIES`, `DATA_SCHEMA`, `CONVERT`,
+`COMPONENTS`, `GLYPH_NUMBER_VALUES`, `GLYPH_EXTRA` and `MODULE_ONLY`.
+
+17.22.8 Tests and gateway checks. `tests.test_module` holds 136 tests (134 before this batch), with the five rows
+of `GlyphComponents`, the tests of the bars' scale flags and zones and of the readout block's value, the live binding rows (`LIVE`)
+and the page counts of `ModuleOnlyKinds`. The component test page under `--render module` passes G0 to G7 with 19 devices and 21
+device symbols; a stock build of its descriptor stops with one refusal for each of the 210 new symbols. What the gateway step finds
+on `/component-test`, in the "Module only" section: `obc-bar-horizontal` 58, `obc-bar-vertical` 58, `obc-circular-progress` 12,
+`obc-instrument-radial` 42 and `obc-readout-block` 40, no console error. Open items: the two unwired events; an alert list built from
+rows (17.22.6); `mainTickmarks` and the readout block's `alert` and slot `icon` not carried; a Document or list binding for `advices`
+not yet tried on the gateway.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -613,7 +613,14 @@ GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
                        # radial charts' own scales; the first value is the element's own default
                        "width": (480, 240), "height": (320, 160), "scaleReferenceSize": (384, 192),
                        "max": (100, 200), "thickness": (24, 40), "outerLabelMaxLength": (0, 6), "outerLabelDecimalPlaces": (0, 2),
-                       "fixedHeight": (320, 160), "circumference": (270, 360), "minRingThickness": (16, 8)}
+                       "fixedHeight": (320, 160), "circumference": (270, 360), "minRingThickness": (16, 8),
+                       # the bars (C2): the thickness of the bar, the ticks and the labels, and the padding of the scale
+                       "barThickness": (24, 40), "tickThickness": (24, 12), "labelThickness": (60, 40),
+                       "paddingLeft": (32, 0), "paddingRight": (32, 0), "paddingTop": (32, 0), "paddingBottom": (32, 0),
+                       # the circular progress (C2): the ring's stroke, its view box and its padding
+                       "strokeWidth": (4, 8), "viewBoxSize": (42, 84), "padding": (0, 4),
+                       # the radial instrument (C2): the clip of the face
+                       "clipTop": (0, 20), "clipBottom": (0, 20), "clipLeft": (0, 20), "clipRight": (0, 20)}
 # The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
 # free string property is shown with, where a glyph has one (the readout's unit).
 GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
@@ -665,6 +672,22 @@ GLYPH_EXTRA["polar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57
 GLYPH_EXTRA["radial-bar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a"]}),
                                    ("five rings", {"data": [90, 72, 55, 40, 18]}),
                                    ("full circle, legend", {"circumference": 360, "legend": True})]
+# the advice zones of the bars (C2), our own sample: a hinted caution zone and an advice zone on the scale 0 to 100
+GLYPH_ZONES = [{"min": 60, "max": 80, "type": "advice", "hinted": False}, {"min": 80, "max": 100, "type": "caution", "hinted": True}]
+GLYPH_EXTRA["bar-horizontal"] = [("advice zones", {"hasBar": True, "advices": GLYPH_ZONES}),
+                                 ("setpoint", {"hasBar": True, "setpoint": 70}),
+                                 ("scale without labels", {"showLabels": False, "hasBar": True})]
+GLYPH_EXTRA["bar-vertical"] = GLYPH_EXTRA["bar-horizontal"]
+GLYPH_RADIAL_ZONES = [{"minValue": 60, "maxValue": 80, "type": "advice", "hinted": False},
+                      {"minValue": 80, "maxValue": 100, "type": "caution", "hinted": True}]
+GLYPH_EXTRA["instrument-radial"] = [("advice zones", {"showLabels": True, "advices": GLYPH_RADIAL_ZONES}),
+                                    ("setpoint", {"showLabels": True, "setpoint": 70}),
+                                    ("colours", {"needleColor": "#7a4aa8", "barColor": "#2e8b57"})]
+# the readout block (C2): a value in every case but the default (which shows the unavailable dash), and a text case
+GLYPH_DATA["readout-block"] = {"value": 12.5}
+GLYPH_EXTRA["readout-block"] = [("text value", {"valueType": "text", "value": "AUTO"}),
+                                ("text, left", {"valueType": "text", "value": "STBY", "alignment": "left"}),
+                                ("off text", {"off": True, "offText": "N/A"})]
 GLYPH_EXTRA["pie-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
                             ("sunburst with children", {"sunburst": True, "data": GLYPH_SUNBURST}),
                             ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",

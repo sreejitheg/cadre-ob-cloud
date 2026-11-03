@@ -1,0 +1,292 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "minValue": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum scale value (manual mode)"
+    },
+    "maxValue": {
+      "type": "number",
+      "default": 100,
+      "description": "Maximum scale value (manual mode)"
+    },
+    "height": {
+      "type": "number",
+      "default": 320,
+      "description": "Total height in pixels (including padding bands)"
+    },
+    "paddingTop": {
+      "type": "number",
+      "default": 32,
+      "description": "Padding above the drawing area"
+    },
+    "paddingBottom": {
+      "type": "number",
+      "default": 32,
+      "description": "Padding below the drawing area"
+    },
+    "side": {
+      "type": "string",
+      "enum": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "default": "right",
+      "description": "Which side this scale lives on"
+    },
+    "fixedAspectRatio": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, freezes all internal calculations and scales the entire component proportionally (like CSS transform:scale), except label font-size remains constant. When false (default), dimensions react to component..."
+    },
+    "scaleReferenceSize": {
+      "type": "number",
+      "default": 384,
+      "description": "Reference size for proportional scaling when fixedAspectRatio is true. At this height, the scale renders at native 1:1 (matches Figma design). Above this height, the scale grows proportionally; below, it shrinks...."
+    },
+    "showMainTickmarkLabels": {
+      "type": "boolean",
+      "default": false,
+      "description": "Label the main tickmarks (min / 0 / max) instead of the primary interval ladder, for a scale too short for a ladder. A chart sets it on its slotted scales below its label threshold. Available when showLabels==true."
+    },
+    "hasBar": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show bar"
+    },
+    "scaleBackground": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show background behind the scale tickmarks."
+    },
+    "barThickness": {
+      "type": "number",
+      "default": 24,
+      "description": "Bar/fill thickness in pixels"
+    },
+    "tickThickness": {
+      "type": "number",
+      "default": 24,
+      "description": "Tickmark band thickness in pixels."
+    },
+    "labelThickness": {
+      "type": "number",
+      "default": 60,
+      "description": "Label band thickness in pixels."
+    },
+    "primaryTickmarkInterval": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Interval for primary (longest) tickmarks with labels (minimum 1). When undefined, no primary tickmarks are shown."
+    },
+    "secondaryTickmarkInterval": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Interval for secondary (medium) tickmarks (minimum 1). When undefined, no secondary tickmarks are shown."
+    },
+    "tertiaryTickmarkInterval": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Interval for tertiary (shortest) tickmarks (minimum 1). When undefined, no tertiary tickmarks are shown."
+    },
+    "scaleType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "condensed"
+      ],
+      "default": "regular",
+      "description": "Scale display mode: regular or condensed (shorter ticks)"
+    },
+    "frameStyle": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "flat",
+        "framed",
+        "instrument"
+      ],
+      "default": "regular",
+      "description": "Frame style: regular (4px gap for all), flat (main tickmarks touch edge), framed, or instrument"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "Color priority: enhanced uses blue instrument colors for bar fill and setpoint"
+    },
+    "fillMode": {
+      "type": "string",
+      "enum": [
+        "fill",
+        "tint"
+      ],
+      "default": "fill",
+      "description": "Fill visualization mode: fill or tint Available when hasBar==true && value!=undefined."
+    },
+    "fillMin": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Minimum fill value for tint mode (defaults to 0) Available when hasBar==true && value!=undefined."
+    },
+    "fillMax": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Maximum fill value for tint mode (defaults to value) Available when hasBar==true && value!=undefined."
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Current value (bar fill level)"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "active",
+        "loading",
+        "off"
+      ],
+      "default": "active",
+      "description": "Instrument state (affects colors and some marker behavior)"
+    },
+    "advicePosition": {
+      "type": "string",
+      "enum": [
+        "center",
+        "inner",
+        "outer"
+      ],
+      "default": "inner",
+      "description": "Advice overlay positioning: center (in bar), inner (covers minor ticks), outer (no overlap) Available when hasBar==true."
+    },
+    "highlightCurrentValue": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, displays a dot indicator at the current value position. The dot is rendered in the scale band, touching its inner edge (towards the chart). This provides an alternative to bar fill for highlighting the..."
+    },
+    "setpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Target setpoint value. undefined = no setpoint marker shown."
+    },
+    "newSetpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Adjustment preview for 2-step interface. When defined, two markers are shown: original (dimmed) + new (focus). Available when setpoint!=undefined."
+    },
+    "touching": {
+      "type": "boolean",
+      "default": false,
+      "description": "User is physically interacting with the control. Suppresses at-setpoint calculation and triggers focus visual. Available when setpoint!=undefined."
+    },
+    "autoAtSetpointDeadband": {
+      "type": "number",
+      "default": 1,
+      "description": "Tolerance for auto at-setpoint detection. Available when setpoint!=undefined && autoAtSetpoint==true."
+    },
+    "setpointAtZeroDeadband": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Tolerance for zero-snap visual state. Available when setpoint!=undefined."
+    },
+    "setpointOverride": {
+      "type": "boolean",
+      "default": false,
+      "description": "Override to derive the setpoint color from the instrument's priority regardless of instrument state. Available when setpoint!=undefined."
+    },
+    "animateSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable CSS-animated confirm transition. Available when setpoint!=undefined."
+    },
+    "hasScale": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the bar draws its scale (tickmarks)."
+    },
+    "showLabels": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the scale draws its value labels. Needs the scale."
+    },
+    "advices": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "advice",
+              "caution"
+            ]
+          },
+          "hinted": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "min",
+          "max",
+          "type"
+        ]
+      },
+      "description": "Advice zones on the scale, one object each: `min` and `max` (scale values), `type` (`advice` or `caution`) and `hinted` (drawn faint until the value reaches it)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "value",
+        "setpoint",
+        "advice"
+      ],
+      "default": "value",
+      "description": "Semantic variant (value / setpoint / advice)."
+    },
+    "value": {
+      "type": [
+        "number",
+        "string",
+        "null"
+      ],
+      "default": null,
+      "description": "The value; null/undefined renders a dash. A number by default, or text when valueType is text."
+    },
+    "valueType": {
+      "type": "string",
+      "enum": [
+        "number",
+        "text"
+      ],
+      "default": "number",
+      "description": "How value is interpreted. number (default) formats it via fractionDigits; text renders it verbatim and ignores the numeric format options. Passing text while this is number throws."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "small",
+        "medium",
+        "large"
+      ],
+      "default": "small",
+      "description": "Density tier \u2014 icon size, gap, degree tier."
+    },
+    "enhanced": {
+      "type": "boolean",
+      "default": false,
+      "description": "Accent (in-command) colour tone."
+    },
+    "weight": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "semibold",
+        "bold"
+      ],
+      "default": "regular",
+      "description": "Number font weight (regular / semibold / bold); colour is independent."
+    },
+    "hasDegree": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render the trailing cap-height degree glyph (\u00b0)."
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show the leading marker-icon container (always on for setpoint/advice)."
+    },
+    "fractionDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of fraction digits. Must be between 0 and 100 \u2014 the range Number.prototype.toFixed accepts; outside it throws a RangeError. A fractional count truncates (2.7 \u2192 2). A count that never arrived (NaN, null or..."
+    },
+    "maxDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "Integer digits to reserve / hint (independent of fractionDigits). Bounded before use: a fractional count truncates (2.7 \u2192 2), anything above 100 \u2014 including Infinity \u2014 caps at 100, and a negative count reserves..."
+    },
+    "hintedZeros": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render muted leading zeros filling the integer part to maxDigits. A negative value keeps them all \u2014 the sign is prepended and never consumes a zero (maxDigits 3: 12.3 \u2192 012.3, -12.3 \u2192 -012.3) \u2014 so a negative reading..."
+    },
+    "hasSignSpacer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Reserve a minus-sign column ahead of the digits: an invisible sign placeholder holds the column open while the value is non-negative and the real sign fills it when negative, so the width does not change across zero...."
+    },
+    "spaceReserver": {
+      "type": "string",
+      "default": "",
+      "description": "Explicit longest string to reserve width for (e.g. \"0000.0\"). Combined with the maxDigits-derived reserve by taking whichever is wider, so it can never reserve less than the formatted value needs."
+    },
+    "off": {
+      "type": "boolean",
+      "default": false,
+      "description": "Render offText instead of a number (e.g. equipment powered down)."
+    },
+    "offText": {
+      "type": "string",
+      "default": "OFF",
+      "description": "Text shown when off is true."
+    },
+    "alignment": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ],
+      "default": "right",
+      "description": "Text alignment of the number within its reserved width."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "optimal",
+        "eco",
+        "caution",
+        "warning",
+        "alarm",
+        "running"
+      ],
+      "default": "regular",
+      "description": "Semantic category of an advice block \u2014 picks the default marker icon and the active styling. Only meaningful for variant=\"advice\". Available when variant==advice."
+    },
+    "active": {
+      "type": "boolean",
+      "default": false,
+      "description": "The advice is triggered: the marker swaps to its filled/status icon and the number takes the category's triggered styling (SemiBold for regular/optimal/eco, active text colour for the alert categories). Only..."
+    },
+    "touching": {
+      "type": "boolean",
+      "default": false,
+      "description": "Setpoint focus (touch) state \u2014 only meaningful for role=\"setpoint\"."
+    },
+    "hidePhase": {
+      "type": "string",
+      "enum": [
+        "none",
+        "hiding",
+        "hidden"
+      ],
+      "default": "none",
+      "description": "Setpoint pop-up fade phase \u2014 only meaningful for role=\"setpoint\"."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

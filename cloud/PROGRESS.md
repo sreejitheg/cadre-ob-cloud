@@ -221,9 +221,18 @@
   stylesheet generator now keeps variables named in strings (chart palette). `tests.test_module` 134 passing (133 before); G0 to G7
   pass, 19 devices and 21 device symbols; stock build refuses all 148 new symbols. Bundle 1,954,229 to 2,007,401 bytes. Full suite
   and gateway step pending.
-- 2026-11-03 07:43: T2 C1 in a Sonnet 5.5 subagent at medium effort: about 239,000 tokens, 106 tool calls, 20 min for the
+- 2026-11-03 07:43: T2 C1 in a Sonnet 5.5 subagent at medium effort: 241,237 tokens, 107 tool calls, about 20 min for the
   six bars and graphs (module-only glyphs, display only, data as lists of objects through `bind`). Real defect fixed on
   the way: `scoped_css` dropped the CSS variables the bundle names in strings, so every chart series drew black; the
   stylesheet gained 52 lines and lost none. Bundle 1,954,229 to 2,007,401 bytes (Chart.js was already bundled). F0 in a
   Sonnet 5.5 subagent: 159,726 tokens, 23 tool calls, 3 min 10 s, `cloud/FRAME-DESIGN.md` (frame estimate 3.3 M
   tokens before the ASM variant the owner then asked for).
+- 2026-11-03 08:20: T2 batch C2 (bar-horizontal, bar-vertical, circular-progress, instrument-radial, readout-block as module-only
+  glyphs, display only; `obc-alert-list` not wrapped: slotted rows, no data property, wiki 17.22.6; tokens not known to the subagent).
+  Bundle 2,007,401 to 2,023,193 bytes (2,009,628, 2,011,825, 2,012,334, 2,021,791, 2,023,193 after each). One generator change: `number | string`
+  attributes (`nvalue`). `tests.test_module` 136 passing (134 before); G0 to G7 pass, 19 devices and 21 device symbols; stock build refuses
+  all 210 new symbols. Full suite 1194 before 1196 after. Gateway step pending.
+- 2026-11-03 08:09: T2 C2 in a Sonnet 5.5 subagent at medium effort: 210,088 tokens, 76 tool calls, 16 min 47 s. The
+  horizontal and vertical bars, circular progress, radial instrument and readout block as module-only glyphs, display
+  only (two events unwired); `obc-alert-list` not wrapped (rows are slotted children, no data property). Bundle
+  2,023,193 bytes. Tests 1194 to 1196. The 12 displays of T2 are done: 11 wrapped, 1 recorded as not wrapped.

@@ -49,3 +49,8 @@ import '@oicl/openbridge-webcomponents/dist/bars-graphs/donut-chart/donut-chart.
 import '@oicl/openbridge-webcomponents/dist/bars-graphs/pie-chart/pie-chart.js';
 import '@oicl/openbridge-webcomponents/dist/bars-graphs/polar-chart/polar-chart.js';
 import '@oicl/openbridge-webcomponents/dist/bars-graphs/radial-bar-chart/radial-bar-chart.js';
+import '@oicl/openbridge-webcomponents/dist/building-blocks/bar-horizontal/bar-horizontal.js';
+import '@oicl/openbridge-webcomponents/dist/building-blocks/bar-vertical/bar-vertical.js';
+import '@oicl/openbridge-webcomponents/dist/building-blocks/circular-progress/circular-progress.js';
+import '@oicl/openbridge-webcomponents/dist/building-blocks/instrument-radial/instrument-radial.js';
+import '@oicl/openbridge-webcomponents/dist/building-blocks/readout-block/readout-block.js';
