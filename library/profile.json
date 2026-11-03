@@ -1791,9 +1791,18 @@
      "type": "Boolean"
     }
    },
-   "module": null,
-   "moduleExcept": [],
-   "moduleNeeds": {},
+   "module": "cadre.ob.damper",
+   "moduleExcept": [
+    {
+     "vertical": true
+    }
+   ],
+   "moduleNeeds": {
+    "variant": [
+     "regular",
+     "flat"
+    ]
+   },
    "params": [
     "activated",
     "alert",
@@ -3206,9 +3215,18 @@
    "interlocks": false,
    "maintenance": false,
    "members": {},
-   "module": null,
-   "moduleExcept": [],
-   "moduleNeeds": {},
+   "module": "cadre.ob.switch",
+   "moduleExcept": [
+    {
+     "vertical": true
+    }
+   ],
+   "moduleNeeds": {
+    "variant": [
+     "regular",
+     "flat"
+    ]
+   },
    "params": [
     "activated",
     "alert",

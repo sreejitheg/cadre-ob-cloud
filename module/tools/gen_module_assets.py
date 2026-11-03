@@ -103,6 +103,15 @@ COMPONENTS = [
     {"tag": "obc-resistor", "type": "cadre.ob.resistor", "name": "resistor", "title": "OB Resistor",
      "palette": "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-damper", "type": "cadre.ob.damper", "name": "damper", "title": "OB Damper",
+     "palette": "OpenBridge damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-switch", "type": "cadre.ob.switch", "name": "switch", "title": "OB Switch",
+     "palette": "OpenBridge switch: an electrical switch symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-capacitor", "type": "cadre.ob.capacitor", "name": "capacitor", "title": "OB Capacitor",
+     "palette": "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).

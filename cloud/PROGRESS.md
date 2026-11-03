@@ -121,3 +121,22 @@
   page). Tests 1104 to 1117, all passing; `test_hmi.NewKindTests.test_contracts` now compares
   `screen.library_contracts()` with the generated file, since `load_contracts` also returns module contracts. G0 to
   G7 pass (19 devices, 21 device symbols). Recipe section 8 names the rows a later batch adds.
+- 2026-11-03 04:19: T1 B1 element `obc-damper` wrapped as `cadre.ob.damper` (library kind `damper`, W1 mapped `filter`:
+  `MODULE_KIND`, `MODULE_PARAM`, `MODULE_DROP`, `MODULE_IF_LISTED`, `MODULE_NEEDS` variant, `MODULE_EXCEPT` vertical,
+  `MODULE_VALUE` regular to square; `walk_plan.MODULE_PROP` `on` and `alert`; `glass_gates.MODULE_TAGS`). 22 properties
+  (no `alternativeIcon`). Module, hmi, walk and asm tests passing; `test_testbench` example of a kind with no module
+  component moved from damper to indicator. Tokens not known to the subagent.
+- 2026-11-03 04:22: T1 B1 element `obc-switch` wrapped as `cadre.ob.switch` (library kind `switch`, as damper, no walk
+  entry: no members). 23 properties (`alternativeIcon` regular, s1, s2, s3). The alarm lamps of the test page are switch
+  symbols of indicator devices: `embed_module` now takes the symbol's `deviceKind` for the faceplate kind (a test
+  added). `test_glass_gates_plan` overview module readouts 1 to 2 (the design's switch).
+- 2026-11-03 04:24: T1 B1 element `obc-capacitor` wrapped as `cadre.ob.capacitor` (module-only kind, one row in
+  `MODULE_ONLY`; 23 properties, `alternativeIcon` capacitor01 to capacitor04). Test page: 19 capacitor symbols in
+  "Module only"; a stock build refuses them with 19 errors. Wiki 12 section 17.14. G0 to G7 pass (19 devices, 21 device
+  symbols); full suite with `env -u CADRE_TEST_LOGIN` 1117 to 1132 passing (04:35). Module not built.
+- 2026-11-03 04:36: T1 B1 done in a Sonnet 5.5 subagent at medium effort: 152,614 tokens, 42 tool calls, 19 min 40 s
+  for three elements (about 51,000 tokens each, against 132,000 to 236,000 per wrap in T0). `damper` (library kind,
+  faceplate `Faceplate/Valve`, `on` from `state`), `switch` (library kind, static), `capacitor` (module-only). Real
+  defect fixed on the way: `embed_module` gave a module symbol the faceplate of its symbol kind, so the test page's
+  alarm lamps (switch symbols of indicator devices) would have opened `Faceplate/Empty`; it now uses
+  `params.deviceKind` as the library view does. Tests 1117 to 1132.

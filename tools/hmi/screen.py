@@ -179,7 +179,7 @@ def pulse_members(kind: str) -> list[str]:
 # under `--render stock` the build refuses it (`embed_symbol`, an error gate G7 contract reports). The component test
 # page shows these kinds in one section (`testbench.module_only_block`) and the glass gates find them by the
 # component's element. A later wrap adds one row here (wiki page 12 section 17.13, `cloud/WRAP-RECIPE.md` section 8).
-MODULE_ONLY = {"resistor": "cadre.ob.resistor"}
+MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor"}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
@@ -191,6 +191,7 @@ _MODULE_ONLY_MARKS = {"hasTag": False, "deviceId": "", "deviceKind": "", "device
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
                "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve", "filter": "cadre.ob.filter",
+               "damper": "cadre.ob.damper", "switch": "cadre.ob.switch",
                "generator": "cadre.ob.generator", "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
 # The two kinds of module 0.3.1 (COB-127): a value with its unit, drawn in the box the library gives the block
 # (`symbol_box`) with a digit count in place of a number format, and opening the faceplate of the device
@@ -213,13 +214,16 @@ MODULE_INSTRUMENTS = ("readout", "instrument-field")
 # count), keep the library's view (`module_digits`). The enhanced field with a setpoint is 6 px higher than the
 # library's box and the other cases at most 4 px (`module/web/instruments.json`, `measure_instruments.py`): the
 # element is not cut, since its box does not clip, but it is not fitted either, so that case stays on the library's view.
-# The module's filter has three orientations (`horizontal`, `verticalRight`, `verticalLeft`) where the library's has a
-# `vertical` flag, which does not say which side, so a vertical filter stays on the library's view like a vertical fan.
+# The module's filter, damper and switch have three orientations (`horizontal`, `verticalRight`, `verticalLeft`) where the library's
+# has a `vertical` flag, which does not say which side, so a vertical filter, damper or switch stays on the library's view like a
+# vertical fan.
 # The generator set (`picture` `genset`) is a drawing of the library's own and stays on its view (wiki page 12 section 17.11).
-MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "generator": [{"picture": "genset"}],
+MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "damper": [{"vertical": True}],
+                 "switch": [{"vertical": True}], "generator": [{"picture": "genset"}],
                  "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
 MODULE_NEEDS = {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
-                "filter": {"variant": ["regular", "flat"]},
+                "filter": {"variant": ["regular", "flat"]}, "damper": {"variant": ["regular", "flat"]},
+                "switch": {"variant": ["regular", "flat"]},
                 # The module's generator is the indicator disc: the library's other variants, the activated ground, the
                 # progress ring and the three badges are marks it does not draw, so a symbol that asks for one keeps the
                 # library's view (the duty mark and the out of service greying do so through `parts.SYMBOL_PARAMS`).
@@ -234,7 +238,8 @@ MODULE_STATE = {"pump": ("hasSpeed",), "motor": ("hasSpeed",), "fan": ("hasSpeed
 
 # Parameter values the library and the component name differently: the library's `regular` variant of a filter is the
 # element's `square` (its enumeration is `square` and `flat`, `SquaredVariant`), and `flat` is `flat` in both.
-MODULE_VALUE = {"filter": {"variant": {"regular": "square"}}}
+MODULE_VALUE = {"filter": {"variant": {"regular": "square"}}, "damper": {"variant": {"regular": "square"}},
+               "switch": {"variant": {"regular": "square"}}}
 
 _DIGITS = re.compile(r"(?:#,##)?0(?:\.(0+))?")
 
@@ -373,12 +378,14 @@ _STATUS_DROP = {"showStatus", "statusText", "hasTag", "deviceId", "deviceKind", 
 # chip), a field's label its `tag` (the caption). The number formats become `fractionDigits`, the field's `align`
 # becomes `center`, and the field's own `tag` and `source` are drawn by neither (`embed_module`).
 MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {},
-                "valve": {}, "analogvalve": {}, "filter": {}, "generator": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
+                "valve": {}, "analogvalve": {}, "filter": {}, "damper": {}, "switch": {}, "generator": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
 MODULE_DROP = {"pump": _STATUS_DROP | {"value"}, "motor": _STATUS_DROP | {"value"},
                "fan": _STATUS_DROP | {"value", "vertical"},
                "valve": _STATUS_DROP | {"hasSpeed", "speed", "value"},
                "analogvalve": _STATUS_DROP | {"hasSpeed", "speed"},
                "filter": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "damper": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "switch": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
                "generator": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical", "variant", "picture", "activated",
                                             "progress", "badgeControl", "badgeInterlock", "badgeCommandLocked"},
                "tank": {"medium", "showPercent", "chart", "history", "hasTag", "deviceId", "deviceKind",
@@ -394,7 +401,7 @@ MODULE_IDENT = {"readout": "idTag", "instrument-field": "tag"}
 # the readout's `stretch`. `module_drop` is the drop in force for the schema in hand.
 _STATUS_PROPS = ("showStatus", "statusText", "badgeDuty", "outOfService")
 MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATUS_PROPS, "valve": _STATUS_PROPS,
-                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS,
+                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS, "damper": _STATUS_PROPS, "switch": _STATUS_PROPS,
                     "generator": ("showStatus", "statusText"), "readout": ("stretch",)}
 
 
@@ -946,7 +953,9 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         if kind in MODULE_INSTRUMENTS:   # as `library.SELECT_INSTRUMENT`: the kind the symbol names, tag else label
             shows, title = params.get("deviceKind") or "instrument", params.get("tag") or params.get("label") or ""
         else:
-            shows, title = kind, params.get("tag") or params["deviceId"].split("/")[-1]
+            # the kind the device names, as on the library's view (the test page's alarm lamps are `switch` symbols of
+            # indicator devices, and the switch has no faceplate of its own)
+            shows, title = params.get("deviceKind") or kind, params.get("tag") or params["deviceId"].split("/")[-1]
         own_custom.update({"deviceId": params["deviceId"], "deviceKind": shows, "title": title,
                            "label": params.get("deviceLabel", "")})
         node["events"] = pv.on_click([

@@ -944,6 +944,42 @@ section 2 of the recipe: `entry.js`, `measure_defaults.py`, `gen_module_assets.p
 `tests/test_module.py` (the second runs over the table). Gateway check: `/component-test`, section "Module only", 19 `obc-resistor`
 elements with a non-zero box and no console error.
 
+### 17.14 Batch B1: the Damper, the Switch and the Capacitor (`cadre.ob.damper`, `cadre.ob.switch`, `cadre.ob.capacitor`)
+
+Batch B1 of tranche T1 wraps three static symbols, none with events or a command of its own. The wraps change the module's
+sources only; the module is not built or installed by them, so the components reach a gateway with the next module build.
+Each is imported in `module/web/entry.js`, listed in `measure_defaults.py` and in `COMPONENTS` of `gen_module_assets.py`, and
+registered in `CadreOb.java`, and the schemas, `components.json` and the browser script are regenerated. Each carries the
+element's own attributes, `showStatus` and `componentSize`, and takes no speed, status text, duty badge or out of service mark.
+
+Damper (manifest path `src/automation/damper/damper.ts`). The element has 21 attributes, the filter's set less
+`alternativeIcon` (it has one drawing), so the component has 22 properties. It is the library kind `damper`
+(`Automation/Damper`), a switched device with members, the `Faceplate/Valve` faceplate and `on` bound to its `state` member, so
+`MODULE_KIND` maps it and the symbol keeps the page's existing bindings (the state, the alarm frame of wiki page 13 section 11.2
+and the faceplate click) with no new member or write. As for the filter, the library's `regular` variant is the element's
+`square` (`MODULE_VALUE`), a variant other than `regular` or `flat` stays on the library's view (`MODULE_NEEDS`), and a vertical
+damper stays on the library's view, since the `vertical` flag does not say which of the two vertical orientations is meant
+(`MODULE_EXCEPT`). The walk reads `on` and the alert frame from the element (`walk_plan.MODULE_PROP`). On the test page 13
+damper symbols become the module's component, the twelve cases and the test device.
+
+Switch (`src/automation/switch/switch.ts`). The element has the filter's 22 attributes; `alternativeIcon` is `regular`, `s1`,
+`s2` or `s3`. It is the library kind `switch`, a plain symbol with no members and no faceplate of its own, mapped exactly as the
+filter, with the same three rules. On the test page 17 switch symbols become the module's component: the twelve cases and the
+five alarm lamps (`alarm_block`), which are switch symbols of indicator devices. A lamp opens the faceplate of the kind its
+device names, so `embed_module` now takes the symbol's `deviceKind` where the descriptor states one and the kind otherwise,
+as the library's view does; without it a module switch lamp would have opened the empty faceplate.
+
+Capacitor (`src/automation/capacitor/capacitor.ts`). The element has the filter's 22 attributes; `alternativeIcon` is
+`capacitor01` to `capacitor04`. The library has no such kind, so it is a module-only kind (section 17.13): one row in
+`screen.MODULE_ONLY` and nothing else in the generator, the test page or the glass gates. The "Module only" section of the test
+page gains 19 capacitor symbols, and a stock build of that page refuses them with one error each.
+
+Tests: `DamperComponent`, `SwitchComponent` and `CapacitorComponent` in `tests/test_module.py` (five tests each), the damper
+and switch cases in `tests/test_hmi.py` (mapping tables, variants, vertical, the lamp's faceplate kind), and the page test of
+`tests/test_testbench.py`, whose example of a kind the module does not draw is now the indicator (the damper's `none` readout
+position is a library value only, and the page omits it). Gates G0 to G7 pass on the component test page with 19 devices and 21
+device symbols.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -64,7 +64,13 @@ public final class CadreOb {
         descriptor("cadre.ob.canvaszoom", "canvaszoom", "OB Canvas Zoom",
             "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page.", "obCanvasZoom", List.of()),
         descriptor("cadre.ob.resistor", "resistor", "OB Resistor",
-            "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obResistor", List.of())
+            "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obResistor", List.of()),
+        descriptor("cadre.ob.damper", "damper", "OB Damper",
+            "OpenBridge damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame.", "obDamper", List.of()),
+        descriptor("cadre.ob.switch", "switch", "OB Switch",
+            "OpenBridge switch: an electrical switch symbol on a diagram, with readout, badges and alert frame.", "obSwitch", List.of()),
+        descriptor("cadre.ob.capacitor", "capacitor", "OB Capacitor",
+            "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obCapacitor", List.of())
     );
 
     private CadreOb() {

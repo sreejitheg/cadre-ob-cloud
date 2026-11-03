@@ -3565,7 +3565,7 @@ class FirstRenderTests(unittest.TestCase):
         node, errors = self.embed(dict(pump, params={"tag": "P-9", "hasSpeed": True}), render="module")
         self.assertEqual((node["type"], node["props"]["hasSpeed"], errors), ("cadre.ob.pump", True, []))
         # the motor and the valves are the module's (COB-074); a vertical fan has no module artwork
-        for kind in ("motor", "valve", "analogvalve", "fan", "filter"):
+        for kind in ("motor", "valve", "analogvalve", "fan", "filter", "damper", "switch"):
             node, errors = self.embed(dict(pump, kind=kind, params={"tag": "X-9"}), render="module")
             self.assertEqual((node["type"], errors), (screen.MODULE_KIND[kind], []), kind)
         node, errors = self.embed(dict(pump, kind="fan", params={"tag": "F-9", "vertical": True}), render="module")
@@ -3574,11 +3574,13 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
         self.assertEqual((screen.MODULE_NEEDS, screen.MODULE_EXCEPT), (
             {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
-             "filter": {"variant": ["regular", "flat"]},
+             "filter": {"variant": ["regular", "flat"]}, "damper": {"variant": ["regular", "flat"]},
+             "switch": {"variant": ["regular", "flat"]},
              "generator": {"variant": ["regular"], "activated": [False], "progress": [False],
                            "badgeControl": ["none"], "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]},
              "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}},
-            {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "generator": [{"picture": "genset"}],
+            {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "damper": [{"vertical": True}],
+            "switch": [{"vertical": True}], "generator": [{"picture": "genset"}],
              "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
         # a filter: the library's regular variant is the element's square; a vertical one stays on the library's view
         node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "regular"}), render="module")
@@ -3586,6 +3588,23 @@ class FirstRenderTests(unittest.TestCase):
         node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "flat"}), render="module")
         self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "flat", []))
         node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
+        # a damper, as a filter (batch B1)
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.damper", "square", []))
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.damper", "flat", []))
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
+        # a switch that names an indicator device (the test page's alarm lamps) opens the indicator's faceplate
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "AL", "hasTag": True, "deviceId": "[default]t/ALM", "deviceKind": "indicator"}), render="module")
+        self.assertEqual((node["type"], node["custom"]["deviceKind"], errors), ("cadre.ob.switch", "indicator", []))
+        # a switch, as a filter (batch B1)
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.switch", "square", []))
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.switch", "flat", []))
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "vertical": True}), render="module")
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
 
     def test_a_generator_is_the_modules_indicator_unless_it_asks_for_what_the_disc_lacks(self):

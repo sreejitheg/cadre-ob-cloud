@@ -14,3 +14,6 @@ import '@oicl/openbridge-webcomponents/dist/navigation-instruments/instrument-fi
 import '@oicl/openbridge-webcomponents/dist/components/alert-list-details/alert-list-details.js';
 import '@oicl/openbridge-webcomponents/dist/pages/alert-list-page-small/alert-list-page-small.js';
 import '@oicl/openbridge-webcomponents/dist/automation/resistor/resistor.js';
+import '@oicl/openbridge-webcomponents/dist/automation/damper/damper.js';
+import '@oicl/openbridge-webcomponents/dist/automation/switch/switch.js';
+import '@oicl/openbridge-webcomponents/dist/automation/capacitor/capacitor.js';
