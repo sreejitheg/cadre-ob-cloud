@@ -308,3 +308,10 @@
   `wiki/14-library-configuration.md` and its index line, and GF-99 to GF-114 in `wiki/07`. Tests 1299 to 1304.
 - 2026-11-03 13:23: Final regression on module 0.7.0 ("Registered 88", script 2,753,602 bytes), first project:
   `cadre_hmi_wtp` G8 6 of 6, G11 44 of 44, G10 17 of 17, walk PASS in every group, plant restored.
+- 2026-11-03 13:58: Final regression on 0.7.0 (`wtp_suite.py`, four projects, 66 min): `cadre_hmi_wtpob` G8 6 of 6, G11
+  44 of 44, G10 21 of 21, walk PASS in every group, plant restored; so both old frames pass the whole suite on 0.7.0.
+  `cadre_hmi_wtpobf` (`ob`): G8 and G11 ran, then G10 stopped in `instrument_steps`: the frame's alert menu, opened by
+  an earlier step, still lay over the faceplate dock and took the click. `cadre_hmi_wtpoba` not reached. G11 on the
+  component test page first stopped at once (1641 leaves, the count moving under animated frame components and glyphs);
+  the sweep now clicks only the module components that draw a device (`faceplates.DEVICE_COMPONENTS`, held to
+  `screen.MODULE_KIND` by a test), and was rerun. F8 (G10 and the walk on the new frames) started.
