@@ -57,3 +57,12 @@
   running state from `state`, the alarm frame from `custom.alerts` through the unchanged `obc-alert-frame` in the
   wrapper, the click opens `Faceplate/ASM/Generator`. Tests 1086 to 1093 (one expectation of
   `tests/test_asm_devices.py` updated for the module rendering, its checks kept on both renderings); G0 to G7 pass.
+- 2026-11-03 01:15: Baseline G11 on the component test page rerun with `--faceplate asm`: 21 of 21 devices, 278 leaf
+  views, no tab fault; one finding remains (real, present at 0.4.3 before any wrap, cause not established): the
+  faceplate opened from the instrument field `TB_FIELD` reads its title as `Temp`, the field's label, so the sweep
+  reports `TB_FIELD` missing and `Temp` unexpected. 15 min 4 s.
+- 2026-11-03 01:17: Step 3.6 `cloud/setup.sh` written: `environment` (idempotent; 0.3 s on a warm machine; cold,
+  about 5 min: apt JDK about 1 min, image pull about 1 min, Gradle warm-up 2 min 11 s, npm ci 5 s), `gateway`
+  (tested from scratch on a throwaway gateway on port 8089: 48 s to a gateway whose token answers 200; a second
+  run changes nothing and does not restart) and `trust-module`. `dockerd` started by the session works and is
+  recorded in the script.
