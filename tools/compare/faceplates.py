@@ -298,6 +298,20 @@ def open_tabs(page, right, title: str, expect: dict, expect_ilk: dict | None = N
     return out, faults
 
 
+def settled_points(page, tries: int = 30, pause: int = 1000) -> list:
+    """The leaves of the page once their count holds still between two measures `pause` ms apart (at most `tries`
+    measures). A large page (the component test page of tranche T1, 830 leaves) still sizes an element after the
+    load and the fixed wait, and the guard of `sweep` then took that for a change made by a click."""
+    points = page.evaluate(LEAF_POINTS)
+    for _ in range(tries):
+        page.wait_for_timeout(pause)
+        again = page.evaluate(LEAF_POINTS)
+        if len(again) == len(points):
+            return again
+        points = again
+    return points
+
+
 def sweep(page, base: str, route: str, expected: set[str], expect_alarms: dict | None = None,
           expect_ilk: dict | None = None, devices: dict | None = None, shallow: set[str] | None = None) -> dict:
     """Sweep one page. A device whose title is in `shallow` is checked by its opener only: its record is
@@ -305,7 +319,7 @@ def sweep(page, base: str, route: str, expected: set[str], expect_alarms: dict |
     page.goto(base + route, wait_until="networkidle", timeout=60000)
     page.wait_for_timeout(4000)
     right = page.locator(".docked-view-right")
-    points = page.evaluate(LEAF_POINTS)
+    points = settled_points(page)
     opened, faults = {}, []
     for i in range(len(points)):
         now = page.evaluate(LEAF_POINTS)

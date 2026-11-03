@@ -141,6 +141,29 @@ document.getElementById('close').addEventListener('click', function () { dock.cl
 
 
 @unittest.skipUnless(HAVE_BROWSER, "Playwright is not importable here; run under ctig's .venv")
+class SettledPointsTests(unittest.TestCase):
+    """The sweep starts from a page whose leaves hold still (tranche T1: 830 leaves, one sized late)."""
+
+    class Growing:
+        def __init__(self, counts):
+            self.counts, self.waits = list(counts), 0
+
+        def evaluate(self, script):
+            return [[0, 0]] * (self.counts.pop(0) if len(self.counts) > 1 else self.counts[0])
+
+        def wait_for_timeout(self, ms):
+            self.waits += 1
+
+    def test_the_leaves_are_measured_until_their_count_holds(self):
+        page = self.Growing([830, 831, 831])
+        self.assertEqual(len(faceplates.settled_points(page)), 831)
+
+    def test_a_page_that_never_settles_is_measured_at_most_tries_times(self):
+        page = self.Growing(list(range(100, 200)))
+        faceplates.settled_points(page, tries=5)
+        self.assertEqual(page.waits, 5)
+
+
 class ScrollInChromiumTests(unittest.TestCase):
     """The real measure and the real locators on a page whose leaves lie far below the first window, in a scroller of its
     own (as Perspective's page is): a click below the window's edge reaches nothing."""
