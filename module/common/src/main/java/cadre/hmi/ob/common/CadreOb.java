@@ -40,6 +40,8 @@ public final class CadreOb {
             "OpenBridge digital valve: open or closed, badges and alert frame.", "obValve", List.of()),
         descriptor("cadre.ob.analogvalve", "analogvalve", "OB Analog Valve",
             "OpenBridge analogue valve: opening readout, badges and alert frame.", "obAnalogValve", List.of()),
+        descriptor("cadre.ob.filter", "filter", "OB Filter",
+            "OpenBridge filter: a static symbol on a diagram, with readout, badges and alert frame.", "obFilter", List.of()),
         descriptor("cadre.ob.readout", "readout", "OB Readout",
             "OpenBridge readout: value chip with its unit and an identifier beneath it.", "obReadout", List.of()),
         descriptor("cadre.ob.instrumentfield", "instrumentfield", "OB Instrument Field",

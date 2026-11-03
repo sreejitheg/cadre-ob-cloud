@@ -346,7 +346,8 @@ def module_value_ok(kind: str, params: dict, param: str) -> bool:
     allows, the module's component only those of its enumeration, unless the generator keeps the symbol on the
     library's view for it (`screen.module_draws`)."""
     enum = module_enum(kind, param)
-    if enum is None or params.get(param) in enum:
+    value = screen.MODULE_VALUE.get(kind, {}).get(param, {}).get(params.get(param), params.get(param))
+    if enum is None or value in enum:
         return True
     return not screen.module_draws(kind, params, target="module")
 

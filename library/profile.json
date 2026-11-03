@@ -2037,9 +2037,18 @@
    "interlocks": false,
    "maintenance": false,
    "members": {},
-   "module": null,
-   "moduleExcept": [],
-   "moduleNeeds": {},
+   "module": "cadre.ob.filter",
+   "moduleExcept": [
+    {
+     "vertical": true
+    }
+   ],
+   "moduleNeeds": {
+    "variant": [
+     "regular",
+     "flat"
+    ]
+   },
    "params": [
     "activated",
     "alert",

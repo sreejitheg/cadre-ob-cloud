@@ -34,3 +34,16 @@
   tracked ones. Installed by REST; the REST restart left the gateway in commissioning (unsigned certificate to
   trust); trusted with `POST /post-step` (step `modules`, `acceptedCertificates`), container restarted: module
   0.4.3 ACTIVE, "Registered 11 Cadre OpenBridge components", script served (997,469 bytes).
+- 2026-11-03 00:30: Step 3.5 parents and samples. `cadre_hmi_base` rebuilt byte-identical to the committed build and
+  deployed (G1 65 views clean); `cadre_hmi_base_asm` built and deployed. `cadre_hmi_wtp` and `cadre_hmi_wtpob`
+  (`--render module`) pass G0 to G7 and deployed; their committed builds predate the generator at `d9f8655` (the
+  rebuilt files differ; not committed). `wtp_suite.py` on `cadre_hmi_wtpob`: G8 6 of 6 routes (139, 158, 257, 155,
+  217 and 122 components, no overlay or error badge), G11 44 of 44; the suite then stopped in G10 on a real defect
+  of the tools (`glass.button` reads `scope.page` of a Playwright `Page`, `tools/compare/glass.py` line 226), so G10
+  and the walk did not run (outside T0; reported, not fixed). The component test page (`cadre_hmi_ctest`, ASM
+  frame and faceplates, module rendering) passes G0 to G7 (19 devices, 21 device symbols) and deployed with 838 tags;
+  G8 on `/component-test` 5270 components, no overlay or error badge.
+- 2026-11-03 00:45: W1 `obc-filter` done in a Sonnet 5.5 subagent at medium effort: 132,335 tokens, 32 tool calls,
+  11 min 12 s. Component `cadre.ob.filter`; the library's `filter` kind now maps to it under `--render module`
+  (12 cases on the test page; a vertical filter stays on the library view). Tests 1081 to 1086, all passing;
+  G0 to G7 pass with 19 devices and 21 device symbols.

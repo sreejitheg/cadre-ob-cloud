@@ -76,12 +76,12 @@ class DeviceProps(unittest.TestCase):
                 self.assertEqual(schema_of(ctype)["properties"][name]["default"], default, f"{ctype}.{name}")
 
     def test_the_other_components_do_not_carry_them(self):
-        # the two valves carry the element's own `showStatus` since 0.3.2 (`gen_module_assets.PROPERTIES`)
+        # the two valves and the filter carry the element's own `showStatus` (valves since 0.3.2) (`gen_module_assets.PROPERTIES`)
         for ctype, c in COMPONENTS.items():
             if ctype in DEVICES:
                 continue
             for name in DEVICE_PROPS:
-                if ctype in ("cadre.ob.valve", "cadre.ob.analogvalve") and name == "showStatus":
+                if ctype in ("cadre.ob.valve", "cadre.ob.analogvalve", "cadre.ob.filter") and name == "showStatus":
                     self.assertEqual((c["props"][name]["type"], c["props"][name]["default"]), ("boolean", True), ctype)
                     continue
                 self.assertNotIn(name, c["props"], f"{ctype}.{name}")
@@ -251,6 +251,57 @@ class AlertRowSelection(unittest.TestCase):
         for needle in ("selectable false", "stale", "onRowClick", "selectedIds"):
             self.assertIn(needle, mjs, needle)
         self.assertIn("alertselect.mjs", (MODULE / "tools/harness/README.md").read_text(encoding="utf-8"))
+
+
+class FilterComponent(unittest.TestCase):
+    """The static filter symbol (spike T0, wrap W1): `obc-filter`, no events, no command of its own."""
+    ctype = "cadre.ob.filter"
+
+    # the element's attributes in the manifest (src/automation/filter/filter.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves
+    MANIFEST_ATTRIBUTES = {
+        "alternativeIcon", "on", "variant", "orientation", "readoutPosition", "readoutSize", "tag", "positioning",
+        "activated", "alert", "alertFrameType", "alertFrameThickness", "alertFrameStatus", "alertFrameMode",
+        "showAlertIcon", "progress", "progressMode", "progressValue", "badgeControl", "badgeCommandLocked",
+        "badgeInterlock", "badgeAlert"}
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-filter")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/filter/filter.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-filter")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["filter1", "filter2", "filter3", "filter4"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.filter", "filter"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/filter.props.json").exists())
+        self.assertIn("automation/filter/filter.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.filter","tag":"obc-filter"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-filter"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
 
 
 class Release(unittest.TestCase):

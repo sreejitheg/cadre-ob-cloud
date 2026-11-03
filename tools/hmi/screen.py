@@ -176,7 +176,7 @@ def pulse_members(kind: str) -> list[str]:
 # page 12) and every other kind as before. The descriptor does not change.
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
-               "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve",
+               "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve", "filter": "cadre.ob.filter",
                "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
 # The two kinds of module 0.3.1 (COB-127): a value with its unit, drawn in the box the library gives the block
 # (`symbol_box`) with a digit count in place of a number format, and opening the faceplate of the device
@@ -199,14 +199,21 @@ MODULE_INSTRUMENTS = ("readout", "instrument-field")
 # count), keep the library's view (`module_digits`). The enhanced field with a setpoint is 6 px higher than the
 # library's box and the other cases at most 4 px (`module/web/instruments.json`, `measure_instruments.py`): the
 # element is not cut, since its box does not clip, but it is not fitted either, so that case stays on the library's view.
-MODULE_EXCEPT = {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
+# The module's filter has three orientations (`horizontal`, `verticalRight`, `verticalLeft`) where the library's has a
+# `vertical` flag, which does not say which side, so a vertical filter stays on the library's view like a vertical fan.
+MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
 MODULE_NEEDS = {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
+                "filter": {"variant": ["regular", "flat"]},
                 "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}}
 # Parameters the module's component states with the contract's default where the symbol gives none: the
 # component's own default differs from the library view's (the module's pump prints a speed, the library's
 # does not).
 MODULE_STATE = {"pump": ("hasSpeed",), "motor": ("hasSpeed",), "fan": ("hasSpeed",),
                 "tank": ("unit", "hasCapacity"), "readout": ("value",), "instrument-field": ("value",)}
+
+# Parameter values the library and the component name differently: the library's `regular` variant of a filter is the
+# element's `square` (its enumeration is `square` and `flat`, `SquaredVariant`), and `flat` is `flat` in both.
+MODULE_VALUE = {"filter": {"variant": {"regular": "square"}}}
 
 _DIGITS = re.compile(r"(?:#,##)?0(?:\.(0+))?")
 
@@ -314,11 +321,12 @@ _STATUS_DROP = {"showStatus", "statusText", "hasTag", "deviceId", "deviceKind", 
 # chip), a field's label its `tag` (the caption). The number formats become `fractionDigits`, the field's `align`
 # becomes `center`, and the field's own `tag` and `source` are drawn by neither (`embed_module`).
 MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {},
-                "valve": {}, "analogvalve": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
+                "valve": {}, "analogvalve": {}, "filter": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
 MODULE_DROP = {"pump": _STATUS_DROP | {"value"}, "motor": _STATUS_DROP | {"value"},
                "fan": _STATUS_DROP | {"value", "vertical"},
                "valve": _STATUS_DROP | {"hasSpeed", "speed", "value"},
                "analogvalve": _STATUS_DROP | {"hasSpeed", "speed"},
+               "filter": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
                "tank": {"medium", "showPercent", "chart", "history", "hasTag", "deviceId", "deviceKind",
                         "deviceLabel", "valueFractionDigits"},
                "readout": {"format", "hasTag", "label", "deviceId", "deviceKind", "deviceLabel", "stretch"},
@@ -332,7 +340,7 @@ MODULE_IDENT = {"readout": "idTag", "instrument-field": "tag"}
 # the readout's `stretch`. `module_drop` is the drop in force for the schema in hand.
 _STATUS_PROPS = ("showStatus", "statusText", "badgeDuty", "outOfService")
 MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATUS_PROPS, "valve": _STATUS_PROPS,
-                    "analogvalve": _STATUS_PROPS, "readout": ("stretch",)}
+                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS, "readout": ("stretch",)}
 
 
 def module_drop(kind: str) -> set[str]:
@@ -805,6 +813,9 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
     for k in MODULE_STATE.get(kind, ()):
         if k not in bound:            # a default stated beside a binding shows instead of the bound value (GF-61)
             props.setdefault(k, c["params"][k])
+    for k, values in MODULE_VALUE.get(kind, {}).items():
+        if props.get(k) in values:
+            props[k] = values[props[k]]
     if kind == "instrument-field" and params.get("hasSetpoint") and "setpoint" not in bound:
         props.setdefault("setpoint", c["params"]["setpoint"])
     if kind in MODULE_INSTRUMENTS:

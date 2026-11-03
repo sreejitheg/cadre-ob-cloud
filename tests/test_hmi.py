@@ -3565,7 +3565,7 @@ class FirstRenderTests(unittest.TestCase):
         node, errors = self.embed(dict(pump, params={"tag": "P-9", "hasSpeed": True}), render="module")
         self.assertEqual((node["type"], node["props"]["hasSpeed"], errors), ("cadre.ob.pump", True, []))
         # the motor and the valves are the module's (COB-074); a vertical fan has no module artwork
-        for kind in ("motor", "valve", "analogvalve", "fan"):
+        for kind in ("motor", "valve", "analogvalve", "fan", "filter"):
             node, errors = self.embed(dict(pump, kind=kind, params={"tag": "X-9"}), render="module")
             self.assertEqual((node["type"], errors), (screen.MODULE_KIND[kind], []), kind)
         node, errors = self.embed(dict(pump, kind="fan", params={"tag": "F-9", "vertical": True}), render="module")
@@ -3574,8 +3574,17 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
         self.assertEqual((screen.MODULE_NEEDS, screen.MODULE_EXCEPT), (
             {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
+             "filter": {"variant": ["regular", "flat"]},
              "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}},
-            {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
+            {"fan": [{"vertical": True}], "filter": [{"vertical": True}],
+             "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
+        # a filter: the library's regular variant is the element's square; a vertical one stays on the library's view
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "square", []))
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "flat", []))
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
 
     def test_every_module_property_the_generator_states_is_in_the_components_schema(self):
         # a property of the library's contract that the generator passes to a module component must be one the
@@ -4623,7 +4632,7 @@ class ToolbarTests(unittest.TestCase):
                              s["id"])
             # no value beside the binding (GF-61)
             self.assertNotIn("showStatus", n["props"].get("params", n["props"]), s["id"])
-        self.assertEqual(kinds, {"cadre.ob.pump", "cadre.ob.valve", "ia.display.view"})   # module and library alike
+        self.assertEqual(kinds, {"cadre.ob.pump", "cadre.ob.valve", "cadre.ob.filter"})   # module and library alike
         # a symbol whose descriptor refuses its state readout keeps it hidden whichever way the button stands
         desc = copy.deepcopy(self.desc)
         next(s for s in desc["symbols"] if s["id"] == "P301")["params"]["showStatus"] = False

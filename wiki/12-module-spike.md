@@ -778,6 +778,35 @@ neither built nor installed (COB-169): until it is, a valve's `showStatus` on a 
 does not declare, which the gateway imports and the wrapper ignores (GF-72), and the toolbar's Readout button leaves the
 module's valves as they are. Its release steps are those of section 17.6, with 0.4.3 in place of 0.4.0.
 
+### 17.10 Wrap W1: the Filter (`cadre.ob.filter`)
+
+Spike T0 wrap W1 adds `cadre.ob.filter`, a static symbol with no command of its own, from `obc-filter` (manifest path
+`src/automation/filter/filter.ts`). The element has no events. The wrap changes the module's sources only; the module is not
+built or installed by it, so the component reaches a gateway with the next module build.
+
+Properties. The 22 attributes of the manifest (`alternativeIcon`, `on`, `variant`, `orientation`, `readoutPosition`,
+`readoutSize`, `tag`, `positioning`, `activated`, `alert`, `alertFrameType`, `alertFrameThickness`, `alertFrameStatus`,
+`alertFrameMode`, `showAlertIcon`, `progress`, `progressMode`, `progressValue`, `badgeControl`, `badgeCommandLocked`,
+`badgeInterlock`, `badgeAlert`), the element's own `showStatus` field (as on the valves, so the toolbar's Readout button reaches
+it) and `componentSize`. Enumerations come from the element's declarations as for the other elements: `alternativeIcon` is
+`filter1` to `filter4`, `variant` is `square` or `flat`, and `orientation` is `horizontal`, `verticalRight` or `verticalLeft`. Defaults are
+measured (`module/web/defaults.json`, `measure_defaults.py`). The filter takes no speed, status text, duty badge or out of
+service mark.
+
+Generator and bundle. `obc-filter` is imported in `module/web/entry.js`, listed in `measure_defaults.py` and in `COMPONENTS` of
+`gen_module_assets.py`, registered in `CadreOb.java`, and the schema, `components.json` and the browser script are regenerated.
+
+Test page. The library already has a `filter` kind (`Automation/Filter`, in the component test page's symbol kinds), so the page
+needed no new block: `MODULE_KIND` maps `filter` to `cadre.ob.filter`, as it maps the valves, and the page's twelve filter
+cases become module components under `--render module`. Three consequences follow. The library's variant `regular` is the
+element's `square` (`MODULE_VALUE`, applied in `embed_module` and in the test page's `module_value_ok`). The library's
+`vertical` flag does not say which side the element's two vertical orientations mean, so a vertical filter stays on the library's
+view (`MODULE_EXCEPT`, as a vertical fan). A variant other than `regular` or `flat` stays on the library's view
+(`MODULE_NEEDS`). The glass gates name the element in `MODULE_TAGS`. `library/profile.json` is regenerated.
+
+Tests: `FilterComponent` in `tests/test_module.py` (five tests), and the filter cases added to `tests/test_hmi.py`. Gates G0 to G7
+pass on the component test page with 19 devices and 21 device symbols.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,
