@@ -273,5 +273,29 @@
   "selectedMode": "all",
   "alerts": [],
   "showTime": false
+ },
+ "obc-resistor": {
+  "alternativeIcon": "resistor1",
+  "on": false,
+  "variant": "square",
+  "orientation": "horizontal",
+  "readoutPosition": "bottom",
+  "readoutSize": "regular",
+  "tag": null,
+  "positioning": "point",
+  "activated": false,
+  "alert": false,
+  "alertFrameType": "small-side-flip",
+  "alertFrameThickness": "small",
+  "alertFrameStatus": "alarm",
+  "alertFrameMode": "acked-active",
+  "showAlertIcon": false,
+  "progress": false,
+  "progressMode": "indeterminate",
+  "progressValue": 0,
+  "badgeControl": "none",
+  "badgeCommandLocked": "none",
+  "badgeInterlock": "none",
+  "badgeAlert": "none"
  }
 }

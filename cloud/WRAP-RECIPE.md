@@ -443,3 +443,30 @@ batch (section 4.2).
 4. **G11 sweep time.** About 15 minutes a sweep; a batch of stateful devices needs one.
 5. **Library mappings to decide.** `automation-readout` against `readout` (the transmitter), and the valve glyphs against
    `analogvalve`: the owner or the orchestrator names the mapping before the wrap.
+
+## 8. Adding a Module-Only Kind (built in B0)
+
+A module-only kind is a descriptor kind with no library view (section 7.2, Option B). Batch B0 built the mechanism and wrapped
+`obc-resistor` as the pilot. A later batch follows sections 2.1 to 2.5 and 2.11 (the bundle, the measured defaults, the generator entry, the
+Java registration, regeneration, the module test) for each element, and replaces sections 2.6 to 2.10 by the rows below. It reads no
+implementation.
+
+1. **One row**, in `tools/hmi/screen.py`, the table `MODULE_ONLY` (kind to component id), for example `"capacitor": "cadre.ob.capacitor"`.
+   The kind is the tag without `obc-`, hyphens kept (`bipolar-transistor`). Nothing else in `screen.py`, `testbench.py` or
+   `glass_gates.py` changes: the contract, the pseudo view `Module/<kind>`, the drawing under `--render module`, the refusal under
+   `--render stock`, the "Module only" section of the test page and the glass gates' element all follow the row.
+2. **The component id** is the `type` of the `gen_module_assets.py` entry (section 2.3); the row must name a component in
+   `module/components.json`, which the module test `ModuleOnlyKinds` checks. The element must have `on`, `tag`, `readoutPosition` and
+   the alert properties as the filter does (a static symbol on the filter's set). An element that does not (the badge, the check valve
+   and the valve glyphs of B4) is outside this mechanism as it stands: it assumes the geometry of an automation symbol (a 48 px symbol box and a readout), so such an element needs its own
+   contract keys in `screen.module_contract` before its row is added; report it to the orchestrator.
+3. **The module test**: copy `ResistorComponent` of `tests/test_module.py` (section 2.11) and change `ctype`, the manifest path and tag, and
+   the `alternativeIcon` enumeration. Add the type to the `carried` dictionary of `DeviceProps.test_the_other_components_do_not_carry_them`.
+   The mechanism tests `ModuleOnlyKinds` run over the table and need no copy.
+4. **Do not add** the kind to `MODULE_KIND`, `MODULE_PARAM`, `MODULE_DROP`, `MODULE_IF_LISTED`, `KIND_VIEW`, `glass_gates.MODULE_TAGS` or
+   `SYMBOL_KINDS`; the profile and `contracts.json` do not change.
+5. **Verification** (section 4.1): the test page gains the kind's symbols (19 for a filter-set element); the device and symbol counts of G7
+   stay 19 and 21; a stock build of a descriptor that names the kind (the page's `workspace/ctest/component-test.json` written under
+   `--render module`, built with `--render stock` into a scratch directory) stops with one error for each symbol.
+6. **Gateway** (section 4.2): G8 on `/component-test` shows the section "Module only" with a count of `obc-<name>` elements equal to its
+   symbols and no console error.

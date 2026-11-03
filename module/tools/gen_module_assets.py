@@ -100,6 +100,9 @@ COMPONENTS = [
      "size": {"width": 640, "height": 420}, "exclude": [], "dts": "pages/alert-list-page-small/alert-list-page-small.d.ts",
      "data": {"alerts": "alerts"}, "events": ["ack-click", "row-click", "silence-click", "ack-all-visible-click"],
      "extra": ["selectable", "selectedIds"], "selection": True},
+    {"tag": "obc-resistor", "type": "cadre.ob.resistor", "name": "resistor", "title": "OB Resistor",
+     "palette": "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).

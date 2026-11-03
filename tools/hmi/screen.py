@@ -58,6 +58,8 @@ def view_of(sym: dict) -> str:
     kind = sym["kind"].lower()
     if kind == "generator" and (sym.get("params") or {}).get("picture") == "genset":
         return GENSET_VIEW
+    if kind in MODULE_ONLY:
+        return MODULE_VIEW + kind
     return KIND_VIEW.get(kind, "")
 
 READOUT_EXTENT = {"right": (64, 0), "left": (64, 0), "bottom": (24, 44), "top": (24, 44), "none": (0, 0)}
@@ -171,6 +173,18 @@ def pulse_members(kind: str) -> list[str]:
     return [m for m in PULSE_MEMBERS if m in known_members(kind)]
 
 
+# Module-only kinds: a descriptor kind that has no library view, only a component of the module. The table maps the kind
+# to the component id; everything else is derived. The contract is `module_contract` (from `module/components.json`),
+# its pseudo view path `Module/<kind>` (`view_of`), the symbol is drawn by `embed_module` under `--render module`, and
+# under `--render stock` the build refuses it (`embed_symbol`, an error gate G7 contract reports). The component test
+# page shows these kinds in one section (`testbench.module_only_block`) and the glass gates find them by the
+# component's element. A later wrap adds one row here (wiki page 12 section 17.13, `cloud/WRAP-RECIPE.md` section 8).
+MODULE_ONLY = {"resistor": "cadre.ob.resistor"}
+MODULE_VIEW = "Module/"
+# The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
+# device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
+_MODULE_ONLY_MARKS = {"hasTag": False, "deviceId": "", "deviceKind": "", "deviceLabel": "", "statusText": "",
+                       "badgeDuty": False, "outOfService": False}
 # The render target. `stock` draws every kind with the library views of the parent; `module`
 # draws the kinds in MODULE_KIND with the Cadre OpenBridge module's components (module/, wiki
 # page 12) and every other kind as before. The descriptor does not change.
@@ -292,9 +306,9 @@ def module_draws(kind: str, params: dict, defaults: dict | None = None, target: 
     `target` is the rendering asked about, for a caller that builds nothing (the walk's plan); without
     it the rendering of the build in hand. `height` is the height of the box the symbol is drawn in, where the
     caller knows it (`module_height`)."""
-    if (target or RENDER["target"]) != "module" or kind not in MODULE_KIND:
+    if (target or RENDER["target"]) != "module" or module_type(kind) is None:
         return False
-    listed = module_props(MODULE_KIND[kind])
+    listed = module_props(module_type(kind))
     if any(params.get(k, False) is not False for k in parts.SYMBOL_PARAMS if k not in listed):
         return False   # the page parts' marks (COB-159; None: bound) of a component that has no such property
     if any(all(_same(params.get(k), v) for k, v in keep.items()) for keep in MODULE_EXCEPT.get(kind, [])):
@@ -314,6 +328,30 @@ def module_draws(kind: str, params: dict, defaults: dict | None = None, target: 
 
 MODULE_COMPONENTS = ROOT / "module" / "components.json"
 _MODULE_SCHEMA: dict = {}
+
+
+def module_type(kind: str) -> str | None:
+    """The module component that draws a descriptor kind under the module rendering: a library kind's (`MODULE_KIND`) or
+    a module-only kind's (`MODULE_ONLY`); None for a kind the module does not draw."""
+    return MODULE_KIND.get(kind) or MODULE_ONLY.get(kind)
+
+
+def module_element(ctype: str) -> str:
+    """The custom element a module component draws (`obc-resistor`), as `module/components.json` states it."""
+    module_props(ctype)
+    return _MODULE_SCHEMA.get(ctype, {}).get("element", "")
+
+
+def module_contract(kind: str, template: dict) -> dict:
+    """The contract of a module-only kind, derived from the module's own contract (`module/components.json`): the
+    component's properties with their defaults, the marks of `_MODULE_ONLY_MARKS`, and the geometry of an automation
+    symbol (48 px symbol box, `symbol-centre`, a state `on`, the readout and identifier boxes), taken from `template`, the
+    library's static symbol. `positioning` is the generator's to state (`embed_module`), so it is no parameter."""
+    module_props(MODULE_ONLY[kind])
+    props = _MODULE_SCHEMA.get(MODULE_ONLY[kind], {}).get("props", {})
+    params = {**_MODULE_ONLY_MARKS, **{k: p["default"] for k, p in props.items() if k != "positioning" and "default" in p}}
+    keep = {k: template[k] for k in ("anchor", "identifier", "readoutExtent", "size", "symbolSize", "state", "statusMode")}
+    return {**keep, "kind": kind, "view": MODULE_VIEW + kind, "params": dict(sorted(params.items()))}
 
 
 def module_props(ctype: str) -> set[str]:
@@ -363,7 +401,9 @@ MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATU
 def module_drop(kind: str) -> set[str]:
     """The parameters of the library's contract that the component of `kind` is not given: `MODULE_DROP`, less those
     of `MODULE_IF_LISTED` that the component's schema lists."""
-    listed = module_props(MODULE_KIND[kind])
+    listed = module_props(module_type(kind))
+    if kind in MODULE_ONLY:   # a module-only kind states the status marks that its component lists
+        return _STATUS_DROP - {k for k in _STATUS_PROPS if k in listed}
     return MODULE_DROP[kind] - {k for k in MODULE_IF_LISTED.get(kind, ()) if k in listed}
 
 
@@ -545,8 +585,17 @@ class Report:
         return {"errors": self.errors, "gaps": self.gaps, "notes": self.notes}
 
 
-def load_contracts() -> dict:
+def library_contracts() -> dict:
+    """The library's own contracts, as the parent generator wrote them (`library/contracts.json`)."""
     return json.loads((ROOT / "library" / "contracts.json").read_text(encoding="utf-8"))
+
+
+def load_contracts() -> dict:
+    """The contracts a build reads: the library's and those of the module-only kinds (`module_contract`)."""
+    contracts = library_contracts()
+    for kind in MODULE_ONLY:
+        contracts[MODULE_VIEW + kind] = module_contract(kind, contracts[KIND_VIEW["filter"]])
+    return contracts
 
 
 def tag_path(root: str, member: str) -> str:
@@ -738,6 +787,12 @@ def embed_symbol(sym: dict, contracts: dict, tag_root: str, rep: Report, *, tool
     # a symbol that states the duty mark or the out of service greying stays on the library's view: the module's
     # components have neither (COB-159); a bound one counts as stated
     probe = module_probe(kind, params, sym.get("bind", {}))
+    if kind in MODULE_ONLY and not (sym.get("render") != "view" and module_draws(kind, probe, c["params"], height=height)):
+        # no library view exists to fall back on: refuse, never a silent gap (gate G7 contract reports the error)
+        why = ("build it with --render module" if RENDER["target"] != "module" else
+               "the component cannot draw these parameters (or the symbol asks for the library's view)")
+        rep.errors.append(f"{sym['id']}: kind {kind!r} is module only ({MODULE_ONLY[kind]}); {why}")
+        return gap_box(sym, rep, pos), {}, {}
     if sym.get("render") != "view" and module_draws(kind, probe, c["params"], height=height):
         return embed_module(sym, kind, params, c, tag_root, toolbar=toolbar, pos=pos, limit=limit)
     x, y, w, h = symbol_box(sym, c, limit) if pos is None else (0, 0, 0, 0)
@@ -824,7 +879,7 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
     outside it, so the symbol centre is where the descriptor puts it. A tank fills the descriptor's box. A readout
     and an instrument field fill the box the library gives the block (`symbol_box`, `limit` as for the library's
     view). Selection (faceplate dock contract) is a DOM click script reading the component's custom properties."""
-    rename, drop = MODULE_PARAM[kind], module_drop(kind)
+    rename, drop = MODULE_PARAM.get(kind, {}), module_drop(kind)
     props = {rename.get(k, k): v for k, v in params.items() if k not in drop}
     bound = sym.get("bind", {})
     for k in MODULE_STATE.get(kind, ()):
@@ -871,7 +926,7 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         # `symbol` positioning makes the element's box the 48 px symbol, centred on our box for
         # every readout side; `point` draws the symbol 24 px off its anchor (measured, wiki page 12). The
         # generator indicator is the 48 px disc already and has no such property.
-        if "positioning" in module_props(MODULE_KIND[kind]):
+        if "positioning" in module_props(module_type(kind)):
             props["positioning"] = "symbol"
         box = pv.cpos(sym["x"], sym["y"], 48, 48)
     elif pos is not None:
@@ -886,7 +941,7 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         for k in ALERT_PARAMS:
             props.pop(k, None)
         custom["alerts"] = {key: params["deviceId"]}
-    node = pv.node(MODULE_KIND[kind], sym["id"], pos or box, props, prop_config=prop_cfg or None)
+    node = pv.node(module_type(kind), sym["id"], pos or box, props, prop_config=prop_cfg or None)
     if params.get("deviceId"):
         if kind in MODULE_INSTRUMENTS:   # as `library.SELECT_INSTRUMENT`: the kind the symbol names, tag else label
             shows, title = params.get("deviceKind") or "instrument", params.get("tag") or params.get("label") or ""
@@ -1719,7 +1774,8 @@ def main() -> int:
         if len(roots) != 1:
             print(f"--component-test needs the descriptors to share one tagRoot, not {sorted(roots)}")
             return 1
-        bench = testbench.build(load_contracts(), library_profile.build(load_contracts(), a.parent), roots.pop())
+        bench = testbench.build(load_contracts(), library_profile.build(load_contracts(), a.parent), roots.pop(),
+                                render=a.render)
         descs.append(bench.descriptor)
         names.append("<component test>")
     bad = schema_errors(descs, names)

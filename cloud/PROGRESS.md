@@ -114,3 +114,10 @@
   by a Sonnet 5.5 subagent at medium effort (179,845 tokens, 33 tool calls, 4 min 33 s): the steps of a wrap, the
   extras per class, verification, pitfalls, and the survey of the 31 T1 elements in batches B0 (module-only
   infrastructure, pilot `resistor`) to B8. Only `damper` and `switch` have a library kind.
+- 2026-11-03 04:08: T1 B0 done in a Sonnet 5.5 subagent at medium effort: 168,997 tokens, 45 tool calls, 12 min 25 s.
+  Module-only kinds: `screen.MODULE_ONLY` (kind to component), contracts `Module/<kind>` derived from
+  `module/components.json`, a stock build refused with one error per symbol (G7 contract), and a "Module only" section
+  on the component test page under `--render module`. Pilot `obc-resistor` as `cadre.ob.resistor` (19 cases on the
+  page). Tests 1104 to 1117, all passing; `test_hmi.NewKindTests.test_contracts` now compares
+  `screen.library_contracts()` with the generated file, since `load_contracts` also returns module contracts. G0 to
+  G7 pass (19 devices, 21 device symbols). Recipe section 8 names the rows a later batch adds.

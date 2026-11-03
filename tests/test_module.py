@@ -79,7 +79,8 @@ class DeviceProps(unittest.TestCase):
         # the two valves and the filter carry the element's own `showStatus` (valves since 0.3.2) (`gen_module_assets.PROPERTIES`);
         # the generator indicator carries `showStatus` and `statusText`, which its wrapper draws itself (W2), and neither mark
         carried = {"cadre.ob.valve": ("showStatus",), "cadre.ob.analogvalve": ("showStatus",),
-                   "cadre.ob.filter": ("showStatus",), "cadre.ob.generator": ("showStatus", "statusText")}
+                   "cadre.ob.filter": ("showStatus",), "cadre.ob.resistor": ("showStatus",),
+                   "cadre.ob.generator": ("showStatus", "statusText")}
         for ctype, c in COMPONENTS.items():
             if ctype in DEVICES:
                 continue
@@ -305,6 +306,162 @@ class FilterComponent(unittest.TestCase):
         for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
             self.assertNotIn(name, props, name)
         self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class ResistorComponent(unittest.TestCase):
+    """The static resistor symbol (batch B0, the pilot of the module-only kinds): `obc-resistor`, no events, no command of
+    its own, on the attribute set of the filter."""
+    ctype = "cadre.ob.resistor"
+
+    # the element's attributes in the manifest (src/automation/resistor/resistor.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves and the filter
+    MANIFEST_ATTRIBUTES = FilterComponent.MANIFEST_ATTRIBUTES
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-resistor")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/resistor/resistor.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-resistor")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["resistor1", "resistor2", "resistor3", "resistor4", "resistor5"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.resistor", "resistor"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/resistor.props.json").exists())
+        self.assertIn("automation/resistor/resistor.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.resistor","tag":"obc-resistor"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-resistor"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class ModuleOnlyKinds(unittest.TestCase):
+    """The module-only kinds (batch B0, wiki page 12 section 17.13): a descriptor kind with no library view, drawn by the
+    module's component alone. The table is `screen.MODULE_ONLY`; the tests run over its rows, so a later row is covered."""
+
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        sys.path.insert(0, str(ROOT / "tools"))
+        from hmi import library_profile, screen, testbench
+        cls.screen, cls.testbench, cls.library_profile = screen, testbench, library_profile
+        cls.contracts = screen.load_contracts()
+
+    def tearDown(self):
+        self.screen.RENDER["target"] = "stock"
+
+    def symbol(self, kind, **kw):
+        return dict({"id": "X1", "kind": kind, "x": 100, "y": 100, "w": 48, "h": 48, "params": {"tag": "X-1"}}, **kw)
+
+    def embed(self, sym, render):
+        self.screen.RENDER["target"] = render
+        rep = self.screen.Report()
+        node, _custom, _cfg = self.screen.embed_symbol(sym, self.contracts, "[default]t", rep, toolbar=True)
+        return node, rep
+
+    def test_the_table_names_components_of_the_module_and_no_library_kind(self):
+        self.assertIn("resistor", self.screen.MODULE_ONLY)
+        for kind, ctype in self.screen.MODULE_ONLY.items():
+            self.assertIn(ctype, COMPONENTS, kind)
+            self.assertNotIn(kind, self.screen.KIND_VIEW, kind)
+            self.assertNotIn(kind, self.screen.MODULE_KIND, kind)
+
+    def test_the_contract_is_derived_from_the_modules_contract(self):
+        for kind, ctype in self.screen.MODULE_ONLY.items():
+            c = self.contracts[self.screen.view_of({"kind": kind})]
+            props = COMPONENTS[ctype]["props"]
+            self.assertEqual(self.screen.view_of({"kind": kind}), "Module/" + kind)
+            self.assertEqual((c["anchor"], c["symbolSize"], c["state"], c["kind"]), ("symbol-centre", 48, "on", kind), kind)
+            for name, p in props.items():     # every property with its default, but the positioning the generator states
+                if name != "positioning":
+                    self.assertEqual(c["params"][name], p["default"], f"{kind}.{name}")
+            self.assertNotIn("positioning", c["params"])
+            self.assertEqual(set(c["params"]) - set(props), set(self.screen._MODULE_ONLY_MARKS) - set(props), kind)
+        # the library's own contracts are not changed, and its profile lists no module-only kind
+        self.assertNotIn("resistor", self.library_profile.build(self.contracts)["kinds"])
+
+    def test_the_module_rendering_draws_the_component(self):
+        for kind, ctype in self.screen.MODULE_ONLY.items():
+            node, rep = self.embed(self.symbol(kind, params={"tag": "X-1", "on": True, "variant": "flat"}), "module")
+            self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
+            self.assertEqual(node["props"]["variant"], "flat")
+            self.assertEqual(node["props"]["positioning"], "symbol")
+            self.assertNotIn("deviceId", node["props"])
+
+    def test_the_stock_rendering_is_refused_with_an_error_not_a_silent_gap(self):
+        for kind, ctype in self.screen.MODULE_ONLY.items():
+            node, rep = self.embed(self.symbol(kind), "stock")
+            self.assertEqual(len(rep.errors), 1, kind)
+            self.assertIn(f"kind {kind!r} is module only ({ctype})", rep.errors[0])
+            self.assertIn("--render module", rep.errors[0])
+            self.assertEqual(node["type"], "ia.display.label")      # the counted gap box stands in the view
+            self.assertEqual([g["kind"] for g in rep.gaps], [kind])
+
+    def test_a_symbol_the_component_cannot_draw_is_refused_under_the_module_rendering_too(self):
+        for kind in self.screen.MODULE_ONLY:
+            node, rep = self.embed(self.symbol(kind, render="view"), "module")
+            self.assertEqual((len(rep.errors), node["type"]), (1, "ia.display.label"), kind)
+            self.assertIn("module only", rep.errors[0])
+
+    def test_the_stock_build_names_the_error_in_the_report_gate_g7_contract_reads(self):
+        for kind in self.screen.MODULE_ONLY:
+            self.screen.RENDER["target"] = "stock"
+            desc = {"tagRoot": "[default]t", "tagModel": "external", "screen": {"width": 400, "height": 300},
+                    "symbols": [self.symbol(kind)]}
+            _doc, info = self.screen.build_screen(desc, self.contracts)
+            self.assertTrue(any("is module only" in e for e in info["errors"]), kind)
+            self.screen.RENDER["target"] = "module"
+            _doc, info = self.screen.build_screen(desc, self.contracts)
+            self.assertEqual((info["errors"], info["gaps"]), ([], []), kind)
+
+    def test_the_component_test_page_has_one_module_only_section_under_the_module_rendering_only(self):
+        prof = self.library_profile.build(self.contracts)
+        stock = self.testbench.build(self.contracts, prof, "[default]cadre_hmi_ctest")
+        self.assertNotIn("ModuleOnly", {s["id"] for s in stock.descriptor["sections"]})
+        self.assertFalse(any(s["kind"] in self.screen.MODULE_ONLY for s in stock.descriptor["symbols"]))
+        mod = self.testbench.build(self.contracts, prof, "[default]cadre_hmi_ctest", render="module")
+        sections = [s for s in mod.descriptor["sections"] if s["id"] == "ModuleOnly"]
+        self.assertEqual(len(sections), 1)
+        self.assertTrue(sections[0]["label"].startswith("Module only"))
+        for kind in self.screen.MODULE_ONLY:
+            mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
+            self.assertGreaterEqual(len(mine), 10, kind)
+            self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])
+            enums = COMPONENTS[self.screen.MODULE_ONLY[kind]]["props"]
+            for param in ("orientation", "readoutPosition"):      # every value of the component's enumeration is a case
+                self.assertEqual({s["params"].get(param, self.contracts[f"Module/{kind}"]["params"][param]) for s in mine},
+                                 set(enums[param]["enum"]), (kind, param))
+            # the state and mark parameters of a static grid are bound to gallery tags that start at the case's value
+            self.assertEqual({mod.gallery[s["id"]]["alertFrameStatus"] for s in mine if "alertFrameStatus" in mod.gallery.get(s["id"], {})},
+                             set(enums["alertFrameStatus"]["enum"]))
+
+    def test_the_glass_gates_find_a_module_only_kind_by_its_element(self):
+        import sys
+        sys.path.insert(0, str(ROOT / "tools" / "compare"))
+        import glass_gates
+        for kind, ctype in self.screen.MODULE_ONLY.items():
+            self.assertEqual(glass_gates.MODULE_TAGS[kind], COMPONENTS[ctype]["element"], kind)
 
 
 class GeneratorComponent(unittest.TestCase):

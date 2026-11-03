@@ -908,6 +908,42 @@ button) and three in `ButtonTests` of `tests/test_asm_parts.py` (the Press only 
 `enabled`; the stock rendering and an unmarked pulse keep the library's button; `render: module` on another action is an error).
 Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
 
+### 17.13 Batch B0: Module-Only Kinds, Piloted with the Resistor (`cadre.ob.resistor`)
+
+Tranche T1 wraps OpenBridge elements that the library has no view for (the eleven electrical symbols, the specialty elements and
+others). The owner chose Option B of `cloud/WRAP-RECIPE.md` section 7.2: such an element is a module-only kind. The batch changes the
+sources only; the module is not built or installed by it.
+
+The table. `screen.MODULE_ONLY` maps a descriptor kind to the id of a module component (`{"resistor": "cadre.ob.resistor"}`). A kind in
+the table is in neither `KIND_VIEW` nor `MODULE_KIND`, so no table of the library mapping (`MODULE_NEEDS`, `MODULE_EXCEPT`, `MODULE_VALUE`,
+`MODULE_STATE`) is touched and the library profile lists no such kind. `module_type(kind)` answers the component of either table.
+
+The contract. `load_contracts` adds one contract for each row under the pseudo view path `Module/<kind>` (`view_of` returns it), derived
+by `module_contract` from `module/components.json`: every property of the component with its default (less `positioning`, which
+`embed_module` states), the device and status marks of the library's symbols (`hasTag`, `deviceId`, `deviceKind`, `deviceLabel`,
+`statusText`, `badgeDuty`, `outOfService`, which reach no property), and the geometry of an automation symbol (anchor `symbol-centre`, a
+48 px symbol box, state `on`, the readout and identifier boxes), taken from the library's static symbol, the filter. The readers of
+`contracts.get(view_of(s))` need no change. `embed_module` takes the component from `module_type`, no renaming, and the drop is the
+status marks the component does not list.
+
+The renderings. Under `--render module` `embed_symbol` hands the symbol to `embed_module`. Where the component cannot draw it (a mark
+the component lacks, or `render` `view`, which has no library view to fall back to) and under `--render stock`, `embed_symbol` adds an
+error to the report ("kind 'resistor' is module only (cadre.ob.resistor); build it with --render module") and draws the counted gap box;
+the error stops the build ("CONTRACT ERRORS: not deploying") and gate G7 contract reports it, so a stock build cannot pass with the kind
+as a silent gap. The glass gates find the kind by the element of its component (`glass_gates.MODULE_TAGS` is extended from the table).
+
+The test page. `testbench.build(..., render="module")` (`screen.py` passes `--render`) adds one section "Module only" after the
+generator set, built by `module_only_cases` from the contract and the component's schema: the state both ways, each other value of
+`variant`, `orientation` and `readoutPosition`, each alert level, the badges, and the identifier and status hidden. Under the stock
+rendering the section is omitted. For the resistor it adds 19 symbols (the page's device symbols and devices are those of before).
+
+The pilot. `obc-resistor` (manifest path `src/automation/resistor/resistor.ts`) has the filter's 22 attributes (the `alternativeIcon`
+enumeration is `resistor1` to `resistor5`, the others are those of the filter), no events, and the module's `showStatus`. Wrapped as in
+section 2 of the recipe: `entry.js`, `measure_defaults.py`, `gen_module_assets.py` (`COMPONENTS`), `CadreOb.java`, and the generated
+`components.json`, `resistor.props.json` and bundle. The component has 23 properties. Tests: `ResistorComponent` and `ModuleOnlyKinds` in
+`tests/test_module.py` (the second runs over the table). Gateway check: `/component-test`, section "Module only", 19 `obc-resistor`
+elements with a non-zero box and no console error.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

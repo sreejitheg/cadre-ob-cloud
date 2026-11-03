@@ -1709,7 +1709,7 @@ class NewKindTests(unittest.TestCase):
 
     def test_contracts(self):
         from hmi import parent as par
-        contracts = screen.load_contracts()
+        contracts = screen.library_contracts()      # the file; `load_contracts` adds the module-only kinds (B0)
         self.assertEqual(par.build_parent()[1], contracts)                       # the generated file is current
         c = contracts["Instrument/Controller"]
         self.assertEqual((c["kind"], c["anchor"], c["flow"]), ("controller", "box", "pass"))

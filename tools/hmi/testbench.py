@@ -333,7 +333,7 @@ _COMPONENTS: dict = {}   # module/components.json, read once
 
 def module_enum(kind: str, param: str) -> list | None:
     """The values the module's component accepts for `param`, None where its schema states no enumeration."""
-    ctype = screen.MODULE_KIND.get(kind)
+    ctype = screen.module_type(kind)
     if not _COMPONENTS:
         _COMPONENTS.update(json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))
                            if screen.MODULE_COMPONENTS.exists() else {"": {}})
@@ -570,6 +570,30 @@ def kind_block(kind: str, contracts: dict, prof: dict) -> Block:
     view = screen.view_of({"kind": kind})
     cases = kind_cases(kind, contracts[view], prof)
     return grid(f"S_{kind.replace('-', '_')}_", kind, cases, contracts)
+
+
+def module_only_cases(kind: str, contract: dict) -> list[Case]:
+    """The cases of a module-only kind, derived from its contract (`screen.module_contract`, the module's own schema): the
+    state both ways, each other value of `variant`, `orientation` and `readoutPosition` the component lists, each alert
+    level, the badges, and the identifier and status hidden. A kind needs no case list of its own."""
+    schema = json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))[screen.MODULE_ONLY[kind]]["props"]
+    base = {"hasTag": True, "tag": ident_of(kind)}
+    out = [Case("off", {**base, "on": False}), Case("on", {**base, "on": True})]
+    for param in ("variant", "orientation", "readoutPosition"):
+        values = schema.get(param, {}).get("enum", [])
+        out += [Case(f"{param} {v}", {**base, "on": True, param: v}) for v in values if v != contract["params"].get(param)]
+    out += [Case(f"alert {v}", {**base, "on": True, "alert": True, "alertFrameStatus": v, "alertFrameMode": "unacked-active"})
+            for v in schema.get("alertFrameStatus", {}).get("enum", [])]
+    out += [Case("badges", {**base, "on": True, "badgeControl": "manual", "badgeInterlock": "interlock",
+                            "badgeCommandLocked": BADGE_LOCKED}),
+            Case("no ID tag", {**base, "on": True, "hasTag": False}),
+            Case("status hidden", {**base, "on": True, "showStatus": False})]
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+def module_only_block(kind: str, contracts: dict) -> Block:
+    """One kind of `screen.MODULE_ONLY` as a grid of its cases."""
+    return grid(f"S_{kind.replace('-', '_')}_", kind, module_only_cases(kind, contracts[screen.view_of({"kind": kind})]), contracts)
 
 
 def genset_block() -> Block:
@@ -893,7 +917,7 @@ def galleryize(symbols: list[dict]) -> dict[str, dict]:
     return out
 
 
-def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component test") -> Bench:
+def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component test", render: str = "stock") -> Bench:
     """The component test page, its test devices and its tags for a project whose tags sit under `tag_root`
     (for example `[default]cadre_hmi_eng02_asm`). Everything comes from `contracts` (library/contracts.json) and
     `prof` (library/profile.json)."""
@@ -913,6 +937,11 @@ def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component 
     if gen is not None:
         sections.append(("Kind_generator", f"Generator  ({screen.view_of({'kind': 'generator'})})", gen))
         sections.append(("Kind_genset", f"Generator set  ({screen.GENSET_VIEW}) in boxes of several sizes", genset_block()))
+    if render == "module" and screen.MODULE_ONLY:   # the kinds with no library view: only the module draws them
+        only = Block()
+        for kind in screen.MODULE_ONLY:
+            only.extend(module_only_block(kind, contracts), 0, only.h)
+        sections.append(("ModuleOnly", "Module only: " + ", ".join(screen.MODULE_ONLY), only))
     sections.append(("Media", "Colour by medium (toolbar: Color)", medium_block()))
     alarm_part, alarm_pulses = alarm_block(specs)
     sections.append(("Alarms", "Test alarms: one lamp for each priority (Critical, High, Medium, Low, Diagnostic)", alarm_part))

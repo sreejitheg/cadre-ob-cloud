@@ -55,6 +55,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 from hmi import provenance  # noqa: E402
+from hmi import screen  # noqa: E402
 from hmi.screen import module_drawn  # noqa: E402
 
 TOOL = "tools/compare/glass_gates.py"
@@ -74,6 +75,8 @@ NO_MATCH = "No page, device or tag matches"
 MODULE_TAGS = {"pump": "obc-pump", "motor": "obc-motor", "fan": "obc-fan", "valve": "obc-digital-valve",
                "analogvalve": "obc-analog-valve", "filter": "obc-filter",
                "generator": "obc-indicator-generator"}
+# A module-only kind (`screen.MODULE_ONLY`) is found by the element of its component.
+MODULE_TAGS.update({kind: screen.module_element(ctype) for kind, ctype in screen.MODULE_ONLY.items()})
 EQ_TOL = 4
 TEST_ROUTE = "/component-test"                     # the library's component test page (`screen.py --component-test`)
 

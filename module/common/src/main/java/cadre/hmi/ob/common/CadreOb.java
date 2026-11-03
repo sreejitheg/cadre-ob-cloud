@@ -62,7 +62,9 @@ public final class CadreOb {
                     event("alertpanel", "onSilenceClick", "The Silence button was clicked."),
                     event("alertpanel", "onAckAllClick", "ACK visible was clicked; event.ids holds the unacknowledged alerts shown."))),
         descriptor("cadre.ob.canvaszoom", "canvaszoom", "OB Canvas Zoom",
-            "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page.", "obCanvasZoom", List.of())
+            "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page.", "obCanvasZoom", List.of()),
+        descriptor("cadre.ob.resistor", "resistor", "OB Resistor",
+            "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obResistor", List.of())
     );
 
     private CadreOb() {

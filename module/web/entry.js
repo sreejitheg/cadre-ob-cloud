@@ -13,3 +13,4 @@ import '@oicl/openbridge-webcomponents/dist/automation/transmitter/transmitter.j
 import '@oicl/openbridge-webcomponents/dist/navigation-instruments/instrument-field/instrument-field.js';
 import '@oicl/openbridge-webcomponents/dist/components/alert-list-details/alert-list-details.js';
 import '@oicl/openbridge-webcomponents/dist/pages/alert-list-page-small/alert-list-page-small.js';
+import '@oicl/openbridge-webcomponents/dist/automation/resistor/resistor.js';
