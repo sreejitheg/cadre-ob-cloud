@@ -326,3 +326,8 @@
 - 2026-11-03 17:43: Final G11 on the component test page (module 0.7.0, device components only): 21 of 21 devices, 274
   leaves, no fault, 63 min; the only finding the instrument field's identity carried since T0 (`TB_FIELD` read as
   `Temp`), to be fixed after the A-02 diagnosis.
+- 2026-11-03 17:55: The instrument field identity of G11 (open since T0) traced to the sweep: it expected an instrument's
+  faceplate under its tag else its identifier, while the library titles it by its tag else its label
+  (`library.SELECT_INSTRUMENT`, `screen.embed_module` for `MODULE_INSTRUMENTS`). `faceplates.faceplate_title` now
+  follows the library's rule (tests added, the kinds held to `screen.MODULE_INSTRUMENTS`); the final G11 measurement
+  re-judged under it: 21 of 21, nothing missing or unexpected, no fault.

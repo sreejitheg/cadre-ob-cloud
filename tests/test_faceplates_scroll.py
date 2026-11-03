@@ -179,6 +179,26 @@ class DeviceComponentsTests(unittest.TestCase):
             self.assertIn(f'[data-component="{c}"]', faceplates.LEAF_POINTS)
 
 
+class FaceplateTitleTests(unittest.TestCase):
+    """The sweep expects each faceplate under the title the library gives it (T2: the instrument field `TB_FIELD`)."""
+
+    def test_the_instrument_kinds_are_those_the_module_draws_as_instruments(self):
+        sys.path.insert(0, str(ROOT / "tools"))
+        from hmi import screen
+        self.assertEqual(set(faceplates.INSTRUMENT_KINDS), set(screen.MODULE_INSTRUMENTS))
+
+    def test_an_instrument_is_titled_by_its_tag_else_its_label(self):
+        f = faceplates.faceplate_title
+        self.assertEqual(f({"id": "TB_FIELD", "kind": "instrument-field", "params": {"label": "Temp"}}), "Temp")
+        self.assertEqual(f({"id": "F1", "kind": "instrument-field", "params": {"tag": "TT-101", "label": "Temp"}}), "TT-101")
+        self.assertEqual(f({"id": "R1", "kind": "readout", "params": {}}), "R1")
+
+    def test_any_other_device_is_titled_by_its_tag_else_its_identifier(self):
+        f = faceplates.faceplate_title
+        self.assertEqual(f({"id": "P1", "kind": "pump", "params": {"label": "Feed"}}), "P1")
+        self.assertEqual(f({"id": "P1", "kind": "pump", "params": {"tag": "P-001"}}), "P-001")
+
+
 class ScrollInChromiumTests(unittest.TestCase):
     """The real measure and the real locators on a page whose leaves lie far below the first window, in a scroller of its
     own (as Perspective's page is): a click below the window's edge reaches nothing."""

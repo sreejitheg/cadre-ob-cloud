@@ -95,7 +95,22 @@ def expected_devices(desc: dict) -> set[str]:
             if "body" in card:
                 items += list(walk(card["body"]))
     # a plain symbol with `faceplate` (a device id, COB-165) opens that device's faceplate as a device symbol does
-    return {s.get("params", {}).get("tag") or s["id"] for s in items if s.get("device") or s.get("faceplate")}
+    return {faceplate_title(s) for s in items if s.get("device") or s.get("faceplate")}
+
+
+# The instrument kinds, whose faceplate is titled by the symbol's tag, else its label (`library.SELECT_INSTRUMENT`, and
+# `screen.embed_module` for `screen.MODULE_INSTRUMENTS`; a unit test holds the two lists together). Every other device
+# symbol's faceplate is titled by its tag, else its identifier. The sweep expected the identifier for an instrument with
+# a label and no tag, and so counted the component test page's field `TB_FIELD`, titled `Temp`, as missing (T0 to T2).
+INSTRUMENT_KINDS = ("readout", "instrument-field")
+
+
+def faceplate_title(sym: dict) -> str:
+    """The title the faceplate a symbol opens carries, by the library's rule for its kind."""
+    params = sym.get("params", {})
+    if sym.get("kind") in INSTRUMENT_KINDS:
+        return params.get("tag") or params.get("label") or sym["id"]
+    return params.get("tag") or sym["id"]
 
 
 QUALITY_LINE = "Bad quality:"   # framework._quality_line: a present member whose quality is not good
