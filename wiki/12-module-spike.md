@@ -1478,6 +1478,73 @@ page passes G0 to G7 with 19 devices and 21 device symbols. What the gateway ste
 notification buttons and the badge button fires its event (not wired, so nothing else happens). The registered components (the log line of the gateway
 hook) move from 55 to 62.
 
+### 17.24 Batch F2: The Alert Button and the Alert Menu (`cadre.ob.alertbuttonitem`, `alertbutton`, `alertmenuitem`, `alertmenu`)
+
+Batch F2 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2 and 3). Each child was wrapped before its parent, by generator entries,
+Java descriptors and table rows (`cloud/WRAP-RECIPE.md` section 9). The four are module-only kinds of `FRAME_ONLY`. The alert menu is
+the first real parent of the `items` mechanism of 17.23.2.
+
+17.24.1 The alert type and the Cadre priorities. The elements take OpenBridge's `AlertType` (`alarm`, `warning`, `caution` and the five
+levels `level-critical`, `level-high`, `level-medium`, `level-low`, `level-diagnostic`). The property `alertType` of the alert button and
+its item (and the `type` of the alert icon in a row) takes those values and also the empty string, which is the idle state: the element
+tests `alertType` for undefined, so the module sends undefined for an empty value (the field kind `ustring`, now also used for an
+optional enumeration declared with `undefinedWhenEmpty`). The five Cadre priorities map onto it as `wiki/13` section 11.1 says, and
+the description of the property in both schemas records the mapping: Critical `level-critical`, High `alarm`, Medium `warning`, Low
+`caution`, Diagnostic empty (no alert colour). The levels `level-high`, `level-medium` and `level-low` draw the colours of `alarm`,
+`warning` and `caution` (11.1), so a frame may use either name. The frame option (F6) states the mapping in its binding; the module
+only carries the value.
+
+17.24.2 The silence control is hidden. The alert button's `showSilenceButton` defaults to false (its element default), as does the alert
+menu's `showSilenceButton`, which the element declares as a field that is true by default: the module states false (the entry's
+`properties` row `showSilenceButton`, `PROPERTIES`) because no Cadre function silences an alarm (owner's answer 4). The alert menu's
+`showAlertListButton` stays true. The silence events are carried and unwired.
+
+17.24.3 Row events. The element `obc-alert-menu-item` fires `item-click`, `ack-click` and `ack-secondary-click` as plain custom events
+that do not bubble, so a listener on the parent never hears them (measured: a row's event does not reach the menu). The wrapper
+therefore listens on each row it builds: an entry key `itemEvents` names the events that come from rows, and the wrapper adds the
+listeners when it builds a row (`listenItem`; rows are removed with their listeners when the list changes). Row events carry the payload
+kind `item` (the row's `id` and tag; an empty id when the row has none). A second key, `eventKinds`, changes the payload kind of an
+event for one component, because `ALERT_EVENTS` is keyed by the event's DOM name and `ack-click` and `silence-click` already name the
+alarm lists' events: the same DOM name is `none` on the row component and `item` on the menu. The `item` payload now finds its row
+through `data-item-id` or `data-cadre-item`. A new payload kind `menuvisible` carries the ACK visible event: `mode` (the tab, `unacked`,
+`all` or `shelved`, the element's `tabName`) and `ids` (the `id` of each visible row that has one).
+
+17.24.4 The components.
+
+| Component | Element | Attributes and fields | Items and slot properties | Events | Not carried |
+|---|---|---|---|---|---|
+| `cadre.ob.alertbuttonitem` | `obc-alert-button-item` | 10 attributes (`aria-label` as `ariaLabel`) | none | `onPress` (the element's `click`) | none |
+| `cadre.ob.alertbutton` | `obc-alert-button` | 13 attributes | none | `onAlertClick`, `onSilenceClick` | none |
+| `cadre.ob.alertmenuitem` | `obc-alert-menu-item` | 13 attributes | `iconName` (slot `icon`), `alertIcon` (items: `obc-alert-icon` in the slot `alert-icon`) | `onItemClick`, `onAckClick`, `onAckSecondaryClick` (no detail) | the `title` and `description` slots (the attributes draw the same text) |
+| `cadre.ob.alertmenu` | `obc-alert-menu` | 2 attributes (`hasShelved`, `canAckAll`) and the fields `showSilenceButton`, `showAlertListButton` | `items` (rows: `obc-alert-menu-item`, each with `obc-alert-icon` in its `alert-icon` slot and a bundled icon in its `icon` slot) | `onAckAllClick`, `onSilenceClick`, `onGoToAlertListClick`, `onItemClick`, `onAckClick`, `onAckSecondaryClick` | the empty state slots (`empty-<tab>-title`, `-description`, `-icon`: the element's own messages draw) |
+
+The alert icon `obc-alert-icon` is an item, not a property, because the slot takes an alert type and a state, not a bundled icon. A row
+object holds the row's attributes, `id` and `children`; for example `{"tag": "obc-alert-menu-item", "id": "A-1", "title": "...",
+"status": "unacknowledged", "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "alarm", "active": true,
+"acknowledged": false}]}`. The default sizes, measured in Chromium: the alert button item 96 by 64, the alert button 160 by 64 (a
+global counter with the silence control draws 153 wide), the alert menu item 360 by 72 and the alert menu 640 by 560 (its own width and
+height; a smaller box clips it). A row has no width of its own and drew 32 wide when centred in its box, so the stylesheet stretches
+`obc-alert-menu-item` to its box, as it does for the alarm lists.
+
+17.24.5 The test page. The section "Frame components" gains `obc-alert-button-item` 26, `obc-alert-button` 31, `obc-alert-menu-item` 22
+and `obc-alert-menu` 8 elements (87 more; 170 in all). The alert menu's cases carry four sample rows of our own (`ALERT_MENU_ROWS`:
+a critical unacknowledged alarm, a high alarm with an ACK action, an acknowledged warning and a caution with a source icon), a case of
+two rows with the shelved tab, an empty menu and one with the silence button shown. The alert button's two breakpoints are left out
+of its cases (they depend on the viewport).
+
+17.24.6 Bundle size of `cadre-ob.js`: 2,174,766 bytes before the first component (F1 left 2,173,627; the wrapper additions are the
+difference), then 2,248,479 with the alert button item (+73,713, which brings the alert icon, the counters and their icons),
+2,256,584 with the alert button (+8,105), 2,277,380 with the alert menu item (+20,796) and 2,295,305 with the alert menu (+17,925).
+
+17.24.7 Tests and gateway checks. `tests.test_module` holds 156 tests (153 before; the class `FrameComponents` gained four rows, the
+`items` row key and three tests); `module/tools/harness/frame.mjs` holds 32 checks (19 before) and `items.mjs` 11, all passing in Chromium,
+among them that the rows' events reach the menu with the row id and that a tag outside the allow list builds nothing. A stand-in page
+in Chromium drew a menu with three rows, the ACK visible and Alerts buttons and the alert icons of the three severities with no console
+message. The component test page passes G0 to G7 with 19 devices and 21 device symbols. What the gateway step finds on
+`/component-test`, in the section "Frame components": the four counts of 17.24.5, each with a non-zero box and no console error; a
+click on a bell fires `onPress` or `onAlertClick`, a click on a row's ACK fires `onAckClick`; none is wired. The registered components
+(the log line of the gateway hook) move from 62 to 66.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

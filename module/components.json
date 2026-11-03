@@ -8877,6 +8877,500 @@
    }
   }
  },
+ "cadre.ob.alertbuttonitem": {
+  "element": "obc-alert-button-item",
+  "title": "OB Alert Button Item",
+  "palette": "OpenBridge alert button item: one bell with an alert type and a count, as the alert button draws it",
+  "schema": "schemas/alertbuttonitem.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 64
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "flat",
+     "normal",
+     "enhanced"
+    ],
+    "default": "normal"
+   },
+   "alertType": {
+    "type": "string",
+    "enum": [
+     "",
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": ""
+   },
+   "nAlerts": {
+    "type": "number",
+    "default": 0
+   },
+   "counter": {
+    "type": "boolean",
+    "default": false
+   },
+   "globalCounter": {
+    "type": "boolean",
+    "default": false
+   },
+   "shelvedCount": {
+    "type": "number",
+    "default": 0
+   },
+   "blinking": {
+    "type": "boolean",
+    "default": false
+   },
+   "flashingSpeed": {
+    "type": "string",
+    "enum": [
+     "default",
+     "fast",
+     "slow",
+     "very-slow",
+     "fixed"
+    ],
+    "default": "default"
+   },
+   "fillHeight": {
+    "type": "boolean",
+    "default": false
+   },
+   "ariaLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onPress": {
+    "element": "click",
+    "schema": "schemas/alertbuttonitem.onPress.json"
+   }
+  }
+ },
+ "cadre.ob.alertbutton": {
+  "element": "obc-alert-button",
+  "title": "OB Alert Button",
+  "palette": "OpenBridge alert button: a bell with the count of alerts and an alert type, with an optional silence control",
+  "schema": "schemas/alertbutton.props.json",
+  "defaultSize": {
+   "width": 160,
+   "height": 64
+  },
+  "props": {
+   "nAlerts": {
+    "type": "number",
+    "default": 0
+   },
+   "alertType": {
+    "type": "string",
+    "enum": [
+     "",
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": ""
+   },
+   "type": {
+    "type": "string",
+    "enum": [
+     "flat",
+     "normal",
+     "enhanced"
+    ],
+    "default": "normal"
+   },
+   "large": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSilenceButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "silenceButtonDisabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "counter": {
+    "type": "boolean",
+    "default": false
+   },
+   "globalCounter": {
+    "type": "boolean",
+    "default": false
+   },
+   "shelvedCount": {
+    "type": "number",
+    "default": 0
+   },
+   "blinking": {
+    "type": "boolean",
+    "default": false
+   },
+   "flashingSpeed": {
+    "type": "string",
+    "enum": [
+     "default",
+     "fast",
+     "slow",
+     "very-slow",
+     "fixed"
+    ],
+    "default": "default"
+   },
+   "flatMaxBreakpointPx": {
+    "type": "number",
+    "default": 0
+   },
+   "silenceButtonMinBreakpointPx": {
+    "type": "number",
+    "default": 0
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onAlertClick": {
+    "element": "click-alert",
+    "schema": "schemas/alertbutton.onAlertClick.json"
+   },
+   "onSilenceClick": {
+    "element": "click-silence",
+    "schema": "schemas/alertbutton.onSilenceClick.json"
+   }
+  }
+ },
+ "cadre.ob.alertmenuitem": {
+  "element": "obc-alert-menu-item",
+  "title": "OB Alert Menu Item",
+  "palette": "OpenBridge alert menu item: one alert row with a title, description, date, time and an ACK action",
+  "schema": "schemas/alertmenuitem.props.json",
+  "defaultSize": {
+   "width": 360,
+   "height": 72
+  },
+  "props": {
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "shelved": {
+    "type": "boolean",
+    "default": false
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "description": {
+    "type": "string",
+    "default": ""
+   },
+   "day": {
+    "type": "string",
+    "default": ""
+   },
+   "time": {
+    "type": "string",
+    "default": ""
+   },
+   "status": {
+    "type": "string",
+    "enum": [
+     "unacknowledged",
+     "caution",
+     "acknowledged",
+     "no-ack-alarm",
+     "no-ack-warning",
+     "rectified"
+    ],
+    "default": "unacknowledged"
+   },
+   "open": {
+    "type": "boolean",
+    "default": false
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "single-line",
+     "double-line"
+    ],
+    "default": "single-line"
+   },
+   "animateIntro": {
+    "type": "boolean",
+    "default": false
+   },
+   "secondaryActionLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "primaryActionState": {
+    "type": "string",
+    "enum": [
+     "enabled",
+     "disabled",
+     "none"
+    ],
+    "default": "enabled"
+   },
+   "secondaryActionState": {
+    "type": "string",
+    "enum": [
+     "enabled",
+     "disabled",
+     "none"
+    ],
+    "default": "none"
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "alertIcon": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-alert-icon"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "items": {
+   "alertIcon": {
+    "tags": [
+     "obc-alert-icon"
+    ],
+    "slot": "alert-icon"
+   }
+  },
+  "events": {
+   "onItemClick": {
+    "element": "item-click",
+    "schema": "schemas/alertmenuitem.onItemClick.json"
+   },
+   "onAckClick": {
+    "element": "ack-click",
+    "schema": "schemas/alertmenuitem.onAckClick.json"
+   },
+   "onAckSecondaryClick": {
+    "element": "ack-secondary-click",
+    "schema": "schemas/alertmenuitem.onAckSecondaryClick.json"
+   }
+  }
+ },
+ "cadre.ob.alertmenu": {
+  "element": "obc-alert-menu",
+  "title": "OB Alert Menu",
+  "palette": "OpenBridge alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
+  "schema": "schemas/alertmenu.props.json",
+  "defaultSize": {
+   "width": 640,
+   "height": 560
+  },
+  "props": {
+   "hasShelved": {
+    "type": "boolean",
+    "default": false
+   },
+   "canAckAll": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSilenceButton": {
+    "type": "boolean",
+    "default": false
+   },
+   "showAlertListButton": {
+    "type": "boolean",
+    "default": true
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-alert-menu-item"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-alert-menu-item"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onAckAllClick": {
+    "element": "ack-all-visible-click",
+    "schema": "schemas/alertmenu.onAckAllClick.json"
+   },
+   "onSilenceClick": {
+    "element": "silence-click",
+    "schema": "schemas/alertmenu.onSilenceClick.json"
+   },
+   "onGoToAlertListClick": {
+    "element": "go-to-alert-list-click",
+    "schema": "schemas/alertmenu.onGoToAlertListClick.json"
+   },
+   "onItemClick": {
+    "element": "item-click",
+    "schema": "schemas/alertmenu.onItemClick.json"
+   },
+   "onAckClick": {
+    "element": "ack-click",
+    "schema": "schemas/alertmenu.onAckClick.json"
+   },
+   "onAckSecondaryClick": {
+    "element": "ack-secondary-click",
+    "schema": "schemas/alertmenu.onAckSecondaryClick.json"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

@@ -75,7 +75,49 @@ check('badge button icon is a child of the default slot', r.join() === 'obi-info
 r = await probe('cadre.ob.notificationbadgebutton', 'obc-notification-badge-button', { label: '1' }, '(el) => { el.shadowRoot.querySelector("button").click(); return window.fired; }');
 check('badge button carries click as onPress with no detail', JSON.stringify(r) === JSON.stringify([['onPress', {}]]), r);
 
-check('no console error or warning', errors.length === 0, errors);
+// ---- batch F2: the alert button and the alert menu
+r = await probe('cadre.ob.alertbuttonitem', 'obc-alert-button-item', { nAlerts: 2, alertType: '' }, '(el) => [el.alertType === undefined, el.nAlerts]');
+check('alert button item alertType is undefined while empty', r[0] === true && r[1] === 2, r);
+r = await probe('cadre.ob.alertbuttonitem', 'obc-alert-button-item', { nAlerts: 2, alertType: 'level-critical' }, '(el) => [el.alertType]');
+check('alert button item alertType reaches the element', r[0] === 'level-critical', r);
+r = await probe('cadre.ob.alertbuttonitem', 'obc-alert-button-item', { nAlerts: 2 }, '(el) => { el.click(); return window.fired; }');
+check('alert button item carries click as onPress with no detail', JSON.stringify(r) === JSON.stringify([['onPress', {}]]), r);
+
+r = await probe('cadre.ob.alertbutton', 'obc-alert-button', { nAlerts: 2, alertType: 'alarm' }, '(el) => [el.showSilenceButton, !!el.shadowRoot.querySelector("obc-button")]');
+check('alert button hides the silence control by default', r[0] === false, r);
+r = await probe('cadre.ob.alertbutton', 'obc-alert-button', { nAlerts: 2, alertType: 'alarm', showSilenceButton: true },
+  `async (el) => { await el.updateComplete; const bs = [...el.shadowRoot.querySelectorAll("button, obc-alert-button-item")]; bs.forEach(b => b.click()); await new Promise(r => setTimeout(r, 100)); return window.fired.map(f => f[0]); }`);
+check('alert button carries click-alert and click-silence', r.includes('onAlertClick') && r.includes('onSilenceClick'), r);
+
+r = await probe('cadre.ob.alertmenuitem', 'obc-alert-menu-item', { title: 'T', alertIcon: [{ tag: 'obc-alert-icon', type: 'alarm', active: true }], hasIcon: true, iconName: 'info' }, kids);
+check('alert menu item: the alert icon is an item in its slot, the icon a slot property', r.sort().join() === 'obc-alert-icon[alert-icon],obi-info[icon]', r);
+r = await probe('cadre.ob.alertmenuitem', 'obc-alert-menu-item', { title: 'T', status: 'unacknowledged' },
+  `async (el) => { el.dispatchEvent(new CustomEvent("item-click")); el.dispatchEvent(new CustomEvent("ack-click")); el.dispatchEvent(new CustomEvent("ack-secondary-click")); return window.fired; }`);
+check('alert menu item carries its three events with no detail', JSON.stringify(r) === JSON.stringify([['onItemClick', {}], ['onAckClick', {}], ['onAckSecondaryClick', {}]]), r);
+
+const rows = [{ tag: 'obc-alert-menu-item', id: 'A-1', title: 'One', status: 'unacknowledged' },
+              { tag: 'obc-alert-menu-item', id: 'A-2', title: 'Two', status: 'acknowledged', children: [{ tag: 'obc-alert-icon', slot: 'alert-icon', type: 'warning' }] },
+              { tag: 'obc-alert-menu-item', title: 'No id' }];
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: rows }, '(el) => [...el.children].map(n => n.tagName.toLowerCase() + ":" + (n.getAttribute("data-item-id") || "") + ":" + n.children.length)');
+check('alert menu builds one row element for each item, with its nested icon', r.join() === 'obc-alert-menu-item:A-1:0,obc-alert-menu-item:A-2:1,obc-alert-menu-item::0', r);
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: rows },
+  `async (el) => { const k = [...el.children]; k[0].dispatchEvent(new CustomEvent("ack-click")); k[1].dispatchEvent(new CustomEvent("item-click")); k[2].dispatchEvent(new CustomEvent("ack-secondary-click")); return window.fired; }`);
+check('alert menu hears the events of its rows (which do not bubble) and reports the row id and tag',
+  JSON.stringify(r) === JSON.stringify([['onAckClick', { id: 'A-1', tag: 'obc-alert-menu-item' }], ['onItemClick', { id: 'A-2', tag: 'obc-alert-menu-item' }],
+                                       ['onAckSecondaryClick', { id: '', tag: 'obc-alert-menu-item' }]]), r);
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: rows, canAckAll: true },
+  `async (el) => { await el.updateComplete; const b = [...el.shadowRoot.querySelectorAll("obc-button")].filter(x => /ack/i.test(x.textContent)); b.forEach(x => x.click()); await new Promise(r => setTimeout(r, 100)); return window.fired.filter(f => f[0] === "onAckAllClick"); }`);
+check('alert menu carries ACK visible with the tab and the ids of the visible rows', r.length === 1 && r[0][1].mode && Array.isArray(r[0][1].ids), r);
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: rows }, '(el) => [el.showSilenceButton, el.showAlertListButton]');
+check('alert menu hides the Silence button by default and keeps the Alerts button', r[0] === false && r[1] === true, r);
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: rows, showSilenceButton: true },
+  `async (el) => { await el.updateComplete; const b = [...el.shadowRoot.querySelectorAll("obc-button")]; b.forEach(x => x.click()); await new Promise(r => setTimeout(r, 100)); return window.fired.map(f => f[0]); }`);
+check('alert menu carries silence-click and go-to-alert-list-click', r.includes('onSilenceClick') && r.includes('onGoToAlertListClick'), r);
+r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: [rows[0], { tag: 'obc-notanitem' }] }, '(el) => el.children.length');
+check('alert menu drops a tag that is not allowed', r === 1, r);
+
+const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem'));      // provoked above
+check('no console error or warning', unexpected.length === 0, unexpected);
 for (const [s, n, d] of results) console.log(s, n, d);
 await browser.close();
 process.exit(results.some(r => r[0] === 'FAIL') ? 1 : 0);

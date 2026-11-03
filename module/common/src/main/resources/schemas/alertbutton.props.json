@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "nAlerts": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of active alerts shown in the counter; 0 shows the idle state."
+    },
+    "alertType": {
+      "type": "string",
+      "enum": [
+        "",
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "",
+      "description": "The alert type that selects the icon and colours. The Cadre priorities map onto it as wiki 13 section 11.1 says: Critical level-critical, High alarm, Medium warning, Low caution, Diagnostic empty (no alert colour); level-high, level-medium and level-low draw the same colours as alarm, warning and caution. Empty draws the idle state."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "normal",
+        "enhanced"
+      ],
+      "default": "normal",
+      "description": "Visual variant: flat (icon only), normal (default, icon and optional counter) or enhanced (emphasized for high-priority alerts)."
+    },
+    "large": {
+      "type": "boolean",
+      "default": false,
+      "description": "Increases the button height and padding for touch-friendly or prominent use."
+    },
+    "showSilenceButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the silence control is drawn beside the bell. False by default: no Cadre function silences an alarm, so the control stays hidden until one exists."
+    },
+    "silenceButtonDisabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the silence button when true. Available when showSilenceButton==true."
+    },
+    "counter": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the alert counter when there are active alerts and the button is not flat."
+    },
+    "globalCounter": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the per-severity counts and the shelved count before the bell and the total (the item's global counter); a flat button shows the plain bell."
+    },
+    "shelvedCount": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of shelved alerts, shown after the global counter badges; hidden at zero. Available when globalCounter==true."
+    },
+    "blinking": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flashes the bell for active alerts of a flashing alert type (never for caution)."
+    },
+    "flashingSpeed": {
+      "type": "string",
+      "enum": [
+        "default",
+        "fast",
+        "slow",
+        "very-slow",
+        "fixed"
+      ],
+      "default": "default",
+      "description": "Flash tempo while blinking is on: default resolves from alertType, fast, slow, very-slow force a tempo, fixed never flashes. Available when blinking==true."
+    },
+    "flatMaxBreakpointPx": {
+      "type": "number",
+      "default": 0,
+      "description": "Window width in px below which a normal or enhanced button switches to flat mode. Available when type!=flat."
+    },
+    "silenceButtonMinBreakpointPx": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum window width in px for showing the silence button. Available when showSilenceButton==true."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

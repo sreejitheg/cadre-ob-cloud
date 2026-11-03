@@ -168,6 +168,11 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 2px;
+  --app-components-alert-button-item-padding-counter-right: 2px;
+  --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-touch-target-size-tall: var(
+    --app-components-topbar-touch-target-tall
+  );
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -180,6 +185,7 @@
   );
   --global-size-spacing-icon-icon-size-small: 16px;
   --app-components-clock-touch-target-size-double: 64px;
+  --app-components-topbar-touch-target-tall: 64px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -205,6 +211,12 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 20px;
+  --app-components-notification-menu-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
   --global-size-spacing-icon-icon-size-large: 32px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -221,6 +233,9 @@
   --ui-components-user-button-border-radius-container: var(
     --global-border-radius-border-radius-base
   );
+  --app-components-alert-button-item-min-width: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-badge-min-size-large: 24px;
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
@@ -235,6 +250,11 @@
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --menu-navigation-components-tab-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-tab-item-label-spacing: 8px;
+  --menu-navigation-components-tab-item-padding-horizontal: 16px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -290,7 +310,18 @@
   --instrument-components-readout-icon-spacing: 4px;
   --instrument-components-readout-padding-horizontal: 4px;
   --instrument-components-readout-padding-vertical: 2px;
+  --app-components-topbar-message-item-tall-padding-vertical: 4px;
+  --app-components-alert-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-button-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-alert-button-item-padding-horizontal: 4px;
   --app-components-alert-counter-item-badge-spacing: 4px;
+  --app-components-alert-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --app-components-notification-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -299,9 +330,31 @@
   );
   --app-components-notification-button-padding-horizontal: 4px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-alert-button-tall-padding-vertical: var(
+    --app-components-topbar-message-item-tall-padding-vertical
+  );
+  --app-components-alert-menu-footer-padding-horizontal: 16px;
+  --app-components-alert-menu-footer-container-height: 72px;
   --app-components-alert-table-row-ack-container-width-small: 80px;
   --app-components-alert-toolbar-margin-horizontal: 16px;
+  --app-components-topbar-message-item-width: 640px;
+  --app-components-alert-menu-width: var(
+    --app-components-topbar-message-item-width
+  );
   --app-components-alert-menu-button-spacing: 8px;
+  --app-components-alert-button-padding-horizontal: 8px;
+  --app-components-message-menu-item-icon-size-regular: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-message-menu-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
+  --app-components-message-menu-item-label-spacing: 8px;
+  --app-components-message-menu-item-padding-vertical-8: 8px;
+  --app-components-message-menu-item-icon-container-padding-vertical: 4px;
+  --app-components-message-menu-item-padding-vertical-4: 4px;
+  --app-components-message-menu-item-padding-vertical-12: 12px;
+  --app-components-message-menu-item-padding-horizontal: 16px;
   --ui-components-toggletip-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
   );
@@ -647,6 +700,11 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 2px;
+  --app-components-alert-button-item-padding-counter-right: 2px;
+  --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-touch-target-size-tall: var(
+    --app-components-topbar-touch-target-tall
+  );
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -659,6 +717,7 @@
   );
   --global-size-spacing-icon-icon-size-small: 20px;
   --app-components-clock-touch-target-size-double: 80px;
+  --app-components-topbar-touch-target-tall: 80px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -684,6 +743,12 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 24px;
+  --app-components-notification-menu-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
   --global-size-spacing-icon-icon-size-large: 40px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -702,6 +767,9 @@
   --ui-components-user-button-border-radius-container: var(
     --global-border-radius-border-radius-base
   );
+  --app-components-alert-button-item-min-width: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-badge-min-size-large: 28px;
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
@@ -716,6 +784,11 @@
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --menu-navigation-components-tab-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-tab-item-label-spacing: 8px;
+  --menu-navigation-components-tab-item-padding-horizontal: 16px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -769,7 +842,18 @@
   --instrument-components-readout-icon-spacing: 8px;
   --instrument-components-readout-padding-horizontal: 8px;
   --instrument-components-readout-padding-vertical: 4px;
+  --app-components-topbar-message-item-tall-padding-vertical: 4px;
+  --app-components-alert-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-button-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-alert-button-item-padding-horizontal: 4px;
   --app-components-alert-counter-item-badge-spacing: 4px;
+  --app-components-alert-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --app-components-notification-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -778,9 +862,31 @@
   );
   --app-components-notification-button-padding-horizontal: 4px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-alert-button-tall-padding-vertical: var(
+    --app-components-topbar-message-item-tall-padding-vertical
+  );
+  --app-components-alert-menu-footer-padding-horizontal: 16px;
+  --app-components-alert-menu-footer-container-height: 88px;
   --app-components-alert-table-row-ack-container-width-small: 44px;
   --app-components-alert-toolbar-margin-horizontal: 16px;
+  --app-components-topbar-message-item-width: 720px;
+  --app-components-alert-menu-width: var(
+    --app-components-topbar-message-item-width
+  );
   --app-components-alert-menu-button-spacing: 8px;
+  --app-components-alert-button-padding-horizontal: 8px;
+  --app-components-message-menu-item-icon-size-regular: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-message-menu-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
+  --app-components-message-menu-item-label-spacing: 8px;
+  --app-components-message-menu-item-padding-vertical-8: 8px;
+  --app-components-message-menu-item-icon-container-padding-vertical: 4px;
+  --app-components-message-menu-item-padding-vertical-4: 4px;
+  --app-components-message-menu-item-padding-vertical-12: 12px;
+  --app-components-message-menu-item-padding-horizontal: 16px;
   --ui-components-toggletip-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
   );
@@ -1118,6 +1224,11 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 3px;
+  --app-components-alert-button-item-padding-counter-right: 3px;
+  --app-components-alert-button-item-counter-spacing: 2px;
+  --app-components-topbar-message-item-touch-target-size-tall: var(
+    --app-components-topbar-touch-target-tall
+  );
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -1130,6 +1241,7 @@
   );
   --global-size-spacing-icon-icon-size-small: 24px;
   --app-components-clock-touch-target-size-double: 96px;
+  --app-components-topbar-touch-target-tall: 96px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1155,6 +1267,12 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 32px;
+  --app-components-notification-menu-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
   --global-size-spacing-icon-icon-size-large: 48px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -1173,6 +1291,9 @@
   --ui-components-user-button-border-radius-container: var(
     --global-border-radius-border-radius-base
   );
+  --app-components-alert-button-item-min-width: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-badge-min-size-large: 38px;
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
@@ -1187,6 +1308,11 @@
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --menu-navigation-components-tab-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-tab-item-label-spacing: 12px;
+  --menu-navigation-components-tab-item-padding-horizontal: 24px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1240,7 +1366,18 @@
   --instrument-components-readout-icon-spacing: 0px;
   --instrument-components-readout-padding-horizontal: 0px;
   --instrument-components-readout-padding-vertical: 0px;
+  --app-components-topbar-message-item-tall-padding-vertical: 4px;
+  --app-components-alert-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-button-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-alert-button-item-padding-horizontal: 8px;
   --app-components-alert-counter-item-badge-spacing: 6px;
+  --app-components-alert-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --app-components-notification-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1249,9 +1386,31 @@
   );
   --app-components-notification-button-padding-horizontal: 8px;
   --app-components-notification-button-counter-spacing: 2px;
+  --app-components-alert-button-tall-padding-vertical: var(
+    --app-components-topbar-message-item-tall-padding-vertical
+  );
+  --app-components-alert-menu-footer-padding-horizontal: 24px;
+  --app-components-alert-menu-footer-container-height: 108px;
   --app-components-alert-table-row-ack-container-width-small: 120px;
   --app-components-alert-toolbar-margin-horizontal: 24px;
+  --app-components-topbar-message-item-width: 960px;
+  --app-components-alert-menu-width: var(
+    --app-components-topbar-message-item-width
+  );
   --app-components-alert-menu-button-spacing: 12px;
+  --app-components-alert-button-padding-horizontal: 12px;
+  --app-components-message-menu-item-icon-size-regular: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-message-menu-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
+  --app-components-message-menu-item-label-spacing: 12px;
+  --app-components-message-menu-item-padding-vertical-8: 12px;
+  --app-components-message-menu-item-icon-container-padding-vertical: 6px;
+  --app-components-message-menu-item-padding-vertical-4: 6px;
+  --app-components-message-menu-item-padding-vertical-12: 18px;
+  --app-components-message-menu-item-padding-horizontal: 24px;
   --ui-components-toggletip-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
   );
@@ -1589,6 +1748,11 @@
     --global-border-radius-border-radius-base
   );
   --app-components-clock-digit-spacing-regular: 4px;
+  --app-components-alert-button-item-padding-counter-right: 4px;
+  --app-components-alert-button-item-counter-spacing: 4px;
+  --app-components-topbar-message-item-touch-target-size-tall: var(
+    --app-components-topbar-touch-target-tall
+  );
   --global-size-spacing-state-container-border-radius: var(
     --global-border-radius-border-radius-base
   );
@@ -1601,6 +1765,7 @@
   );
   --global-size-spacing-icon-icon-size-small: 32px;
   --app-components-clock-touch-target-size-double: 128px;
+  --app-components-topbar-touch-target-tall: 128px;
   --app-components-tool-bar-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1626,6 +1791,12 @@
     --global-size-spacing-icon-icon-size-large
   );
   --ui-components-badge-icon-size-large: 40px;
+  --app-components-notification-menu-item-touch-target: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-menu-border-radius: var(
+    --global-border-radius-border-radius-floating
+  );
   --global-size-spacing-icon-icon-size-large: 64px;
   --ui-components-user-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
@@ -1644,6 +1815,9 @@
   --ui-components-user-button-border-radius-container: var(
     --global-border-radius-border-radius-base
   );
+  --app-components-alert-button-item-min-width: var(
+    --global-size-spacing-touch-target-min
+  );
   --ui-components-badge-min-size-large: 48px;
   --ui-components-context-menu-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
@@ -1658,6 +1832,11 @@
   --app-components-navigation-menu-footer-margin-horizontal: var(
     --global-size-spacing-nav-item-and-menus-margin-horizontal-context-menu
   );
+  --menu-navigation-components-tab-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --menu-navigation-components-tab-item-label-spacing: 16px;
+  --menu-navigation-components-tab-item-padding-horizontal: 32px;
   --menu-navigation-components-table-header-item-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1717,7 +1896,18 @@
   --instrument-components-readout-icon-spacing: 4px;
   --instrument-components-readout-padding-horizontal: 4px;
   --instrument-components-readout-padding-vertical: 2px;
+  --app-components-topbar-message-item-tall-padding-vertical: 8px;
+  --app-components-alert-button-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-alert-button-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-alert-button-item-padding-horizontal: 8px;
   --app-components-alert-counter-item-badge-spacing: 8px;
+  --app-components-alert-button-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
   --app-components-notification-button-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1726,9 +1916,31 @@
   );
   --app-components-notification-button-padding-horizontal: 8px;
   --app-components-notification-button-counter-spacing: 4px;
+  --app-components-alert-button-tall-padding-vertical: var(
+    --app-components-topbar-message-item-tall-padding-vertical
+  );
+  --app-components-alert-menu-footer-padding-horizontal: 32px;
+  --app-components-alert-menu-footer-container-height: 144px;
   --app-components-alert-table-row-ack-container-width-small: 40px;
   --app-components-alert-toolbar-margin-horizontal: 32px;
+  --app-components-topbar-message-item-width: 1280px;
+  --app-components-alert-menu-width: var(
+    --app-components-topbar-message-item-width
+  );
   --app-components-alert-menu-button-spacing: 16px;
+  --app-components-alert-button-padding-horizontal: 16px;
+  --app-components-message-menu-item-icon-size-regular: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-message-menu-item-icon-size-large: var(
+    --global-size-spacing-icon-icon-size-large
+  );
+  --app-components-message-menu-item-label-spacing: 16px;
+  --app-components-message-menu-item-padding-vertical-8: 16px;
+  --app-components-message-menu-item-icon-container-padding-vertical: 8px;
+  --app-components-message-menu-item-padding-vertical-4: 8px;
+  --app-components-message-menu-item-padding-vertical-12: 24px;
+  --app-components-message-menu-item-padding-horizontal: 32px;
   --ui-components-toggletip-icon-size: var(
     --global-size-spacing-icon-icon-size-regular
   );
@@ -2044,8 +2256,29 @@
   --on-amplified-active-color: rgb(29, 60, 103);
   --on-amplified-disabled-color: rgb(190, 190, 190);
   --alarm-enabled-background-color: rgb(227, 0, 25);
+  --alarm-enabled-border-color: rgb(171, 0, 0);
+  --alarm-hover-background-color: rgb(195, 0, 0);
+  --alarm-hover-border-color: rgb(171, 0, 0);
+  --alarm-pressed-background-color: rgb(171, 0, 0);
+  --alarm-pressed-border-color: rgb(171, 0, 0);
+  --alarm-disabled-background-color: rgb(227, 0, 25);
+  --alarm-disabled-border-color: rgb(227, 0, 25);
   --warning-enabled-background-color: rgb(254, 148, 19);
+  --warning-enabled-border-color: rgb(233, 103, 0);
+  --warning-hover-background-color: rgb(233, 103, 0);
+  --warning-hover-border-color: rgb(211, 89, 0);
+  --warning-pressed-background-color: rgb(211, 89, 0);
+  --warning-pressed-border-color: rgb(190, 78, 0);
+  --warning-disabled-background-color: rgb(255, 135, 42);
+  --warning-disabled-border-color: rgb(255, 135, 42);
   --caution-enabled-background-color: rgb(255, 219, 66);
+  --caution-enabled-border-color: rgb(179, 135, 0);
+  --caution-hover-background-color: rgb(253, 198, 0);
+  --caution-hover-border-color: rgb(179, 135, 0);
+  --caution-pressed-background-color: rgb(232, 179, 0);
+  --caution-pressed-border-color: rgb(179, 135, 0);
+  --caution-disabled-background-color: rgb(179, 135, 0);
+  --caution-disabled-border-color: rgb(179, 135, 0);
   --indent-enabled-background-color: rgb(0, 0, 0, 0.03999999910593033);
   --indent-enabled-border-color: rgb(0, 0, 0, 0.10000000149011612);
   --indent-hover-background-color: rgb(0, 0, 0, 0.10000000149011612);
@@ -2060,8 +2293,11 @@
   --on-indent-neutral-color: rgb(83, 83, 83);
   --on-indent-disabled-color: rgb(190, 190, 190);
   --on-caution-active-color: rgb(61, 61, 61);
+  --on-caution-disabled-color: rgb(143, 107, 0);
   --on-warning-active-color: rgb(26, 26, 26);
+  --on-warning-disabled-color: rgb(145, 55, 0);
   --on-alarm-active-color: rgb(255, 255, 255);
+  --on-alarm-disabled-color: rgb(255, 167, 156);
   --instrument-enhanced-primary-color: rgb(29, 60, 103);
   --instrument-regular-primary-color: rgb(61, 61, 61);
   --automation-device-primary-color: rgb(255, 255, 255);
@@ -2217,6 +2453,7 @@
   --alert-critical-outline-color: rgb(153, 0, 143);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(248, 155, 235);
 }
 .psc-cadre\/palette\/dusk .cadre-ob.cadre-ob {
   --icon-02-chevron-up: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 14.0002L7.41 15.4102L12 10.8302L16.59 15.4102L18 14.0002L12 8.00016L6 14.0002Z" fill="rgba(255, 255, 255, .550)"/></svg>');
@@ -2310,8 +2547,29 @@
   --on-amplified-active-color: rgb(169, 209, 255);
   --on-amplified-disabled-color: rgb(77, 77, 77);
   --alarm-enabled-background-color: rgb(219, 0, 7);
+  --alarm-enabled-border-color: rgb(244, 27, 36);
+  --alarm-hover-background-color: rgb(244, 27, 36);
+  --alarm-hover-border-color: rgb(244, 27, 36);
+  --alarm-pressed-background-color: rgb(255, 59, 56);
+  --alarm-pressed-border-color: rgb(244, 27, 36);
+  --alarm-disabled-background-color: rgb(219, 0, 7);
+  --alarm-disabled-border-color: rgb(219, 0, 7);
   --warning-enabled-background-color: rgb(244, 120, 0);
+  --warning-enabled-border-color: rgb(255, 143, 48);
+  --warning-hover-background-color: rgb(255, 143, 48);
+  --warning-hover-border-color: rgb(255, 168, 94);
+  --warning-pressed-background-color: rgb(255, 168, 94);
+  --warning-pressed-border-color: rgb(255, 168, 94);
+  --warning-disabled-background-color: rgb(255, 143, 48);
+  --warning-disabled-border-color: rgb(255, 143, 48);
   --caution-enabled-background-color: rgb(215, 164, 0);
+  --caution-enabled-border-color: rgb(233, 180, 0);
+  --caution-hover-background-color: rgb(233, 180, 0);
+  --caution-hover-border-color: rgb(253, 198, 0);
+  --caution-pressed-background-color: rgb(253, 198, 0);
+  --caution-pressed-border-color: rgb(253, 198, 0);
+  --caution-disabled-background-color: rgb(172, 130, 0);
+  --caution-disabled-border-color: rgb(172, 130, 0);
   --indent-enabled-background-color: rgb(255, 255, 255, 0.07999999821186066);
   --indent-enabled-border-color: rgb(255, 255, 255, 0.07999999821186066);
   --indent-hover-background-color: rgb(255, 255, 255, 0.029999999329447746);
@@ -2326,8 +2584,11 @@
   --on-indent-neutral-color: rgb(171, 171, 171);
   --on-indent-disabled-color: rgb(77, 77, 77);
   --on-caution-active-color: rgb(37, 37, 37);
+  --on-caution-disabled-color: rgb(100, 73, 0);
   --on-warning-active-color: rgb(37, 37, 37);
+  --on-warning-disabled-color: rgb(132, 54, 0);
   --on-alarm-active-color: rgb(255, 255, 255);
+  --on-alarm-disabled-color: rgb(38, 38, 38);
   --instrument-enhanced-primary-color: rgb(169, 209, 255);
   --instrument-regular-primary-color: rgb(255, 255, 255);
   --automation-device-primary-color: rgb(247, 247, 247);
@@ -2493,6 +2754,7 @@
   --alert-critical-outline-color: rgb(183, 32, 185);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(255, 255, 255);
 }
 .psc-cadre\/palette\/night .cadre-ob.cadre-ob {
   --icon-02-chevron-up: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 14.0002L7.41 15.4102L12 10.8302L16.59 15.4102L18 14.0002L12 8.00016L6 14.0002Z" fill="rgb(51, 51, 0)"/></svg>');
@@ -2586,8 +2848,29 @@
   --on-amplified-active-color: rgb(88, 200, 162);
   --on-amplified-disabled-color: rgb(72, 52, 31);
   --alarm-enabled-background-color: rgb(185, 0, 0);
+  --alarm-enabled-border-color: rgb(185, 0, 0);
+  --alarm-hover-background-color: rgb(185, 0, 0);
+  --alarm-hover-border-color: rgb(233, 15, 32);
+  --alarm-pressed-background-color: rgb(212, 0, 12);
+  --alarm-pressed-border-color: rgb(233, 15, 32);
+  --alarm-disabled-background-color: rgb(119, 0, 0);
+  --alarm-disabled-border-color: rgb(119, 0, 0);
   --warning-enabled-background-color: rgb(186, 90, 0);
+  --warning-enabled-border-color: rgb(186, 90, 0);
+  --warning-hover-background-color: rgb(186, 90, 0);
+  --warning-hover-border-color: rgb(230, 120, 0);
+  --warning-pressed-background-color: rgb(168, 80, 0);
+  --warning-pressed-border-color: rgb(230, 120, 0);
+  --warning-disabled-background-color: rgb(147, 68, 0);
+  --warning-disabled-border-color: rgb(147, 68, 0);
   --caution-enabled-background-color: rgb(137, 115, 0);
+  --caution-enabled-border-color: rgb(137, 115, 0);
+  --caution-hover-background-color: rgb(137, 115, 0);
+  --caution-hover-border-color: rgb(175, 148, 0);
+  --caution-pressed-background-color: rgb(123, 104, 0);
+  --caution-pressed-border-color: rgb(175, 148, 0);
+  --caution-disabled-background-color: rgb(107, 89, 0);
+  --caution-disabled-border-color: rgb(107, 89, 0);
   --indent-enabled-background-color: rgb(0, 0, 0);
   --indent-enabled-border-color: rgb(72, 52, 31);
   --indent-hover-background-color: rgb(0, 0, 0);
@@ -2602,8 +2885,11 @@
   --on-indent-neutral-color: rgb(199, 136, 66);
   --on-indent-disabled-color: rgb(72, 52, 31);
   --on-caution-active-color: rgb(0, 0, 0);
+  --on-caution-disabled-color: rgb(0, 0, 0, 0.27000001072883606);
   --on-warning-active-color: rgb(0, 0, 0);
+  --on-warning-disabled-color: rgb(0, 0, 0, 0.27000001072883606);
   --on-alarm-active-color: rgb(0, 0, 0);
+  --on-alarm-disabled-color: rgb(0, 0, 0, 0.30000001192092896);
   --instrument-enhanced-primary-color: rgb(88, 200, 162);
   --instrument-regular-primary-color: rgb(234, 167, 94);
   --automation-device-primary-color: rgb(255, 211, 167);
@@ -2749,6 +3035,7 @@
   --alert-critical-outline-color: rgb(161, 6, 163);
   --on-critical-color: rgb(0, 0, 0);
   --on-critical-active-color: rgb(0, 0, 0);
+  --on-critical-disabled-color: rgb(255, 255, 255);
 }
 .psc-cadre\/palette\/bright .cadre-ob.cadre-ob {
   --icon-02-chevron-up: url('data:image/svg+xml,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M6 14.0002L7.41 15.4102L12 10.8302L16.59 15.4102L18 14.0002L12 8.00016L6 14.0002Z" fill="rgba(0, 0, 0, .650)"/></svg>');
@@ -2842,8 +3129,29 @@
   --on-amplified-active-color: rgb(2, 18, 40);
   --on-amplified-disabled-color: rgb(108, 108, 108);
   --alarm-enabled-background-color: rgb(216, 17, 28);
+  --alarm-enabled-border-color: rgb(112, 0, 0);
+  --alarm-hover-background-color: rgb(164, 0, 0);
+  --alarm-hover-border-color: rgb(79, 0, 0);
+  --alarm-pressed-background-color: rgb(112, 0, 0);
+  --alarm-pressed-border-color: rgb(79, 0, 0);
+  --alarm-disabled-background-color: rgb(164, 0, 0);
+  --alarm-disabled-border-color: rgb(164, 0, 0);
   --warning-enabled-background-color: rgb(245, 128, 35);
+  --warning-enabled-border-color: rgb(135, 55, 0);
+  --warning-hover-background-color: rgb(178, 79, 0);
+  --warning-hover-border-color: rgb(135, 55, 0);
+  --warning-pressed-background-color: rgb(135, 55, 0);
+  --warning-pressed-border-color: rgb(93, 34, 0);
+  --warning-disabled-background-color: rgb(178, 79, 0);
+  --warning-disabled-border-color: rgb(178, 79, 0);
   --caution-enabled-background-color: rgb(255, 206, 52);
+  --caution-enabled-border-color: rgb(138, 103, 0);
+  --caution-hover-background-color: rgb(231, 179, 0);
+  --caution-hover-border-color: rgb(138, 103, 0);
+  --caution-pressed-background-color: rgb(172, 130, 0);
+  --caution-pressed-border-color: rgb(69, 49, 0);
+  --caution-disabled-background-color: rgb(172, 130, 0);
+  --caution-disabled-border-color: rgb(172, 130, 0);
   --indent-enabled-background-color: rgb(0, 0, 0, 0.14901961386203766);
   --indent-enabled-border-color: rgb(0, 0, 0, 0.45098039507865906);
   --indent-hover-background-color: rgb(0, 0, 0, 0.3607843220233917);
@@ -2858,8 +3166,11 @@
   --on-indent-neutral-color: rgb(17, 17, 17);
   --on-indent-disabled-color: rgb(108, 108, 108);
   --on-caution-active-color: rgb(0, 0, 0);
+  --on-caution-disabled-color: rgb(138, 103, 0);
   --on-warning-active-color: rgb(0, 0, 0);
+  --on-warning-disabled-color: rgb(93, 34, 0);
   --on-alarm-active-color: rgb(255, 255, 255);
+  --on-alarm-disabled-color: rgb(242, 78, 70);
   --instrument-enhanced-primary-color: rgb(7, 35, 70);
   --instrument-regular-primary-color: rgb(35, 35, 35);
   --automation-device-primary-color: rgb(255, 255, 255);
@@ -3010,42 +3321,75 @@
   --alert-critical-outline-color: rgb(142, 7, 143);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(255, 255, 255);
 }
 .psc-cadre\/palette\/day .cadre-ob.cadre-ob {
   --critical-enabled-background-color: rgb(196, 36, 183);
   --critical-enabled-border-color: rgb(153, 0, 143);
+  --critical-hover-background-color: rgb(173, 5, 162);
+  --critical-hover-border-color: rgb(153, 0, 143);
+  --critical-pressed-background-color: rgb(153, 0, 143);
+  --critical-pressed-border-color: rgb(153, 0, 143);
+  --critical-disabled-background-color: rgb(196, 36, 183);
+  --critical-disabled-border-color: rgb(196, 36, 183);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(248, 155, 235);
   --alert-critical-color: var(--critical-enabled-background-color);
   --alert-critical-outline-color: var(--critical-enabled-border-color);
   --alert-diagnostic-color: var(--notification-enabled-background-color);
+  --alert-diagnostic-outline-color: var(--notification-enabled-border-color);
 }
 .psc-cadre\/palette\/dusk .cadre-ob.cadre-ob {
   --critical-enabled-background-color: rgb(189, 40, 190);
   --critical-enabled-border-color: rgb(206, 65, 207);
+  --critical-hover-background-color: rgb(206, 65, 207);
+  --critical-hover-border-color: rgb(206, 65, 207);
+  --critical-pressed-background-color: rgb(218, 85, 218);
+  --critical-pressed-border-color: rgb(206, 65, 207);
+  --critical-disabled-background-color: rgb(189, 40, 190);
+  --critical-disabled-border-color: rgb(189, 40, 190);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(38, 38, 38);
   --alert-critical-color: var(--critical-enabled-background-color);
   --alert-critical-outline-color: var(--critical-enabled-border-color);
   --alert-diagnostic-color: var(--notification-enabled-background-color);
+  --alert-diagnostic-outline-color: var(--notification-enabled-border-color);
 }
 .psc-cadre\/palette\/night .cadre-ob.cadre-ob {
   --critical-enabled-background-color: rgb(195, 48, 196);
   --critical-enabled-border-color: rgb(195, 48, 196);
+  --critical-hover-background-color: rgb(195, 48, 196);
+  --critical-hover-border-color: rgb(224, 100, 224);
+  --critical-pressed-background-color: rgb(181, 30, 182);
+  --critical-pressed-border-color: rgb(224, 100, 224);
+  --critical-disabled-background-color: rgb(161, 6, 163);
+  --critical-disabled-border-color: rgb(161, 6, 163);
   --on-critical-color: rgb(0, 0, 0);
   --on-critical-active-color: rgb(0, 0, 0);
+  --on-critical-disabled-color: rgb(0, 0, 0, 0.30000001192092896);
   --alert-critical-color: var(--critical-enabled-background-color);
   --alert-critical-outline-color: var(--critical-enabled-border-color);
   --alert-diagnostic-color: var(--notification-enabled-background-color);
+  --alert-diagnostic-outline-color: var(--notification-enabled-border-color);
 }
 .psc-cadre\/palette\/bright .cadre-ob.cadre-ob {
   --critical-enabled-background-color: rgb(196, 36, 183);
   --critical-enabled-border-color: rgb(112, 0, 104);
+  --critical-hover-background-color: rgb(153, 0, 143);
+  --critical-hover-border-color: rgb(112, 0, 104);
+  --critical-pressed-background-color: rgb(112, 0, 104);
+  --critical-pressed-border-color: rgb(112, 0, 104);
+  --critical-disabled-background-color: rgb(196, 36, 183);
+  --critical-disabled-border-color: rgb(196, 36, 183);
   --on-critical-color: rgb(255, 255, 255);
   --on-critical-active-color: rgb(255, 255, 255);
+  --on-critical-disabled-color: rgb(248, 155, 235);
   --alert-critical-color: var(--critical-enabled-background-color);
   --alert-critical-outline-color: var(--critical-enabled-border-color);
   --alert-diagnostic-color: var(--notification-enabled-background-color);
+  --alert-diagnostic-outline-color: var(--notification-enabled-border-color);
 }
 .cadre-ob.cadre-ob {
   --obc-can-hover: 1;
@@ -3108,4 +3452,10 @@
   width: 100%;
   height: 100%;
   min-height: 0;
+}
+/* An alert menu row fills the width of its component box. */
+.cadre-ob > obc-alert-menu-item {
+  align-self: stretch;
+  flex: 1 1 auto;
+  width: 100%;
 }

@@ -1113,5 +1113,51 @@
   "icon": false,
   "disabled": false,
   "indent": false
+ },
+ "obc-alert-button-item": {
+  "type": "normal",
+  "alertType": "__undefined__",
+  "nAlerts": 0,
+  "counter": false,
+  "globalCounter": false,
+  "shelvedCount": 0,
+  "blinking": false,
+  "flashingSpeed": "default",
+  "fillHeight": false,
+  "ariaLabel": null
+ },
+ "obc-alert-button": {
+  "nAlerts": 0,
+  "alertType": "__undefined__",
+  "type": "normal",
+  "large": false,
+  "showSilenceButton": false,
+  "silenceButtonDisabled": false,
+  "counter": false,
+  "globalCounter": false,
+  "shelvedCount": 0,
+  "blinking": false,
+  "flashingSpeed": "default",
+  "flatMaxBreakpointPx": 0,
+  "silenceButtonMinBreakpointPx": 0
+ },
+ "obc-alert-menu-item": {
+  "hasIcon": false,
+  "shelved": false,
+  "title": "",
+  "description": "",
+  "day": "",
+  "time": "",
+  "status": "unacknowledged",
+  "open": false,
+  "size": "single-line",
+  "animateIntro": false,
+  "secondaryActionLabel": "",
+  "primaryActionState": "enabled",
+  "secondaryActionState": "none"
+ },
+ "obc-alert-menu": {
+  "hasShelved": false,
+  "canAckAll": false
  }
 }

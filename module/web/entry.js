@@ -62,4 +62,9 @@ import '@oicl/openbridge-webcomponents/dist/components/user-button/user-button.j
 import '@oicl/openbridge-webcomponents/dist/components/app-button/app-button.js';
 import '@oicl/openbridge-webcomponents/dist/components/notification-button/notification-button.js';
 import '@oicl/openbridge-webcomponents/dist/components/notification-badge-button/notification-badge-button.js';
+// tranche T2, batch F2: the alert button and the alert menu (each child before its parent)
+import '@oicl/openbridge-webcomponents/dist/components/alert-button-item/alert-button-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/alert-button/alert-button.js';
+import '@oicl/openbridge-webcomponents/dist/components/alert-menu-item/alert-menu-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/alert-menu/alert-menu.js';
 import './icons.js';

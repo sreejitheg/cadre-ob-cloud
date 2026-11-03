@@ -186,7 +186,9 @@ def pulse_members(kind: str) -> list[str]:
 FRAME_ONLY = {"tooltip": "cadre.ob.tooltip", "toggletip": "cadre.ob.toggletip", "clock": "cadre.ob.clock",
               "user-button": "cadre.ob.userbutton", "app-button": "cadre.ob.appbutton",
               "notification-button": "cadre.ob.notificationbutton",
-              "notification-badge-button": "cadre.ob.notificationbadgebutton"}
+              "notification-badge-button": "cadre.ob.notificationbadgebutton",
+              "alert-button-item": "cadre.ob.alertbuttonitem", "alert-button": "cadre.ob.alertbutton",
+              "alert-menu-item": "cadre.ob.alertmenuitem", "alert-menu": "cadre.ob.alertmenu"}
 MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
                "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
                "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway",

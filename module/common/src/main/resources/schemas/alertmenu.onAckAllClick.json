@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "The ACK visible button was pressed. event.mode is the tab (unacked, all or shelved); event.ids holds the `id` of each visible row that has one.",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "description": "The tab the button acted on: unacked, all or shelved."
+    },
+    "ids": {
+      "type": "array",
+      "description": "The `id` of each visible row that has one."
+    }
+  }
+}

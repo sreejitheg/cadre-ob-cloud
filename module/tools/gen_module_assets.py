@@ -57,6 +57,16 @@ ALERT_EVENTS = {
                        "text of the button."),
     "secondary-action": ("onSecondaryAction", "label", "The secondary button of the toggletip was pressed. event.label is "
                          "the text of the button."),
+    # The alert button and the alert menu (T2, batch F2). Names that an earlier row holds for the alarm lists (`ack-click`,
+    # `silence-click`) keep their name here; a component words the event for itself with `eventText` and changes the payload
+    # with `eventKinds`.
+    "click-alert": ("onAlertClick", "none", "The bell was pressed. The event carries nothing; the page's script decides what it opens."),
+    "click-silence": ("onSilenceClick", "none", "The silence control of the alert button was pressed. The control is hidden by default "
+                      "(`showSilenceButton`); the event carries nothing."),
+    "item-click": ("onItemClick", "none", "The row was pressed. The event carries nothing."),
+    "ack-secondary-click": ("onAckSecondaryClick", "none", "The secondary action of the row was pressed. The event carries nothing."),
+    "go-to-alert-list-click": ("onGoToAlertListClick", "none", "The Alerts button of the menu was pressed. The event carries nothing; "
+                               "the page's script decides where it goes."),
 }
 # The properties of the object a Perspective component event carries, by payload kind (the wrapper's `payload` builds the
 # object from the element's event detail). A kind a later wrap needs is one entry here and one branch of `payload`.
@@ -71,6 +81,9 @@ PAYLOAD_PROPS = {
                      "isActive": {"type": "boolean", "description": "The active state the press asks for."}},
     "label": {"label": {"type": "string", "description": "The text of the button that was pressed."}},
     # an event of a child built from `items`: the `id` its item object carries (empty if none) and its tag
+    # the ACK visible button of the alert menu: the tab it acted on and the `id` of each visible row that has one
+    "menuvisible": {"mode": {"type": "string", "description": "The tab the button acted on: unacked, all or shelved."},
+                    "ids": {"type": "array", "description": "The `id` of each visible row that has one."}},
     "item": {"id": {"type": "string", "description": "The id of the item the event came from (empty if it has none)."},
              "tag": {"type": "string", "description": "The tag of the item the event came from."}},
 }
@@ -84,6 +97,13 @@ LINE_FRAME = ["state", "frameStyle", "borderRadiusPosition", "borderRadiusPositi
 # `borderRadiusPosition` are undefined by default, and any explicit value overrides what the element derives), and the
 # instrument mode with the border radius it enables, which serve a bar placed inside another instrument.
 BAR_LEFT_OUT = ["barContainerStyle", "borderRadiusPosition", "instrumentMode", "borderRadius"]
+# The alert type of the alert button family. OpenBridge's `AlertType` has the three IEC names and five severity levels; the five
+# Cadre priorities map onto them as wiki 13 section 11.1 says (the module's colours already follow it): Critical the critical
+# level (`level-critical`), High alarm, Medium warning, Low caution and Diagnostic none (empty). An empty value is the idle state,
+# drawn without an alert colour.
+ALERT_TYPE_TEXT = ("The alert type that selects the icon and colours. The Cadre priorities map onto it as wiki 13 section 11.1 says: "
+                   "Critical level-critical, High alarm, Medium warning, Low caution, Diagnostic empty (no alert colour); "
+                   "level-high, level-medium and level-low draw the same colours as alarm, warning and caution. Empty draws the idle state.")
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
      "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
@@ -308,6 +328,46 @@ COMPONENTS = [
      "size": {"width": 80, "height": 48}, "exclude": [], "events": ["click"],
      "slots": [{"slot": "", "kind": "text", "property": "label"}, {"slot": "", "kind": "icon"}],
      "eventText": {"click": "The badge button was pressed. The event carries nothing."}},
+    # batch F2 (T2): the alert button and the alert menu, each child before its parent. The silence control is hidden by default
+    # (owner's answer 4 of cloud/FRAME-DESIGN.md): no Cadre function silences an alarm, so `showSilenceButton` is false.
+    {"tag": "obc-alert-button-item", "type": "cadre.ob.alertbuttonitem", "name": "alertbuttonitem", "title": "OB Alert Button Item",
+     "palette": "OpenBridge alert button item: one bell with an alert type and a count, as the alert button draws it",
+     "size": {"width": 96, "height": 64}, "exclude": [], "events": ["click"], "undefinedWhenEmpty": ["alertType"],
+     "describe": {"alertType": ALERT_TYPE_TEXT},
+     "eventText": {"click": "The bell was pressed. The event carries nothing; the page's script decides what it opens."}},
+    {"tag": "obc-alert-button", "type": "cadre.ob.alertbutton", "name": "alertbutton", "title": "OB Alert Button",
+     "palette": "OpenBridge alert button: a bell with the count of alerts and an alert type, with an optional silence control",
+     "size": {"width": 160, "height": 64}, "exclude": [], "events": ["click-alert", "click-silence"],
+     "undefinedWhenEmpty": ["alertType"], "types": {"type": "ObcAlertButtonType"},
+     "describe": {"alertType": ALERT_TYPE_TEXT,
+                  "showSilenceButton": "Whether the silence control is drawn beside the bell. False by default: no Cadre function "
+                                       "silences an alarm, so the control stays hidden until one exists."}},
+    {"tag": "obc-alert-menu-item", "type": "cadre.ob.alertmenuitem", "name": "alertmenuitem", "title": "OB Alert Menu Item",
+     "palette": "OpenBridge alert menu item: one alert row with a title, description, date, time and an ACK action",
+     "size": {"width": 360, "height": 72}, "exclude": [], "events": ["item-click", "ack-click", "ack-secondary-click"],
+     "eventKinds": {"ack-click": "none"}, "types": {"status": "ObcAlertMenuItemStatus"},
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "items": {"alertIcon": {"tags": ["obc-alert-icon"], "slot": "alert-icon",
+                             "describe": "The alert icon at the start of the row, one `obc-alert-icon`"}},
+     "eventText": {"ack-click": "The ACK action of the row was pressed. The event carries nothing."}},
+    {"tag": "obc-alert-menu", "type": "cadre.ob.alertmenu", "name": "alertmenu", "title": "OB Alert Menu",
+     "palette": "OpenBridge alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
+     "size": {"width": 640, "height": 560}, "exclude": [],
+     "events": ["ack-all-visible-click", "silence-click", "go-to-alert-list-click", "item-click", "ack-click", "ack-secondary-click"],
+     "itemEvents": ["item-click", "ack-click", "ack-secondary-click"],
+     "eventKinds": {"ack-all-visible-click": "menuvisible", "ack-click": "item", "item-click": "item", "ack-secondary-click": "item"},
+     "properties": ["showSilenceButton", "showAlertListButton"],
+     "items": {"items": {"tags": ["obc-alert-menu-item"], "slot": "",
+                         "describe": "The alert rows of the menu, one `obc-alert-menu-item` for each"}},
+     "describe": {"showSilenceButton": "Whether the menu draws its Silence button. False by default: no Cadre function silences an "
+                                       "alarm, so the button stays hidden until one exists (the element's own default is true).",
+                  "showAlertListButton": "Whether the menu draws its Alerts button, which asks for the page of the full alert list."},
+     "eventText": {
+         "ack-all-visible-click": "The ACK visible button was pressed. event.mode is the tab (unacked, all or shelved); event.ids "
+                                  "holds the `id` of each visible row that has one.",
+         "item-click": "A row was pressed. event.id is the row's `id` (empty if it has none) and event.tag its tag.",
+         "ack-click": "The ACK action of a row was pressed. event.id is the row's `id` (empty if it has none) and event.tag its tag.",
+         "ack-secondary-click": "The secondary action of a row was pressed. event.id is the row's `id` and event.tag its tag."}},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -458,6 +518,10 @@ PROPERTIES = {
     "isClickable": {"type": "boolean", "default": True, "description":
                     "Whether the clock is a button (draws its pressed and hover states). False draws a plain block."},
     "showLabel": {"type": "boolean", "default": True, "description": "Whether the button draws its label under the icon."},
+    # the alert menu (F2): fields without an attribute; the silence button is hidden by default (no Cadre silence function)
+    "showSilenceButton": {"type": "boolean", "default": False, "description":
+                          "Whether the menu draws its Silence button. False by default; the element's own default is true."},
+    "showAlertListButton": {"type": "boolean", "default": True, "description": "Whether the menu draws its Alerts button."},
 }
 # ------------------------------------------------------------------------------- frame mechanisms (T2, batch F1)
 # Slotted children of a frame component are carried by three mechanisms, each driven by a key of the component's entry.
@@ -479,7 +543,7 @@ PROPERTIES = {
 # A tag allowed as an item must be an element of the manifest. `ITEM_CHILDREN` maps an item tag to the item tags it may
 # hold; `ITEM_FIELDS` lists fields a tag has with no attribute that an item may set (rows are added by the batch that needs them).
 ICONS_JS = HERE / "web/icons.js"
-ITEM_CHILDREN: dict[str, list[str]] = {}
+ITEM_CHILDREN: dict[str, list[str]] = {"obc-alert-menu-item": ["obc-alert-icon"]}
 ITEM_FIELDS: dict[str, list[str]] = {}
 ITEM_PLAIN = ["span"]          # elements that are not custom elements and may hold text anywhere below a top level item
 ITEM_DEPTH = 8                 # the deepest nesting of `children` the wrapper builds
@@ -667,6 +731,8 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
             vals = enum_map[base]
             d = default if default in vals else vals[0]
             p, kind = {"type": "string", "enum": vals, "default": d}, "string"
+            if nullable and name in spec.get("undefinedWhenEmpty", []):      # an optional enumeration: empty is undefined (the idle state)
+                p, kind = {"type": "string", "enum": [""] + vals, "default": ""}, "ustring"
         else:
             print(f"  skipped {spec['tag']}.{name}: type {ttext!r} not mapped")
             continue
@@ -814,7 +880,10 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                # drew at 0 by 0 on the gateway (T2, 2026-11-03), so it fills the box like the alarm lists.
                "/* The radial instrument fills its component box. */\n"
                ".cadre-ob > obc-instrument-radial {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n"
-               "  height: 100%;\n  min-height: 0;\n}\n")
+               "  height: 100%;\n  min-height: 0;\n}\n"
+               # A row of the alert menu has no width of its own and collapses to its icon when centred (F2, measured in Chromium).
+               "/* An alert menu row fills the width of its component box. */\n"
+               ".cadre-ob > obc-alert-menu-item {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
     return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
 
 
@@ -888,10 +957,15 @@ WRAPPER = r"""
                                             .map(function (a) { return String(a.id); }) };
     }
     if (kind === 'notification') return { count: Number(d.count) || 0, isActive: !!d.isActive };
+    if (kind === 'menuvisible') {
+      var vis = (d.visibleElements || []).map(function (v) { return v && v.element && v.element.getAttribute ? v.element.getAttribute('data-item-id') : null; })
+                                        .filter(function (i) { return i !== null && i !== ''; });
+      return { mode: String(d.tabName || 'unacked'), ids: vis };
+    }
     if (kind === 'label') return { label: String(d.label === undefined || d.label === null ? '' : d.label) };
     if (kind === 'item') {
-      var from = e && e.target && e.target.closest ? e.target.closest('[data-item-id]') : null;
-      return { id: from ? String(from.getAttribute('data-item-id')) : '', tag: from ? String(from.tagName).toLowerCase() : '' };
+      var from = e && e.target && e.target.closest ? e.target.closest('[data-item-id],[data-cadre-item]') : null;
+      return { id: from ? String(from.getAttribute('data-item-id') || '') : '', tag: from ? String(from.tagName).toLowerCase() : '' };
     }
     return {};
   }
@@ -959,7 +1033,7 @@ WRAPPER = r"""
           this.itemNodes = {};
           if (el && spec.sheet) this.sheets();
           if (el) {
-            (spec.events || []).forEach((ev) => {
+            (spec.events || []).filter((ev) => !ev.onItems).forEach((ev) => {
               var f = (e) => this.fire(ev, e);
               el.addEventListener(ev.dom, f);
               this.handlers.push([el, ev.dom, f]);
@@ -1025,6 +1099,13 @@ WRAPPER = r"""
         this.applyItems(el, p);
         if (spec.selection) this.applySelection(p);
       }
+      // An event of an item that does not bubble (the alert menu's rows fire plain CustomEvents) is heard on the item itself;
+      // the item node is dropped with its listeners when the list changes.
+      listenItem(n) {
+        (spec.events || []).filter((ev) => ev.onItems).forEach((ev) => {
+          n.addEventListener(ev.dom, (e) => this.fire(ev, e));
+        });
+      }
       // The children an `items` property builds (module 0.7.0): rebuilt when the list changes, marked data-cadre-item so that
       // they never mix with the children React draws for the slot properties.
       applyItems(el, p) {
@@ -1035,9 +1116,9 @@ WRAPPER = r"""
           this.applied['items:' + it.name] = key;
           (this.itemNodes[it.name] || []).forEach(function (n) { n.remove(); });
           var nodes = [];
-          (Array.isArray(list) ? list : []).forEach(function (o) {
+          (Array.isArray(list) ? list : []).forEach((o) => {
             var n = buildItem(o, it.tags, 0, it.slot);
-            if (n) { n.setAttribute('data-cadre-item', ''); nodes.push(n); el.appendChild(n); }
+            if (n) { n.setAttribute('data-cadre-item', ''); nodes.push(n); el.appendChild(n); this.listenItem(n); }
           });
           this.itemNodes[it.name] = nodes;
         });
@@ -1316,13 +1397,19 @@ def main() -> int:
         schema, fields = schema_for(spec, decl, enum_map, d)
         (SCHEMAS / f"{spec['name']}.props.json").write_text(json.dumps(schema, indent=2) + "\n", encoding="utf-8")
         declared = {e.get("name") for e in decl.get("events", [])}
+        for e in spec.get("itemEvents", []):      # an item event is declared by the item element the list builds, not by the host
+            if not any(e in {x.get("name") for x in declaration(manifest, t).get("events", [])}
+                       for t in ITEM_TABLE if t != spec["tag"]):
+                raise SystemExit(f"{spec['tag']}: item event {e!r} is declared by no item element")
+            declared.add(e)
         events = []
         for dom in spec.get("events", []):
             if dom not in declared:
                 raise SystemExit(f"{spec['tag']} declares no event {dom!r} in the manifest")
             name, kind, text = ALERT_EVENTS[dom]
             text = spec.get("eventText", {}).get(dom, text)      # a component may word the event for itself
-            events.append({"dom": dom, "name": name, "payload": kind})
+            kind = spec.get("eventKinds", {}).get(dom, kind)     # and change its payload (the alert menu's rows report their `id`)
+            events.append({"dom": dom, "name": name, "payload": kind, **({"onItems": True} if dom in spec.get("itemEvents", []) else {})})
             props = PAYLOAD_PROPS[kind]
             (SCHEMAS / f"{spec['name']}.{name}.json").write_text(json.dumps(
                 {"type": "object", "description": text, "properties": props}, indent=2) + "\n", encoding="utf-8")

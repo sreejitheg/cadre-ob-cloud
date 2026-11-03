@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "The ACK action of a row was pressed. event.id is the row's `id` (empty if it has none) and event.tag its tag.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of the item the event came from (empty if it has none)."
+    },
+    "tag": {
+      "type": "string",
+      "description": "The tag of the item the event came from."
+    }
+  }
+}

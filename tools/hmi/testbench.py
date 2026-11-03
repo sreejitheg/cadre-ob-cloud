@@ -741,6 +741,21 @@ def glyph_cases(schema: dict, contract: dict) -> list[Case]:
 # properties of the icon slots (an enumeration of every bundled icon), which would draw one case for each icon; the samples
 # below are our own: `base` is stated in every case (it gives the element something to draw: a label, a time), and `extra`
 # adds named cases (a slot property, a combination). A later batch adds one row of each table for its component.
+ALERT_MENU_ROWS = [
+    {"tag": "obc-alert-menu-item", "id": "A-1001", "title": "Critical, bilge pump P-101", "description": "Bilge level very high",
+     "day": "Today", "time": "09:41", "status": "no-ack-alarm",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "level-critical", "active": True, "acknowledged": False}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1002", "title": "High level, tank T-201", "description": "Level above 90 percent",
+     "day": "Today", "time": "09:38", "status": "unacknowledged",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "alarm", "active": True, "acknowledged": False}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1003", "title": "Filter F-3 differential", "description": "Pressure drop rising",
+     "day": "Yesterday", "time": "22:15", "status": "acknowledged",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "warning", "active": True, "acknowledged": True}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1004", "title": "Low caution, fan K-2", "description": "Vibration above normal",
+     "day": "Yesterday", "time": "18:02", "status": "caution", "hasIcon": True,
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "caution", "active": True, "acknowledged": False},
+                  {"tag": "obi-info", "slot": "icon"}]},
+]
 FRAME_SAMPLE = {
     "tooltip": {"base": {"label": "Pump P-101 running"},
                 "extra": [("icon only", {"type": "icon", "iconName": "info"}),
@@ -767,9 +782,28 @@ FRAME_SAMPLE = {
                                       ("custom icon", {"iconName": "alarm"})]},
     "notification-badge-button": {"base": {"label": "12"},
                                   "extra": [("icon", {"icon": True, "label": "", "iconName": "info"})]},
+    # the alert button and the alert menu (F2): rows of our own, as the frame will build them from the alarm list
+    "alert-button-item": {"base": {"nAlerts": 3, "counter": True, "alertType": "alarm"}, "extra": []},
+    "alert-button": {"base": {"nAlerts": 3, "counter": True, "alertType": "alarm"},
+                     "extra": [("global counter", {"globalCounter": True, "shelvedCount": 2, "alertType": "warning"}),
+                               ("blinking critical", {"blinking": True, "alertType": "level-critical"}),
+                               ("silence disabled", {"showSilenceButton": True, "silenceButtonDisabled": True})]},
+    "alert-menu-item": {"base": {"title": "High level, tank T-201", "description": "Level above 90 percent", "day": "Today",
+                                 "time": "09:41",
+                                 "alertIcon": [{"tag": "obc-alert-icon", "type": "alarm", "active": True, "acknowledged": False}]},
+                        "extra": [("secondary action", {"secondaryActionLabel": "Shelve", "secondaryActionState": "enabled",
+                                                        "size": "double-line"}),
+                                  ("source icon", {"hasIcon": True, "iconName": "info"}),
+                                  ("acknowledged", {"status": "acknowledged", "alertIcon": [
+                                      {"tag": "obc-alert-icon", "type": "warning", "active": True, "acknowledged": True}]})]},
+    "alert-menu": {"base": {"canAckAll": True, "items": ALERT_MENU_ROWS},
+                   "extra": [("shelved tab", {"hasShelved": True, "items": ALERT_MENU_ROWS[:2]}),
+                             ("no rows", {"items": []}),
+                             ("silence shown", {"showSilenceButton": True})]},
 }
 # Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
-FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",)}
+FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),
+              "alert-button": ("flatMaxBreakpointPx", "silenceButtonMinBreakpointPx")}     # a breakpoint depends on the viewport
 GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5)})
 
 

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The ACK action of the row was pressed. The event carries nothing.",
+  "properties": {}
+}

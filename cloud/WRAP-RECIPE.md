@@ -571,8 +571,8 @@ registration, regeneration, module test); sections 2.6 to 2.10 are replaced by t
      must be in the manifest. Nested tags go in `ITEM_CHILDREN` (tag to the tags it may hold; the nesting is one row for each parent,
      a group lists itself), and a field with no attribute that an item may set in `ITEM_FIELDS`. An item object is `tag`, the
      attributes by their manifest field names, `text`, `id`, `slot`, `children`. A second list for another slot is a second entry
-     (`"footerItems": {"tags": [...], "slot": "footer"}`). Events from an item bubble to the host: carry them with payload kind `item`
-     and the event reports the item's `id` and `tag`.
+     (`"footerItems": {"tags": [...], "slot": "footer"}`). Events from an item reach the host only if they bubble (a native `click` does, a plain `CustomEvent` does not): carry them with
+     payload kind `item` (the event reports the item's `id` and `tag`) and, for a non-bubbling event, the key `itemEvents` (item 9).
    * `"types": {"variant": "ToggletipVariant"}` for an attribute whose manifest type is missing (the enumeration is read from the
      `.d.ts`); `"dts"` when a generic enumeration name (`Size`, `Variant`) is declared by several elements (the user button).
    * `"undefinedWhenEmpty": ["description"]` for an optional text whose element tests `!== undefined`.
@@ -604,3 +604,16 @@ registration, regeneration, module test); sections 2.6 to 2.10 are replaced by t
 8. **Measured facts.** A component with a boolean attribute of a custom element must be set as a property, never as markup (React 18
    writes the string); the wrapper does, and so does the items builder. A slotted icon is `obi-<name>` with the slot on it and needs
    no size. An element that draws a bubble (tooltip, toggletip) is as wide as its content unless `customWidth` states it.
+9. **Parents with children (F2).** A parent's `items` entry lists the child tag; the child's own tags go in `ITEM_CHILDREN` (the alert
+   menu item holds `obc-alert-icon`, which is also an `items` entry of the leaf `alertmenuitem` with `"slot": "alert-icon"`, because
+   that slot takes an element, not a bundled icon). Three entry keys were added for F2: `"itemEvents": [...]` for DOM events that the
+   children fire and that do not bubble (a custom element's `new CustomEvent(name)` has `bubbles` false; the wrapper then listens on
+   each built child, and the generator checks the event against the child elements of `ITEM_TABLE`); `"eventKinds": {dom: kind}` to
+   change one event's payload kind for one component (`ALERT_EVENTS` is keyed by the DOM name, so the same name may be `none` on a
+   leaf and `item` on its parent; the row of `ALERT_EVENTS` still gives the component event name); and `"undefinedWhenEmpty"` now
+   also applies to an optional enumeration (`alertType`: the schema gains the empty string, the field is `ustring`). A boolean field
+   whose module default differs from the element's (`showSilenceButton` of the alert menu, hidden on purpose) is a row of
+   `PROPERTIES` with the module's default and a `describe` text. Measure the size of a parent: the alert menu draws 640 by 560
+   whatever its box, and a child with no width of its own (the menu row) needs a stylesheet rule that stretches it (see `devices` in
+   the generator's `scoped_css`). A decorator list of a registered element can hold more than the registration (`[v("tag"),Ui()]`), so
+   `FrameComponents` looks for `v("tag")` inside a list.

@@ -924,6 +924,8 @@ OpenBridge alert levels already colour so (`level-critical` on the critical colo
 alarm), and the frame follows the same table: the top bar's colour (`framework.PRIORITY_VAR`), the
 library symbols' frame and flap (the status `critical`, drawn with the alarm's triangle), and the
 classes `cadre/alert/flash-critical` and `cadre/alert/badge-critical`.
+The alert button and its item take the same mapping in their `alertType` property (wiki 12 section 17.24.1): the empty value is
+Diagnostic, which has no alert colour.
 
 ### 11.2 A Symbol's Alarm State
 

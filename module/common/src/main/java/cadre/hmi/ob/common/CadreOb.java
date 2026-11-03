@@ -163,7 +163,27 @@ public final class CadreOb {
             List.of(event("notificationbutton", "onNotificationClick", "The button was pressed; event.count and event.isActive (the state the press asks for)."))),
         descriptor("cadre.ob.notificationbadgebutton", "notificationbadgebutton", "OB Notification Badge Button",
             "OpenBridge notification badge button: a small button with a short text or an icon, used for counts.", "obNotificationBadgeButton",
-            List.of(event("notificationbadgebutton", "onPress", "The badge button was pressed; the event carries nothing.")))
+            List.of(event("notificationbadgebutton", "onPress", "The badge button was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.alertbuttonitem", "alertbuttonitem", "OB Alert Button Item",
+            "OpenBridge alert button item: one bell with an alert type and a count, as the alert button draws it.", "obAlertButtonItem",
+            List.of(event("alertbuttonitem", "onPress", "The bell was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.alertbutton", "alertbutton", "OB Alert Button",
+            "OpenBridge alert button: a bell with the count of alerts and an alert type, with an optional silence control.", "obAlertButton",
+            List.of(event("alertbutton", "onAlertClick", "The bell was pressed; the event carries nothing."),
+                    event("alertbutton", "onSilenceClick", "The silence control was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.alertmenuitem", "alertmenuitem", "OB Alert Menu Item",
+            "OpenBridge alert menu item: one alert row with a title, description, date, time and an ACK action.", "obAlertMenuItem",
+            List.of(event("alertmenuitem", "onItemClick", "The row was pressed; the event carries nothing."),
+                    event("alertmenuitem", "onAckClick", "The ACK action was pressed; the event carries nothing."),
+                    event("alertmenuitem", "onAckSecondaryClick", "The secondary action was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.alertmenu", "alertmenu", "OB Alert Menu",
+            "OpenBridge alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button.", "obAlertMenu",
+            List.of(event("alertmenu", "onAckAllClick", "The ACK visible button was pressed; event.mode and event.ids."),
+                    event("alertmenu", "onSilenceClick", "The Silence button was pressed; the event carries nothing."),
+                    event("alertmenu", "onGoToAlertListClick", "The Alerts button was pressed; the event carries nothing."),
+                    event("alertmenu", "onItemClick", "A row was pressed; event.id and event.tag."),
+                    event("alertmenu", "onAckClick", "The ACK action of a row was pressed; event.id and event.tag."),
+                    event("alertmenu", "onAckSecondaryClick", "The secondary action of a row was pressed; event.id and event.tag.")))
     );
 
     private CadreOb() {

@@ -1791,6 +1791,7 @@ class FrameMechanisms(unittest.TestCase):
         spec = {"items": {"items": {"tags": ["obc-app-button"]}}}
         old = dict(self.gen.ITEM_CHILDREN)
         try:
+            self.gen.ITEM_CHILDREN.clear()      # the real rows (the alert menu's, F2) are not this test's subject
             self.gen.ITEM_CHILDREN["obc-app-button"] = ["obc-notification-badge-button"]
             table = self.gen.build_item_table(self.manifest, [spec])
             self.assertEqual(set(table), {"obc-app-button", "obc-notification-badge-button"})
@@ -1867,7 +1868,27 @@ class FrameComponents(unittest.TestCase):
                                              "src/components/notification-badge-button/notification-badge-button.ts",
                                              {"openRight", "openLeft", "cornerLeft", "cornerRight", "icon", "disabled", "indent"}, set(),
                                              {"label", "iconName"}, {"onPress": "click"}),
+        # batch F2: the alert button and the alert menu; `items` properties are listed in the sixth row of each, after the slots
+        "cadre.ob.alertbuttonitem": ("obc-alert-button-item", "src/components/alert-button-item/alert-button-item.ts",
+                                     {"type", "alertType", "nAlerts", "counter", "globalCounter", "shelvedCount", "blinking",
+                                      "flashingSpeed", "fillHeight", "ariaLabel"}, set(), set(), {"onPress": "click"}),
+        "cadre.ob.alertbutton": ("obc-alert-button", "src/components/alert-button/alert-button.ts",
+                                 {"nAlerts", "alertType", "type", "large", "showSilenceButton", "silenceButtonDisabled", "counter",
+                                  "globalCounter", "shelvedCount", "blinking", "flashingSpeed", "flatMaxBreakpointPx",
+                                  "silenceButtonMinBreakpointPx"}, set(), set(),
+                                 {"onAlertClick": "click-alert", "onSilenceClick": "click-silence"}),
+        "cadre.ob.alertmenuitem": ("obc-alert-menu-item", "src/components/alert-menu-item/alert-menu-item.ts",
+                                   {"hasIcon", "shelved", "title", "description", "day", "time", "status", "open", "size", "animateIntro",
+                                    "secondaryActionLabel", "primaryActionState", "secondaryActionState"}, set(), {"iconName"},
+                                   {"onItemClick": "item-click", "onAckClick": "ack-click", "onAckSecondaryClick": "ack-secondary-click"}),
+        "cadre.ob.alertmenu": ("obc-alert-menu", "src/components/alert-menu/alert-menu.ts", {"hasShelved", "canAckAll"},
+                               {"showSilenceButton", "showAlertListButton"}, set(),
+                               {"onAckAllClick": "ack-all-visible-click", "onSilenceClick": "silence-click",
+                                "onGoToAlertListClick": "go-to-alert-list-click", "onItemClick": "item-click", "onAckClick": "ack-click",
+                                "onAckSecondaryClick": "ack-secondary-click"}),
     }
+    # the `items` properties of a frame component (a list of child elements), with the tags each allows at the top level
+    ITEMS = {"cadre.ob.alertmenuitem": {"alertIcon": ["obc-alert-icon"]}, "cadre.ob.alertmenu": {"items": ["obc-alert-menu-item"]}}
 
     @classmethod
     def setUpClass(cls):
@@ -1887,13 +1908,18 @@ class FrameComponents(unittest.TestCase):
             c = COMPONENTS[ctype]
             self.assertEqual(c["element"], tag)
             self.assertEqual({a["fieldName"] for a in self.decl(path, tag)["attributes"]}, attrs, ctype)
-            self.assertEqual(set(c["props"]) - {"componentSize"}, attrs | fields | slots, ctype)
+            self.assertEqual(set(c["props"]) - {"componentSize"}, attrs | fields | slots | set(self.ITEMS.get(ctype, {})), ctype)
             self.assertEqual(set(c.get("slots", {})), slots, ctype)
+            self.assertEqual({n: i["tags"] for n, i in c.get("items", {}).items()}, self.ITEMS.get(ctype, {}), ctype)
 
     def test_the_events_are_the_elements_own_carried_and_not_wired(self):
         for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
             c = COMPONENTS[ctype]
             declared = {e["name"] for e in self.decl(path, tag).get("events", [])}
+            for tags in self.ITEMS.get(ctype, {}).values():      # an event of a row is declared by the row's element
+                for t in tags:
+                    declared |= {e["name"] for m in self.manifest["modules"] for d in m.get("declarations", [])
+                                 if d.get("tagName") == t for e in d.get("events", [])}
             self.assertEqual({n: e["element"] for n, e in c.get("events", {}).items()}, events, ctype)
             self.assertTrue(set(events.values()) <= declared, ctype)
             for name, e in c.get("events", {}).items():
@@ -1907,7 +1933,14 @@ class FrameComponents(unittest.TestCase):
     def test_the_payloads(self):
         for name, props in (("notificationbutton.onNotificationClick", {"count": "number", "isActive": "boolean"}),
                             ("toggletip.onPrimaryAction", {"label": "string"}), ("toggletip.onSecondaryAction", {"label": "string"}),
-                            ("appbutton.onPress", {}), ("notificationbadgebutton.onPress", {})):
+                            ("appbutton.onPress", {}), ("notificationbadgebutton.onPress", {}),
+                            ("alertbutton.onAlertClick", {}), ("alertbutton.onSilenceClick", {}), ("alertbuttonitem.onPress", {}),
+                            ("alertmenuitem.onItemClick", {}), ("alertmenuitem.onAckClick", {}), ("alertmenuitem.onAckSecondaryClick", {}),
+                            ("alertmenu.onAckAllClick", {"mode": "string", "ids": "array"}),
+                            ("alertmenu.onSilenceClick", {}), ("alertmenu.onGoToAlertListClick", {}),
+                            ("alertmenu.onItemClick", {"id": "string", "tag": "string"}),
+                            ("alertmenu.onAckClick", {"id": "string", "tag": "string"}),
+                            ("alertmenu.onAckSecondaryClick", {"id": "string", "tag": "string"})):
             schema = json.loads((MODULE / f"common/src/main/resources/schemas/{name}.json").read_text(encoding="utf-8"))
             self.assertEqual({k: v["type"] for k, v in schema["properties"].items()}, props, name)
 
@@ -1920,6 +1953,53 @@ class FrameComponents(unittest.TestCase):
         self.assertEqual(schema_of("cadre.ob.userbutton")["properties"]["variant"]["enum"], ["icon", "initials"])
         self.assertEqual(schema_of("cadre.ob.appbutton")["properties"]["size"]["enum"], ["normal", "small"])
         self.assertEqual(schema_of("cadre.ob.notificationbutton")["properties"]["buttonStyle"]["enum"], ["flat", "normal", "enhanced"])
+        levels = ["alarm", "warning", "caution", "level-critical", "level-high", "level-medium", "level-low", "level-diagnostic"]
+        for ctype in ("alertbuttonitem", "alertbutton"):
+            p = schema_of(f"cadre.ob.{ctype}")["properties"]
+            self.assertEqual(p["alertType"]["enum"], [""] + levels, ctype)      # empty is the idle state (undefined)
+            self.assertEqual(p["alertType"]["default"], "", ctype)
+            self.assertEqual(p["type"]["enum"], ["flat", "normal", "enhanced"], ctype)
+            self.assertEqual(p["flashingSpeed"]["enum"], ["default", "fast", "slow", "very-slow", "fixed"], ctype)
+        self.assertEqual(schema_of("cadre.ob.alertmenuitem")["properties"]["status"]["enum"],
+                         ["unacknowledged", "caution", "acknowledged", "no-ack-alarm", "no-ack-warning", "rectified"])
+        self.assertEqual(schema_of("cadre.ob.alertmenuitem")["properties"]["primaryActionState"]["enum"], ["enabled", "disabled", "none"])
+
+    def test_the_silence_control_is_hidden_by_default_and_the_priority_mapping_is_recorded(self):
+        """Owner's answer 4 of the frame design: no Cadre silence function exists, so the control is off until one does."""
+        self.assertIs(schema_of("cadre.ob.alertbutton")["properties"]["showSilenceButton"]["default"], False)
+        self.assertIs(schema_of("cadre.ob.alertmenu")["properties"]["showSilenceButton"]["default"], False)
+        self.assertIs(schema_of("cadre.ob.alertmenu")["properties"]["showAlertListButton"]["default"], True)
+        self.assertIs(COMPONENTS["cadre.ob.alertbutton"]["props"]["showSilenceButton"]["default"], False)
+        for ctype in ("alertbuttonitem", "alertbutton"):      # wiki 13 section 11.1: Critical level-critical, High alarm, Medium warning, Low caution
+            text = schema_of(f"cadre.ob.{ctype}")["properties"]["alertType"]["description"]
+            for word in ("Critical level-critical", "High alarm", "Medium warning", "Low caution", "Diagnostic empty"):
+                self.assertIn(word, text, ctype)
+
+    def test_the_items_of_the_alert_menu_are_rows_of_the_menu_item_with_an_alert_icon_slot(self):
+        sys_path = str(MODULE / "tools")
+        import sys
+        sys.path.insert(0, sys_path)
+        import gen_module_assets
+        self.assertEqual(gen_module_assets.ITEM_CHILDREN["obc-alert-menu-item"], ["obc-alert-icon"])
+        menu = COMPONENTS["cadre.ob.alertmenu"]
+        self.assertEqual(menu["items"], {"items": {"tags": ["obc-alert-menu-item"], "slot": ""}})
+        self.assertEqual(COMPONENTS["cadre.ob.alertmenuitem"]["items"], {"alertIcon": {"tags": ["obc-alert-icon"], "slot": "alert-icon"}})
+        # the rows are listed with their attributes in the schema, and the events of a row are heard on the row (they do not bubble)
+        text = schema_of("cadre.ob.alertmenu")["properties"]["items"]["description"]
+        for attr in ("status", "title", "description", "day", "time", "secondaryActionLabel"):
+            self.assertIn(attr, text)
+        for name, e in {n: e for n, e in menu["events"].items()}.items():
+            self.assertTrue((MODULE / "common/src/main/resources" / e["schema"]).is_file(), name)
+        self.assertRegex(JS, r'"dom":"ack-click","name":"onAckClick","payload":"item","onItems":true')
+        self.assertRegex(JS, r'"dom":"ack-all-visible-click","name":"onAckAllClick","payload":"menuvisible"')
+        self.assertNotRegex(JS, r'"dom":"ack-click","name":"onAckClick","payload":"item"\}')       # no host listener for a row's event
+        # the sample rows use only tags and attributes the wrapper knows
+        rows = self.testbench.ALERT_MENU_ROWS
+        self.assertEqual({r["tag"] for r in rows}, {"obc-alert-menu-item"})
+        self.assertEqual(len({r["id"] for r in rows}), len(rows))
+        known = {a["fieldName"] for a in self.decl("src/components/alert-menu-item/alert-menu-item.ts", "obc-alert-menu-item")["attributes"]}
+        for r in rows:
+            self.assertTrue(set(r) - {"tag", "id", "children"} <= known, r)
 
     def test_the_components_are_registered_in_java_imported_and_wrapped(self):
         java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
@@ -1931,7 +2011,8 @@ class FrameComponents(unittest.TestCase):
                 self.assertIn(f'event("{name}", "{ev}"', java)
             self.assertIn(path.replace("src/", "dist/").replace(".ts", ".js"), entry)
             self.assertIn(f'"type":"{ctype}","tag":"{tag}"', JS)
-            self.assertRegex(JS, rf'\(\[\w+\("{tag}"\)\]')
+            # the element's registration decorator, alone or beside another (the alert button family has one more)
+            self.assertRegex(JS, rf'[\[,]\w+\("{tag}"\)[,\]]')
         self.assertEqual(len(re.findall(r'^        descriptor\("', java, re.M)), len(COMPONENTS))
 
     def test_the_table_row_of_each_is_a_frame_kind_and_a_module_only_kind(self):
@@ -1955,7 +2036,8 @@ class FrameComponents(unittest.TestCase):
             self.assertNotIn(kind, only.split(": ", 1)[1].split(", "))
         counts = {k: sum(1 for s in bench.descriptor["symbols"] if s["kind"] == k) for k in self.screen.FRAME_ONLY}
         self.assertEqual(counts, {"tooltip": 13, "toggletip": 14, "clock": 15, "user-button": 14, "app-button": 7,
-                                  "notification-button": 11, "notification-badge-button": 9})
+                                  "notification-button": 11, "notification-badge-button": 9,
+                                  "alert-button-item": 26, "alert-button": 31, "alert-menu-item": 22, "alert-menu": 8})
         stock = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="stock")
         self.assertNotIn("FrameComponents", [s["id"] for s in stock.descriptor["sections"]])
         self.assertEqual(self.testbench.check(bench.descriptor, contracts), [])

@@ -46,6 +46,7 @@ lit-html/is-server.js:
 @lit/localize/init/runtime.js:
 @lit/localize/init/transform.js:
 lit-html/directives/map.js:
+lit-html/directives/choose.js:
   /**
    * @license
    * Copyright 2021 Google LLC
