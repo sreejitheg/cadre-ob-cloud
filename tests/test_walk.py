@@ -3821,6 +3821,76 @@ class AlertMenuRowTests(unittest.TestCase):
         self.assertNotIn("click_text_in(page, panel(page)", text)
         self.assertNotIn("click_text_in(page, panel(page)", (ROOT / "tools" / "compare" / "glass.py").read_text(encoding="utf-8"))
 
+    def test_the_older_panel_scrolls_a_covered_ack_clear_of_its_toolbar_before_pressing_it(self):
+        """Walk row A-02 (2026-11-03): the small panel of the older frames lays its toolbar (All, silence, ACK VISIBLE) over the
+        rows below the first, and the ACK of the second row (TK-101 under P-502's) lay under it at times, so the press landed on the
+        toolbar and acknowledged nothing. The row script says whether a press at the cell reaches the cell, and `ack_alarm` scrolls
+        the row to the top of the list until it does, then presses where the ACK now lies."""
+        from unittest import mock
+        for part in ("elementFromPoint", "clear", "n === cell", "x: x, y: y"):
+            self.assertIn(part, glass.ROW_ACTION)
+        self.assertIn("scrollIntoView", glass.ROW_REVEAL)
+        reads = [{"button": True, "clear": False, "x": 1057, "y": 280}, {"button": True, "clear": False, "x": 1057, "y": 280},
+                 {"button": True, "clear": True, "x": 1057, "y": 180}, {"acked": True}]
+
+        class Page:
+            mouse_clicks, evaluated = [], []
+
+            def __init__(self):
+                self.mouse, self.mouse_clicks, self.evaluated = self, [], []
+
+            def locator(self, sel):
+                return self
+
+            def count(self):
+                return 1
+
+            def click(self, x, y):
+                self.mouse_clicks.append((x, y))
+
+            def evaluate(self, script, arg=None):
+                self.evaluated.append((script, arg))
+                return True
+
+            def wait_for_timeout(self, ms):
+                pass
+        page = Page()
+        with mock.patch.object(glass, "dock"), mock.patch.object(glass, "open_alarm_menu"), \
+                mock.patch.object(glass, "is_module_frame", return_value=False), \
+                mock.patch.object(glass, "alert_list", return_value=[]), mock.patch.object(glass, "click_alert_row"), \
+                mock.patch.object(glass, "alert_row", side_effect=lambda p, m: reads.pop(0) if len(reads) > 1 else reads[0]):
+            self.assertTrue(glass.ack_alarm(page, "TK-101"))
+        self.assertEqual(page.mouse_clicks, [(1057, 180)])
+        self.assertEqual([e[0] for e in page.evaluated], [glass.ROW_REVEAL, glass.ROW_REVEAL])
+
+    def test_a_cell_that_stays_covered_is_not_pressed(self):
+        from unittest import mock
+
+        class Page:
+            def __init__(self):
+                self.mouse, self.clicks = self, []
+
+            def locator(self, sel):
+                return self
+
+            def count(self):
+                return 1
+
+            def click(self, x, y):
+                self.clicks.append((x, y))
+
+            def evaluate(self, script, arg=None):
+                return True
+
+            def wait_for_timeout(self, ms):
+                pass
+        page = Page()
+        with mock.patch.object(glass, "dock"), mock.patch.object(glass, "open_alarm_menu"), \
+                mock.patch.object(glass, "is_module_frame", return_value=False), \
+                mock.patch.object(glass, "alert_row", return_value={"button": True, "clear": False, "x": 1, "y": 2}):
+            self.assertFalse(glass.ack_alarm(page, "TK-101"))
+        self.assertEqual(page.clicks, [])
+
     def test_the_obasm_menu_reaches_the_support_list_by_the_apps_button(self):
         import inspect
         src = inspect.getsource(glass.navigate_by_menu)

@@ -323,10 +323,33 @@ ROW_ACTION = r"""([host, match]) => {
   const cells = [...row.children].filter(c => c.getAttribute('role') === 'cell');
   const cell = cells[cells.length - 1];
   const r = cell.getBoundingClientRect();
+  // `clear`: what a press at the cell's centre reaches is the cell itself (a node in it, or in a shadow root in it), not the panel's
+  // own toolbar (All, silence, ACK VISIBLE), which lies over the rows of the small list that sit below its first
+  const x = r.x + r.width / 2, y = r.y + r.height / 2;
+  let hit = document.elementFromPoint(x, y);
+  for (let i = 0; hit && hit.shadowRoot && i < 12; i++) { const inner = hit.shadowRoot.elementFromPoint(x, y); if (!inner || inner === hit) break; hit = inner; }
+  let clear = false;
+  for (let n = hit, i = 0; n && i < 40; i++) { if (n === cell) { clear = true; break; } n = n.parentNode && n.parentNode.host ? n.parentNode.host : n.parentNode; }
   return {found: true, row: true, id: a.id, noAck: !!a.noAck, acked: !!a.acknowledged, active: a.active === true,
           button: !!cell.querySelector('obc-button'),
           noAckIcon: !!cell.querySelector('obi-alarm-noack-iec, obi-warning-noack-iec'),
-          text: cell.textContent.replace(/\s+/g, ' ').trim(), x: r.x + r.width / 2, y: r.y + r.height / 2} }"""
+          text: cell.textContent.replace(/\s+/g, ' ').trim(), x: x, y: y, clear: clear} }"""
+
+ROW_REVEAL = r"""([host, match]) => {
+  // bring the row of a module alarm list (shadow DOM) whose alert's source or text contains `match` to the top of the list's own scroll
+  // area, so that its ACK lies clear of the panel's toolbar (`ROW_ACTION` says `clear`); false where the row is not drawn
+  const el = [...document.querySelectorAll(host)].find(e => e.getBoundingClientRect().width > 0);
+  if (!el) return false;
+  const a = (el.alerts || []).find(x => String(x.source).includes(match) || String(x.text).includes(match));
+  if (!a) return false;
+  const find = (root, sel) => {
+    const hit = root.querySelector(sel); if (hit) return hit;
+    for (const n of root.querySelectorAll('*')) if (n.shadowRoot) { const h = find(n.shadowRoot, sel); if (h) return h; }
+    return null };
+  const row = find(el.shadowRoot || el, `button[role="row"][data-row-id="${CSS.escape(String(a.id))}"]`);
+  if (!row) return false;
+  row.scrollIntoView({block: 'start', inline: 'nearest'});
+  return true }"""
 
 
 def visible_text_count(page, host, text) -> int:
@@ -919,10 +942,15 @@ def ack_alarm(page, match: str) -> bool:
         cell = {}
         for _ in range(12):
             cell = alert_row(page, match) or {}
-            if cell.get("button"):
+            if cell.get("button") and cell.get("clear", True):
                 break
+            if cell.get("button") and not is_module_frame(page):
+                # the older frames' panel lays its toolbar over the rows below the first: scroll the row up, read it again (A-02)
+                page.evaluate(ROW_REVEAL, [panel(page), match])
+                page.wait_for_timeout(200)
+                continue
             page.wait_for_timeout(500)
-        if not cell.get("button"):
+        if not cell.get("button") or not cell.get("clear", True):
             return False
         page.mouse.click(cell["x"], cell["y"])
         acked = False

@@ -1468,3 +1468,27 @@ fix is in the glass.
 4. The tree group press navigates (F7): not reproduced. A group press only toggles (section 11.3 of `wiki/04` corrected).
 5. The bell read 2 where the menu listed 6 rows: not a defect. See 13.11.4 item 4.
 
+
+#### 13.11.7 Walk Row A-02 and the Older Panel's Toolbar
+
+Measured and fixed on 2026-11-03 against `cadre_hmi_wtpob` (the older frame, module 0.7.0). The frame and the module needed no change; the fix is in the glass.
+
+1. Symptom. Row A-02 (TK-101's high level alarm, acknowledged from the top bar's alarm menu) failed in some runs with "acknowledged in the alarm menu:
+   False", leaving a cleared, unacknowledged event; A-01 (AIT-301) never did. The generated project was the same in passing and failing runs.
+2. Cause. The older frame's menu is the module's `obc-alert-list-page-small`. The panel draws its toolbar (the All filter, silence and ACK VISIBLE)
+   over the bottom of its list, and the list shows one row clear of it. The walk's plant holds P-502's unacknowledged fault, which sorts first, so
+   TK-101's row is the second, and the centre of its ACK cell (y 280) lay at the toolbar's lower edge. `glass.ack_alarm` pressed the cell's centre
+   as read, the press landed on the toolbar's `div.action` (the pointer event's target, measured), no `ack-click` followed, and the six tries of
+   `walk_run.acknowledge` read the same position. Whether the edge reached the cell varied between runs (a layout difference of a pixel or two, inferred), hence the
+   intermittence; AIT-301's row is the first and was never covered. Each failed run left one more unacknowledged cleared event on TK-101, which
+   the following runs counted (the Alarms tab read 2, 3 and 5 before the step).
+3. Fix. `ROW_ACTION` also answers `clear`: whether the element at the cell's centre, followed through shadow roots, is the cell or inside it.
+   `ROW_REVEAL` scrolls the row to the top of the list's own scroll area. `glass.ack_alarm`, on the older frames, scrolls the row and reads it again
+   while `clear` is false, and returns False rather than press a covered cell. The new frames' menu (`ALERT_MENU_ROW`) has no toolbar over its rows
+   and is unchanged. Held by `tests.test_walk.AlertMenuRowTests` (a covered cell is scrolled before the press; one that stays covered is not pressed).
+4. Evidence. In the runs that failed, every press of the six tries had the same target (the toolbar) and the same position; the faceplate probe read
+   the element at the cell's centre as the toolbar's `div.action` (49 px high) while the row query still said the ACK was drawn and enabled. The
+   dependence on a pixel or two of layout is inferred from runs that passed at the same position. With the fix, see the runs recorded in
+   `cloud/PROGRESS.md`.
+5. For the product: an operator meets the same overlap in the small panel, where the second row's ACK is under the toolbar until the list is scrolled.
+   The panel is OpenBridge's layout and is not changed here (rule 7 of the operating manual).

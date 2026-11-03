@@ -331,3 +331,13 @@
   (`library.SELECT_INSTRUMENT`, `screen.embed_module` for `MODULE_INSTRUMENTS`). `faceplates.faceplate_title` now
   follows the library's rule (tests added, the kinds held to `screen.MODULE_INSTRUMENTS`); the final G11 measurement
   re-judged under it: 21 of 21, nothing missing or unexpected, no fault.
+- 2026-11-03 19:23: Walk row A-02 on `cadre_hmi_wtpob` (intermittent, open since 0.5.0) traced to the glass: the older frame's small alert panel
+  (`obc-alert-list-page-small`) lays its toolbar over the rows below the first, so TK-101's ACK (second row, under P-502's) lay under it at times and
+  the press, at the cell's centre, hit the toolbar (pointer target `div.action`) and fired no `ack-click`. Fix in `tools/compare/glass.py` only
+  (`ROW_ACTION` answers `clear`, `ROW_REVEAL` scrolls the row up, `ack_alarm` scrolls until clear and never presses a covered cell); the module
+  and the frame are unchanged, no rebuild. Two tests added (`AlertMenuRowTests`); full offline suite 1318 passing (`env -u CADRE_TEST_LOGIN`).
+  Walk on `wtpob` after the fix: PASS 3 of 3 full runs (A 2/2 each) and A-only PASS 1 of 1; before, FAIL (reproduced, A-only 8 tries). Wiki 13.11.7.
+  Started 17:24 UTC, ended 19:23 UTC.
+- 2026-11-03 19:23: A-02 diagnosis cost, recorded by the orchestrator: 190,435 tokens, 105 tool calls, 119 min (mostly walk
+  runs). For the owner: the panel's own toolbar also covers the second row's ACK for an operator until the list scrolls
+  (OpenBridge's layout, unchanged).
