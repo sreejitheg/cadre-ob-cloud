@@ -190,6 +190,12 @@
   "badgeInterlock": "none",
   "badgeAlert": "none"
  },
+ "obc-indicator-generator": {
+  "variant": "button",
+  "value": "off",
+  "level": 0,
+  "secondaryLevel": 0
+ },
  "obc-transmitter": {
   "orientation": "bottom",
   "type": "value",

@@ -6,6 +6,7 @@ import '@oicl/openbridge-webcomponents/dist/automation/motor/motor.js';
 import '@oicl/openbridge-webcomponents/dist/automation/fan/fan.js';
 import '@oicl/openbridge-webcomponents/dist/automation/digital-valve/digital-valve.js';
 import '@oicl/openbridge-webcomponents/dist/automation/filter/filter.js';
+import '@oicl/openbridge-webcomponents/dist/automation/indicator-generator/indicator-generator.js';
 import '@oicl/openbridge-webcomponents/dist/automation/analog-valve/analog-valve.js';
 import '@oicl/openbridge-webcomponents/dist/automation/transmitter/transmitter.js';
 import '@oicl/openbridge-webcomponents/dist/navigation-instruments/instrument-field/instrument-field.js';

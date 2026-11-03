@@ -177,7 +177,7 @@ def pulse_members(kind: str) -> list[str]:
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
                "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve", "filter": "cadre.ob.filter",
-               "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
+               "generator": "cadre.ob.generator", "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
 # The two kinds of module 0.3.1 (COB-127): a value with its unit, drawn in the box the library gives the block
 # (`symbol_box`) with a digit count in place of a number format, and opening the faceplate of the device
 # kind its parameter names.
@@ -201,9 +201,16 @@ MODULE_INSTRUMENTS = ("readout", "instrument-field")
 # element is not cut, since its box does not clip, but it is not fitted either, so that case stays on the library's view.
 # The module's filter has three orientations (`horizontal`, `verticalRight`, `verticalLeft`) where the library's has a
 # `vertical` flag, which does not say which side, so a vertical filter stays on the library's view like a vertical fan.
-MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
+# The generator set (`picture` `genset`) is a drawing of the library's own and stays on its view (wiki page 12 section 17.11).
+MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "generator": [{"picture": "genset"}],
+                 "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
 MODULE_NEEDS = {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
                 "filter": {"variant": ["regular", "flat"]},
+                # The module's generator is the indicator disc: the library's other variants, the activated ground, the
+                # progress ring and the three badges are marks it does not draw, so a symbol that asks for one keeps the
+                # library's view (the duty mark and the out of service greying do so through `parts.SYMBOL_PARAMS`).
+                "generator": {"variant": ["regular"], "activated": [False], "progress": [False],
+                              "badgeControl": ["none"], "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]},
                 "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}}
 # Parameters the module's component states with the contract's default where the symbol gives none: the
 # component's own default differs from the library view's (the module's pump prints a speed, the library's
@@ -260,6 +267,14 @@ def _same(value, want) -> bool:
     return type(value) is type(want) and value == want
 
 
+def module_probe(kind: str, params: dict, bound: dict) -> dict:
+    """The symbol's parameters as `module_draws` is asked about them: a bound page part mark (`parts.SYMBOL_PARAMS`) counts
+    as stated (None), and so does a bound parameter that `MODULE_NEEDS` names and the kind's component drops, such as the
+    generator's progress ring: the binding would reach no property of the component, so the symbol keeps the library's view."""
+    marks = set(parts.SYMBOL_PARAMS) | (set(MODULE_NEEDS.get(kind, {})) & MODULE_DROP.get(kind, set()))
+    return {**params, **{k: None for k in bound if k in marks}}
+
+
 def module_drawn(sym: dict) -> bool:
     """Whether a descriptor's symbol is drawn as the module's component under the module rendering: not asked to stay
     on the library's view (`render: view`), and one the component can draw (`module_draws`, with the same probe of the
@@ -267,8 +282,7 @@ def module_drawn(sym: dict) -> bool:
     gates, whose selectors find module components only (COB-198)."""
     kind = sym.get("kind")
     params = sym.get("params") or {}
-    probe = {**params, **{k: None for k in sym.get("bind", {}) if k in parts.SYMBOL_PARAMS}}
-    return sym.get("render") != "view" and module_draws(kind, probe, target="module")
+    return sym.get("render") != "view" and module_draws(kind, module_probe(kind, params, sym.get("bind", {})), target="module")
 
 
 def module_draws(kind: str, params: dict, defaults: dict | None = None, target: str | None = None,
@@ -321,12 +335,14 @@ _STATUS_DROP = {"showStatus", "statusText", "hasTag", "deviceId", "deviceKind", 
 # chip), a field's label its `tag` (the caption). The number formats become `fractionDigits`, the field's `align`
 # becomes `center`, and the field's own `tag` and `source` are drawn by neither (`embed_module`).
 MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {},
-                "valve": {}, "analogvalve": {}, "filter": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
+                "valve": {}, "analogvalve": {}, "filter": {}, "generator": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
 MODULE_DROP = {"pump": _STATUS_DROP | {"value"}, "motor": _STATUS_DROP | {"value"},
                "fan": _STATUS_DROP | {"value", "vertical"},
                "valve": _STATUS_DROP | {"hasSpeed", "speed", "value"},
                "analogvalve": _STATUS_DROP | {"hasSpeed", "speed"},
                "filter": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "generator": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical", "variant", "picture", "activated",
+                                            "progress", "badgeControl", "badgeInterlock", "badgeCommandLocked"},
                "tank": {"medium", "showPercent", "chart", "history", "hasTag", "deviceId", "deviceKind",
                         "deviceLabel", "valueFractionDigits"},
                "readout": {"format", "hasTag", "label", "deviceId", "deviceKind", "deviceLabel", "stretch"},
@@ -340,7 +356,8 @@ MODULE_IDENT = {"readout": "idTag", "instrument-field": "tag"}
 # the readout's `stretch`. `module_drop` is the drop in force for the schema in hand.
 _STATUS_PROPS = ("showStatus", "statusText", "badgeDuty", "outOfService")
 MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATUS_PROPS, "valve": _STATUS_PROPS,
-                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS, "readout": ("stretch",)}
+                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS,
+                    "generator": ("showStatus", "statusText"), "readout": ("stretch",)}
 
 
 def module_drop(kind: str) -> set[str]:
@@ -720,7 +737,7 @@ def embed_symbol(sym: dict, contracts: dict, tag_root: str, rep: Report, *, tool
         height = symbol_box(sym, c, limit)[3]
     # a symbol that states the duty mark or the out of service greying stays on the library's view: the module's
     # components have neither (COB-159); a bound one counts as stated
-    probe = {**params, **{k: None for k in sym.get("bind", {}) if k in parts.SYMBOL_PARAMS}}
+    probe = module_probe(kind, params, sym.get("bind", {}))
     if sym.get("render") != "view" and module_draws(kind, probe, c["params"], height=height):
         return embed_module(sym, kind, params, c, tag_root, toolbar=toolbar, pos=pos, limit=limit)
     x, y, w, h = symbol_box(sym, c, limit) if pos is None else (0, 0, 0, 0)
@@ -852,8 +869,10 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         module_status(sym, kind, props, prop_cfg, toolbar=toolbar, drop=drop, gated=state in bound or state in params)
     if symbol:
         # `symbol` positioning makes the element's box the 48 px symbol, centred on our box for
-        # every readout side; `point` draws the symbol 24 px off its anchor (measured, wiki page 12).
-        props["positioning"] = "symbol"
+        # every readout side; `point` draws the symbol 24 px off its anchor (measured, wiki page 12). The
+        # generator indicator is the 48 px disc already and has no such property.
+        if "positioning" in module_props(MODULE_KIND[kind]):
+            props["positioning"] = "symbol"
         box = pv.cpos(sym["x"], sym["y"], 48, 48)
     elif pos is not None:
         box = None                     # a card lays the symbol out: its position is the flex item's

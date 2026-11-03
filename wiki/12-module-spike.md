@@ -807,6 +807,61 @@ view (`MODULE_EXCEPT`, as a vertical fan). A variant other than `regular` or `fl
 Tests: `FilterComponent` in `tests/test_module.py` (five tests), and the filter cases added to `tests/test_hmi.py`. Gates G0 to G7
 pass on the component test page with 19 devices and 21 device symbols.
 
+### 17.11 Wrap W2: the Generator (`cadre.ob.generator`)
+
+Spike T0 wrap W2 adds `cadre.ob.generator`, a stateful device symbol, from `obc-indicator-generator` (manifest path
+`src/automation/indicator-generator/indicator-generator.ts`). The element has no events and no alert attributes. The wrap
+changes the module's sources only; the module is not built or installed by it.
+
+What the element draws. A compact generator indicator, 48 by 48 px (56 as a double bar): a disc with the generator G glyph, and
+for the `bar` and `double-bar` variants one or two progress rings. `value` is the visual scheme (`off`, `regular`, `filled`,
+`enhanced`, `categorical`): `off` greys the disc and hides the rings, the others draw it in the instrument colours. `level` and
+`secondaryLevel` (0 to 100) sweep the rings. The element has no notion of running, no identifier, no status word and no alert, so a
+plain `value` binding would carry the state and nothing else. The element can carry what the row needs, which is why the wrap
+proceeds, with the module adding the rest in its wrapper.
+
+Properties. The four attributes of the manifest (`variant`, `value`, `level`, `secondaryLevel`; enumerations from the element's
+declarations, defaults measured in `module/web/defaults.json`) and the module's own eight, which the wrapper applies
+(`gen_module_assets.EXTRA`, `generator`): `on`, `tag`, `readoutPosition` (`top`, `bottom`, `left`, `right`, `none`),
+`showStatus`, `statusText`, `alert`, `alertFrameStatus` and `alertFrameMode`. The last two take the values of OpenBridge's own
+`AlertType` and `ObcAlertFrameMode`, as the other device components do. `level` and `secondaryLevel` are not bound: the only
+percentage in Table 13 of wiki page 13 is the fuel level, which is not the load the rings mean.
+
+How the wrapper draws it. No file of OpenBridge changes (CLAUDE.md non-negotiable 7). `on` selects the scheme: a generator that is
+not running draws `off`, one that runs draws `value`, the regular scheme where `value` is `off` (a plain button in the other
+schemes has an icon in the disc's own colour, so `regular` is the running look). The alarm frame is OpenBridge's `obc-alert-frame`
+element, unchanged, added to the indicator's shadow root with the type `small-side-flip` and the small thickness, so that its levels
+colour as those of the other device components: `level-critical` on the Cadre critical colour (a palette variable of the Cadre
+palette classes, rgb(196, 36, 183) by day), `level-high` and `alarm` on the alarm colour, `level-medium` and `warning` on the
+warning colour, `level-low` and `caution` on the caution colour (wiki page 13 section 11.1). The identifier and the status word are
+OpenBridge's `obc-automation-button-readout-stack`, unchanged, on the side `readoutPosition` names. The wrapper also sets `tag`,
+`on`, `alert` and `alertFrameMode` as plain fields on the indicator, which is where the glass gates read a device component.
+
+Members. The library symbol binds `on` to the member `state` (Table 13 of wiki page 13) and no other. The members `fault` and
+`faultCode` are not parameters of the symbol, so they are not bound here: a fault shows through the alarm frame, which follows the
+device's alarms (section 11.2 of wiki page 13: one binding of `custom.alerts` for the page, `alert` from `alertAny`,
+`alertFrameStatus` from `level`, `alertFrameMode` from `mode`), the same rule as every other module symbol. The identifier
+and the status word follow the toolbar's ID tag and Readout buttons as on the other symbols (`embed_module`, `module_status`).
+
+Click. As the other module components: when the symbol names a device, `embed_module` gives the component the `onClick` script that
+calls `cadre.hmi.select_device` with the device, the kind `generator`, its title and label, and opens the faceplate in the session's
+place for it (`library.open_faceplate`). `framework.FACEPLATE_VIEW` maps the kind to `Faceplate/ASM/Generator` for either style. The
+faceplate sweep G11 clicks every `cadre.ob.` component at the centre of its box, so it opens this one.
+
+Generator and test page. `MODULE_KIND` maps `generator` to the component. The module draws only the plain symbol: the
+library's `variant` other than `regular`, `activated`, `progress`, the three badges (`MODULE_NEEDS`), the duty and out of service
+marks (the page parts' marks) and the generator set, `params.picture` `genset` (`MODULE_EXCEPT`), keep the library's view. The
+generator set stays on the library's view: it is a drawing of 240 by 150 px of our own, and the indicator is a 48 px disc with
+another purpose. A parameter that is bound and that the component drops, such as `progress`, now also keeps the library's view
+(`screen.module_probe`), because the binding would otherwise reach no property. The component has no `positioning`, so `embed_module`
+states it only where the schema lists it. `MODULE_TAGS` of the glass gates and `MODULE_PROP` of the walk plan name the element,
+and `library/profile.json` is regenerated. On the component test page 11 of the 16 generator cases become module components
+(the variant, badges, out of service, progress and activated cases and the five generator sets stay on the library's view).
+
+Tests: `GeneratorComponent` in `tests/test_module.py` (six tests) and one in `FirstRenderTests` of `tests/test_hmi.py`. A Chromium
+check with a stand in for the Perspective client drew each case as expected (`on` off and on, the frame at each level and mode,
+the four readout sides, no readout). Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

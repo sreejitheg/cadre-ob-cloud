@@ -2270,9 +2270,32 @@
      "type": "Float8"
     }
    },
-   "module": null,
-   "moduleExcept": [],
-   "moduleNeeds": {},
+   "module": "cadre.ob.generator",
+   "moduleExcept": [
+    {
+     "picture": "genset"
+    }
+   ],
+   "moduleNeeds": {
+    "activated": [
+     false
+    ],
+    "badgeCommandLocked": [
+     "none"
+    ],
+    "badgeControl": [
+     "none"
+    ],
+    "badgeInterlock": [
+     "none"
+    ],
+    "progress": [
+     false
+    ],
+    "variant": [
+     "regular"
+    ]
+   },
    "params": [
     "activated",
     "alert",

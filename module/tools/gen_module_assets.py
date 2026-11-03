@@ -70,6 +70,13 @@ COMPONENTS = [
     {"tag": "obc-filter", "type": "cadre.ob.filter", "name": "filter", "title": "OB Filter",
      "palette": "OpenBridge filter: a static symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-indicator-generator", "type": "cadre.ob.generator", "name": "generator", "title": "OB Generator",
+     "palette": "OpenBridge generator indicator: running state, readout and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "generator": True,
+     "extra": ["on", "tag", "readoutPosition", "showStatus", "statusText", "alert", "alertFrameStatus", "alertFrameMode"],
+     "describe": {"showStatus": "Whether the symbol draws its status word (On or Off, or statusText). False hides the "
+                               "word; the identifier stays. The diagram toolbar's Readout button binds it.",
+                  "statusText": "When not empty, the status word drawn beside the symbol in place of On or Off."}},
     {"tag": "obc-transmitter", "type": "cadre.ob.readout", "name": "readout", "title": "OB Readout",
      "palette": "OpenBridge transmitter: value chip with unit and an identifier beneath it",
      "size": {"width": 72, "height": 24}, "exclude": ["data", "lineType"], "extra": ["stretch"], "sheet": "readout",
@@ -145,6 +152,24 @@ EXTRA = {
                     "description": "The ids of the selected rows. Written by the component when a tick is toggled "
                                    "(bind it two ways); ticks show the ids in it, and an id of an alert the list no "
                                    "longer shows is dropped."}},
+    # The indicator generator draws a disc and nothing else (no state, no readout, no alert attributes), so the
+    # wrapper adds them (`generator` in the WRAPPER below): the running state selects the element's `value`
+    # scheme, and its identifier, status word and alert frame are drawn from OpenBridge's own readout stack and
+    # alert frame elements, unchanged, inside the element's shadow root.
+    "on": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
+           "Whether the generator is running. A generator that runs draws the scheme of `value` (the regular "
+           "scheme where `value` is off); one that does not run draws the element's off scheme."}},
+    "tag": {"kind": "string", "def": "", "schema": {"type": "string", "default": "", "description":
+            "The identifier printed with the symbol; empty prints none."}},
+    "readoutPosition": {"kind": "string", "def": "bottom", "schema": {"type": "string", "enum": [
+                        "top", "bottom", "left", "right", "none"], "default": "bottom", "description":
+                        "The side of the symbol on which the identifier and the status word lie; none draws neither."}},
+    "alert": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
+              "Whether the symbol is framed by the OpenBridge alert frame."}},
+    "alertFrameStatus": {"kind": "string", "def": "alarm", "enum": "AlertType", "schema": {
+                         "type": "string", "default": "alarm", "description": "Available when alert==true."}},
+    "alertFrameMode": {"kind": "string", "def": "acked-active", "enum": "ObcAlertFrameMode", "schema": {
+                       "type": "string", "default": "acked-active", "description": "Available when alert==true."}},
     "unit": {"kind": "string", "def": "m³", "schema": {"type": "string", "default": "m³", "description":
              "The unit printed after the capacity, in place of the cubic metres of the OpenBridge tank."}},
     "hasCapacity": {"kind": "boolean", "def": True, "schema": {"type": "boolean", "default": True, "description":
@@ -270,6 +295,12 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         props[name] = dict(DATA_SCHEMA[kind])
     for name in spec.get("extra", []):
         props[name] = dict(EXTRA[name]["schema"])
+        if EXTRA[name].get("enum"):      # the enumeration of OpenBridge's own declaration, as for an attribute
+            vals = enum_map[EXTRA[name]["enum"]]
+            props[name] = {"type": "string", "enum": vals, "default": EXTRA[name]["def"],
+                           "description": props[name]["description"]}
+        if name in spec.get("describe", {}):
+            props[name]["description"] = spec["describe"][name]
     props["componentSize"] = {"type": "string", "enum": SIZES, "default": "regular",
                               "description": "OpenBridge component size: regular, medium, large or xl."}
     props["style"] = {"$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
@@ -526,11 +557,13 @@ WRAPPER = r"""
         for (var i = 0; i < spec.fields.length; i++) {
           var n = spec.fields[i].name;
           if (speedless && (n === 'speed' || n === 'speedInPercent')) { if (el[n] !== undefined) el[n] = undefined; continue; }
+          if (spec.generator && n === 'value') continue;      // set from the running state (applyGenerator)
           if (el[n] !== p[n]) el[n] = p[n];
         }
         if (spec.endAligned) el.toggleAttribute('data-center', !!p.center);
         if (spec.chipSheet) { el.toggleAttribute('data-stretch', !!p.stretch); this.sheets(); }
         if (spec.status) this.applyStatus(el, p);
+        if (spec.generator) this.applyGenerator(el, p);
         (spec.data || []).forEach((d) => {
           var key = JSON.stringify(p[d.name] === undefined ? null : p[d.name]);
           if (this.applied[d.name] !== key) { this.applied[d.name] = key; el[d.name] = CONVERT[d.kind](p[d.name]); }
@@ -658,6 +691,57 @@ WRAPPER = r"""
         }
         if (this.statusText !== text) { this.statusText = text; if (el.requestUpdate) el.requestUpdate(); }
       }
+      // The indicator generator (module 0.4.4, spike T0 wrap W2). The element draws a disc whose scheme is its `value`
+      // (`off` hides the rings and greys the disc) and knows nothing of a running state, an identifier, a status word
+      // or an alert. The wrapper selects the scheme from `on` (a generator that is not running draws `off`; one that
+      // runs draws `value`, the regular scheme where `value` is off), and draws the rest with OpenBridge's own elements,
+      // unchanged, in the shadow root of the indicator: `obc-alert-frame` over the 48 px symbol, which colours its
+      // levels as the other device components do, and `obc-automation-button-readout-stack`, the identifier and the
+      // status word as the other symbols print them. The plain fields `tag`, `on`, `alert` and `alertFrameMode`
+      // are set on the element as well, which is where the glass gates read a device component's state.
+      applyGenerator(el, p) {
+        var value = p.on ? (p.value === 'off' ? 'regular' : p.value) : 'off';
+        if (el.value !== value) el.value = value;
+        el.tag = p.tag || '';
+        el.on = !!p.on;
+        el.alert = !!p.alert;
+        el.alertFrameMode = p.alertFrameMode;
+        el.alertFrameStatus = p.alertFrameStatus;
+        Promise.resolve(el.updateComplete).then(() => { if (this.el === el) this.drawGenerator(el, p); });
+      }
+      drawGenerator(el, p) {
+        var root = el.shadowRoot;
+        if (!root) return;
+        var frame = root.querySelector('obc-alert-frame[data-cadre]');
+        if (p.alert) {
+          if (!frame) {
+            frame = document.createElement('obc-alert-frame');
+            frame.setAttribute('data-cadre', '');
+            root.appendChild(frame);
+          }
+          frame.type = 'small-side-flip';
+          frame.thickness = 'small';
+          frame.status = p.alertFrameStatus;
+          frame.mode = p.alertFrameMode;
+        } else if (frame) frame.remove();
+        var stack = root.querySelector('obc-automation-button-readout-stack[data-cadre]');
+        var side = p.readoutPosition || 'bottom';
+        var show = p.showStatus !== false;
+        if (side === 'none' || (!show && !p.tag)) { if (stack) stack.remove(); return; }
+        if (!stack) {
+          stack = document.createElement('obc-automation-button-readout-stack');
+          stack.setAttribute('data-cadre', '');
+          root.appendChild(stack);
+        }
+        var word = (typeof p.statusText === 'string' && p.statusText) ? p.statusText : (p.on ? 'On' : 'Off');
+        stack.tag = p.tag || null;
+        stack.readouts = show ? [{ type: p.on ? 'state-on' : 'state-off', value: word, hasIcon: true }] : [];
+        stack.size = 'regular';
+        stack.idTagOrientation = side === 'top' ? 'top' : 'bottom';    // as obc-automation-button does
+        var at = { top: 'bottom:100%;left:50%;transform:translateX(-50%)', bottom: 'top:100%;left:50%;transform:translateX(-50%)',
+                   left: 'right:100%;top:50%;transform:translateY(-50%)', right: 'left:100%;top:50%;transform:translateY(-50%)' };
+        stack.style.cssText = 'position:absolute;pointer-events:none;' + (at[side] || at.bottom);
+      }
       // The duty badge goes into the first free corner of the element, unless its interlock badge, which draws
       // the same icon, is already there.
       dutySlot(p) {
@@ -740,7 +824,7 @@ def main() -> int:
                 {"type": "object", "description": text, "properties": props}, indent=2) + "\n", encoding="utf-8")
         js_specs.append({"type": spec["type"], "tag": spec["tag"], "size": spec["size"], "fields": fields,
                          "extras": [{"name": n, "kind": EXTRA[n]["kind"], "def": EXTRA[n]["def"]} for n in spec.get("extra", [])],
-                         "speedless": bool(spec.get("speedless")), "tankSlots": bool(spec.get("tankSlots")),
+                         "speedless": bool(spec.get("speedless")), "generator": bool(spec.get("generator")), "tankSlots": bool(spec.get("tankSlots")),
                          "sheet": spec.get("sheet", ""), "chipSheet": spec.get("chipSheet", ""),
                          "selection": bool(spec.get("selection")),
                          "status": bool(spec.get("status")), "endAligned": bool(spec.get("endAligned")),

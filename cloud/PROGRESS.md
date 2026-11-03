@@ -47,3 +47,13 @@
   11 min 12 s. Component `cadre.ob.filter`; the library's `filter` kind now maps to it under `--render module`
   (12 cases on the test page; a vertical filter stays on the library view). Tests 1081 to 1086, all passing;
   G0 to G7 pass with 19 devices and 21 device symbols.
+- 2026-11-03 00:55: G11 on the component test page (baseline, module 0.4.3): 21 of 21 devices opened, but 9 tab
+  faults, all on the asm faceplates, and the field TB_FIELD read as `Temp`. Cause of the tab faults: the command line of
+  `tools/compare/faceplates.py` judged every device against the `openbridge` style; option `--faceplate` added
+  (default unchanged) and the sweep rerun with `--faceplate asm`. One sweep of the page takes about 15 min.
+- 2026-11-03 01:07: W2 `obc-indicator-generator` done in a Sonnet 5.5 subagent at medium effort: 235,754 tokens,
+  81 tool calls, 11 min 44 s. Component `cadre.ob.generator`; the plain generator symbol maps to it under
+  `--render module` (11 of 16 generator cases on the test page), the generator set stays on the library view; the
+  running state from `state`, the alarm frame from `custom.alerts` through the unchanged `obc-alert-frame` in the
+  wrapper, the click opens `Faceplate/ASM/Generator`. Tests 1086 to 1093 (one expectation of
+  `tests/test_asm_devices.py` updated for the module rendering, its checks kept on both renderings); G0 to G7 pass.

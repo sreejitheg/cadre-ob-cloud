@@ -3575,8 +3575,10 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((screen.MODULE_NEEDS, screen.MODULE_EXCEPT), (
             {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
              "filter": {"variant": ["regular", "flat"]},
+             "generator": {"variant": ["regular"], "activated": [False], "progress": [False],
+                           "badgeControl": ["none"], "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]},
              "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}},
-            {"fan": [{"vertical": True}], "filter": [{"vertical": True}],
+            {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "generator": [{"picture": "genset"}],
              "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
         # a filter: the library's regular variant is the element's square; a vertical one stays on the library's view
         node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "regular"}), render="module")
@@ -3585,6 +3587,34 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "flat", []))
         node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "vertical": True}), render="module")
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
+
+    def test_a_generator_is_the_modules_indicator_unless_it_asks_for_what_the_disc_lacks(self):
+        # spike T0 wrap W2: the plain generator symbol is `cadre.ob.generator`; the generator set, another variant, the
+        # activated ground, a progress ring (stated or bound), a badge and the duty and out of service marks stay on the library's view
+        gen = {"id": "G", "kind": "generator", "x": 0, "y": 0, "w": 48, "h": 48}
+        node, errors = self.embed(dict(gen, params={"tag": "GEN-9", "picture": "symbol"}), render="module")
+        self.assertEqual((node["type"], errors), ("cadre.ob.generator", []))
+        # the library's own parameters the disc has no property for are not passed (gate G1)
+        self.assertEqual(set(node["props"]) - set(json.loads((ROOT / "module/components.json").read_text(
+            encoding="utf-8"))["cadre.ob.generator"]["props"]), set())
+        for params in ({"picture": "genset"}, {"variant": "flat"}, {"activated": True}, {"progress": True},
+                       {"badgeControl": "manual"}, {"badgeInterlock": "interlock"}, {"badgeDuty": True},
+                       {"outOfService": True}):
+            node, errors = self.embed(dict(gen, params=dict(params, tag="GEN-9")), render="module")
+            self.assertEqual((node["type"], errors), ("ia.display.view", []), params)
+        for bound in ("progress", "activated"):
+            node, errors = self.embed(dict(gen, params={"tag": "GEN-9"}, bind={bound: "G/" + bound}), render="module")
+            self.assertEqual(node["type"], "ia.display.view", bound)
+        # the state binds `on`; the identifier and the status word follow the toolbar; the click opens the generator faceplate
+        node, errors = self.embed(dict(gen, device="G1", label="Genset", params={"tag": "GEN-9"}, bind={"on": "G1/state"}),
+                                  render="module")
+        self.assertEqual(node["type"], "cadre.ob.generator")
+        self.assertIn("props.on", node["propConfig"])
+        # the alarm state follows the device's alarms as the other module symbols do (wiki page 13 section 11.2)
+        for prop, field in (("alert", "alertAny"), ("alertFrameStatus", "level"), ("alertFrameMode", "mode")):
+            self.assertIn(f".{field}}}", json.dumps(node["propConfig"][f"props.{prop}"]))
+        self.assertEqual(node["custom"]["deviceKind"], "generator")
+        self.assertIn("cadre.hmi.select_device", json.dumps(node["events"]))
 
     def test_every_module_property_the_generator_states_is_in_the_components_schema(self):
         # a property of the library's contract that the generator passes to a module component must be one the

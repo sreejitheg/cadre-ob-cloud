@@ -1042,8 +1042,10 @@ faceplate only, and either style opens it (`framework.FACEPLATE_VIEW`).
    `library/icons/generator.json` with `tools/convert_icons.py` for use as a navigation icon; it has no running and stopped
    pair, so the two forms, `generator-on` and `generator-off`, are drawn in `library.py` from primitives (a stroked arc
    for the G). The symbol takes the alarm frame of F016 (section 11.2) and the click that opens its faceplate; it passes
-   the medium (`PASS_KINDS`) and its status row reads On or Off like the others. The module draws no generator, so under
-   `--render module` the kind keeps this stock view.
+   the medium (`PASS_KINDS`) and its status row reads On or Off like the others. Under `--render module` the plain symbol is drawn by the module's
+   `cadre.ob.generator` (wiki page 12 section 17.11), which carries the state, the identifier, the status word, the alarm frame
+   of section 11.2 and the click; a symbol that asks for what that disc lacks (another variant, the activated ground, a
+   progress ring, a badge, the duty or out of service mark) and the generator set keep this stock view.
 2. **The generator set.** A descriptor symbol of kind `generator` with `params.picture` set to `genset` is drawn by
    `Automation/GeneratorSet` (gap GG-01): a vector drawing of our own, an engine block with three cylinder heads and an
    exhaust, a coupling and an alternator with its terminal box and louvres, on a base frame, 240 by 150 px by default. It

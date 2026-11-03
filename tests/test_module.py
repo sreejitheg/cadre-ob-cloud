@@ -76,13 +76,16 @@ class DeviceProps(unittest.TestCase):
                 self.assertEqual(schema_of(ctype)["properties"][name]["default"], default, f"{ctype}.{name}")
 
     def test_the_other_components_do_not_carry_them(self):
-        # the two valves and the filter carry the element's own `showStatus` (valves since 0.3.2) (`gen_module_assets.PROPERTIES`)
+        # the two valves and the filter carry the element's own `showStatus` (valves since 0.3.2) (`gen_module_assets.PROPERTIES`);
+        # the generator indicator carries `showStatus` and `statusText`, which its wrapper draws itself (W2), and neither mark
+        carried = {"cadre.ob.valve": ("showStatus",), "cadre.ob.analogvalve": ("showStatus",),
+                   "cadre.ob.filter": ("showStatus",), "cadre.ob.generator": ("showStatus", "statusText")}
         for ctype, c in COMPONENTS.items():
             if ctype in DEVICES:
                 continue
             for name in DEVICE_PROPS:
-                if ctype in ("cadre.ob.valve", "cadre.ob.analogvalve", "cadre.ob.filter") and name == "showStatus":
-                    self.assertEqual((c["props"][name]["type"], c["props"][name]["default"]), ("boolean", True), ctype)
+                if name in carried.get(ctype, ()):
+                    self.assertEqual((c["props"][name]["type"], c["props"][name]["default"]), DEVICE_PROPS[name], ctype)
                     continue
                 self.assertNotIn(name, c["props"], f"{ctype}.{name}")
 
@@ -302,6 +305,69 @@ class FilterComponent(unittest.TestCase):
         for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
             self.assertNotIn(name, props, name)
         self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class GeneratorComponent(unittest.TestCase):
+    """The generator indicator (spike T0, wrap W2): `obc-indicator-generator`, a 48 px disc with no events. The element
+    knows no running state, identifier, status word or alert; the wrapper adds them (`gen_module_assets.EXTRA`)."""
+    ctype = "cadre.ob.generator"
+
+    # the element's attributes in the manifest (src/automation/indicator-generator/indicator-generator.ts)
+    MANIFEST_ATTRIBUTES = {"variant", "value", "level", "secondaryLevel"}
+    # what the wrapper adds, and where it comes from
+    WRAPPER_PROPS = {"on", "tag", "readoutPosition", "showStatus", "statusText", "alert", "alertFrameStatus", "alertFrameMode"}
+
+    def test_the_contract_names_the_element_its_four_attributes_and_the_wrapper_props(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-indicator-generator")
+        self.assertEqual(set(c["props"]) - {"componentSize"}, self.MANIFEST_ATTRIBUTES | self.WRAPPER_PROPS)
+        self.assertNotIn("events", c)
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/indicator-generator/indicator-generator.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-indicator-generator")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element_and_the_alert_frame(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["variant"]["enum"], ["button", "bar", "double-bar"])
+        self.assertEqual(props["value"]["enum"], ["off", "regular", "filled", "enhanced", "categorical"])
+        self.assertEqual((props["variant"]["default"], props["value"]["default"]), ("button", "off"))
+        # the alert props take the values the other device components take (the same OpenBridge enumerations)
+        for name in ("alertFrameStatus", "alertFrameMode"):
+            self.assertEqual(props[name]["enum"], COMPONENTS["cadre.ob.filter"]["props"][name]["enum"], name)
+            self.assertEqual(props[name]["default"], COMPONENTS["cadre.ob.filter"]["props"][name]["default"], name)
+        self.assertEqual((props["on"]["default"], props["alert"]["default"], props["showStatus"]["default"]),
+                         (False, False, True))
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.generator", "generator"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/generator.props.json").exists())
+        self.assertIn("automation/indicator-generator/indicator-generator.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.generator","tag":"obc-indicator-generator"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-indicator-generator"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_the_wrapper_draws_the_state_and_the_alert_frame_without_changing_the_element(self):
+        # the generator's wrapper flag is set for this component only
+        specs = re.search(r"var COMPONENTS = (\[.*?\]);\n  var SHEETS", JS, re.S)
+        comps = json.loads(specs.group(1))
+        self.assertEqual([c["type"] for c in comps if c["generator"]], [self.ctype])
+        # the running state selects the scheme; the frame and the readout are OpenBridge's own elements, added in the shadow root
+        self.assertIn("var value = p.on ? (p.value === 'off' ? 'regular' : p.value) : 'off';", JS)
+        self.assertIn("document.createElement('obc-alert-frame')", JS)
+        self.assertIn("document.createElement('obc-automation-button-readout-stack')", JS)
+        # the element is the pinned package's, untouched (CLAUDE.md non-negotiables 2 and 7): the pin stands
+        self.assertIn('"@oicl/openbridge-webcomponents": "2.0.0-next.155"', (MODULE / "web/package.json").read_text(encoding="utf-8"))
+
+    def test_the_alert_frame_takes_the_levels_the_page_gives_it(self):
+        # `custom.alerts` gives the level `level-critical` ... `level-diagnostic` (`cadre.hmi.ALERT_NONE`), which the frame's own
+        # classes colour (critical on the Cadre critical colour, high on alarm, medium on warning, low on caution)
+        self.assertEqual(COMPONENTS[self.ctype]["props"]["alertFrameStatus"]["enum"][3:],
+                         ["level-critical", "level-high", "level-medium", "level-low", "level-diagnostic"])
 
 
 class Release(unittest.TestCase):

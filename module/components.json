@@ -1594,6 +1594,110 @@
    }
   }
  },
+ "cadre.ob.generator": {
+  "element": "obc-indicator-generator",
+  "title": "OB Generator",
+  "palette": "OpenBridge generator indicator: running state, readout and alert frame",
+  "schema": "schemas/generator.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "button",
+     "bar",
+     "double-bar"
+    ],
+    "default": "button"
+   },
+   "value": {
+    "type": "string",
+    "enum": [
+     "off",
+     "regular",
+     "filled",
+     "enhanced",
+     "categorical"
+    ],
+    "default": "off"
+   },
+   "level": {
+    "type": "number",
+    "default": 0
+   },
+   "secondaryLevel": {
+    "type": "number",
+    "default": 0
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right",
+     "none"
+    ],
+    "default": "bottom"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "statusText": {
+    "type": "string",
+    "default": ""
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.readout": {
   "element": "obc-transmitter",
   "title": "OB Readout",

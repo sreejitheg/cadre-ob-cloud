@@ -1295,6 +1295,7 @@
   --base-orange-600: rgb(91, 49, 0);
   --base-teal-050: rgb(226, 242, 243);
   --base-teal-100: rgb(190, 228, 229);
+  --base-teal-400: rgb(0, 125, 129);
   --base-teal-500: rgb(0, 93, 97);
   --base-teal-600: rgb(0, 67, 70);
   --border-focus-color: rgb(66, 113, 179);
@@ -1526,6 +1527,7 @@
   --base-orange-600: rgb(245, 197, 147);
   --base-teal-050: rgb(22, 44, 44);
   --base-teal-100: rgb(28, 57, 57);
+  --base-teal-400: rgb(53, 150, 149);
   --base-teal-500: rgb(77, 188, 187);
   --base-teal-600: rgb(132, 220, 219);
   --border-focus-color: rgb(128, 174, 234);
@@ -1757,6 +1759,7 @@
   --base-orange-600: rgb(234, 167, 94);
   --base-teal-050: rgb(7, 20, 20);
   --base-teal-100: rgb(13, 33, 33);
+  --base-teal-400: rgb(1, 130, 132);
   --base-teal-500: rgb(0, 166, 170);
   --base-teal-600: rgb(50, 199, 203);
   --border-focus-color: rgb(44, 131, 102);
@@ -1978,6 +1981,7 @@
   --base-orange-600: rgb(60, 26, 0);
   --base-teal-050: rgb(186, 218, 217);
   --base-teal-100: rgb(146, 196, 195);
+  --base-teal-400: rgb(0, 89, 89);
   --base-teal-500: rgb(0, 59, 59);
   --base-teal-600: rgb(0, 40, 40);
   --border-focus-color: rgb(7, 35, 70);

@@ -72,7 +72,8 @@ NO_MATCH = "No page, device or tag matches"
 # are `obc-digital-valve` and `obc-analog-valve`: no element named `obc-valve` or `obc-analogvalve` exists, so a selector
 # built from those names counted no valve and the readouts gate expected one device more than it found (COB-194).
 MODULE_TAGS = {"pump": "obc-pump", "motor": "obc-motor", "fan": "obc-fan", "valve": "obc-digital-valve",
-               "analogvalve": "obc-analog-valve", "filter": "obc-filter"}
+               "analogvalve": "obc-analog-valve", "filter": "obc-filter",
+               "generator": "obc-indicator-generator"}
 EQ_TOL = 4
 TEST_ROUTE = "/component-test"                     # the library's component test page (`screen.py --component-test`)
 
