@@ -35,6 +35,13 @@ import re
 from pathlib import Path
 
 LEAF_MARK = "data-g11-leaf"   # the attribute the measure stamps on each leaf's clicked element: its index (COB-201)
+# The module components a click opens a device's faceplate from: those of the kinds the module draws for the library
+# (`screen.MODULE_KIND`; a unit test holds the two together). The module-only glyphs, the charts and the 33 frame
+# components open no faceplate, and some animate (a blinking alert button, an indeterminate progress ring, a clock):
+# swept as leaves they changed the count under the guard of `sweep` (T2, 1641 leaves, 2026-11-03).
+DEVICE_COMPONENTS = ("cadre.ob.analogvalve", "cadre.ob.damper", "cadre.ob.fan", "cadre.ob.filter", "cadre.ob.generator",
+                     "cadre.ob.instrumentfield", "cadre.ob.motor", "cadre.ob.pump", "cadre.ob.readout", "cadre.ob.switch",
+                     "cadre.ob.tank", "cadre.ob.valve")
 LEAF_POINTS = """() => {
   const out = [], seen = new Set();
   document.querySelectorAll('[data-g11-leaf]').forEach(e => e.removeAttribute('data-g11-leaf'));
@@ -50,14 +57,15 @@ LEAF_POINTS = """() => {
     const p = [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)];
     if (!seen.has(p.join(','))) { seen.add(p.join(',')); mark(sym || v, p); }
   }
-  // components of the Cadre OpenBridge module: their box is the symbol (pump) or the tank
-  for (const m of document.querySelectorAll('[data-component^="cadre.ob."]')) {
+  // components of the Cadre OpenBridge module that draw a device: their box is the symbol (pump) or the tank
+  for (const m of document.querySelectorAll('__DEVICE_COMPONENTS__')) {
     if (m.closest('[class*="docked-view"]')) continue;
     const r = m.getBoundingClientRect();
     const p = [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)];
     if (r.width >= 8 && !seen.has(p.join(','))) { seen.add(p.join(',')); mark(m, p); }
   }
   return out }"""
+LEAF_POINTS = LEAF_POINTS.replace("__DEVICE_COMPONENTS__", ", ".join(f'[data-component="{c}"]' for c in DEVICE_COMPONENTS))
 
 
 def bring_into_view(page, index: int) -> bool:

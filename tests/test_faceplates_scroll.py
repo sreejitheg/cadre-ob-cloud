@@ -164,6 +164,21 @@ class SettledPointsTests(unittest.TestCase):
         self.assertEqual(page.waits, 5)
 
 
+class DeviceComponentsTests(unittest.TestCase):
+    """The sweep clicks the module components that draw a device, and only those (T2: the frame components and glyphs
+    open no faceplate and some animate)."""
+
+    def test_the_device_components_are_those_the_module_draws_for_the_library(self):
+        sys.path.insert(0, str(ROOT / "tools"))
+        from hmi import screen
+        self.assertEqual(set(faceplates.DEVICE_COMPONENTS), set(screen.MODULE_KIND.values()))
+
+    def test_the_measure_selects_them_and_no_other_module_component(self):
+        self.assertNotIn('[data-component^="cadre.ob."]', faceplates.LEAF_POINTS)
+        for c in faceplates.DEVICE_COMPONENTS:
+            self.assertIn(f'[data-component="{c}"]', faceplates.LEAF_POINTS)
+
+
 class ScrollInChromiumTests(unittest.TestCase):
     """The real measure and the real locators on a page whose leaves lie far below the first window, in a scroller of its
     own (as Perspective's page is): a click below the window's edge reaches nothing."""
