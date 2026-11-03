@@ -366,6 +366,9 @@ def main() -> int:
                     help="the viewport's height; a long page (the component test page, 8,600 px) needs its own")
     ap.add_argument("--viewport", default=None, metavar="WxH",
                     help="the viewport, WIDTHxHEIGHT (default 2700 wide and --height high, as before)")
+    ap.add_argument("--faceplate", choices=("openbridge", "asm"), default="openbridge",
+                    help="the project's default faceplate style (screen.py --faceplate, COBD-045), against which a "
+                         "device without a style of its own in the device model is judged")
     a = ap.parse_args()
     width, height = 2700, a.height
     if a.viewport:
@@ -382,7 +385,8 @@ def main() -> int:
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     devices = None
     if a.devices_file:
-        devices = device_expectations(descs, json.loads(Path(a.devices_file).read_text(encoding="utf-8")))
+        devices = device_expectations(descs, json.loads(Path(a.devices_file).read_text(encoding="utf-8")),
+                                     a.faceplate)
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_context(viewport={"width": width, "height": height}).new_page()
