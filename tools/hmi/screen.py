@@ -32,11 +32,11 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, parent as par, parts  # noqa: E402
+    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, obasm, parent as par, parts  # noqa: E402
     from hmi.framework import root_classes, search_panel  # noqa: E402
     from hmi.library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE  # noqa: E402
 else:
-    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, parent as par, parts
+    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, obasm, parent as par, parts
     from .framework import root_classes, search_panel
     from .library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE
 
@@ -1305,7 +1305,7 @@ def diagram_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict
     merge_custom(custom, scale["custom"])
     custom_cfg.update(scale["custom_config"])
     root_kids = [canvas] + ([toolbar_node(has_media(desc))] if toolbar else [])
-    if FRAME["name"] == "asm":
+    if FRAME["name"] in navigation.ASM_FRAMES:
         root_kids.append(search_panel())
     root = pv.node("ia.container.flex", "root", {}, {"direction": "column", "style": {"overflow": "hidden"}},
                    prop_config={"props.style.classes": root_classes("cadre/surface/page")}, children=root_kids)
@@ -1477,7 +1477,7 @@ def cards_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict]:
                                                       "style": {"overflow": "auto" if scroll else "hidden",
                                                                 "padding": "4px"}},
                    prop_config={"props.style.classes": root_classes("cadre/surface/page")},
-                   children=rows + ([search_panel()] if FRAME["name"] == "asm" else []))
+                   children=rows + ([search_panel()] if FRAME["name"] in navigation.ASM_FRAMES else []))
     scr = desc["screen"]
     doc = pv.view(root, size={"width": scr.get("width", 1600), "height": scr.get("height", 852)},
                   custom=custom, custom_config=custom_cfg)
@@ -1715,9 +1715,9 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
                 frame: str = "openbridge") -> tuple[pv.Project, dict]:
     if frame not in navigation.FRAMES:
         raise ValueError(f"frame {frame!r}: one of {navigation.FRAMES}")
-    if frame == "ob" and render != "module":   # the frame is drawn with the module's components: a stock build has none
-        raise ValueError("--frame ob draws the OpenBridge frame components of the module: it needs --render module")
-    if frame == "asm" and (bad := navigation.frame_errors(descs)):
+    if frame in navigation.MODULE_FRAMES and render != "module":   # the frame is drawn with the module's components: a stock build has none
+        raise ValueError(f"--frame {frame} draws the OpenBridge frame components of the module: it needs --render module")
+    if frame in navigation.ASM_FRAMES and (bad := navigation.frame_errors(descs)):
         raise ValueError("; ".join(bad))
     RENDER["target"] = render
     RENDER["devices"] = model_devices(devices)
@@ -1756,10 +1756,12 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     sp["custom"]["commands"] = parts.commands_index(descs)   # the pulse tags the page buttons may write (COB-159)
     if frame == "asm":   # the ASM frame (COB-160): its docks, pivot pages and the data its views read
         sp["custom"].update(navigation.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
+    if frame == "obasm":   # the ASM frame on the OpenBridge frame components (T2 F6b): the ASM data, this frame's name
+        sp["custom"].update(obasm.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
     if frame == "ob":   # the OpenBridge frame (T2 F6a): the frame's name; its docks are in the page configuration
         sp["custom"].update(obframe.session_custom())
     child.set_session_props(sp)
-    child.set_page_config({"asm": navigation.page_config, "ob": obframe.page_config}.get(frame, par.page_config)(app_name, pages))
+    child.set_page_config({"asm": navigation.page_config, "ob": obframe.page_config, "obasm": obasm.page_config}.get(frame, par.page_config)(app_name, pages))
     return child, reports
 
 
@@ -1823,6 +1825,7 @@ def main() -> int:
                     help="asm: the ASM application frame (COB-160): navigation dock, crumb popups, global search, "
                          "page header, alarm banner and a floating faceplate for each device; "
                          "ob: the OpenBridge frame, drawn with the module's frame components (needs --render module); "
+                         "obasm: the ASM frame drawn with the same components (needs --render module); "
                          "the default is unchanged")
     ap.add_argument("--component-test", action="store_true",
                     help="add the component test page (route /component-test, a level 4 support page) generated from "
@@ -1847,8 +1850,8 @@ def main() -> int:
     if (a.tag_root or a.write_descriptor or a.write_devices) and not a.component_test:
         print("--tag-root, --write-descriptor and --write-devices go with --component-test")
         return 1
-    if a.frame == "ob" and a.render != "module":
-        print("--frame ob draws the OpenBridge frame components of the module: it needs --render module")
+    if a.frame in navigation.MODULE_FRAMES and a.render != "module":
+        print(f"--frame {a.frame} draws the OpenBridge frame components of the module: it needs --render module")
         return 1
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     names = list(a.descriptor)

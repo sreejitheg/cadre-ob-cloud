@@ -204,7 +204,7 @@ class ObOptionTests(unittest.TestCase):
         return {k: v.decode("utf-8") for k, v in child.files.items() if k.endswith(".json")}
 
     def test_the_option_is_the_third_frame_and_the_first_two_keep_their_names(self):
-        self.assertEqual(navigation.FRAMES, ("openbridge", "asm", "ob"))
+        self.assertEqual(navigation.FRAMES[:3], ("openbridge", "asm", "ob"))   # F6b adds a fourth, tested in test_obasm_frame
 
     def test_a_child_with_the_option_has_the_obframes_docks_and_session(self):
         child, _ = self.build("ob")

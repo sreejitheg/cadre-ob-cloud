@@ -1,0 +1,301 @@
+{
+  "custom": {
+    "support": {
+      "items": [],
+      "rows": []
+    },
+    "tree": {
+      "items": [],
+      "rows": []
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.support": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\trows = cadre.hmi.nav_support(self.session, value)\n\treturn cadre.hmi.obasm_items('support', rows, value, ['menu', 'user', 'user-settings', 'notification', 'notification-filled', 'applications', 'alerts', 'alarm', 'alert-list', 'info', 'help', 'home', 'search', 'dashboard', 'palette-day', 'palette-dusk', 'palette-night', 'palette-day-bright', 'palette-dimming', 'time', 'silence-iec', 'settings-default-iec', 'chevron-left-google', 'chevron-right-google', 'close-google', 'check-google', 'placeholder', 'command-in', 'command-no', 'command-take', 'command-request', 'command-shared', 'command-locked', 'joystick'])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.tree": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.navQuery}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\tparts = (value or '').split('|', 1)\n\trows = cadre.hmi.nav_tree(self.session, parts[1] if len(parts) > 1 else '', parts[0])\n\treturn cadre.hmi.obasm_items('tree', rows, parts[0], ['menu', 'user', 'user-settings', 'notification', 'notification-filled', 'applications', 'alerts', 'alarm', 'alert-list', 'info', 'help', 'home', 'search', 'dashboard', 'palette-day', 'palette-dusk', 'palette-night', 'palette-day-bright', 'palette-dimming', 'time', 'silence-iec', 'settings-default-iec', 'chevron-left-google', 'chevron-right-google', 'close-google', 'check-google', 'placeholder', 'command-in', 'command-no', 'command-take', 'command-request', 'command-shared', 'command-locked', 'joystick'])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 800,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if(coalesce({session.custom.navPanel}, 'pages') = 'support', 'Tools and support', 'Navigation')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/title cadre/text/active",
+                "whiteSpace": "nowrap"
+              },
+              "text": "Navigation"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 24,
+                  "x": 8,
+                  "y": 8
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z",
+                      "fill": {
+                        "paint": "var(--element-active-color)"
+                      },
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 24 24"
+                },
+                "type": "ia.shapes.svg"
+              }
+            ],
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.closeDock('nav')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Close"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat",
+                "height": "40px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "width": "40px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "56px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "overflow": "hidden",
+            "padding": "0 8px 0 16px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "Search"
+        },
+        "position": {
+          "basis": "36px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') != 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.text": {
+            "binding": {
+              "config": {
+                "bidirectional": true,
+                "path": "session.custom.navQuery"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "deferUpdates": false,
+          "placeholder": "Search pages and areas",
+          "rejectUpdatesWhileFocused": false,
+          "style": {
+            "margin": "8px 8px 4px 8px"
+          },
+          "text": ""
+        },
+        "type": "ia.input.text-field"
+      },
+      {
+        "events": {
+          "component": {
+            "onItemClick": {
+              "config": {
+                "script": "\t# GF-37: event.id is the id of the row pressed, at any depth; cadre.hmi.obasm_items set it on the row\n\trows = [x for x in self.view.custom.tree.rows if x['id'] == event.id]\n\tif rows:\n\t\tr = rows[0]\n\t\tif r['action'] == 'alarms' or r['action'] == 'trend':\n\t\t\tself.session.custom.contentNode = r['nodeId']\n\t\t\tsystem.perspective.navigate('/node/' + r['action'])\n\t\telif r['route']:\n\t\t\tsystem.perspective.navigate(r['route'])\n\t\tif r['deviceId']:\n\t\t\tcadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'])\n\t\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\telse:\n\t\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\t\tself.session.custom.faceplateDocked = True\n\t\tif r['close'] == 'nav':\n\t\t\tsystem.perspective.closeDock('nav')\n\t\telif r['close'] == 'search':\n\t\t\tself.session.custom.searchQuery = ''\n\t\t\tself.session.custom.searchOpen = False\n\t\telif r['close']:\n\t\t\tsystem.perspective.closePopup(r['close'])"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Tree"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') != 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.items": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.tree.items}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "items": []
+        },
+        "type": "cadre.ob.treenavigation"
+      },
+      {
+        "events": {
+          "component": {
+            "onItemClick": {
+              "config": {
+                "script": "\t# GF-37: event.id is the id of the row pressed, at any depth; cadre.hmi.obasm_items set it on the row\n\trows = [x for x in self.view.custom.support.rows if x['id'] == event.id]\n\tif rows:\n\t\tr = rows[0]\n\t\tif r['action'] == 'alarms' or r['action'] == 'trend':\n\t\t\tself.session.custom.contentNode = r['nodeId']\n\t\t\tsystem.perspective.navigate('/node/' + r['action'])\n\t\telif r['route']:\n\t\t\tsystem.perspective.navigate(r['route'])\n\t\tif r['deviceId']:\n\t\t\tcadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'])\n\t\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\telse:\n\t\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\t\tself.session.custom.faceplateDocked = True\n\t\tif r['close'] == 'nav':\n\t\t\tsystem.perspective.closeDock('nav')\n\t\telif r['close'] == 'search':\n\t\t\tself.session.custom.searchQuery = ''\n\t\t\tself.session.custom.searchOpen = False\n\t\telif r['close']:\n\t\t\tsystem.perspective.closePopup(r['close'])"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Support"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.navPanel}, 'pages') = 'support'"
+              },
+              "type": "expr"
+            }
+          },
+          "props.items": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.support.items}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "footerItems": [],
+          "items": []
+        },
+        "type": "cadre.ob.navigationmenu"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/menu cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden",
+        "padding": "0 0 8px 0"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

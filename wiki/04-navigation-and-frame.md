@@ -541,8 +541,8 @@ Built and tested offline on 2026-11-03 (tranche T2, batch F6a; `cloud/FRAME-DESI
 answers). The frame of sections 2 to 7 stays the default and section 8 the ASM frame; this is a third set of views and docks,
 taken only by a child built with `screen.py --frame ob`, and drawn with the module's frame components (`wiki/12` sections 17.23
 to 17.27). Code: `tools/hmi/obframe.py` (views, page configuration, session data), the function `cadre.hmi.ob_items` of
-`tools/hmi/navigation_scripts.py`, `tests/test_ob_frame.py`. This batch is the OpenBridge variant; the ASM variant (the navigation
-tree, crumb popups and page header on the same components) is the next batch.
+`tools/hmi/navigation_scripts.py`, `tests/test_ob_frame.py`. This is the OpenBridge variant; the ASM variant (the navigation
+tree, crumb popups and page header on the same components) is section 11.
 
 ### 10.1 The Option and the Docks
 
@@ -625,3 +625,101 @@ G10 and G11 on `cadre_hmi_wtpobf`:
 5. The navigation menu's items, the checked item, a node's `alerts` badge, and the dock closing on a click outside it.
 6. The popup sizes (alert 640 by 600, user 320 by 280, brilliance 320 by 280) against the components' measured sizes.
 7. The icons of the navigation items: only those named like a bundled OpenBridge icon (`dashboard`, `alert-list`) draw.
+
+## 11. The ASM Frame on the OpenBridge Components (`--frame obasm`)
+
+Built and tested offline on 2026-11-03 (tranche T2, batch F6b; `cloud/FRAME-DESIGN.md` section 1.2, the owner's answers 1 to 4 and
+the departures at the end). It is the fourth frame option beside `openbridge`, section 8 (`asm`) and section 10 (`ob`), all three
+unchanged. It carries every part of the ASM frame and draws, with the module's frame components (`wiki/12` sections 17.23 to 17.27),
+the parts a component can carry faithfully; it needs `--render module` (the command line stops with a message and `build_child`
+raises `ValueError` under the stock rendering). Code: `tools/hmi/obasm.py` (views, page configuration, session data), the function
+`cadre.hmi.obasm_items` of `tools/hmi/navigation_scripts.py`, `obframe.bar_node` (the bar, shared with section 10),
+`tests/test_obasm_frame.py`. The ASM rules stay in the data and the scripts (`node_counts`, `nav_tree`, `crumbs`, the priority table
+of `wiki/13` section 11.1), not in a component (CLAUDE.md rule 7).
+
+### 11.1 The Option and the Docks
+
+`screen.build_child(..., frame="obasm")`, or `--frame obasm`. The parent carries three more views (`obasm.views()`); a child of another
+frame is byte-identical to one built before the option. The popups of the bar's bell, dimming and user buttons are section 10's
+(`Framework/OB/AlertMenu`, `Brilliance`, `UserMenu`), shared. The alarm banner, the floating faceplate, the two pivot pages and the
+search results are the ASM frame's own views.
+
+Table 8. The docks of a child built with `--frame obasm` (`obasm.shared_docks`).
+
+| Edge | Identifier | View | Size | Display | Content |
+|---|---|---|---|---|---|
+| Top | `topbar` | `Framework/OBASM/Head`: `cadre.ob.topbar` (48 px), the strip (36 px), the page header (48 px) | 132 px | visible | push |
+| Left | `nav` | `Framework/OBASM/NavDock`: the title row and search box over `cadre.ob.treenavigation` or `cadre.ob.navigationmenu` | 320 px, modal | on demand | cover |
+| Right | `faceplate` | `Framework/SideMenu` | 400 px | on demand | push |
+| Bottom | `alarmbanner` | `Framework/ASM/AlarmBanner` | 76 px | visible | push |
+
+### 11.2 What Carries Each Part
+
+Table 9. The parts of the ASM frame (section 8.1 and the design, section 1.2) and what draws each.
+
+| Part | Carried by | Why |
+|---|---|---|
+| Top bar, menu button, support button, bell, dimming, user, clock | `cadre.ob.topbar` (`obframe.bar_node`); menu button writes `navPanel` `pages`, apps button `support`, then both `openDock('nav')` | the component has the buttons, the bell and the clock; the bar's page name is empty while the page names a node (section 7 item 4) |
+| Navigation dock, pages state | `cadre.ob.treenavigation`; the Cadre title row and search box (`navQuery`) | a node that holds pages or nodes is a group, its counts the row's `alerts` (section 11.3) |
+| Navigation dock, support state | `cadre.ob.navigationmenu` over `cadre.hmi.nav_support` | flat list of pages with the open page checked |
+| Page header: pivot and page tabs | `cadre.ob.pivotitemgroup` (Mimic, Alarms, Trend) and `cadre.ob.tabrow` | the ASM header's own pivot and tabs |
+| Page header: title, level, previous and next | the ASM header's nodes | no component names a title or a step button with its target |
+| Crumb with node badges, crumb popup | `Framework/OBASM/Crumb`, then the ASM popup | owner's answer 2; no component draws priority badges on a popup row |
+| Global search | the ASM text field (`searchQuery`) and `Framework/ASM/SearchResults` | the module has no search field |
+| Alert message and its ACK | the ASM strip node (W6) | owner's answer 3 |
+| Alert menu, user menu, brilliance | section 10's popups | unchanged |
+| Alarm banner, floating faceplates | the ASM views | no component carries them (design section 3) |
+
+The head is three rows in the one top dock (GF-90): the bar, a strip of the crumb, the search field and the alert message, and the
+page header. The header is 48 px, not the ASM's 36, because the module's pivot group and tab row are 48 px high (`wiki/12`
+section 17.27.5); the crumb popup opens at 84 px, beneath the strip.
+
+### 11.3 The Tree and Its Rows
+
+`cadre.hmi.obasm_items('tree', rows, route, icons)` shapes `nav_tree`'s rows into `{"rows", "items"}`. A row followed by deeper rows
+is an `obc-tree-navigation-group`, any other an `obc-tree-navigation-item`; a node row's counts are its `alerts` by the table of
+`wiki/13` section 11.1 (the same as section 10.3), the row of the open page is `checked` and its branch `expanded`. A group has no
+event but `expand-toggle`, which the group applies itself, so a node that holds pages is reached through its pages (section 8.3 item 1
+has the node row open its first page). A node with no page of its own gets an Alarms leaf as the group's first row, which is the
+node's Alarms page. With a query the list is flat and every row a leaf. The view keeps the rows (`custom.tree.rows`, each with the
+`id` the item carries); a press looks its row up by `event.id` and runs `navigation.action_lines`, the ASM row action: the route,
+or the Alarms or Trend page of the node (`contentNode`), then the device's faceplate through `library.open_device`, then closing the
+dock. The support list is the same with `obc-navigation-item` rows.
+
+### 11.4 Events and the Functions They Call
+
+Every component event is a script action whose first line cites the shape measured in GF-37; no write path is new.
+
+Table 10. The wired events of the ASM variant.
+
+| Component | Event | Script |
+|---|---|---|
+| `cadre.ob.topbar` | `onMenuButtonClick`, `onAppsButtonClick` | `session.custom.navPanel = 'pages'` or `'support'`, then `system.perspective.openDock(id='nav')` |
+| | `onAlertClick`, `onDimmingButtonClick`, `onUserButtonClick` | as Table 7 |
+| `cadre.ob.pivotitemgroup` | `onChange` | `event.selectedValue` `mimic`: navigate to the node's first page; `alarms` or `trend`: write `contentNode`, navigate to `/node/alarms` or `/node/trend` |
+| `cadre.ob.tabrow` | `onTabSelected` | `system.perspective.navigate(event.id)`; a tab's id is the page's route |
+| `cadre.ob.treenavigation` | `onItemClick` | the ASM row action of the row `event.id` names |
+| `cadre.ob.navigationmenu` (dock) | `onItemClick` | the same |
+
+The floating faceplate per device (section 8.2) follows `cadre.hmi.asm_frame`, which is true for `asm` and `obasm`.
+
+### 11.5 Session Data
+
+A child adds the keys of section 8.9 (`pageInfo`, `searchIndex`, `contentNode`) and `frame` `obasm`; a page carries the search panel as
+in the ASM frame.
+
+### 11.6 Not Verified Without the Gateway
+
+Nothing of this section has run on the gateway. To be seen at G8, G10 and G11 on `cadre_hmi_wtpoba`:
+
+1. The head draws three rows in 132 px; the pivot group and the tab row stand in the 48 px header, the tab row only where the node has
+   several pages, and the pivot only where the page names a node.
+2. The apps button is shown and opens the dock on the support list; the menu button on the tree.
+3. The tree draws groups and leaves with the node counts as badges (the object `alerts` read through the property tree is unmeasured
+   on a gateway, `wiki/12` section 17.25.3); a group's badge shows while it is closed; the current branch opens; the tree scrolls when
+   its rows exceed the dock.
+4. Each of the events of Table 10 arrives with the payload named (`event.id`, `event.selectedValue`), and a row press runs the row
+   action and closes the dock.
+5. The crumb popup stands beneath the strip (84 px); the pivot selection follows `head.mode` on the pivot pages.
+6. The bar's page name is empty while crumbs show, and returns on a page that names no node.
+7. The search results panel and the floating faceplate per device in `popup` mode.

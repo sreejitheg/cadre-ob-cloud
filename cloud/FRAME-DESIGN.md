@@ -341,3 +341,28 @@ The OpenBridge variant (`--frame ob`, wiki 04 section 10) departed from sections
 7. **Parent.** The parent now holds views with module components (the five above), which it did not before; they are inert until a child
    names them, and G1 of the parent reads the module's schemas.
 
+## Departures from the Design in Batch F6b (2026-11-03)
+
+The ASM variant (`--frame obasm`, wiki 04 section 11) departed from sections 1.2, 3 and 4.1 in these respects.
+
+1. **Name and views.** The option is `obasm`. Three views are new (`Framework/OBASM/Head`, `NavDock`, `Crumb`); the bell, user and
+   brilliance popups are F6a's, and the banner, floating faceplate, search results and pivot pages are the ASM frame's. The module
+   code is in `tools/hmi/obasm.py`, a sibling of `obframe.py`, which gains `bar_node` (the F6a bar, unchanged without arguments).
+   `navigation.FRAMES` gains `obasm`, and `ASM_FRAMES` and `MODULE_FRAMES` name the frames that carry the ASM rules and the frames
+   drawn with the module's components.
+2. **Scripts.** One function is added, `cadre.hmi.obasm_items` (pivot, tabs, tree and support items). `cadre.hmi.asm_frame` answers true
+   for `obasm` as well, so the floating faceplate per device holds; it is the only existing function changed, and it answers as before
+   for the other frames. `navigation.crumb` takes the popup's top row (default 48, unchanged).
+3. **Head.** The head is 132 px in three rows (bar 48, strip 36, header 48), not 84. The module top bar cannot hold the crumb, the search
+   field or the alert message, so they stand in the strip; the header is 48 px because the module's pivot group and tab row are
+   48 px high (the ASM header is 36). The bar's page name is empty while the page names a node.
+4. **Tree.** A tree group fires only `expand-toggle`, so a node that holds pages is no longer a button that opens its first page (section
+   8.3 item 1): the page is one press further. A node with no page of its own gets an Alarms leaf. A group draws its counts only while
+   closed (the element's rule), so an open node shows its children's. Rows draw no icon.
+5. **Crumb popup.** The popup stays the ASM view (Show and Areas), because `obc-context-menu-input` carries no priority badge on an
+   option. The design (section 3) named the context menu; owner's answer 2 holds for the crumb, and the same reasoning holds for its popup.
+6. **Search.** The module has no search field (`app-menu` has a `search` event but is a menu of apps), so the ASM text field stays, in the
+   strip.
+7. **Not carried by a component, kept as ASM views:** the alert message (answer 3), the alarm banner and the floating faceplate (design
+   section 3), the title, level and the two step buttons of the header.
+

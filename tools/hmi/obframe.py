@@ -70,6 +70,43 @@ def alert_type_expr() -> str:
 # ---------------------------------------------------------------------------------------------------------
 # The top dock
 # ---------------------------------------------------------------------------------------------------------
+def bar_node(menu: list[str] | None = None, apps: list[str] | None = None, page_after_crumbs: bool = False) -> dict:
+    """The module top bar node of the head. `menu` is the script of the menu button (by default it opens the navigation dock), `apps`
+    the script of the apps button (given, the button is shown and wired: the ASM variant's second button, `obasm.py`), and
+    `page_after_crumbs` gives the page name way to the crumb where the page names a node (wiki 04 section 7 item 4), as the ASM
+    bar's page name does. Called with no argument it is the OpenBridge variant's bar."""
+    page = pv.bind(pv.prop("page.props.path"), [pv.script_transform(["return cadre.hmi.page_title(self.session, value)"])])
+    if page_after_crumbs:
+        page = pv.bind(pv.expr("if(len({view.custom.crumbs}) > 0, '', {page.props.path})"), [pv.script_transform([
+            "return cadre.hmi.page_title(self.session, value) if value else ''"])])
+    handlers = {
+        "onMenuButtonClick": menu or [
+            "# GF-37: the event carries nothing; the dock is the one the ASM top bar's menu button opens",
+            f"system.perspective.openDock(id='{NAV_DOCK}')"],
+        "onAlertClick": [
+            "# GF-37: the bell's event carries nothing; the popup is the default bar's, with the alert menu in it",
+            _open_menu(ALERT_POPUP, ALERT_VIEW, ALERT_RIGHT)],
+        "onDimmingButtonClick": [
+            "# GF-37: the event carries nothing",
+            _open_menu(BRILLIANCE_POPUP, BRILLIANCE_VIEW, BRILLIANCE_RIGHT)],
+        "onUserButtonClick": [
+            "# GF-37: the event carries nothing",
+            _open_menu(USER_POPUP, USER_VIEW, USER_RIGHT)]}
+    if apps:
+        handlers["onAppsButtonClick"] = apps
+    return pv.node("cadre.ob.topbar", "TopBar", pv.fpos(basis=f"{TOP_BAR_HEIGHT}px", shrink=0), {
+        "showDimmingButton": True, "showClock": True, **({"showAppsButton": True} if apps else {})},
+        prop_config={
+            "props.appTitle": pv.bind(pv.expr("{view.params.appName}")),
+            "props.pageName": page,
+            "props.nAlerts": pv.bind(pv.expr("{view.custom.alarm.count}")),
+            "props.alertType": pv.bind(pv.expr(alert_type_expr())),
+            "props.blinking": pv.bind(pv.expr("{view.custom.alarm.unacked} > 0")),
+            "props.date": pv.bind(pv.expr(CLOCK_DATE)),
+            "props.showUserButton": pv.bind(pv.expr("{view.params.showUser}"))},
+        events=_events(**handlers))
+
+
 def head() -> dict:
     """`Framework/OB/Head`: the module top bar over the strip of the Cadre crumb and the Cadre alert message. The dock is
     one dock because the gateway draws one dock of a side at a time (GF-90), so the two rows share it, as the ASM frame's
@@ -80,30 +117,7 @@ def head() -> dict:
     from the page name ("Engine roomCommand"); the frame has no command to name there."""
     src = framework.top_bar()   # the strip's three nodes and the data they read are the default bar's own
     kids = {k["meta"]["name"]: k for k in src["root"]["children"]}
-    bar = pv.node("cadre.ob.topbar", "TopBar", pv.fpos(basis=f"{TOP_BAR_HEIGHT}px", shrink=0), {
-        "showDimmingButton": True, "showClock": True},
-        prop_config={
-            "props.appTitle": pv.bind(pv.expr("{view.params.appName}")),
-            "props.pageName": pv.bind(pv.prop("page.props.path"), [pv.script_transform([
-                "return cadre.hmi.page_title(self.session, value)"])]),
-            "props.nAlerts": pv.bind(pv.expr("{view.custom.alarm.count}")),
-            "props.alertType": pv.bind(pv.expr(alert_type_expr())),
-            "props.blinking": pv.bind(pv.expr("{view.custom.alarm.unacked} > 0")),
-            "props.date": pv.bind(pv.expr(CLOCK_DATE)),
-            "props.showUserButton": pv.bind(pv.expr("{view.params.showUser}"))},
-        events=_events(
-            onMenuButtonClick=[
-                "# GF-37: the event carries nothing; the dock is the one the ASM top bar's menu button opens",
-                f"system.perspective.openDock(id='{NAV_DOCK}')"],
-            onAlertClick=[
-                "# GF-37: the bell's event carries nothing; the popup is the default bar's, with the alert menu in it",
-                _open_menu(ALERT_POPUP, ALERT_VIEW, ALERT_RIGHT)],
-            onDimmingButtonClick=[
-                "# GF-37: the event carries nothing",
-                _open_menu(BRILLIANCE_POPUP, BRILLIANCE_VIEW, BRILLIANCE_RIGHT)],
-            onUserButtonClick=[
-                "# GF-37: the event carries nothing",
-                _open_menu(USER_POPUP, USER_VIEW, USER_RIGHT)]))
+    bar = bar_node()
     strip = pv.node("ia.container.flex", "Strip", pv.fpos(basis=f"{STRIP_HEIGHT}px", shrink=0), {
         "direction": "row", "alignItems": "center", "style": {"overflow": "hidden"}},
         children=[kids["Crumbs"], kids["Spacer"], kids["AlertMessage"]])
