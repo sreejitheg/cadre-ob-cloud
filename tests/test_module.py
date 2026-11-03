@@ -1994,6 +1994,14 @@ class FrameComponents(unittest.TestCase):
             self.screen.RENDER["target"] = "stock"
 
 
+class RadialInstrumentFillsItsBox(unittest.TestCase):
+    """The radial instrument has no size of its own and drew at 0 by 0 when centred in its box (T2 gateway check)."""
+
+    def test_the_stylesheet_stretches_the_radial_instrument(self):
+        css = (MODULE / "gateway/src/main/resources/mounted/css/cadre-ob.css").read_text(encoding="utf-8")
+        self.assertRegex(css, r"\.cadre-ob > obc-instrument-radial \{[^}]*flex: 1 1 auto;[^}]*height: 100%;")
+
+
 class Release(unittest.TestCase):
     def test_the_version_is_plain_and_0_6_0(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")

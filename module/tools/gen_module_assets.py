@@ -809,7 +809,12 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                "  color: var(--element-active-color, #1f1f1f);\n"
                "  font: 570 12px/14px var(--global-typography-font-family, sans-serif);\n}\n"
                "/* A stretched readout fills its component box. */\n"
-               ".cadre-ob > obc-transmitter[data-stretch] {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
+               ".cadre-ob > obc-transmitter[data-stretch] {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n"
+               # The radial instrument sizes its dial from its host and has no size of its own: centred in the box it
+               # drew at 0 by 0 on the gateway (T2, 2026-11-03), so it fills the box like the alarm lists.
+               "/* The radial instrument fills its component box. */\n"
+               ".cadre-ob > obc-instrument-radial {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n"
+               "  height: 100%;\n  min-height: 0;\n}\n")
     return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
 
 
