@@ -470,3 +470,8 @@ implementation.
    `--render module`, built with `--render stock` into a scratch directory) stops with one error for each symbol.
 6. **Gateway** (section 4.2): G8 on `/component-test` shows the section "Module only" with a count of `obc-<name>` elements equal to its
    symbols and no console error.
+
+### 8.9 A Note from B2
+
+When a test class of `tests/test_module.py` is copied for a new element, the copy ends at the line before the next
+`class ` statement; a scripted copy that ran on into `ModuleOnlyKinds` duplicated its blocks in B2.

@@ -70,7 +70,17 @@ public final class CadreOb {
         descriptor("cadre.ob.switch", "switch", "OB Switch",
             "OpenBridge switch: an electrical switch symbol on a diagram, with readout, badges and alert frame.", "obSwitch", List.of()),
         descriptor("cadre.ob.capacitor", "capacitor", "OB Capacitor",
-            "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obCapacitor", List.of())
+            "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obCapacitor", List.of()),
+        descriptor("cadre.ob.diodes", "diodes", "OB Diodes",
+            "OpenBridge diodes: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obDiodes", List.of()),
+        descriptor("cadre.ob.ground", "ground", "OB Ground",
+            "OpenBridge ground: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obGround", List.of()),
+        descriptor("cadre.ob.source", "source", "OB Source",
+            "OpenBridge source: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obSource", List.of()),
+        descriptor("cadre.ob.converter", "converter", "OB Converter",
+            "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obConverter", List.of()),
+        descriptor("cadre.ob.transformer", "transformer", "OB Transformer",
+            "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obTransformer", List.of())
     );
 
     private CadreOb() {

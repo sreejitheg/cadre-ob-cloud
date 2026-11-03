@@ -112,6 +112,21 @@ COMPONENTS = [
     {"tag": "obc-capacitor", "type": "cadre.ob.capacitor", "name": "capacitor", "title": "OB Capacitor",
      "palette": "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-diodes", "type": "cadre.ob.diodes", "name": "diodes", "title": "OB Diodes",
+     "palette": "OpenBridge diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-ground", "type": "cadre.ob.ground", "name": "ground", "title": "OB Ground",
+     "palette": "OpenBridge ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-source", "type": "cadre.ob.source", "name": "source", "title": "OB Source",
+     "palette": "OpenBridge source: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-converter", "type": "cadre.ob.converter", "name": "converter", "title": "OB Converter",
+     "palette": "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-transformer", "type": "cadre.ob.transformer", "name": "transformer", "title": "OB Transformer",
+     "palette": "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).

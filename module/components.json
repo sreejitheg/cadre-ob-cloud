@@ -3058,6 +3058,1031 @@
    }
   }
  },
+ "cadre.ob.diodes": {
+  "element": "obc-diodes",
+  "title": "OB Diodes",
+  "palette": "OpenBridge diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "schema": "schemas/diodes.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "alternativeIcon": {
+    "type": "string",
+    "enum": [
+     "diodes01",
+     "diodes02",
+     "diodes03",
+     "diodes04",
+     "diodes05",
+     "diodes06"
+    ],
+    "default": "diodes01"
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "square",
+     "flat"
+    ],
+    "default": "square"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.ground": {
+  "element": "obc-ground",
+  "title": "OB Ground",
+  "palette": "OpenBridge ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "schema": "schemas/ground.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "alternativeIcon": {
+    "type": "string",
+    "enum": [
+     "ground1",
+     "ground2",
+     "ground3"
+    ],
+    "default": "ground1"
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "square",
+     "flat"
+    ],
+    "default": "square"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.source": {
+  "element": "obc-source",
+  "title": "OB Source",
+  "palette": "OpenBridge source: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "schema": "schemas/source.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "alternativeIcon": {
+    "type": "string",
+    "enum": [
+     "sources01",
+     "sources02",
+     "sources03",
+     "sources04",
+     "sources05"
+    ],
+    "default": "sources01"
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "square",
+     "flat"
+    ],
+    "default": "square"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.converter": {
+  "element": "obc-converter",
+  "title": "OB Converter",
+  "palette": "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "schema": "schemas/converter.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "alternativeIcon": {
+    "type": "string",
+    "enum": [
+     "converterDcdc",
+     "converterDcac",
+     "converterAcdc",
+     "converterFilter1"
+    ],
+    "default": "converterDcdc"
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "square",
+     "flat"
+    ],
+    "default": "square"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.transformer": {
+  "element": "obc-transformer",
+  "title": "OB Transformer",
+  "palette": "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "schema": "schemas/transformer.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "alternativeIcon": {
+    "type": "string",
+    "enum": [
+     "transformer01",
+     "transformer02"
+    ],
+    "default": "transformer01"
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "square",
+     "flat"
+    ],
+    "default": "square"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

@@ -980,6 +980,29 @@ and switch cases in `tests/test_hmi.py` (mapping tables, variants, vertical, the
 position is a library value only, and the page omits it). Gates G0 to G7 pass on the component test page with 19 devices and 21
 device symbols.
 
+### 17.15 Batch B2: the Diodes, the Ground, the Source, the Converter and the Transformer (`cadre.ob.diodes`, `cadre.ob.ground`, `cadre.ob.source`, `cadre.ob.converter`, `cadre.ob.transformer`)
+
+Batch B2 of tranche T1 wraps five static electrical symbols, none with events or a command of its own and none with a library
+kind. Each has the filter's 22 attributes (checked against the pinned manifest, so `module_contract` needed no change), is a
+module-only kind (section 17.13: one row in `screen.MODULE_ONLY` and nothing else in the generator, the test page or the glass
+gates) and gains 19 symbols in the "Module only" section of the test page. A stock build of that page refuses every such symbol
+with one error each. The wraps change the module's sources only; the module is not built or installed by them.
+
+Diodes (`src/automation/diodes/diodes.ts`). `alternativeIcon` is `diodes01` to `diodes06`; the component has 23 properties.
+
+Ground (`src/automation/ground/ground.ts`). `alternativeIcon` is `ground1`, `ground2` or `ground3`; the component has 23 properties.
+
+Source (`src/automation/source/source.ts`). `alternativeIcon` is `sources01` to `sources05`; the component has 23 properties.
+
+Converter (`src/automation/converter/converter.ts`). `alternativeIcon` is `converterDcdc`, `converterDcac`, `converterAcdc` or
+`converterFilter1`; the component has 23 properties.
+
+Transformer (`src/automation/transformer/transformer.ts`). `alternativeIcon` is `transformer01` or `transformer02`; the component
+has 23 properties.
+
+Tests: `DiodesComponent`, `GroundComponent`, `SourceComponent`, `ConverterComponent` and `TransformerComponent` in
+`tests/test_module.py` (five tests each). Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

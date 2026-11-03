@@ -140,3 +140,17 @@
   defect fixed on the way: `embed_module` gave a module symbol the faceplate of its symbol kind, so the test page's
   alarm lamps (switch symbols of indicator devices) would have opened `Faceplate/Empty`; it now uses
   `params.deviceKind` as the library view does. Tests 1117 to 1132.
+- 2026-11-03 04:51: T1 B2 element `obc-diodes` wrapped as `cadre.ob.diodes` (module-only kind, filter's 22 attributes, 23 properties,
+  one `MODULE_ONLY` row, no module_contract change). `tests.test_module` passing; 19 symbols on the test page.
+- 2026-11-03 04:51: T1 B2 element `obc-ground` wrapped as `cadre.ob.ground` (module-only kind, filter's 22 attributes, 23 properties,
+  one `MODULE_ONLY` row, no module_contract change). `tests.test_module` passing; 19 symbols on the test page.
+- 2026-11-03 04:51: T1 B2 element `obc-source` wrapped as `cadre.ob.source` (module-only kind, filter's 22 attributes, 23 properties,
+  one `MODULE_ONLY` row, no module_contract change). `tests.test_module` passing; 19 symbols on the test page.
+- 2026-11-03 04:51: T1 B2 element `obc-converter` wrapped as `cadre.ob.converter` (module-only kind, filter's 22 attributes, 23 properties,
+  one `MODULE_ONLY` row, no module_contract change). `tests.test_module` passing; 19 symbols on the test page.
+- 2026-11-03 04:51: T1 B2 element `obc-transformer` wrapped as `cadre.ob.transformer` (module-only kind, filter's 22 attributes, 23 properties,
+  one `MODULE_ONLY` row, no module_contract change). `tests.test_module` passing; 19 symbols on the test page.
+- 2026-11-03 04:56: T1 B2 done (diodes, ground, source, converter, transformer). Full suite 1134 to 1158, all passing.
+  G0 to G7 pass on the test page (19 devices, 21 device symbols); stock build refuses 19 symbols per kind.
+- 2026-11-03 04:56: T1 B2 in a Sonnet 5.5 subagent at medium effort: 106,413 tokens, 31 tool calls, 6 min 17 s for five
+  elements (about 21,000 tokens each).

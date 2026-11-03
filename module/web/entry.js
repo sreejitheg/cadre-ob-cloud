@@ -17,3 +17,8 @@ import '@oicl/openbridge-webcomponents/dist/automation/resistor/resistor.js';
 import '@oicl/openbridge-webcomponents/dist/automation/damper/damper.js';
 import '@oicl/openbridge-webcomponents/dist/automation/switch/switch.js';
 import '@oicl/openbridge-webcomponents/dist/automation/capacitor/capacitor.js';
+import '@oicl/openbridge-webcomponents/dist/automation/diodes/diodes.js';
+import '@oicl/openbridge-webcomponents/dist/automation/ground/ground.js';
+import '@oicl/openbridge-webcomponents/dist/automation/source/source.js';
+import '@oicl/openbridge-webcomponents/dist/automation/converter/converter.js';
+import '@oicl/openbridge-webcomponents/dist/automation/transformer/transformer.js';
