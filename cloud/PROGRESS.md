@@ -72,3 +72,15 @@
   `page_pulse` (W18, `Administrator`) are unchanged, so the press asks and Confirm writes; test page button
   `TB_press_GEN_start` on `TB_GEN/cmdStart`. Tests 1093 to 1101, all passing; G0 to G7 pass (19 devices, 21
   device symbols).
+- 2026-11-03 01:21: Module 0.4.4 (version and description in `module/build.gradle.kts`, release tests updated):
+  assets regenerated with no difference, built offline in 8 s (617,070 bytes, three 0.4.4 jars), installed by REST
+  (upload 200, install 200), restarted by REST: no commissioning step for the upgrade of a trusted unsigned module;
+  "Registered 14 Cadre OpenBridge components" 28 s after the request, script 1,056,955 bytes.
+- 2026-11-03 01:24: `cadre_hmi_base_asm` and `cadre_hmi_ctest` rebuilt and deployed: G0 to G7 pass (19 devices, 21
+  device symbols), 836 tags. G8 on `/component-test` PASS, 4424 components, no overlay or error badge. Browser probe:
+  12 `obc-filter`, 12 `obc-indicator-generator` (one with its alarm frame) and 1 `obc-automation-button`, all
+  drawn with a size, no console error.
+- 2026-11-03 01:27: W3 write check on the gateway: signed out, the press asks and Confirm is disabled, a forced
+  click writes nothing (`TB_GEN/cmdStart` false); signed in as the test user (`Administrator`) through the
+  project's identity provider, Confirm is enabled, `cmdStart` true 3 s after and false again after 62 s, and the
+  test generator `GEN` draws running. Test tags restored (836). Full offline suite: 1102 run, all passing, 3 min 52 s.

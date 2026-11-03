@@ -442,15 +442,21 @@ class ButtonComponent(unittest.TestCase):
 
 
 class Release(unittest.TestCase):
-    def test_the_version_is_plain_and_0_4_3(self):
+    def test_the_version_is_plain_and_0_4_4(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")
-        self.assertIn('version = "0.4.3"', text)      # GF-27: plain major.minor.revision
+        self.assertIn('version = "0.4.4"', text)      # GF-27: plain major.minor.revision (spike T0: filter, generator, button)
         self.assertNotRegex(text, r'version = "[^"]*-')
 
     def test_the_description_names_the_canvas_zoom(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")
         line = next(ln for ln in text.splitlines() if "moduleDescription" in ln)
         self.assertIn("canvas zoom", line)
+
+    def test_the_description_names_the_wraps_of_spike_t0(self):
+        text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")
+        line = next(ln for ln in text.splitlines() if "moduleDescription" in ln)
+        for word in ("filter", "generator", "automation button"):
+            self.assertIn(word, line, word)
 
 
 if __name__ == "__main__":

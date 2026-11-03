@@ -5,7 +5,7 @@ plugins {
 }
 
 allprojects {
-    version = "0.4.3"
+    version = "0.4.4"
     group = "cadre.hmi.ob"
 }
 
@@ -14,7 +14,7 @@ ignitionModule {
     name.set("Cadre OpenBridge")
     id.set("cadre.hmi.ob")
     moduleVersion.set("${project.version}")
-    moduleDescription.set("OpenBridge web components (Apache-2.0, 2.0.0-next.155) as Perspective components: pump, motor, fan, valve, analogue valve, tank, readout, instrument field, alert list and alert panel, with status, duty and out of service marks on the devices a canvas zoom component and row selection on the alert lists.")
+    moduleDescription.set("OpenBridge web components (Apache-2.0, 2.0.0-next.155) as Perspective components: pump, motor, fan, valve, analogue valve, tank, filter, generator, automation button, readout, instrument field, alert list and alert panel, with status, duty and out of service marks on the devices a canvas zoom component and row selection on the alert lists.")
     requiredIgnitionVersion.set("8.3.0")
     requiredFrameworkVersion.set("8")
     freeModule.set(true)
