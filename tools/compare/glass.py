@@ -335,7 +335,9 @@ def visible_text_count(page, host, text) -> int:
     return sum(1 for i in range(loc.count()) if (loc.nth(i).bounding_box() or {}).get("width", 0) > 0)
 
 
-BELL = '[data-component-path="T[0].0:5"]'   # the top bar's alarm button (AlertButton), path measured
+# The top bar's alarm button (AlertButton): the 7th child of the top bar's root (`framework.top_bar`, after the alert
+# message the generator added at index 5). A unit test holds the index to the generator (test_walk, TopBarPathTests).
+BELL = '[data-component-path="T[0].0:6"]'
 PANEL = "obc-alert-list-page-small"
 
 

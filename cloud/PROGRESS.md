@@ -99,3 +99,12 @@
   without the fix and passes with it. `cadre_hmi_wtp` and `cadre_hmi_wtpob` rebuilt from the current tree (G0 to G7
   pass; `/filtration` of the module rendering now draws 3 `cadre.ob.filter`) and deployed; `wtp_suite.py` started
   on both renderings.
+- 2026-11-03 03:22: First G10 run since the fix (`wtp_suite.py`, both renderings, 77 min): G8 and G11 pass on both
+  (44 of 44 each), the plant restored with no difference; G10 13 of 17 (stock) and 14 of 21 (module); the walk
+  fails its trend (T) and alarm (A) groups, and C-08, C-10, C-15 under the module rendering. Two causes found:
+  (1) environmental: the fresh gateway has no history provider `Sample_SQLite_Database`, which the tag model names,
+  so no trend draws (F19, T-01 to T-03); created through REST as an SQLite connection and an SQL historian of our
+  own configuration (history partition created); (2) real: the glass presses the top bar's alarm button by the
+  measured path `T[0].0:5`, but the generator has since put the alert message there and the button at index 6, so
+  the alarm menu never opened (F16, F21, F11, F14, A-01, A-02). `glass.BELL` corrected and held to
+  `framework.top_bar` by a new unit test (fails on the old path). The trial expired during the module run's G10.

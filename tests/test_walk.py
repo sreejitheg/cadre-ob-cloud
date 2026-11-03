@@ -642,6 +642,19 @@ class FaceplateStylePlanTests(unittest.TestCase):
         self.assertIn(("XV-1", "Maintenance"), self.tabs(own))
 
 
+class TopBarPathTests(unittest.TestCase):
+    """The glass finds the top bar's alarm button by its component path, and the path follows the order in which
+    `framework.top_bar` lays out the root's children (spike T0, 2026-11-03: the alert message moved the button
+    from index 5 to 6 and G10 pressed the message instead, so the alarm menu never opened)."""
+
+    def test_the_bell_path_is_the_alarm_button_of_the_generated_top_bar(self):
+        sys.path.insert(0, str(ROOT / "tools" / "compare"))
+        import glass
+        from hmi import framework
+        names = [c["meta"]["name"] for c in framework.top_bar()["root"]["children"]]
+        self.assertEqual(glass.BELL, f'[data-component-path="T[0].0:{names.index("AlertButton")}"]')
+
+
 class ConfirmedPressTests(unittest.TestCase):
     """The glass presses a confirmed command as an operator does (F029, COBD-045): a question still open
     is cancelled, the button pressed, the Confirm it raises answered; an entry is typed, then Set."""
