@@ -736,6 +736,61 @@ def glyph_cases(schema: dict, contract: dict) -> list[Case]:
     return [c for c in out if all(k in contract["params"] for k in c.params)]
 
 
+# The frame components (T2, F1 to F5), shown in the section "Frame components" (`frame_block`). The cases come from the
+# component's own schema like a glyph's (`glyph_cases`: each value of each enumeration, each flag, each number), minus the
+# properties of the icon slots (an enumeration of every bundled icon), which would draw one case for each icon; the samples
+# below are our own: `base` is stated in every case (it gives the element something to draw: a label, a time), and `extra`
+# adds named cases (a slot property, a combination). A later batch adds one row of each table for its component.
+FRAME_SAMPLE = {
+    "tooltip": {"base": {"label": "Pump P-101 running"},
+                "extra": [("icon only", {"type": "icon", "iconName": "info"}),
+                          ("label with icon", {"showIcon": True, "iconName": "alarm"})]},
+    "toggletip": {"base": {"title": "Bilge pump P-101", "description": "Running since 09:30 in local control.",
+                           "customWidth": 280, "content": "Duty pump of group 2", "leadingIconName": "info",
+                           "trailingIconName": "close-google"},
+                  "extra": [("two actions", {"hasActions": True, "primaryButtonLabel": "Open", "secondaryButtonLabel": "Close"}),
+                            ("all parts", {"hasContent": True, "hasLeadingIcon": True, "hasTrailingIcon": True, "hasActions": True,
+                                           "primaryButtonLabel": "Open", "secondaryButtonLabel": "Close"})]},
+    "clock": {"base": {"date": "2026-01-01T09:30:45Z"},
+              "extra": [("date, weekday, year and zone", {"showDate": True, "showWeekday": True, "showYear": True,
+                                                          "showTimezone": True, "showSeconds": True, "timeZoneOffsetHours": 5})]},
+    "user-button": {"base": {"initials": "AB"},
+                    "extra": [("icon with label", {"label": "Alex Bravo", "sublabel": "Operator"}),
+                              ("initials with label", {"variant": "initials", "label": "Alex Bravo", "sublabel": "Operator"}),
+                              ("large with label", {"variant": "initials", "size": "large", "label": "Alex Bravo",
+                                                    "sublabel": "Administrator"}),
+                              ("custom icon", {"iconName": "user-settings"})]},
+    "app-button": {"base": {"label": "Home", "iconName": "home"}, "extra": []},
+    "notification-button": {"base": {},
+                            "extra": [("active with count", {"isActive": True, "buttonStyle": "normal", "showCount": True, "count": 12}),
+                                      ("enhanced with count", {"isActive": True, "buttonStyle": "enhanced", "showCount": True, "count": 3}),
+                                      ("custom icon", {"iconName": "alarm"})]},
+    "notification-badge-button": {"base": {"label": "12"},
+                                  "extra": [("icon", {"icon": True, "label": "", "iconName": "info"})]},
+}
+# Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
+FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",)}
+GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5)})
+
+
+def frame_cases(kind: str, contract: dict) -> list[Case]:
+    """The cases of a frame component (see `FRAME_SAMPLE`): the glyph cases of its schema without the icon slot properties,
+    each stating the kind's base sample, then its named cases."""
+    spec = json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))[screen.MODULE_ONLY[kind]]
+    icons = {n for n, sl in spec.get("slots", {}).items() if sl["kind"] == "icon"}
+    props = {k: p for k, p in spec["props"].items() if k not in icons and k not in FRAME_SKIP.get(kind, ())}
+    sample = FRAME_SAMPLE[kind]
+    out = glyph_cases(props, {**contract, "kind": "<frame>"})        # no GLYPH_DATA or GLYPH_EXTRA row: the samples are ours
+    out = [Case(c.caption, {**sample["base"], **c.params}) for c in out]
+    out += [Case(caption, {**sample["base"], **params}) for caption, params in sample["extra"]]
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+def frame_block(kind: str, contracts: dict) -> Block:
+    """One kind of `screen.FRAME_ONLY` as a grid of its cases."""
+    return grid(f"S_{kind.replace('-', '_')}_", kind, frame_cases(kind, contracts[screen.view_of({"kind": kind})]), contracts)
+
+
 def module_only_block(kind: str, contracts: dict) -> Block:
     """One kind of `screen.MODULE_ONLY` as a grid of its cases."""
     return grid(f"S_{kind.replace('-', '_')}_", kind, module_only_cases(kind, contracts[screen.view_of({"kind": kind})]), contracts)
@@ -1082,11 +1137,17 @@ def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component 
     if gen is not None:
         sections.append(("Kind_generator", f"Generator  ({screen.view_of({'kind': 'generator'})})", gen))
         sections.append(("Kind_genset", f"Generator set  ({screen.GENSET_VIEW}) in boxes of several sizes", genset_block()))
-    if render == "module" and screen.MODULE_ONLY:   # the kinds with no library view: only the module draws them
+    plain = [k for k in screen.MODULE_ONLY if k not in screen.FRAME_ONLY]
+    if render == "module" and plain:   # the kinds with no library view: only the module draws them
         only = Block()
-        for kind in screen.MODULE_ONLY:
+        for kind in plain:
             only.extend(module_only_block(kind, contracts), 0, only.h)
-        sections.append(("ModuleOnly", "Module only: " + ", ".join(screen.MODULE_ONLY), only))
+        sections.append(("ModuleOnly", "Module only: " + ", ".join(plain), only))
+    if render == "module" and screen.FRAME_ONLY:   # the frame components (T2): their own section, below the module only kinds
+        frame = Block()
+        for kind in screen.FRAME_ONLY:
+            frame.extend(frame_block(kind, contracts), 0, frame.h)
+        sections.append(("FrameComponents", "Frame components: " + ", ".join(screen.FRAME_ONLY), frame))
     sections.append(("Media", "Colour by medium (toolbar: Color)", medium_block()))
     alarm_part, alarm_pulses = alarm_block(specs)
     sections.append(("Alarms", "Test alarms: one lamp for each priority (Critical, High, Medium, Low, Diagnostic)", alarm_part))

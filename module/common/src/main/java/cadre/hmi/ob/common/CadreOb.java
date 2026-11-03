@@ -144,7 +144,26 @@ public final class CadreOb {
         descriptor("cadre.ob.instrumentradial", "instrumentradial", "OB Radial Instrument",
             "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only.", "obInstrumentRadial", List.of()),
         descriptor("cadre.ob.readoutblock", "readoutblock", "OB Readout Block",
-            "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only.", "obReadoutBlock", List.of())
+            "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only.", "obReadoutBlock", List.of()),
+        descriptor("cadre.ob.tooltip", "tooltip", "OB Tooltip",
+            "OpenBridge tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants.", "obTooltip", List.of()),
+        descriptor("cadre.ob.toggletip", "toggletip", "OB Toggletip",
+            "OpenBridge toggletip: a title, description and optional text content and two actions in a bubble.", "obToggletip",
+            List.of(event("toggletip", "onPrimaryAction", "The primary button was pressed; event.label is its text."),
+                    event("toggletip", "onSecondaryAction", "The secondary button was pressed; event.label is its text."))),
+        descriptor("cadre.ob.clock", "clock", "OB Clock",
+            "OpenBridge clock: the time of day with optional seconds, date, weekday, year and time zone.", "obClock", List.of()),
+        descriptor("cadre.ob.userbutton", "userbutton", "OB User Button",
+            "OpenBridge user button: a round button with a user icon or initials and an optional label and sublabel.", "obUserButton", List.of()),
+        descriptor("cadre.ob.appbutton", "appbutton", "OB App Button",
+            "OpenBridge app button: an icon above a label, as in the application menu.", "obAppButton",
+            List.of(event("appbutton", "onPress", "The app button was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.notificationbutton", "notificationbutton", "OB Notification Button",
+            "OpenBridge notification button: a bell, flat or filled, with an optional count.", "obNotificationButton",
+            List.of(event("notificationbutton", "onNotificationClick", "The button was pressed; event.count and event.isActive (the state the press asks for)."))),
+        descriptor("cadre.ob.notificationbadgebutton", "notificationbadgebutton", "OB Notification Badge Button",
+            "OpenBridge notification badge button: a small button with a short text or an icon, used for counts.", "obNotificationBadgeButton",
+            List.of(event("notificationbadgebutton", "onPress", "The badge button was pressed; the event carries nothing.")))
     );
 
     private CadreOb() {

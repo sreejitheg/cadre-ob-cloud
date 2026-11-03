@@ -1046,5 +1046,72 @@
   "alert": false,
   "touching": false,
   "hidePhase": "none"
+ },
+ "obc-tooltip": {
+  "type": "label",
+  "variant": "normal",
+  "label": "Label",
+  "showIcon": false
+ },
+ "obc-toggletip": {
+  "variant": "normal",
+  "title": "",
+  "description": "__undefined__",
+  "hasContent": false,
+  "hasActions": false,
+  "hasLeadingIcon": false,
+  "hasTrailingIcon": false,
+  "customWidth": "__undefined__",
+  "primaryButtonLabel": "Label",
+  "secondaryButtonLabel": "Label"
+ },
+ "obc-clock": {
+  "date": "__undefined__",
+  "showSeconds": false,
+  "showDate": false,
+  "showTimezone": false,
+  "timeZoneOffsetHours": 0,
+  "showYear": false,
+  "showWeekday": false,
+  "locale": "en-GB",
+  "hour12": false,
+  "selected": false,
+  "double": false,
+  "activated": false,
+  "integrationBarMode": false,
+  "blinkOnlyBreakpointPx": 0
+ },
+ "obc-user-button": {
+  "variant": "icon",
+  "size": "regular",
+  "styleType": "flat",
+  "static": false,
+  "disabled": false,
+  "initials": "",
+  "label": "__undefined__",
+  "sublabel": "__undefined__"
+ },
+ "obc-app-button": {
+  "label": "Button",
+  "checked": false,
+  "integration": false,
+  "size": "normal",
+  "disabled": false
+ },
+ "obc-notification-button": {
+  "buttonStyle": "flat",
+  "count": 0,
+  "showCount": false,
+  "isActive": false,
+  "ariaLabel": "Notifications"
+ },
+ "obc-notification-badge-button": {
+  "openRight": false,
+  "openLeft": false,
+  "cornerLeft": false,
+  "cornerRight": false,
+  "icon": false,
+  "disabled": false,
+  "indent": false
  }
 }

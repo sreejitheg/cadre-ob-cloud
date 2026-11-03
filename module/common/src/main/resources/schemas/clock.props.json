@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "date": {
+      "type": "string",
+      "default": "",
+      "description": "The time to draw, an ISO 8601 string in UTC (for example 2026-01-01T09:30:00Z), which the page binds to the current time. The clock does not tick by itself; empty draws NaN."
+    },
+    "showSeconds": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `showSeconds`."
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays the date (day and abbreviated month) after the time. Defaults to false."
+    },
+    "showTimezone": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays the timezone after the time. Defaults to false."
+    },
+    "timeZoneOffsetHours": {
+      "type": "number",
+      "default": 0,
+      "description": "Timezone offset in hours, from UTC. Defaults to 0."
+    },
+    "showYear": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when showDate==true."
+    },
+    "showWeekday": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when showDate==true."
+    },
+    "locale": {
+      "type": "string",
+      "default": "en-GB",
+      "description": "Available when showDate==true."
+    },
+    "hour12": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `hour12`."
+    },
+    "selected": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `selected`."
+    },
+    "double": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `double`."
+    },
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, the clock as a button is activated. For example, when the calendar is open, the clock is activated."
+    },
+    "integrationBarMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `integrationBarMode`."
+    },
+    "blinkOnlyBreakpointPx": {
+      "type": "number",
+      "default": 0,
+      "description": "The pixel width at which the component switches to blink-only mode. When the viewport width is less than or equal to this value, only the blinking colon is shown. Defaults to 0 (never switches to blink-only)."
+    },
+    "isClickable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the clock is a button (draws its pressed and hover states). False draws a plain block."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -54,3 +54,12 @@ import '@oicl/openbridge-webcomponents/dist/building-blocks/bar-vertical/bar-ver
 import '@oicl/openbridge-webcomponents/dist/building-blocks/circular-progress/circular-progress.js';
 import '@oicl/openbridge-webcomponents/dist/building-blocks/instrument-radial/instrument-radial.js';
 import '@oicl/openbridge-webcomponents/dist/building-blocks/readout-block/readout-block.js';
+// tranche T2, batch F1: the frame's leaf components, and the icons their slots can take (icons.js)
+import '@oicl/openbridge-webcomponents/dist/components/tooltip/tooltip.js';
+import '@oicl/openbridge-webcomponents/dist/components/toggletip/toggletip.js';
+import '@oicl/openbridge-webcomponents/dist/components/clock/clock.js';
+import '@oicl/openbridge-webcomponents/dist/components/user-button/user-button.js';
+import '@oicl/openbridge-webcomponents/dist/components/app-button/app-button.js';
+import '@oicl/openbridge-webcomponents/dist/components/notification-button/notification-button.js';
+import '@oicl/openbridge-webcomponents/dist/components/notification-badge-button/notification-badge-button.js';
+import './icons.js';

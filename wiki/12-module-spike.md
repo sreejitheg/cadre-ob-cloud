@@ -1403,6 +1403,81 @@ on `/component-test`, in the "Module only" section: `obc-bar-horizontal` 58, `ob
 rows (17.22.6); `mainTickmarks` and the readout block's `alert` and slot `icon` not carried; a Document or list binding for `advices`
 not yet tried on the gateway.
 
+### 17.23 Batch F1: The Frame Mechanisms and Seven Leaf Components (`cadre.ob.tooltip`, `toggletip`, `clock`, `userbutton`, `appbutton`, `notificationbutton`, `notificationbadgebutton`)
+
+Batch F1 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2.3 and 4.2). It builds, once and table driven, the mechanisms that the
+frame components need, and wraps the seven leaves that use none of the heavy ones. The components are module-only kinds of the
+table `FRAME_ONLY` (merged into `MODULE_ONLY`, never into `MODULE_KIND`) and the component test page shows them in the section
+"Frame components".
+
+17.23.1 Slot properties. A slot that takes text or an icon becomes a property of the component: the entry key `slots` lists
+`{"slot", "kind"}` (and optionally `"property"`), the slot must be one the manifest declares for the element, and the property
+name is the slot name in camel case (`content`, `leadingIconName`), `text` for the default slot and `iconName` for an icon in it;
+a name that is already a property is refused at generation. A text slot property is a string; an icon slot property is a string
+whose enumeration is the empty string and the icon names of `module/web/icons.js` (27 icons of the frame: menu, user, notification,
+alarms, palettes, chevrons and others). Each import of that file is checked by the generator against `dist/icons` of the pinned
+package, which must define `obi-<name>`; no icon name comes from recall, and the 2,104 icons of the package are not all bundled
+(about 1.7 KB each). The wrapper draws a text as a text node (default slot) or a `span` in its slot, and an icon as the element
+`obi-<name>` in its slot; a name outside the list draws nothing. The contract (`components.json`) gains a `slots` key for each
+component so that tools know which properties are slot properties.
+
+17.23.2 The `items` property. An entry key `items` (`{"items": {"tags": [...], "slot": ""}}`) declares a data property, a list of
+objects, that the wrapper turns into child elements of the host. An object holds `tag` (one of the entry's tags at the top
+level, one of `ITEM_CHILDREN[parent]` below it, or `span` or a bundled icon `obi-<name>` anywhere below it), the element's
+attributes by their manifest field names, `text`, `id` (kept as `data-item-id`), `slot` and `children` (nested to a depth of 8).
+The generator reads each allowed tag's attribute names from the manifest (`build_item_table`; a tag the manifest does not declare
+stops the run) and puts the table in the wrapper; an attribute not in it is ignored with a console warning, as is a tag not
+allowed at its place. Attributes are set as properties, never as markup, so booleans, numbers and objects arrive as they are
+(React 18 would turn a boolean attribute of a custom element into a string). The children are rebuilt only when the list changes
+and are marked `data-cadre-item`. None of the seven leaves uses it: it is proved in Chromium on a synthetic host
+(`module/tools/harness/items.mjs`: nesting, a slot on the top level items, ids, refusals, rebuild) and by the generator tests.
+
+17.23.3 Events. The element's custom events become Perspective component events (GF-37). The table `ALERT_EVENTS` has three new
+rows, `obc-click` (`onNotificationClick`, payload `count` and `isActive`, the state the press asks for), `primary-action`
+(`onPrimaryAction`) and `secondary-action` (`onSecondaryAction`), both with the button's `label`; the payload kinds are the table
+`PAYLOAD_PROPS` (which now also writes the event schema files) and the wrapper's `payload`, and a new kind `item` reports the `id`
+and tag of the item an event came from. A component words its own event text with the entry key `eventText`. No event is wired to a
+script and none writes a tag; the frame option (F6) wires them. The clock and the user button declare no event: a press is the
+host's own click, which Perspective's `onClick` already carries.
+
+17.23.4 Two small generator additions. The entry key `types` names the enumeration of an attribute whose manifest type is missing
+(`toggletip.variant`, `app-button.size`); the key `undefinedWhenEmpty` makes an optional text undefined while empty (field kind
+`ustring`), which the toggletip needs because its element tests `description !== undefined` and would draw an empty block for
+null (the user button's `label` and `sublabel` take it for the same reason). `describe` now also rewords an attribute's
+description. The functions `js_spec` and `wrapper_script` were split out of `main` so that the harness can build a bundle for a synthetic
+component.
+
+17.23.5 The components. Counts are properties, including slot properties and `componentSize`, in the contract.
+
+| Component | Element | Attributes and fields | Slot properties | Events | Not carried |
+|---|---|---|---|---|---|
+| `cadre.ob.tooltip` | `obc-tooltip` | 4: `type`, `variant` (seven), `label`, `showIcon` | `iconName` | none | none |
+| `cadre.ob.toggletip` | `obc-toggletip` | 10 | `leadingIconName`, `trailingIconName`, `content` (text) | `onPrimaryAction`, `onSecondaryAction` | arbitrary elements in the `content` slot (it carries text only) |
+| `cadre.ob.clock` | `obc-clock` | 14 attributes and the field `isClickable` | none | none | a ticking clock: the page binds `date`, and an empty `date` draws NaN |
+| `cadre.ob.userbutton` | `obc-user-button` | 8 | `iconName` | none | none |
+| `cadre.ob.appbutton` | `obc-app-button` | 5 attributes and the field `showLabel` | `iconName` | `onPress` | none |
+| `cadre.ob.notificationbutton` | `obc-notification-button` | 5 | `iconName` | `onNotificationClick` | none |
+| `cadre.ob.notificationbadgebutton` | `obc-notification-badge-button` | 7 | `label` (the default slot's text), `iconName` | `onPress` | none |
+
+The default size of each is the largest its page cases draw, measured in Chromium (the tooltip 224 by 40, the toggletip 320 by
+232 with a `customWidth` of 280, the clock 208 by 64, the user button 128 by 136, the app button 96 by 96, the notification button
+64 by 64 and the badge button 80 by 48).
+
+17.23.6 The test page. The section "Frame components" follows "Module only" under `--render module` and is absent under
+`--render stock`. Its cases come from `testbench.frame_cases`: the glyph cases of the component's schema (each enumeration value,
+each flag, each number) without the icon slot properties, each stating the kind's base sample of `FRAME_SAMPLE` (our own text and
+time), then the named cases of the same table. The page holds 83 frame elements: `obc-tooltip` 13, `obc-toggletip` 14,
+`obc-clock` 15, `obc-user-button` 14, `obc-app-button` 7, `obc-notification-button` 11 and `obc-notification-badge-button` 9. A
+stand-in page in Chromium drew all 83 with no console message and none wider than its box. A stock build refuses every one, as for
+the other module-only kinds.
+
+17.23.7 Tests and gateway checks. `tests.test_module` holds 153 tests (136 before this batch), with the classes `FrameMechanisms`
+and `FrameComponents`; `module/tools/harness/frame.mjs` (19 checks) and `items.mjs` (11 checks) pass in Chromium. The component test
+page passes G0 to G7 with 19 devices and 21 device symbols. What the gateway step finds on `/component-test`, in the section
+"Frame components": the counts of 17.23.6, each with a non-zero box and no console error; a click on the app button, the
+notification buttons and the badge button fires its event (not wired, so nothing else happens). The registered components (the log line of the gateway
+hook) move from 55 to 62.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

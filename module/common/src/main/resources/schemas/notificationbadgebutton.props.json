@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "openRight": {
+      "type": "boolean",
+      "default": false,
+      "description": "Removes the right border for seamless grouping with adjacent buttons. Use when this button is not the last in a horizontal group."
+    },
+    "openLeft": {
+      "type": "boolean",
+      "default": false,
+      "description": "Removes the left border for seamless grouping with adjacent buttons. Use when this button is not the first in a horizontal group."
+    },
+    "cornerLeft": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applies rounded corners to the left side of the button. Use for the first button in a group or when aligning to a container's left edge."
+    },
+    "cornerRight": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applies rounded corners to the right side of the button. Use for the last button in a group or when aligning to a container's right edge."
+    },
+    "icon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applies icon-specific styling for icon-only buttons. When true, supply an icon in the default slot."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the button, preventing user interaction and applying a muted style."
+    },
+    "indent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Applies an indented background style for emphasis or grouping. Useful for visually separating the button from others or indicating a secondary action."
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the default slot; empty puts none. Main content slot for icon or text label."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the default slot, by name (an OpenBridge icon the module bundles); empty puts none. Main content slot for icon or text label."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

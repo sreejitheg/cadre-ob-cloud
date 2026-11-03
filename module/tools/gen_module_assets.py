@@ -49,6 +49,30 @@ ALERT_EVENTS = {
     # The command button (spike T0 wrap W3): the element's own `click`, with no detail to carry.
     "click": ("onPress", "none", "The button was pressed. The event carries nothing; the page's script decides what it "
                                  "commands (the library's confirmed pulse, write path W18)."),
+    # The frame components (T2, batch F1): events that carry a detail. None of them is wired to a script by the module.
+    "obc-click": ("onNotificationClick", "notification", "The notification button was pressed. event.count is the count the "
+                  "button holds; event.isActive is the state the press asks for (the opposite of the state shown; the "
+                  "component does not toggle itself, the page sets isActive)."),
+    "primary-action": ("onPrimaryAction", "label", "The primary button of the toggletip was pressed. event.label is the "
+                       "text of the button."),
+    "secondary-action": ("onSecondaryAction", "label", "The secondary button of the toggletip was pressed. event.label is "
+                         "the text of the button."),
+}
+# The properties of the object a Perspective component event carries, by payload kind (the wrapper's `payload` builds the
+# object from the element's event detail). A kind a later wrap needs is one entry here and one branch of `payload`.
+PAYLOAD_PROPS = {
+    "none": {},
+    "alert": {"ids": {"type": "array", "description": "The alert ids of the event."},
+              "id": {"type": "string"}, "tagId": {"type": "string", "description": "The device folder."},
+              "source": {"type": "string"}, "text": {"type": "string"}},
+    "visible": {"ids": {"type": "array", "description": "The alert ids of the event."},
+                "mode": {"type": "string", "description": "The list mode."}},
+    "notification": {"count": {"type": "number", "description": "The count the button holds."},
+                     "isActive": {"type": "boolean", "description": "The active state the press asks for."}},
+    "label": {"label": {"type": "string", "description": "The text of the button that was pressed."}},
+    # an event of a child built from `items`: the `id` its item object carries (empty if none) and its tag
+    "item": {"id": {"type": "string", "description": "The id of the item the event came from (empty if it has none)."},
+             "tag": {"type": "string", "description": "The tag of the item the event came from."}},
 }
 # The attributes of the two line chart elements that serve a slotted external scale or an instrument panel (`state`,
 # `frameStyle`, the border radius family, `instrumentMode`) and the element's debug overlay: the module draws the chart
@@ -247,6 +271,43 @@ COMPONENTS = [
     {"tag": "obc-readout-block", "type": "cadre.ob.readoutblock", "name": "readoutblock", "title": "OB Readout Block",
      "palette": "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only",
      "size": {"width": 144, "height": 64}, "exclude": ["valueSize", "dataQuality", "alert"]},
+    # batch F1 (T2): the frame's leaf components. They are module-only kinds listed in `screen.FRAME_ONLY`; their events are
+    # carried and not wired (the frame option wires them), and their slotted children are slot properties (`slots`).
+    {"tag": "obc-tooltip", "type": "cadre.ob.tooltip", "name": "tooltip", "title": "OB Tooltip",
+     "palette": "OpenBridge tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
+     "size": {"width": 224, "height": 40}, "exclude": [], "slots": [{"slot": "icon", "kind": "icon"}]},
+    {"tag": "obc-toggletip", "type": "cadre.ob.toggletip", "name": "toggletip", "title": "OB Toggletip",
+     "palette": "OpenBridge toggletip: a title, description and optional text content and two actions in a bubble",
+     "size": {"width": 320, "height": 232}, "exclude": [], "types": {"variant": "ToggletipVariant"},
+     "undefinedWhenEmpty": ["description"], "events": ["primary-action", "secondary-action"],
+     "slots": [{"slot": "leading-icon", "kind": "icon"}, {"slot": "trailing-icon", "kind": "icon"},
+               {"slot": "content", "kind": "text"}],
+     "describe": {"hasContent": "Whether the toggletip draws the `content` text below the description.",
+                  "customWidth": "The width of the toggletip in px; unset sizes it to its content."}},
+    {"tag": "obc-clock", "type": "cadre.ob.clock", "name": "clock", "title": "OB Clock",
+     "palette": "OpenBridge clock: the time of day with optional seconds, date, weekday, year and time zone",
+     "size": {"width": 208, "height": 64}, "exclude": [], "properties": ["isClickable"],
+     "describe": {"date": "The time to draw, an ISO 8601 string in UTC (for example 2026-01-01T09:30:00Z), which the page "
+                          "binds to the current time. The clock does not tick by itself; empty draws NaN."}},
+    {"tag": "obc-user-button", "type": "cadre.ob.userbutton", "name": "userbutton", "title": "OB User Button",
+     "palette": "OpenBridge user button: a round button with a user icon or initials and an optional label and sublabel",
+     "size": {"width": 128, "height": 136}, "exclude": [], "dts": "components/user-button/user-button.d.ts",
+     "undefinedWhenEmpty": ["label", "sublabel"], "slots": [{"slot": "icon", "kind": "icon"}]},
+    {"tag": "obc-app-button", "type": "cadre.ob.appbutton", "name": "appbutton", "title": "OB App Button",
+     "palette": "OpenBridge app button: an icon above a label, as in the application menu",
+     "size": {"width": 96, "height": 96}, "exclude": [], "types": {"size": "AppButtonSize"}, "events": ["click"],
+     "properties": ["showLabel"], "slots": [{"slot": "icon", "kind": "icon"}],
+     "eventText": {"click": "The app button was pressed. The event carries nothing; the page's script decides what it opens."}},
+    {"tag": "obc-notification-button", "type": "cadre.ob.notificationbutton", "name": "notificationbutton",
+     "title": "OB Notification Button",
+     "palette": "OpenBridge notification button: a bell, flat or filled, with an optional count",
+     "size": {"width": 64, "height": 64}, "exclude": [], "events": ["obc-click"], "slots": [{"slot": "icon", "kind": "icon"}]},
+    {"tag": "obc-notification-badge-button", "type": "cadre.ob.notificationbadgebutton", "name": "notificationbadgebutton",
+     "title": "OB Notification Badge Button",
+     "palette": "OpenBridge notification badge button: a small button with a short text or an icon, used for counts",
+     "size": {"width": 80, "height": 48}, "exclude": [], "events": ["click"],
+     "slots": [{"slot": "", "kind": "text", "property": "label"}, {"slot": "", "kind": "icon"}],
+     "eventText": {"click": "The badge button was pressed. The event carries nothing."}},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -393,7 +454,122 @@ PROPERTIES = {
     # the bars' scale (C2): fields without an attribute, true by default in the element
     "hasScale": {"type": "boolean", "default": True, "description": "Whether the bar draws its scale (tickmarks)."},
     "showLabels": {"type": "boolean", "default": True, "description": "Whether the scale draws its value labels. Needs the scale."},
+    # the frame's leaf components (F1): fields without an attribute, true by default in the element
+    "isClickable": {"type": "boolean", "default": True, "description":
+                    "Whether the clock is a button (draws its pressed and hover states). False draws a plain block."},
+    "showLabel": {"type": "boolean", "default": True, "description": "Whether the button draws its label under the icon."},
 }
+# ------------------------------------------------------------------------------- frame mechanisms (T2, batch F1)
+# Slotted children of a frame component are carried by three mechanisms, each driven by a key of the component's entry.
+#
+#   "slots": [{"slot": "icon", "kind": "icon"}, {"slot": "content", "kind": "text"}]
+#       a text slot becomes a string property (named after the slot; `text` for the default slot) and an icon slot becomes a
+#       string property (named after the slot with `Name` added: `iconName`) whose values are the names of `ICONS_JS`
+#       (checked against `dist/icons` of the pinned package). An entry may name its property with "property". The slot must be
+#       one the manifest declares for the element.
+#   "items": {"items": {"tags": ["obc-pivot-item"], "slot": ""}}
+#       a data property (a list of objects) that the wrapper turns into child elements of the host. An object holds `tag`
+#       (one of the entry's `tags` at the top level, one of `ITEM_CHILDREN[parent]` below it, or `span` or an icon `obi-<name>`
+#       anywhere below), the element's attributes by their field names (checked against the manifest, an unknown one is ignored),
+#       `text` (the element's text), `id` (kept as `data-item-id`, which events from the item report), `slot` and `children`.
+#   "types": {"size": "AppButtonSize"}
+#       the enumeration of an attribute whose manifest type is missing; "undefinedWhenEmpty": ["description"] gives an
+#       optional text the value undefined while it is empty (an element that tests `!== undefined` draws an empty block for null).
+#
+# A tag allowed as an item must be an element of the manifest. `ITEM_CHILDREN` maps an item tag to the item tags it may
+# hold; `ITEM_FIELDS` lists fields a tag has with no attribute that an item may set (rows are added by the batch that needs them).
+ICONS_JS = HERE / "web/icons.js"
+ITEM_CHILDREN: dict[str, list[str]] = {}
+ITEM_FIELDS: dict[str, list[str]] = {}
+ITEM_PLAIN = ["span"]          # elements that are not custom elements and may hold text anywhere below a top level item
+ITEM_DEPTH = 8                 # the deepest nesting of `children` the wrapper builds
+
+
+def icon_names() -> list[str]:
+    """The icons the module bundles, in the order of `web/icons.js`: each import is checked against `dist/icons` of the pinned
+    package and must define `obi-<name>`. This list is the enumeration of every icon slot property."""
+    names = re.findall(r"^import '@oicl/openbridge-webcomponents/dist/icons/icon-([a-z0-9-]+)\.js';", ICONS_JS.read_text(encoding="utf-8"), re.M)
+    if not names or len(set(names)) != len(names):
+        raise SystemExit("web/icons.js lists no icon, or lists one twice")
+    for n in names:
+        f = PKG / "dist/icons" / f"icon-{n}.js"
+        if not f.is_file() or f'customElement("obi-{n}")' not in f.read_text(encoding="utf-8"):
+            raise SystemExit(f"icon {n!r} of web/icons.js is not an icon of the pinned package")
+    return names
+
+
+def camel(name: str) -> str:
+    head, *rest = name.split("-")
+    return head + "".join(w.capitalize() for w in rest)
+
+
+def slot_specs(spec: dict, decl: dict, own: set[str]) -> list[dict]:
+    """The slot properties of a component: for each entry of its `slots`, the slot, the kind (`text` or `icon`) and the
+    property name. The slot must be declared by the element, and the name must not be one of the element's own."""
+    declared = {s.get("name", "") for s in decl.get("slots", [])}
+    out, seen = [], set()
+    for e in spec.get("slots", []):
+        slot, kind = e["slot"], e["kind"]
+        if kind not in ("text", "icon"):
+            raise SystemExit(f"{spec['tag']}: slot kind {kind!r} is neither text nor icon")
+        if slot not in declared:
+            raise SystemExit(f"{spec['tag']} declares no slot {slot!r} in the manifest")
+        name = e.get("property") or ((camel(slot) if slot else "icon") + "Name" if kind == "icon" else (camel(slot) if slot else "text"))
+        if name in own or name in seen:
+            raise SystemExit(f"{spec['tag']}: the slot property {name!r} is already a property; name it with \"property\"")
+        seen.add(name)
+        about = next((clean(s.get("description")) for s in decl.get("slots", []) if s.get("name", "") == slot), "")
+        out.append({"slot": slot, "kind": kind, "name": name, "about": about})
+    return out
+
+
+def slot_schema(sl: dict, icons: list[str]) -> dict:
+    where = f"the `{sl['slot']}` slot" if sl["slot"] else "the default slot"
+    if sl["kind"] == "icon":
+        return {"type": "string", "enum": [""] + icons, "default": "",
+                "description": f"The icon in {where}, by name (an OpenBridge icon the module bundles); empty puts none. {sl['about']}".strip()}
+    return {"type": "string", "default": "",
+            "description": f"The text in {where}; empty puts none. {sl['about']}".strip()}
+
+
+def build_item_table(manifest: dict, specs: list[dict]) -> dict:
+    """What the wrapper needs of each element an `items` property may build: its attribute field names, and the item tags
+    it may hold. The closure of the entries' tags under `ITEM_CHILDREN`; every tag must be an element of the manifest."""
+    todo = [t for sp in specs for e in sp.get("items", {}).values() for t in e["tags"]]
+    for parent, kids in ITEM_CHILDREN.items():
+        todo += [parent, *kids]
+    table: dict[str, dict] = {}
+    while todo:
+        tag = todo.pop()
+        if tag in table:
+            continue
+        decl = declaration(manifest, tag)
+        names = [a["fieldName"] for a in decl.get("attributes", []) if a.get("fieldName")]
+        fields = {m["name"] for m in decl.get("members", []) if m.get("kind") == "field"}
+        for f in ITEM_FIELDS.get(tag, []):
+            if f not in fields:
+                raise SystemExit(f"{tag} declares no field {f!r} in the manifest")
+        table[tag] = {"props": names + [f for f in ITEM_FIELDS.get(tag, []) if f not in names],
+                      "kids": list(ITEM_CHILDREN.get(tag, []))}
+        todo += table[tag]["kids"]
+    return dict(sorted(table.items()))
+
+
+def items_schema(entry: dict, table: dict) -> dict:
+    tags = entry["tags"]
+    kinds = "; ".join(f"`{t}` ({', '.join(table[t]['props']) or 'no attribute'})" for t in tags)
+    about = entry.get("describe", "The child elements of the component")
+    return {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                "tag": {"type": "string", "enum": list(tags)}, "id": {"type": "string"}, "slot": {"type": "string"},
+                "text": {"type": "string"}, "children": {"type": "array", "items": {"type": "object"}}},
+                "required": ["tag"]},
+            "description": f"{about}, as a list with one object for each: `tag` and then the element's attributes by name, "
+                           f"`text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). "
+                           f"Tags and attributes: {kinds}."}
+
+
+ITEM_TABLE: dict[str, dict] = {}    # set by `main` before the schemas are written
+
 # Rules added to the shadow root of an element, where the element draws something a process diagram's box
 # cannot use as it stands (COB-127). The transmitter is built to hang from a line by a leader line: it
 # offsets itself by half its width and 8 px, which puts it beside the box a diagram gives it. The module
@@ -470,7 +646,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         name = a.get("fieldName")
         if not name or name in spec["exclude"] or name in spec.get("data", {}):
             continue
-        ttext = ((a.get("type") or {}).get("text") or "").strip()
+        ttext = ((a.get("type") or {}).get("text") or "").strip() or spec.get("types", {}).get(name, "")
         desc = clean((members.get(name) or {}).get("description") or a.get("description"))
         default = defaults.get(name)
         base = ttext.replace(" | undefined", "").replace(" | null", "")
@@ -485,6 +661,8 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
             p, kind = {"type": ["number", "null"], "default": default if isinstance(default, (int, float)) else None}, "nnumber"
         elif base == "string":
             p, kind = {"type": "string", "default": default if isinstance(default, str) else ""}, ("nstring" if nullable else "string")
+            if name in spec.get("undefinedWhenEmpty", []):
+                kind = "ustring"
         elif base in enum_map:
             vals = enum_map[base]
             d = default if default in vals else vals[0]
@@ -503,6 +681,13 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         fields.append({"name": name, "kind": want["type"], "def": want["default"]})
     for name, kind in spec.get("data", {}).items():
         props[name] = dict(DATA_SCHEMA[kind])
+    slots = slot_specs(spec, decl, set(props) | set(spec.get("data", {})) | set(spec.get("extra", [])) | set(spec.get("items", {})))
+    if slots:
+        icons = icon_names()
+        for sl in slots:
+            props[sl["name"]] = slot_schema(sl, icons)
+    for name, entry in spec.get("items", {}).items():
+        props[name] = items_schema(entry, ITEM_TABLE)
     for name in spec.get("extra", []):
         props[name] = dict(EXTRA[name]["schema"])
         if EXTRA[name].get("enum"):      # the enumeration of OpenBridge's own declaration, as for an attribute
@@ -511,6 +696,9 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
                            "description": props[name]["description"]}
         if name in spec.get("describe", {}):
             props[name]["description"] = spec["describe"][name]
+    for name, text in spec.get("describe", {}).items():
+        if name in props and name not in spec.get("extra", []):
+            props[name]["description"] = text
     props["componentSize"] = {"type": "string", "enum": SIZES, "default": "regular",
                               "description": "OpenBridge component size: regular, medium, large or xl."}
     props["style"] = {"$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
@@ -635,6 +823,10 @@ WRAPPER = r"""
   var h = window.React.createElement;
   var COMPONENTS = __COMPONENTS__;
   var SHEETS = __SHEETS__;
+  var ITEMS = __ITEMS__;          // the elements an `items` property may build: attribute field names and child tags
+  var ICONS = __ICONS__;          // the icons the slot properties and the items may use (web/icons.js)
+  var ITEM_PLAIN = __ITEM_PLAIN__;
+  var ITEM_DEPTH = __ITEM_DEPTH__;
 
   function read(tree, f) {
     switch (f.kind) {
@@ -644,6 +836,7 @@ WRAPPER = r"""
       case 'nnumber': { var v = tree.read(f.name); return (v === null || v === undefined || v === '') ? undefined : Number(v); }
       case 'nvalue': { var q = tree.read(f.name); return (q === null || q === undefined || q === '') ? null : (typeof q === 'number' ? q : String(q)); }
       case 'nstring': { var s = tree.readString(f.name, ''); return s === '' ? null : s; }
+      case 'ustring': { var u = tree.readString(f.name, ''); return u === '' ? undefined : u; }
       default: return tree.readString(f.name, f.def);
     }
   }
@@ -689,7 +882,43 @@ WRAPPER = r"""
       return { mode: String(mode), ids: shown.filter(function (a) { return !a.acknowledged; })
                                             .map(function (a) { return String(a.id); }) };
     }
+    if (kind === 'notification') return { count: Number(d.count) || 0, isActive: !!d.isActive };
+    if (kind === 'label') return { label: String(d.label === undefined || d.label === null ? '' : d.label) };
+    if (kind === 'item') {
+      var from = e && e.target && e.target.closest ? e.target.closest('[data-item-id]') : null;
+      return { id: from ? String(from.getAttribute('data-item-id')) : '', tag: from ? String(from.tagName).toLowerCase() : '' };
+    }
     return {};
+  }
+
+  // ---- Child elements from an `items` property (T2, batch F1). An item is an object: `tag`, the element's attributes by
+  // field name, `text`, `id`, `slot` and `children`. The tag must be one the component's entry allows at the top level, or
+  // one the parent's tag allows (ITEMS[parent].kids), or a plain element or a bundled icon below the top level; an
+  // attribute the table does not list is ignored with a warning, and an item nested deeper than ITEM_DEPTH is dropped.
+  // Attributes are set as properties of the element (never as markup), so booleans, numbers and objects arrive as they are.
+  function isIconTag(tag) { return tag.indexOf('obi-') === 0 && ICONS.indexOf(tag.slice(4)) >= 0; }
+  function buildItem(o, allowed, depth, slot) {
+    if (!o || typeof o !== 'object' || typeof o.tag !== 'string' || depth > ITEM_DEPTH) return null;
+    var tag = o.tag;
+    var below = depth > 0 && (ITEM_PLAIN.indexOf(tag) >= 0 || isIconTag(tag));
+    if (allowed.indexOf(tag) < 0 && !below) { console.warn('cadre-ob: item tag not allowed here: ' + tag); return null; }
+    var el = document.createElement(tag);
+    var own = slot || (typeof o.slot === 'string' ? o.slot : '');
+    if (own) el.setAttribute('slot', own);
+    if (o.id !== undefined && o.id !== null && o.id !== '') el.setAttribute('data-item-id', String(o.id));
+    var info = ITEMS[tag], names = info ? info.props : [];
+    Object.keys(o).forEach(function (k) {
+      if (k === 'tag' || k === 'id' || k === 'slot' || k === 'text' || k === 'children') return;
+      if (names.indexOf(k) >= 0) el[k] = o[k];
+      else console.warn('cadre-ob: ' + tag + ' has no item attribute ' + k);
+    });
+    if (typeof o.text === 'string' && o.text !== '') el.textContent = o.text;
+    var kids = info ? info.kids : [];
+    (Array.isArray(o.children) ? o.children : []).forEach(function (c) {
+      var n = buildItem(c, kids, depth + 1, '');
+      if (n) el.appendChild(n);
+    });
+    return el;
   }
 
   function wrapper(spec) {
@@ -699,6 +928,7 @@ WRAPPER = r"""
         this.el = null;
         this.handlers = [];
         this.applied = {};
+        this.itemNodes = {};
         // row selection (alarm lists, module 0.4.2): the ids shown and sent, the table and what watches it
         this.selIds = [];
         this.selSent = [];
@@ -721,6 +951,7 @@ WRAPPER = r"""
           this.selDetach();
           this.el = el;
           this.applied = {};
+          this.itemNodes = {};
           if (el && spec.sheet) this.sheets();
           if (el) {
             (spec.events || []).forEach((ev) => {
@@ -786,7 +1017,25 @@ WRAPPER = r"""
           var key = JSON.stringify(p[d.name] === undefined ? null : p[d.name]);
           if (this.applied[d.name] !== key) { this.applied[d.name] = key; el[d.name] = CONVERT[d.kind](p[d.name]); }
         });
+        this.applyItems(el, p);
         if (spec.selection) this.applySelection(p);
+      }
+      // The children an `items` property builds (module 0.7.0): rebuilt when the list changes, marked data-cadre-item so that
+      // they never mix with the children React draws for the slot properties.
+      applyItems(el, p) {
+        (spec.items || []).forEach((it) => {
+          var list = p[it.name];
+          var key = JSON.stringify(list === undefined ? null : list);
+          if (this.applied['items:' + it.name] === key) return;
+          this.applied['items:' + it.name] = key;
+          (this.itemNodes[it.name] || []).forEach(function (n) { n.remove(); });
+          var nodes = [];
+          (Array.isArray(list) ? list : []).forEach(function (o) {
+            var n = buildItem(o, it.tags, 0, it.slot);
+            if (n) { n.setAttribute('data-cadre-item', ''); nodes.push(n); el.appendChild(n); }
+          });
+          this.itemNodes[it.name] = nodes;
+        });
       }
       // ---- Row selection of the two alarm lists (module 0.4.2). OpenBridge's table draws the tick column (an
       // obc-checkbox in each row, and one in the header of the full list) when its `selectable` is true, takes the
@@ -982,6 +1231,14 @@ WRAPPER = r"""
           var slot = this.dutySlot(p);
           if (slot) kids.push(h('obc-automation-badge', { slot: slot, key: 'duty', type: 'interlock' }));
         }
+        // the slot properties: a text becomes a text node (the default slot) or a span in its slot, an icon an `obi-` element
+        (spec.slots || []).forEach(function (sl) {
+          var v = p[sl.name];
+          if (typeof v !== 'string' || v === '') return;
+          if (sl.kind === 'icon') {
+            if (ICONS.indexOf(v) >= 0) kids.push(h('obi-' + v, { slot: sl.slot || undefined, key: 'slot:' + sl.name }));
+          } else kids.push(sl.slot ? h('span', { slot: sl.slot, key: 'slot:' + sl.name }, v) : v);
+        });
         // an out of service symbol: the library view's veil of the page colour and the word OOS, over the symbol
         var oos = (spec.status && p.outOfService) ? h('div', { className: 'cadre-ob-oos', key: 'oos' }, 'OOS') : null;
         // an element that sits at the end of its box unless the symbol is centred
@@ -1005,6 +1262,7 @@ WRAPPER = r"""
         spec.fields.forEach(function (f) { out[f.name] = read(tree, f); });
         (spec.extras || []).forEach(function (f) { out[f.name] = read(tree, f); });
         (spec.data || []).forEach(function (d) { out[d.name] = tree.readArray(d.name, []); });
+        (spec.items || []).forEach(function (d) { out[d.name] = tree.readArray(d.name, []); });
         return out;
       }
     });
@@ -1013,10 +1271,36 @@ WRAPPER = r"""
 """
 
 
+def js_spec(spec: dict, fields: list[dict], events: list[dict], slots: list[dict], items: list[dict]) -> dict:
+    """What the browser wrapper needs of one component (the JSON in `COMPONENTS` of `WRAPPER`)."""
+    return {"type": spec["type"], "tag": spec["tag"], "size": spec["size"], "fields": fields,
+            "extras": [{"name": n, "kind": EXTRA[n]["kind"], "def": EXTRA[n]["def"]} for n in spec.get("extra", [])]
+                      + [{"name": sl["name"], "kind": "string", "def": ""} for sl in slots],
+            "speedless": bool(spec.get("speedless")), "generator": bool(spec.get("generator")), "tankSlots": bool(spec.get("tankSlots")),
+            "sheet": spec.get("sheet", ""), "chipSheet": spec.get("chipSheet", ""),
+            "selection": bool(spec.get("selection")),
+            "status": bool(spec.get("status")), "endAligned": bool(spec.get("endAligned")),
+            "data": [{"name": n, "kind": k} for n, k in spec.get("data", {}).items()],
+            "events": events,
+            **({"slots": [{"slot": sl["slot"], "kind": sl["kind"], "name": sl["name"]} for sl in slots]} if slots else {}),
+            **({"items": items} if items else {})}
+
+
+def wrapper_script(js_specs: list[dict]) -> str:
+    """The React wrappers for `js_specs`, with the tables of the sheets, the item elements and the icons filled in."""
+    out = WRAPPER.replace("__COMPONENTS__", json.dumps(js_specs, separators=(",", ":"))) \
+                 .replace("__SHEETS__", json.dumps(SHEETS, separators=(",", ":")))
+    return (out.replace("__ITEMS__", json.dumps(ITEM_TABLE, separators=(",", ":")))
+            .replace("__ICONS__", json.dumps(icon_names(), separators=(",", ":")))
+            .replace("__ITEM_PLAIN__", json.dumps(ITEM_PLAIN)).replace("__ITEM_DEPTH__", str(ITEM_DEPTH)))
+
+
 def main() -> int:
     manifest = json.loads((PKG / "custom-elements.json").read_text(encoding="utf-8"))
     defaults = json.loads((HERE / "web/defaults.json").read_text(encoding="utf-8"))
     enum_map = enums()
+    ITEM_TABLE.clear()
+    ITEM_TABLE.update(build_item_table(manifest, COMPONENTS))
     bundle_js = (HERE / "web/dist/ob-components.js").read_text(encoding="utf-8")
     shutil.copyfile(HERE / "web/dist/ob-components.js.LEGAL.txt", MOUNTED / "js/ob-components.js.LEGAL.txt")
     SCHEMAS.mkdir(parents=True, exist_ok=True)
@@ -1032,27 +1316,23 @@ def main() -> int:
             if dom not in declared:
                 raise SystemExit(f"{spec['tag']} declares no event {dom!r} in the manifest")
             name, kind, text = ALERT_EVENTS[dom]
+            text = spec.get("eventText", {}).get(dom, text)      # a component may word the event for itself
             events.append({"dom": dom, "name": name, "payload": kind})
-            props = ({"ids": {"type": "array", "description": "The alert ids of the event."},
-                      "id": {"type": "string"}, "tagId": {"type": "string", "description": "The device folder."},
-                      "source": {"type": "string"}, "text": {"type": "string"}} if kind == "alert" else
-                     {"ids": {"type": "array", "description": "The alert ids of the event."},
-                      "mode": {"type": "string", "description": "The list mode."}} if kind == "visible" else {})
+            props = PAYLOAD_PROPS[kind]
             (SCHEMAS / f"{spec['name']}.{name}.json").write_text(json.dumps(
                 {"type": "object", "description": text, "properties": props}, indent=2) + "\n", encoding="utf-8")
-        js_specs.append({"type": spec["type"], "tag": spec["tag"], "size": spec["size"], "fields": fields,
-                         "extras": [{"name": n, "kind": EXTRA[n]["kind"], "def": EXTRA[n]["def"]} for n in spec.get("extra", [])],
-                         "speedless": bool(spec.get("speedless")), "generator": bool(spec.get("generator")), "tankSlots": bool(spec.get("tankSlots")),
-                         "sheet": spec.get("sheet", ""), "chipSheet": spec.get("chipSheet", ""),
-                         "selection": bool(spec.get("selection")),
-                         "status": bool(spec.get("status")), "endAligned": bool(spec.get("endAligned")),
-                         "data": [{"name": n, "kind": k} for n, k in spec.get("data", {}).items()],
-                         "events": events})
+        slots = slot_specs(spec, decl, set())      # the names were checked against the properties by `schema_for`
+        items = [{"name": n, "tags": e["tags"], "slot": e.get("slot", "")} for n, e in spec.get("items", {}).items()]
+        js_specs.append(js_spec(spec, fields, events, slots, items))
         contract[spec["type"]] = {"element": spec["tag"], "title": spec["title"], "palette": spec["palette"],
                                   "schema": f"schemas/{spec['name']}.props.json",
                                   "defaultSize": spec["size"],
                                   "props": {k: {kk: vv for kk, vv in v.items() if kk != "description"}
                                             for k, v in schema["properties"].items() if k != "style"}}
+        if slots:      # which properties are slot properties, for the test page and the frame (not part of the Perspective schema)
+            contract[spec["type"]]["slots"] = {sl["name"]: {"slot": sl["slot"], "kind": sl["kind"]} for sl in slots}
+        if items:
+            contract[spec["type"]]["items"] = {i["name"]: {"tags": i["tags"], "slot": i["slot"]} for i in items}
         if events:
             contract[spec["type"]]["events"] = {e["name"]: {"element": e["dom"], "schema": f"schemas/{spec['name']}.{e['name']}.json"}
                                                 for e in events}
@@ -1069,7 +1349,7 @@ def main() -> int:
                                         for k, v in zoom["props"].items()}}
     print(f"{zoom['type']}: {len(zoom['props'])} properties (web/canvaszoom.js)")
     canvas_zoom_js = (HERE / "web/canvaszoom.js").read_text(encoding="utf-8")
-    wrappers = WRAPPER.replace("__COMPONENTS__", json.dumps(js_specs, separators=(",", ":")))         .replace("__SHEETS__", json.dumps(SHEETS, separators=(",", ":")))
+    wrappers = wrapper_script(js_specs)
     (MOUNTED / "js/cadre-ob.js").write_text(bundle_js + "\n" + wrappers + "\n" + canvas_zoom_js, encoding="utf-8")
     css, stats = scoped_css(bundle_js)
     (MOUNTED / "css").mkdir(parents=True, exist_ok=True)

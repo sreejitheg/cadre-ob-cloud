@@ -236,3 +236,17 @@
   horizontal and vertical bars, circular progress, radial instrument and readout block as module-only glyphs, display
   only (two events unwired); `obc-alert-list` not wrapped (rows are slotted children, no data property). Bundle
   2,023,193 bytes. Tests 1194 to 1196. The 12 displays of T2 are done: 11 wrapped, 1 recorded as not wrapped.
+- 2026-11-03 08:33: T2 F1 (frame mechanisms and seven leaves) in a Sonnet 5.5 subagent at medium effort: 303,036 tokens, 93 tool calls, 20 min (08:13 to 08:33). Mechanisms: slot properties (text and icon, icon allow list from `module/web/icons.js`
+  checked against the pinned `dist/icons`), the `items` property (allow listed tags, attributes as properties, nested children),
+  event payload kinds (`PAYLOAD_PROPS`), `types`, `undefinedWhenEmpty`. Seven module-only kinds in `FRAME_ONLY`: tooltip, toggletip,
+  clock, user button, app button, notification button, notification badge button; events carried, not wired. Bundle 2,023,193 to
+  2,173,627 bytes (tooltip +7,118, toggletip +15,139, clock +11,337, user button +21,326, app button +14,980, notification button
+  +15,882, badge button +4,846, 27 icons +49,184, wrappers and tables the rest). Section "Frame components": 83 elements on the
+  test page, G0 to G7 pass (19 devices, 21 device symbols). Tests 1196 to 1216 (`tests.test_module` 136 to 153); harness
+  `frame.mjs` 19 and `items.mjs` 11 checks pass. Gateway step pending.
+- 2026-11-03 08:20: Gateway check of C1 and C2 (module 0.6.1, built from a clean worktree at `a0fec96`, "Registered 55
+  Cadre OpenBridge components"): G8 first FAILED with 72 view state badges, all embedded views still loading on the
+  larger page (82 after 6 s, none after 26 s); `capture.settle_badges` now waits for them, at most 60 s, and a badge that
+  stays still fails (tests added); G8 then PASS, 5160 components. Every chart and block found and drawn except
+  `obc-instrument-radial`: 42 found, all of size 0 (the element sits as a block of zero size in its flex box; a real
+  defect of C2, to fix). The line graph and the donut chart draw their data, in greys (for the owner's visual review).

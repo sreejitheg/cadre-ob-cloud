@@ -179,6 +179,14 @@ def pulse_members(kind: str) -> list[str]:
 # under `--render stock` the build refuses it (`embed_symbol`, an error gate G7 contract reports). The component test
 # page shows these kinds in one section (`testbench.module_only_block`) and the glass gates find them by the
 # component's element. A later wrap adds one row here (wiki page 12 section 17.13, `cloud/WRAP-RECIPE.md` section 8).
+# The frame components (tranche T2, batches F1 to F5): module-only kinds, as above, which the component test page shows in
+# its own section "Frame components" (`testbench.frame_block`) and not in "Module only". A row here is a row of
+# `MODULE_ONLY` too (merged below); the kind is the tag without `obc-`, hyphens kept. They are not descriptor symbols of the
+# stock rendering and not library kinds (`MODULE_KIND` is not touched): the frame option draws them in its own views.
+FRAME_ONLY = {"tooltip": "cadre.ob.tooltip", "toggletip": "cadre.ob.toggletip", "clock": "cadre.ob.clock",
+              "user-button": "cadre.ob.userbutton", "app-button": "cadre.ob.appbutton",
+              "notification-button": "cadre.ob.notificationbutton",
+              "notification-badge-button": "cadre.ob.notificationbadgebutton"}
 MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
                "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
                "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway",
@@ -200,7 +208,7 @@ MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor
                "bar-vertical": "cadre.ob.barvertical",
                "circular-progress": "cadre.ob.circularprogress",
                "instrument-radial": "cadre.ob.instrumentradial",
-               "readout-block": "cadre.ob.readoutblock"}
+               "readout-block": "cadre.ob.readoutblock", **FRAME_ONLY}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).

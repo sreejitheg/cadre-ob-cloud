@@ -1,0 +1,92 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Button",
+      "description": "Sets the button's text label. Available when showLabel==true."
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, applies the \"checked\" visual style to indicate selection or active state."
+    },
+    "integration": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, applies integration styles for the integration app bar."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "small"
+      ],
+      "default": "normal",
+      "description": "Controls the button's size variant. Accepts 'normal' (default) or 'small'."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-app-button` property `disabled`."
+    },
+    "showLabel": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the button draws its label under the icon."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Displays the leading icon for the button."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

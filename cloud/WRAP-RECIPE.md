@@ -552,3 +552,55 @@ size (give the entry in `gen_module_assets.py` the size the symbol should have o
    the entry's `size` is the size on a diagram; the bars draw at their own `width` or `height` and the entry's size must cover the largest
    drawing the page states (measure with a stand-in page; the bars needed 128 for the scale with thick bar, ticks and labels).
 4. An element with no attribute and no data property whose rows are slotted children (`obc-alert-list`) is not wrapped: see wiki 17.22.6.
+
+## 9. Frame Components (T2, batches F1 to F5)
+
+Batch F1 built the mechanisms (wiki 12 section 17.23); a later batch adds a frame component by the entries below and reads no
+implementation. The sections 2.1 to 2.5 and 2.11 of the recipe still apply (bundle import, measured defaults, generator entry, Java
+registration, regeneration, module test); sections 2.6 to 2.10 are replaced by the rows here.
+
+1. **Bundle and defaults.** One import line in `module/web/entry.js` (the path from the manifest's `modules[].path`, `src` to
+   `dist`, `.ts` to `.js`) and the tag in `TAGS` of `module/tools/measure_defaults.py`; run `npm run build` in `module/web`, then
+   `python module/tools/measure_defaults.py` (additions only), then the generator.
+2. **The generator entry** (`COMPONENTS` of `gen_module_assets.py`). The keys of section 2.3 plus, as the element needs:
+   * `"slots": [{"slot": "icon", "kind": "icon"}, {"slot": "content", "kind": "text"}]`: a text or icon slot becomes a string
+     property (`content`; `iconName`, `leadingIconName`; `text` for the default slot; `"property": "label"` renames it). The slot must be
+     in the manifest. An icon slot's values are the icons of `module/web/icons.js`; to offer another icon add its import line there (the
+     file name after `icon-`, checked against `dist/icons` by the generator; the package's 2,104 icons are not all bundled).
+   * `"items": {"items": {"tags": ["obc-pivot-item"], "slot": ""}}`: a list of objects the wrapper builds as child elements. Every tag
+     must be in the manifest. Nested tags go in `ITEM_CHILDREN` (tag to the tags it may hold; the nesting is one row for each parent,
+     a group lists itself), and a field with no attribute that an item may set in `ITEM_FIELDS`. An item object is `tag`, the
+     attributes by their manifest field names, `text`, `id`, `slot`, `children`. A second list for another slot is a second entry
+     (`"footerItems": {"tags": [...], "slot": "footer"}`). Events from an item bubble to the host: carry them with payload kind `item`
+     and the event reports the item's `id` and `tag`.
+   * `"types": {"variant": "ToggletipVariant"}` for an attribute whose manifest type is missing (the enumeration is read from the
+     `.d.ts`); `"dts"` when a generic enumeration name (`Size`, `Variant`) is declared by several elements (the user button).
+   * `"undefinedWhenEmpty": ["description"]` for an optional text whose element tests `!== undefined`.
+   * `"properties": ["isClickable"]` for a field with no attribute, with a row in `PROPERTIES` (the element's own default).
+   * `"events": ["primary-action"]` (the element's DOM event, declared in the manifest) with a row in `ALERT_EVENTS`
+     (`dom: (component event name, payload kind, text)`; the kinds are the keys of `PAYLOAD_PROPS`: `none`, `alert`, `visible`,
+     `notification`, `label`, `item`; a new kind is one entry there and one branch of `payload` in the wrapper) and, to word the text for
+     one component, `"eventText": {dom: text}`. The name is never `onClick`. Nothing is wired and no event writes a tag.
+   * `"describe": {"date": "..."}` rewords any property's description; `"size"` is the largest drawing the page cases make (measure).
+   * Credentials never enter a property: exclude `username` and `password` of the user menu with `"exclude"`.
+3. **Java** (`CadreOb.java`): one `descriptor(...)` line, with one `event("<name>", "<componentEvent>", "<text>")` for each event
+   (the schema file `schemas/<name>.<componentEvent>.json` is written by the generator). The count of the gateway hook log moves.
+4. **The table row** (`tools/hmi/screen.py`): one entry of `FRAME_ONLY` (kind, the tag without `obc-`, hyphens kept, to the component
+   id). It is merged into `MODULE_ONLY`, so the module-only mechanism (section 8) gives the contract and the refusal under
+   `--render stock`; nothing is added to `MODULE_KIND`, the profile or `contracts.json`. The kind is not a library kind.
+5. **The page cases** (`tools/hmi/testbench.py`): one entry of `FRAME_SAMPLE` (`base`: parameters stated in every case, our own text;
+   `extra`: named cases, with the slot properties and any combination) and, where a number needs its own values or a property must
+   be left out, `GLYPH_NUMBER_VALUES` and `FRAME_SKIP`. The cases are generated from the schema (every enumeration value, each
+   flag, each number) without the icon slot properties. Every slot property must appear in some case (a test checks it). A bound
+   parameter name of the gallery (`GALLERY_PARAMS`: `text`, `value`, `state`...) becomes a memory tag; name a text property
+   something else (the badge button's default slot text is `label`) unless a tag is wanted.
+6. **Tests** (`tests/test_module.py`): one row in `FrameComponents.ROWS` (tag, manifest path, attributes, fields, slot properties,
+   events), the counts of its cases in `test_the_component_test_page_shows_them_in_one_frame_section...`, and a case in
+   `module/tools/harness/frame.mjs` for its slots and events (run `node module/tools/harness/frame.mjs`, see the harness README;
+   `items.mjs` proves the items mechanism on a synthetic host and needs no change). The kind's tests in `ModuleOnlyKinds` skip frame
+   kinds (`glyph_kinds` excludes `FRAME_ONLY`).
+7. **Gateway** (section 4.2): the section "Frame components" of `/component-test` shows `obc-<name>` with the count of its cases,
+   a non-zero box and no console error. G10 and G11 are not affected (no frame component is a device or a descriptor symbol).
+8. **Measured facts.** A component with a boolean attribute of a custom element must be set as a property, never as markup (React 18
+   writes the string); the wrapper does, and so does the items builder. A slotted icon is `obi-<name>` with the slot on it and needs
+   no size. An element that draws a bubble (tooltip, toggletip) is as wide as its content unless `customWidth` states it.

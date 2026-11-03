@@ -8134,6 +8134,749 @@
    }
   }
  },
+ "cadre.ob.tooltip": {
+  "element": "obc-tooltip",
+  "title": "OB Tooltip",
+  "palette": "OpenBridge tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
+  "schema": "schemas/tooltip.props.json",
+  "defaultSize": {
+   "width": 224,
+   "height": 40
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "icon",
+     "label"
+    ],
+    "default": "label"
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "raised",
+     "enhanced",
+     "eco",
+     "alarm",
+     "warning",
+     "caution"
+    ],
+    "default": "normal"
+   },
+   "label": {
+    "type": "string",
+    "default": "Label"
+   },
+   "showIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  }
+ },
+ "cadre.ob.toggletip": {
+  "element": "obc-toggletip",
+  "title": "OB Toggletip",
+  "palette": "OpenBridge toggletip: a title, description and optional text content and two actions in a bubble",
+  "schema": "schemas/toggletip.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 232
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "raised",
+     "enhanced",
+     "eco-feedback",
+     "caution",
+     "warning",
+     "alarm"
+    ],
+    "default": "normal"
+   },
+   "title": {
+    "type": "string",
+    "default": ""
+   },
+   "description": {
+    "type": "string",
+    "default": ""
+   },
+   "hasContent": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasActions": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasLeadingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasTrailingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "customWidth": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "primaryButtonLabel": {
+    "type": "string",
+    "default": "Label"
+   },
+   "secondaryButtonLabel": {
+    "type": "string",
+    "default": "Label"
+   },
+   "leadingIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "trailingIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "content": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "leadingIconName": {
+    "slot": "leading-icon",
+    "kind": "icon"
+   },
+   "trailingIconName": {
+    "slot": "trailing-icon",
+    "kind": "icon"
+   },
+   "content": {
+    "slot": "content",
+    "kind": "text"
+   }
+  },
+  "events": {
+   "onPrimaryAction": {
+    "element": "primary-action",
+    "schema": "schemas/toggletip.onPrimaryAction.json"
+   },
+   "onSecondaryAction": {
+    "element": "secondary-action",
+    "schema": "schemas/toggletip.onSecondaryAction.json"
+   }
+  }
+ },
+ "cadre.ob.clock": {
+  "element": "obc-clock",
+  "title": "OB Clock",
+  "palette": "OpenBridge clock: the time of day with optional seconds, date, weekday, year and time zone",
+  "schema": "schemas/clock.props.json",
+  "defaultSize": {
+   "width": 208,
+   "height": 64
+  },
+  "props": {
+   "date": {
+    "type": "string",
+    "default": ""
+   },
+   "showSeconds": {
+    "type": "boolean",
+    "default": false
+   },
+   "showDate": {
+    "type": "boolean",
+    "default": false
+   },
+   "showTimezone": {
+    "type": "boolean",
+    "default": false
+   },
+   "timeZoneOffsetHours": {
+    "type": "number",
+    "default": 0
+   },
+   "showYear": {
+    "type": "boolean",
+    "default": false
+   },
+   "showWeekday": {
+    "type": "boolean",
+    "default": false
+   },
+   "locale": {
+    "type": "string",
+    "default": "en-GB"
+   },
+   "hour12": {
+    "type": "boolean",
+    "default": false
+   },
+   "selected": {
+    "type": "boolean",
+    "default": false
+   },
+   "double": {
+    "type": "boolean",
+    "default": false
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "integrationBarMode": {
+    "type": "boolean",
+    "default": false
+   },
+   "blinkOnlyBreakpointPx": {
+    "type": "number",
+    "default": 0
+   },
+   "isClickable": {
+    "type": "boolean",
+    "default": true
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.userbutton": {
+  "element": "obc-user-button",
+  "title": "OB User Button",
+  "palette": "OpenBridge user button: a round button with a user icon or initials and an optional label and sublabel",
+  "schema": "schemas/userbutton.props.json",
+  "defaultSize": {
+   "width": 128,
+   "height": 136
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "icon",
+     "initials"
+    ],
+    "default": "icon"
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "large"
+    ],
+    "default": "regular"
+   },
+   "styleType": {
+    "type": "string",
+    "enum": [
+     "flat",
+     "normal",
+     "selected"
+    ],
+    "default": "flat"
+   },
+   "static": {
+    "type": "boolean",
+    "default": false
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "initials": {
+    "type": "string",
+    "default": ""
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "sublabel": {
+    "type": "string",
+    "default": ""
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  }
+ },
+ "cadre.ob.appbutton": {
+  "element": "obc-app-button",
+  "title": "OB App Button",
+  "palette": "OpenBridge app button: an icon above a label, as in the application menu",
+  "schema": "schemas/appbutton.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": "Button"
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "integration": {
+    "type": "boolean",
+    "default": false
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "small"
+    ],
+    "default": "normal"
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "showLabel": {
+    "type": "boolean",
+    "default": true
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onPress": {
+    "element": "click",
+    "schema": "schemas/appbutton.onPress.json"
+   }
+  }
+ },
+ "cadre.ob.notificationbutton": {
+  "element": "obc-notification-button",
+  "title": "OB Notification Button",
+  "palette": "OpenBridge notification button: a bell, flat or filled, with an optional count",
+  "schema": "schemas/notificationbutton.props.json",
+  "defaultSize": {
+   "width": 64,
+   "height": 64
+  },
+  "props": {
+   "buttonStyle": {
+    "type": "string",
+    "enum": [
+     "flat",
+     "normal",
+     "enhanced"
+    ],
+    "default": "flat"
+   },
+   "count": {
+    "type": "number",
+    "default": 0
+   },
+   "showCount": {
+    "type": "boolean",
+    "default": false
+   },
+   "isActive": {
+    "type": "boolean",
+    "default": false
+   },
+   "ariaLabel": {
+    "type": "string",
+    "default": "Notifications"
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onNotificationClick": {
+    "element": "obc-click",
+    "schema": "schemas/notificationbutton.onNotificationClick.json"
+   }
+  }
+ },
+ "cadre.ob.notificationbadgebutton": {
+  "element": "obc-notification-badge-button",
+  "title": "OB Notification Badge Button",
+  "palette": "OpenBridge notification badge button: a small button with a short text or an icon, used for counts",
+  "schema": "schemas/notificationbadgebutton.props.json",
+  "defaultSize": {
+   "width": 80,
+   "height": 48
+  },
+  "props": {
+   "openRight": {
+    "type": "boolean",
+    "default": false
+   },
+   "openLeft": {
+    "type": "boolean",
+    "default": false
+   },
+   "cornerLeft": {
+    "type": "boolean",
+    "default": false
+   },
+   "cornerRight": {
+    "type": "boolean",
+    "default": false
+   },
+   "icon": {
+    "type": "boolean",
+    "default": false
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "indent": {
+    "type": "boolean",
+    "default": false
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "label": {
+    "slot": "",
+    "kind": "text"
+   },
+   "iconName": {
+    "slot": "",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onPress": {
+    "element": "click",
+    "schema": "schemas/notificationbadgebutton.onPress.json"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

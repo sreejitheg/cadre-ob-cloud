@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The primary button of the toggletip was pressed. event.label is the text of the button.",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "The text of the button that was pressed."
+    }
+  }
+}

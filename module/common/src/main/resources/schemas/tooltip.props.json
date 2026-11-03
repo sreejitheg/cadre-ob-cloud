@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "icon",
+        "label"
+      ],
+      "default": "label",
+      "description": "Type of tooltip display. - icon: Shows only an icon. - label: Shows text with optional leading icon. Default: label"
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "raised",
+        "enhanced",
+        "eco",
+        "alarm",
+        "warning",
+        "caution"
+      ],
+      "default": "normal",
+      "description": "Visual style and semantic meaning of the tooltip. - normal (default): Standard informational tooltip. - enhanced: Highlighted/important notification (blue). - eco: Environmental/positive state (green). - raised:..."
+    },
+    "label": {
+      "type": "string",
+      "default": "Label",
+      "description": "Text content displayed in the tooltip (only used when type=\"label\"). Default: 'Label' Available when type==label."
+    },
+    "showIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show the leading icon when type=\"label\". Has no effect when type=\"icon\". Default: false Available when type==label."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon slot (shown when type=\"icon\" or type=\"label\" with showIcon=true)"
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -1318,7 +1318,8 @@ class ModuleOnlyKinds(unittest.TestCase):
         return [k for k in self.screen.MODULE_ONLY if self.is_symbol(k)]
 
     def glyph_kinds(self):
-        return [k for k in self.screen.MODULE_ONLY if not self.is_symbol(k)]
+        # the frame components (T2, F1) are module-only kinds too, tested by `FrameComponents` with their own cases
+        return [k for k in self.screen.MODULE_ONLY if not self.is_symbol(k) and k not in self.screen.FRAME_ONLY]
 
     def embed(self, sym, render):
         self.screen.RENDER["target"] = render
@@ -1726,6 +1727,271 @@ class ButtonComponent(unittest.TestCase):
         self.assertIn(("cmdStart", "Boolean"), [(t["name"], t["dataType"]) for t in gen["tags"]])   # the tag exists, a memory Boolean
         # the library's own pulse buttons of the page stay as they were
         self.assertNotIn("render", by_id["TB_pulse_TB_PUMP"])
+
+
+class FrameMechanisms(unittest.TestCase):
+    """The mechanisms of the frame components (tranche T2, batch F1; wiki page 12 section 17.23): the slot properties (text and
+    icon), the `items` property and the event payload kinds, all driven by tables of the generator, so that a later batch adds
+    a component by entries only. The browser side is proved by `module/tools/harness/frame.mjs` and `items.mjs`."""
+
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        sys.path.insert(0, str(MODULE / "tools"))
+        import gen_module_assets
+        cls.gen = gen_module_assets
+        cls.manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                                  .read_text(encoding="utf-8"))
+
+    def test_the_icon_list_is_the_imports_of_icons_js_and_each_is_an_icon_of_the_pinned_package(self):
+        names = self.gen.icon_names()
+        text = (MODULE / "web/icons.js").read_text(encoding="utf-8")
+        self.assertEqual(names, re.findall(r"dist/icons/icon-([a-z0-9-]+)\.js", text))
+        self.assertIn("import './icons.js';", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        icons = MODULE / "web/node_modules/@oicl/openbridge-webcomponents/dist/icons"
+        for n in names:
+            self.assertTrue((icons / f"icon-{n}.js").is_file(), n)
+        self.assertIn('var ICONS = ' + json.dumps(names, separators=(",", ":")) + ';', JS)
+
+    def test_every_icon_slot_property_is_an_enumeration_of_exactly_those_icons(self):
+        names = self.gen.icon_names()
+        seen = 0
+        for ctype, c in COMPONENTS.items():
+            for prop, sl in c.get("slots", {}).items():
+                p = schema_of(ctype)["properties"][prop]
+                if sl["kind"] == "icon":
+                    seen += 1
+                    self.assertEqual((p["type"], p["default"], p["enum"]), ("string", "", [""] + names), f"{ctype}.{prop}")
+                else:
+                    self.assertEqual((p["type"], p["default"], "enum" in p), ("string", "", False), f"{ctype}.{prop}")
+        self.assertGreaterEqual(seen, 6)
+
+    def test_a_slot_must_be_one_the_manifest_declares_and_its_property_must_be_free(self):
+        decl = self.gen.declaration(self.manifest, "obc-tooltip")
+        spec = {"tag": "obc-tooltip", "slots": [{"slot": "nowhere", "kind": "text"}]}
+        with self.assertRaises(SystemExit):
+            self.gen.slot_specs(spec, decl, set())
+        spec = {"tag": "obc-tooltip", "slots": [{"slot": "icon", "kind": "icon"}]}
+        with self.assertRaises(SystemExit):
+            self.gen.slot_specs(spec, decl, {"iconName"})
+        spec = {"tag": "obc-tooltip", "slots": [{"slot": "icon", "kind": "icon", "property": "glyph"}]}
+        self.assertEqual([s["name"] for s in self.gen.slot_specs(spec, decl, {"iconName"})], ["glyph"])
+        with self.assertRaises(SystemExit):
+            self.gen.slot_specs({"tag": "obc-tooltip", "slots": [{"slot": "icon", "kind": "picture"}]}, decl, set())
+
+    def test_slot_property_names_follow_the_slot_names(self):
+        decl = self.gen.declaration(self.manifest, "obc-toggletip")
+        spec = {"tag": "obc-toggletip", "slots": [{"slot": "leading-icon", "kind": "icon"}, {"slot": "content", "kind": "text"}]}
+        self.assertEqual([s["name"] for s in self.gen.slot_specs(spec, decl, set())], ["leadingIconName", "content"])
+        decl = self.gen.declaration(self.manifest, "obc-notification-badge-button")
+        spec = {"tag": "obc-notification-badge-button", "slots": [{"slot": "", "kind": "text"}, {"slot": "", "kind": "icon"}]}
+        self.assertEqual([s["name"] for s in self.gen.slot_specs(spec, decl, set())], ["text", "iconName"])
+
+    def test_the_item_table_holds_the_manifests_attributes_and_refuses_a_tag_it_does_not_declare(self):
+        spec = {"items": {"items": {"tags": ["obc-app-button"]}}}
+        old = dict(self.gen.ITEM_CHILDREN)
+        try:
+            self.gen.ITEM_CHILDREN["obc-app-button"] = ["obc-notification-badge-button"]
+            table = self.gen.build_item_table(self.manifest, [spec])
+            self.assertEqual(set(table), {"obc-app-button", "obc-notification-badge-button"})
+            self.assertEqual(table["obc-app-button"], {"props": ["label", "checked", "integration", "size", "disabled"],
+                                                       "kids": ["obc-notification-badge-button"]})
+            with self.assertRaises(SystemExit):
+                self.gen.build_item_table(self.manifest, [{"items": {"items": {"tags": ["obc-no-such-element"]}}}])
+            schema = self.gen.items_schema({"tags": ["obc-app-button"], "describe": "Things"}, table)
+        finally:
+            self.gen.ITEM_CHILDREN.clear()
+            self.gen.ITEM_CHILDREN.update(old)
+        self.assertEqual((schema["type"], schema["default"], schema["items"]["properties"]["tag"]["enum"]),
+                         ("array", [], ["obc-app-button"]))
+        self.assertIn("Things", schema["description"])
+        self.assertIn("label, checked", schema["description"])
+
+    def test_the_wrapper_builds_items_as_properties_from_a_fixed_allow_list(self):
+        for text in ("function buildItem(o, allowed, depth, slot)", "ITEM_DEPTH", "el.setAttribute('data-item-id'",
+                     "applyItems(el, p)", "document.createElement(tag)", "if (names.indexOf(k) >= 0) el[k] = o[k];",
+                     "out[d.name] = tree.readArray(d.name, []);"):
+            self.assertIn(text, JS)
+        self.assertIn('var ITEM_PLAIN = ["span"];', JS)
+        self.assertIn("var ITEM_DEPTH = 8;", JS)
+        self.assertRegex(JS, r"var ITEMS = \{[^;]*\};")
+        self.assertNotIn("innerHTML = o", JS)          # an item is never markup
+
+    def test_every_event_payload_kind_has_a_schema_and_every_carried_event_a_row(self):
+        for dom, (name, kind, text) in self.gen.ALERT_EVENTS.items():
+            self.assertIn(kind, self.gen.PAYLOAD_PROPS, dom)
+            self.assertTrue(name.startswith("on") and name != "onClick", dom)
+            self.assertTrue(text, dom)
+        for ctype, c in COMPONENTS.items():
+            for name, e in c.get("events", {}).items():
+                schema = json.loads((MODULE / "common/src/main/resources" / e["schema"]).read_text(encoding="utf-8"))
+                self.assertEqual(schema["type"], "object", name)
+                self.assertTrue(schema["description"], name)
+                self.assertIn(e["element"], self.gen.ALERT_EVENTS, name)
+        for kind in ("notification", "label", "item"):
+            self.assertIn("kind === '" + kind + "'", JS)
+
+    def test_the_unset_while_empty_kind_gives_undefined(self):
+        self.assertIn("case 'ustring': { var u = tree.readString(f.name, ''); return u === '' ? undefined : u; }", JS)
+        self.assertIn('"name":"description","kind":"ustring"', JS.replace(" ", ""))
+        self.assertIn('{"name":"label","kind":"ustring","def":""}'.replace(" ", ""), JS.replace(" ", ""))
+
+
+class FrameComponents(unittest.TestCase):
+    """The seven leaf components of batch F1: `obc-tooltip`, `obc-toggletip`, `obc-clock`, `obc-user-button`, `obc-app-button`,
+    `obc-notification-button` and `obc-notification-badge-button`. Each carries exactly the manifest's attributes, its fields
+    without an attribute and its slot properties, and its events (unwired)."""
+    # component type: (tag, manifest path, the manifest's attributes, fields without an attribute, slot properties, events)
+    ROWS = {
+        "cadre.ob.tooltip": ("obc-tooltip", "src/components/tooltip/tooltip.ts", {"type", "variant", "label", "showIcon"}, set(),
+                             {"iconName"}, {}),
+        "cadre.ob.toggletip": ("obc-toggletip", "src/components/toggletip/toggletip.ts",
+                               {"variant", "title", "description", "hasContent", "hasActions", "hasLeadingIcon", "hasTrailingIcon",
+                                "customWidth", "primaryButtonLabel", "secondaryButtonLabel"}, set(),
+                               {"leadingIconName", "trailingIconName", "content"},
+                               {"onPrimaryAction": "primary-action", "onSecondaryAction": "secondary-action"}),
+        "cadre.ob.clock": ("obc-clock", "src/components/clock/clock.ts",
+                           {"date", "showSeconds", "showDate", "showTimezone", "timeZoneOffsetHours", "showYear", "showWeekday", "locale",
+                            "hour12", "selected", "double", "activated", "integrationBarMode", "blinkOnlyBreakpointPx"},
+                           {"isClickable"}, set(), {}),
+        "cadre.ob.userbutton": ("obc-user-button", "src/components/user-button/user-button.ts",
+                                {"variant", "size", "styleType", "static", "disabled", "initials", "label", "sublabel"}, set(),
+                                {"iconName"}, {}),
+        "cadre.ob.appbutton": ("obc-app-button", "src/components/app-button/app-button.ts",
+                               {"label", "checked", "integration", "size", "disabled"}, {"showLabel"}, {"iconName"},
+                               {"onPress": "click"}),
+        "cadre.ob.notificationbutton": ("obc-notification-button", "src/components/notification-button/notification-button.ts",
+                                        {"buttonStyle", "count", "showCount", "isActive", "ariaLabel"}, set(), {"iconName"},
+                                        {"onNotificationClick": "obc-click"}),
+        "cadre.ob.notificationbadgebutton": ("obc-notification-badge-button",
+                                             "src/components/notification-badge-button/notification-badge-button.ts",
+                                             {"openRight", "openLeft", "cornerLeft", "cornerRight", "icon", "disabled", "indent"}, set(),
+                                             {"label", "iconName"}, {"onPress": "click"}),
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        sys.path.insert(0, str(ROOT / "tools"))
+        from hmi import library_profile, screen, testbench
+        cls.screen, cls.testbench, cls.library_profile = screen, testbench, library_profile
+        cls.manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                                  .read_text(encoding="utf-8"))
+
+    def decl(self, path, tag):
+        return next(d for m in self.manifest["modules"] if m["path"] == path
+                    for d in m.get("declarations", []) if d.get("tagName") == tag)
+
+    def test_each_contract_carries_the_manifests_attributes_fields_and_slot_properties(self):
+        for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
+            c = COMPONENTS[ctype]
+            self.assertEqual(c["element"], tag)
+            self.assertEqual({a["fieldName"] for a in self.decl(path, tag)["attributes"]}, attrs, ctype)
+            self.assertEqual(set(c["props"]) - {"componentSize"}, attrs | fields | slots, ctype)
+            self.assertEqual(set(c.get("slots", {})), slots, ctype)
+
+    def test_the_events_are_the_elements_own_carried_and_not_wired(self):
+        for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
+            c = COMPONENTS[ctype]
+            declared = {e["name"] for e in self.decl(path, tag).get("events", [])}
+            self.assertEqual({n: e["element"] for n, e in c.get("events", {}).items()}, events, ctype)
+            self.assertTrue(set(events.values()) <= declared, ctype)
+            for name, e in c.get("events", {}).items():
+                self.assertTrue((MODULE / "common/src/main/resources" / e["schema"]).is_file(), name)
+        # the clock and the user button declare no event: a press is the host's own click (the frame binds Perspective's onClick)
+        self.assertNotIn("events", COMPONENTS["cadre.ob.clock"])
+        self.assertNotIn("events", COMPONENTS["cadre.ob.userbutton"])
+        self.assertEqual(self.decl(self.ROWS["cadre.ob.userbutton"][1], "obc-user-button").get("events", []), [])
+        self.assertEqual(self.decl(self.ROWS["cadre.ob.clock"][1], "obc-clock").get("events", []), [])
+
+    def test_the_payloads(self):
+        for name, props in (("notificationbutton.onNotificationClick", {"count": "number", "isActive": "boolean"}),
+                            ("toggletip.onPrimaryAction", {"label": "string"}), ("toggletip.onSecondaryAction", {"label": "string"}),
+                            ("appbutton.onPress", {}), ("notificationbadgebutton.onPress", {})):
+            schema = json.loads((MODULE / f"common/src/main/resources/schemas/{name}.json").read_text(encoding="utf-8"))
+            self.assertEqual({k: v["type"] for k, v in schema["properties"].items()}, props, name)
+
+    def test_the_enumerations_come_from_the_elements(self):
+        self.assertEqual(schema_of("cadre.ob.tooltip")["properties"]["variant"]["enum"],
+                         ["normal", "raised", "enhanced", "eco", "alarm", "warning", "caution"])
+        self.assertEqual(schema_of("cadre.ob.toggletip")["properties"]["variant"]["enum"],
+                         ["normal", "raised", "enhanced", "eco-feedback", "caution", "warning", "alarm"])
+        self.assertEqual(schema_of("cadre.ob.userbutton")["properties"]["size"]["enum"], ["regular", "large"])
+        self.assertEqual(schema_of("cadre.ob.userbutton")["properties"]["variant"]["enum"], ["icon", "initials"])
+        self.assertEqual(schema_of("cadre.ob.appbutton")["properties"]["size"]["enum"], ["normal", "small"])
+        self.assertEqual(schema_of("cadre.ob.notificationbutton")["properties"]["buttonStyle"]["enum"], ["flat", "normal", "enhanced"])
+
+    def test_the_components_are_registered_in_java_imported_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        entry = (MODULE / "web/entry.js").read_text(encoding="utf-8")
+        for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
+            name = COMPONENTS[ctype]["schema"].split("/")[-1].split(".")[0]
+            self.assertRegex(java, rf'descriptor\("{re.escape(ctype)}", "{name}"')
+            for ev in events:
+                self.assertIn(f'event("{name}", "{ev}"', java)
+            self.assertIn(path.replace("src/", "dist/").replace(".ts", ".js"), entry)
+            self.assertIn(f'"type":"{ctype}","tag":"{tag}"', JS)
+            self.assertRegex(JS, rf'\(\[\w+\("{tag}"\)\]')
+        self.assertEqual(len(re.findall(r'^        descriptor\("', java, re.M)), len(COMPONENTS))
+
+    def test_the_table_row_of_each_is_a_frame_kind_and_a_module_only_kind(self):
+        self.assertEqual(set(self.screen.FRAME_ONLY.values()), set(self.ROWS))
+        for kind, ctype in self.screen.FRAME_ONLY.items():
+            self.assertEqual(self.screen.MODULE_ONLY[kind], ctype)
+            self.assertEqual(COMPONENTS[ctype]["element"], "obc-" + kind)       # the kind is the tag without `obc-`
+            self.assertNotIn(kind, self.screen.MODULE_KIND)
+
+    def test_the_component_test_page_shows_them_in_one_frame_section_under_the_module_rendering_only(self):
+        contracts = self.screen.load_contracts()
+        prof = self.library_profile.build(contracts)
+        bench = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="module")
+        ids = [s["id"] for s in bench.descriptor["sections"]]
+        self.assertIn("FrameComponents", ids)
+        self.assertLess(ids.index("ModuleOnly"), ids.index("FrameComponents"))
+        title = next(s["label"] for s in bench.descriptor["sections"] if s["id"] == "FrameComponents")
+        self.assertIn("Frame components: tooltip, toggletip, clock, user-button, app-button", title)
+        only = next(s["label"] for s in bench.descriptor["sections"] if s["id"] == "ModuleOnly")
+        for kind in self.screen.FRAME_ONLY:
+            self.assertNotIn(kind, only.split(": ", 1)[1].split(", "))
+        counts = {k: sum(1 for s in bench.descriptor["symbols"] if s["kind"] == k) for k in self.screen.FRAME_ONLY}
+        self.assertEqual(counts, {"tooltip": 13, "toggletip": 14, "clock": 15, "user-button": 14, "app-button": 7,
+                                  "notification-button": 11, "notification-badge-button": 9})
+        stock = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="stock")
+        self.assertNotIn("FrameComponents", [s["id"] for s in stock.descriptor["sections"]])
+        self.assertEqual(self.testbench.check(bench.descriptor, contracts), [])
+
+    def test_the_samples_are_ours_and_every_slot_property_is_exercised_on_the_page(self):
+        used = set()
+        for kind, sample in self.testbench.FRAME_SAMPLE.items():
+            for params in [sample["base"]] + [p for _c, p in sample["extra"]]:
+                used |= {(kind, k) for k in params}
+        for kind, ctype in self.screen.FRAME_ONLY.items():
+            for prop, sl in COMPONENTS[ctype].get("slots", {}).items():
+                self.assertIn((kind, prop), used, f"{kind}.{prop}")
+        for icon in ("info", "alarm", "close-google", "home", "user-settings"):
+            self.assertIn(icon, self.gen_icons())
+
+    def gen_icons(self):
+        import sys
+        sys.path.insert(0, str(MODULE / "tools"))
+        import gen_module_assets
+        return gen_module_assets.icon_names()
+
+    def test_a_stock_build_refuses_a_frame_kind_with_an_error_and_no_silent_gap(self):
+        contracts = self.screen.load_contracts()
+        try:
+            self.screen.RENDER["target"] = "stock"
+            rep = self.screen.Report()
+            sym = {"id": "X1", "kind": "tooltip", "x": 100, "y": 100, "w": 192, "h": 40, "params": {"label": "Hi"}}
+            self.screen.embed_symbol(sym, contracts, "[default]t", rep, toolbar=True)
+            self.assertEqual(len(rep.errors), 1)
+            self.assertIn("kind 'tooltip' is module only (cadre.ob.tooltip)", rep.errors[0])
+            self.screen.RENDER["target"] = "module"
+            rep = self.screen.Report()
+            node, _c, _cfg = self.screen.embed_symbol(sym, contracts, "[default]t", rep, toolbar=True)
+            self.assertEqual((node["type"], node["props"], rep.errors), ("cadre.ob.tooltip", {"label": "Hi"}, []))
+        finally:
+            self.screen.RENDER["target"] = "stock"
 
 
 class Release(unittest.TestCase):
