@@ -1184,6 +1184,34 @@
   "params": {},
   "view": "Framework/NavMenu"
  },
+ "Framework/OB/AlertMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/AlertMenu"
+ },
+ "Framework/OB/Brilliance": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/Brilliance"
+ },
+ "Framework/OB/Head": {
+  "kind": "framework",
+  "params": {
+   "appName": "App",
+   "showUser": true
+  },
+  "view": "Framework/OB/Head"
+ },
+ "Framework/OB/NavDock": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/NavDock"
+ },
+ "Framework/OB/UserMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/UserMenu"
+ },
  "Framework/SideMenu": {
   "kind": "framework",
   "params": {},

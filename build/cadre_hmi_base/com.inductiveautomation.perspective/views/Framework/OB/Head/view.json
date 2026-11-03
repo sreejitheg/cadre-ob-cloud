@@ -1,0 +1,479 @@
+{
+  "custom": {
+    "alarm": {
+      "count": 0,
+      "highest": "",
+      "topLabel": "",
+      "topTime": "",
+      "unacked": 0
+    },
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "crumbs": []
+  },
+  "params": {
+    "appName": "App",
+    "showUser": true
+  },
+  "propConfig": {
+    "custom.alarm": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alarm_summary(self.session.custom.alarmScope)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.crumbs": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.crumbs(self.session, value)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.appName": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showUser": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 84,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onAlertClick": {
+              "config": {
+                "script": "\t# GF-37: the bell's event carries nothing; the popup is the default bar's, with the alert menu in it\n\tsystem.perspective.openPopup('alertMenu', 'Framework/OB/AlertMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onDimmingButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing\n\tsystem.perspective.openPopup('brilliance', 'Framework/OB/Brilliance', params={}, position={'top': 48, 'right': 56}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onMenuButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing; the dock is the one the ASM top bar's menu button opens\n\tsystem.perspective.openDock(id='nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onUserButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing\n\tsystem.perspective.openPopup('userMenu', 'Framework/OB/UserMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "TopBar"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.alertType": {
+            "binding": {
+              "config": {
+                "expression": "case({view.custom.alarm.highest}, 'Critical', 'level-critical', 'High', 'level-high', 'Medium', 'level-medium', 'Low', 'level-low', '')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.appTitle": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.appName}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.blinking": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarm.unacked} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.date": {
+            "binding": {
+              "config": {
+                "expression": "dateFormat(now(1000), \"yyyy-MM-dd'T'HH:mm:ss'Z'\")"
+              },
+              "type": "expr"
+            }
+          },
+          "props.nAlerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarm.count}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.pageName": {
+            "binding": {
+              "config": {
+                "path": "page.props.path"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.page_title(self.session, value)",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          },
+          "props.showUserButton": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showUser}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "showClock": true,
+          "showDimmingButton": true
+        },
+        "type": "cadre.ob.topbar"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Crumbs"
+            },
+            "position": {
+              "shrink": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.crumbs}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.crumbs}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "elementPosition": {
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Framework/Crumb",
+              "style": {
+                "gap": "4px",
+                "marginLeft": "8px"
+              },
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": true
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "meta": {
+              "name": "Spacer"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "20px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.elements[0].fill.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "case({view.custom.alarm.highest}, 'Critical', 'var(--alert-critical-color)', 'High', 'var(--alert-alarm-color)', 'Medium', 'var(--alert-warning-color)', 'Low', 'var(--alert-caution-color)', 'var(--element-neutral-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M10 2L19 18H1Z",
+                      "fill": {
+                        "paint": "var(--alert-alarm-color)"
+                      },
+                      "name": "tri",
+                      "type": "path"
+                    },
+                    {
+                      "d": "M9.2 7H10.8V12.5H9.2ZM9.2 13.8H10.8V15.4H9.2Z",
+                      "fill": {
+                        "paint": "var(--on-alarm-color)"
+                      },
+                      "name": "mark",
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 20 20"
+                },
+                "type": "ia.shapes.svg"
+              },
+              {
+                "meta": {
+                  "name": "Text"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.topLabel}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "overflow": "hidden",
+                    "textOverflow": "ellipsis",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Time"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.topTime}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tcadre.hmi.ack_top(self.session.custom.alarmScope, self.session)"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Ack"
+                },
+                "position": {
+                  "basis": "56px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.unacked} > 0"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W6}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "28px"
+                  },
+                  "text": "ACK"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "AlertMessage"
+            },
+            "position": {
+              "basis": "420px",
+              "shrink": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarm.count} > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "backgroundColor": "var(--normal-enabled-background-color)",
+                "border": "1px solid var(--border-outline-color)",
+                "borderRadius": "6px",
+                "gap": "8px",
+                "height": "32px",
+                "margin": "0 8px",
+                "overflow": "hidden",
+                "padding": "0 4px 0 8px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Strip"
+        },
+        "position": {
+          "basis": "36px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/bar cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

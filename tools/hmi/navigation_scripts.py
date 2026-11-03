@@ -533,4 +533,60 @@ def banner_alarms(session, route=""):
 			"state": state, "deviceId": folder if d is not None else "", "deviceKind": _text(d["kind"]) if d is not None else "",
 			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else ""})
 	return out
+
+
+# --- the OpenBridge frame (`--frame ob`, tools/hmi/obframe.py) ----------------------------------------------
+# The Cadre priority to the count of OpenBridge's `AlertCounts` (wiki 13 section 11.1: Critical the critical colour,
+# High alarm, Medium warning, Low caution, Diagnostic its own level), for the `alerts` of a navigation item.
+OB_COUNT_OF = {"Critical": "countLevelCritical", "High": "countAlarm", "Medium": "countWarning", "Low": "countCaution",
+	"Diagnostic": "countLevelDiagnostic"}
+
+
+def ob_items(kind, rows, state=None, icons=None):
+	"""The item objects of the module's frame components (`items` of `cadre.ob.alertmenu` and
+	`cadre.ob.navigationmenu`: `tag`, the element's attributes, `id`, `children`), built from rows the library already
+	answers. It reads nothing but its arguments (and formats the times).
+
+	`kind` "alerts": `rows` are `alarm_list` records, `state` whether the session may acknowledge (W8). A row is an
+	`obc-alert-menu-item` whose `id` is the alarm event's id; ACK shows while the alarm is unacknowledged and is disabled
+	without the permission (the scripts refuse anyway, `ack`).
+	`kind` "nav": `rows` are navigation items (`nav_items`, or the footer: `label`, `path`, `icon`, optional `counts`),
+	`state` the current route, `icons` the OpenBridge icon names the module bundles. An item's `id` is its route and an
+	item that names a node shows the node's counts as `alerts`. An icon outside `icons` is left out."""
+	out = []
+	if kind == "alerts":
+		for r in (rows or []):
+			acked = r["acknowledged"] is not False
+			day = ""
+			try:
+				day = system.date.format(system.date.fromMillis(long(r["time"])), "d MMM")
+			except Exception:
+				pass
+			out.append({"tag": "obc-alert-menu-item", "id": _text(r["id"]), "title": _text(r["text"]),
+				"description": _text(r["source"]), "day": day, "time": _clock(r["time"]),
+				"status": "acknowledged" if acked else "unacknowledged",
+				"primaryActionState": "enabled" if state else "disabled",
+				"children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": r["type"],
+					"active": r["active"] is True, "acknowledged": acked}]})
+		return out
+	for it in (rows or []):
+		path = _text(it["path"])
+		icon = ""
+		counts = None
+		try:
+			icon = _text(it["icon"])
+		except Exception:
+			pass
+		try:
+			counts = it["counts"]
+		except Exception:
+			pass
+		item = {"tag": "obc-navigation-item", "id": path, "label": _text(it["label"]), "checked": path == _text(state)}
+		if icon and icon in (icons or []):
+			item["hasIcon"] = True
+			item["children"] = [{"tag": "obi-" + icon, "slot": "icon"}]
+		if counts is not None and counts["total"] > 0:
+			item["alerts"] = dict((OB_COUNT_OF[p], counts[p]) for p in OB_COUNT_OF)
+		out.append(item)
+	return out
 '''

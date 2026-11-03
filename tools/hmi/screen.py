@@ -32,11 +32,11 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts  # noqa: E402
+    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, parent as par, parts  # noqa: E402
     from hmi.framework import root_classes, search_panel  # noqa: E402
     from hmi.library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE  # noqa: E402
 else:
-    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts
+    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, parent as par, parts
     from .framework import root_classes, search_panel
     from .library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE
 
@@ -1715,6 +1715,8 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
                 frame: str = "openbridge") -> tuple[pv.Project, dict]:
     if frame not in navigation.FRAMES:
         raise ValueError(f"frame {frame!r}: one of {navigation.FRAMES}")
+    if frame == "ob" and render != "module":   # the frame is drawn with the module's components: a stock build has none
+        raise ValueError("--frame ob draws the OpenBridge frame components of the module: it needs --render module")
     if frame == "asm" and (bad := navigation.frame_errors(descs)):
         raise ValueError("; ".join(bad))
     RENDER["target"] = render
@@ -1754,8 +1756,10 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     sp["custom"]["commands"] = parts.commands_index(descs)   # the pulse tags the page buttons may write (COB-159)
     if frame == "asm":   # the ASM frame (COB-160): its docks, pivot pages and the data its views read
         sp["custom"].update(navigation.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
+    if frame == "ob":   # the OpenBridge frame (T2 F6a): the frame's name; its docks are in the page configuration
+        sp["custom"].update(obframe.session_custom())
     child.set_session_props(sp)
-    child.set_page_config(navigation.page_config(app_name, pages) if frame == "asm" else par.page_config(app_name, pages))
+    child.set_page_config({"asm": navigation.page_config, "ob": obframe.page_config}.get(frame, par.page_config)(app_name, pages))
     return child, reports
 
 
@@ -1817,7 +1821,9 @@ def main() -> int:
                     help="where a session opens a faceplate until its pin moves it: the right dock or a popup")
     ap.add_argument("--frame", choices=list(navigation.FRAMES), default="openbridge",
                     help="asm: the ASM application frame (COB-160): navigation dock, crumb popups, global search, "
-                         "page header, alarm banner and a floating faceplate for each device; the default is unchanged")
+                         "page header, alarm banner and a floating faceplate for each device; "
+                         "ob: the OpenBridge frame, drawn with the module's frame components (needs --render module); "
+                         "the default is unchanged")
     ap.add_argument("--component-test", action="store_true",
                     help="add the component test page (route /component-test, a level 4 support page) generated from "
                          "the library catalogue (tools/hmi/testbench.py, wiki page 13 section 13): every kind with its "
@@ -1840,6 +1846,9 @@ def main() -> int:
         return 1
     if (a.tag_root or a.write_descriptor or a.write_devices) and not a.component_test:
         print("--tag-root, --write-descriptor and --write-devices go with --component-test")
+        return 1
+    if a.frame == "ob" and a.render != "module":
+        print("--frame ob draws the OpenBridge frame components of the module: it needs --render module")
         return 1
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     names = list(a.descriptor)

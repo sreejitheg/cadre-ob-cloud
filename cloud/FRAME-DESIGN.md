@@ -318,3 +318,26 @@ On a sample built with `--frame ob --render module`:
    section 11.1 says; G8 on the new frame is judged by its own rules and its pictures are sent to the owner; the frame
    is built into the existing parent, which already carries every frame's views, with a sample child on each new
    variant.
+
+## Departures from the Design in Batch F6a (2026-11-03)
+
+The OpenBridge variant (`--frame ob`, wiki 04 section 10) departed from sections 3 and 4.1 in these respects.
+
+1. **Views and scripts.** The five views are `Framework/OB/Head`, `NavDock`, `AlertMenu`, `UserMenu` and `Brilliance`; `Head` holds
+   the strip (crumb and alert message) beneath the bar, not beside it, so the dock is 84 px, as the ASM frame's. The design's
+   `session_defaults` change is not made: the session keys the views read already exist, and a change would alter the older
+   frames' children. `session_custom` is `{"frame": "ob"}`. One script function is added, `cadre.hmi.ob_items`, which shapes
+   the alarm list and the navigation items into the components' item lists; `nav_tree` is not used (the ASM variant's source).
+2. **Alert menu.** The design (section 3) wired `ack-click` to W8 "after Confirm". The default frame's module panel acknowledges
+   a row and ACK visible at once, with the Confirm row on its own Ack all bar, and the frame follows that exactly: W8 and W9 as
+   the panel, the bar and its Confirm row under the menu. A row is disabled, not hidden, without the permission.
+3. **Clock.** The design bound `date` to ISO text with `timeZoneOffsetHours` from the clock label. The default bar's clock shows the
+   gateway's wall time with a label, so `date` is the wall time written as an instant and the offset is 0 (the label "UTC" is dropped).
+4. **Command text.** `commandButtonText` is left empty (the F4 run-on "Engine roomCommand" is avoided, not fixed in the wrapper).
+5. **Brilliance.** The brightness section is hidden (`showBrightness` false), as the design said; the popup is 320 by 280, to be
+   measured at the gateway step.
+6. **Icons.** A navigation item draws an icon only where its Cadre icon name is also a bundled OpenBridge icon (`dashboard`,
+   `alert-list`); the others draw none. No icon was added to the bundle in this batch.
+7. **Parent.** The parent now holds views with module components (the five above), which it did not before; they are inert until a child
+   names them, and G1 of the parent reads the module's schemas.
+

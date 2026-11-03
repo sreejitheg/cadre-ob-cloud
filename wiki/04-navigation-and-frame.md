@@ -534,3 +534,94 @@ joining it. A process flow through a machine carries its medium and is no feeder
 The commands are proven offline on synthetic inputs with placeholder names (`tests/fixtures/asm-*.json`): the descriptors
 pass the generator's gates G0 to G7, and the previews pass their checks in a browser. A real run on the migrated slice is
 the integrated run's work, not this section's.
+
+## 10. The OpenBridge Frame (`--frame ob`)
+
+Built and tested offline on 2026-11-03 (tranche T2, batch F6a; `cloud/FRAME-DESIGN.md` sections 3 and 4.1 and the owner's
+answers). The frame of sections 2 to 7 stays the default and section 8 the ASM frame; this is a third set of views and docks,
+taken only by a child built with `screen.py --frame ob`, and drawn with the module's frame components (`wiki/12` sections 17.23
+to 17.27). Code: `tools/hmi/obframe.py` (views, page configuration, session data), the function `cadre.hmi.ob_items` of
+`tools/hmi/navigation_scripts.py`, `tests/test_ob_frame.py`. This batch is the OpenBridge variant; the ASM variant (the navigation
+tree, crumb popups and page header on the same components) is the next batch.
+
+### 10.1 The Option and the Docks
+
+`screen.build_child(..., frame="ob")`, or `--frame ob` on the command line. The option needs `--render module`: the command
+line stops with a message, and `build_child` raises `ValueError`, under the stock rendering, as the module-only kinds are
+refused there. The parent carries the five views whether or not a child uses them (`obframe.views()`, written by `parent.py`
+beside the ASM frame's). A child built with `openbridge` or `asm` is byte-identical to one built before the option.
+
+Table 6. The docks of a child built with `--frame ob` (`obframe.shared_docks`).
+
+| Edge | Identifier | View | Size | Display | Content |
+|---|---|---|---|---|---|
+| Top | `topbar` | `Framework/OB/Head`: `cadre.ob.topbar` (48 px) above a strip of the Cadre crumb and alert message (36 px) | 84 px | visible | push |
+| Left | `nav` | `Framework/OB/NavDock`: `cadre.ob.navigationmenu` under a title and close row | 320 px, modal | on demand | cover |
+| Right | `faceplate` | `Framework/SideMenu` | 400 px | on demand | push |
+
+The bar and the strip share the one top dock (GF-90). The bar is 48 px high (measured, `wiki/12` section 17.26.7); the strip keeps
+the two parts the owner kept (answers 2 and 3): the Cadre crumb (`Framework/Crumb`, each node with its badges, section 7 item 4)
+and the Cadre alert message (the latest alarm and its ACK, write path W6, as the default bar has it). Both are the default
+bar's own nodes (`framework.top_bar`), taken by name, with the data they read (`custom.alarm`, `custom.can`, `custom.crumbs`).
+
+### 10.2 The Top Bar
+
+`cadre.ob.topbar` carries the application's name (`params.appName`), the page's name (`cadre.hmi.page_title` of the open route, as
+the default bar's), its own alert button and clock, and the menu, dimming and user buttons. The bell's count is
+`custom.alarm.count` (the library's alarm summary, `cadre.hmi.alarm_summary`, every 2 s), its flashing `custom.alarm.unacked > 0`
+and its colour `alertType` from the highest active priority by `wiki/13` section 11.1 (Critical `level-critical`, High
+`level-high`, Medium `level-medium`, Low `level-low`, Diagnostic none: the table is `cadre.hmi.PRIORITY_STATUS` and `ALERT_TYPE`,
+read by the generator). The silence control is hidden (owner's answer 4: the module's default, and no `onSilenceClick` is wired).
+The clock shows the gateway's wall time, as the default bar's does: its `date` is the wall time of `now(1000)` written as an
+instant and `timeZoneOffsetHours` stays 0 (the default bar's label "UTC" is only a label, so the new bar has none). The command
+text is left empty: the gateway run of batch F4 found the text run on from the page's name ("Engine roomCommand"), and the frame has
+no command to name there.
+
+### 10.3 Events and the Functions They Call
+
+Every component event is a script action whose first line cites the shape measured in GF-37 (`event.id`, `event.ids`,
+`event.value`, or nothing) and which calls a function that exists: no write path is new.
+
+Table 7. The wired events of the OpenBridge frame.
+
+| Component | Event | Script |
+|---|---|---|
+| `cadre.ob.topbar` | `onMenuButtonClick` | `system.perspective.openDock(id='nav')` |
+| | `onAlertClick`, `onDimmingButtonClick`, `onUserButtonClick` | `framework._open_menu`: a modal popup (section 8.10) of `Framework/OB/AlertMenu`, `Brilliance` or `UserMenu`, top 48, right 8, 56 and 8 |
+| `cadre.ob.navigationmenu` | `onItemClick` | `system.perspective.navigate(event.id)`, then `closeDock('nav')`; an item's `id` is its route |
+| `cadre.ob.alertmenu` | `onAckClick` | `cadre.hmi.ack_listed([event.id], session, 'W8')`: `ack` under W8, as the module panel's row ACK |
+| | `onAckAllClick` | `cadre.hmi.ack_event(event, session, path='W9')`, as the panel's ACK visible, its message through `ack_message` |
+| | `onItemClick` | `cadre.hmi.select_alarm_device`, then the faceplate opener (`library.open_faceplate`), as the panel's row |
+| | `onGoToAlertListClick` | `navigate('/alerts')` |
+| `cadre.ob.usermenu` | `onSignInClick`, `onSignOutClick` | `system.perspective.login()` and `logout()` (GF-44); the component has no credential property and none is bound |
+| `cadre.ob.brilliancemenu` | `onPaletteChanged` | `cadre.hmi.set_palette(session, event.value)` for `day`, `bright`, `dusk` and `night`; the brightness section is hidden |
+
+The alert menu follows the default frame's module panel (`framework.alert_menu_module`): the acknowledgements are the same
+functions under W8 and W9 and the `Administrator` rule inside `ack`; a row is disabled for ACK, not hidden, without the
+permission (`primaryActionState`); `canAckAll` follows `custom.can.W9`. The Ack all bar and its Confirm row (`acks.bar`, `wiki/13`
+section 10.6) stand under the menu as they stand under the panel, without Ack selected (the menu has no selection). The menu's
+rows are the alarm query's (`cadre.hmi.alarm_list`, every 2 s), shaped by `cadre.hmi.ob_items('alerts', ...)`: one
+`obc-alert-menu-item` for each alarm, `id` the alarm event's, status `unacknowledged` while unacknowledged, with an
+`obc-alert-icon` of the record's `type`. The navigation menu's items are `cadre.hmi.nav_items` (each page with the counts of its node)
+and the footer (`session.custom.nav.footer`), shaped by `cadre.hmi.ob_items('nav', ...)`: the item for the open page is `checked`,
+an item with active alarms shows them as `alerts` (Critical `countLevelCritical`, High `countAlarm`, Medium `countWarning`, Low
+`countCaution`, Diagnostic `countLevelDiagnostic`), and an item shows an icon only where the module bundles one of that name.
+
+### 10.4 Session Data
+
+A child built with `--frame ob` adds `frame` (`ob`) to the generator's usual keys (`nav`, `alarmScope`, `devices`, `hierarchy`,
+`faceplateStyle`). The views read `palette`, `nav`, `alarmScope`, `devices` and the selection keys, which every frame has.
+
+### 10.5 Not Verified Without the Gateway
+
+Nothing of this section has run on the gateway; the checks are offline (`tests/test_ob_frame.py`, gates G0 to G7). To be seen at G8,
+G10 and G11 on `cadre_hmi_wtpobf`:
+
+1. The head draws the bar and the strip in the 84 px dock, with the bar's menu, dimming and user buttons and the bell all shown.
+2. A component event runs a script action (GF-37) for every event of Table 7, and `event.id`, `event.ids` and `event.value` are the
+   attributes the payload names.
+3. The popups' right offsets (8, 56, 8) are the default bar's; the bar's buttons may stand elsewhere, so the offsets are to be read.
+4. The alert menu rows, the ACK of a row and ACK visible under W8 and W9; nobody signed in: ACK disabled, `canAckAll` false.
+5. The navigation menu's items, the checked item, a node's `alerts` badge, and the dock closing on a click outside it.
+6. The popup sizes (alert 640 by 600, user 320 by 280, brilliance 320 by 280) against the components' measured sizes.
+7. The icons of the navigation items: only those named like a bundled OpenBridge icon (`dashboard`, `alert-list`) draw.

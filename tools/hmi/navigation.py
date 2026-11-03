@@ -23,7 +23,7 @@ from .framework import (SEARCH_VIEW, search_panel, _badges_embed, _icon_button, 
                         root_classes)
 from .library import icon_svg, open_device, svg
 
-FRAMES = ("openbridge", "asm")
+FRAMES = ("openbridge", "asm", "ob")   # ob: the OpenBridge frame components (tools/hmi/obframe.py); needs --render module
 FLOAT_VIEW = "Framework/ASM/FloatFaceplate"
 CRUMB_POPUP = "crumbPopup"
 # a row's `close` that means the in-page search panel (L4): the query is cleared and the panel closes
