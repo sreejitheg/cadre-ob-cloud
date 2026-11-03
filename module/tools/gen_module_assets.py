@@ -183,6 +183,15 @@ COMPONENTS = [
     {"tag": "obc-gauge-valve", "type": "cadre.ob.gaugevalve", "name": "gaugevalve", "title": "OB Valve Gauge",
      "palette": "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
      "size": {"width": 240, "height": 280}, "exclude": []},
+    {"tag": "obc-hydraulic-valve-4-3", "type": "cadre.ob.hydraulicvalve43", "name": "hydraulicvalve43", "title": "OB Hydraulic 4/3 Valve",
+     "palette": "OpenBridge hydraulic 4/3 valve: a three position selector showing the selected position, display only",
+     "size": {"width": 144, "height": 48}, "exclude": []},
+    {"tag": "obc-hydraulic-valve-x-2", "type": "cadre.ob.hydraulicvalvex2", "name": "hydraulicvalvex2", "title": "OB Hydraulic X/2 Valve",
+     "palette": "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
+     "size": {"width": 96, "height": 48}, "exclude": []},
+    {"tag": "obc-transmitter-button", "type": "cadre.ob.transmitterbutton", "name": "transmitterbutton", "title": "OB Transmitter Button",
+     "palette": "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
+     "size": {"width": 96, "height": 40}, "exclude": []},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).

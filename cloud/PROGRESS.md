@@ -193,3 +193,11 @@
   valve gauges), display only: events unwired, setpoints shown and never written. `schema_for` keeps a measured
   numeric default for a nullable number (no earlier schema changed). Tests 1189 to 1190 (the table-driven module-only
   tests of B0 cover the new kinds).
+- 2026-11-03 05:50: T1 B8 in one Sonnet 5.5 subagent at medium effort (tokens not reported): hydraulic valves 4/3 and X/2 and the transmitter
+  button wrapped as display-only glyphs (events unwired, writes recorded as open items); the input modal not wrapped (four empty slots, no
+  attributes: wiki 17.20.5). Page counts 10, 8 and 22; G0 to G7 pass (19 devices, 21 device symbols). tests.test_module 133 passing; full suite 1190 to 1191.
+- 2026-11-03 05:49: T1 B8 in a Sonnet 5.5 subagent at medium effort: 135,942 tokens, 37 tool calls, 7 min 28 s. The two
+  hydraulic valves (`selectedPosition` bound, `position-selected` unwired) and the transmitter button (values bound,
+  click unwired) as module-only glyphs; `obc-automation-input-modal` not wrapped: four bare slots and no attribute,
+  which a property cannot fill (a container component is outside T1). Tests 1190 to 1191. T1 offline complete: 30 of
+  the 31 elements wrapped.

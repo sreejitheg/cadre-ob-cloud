@@ -79,7 +79,8 @@ GALLERY_PARAMS = frozenset({
     "outOfService", "progress",
     "value2", "closed",   # the state of the valve glyphs (B4), which no earlier kind has
     "level",              # the level of the battery and tank indicators (B5); their `value` is the scheme and is bound too
-    "state", "priority", "medium", "bottomValue"})   # the live state of the specialty tanks and the gauges (B6, B7)
+    "state", "priority", "medium", "bottomValue",   # the live state of the specialty tanks and the gauges (B6, B7)
+    "selectedPosition", "adviceValue", "setpointValue"})   # the hydraulic valves' position and the transmitter button's segments (B8)
 GALLERY_PREFIXES = ("S_", "N_", "B_")   # the ids of the symbols of the static grids
 
 
@@ -603,11 +604,20 @@ GLYPH_NUMBERS = (50, 100)
 GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
                        # the gauges' scale and their deadbands (B7): the first value is the element's own default
                        "maxValue": (100, 200), "minValue": (0, -50), "autoAtSetpointDeadband": (2, 5),
-                       "setpointAtZeroDeadband": (0.5, 1), "fractionDigits": (0, 2)}
+                       "setpointAtZeroDeadband": (0.5, 1), "fractionDigits": (0, 2),
+                       # the selected position of the hydraulic valves (B8): a zero-based index, the first is the element's own default
+                       "selectedPosition": (1, 0, 2),
+                       # the transmitter button's reserved integer digits (B8)
+                       "maxDigits": (0, 4)}
 # The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
 # free string property is shown with, where a glyph has one (the readout's unit).
 GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
 GLYPH_TEXT = {"unit": "kn"}
+# The nullable numbers a glyph shows live and so states at the values of `GLYPH_NUMBERS` (B8: the transmitter button's three
+# segments, which draw dashes while empty). A nullable number outside this set (a gauge's setpoint) is left unstated.
+GLYPH_NULLABLE = ("value", "adviceValue", "setpointValue")
+# A companion a value of an enumeration needs to show anything: the tag variant of the transmitter button is its label.
+GLYPH_COMPANION = {("variant", "tag"): {"label": "TT"}}
 
 
 def glyph_cases(schema: dict, contract: dict) -> list[Case]:
@@ -620,15 +630,17 @@ def glyph_cases(schema: dict, contract: dict) -> list[Case]:
     none of those is stated."""
     props = {k: p for k, p in schema.items() if k not in ("positioning", "componentSize")}
     default = {k: p["default"] for k, p in props.items()}
-    numbers = {k: GLYPH_NUMBER_VALUES.get(k, GLYPH_NUMBERS) for k, p in props.items() if p["type"] == "number"}
+    numbers = {k: GLYPH_NUMBER_VALUES.get(k, GLYPH_NUMBERS) for k, p in props.items()
+               if p["type"] == "number" or (p["type"] == ["number", "null"] and k in GLYPH_NULLABLE)}
     series = [k for k, p in props.items() if p["type"] == "array" and p.get("items", {}).get("type") == "number"]
     mid = {k: v[0] for k, v in numbers.items()}
     out = [Case("default", {})]
     for k, p in props.items():
         if "enum" in p:
-            out += [Case(f"{k} {v}", {**mid, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {})})
+            out += [Case(f"{k} {v}", {**mid, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {}),
+                                      **GLYPH_COMPANION.get((k, v), {})})
                     for v in p["enum"]]
-        elif p["type"] == "number":
+        elif k in numbers:
             out += [Case(f"{k} {v}", {k: v}) for v in numbers[k]]
         elif p["type"] == "boolean":
             out.append(Case(k if not default[k] else f"not {k}", {**mid, k: not default[k]}))

@@ -40,3 +40,6 @@ import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-separator/hydra
 import '@oicl/openbridge-webcomponents/dist/automation/gauge-generator/gauge-generator.js';
 import '@oicl/openbridge-webcomponents/dist/automation/gauge-motors-and-pumps/gauge-motors-and-pumps.js';
 import '@oicl/openbridge-webcomponents/dist/automation/gauge-valve/gauge-valve.js';
+import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-valve-4-3/hydraulic-valve-4-3.js';
+import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-valve-x-2/hydraulic-valve-x-2.js';
+import '@oicl/openbridge-webcomponents/dist/automation/transmitter-button/transmitter-button.js';

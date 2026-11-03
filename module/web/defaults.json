@@ -762,5 +762,33 @@
   "setpointAtZeroDeadband": 0.5,
   "setpointOverride": false,
   "animateSetpoint": false
+ },
+ "obc-hydraulic-valve-4-3": {
+  "type": "1",
+  "ariaLabel": "Hydraulic 4/3 valve",
+  "selectedPosition": 1,
+  "vertical": false
+ },
+ "obc-hydraulic-valve-x-2": {
+  "type": "2/2",
+  "ariaLabel": "Hydraulic valve",
+  "selectedPosition": 1,
+  "vertical": false
+ },
+ "obc-transmitter-button": {
+  "variant": "value",
+  "size": "regular",
+  "value": "__undefined__",
+  "unit": "",
+  "fractionDigits": 1,
+  "maxDigits": 0,
+  "hintedZeros": false,
+  "hasSignSpacer": false,
+  "hasIcon": false,
+  "hasAdvice": false,
+  "adviceValue": "__undefined__",
+  "hasSetPoint": false,
+  "setpointValue": "__undefined__",
+  "label": ""
  }
 }

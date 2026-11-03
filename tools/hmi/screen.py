@@ -187,7 +187,9 @@ MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor
                "heat-exchanger": "cadre.ob.heatexchanger", "heat-pump": "cadre.ob.heatpump",
                "hydraulic-separator": "cadre.ob.hydraulicseparator",
                "gauge-generator": "cadre.ob.gaugegenerator",
-               "gauge-motors-and-pumps": "cadre.ob.gaugemotorspumps", "gauge-valve": "cadre.ob.gaugevalve"}
+               "gauge-motors-and-pumps": "cadre.ob.gaugemotorspumps", "gauge-valve": "cadre.ob.gaugevalve",
+               "hydraulic-valve-4-3": "cadre.ob.hydraulicvalve43", "hydraulic-valve-x-2": "cadre.ob.hydraulicvalvex2",
+               "transmitter-button": "cadre.ob.transmitterbutton"}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).

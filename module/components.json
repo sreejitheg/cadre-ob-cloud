@@ -6185,6 +6185,190 @@
    }
   }
  },
+ "cadre.ob.hydraulicvalve43": {
+  "element": "obc-hydraulic-valve-4-3",
+  "title": "OB Hydraulic 4/3 Valve",
+  "palette": "OpenBridge hydraulic 4/3 valve: a three position selector showing the selected position, display only",
+  "schema": "schemas/hydraulicvalve43.props.json",
+  "defaultSize": {
+   "width": 144,
+   "height": 48
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "1",
+     "2",
+     "3",
+     "4",
+     "5"
+    ],
+    "default": "1"
+   },
+   "ariaLabel": {
+    "type": "string",
+    "default": "Hydraulic 4/3 valve"
+   },
+   "selectedPosition": {
+    "type": "number",
+    "default": 1
+   },
+   "vertical": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.hydraulicvalvex2": {
+  "element": "obc-hydraulic-valve-x-2",
+  "title": "OB Hydraulic X/2 Valve",
+  "palette": "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
+  "schema": "schemas/hydraulicvalvex2.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 48
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "2/2",
+     "3/2",
+     "4/2"
+    ],
+    "default": "2/2"
+   },
+   "ariaLabel": {
+    "type": "string",
+    "default": "Hydraulic valve"
+   },
+   "selectedPosition": {
+    "type": "number",
+    "default": 1
+   },
+   "vertical": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.transmitterbutton": {
+  "element": "obc-transmitter-button",
+  "title": "OB Transmitter Button",
+  "palette": "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
+  "schema": "schemas/transmitterbutton.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 40
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "value",
+     "tag"
+    ],
+    "default": "value"
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large"
+    ],
+    "default": "regular"
+   },
+   "value": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "fractionDigits": {
+    "type": "number",
+    "default": 1
+   },
+   "maxDigits": {
+    "type": "number",
+    "default": 0
+   },
+   "hintedZeros": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasSignSpacer": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasAdvice": {
+    "type": "boolean",
+    "default": false
+   },
+   "adviceValue": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "hasSetPoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "setpointValue": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

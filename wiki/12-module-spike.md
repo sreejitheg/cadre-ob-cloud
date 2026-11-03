@@ -1209,6 +1209,58 @@ a write path of the device model (wiki 13 section 5). The icon slots of the gaug
 tanks. The sizes chosen for the gauges (240 by 280) are not measured on the gateway. The large face (`large`) is the only one that
 draws the setpoint marks.
 
+### 17.20 Batch B8: Two Hydraulic Valves, the Transmitter Button and the Input Modal (`cadre.ob.hydraulicvalve43`, `hydraulicvalvex2`, `transmitterbutton`; the modal is not wrapped)
+
+Batch B8, the last of tranche T1, examines four control elements under the owner's decisions (recipe section 6 items 2 and 4): an element
+whose event or property implies a write is wrapped for display and state only, no event writes and no binding writes. Three are wrapped as
+module-only kinds of the glyph form (sections 17.13 and 17.17.1); one is not. Facts are from the pinned manifest and the `dist/` sources.
+
+17.20.1 Hydraulic 4/3 valve (`hydraulic-valve-4-3.js`, base `shuffle-button-base.js`; 4 attributes, all carried). A selector of three
+positions drawn as a sliding window of buttons, each showing a hydraulic symbol. `selectedPosition` (zero based, default 1, clamped to the
+positions) is the state; `type` (`1` to `5`) chooses the symbol of the centre position, the outer two being fixed; `vertical` stacks the
+positions; `ariaLabel` is the accessible name. Size 144 by 48, not measured on the gateway.
+
+17.20.2 Hydraulic X/2 valve (`hydraulic-valve-x-2.js`, the same base and attributes). Two positions; `type` is `2/2`, `3/2` or `4/2` and
+selects the pair of symbols. Size 96 by 48, not measured on the gateway. Live attribute of both valves: `selectedPosition`, bound to a tag
+for display. The element changes nothing itself: a press dispatches `position-selected` with the requested position and leaves
+`selectedPosition` to the host.
+
+17.20.3 The write is deferred. The event `position-selected` (a composed, bubbling `CustomEvent` whose detail is `{position}`, dispatched
+by a press or by an arrow key) is not carried: neither valve has an `events` entry, so Perspective receives nothing and nothing is written.
+A later wiring follows recipe section 3.3: carry the event as a component event with a `payload` kind, set a pending flag on it, ask on
+Press and write the position on Confirm through the existing write path with the `Administrator` check (COBD-024), and echo the written
+position back through `selectedPosition`. This is an open item.
+
+17.20.4 Transmitter button (`transmitter-button.js`; 14 attributes, all carried). A pressable chip that is the core of a transmitter. The
+`value` variant draws an optional advice segment (`hasAdvice`, `adviceValue`), an optional setpoint segment (`hasSetPoint`,
+`setpointValue`), then the value with its `unit`; the `tag` variant draws a rounded pill with `label` and no live value. `size`
+(`regular`, `medium`, `large`) scales the text. The three numbers are nullable and draw dashes while empty. `fractionDigits`, `maxDigits`,
+`hintedZeros` and `hasSignSpacer` are the shared numeric format of the element's `obc-readout-block`. `hasIcon` reserves a slot for a
+leading icon; the slot (`icon`) is not carried, so the flag leaves its space empty. Live attributes: `value`, `adviceValue`,
+`setpointValue` (and `label` as text), which bind to tags for display. Size 96 by 40, not measured on the gateway. The manifest declares
+no event and the source has no listener; the inner `button` has a native click that bubbles out of the shadow root. A later wiring would
+list the DOM event `click` in `ALERT_EVENTS` as the component event `onPress` (never `onClick`) and follow the same Press, Confirm rule;
+it is left unwired and is an open item.
+
+17.20.5 Input modal (`automation-input-modal.js`): not wrapped. The manifest gives it no attributes and no events, and four slots
+(`header`, `preview`, `action-primary`, `action-secondary`). The source is a template of one wrapper with a header, a preview and an
+actions row, each a bare `slot`, and a stylesheet: it holds no state and draws nothing of its own. A property cannot fill a slot (as for
+the gauges' icon slots, section 17.19.4), so a component that carried the element alone would show an empty frame, and a faithful wrap
+would need Perspective child components laid into those slots, which is a container component with its own contract and is outside the
+display-only scope of T1. Recorded as not wrapped; it can return if a container wrapper is built.
+
+17.20.6 Changes to the generator and the page. `testbench.glyph_cases` states a nullable number at the page's number pairs when it is
+named in `GLYPH_NULLABLE` (`value`, `adviceValue`, `setpointValue`); a gauge's nullable setpoints stay unstated as before, so no earlier
+page count moved. The `tag` variant case carries `label` `TT` (`GLYPH_COMPANION`). `selectedPosition` (1, 0, 2) and `maxDigits` (0, 4)
+join `GLYPH_NUMBER_VALUES`; `selectedPosition`, `adviceValue` and `setpointValue` join `GALLERY_PARAMS`. No change to `embed_module`.
+
+17.20.7 Components and tests. Properties (with `componentSize`): each valve 5, the transmitter button 15. The registered components move
+from 41 to 44. Tests: three rows of `GlyphComponents` (attribute sets, sizes, the valves' event not carried, the button's no event),
+the live binding tests and updated page counts in `ModuleOnlyKinds`, and one test of the button's page cases. The component test page
+under `--render module` passes G0 to G7 with 19 devices and 21 device symbols; a stock build of its descriptor stops with 40 further
+refusals for these kinds. What the gateway step finds on `/component-test`, in the "Module only" section: `obc-hydraulic-valve-4-3` 10,
+`obc-hydraulic-valve-x-2` 8 and `obc-transmitter-button` 22, each with a size and no console error.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

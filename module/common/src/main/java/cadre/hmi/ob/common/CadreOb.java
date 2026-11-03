@@ -116,7 +116,13 @@ public final class CadreOb {
         descriptor("cadre.ob.gaugemotorspumps", "gaugemotorspumps", "OB Motor and Pump Gauge",
             "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only.", "obGaugeMotorsPumps", List.of()),
         descriptor("cadre.ob.gaugevalve", "gaugevalve", "OB Valve Gauge",
-            "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only.", "obGaugeValve", List.of())
+            "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only.", "obGaugeValve", List.of()),
+        descriptor("cadre.ob.hydraulicvalve43", "hydraulicvalve43", "OB Hydraulic 4/3 Valve",
+            "OpenBridge hydraulic 4/3 valve: a three position selector showing the selected position, display only.", "obHydraulicValve43", List.of()),
+        descriptor("cadre.ob.hydraulicvalvex2", "hydraulicvalvex2", "OB Hydraulic X/2 Valve",
+            "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only.", "obHydraulicValveX2", List.of()),
+        descriptor("cadre.ob.transmitterbutton", "transmitterbutton", "OB Transmitter Button",
+            "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only.", "obTransmitterButton", List.of())
     );
 
     private CadreOb() {

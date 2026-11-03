@@ -1002,6 +1002,12 @@ class GlyphComponents(unittest.TestCase):
     # the one DOM event of an element, which is not carried (display only)
     CLICK = {"cadre.ob.automationreadout", "cadre.ob.heatexchanger", "cadre.ob.heatpump",
              "cadre.ob.hydraulicseparator"}
+    # B8: the valve selectors' one event, `position-selected`, which is not carried either (a write is deferred)
+    SHUFFLE = {"type", "ariaLabel", "selectedPosition", "vertical"}
+    SELECTED = {"cadre.ob.hydraulicvalve43", "cadre.ob.hydraulicvalvex2"}
+    # B8: the transmitter button declares no event at all (its inner `button` has a native click that nobody listens to)
+    TRANSMITTER = {"variant", "size", "value", "unit", "fractionDigits", "maxDigits", "hintedZeros", "hasSignSpacer", "hasIcon",
+                   "hasAdvice", "adviceValue", "hasSetPoint", "setpointValue", "label"}
     GLYPHS = {
         "cadre.ob.automationbadge": ("obc-automation-badge", "src/automation/automation-badge/automation-badge.ts",
                                      {"mode", "type"}, {"width": 32, "height": 32}),
@@ -1038,6 +1044,13 @@ class GlyphComponents(unittest.TestCase):
                                       GAUGE, {"width": 240, "height": 280}),
         "cadre.ob.gaugevalve": ("obc-gauge-valve", "src/automation/gauge-valve/gauge-valve.ts",
                                 GAUGE_VALVE, {"width": 240, "height": 280}),
+        # batch B8: the control elements (module-only, display only): the selected position is shown, never written
+        "cadre.ob.hydraulicvalve43": ("obc-hydraulic-valve-4-3", "src/automation/hydraulic-valve-4-3/hydraulic-valve-4-3.ts",
+                                      SHUFFLE, {"width": 144, "height": 48}),
+        "cadre.ob.hydraulicvalvex2": ("obc-hydraulic-valve-x-2", "src/automation/hydraulic-valve-x-2/hydraulic-valve-x-2.ts",
+                                      SHUFFLE, {"width": 96, "height": 48}),
+        "cadre.ob.transmitterbutton": ("obc-transmitter-button", "src/automation/transmitter-button/transmitter-button.ts",
+                                       TRANSMITTER, {"width": 96, "height": 40}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
              "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
@@ -1046,7 +1059,10 @@ class GlyphComponents(unittest.TestCase):
              "cadre.ob.heatpump": "heatpump",
              "cadre.ob.hydraulicseparator": "hydraulicseparator",
              "cadre.ob.gaugegenerator": "gaugegenerator",
-             "cadre.ob.gaugemotorspumps": "gaugemotorspumps", "cadre.ob.gaugevalve": "gaugevalve"}
+             "cadre.ob.gaugemotorspumps": "gaugemotorspumps", "cadre.ob.gaugevalve": "gaugevalve",
+             "cadre.ob.hydraulicvalve43": "hydraulicvalve43",
+             "cadre.ob.hydraulicvalvex2": "hydraulicvalvex2",
+             "cadre.ob.transmitterbutton": "transmitterbutton"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1065,7 +1081,8 @@ class GlyphComponents(unittest.TestCase):
             declared = {a["fieldName"] for a in decl["attributes"]}
             self.assertEqual(declared - ({"lineType"} if ctype == "cadre.ob.automationreadout" else set()), attrs, ctype)
             # a `click` is the only event among them, and it is not wired (display only, wiki 17.18 and 17.19)
-            self.assertEqual([e["name"] for e in decl.get("events", [])], ["click"] if ctype in self.CLICK else [], ctype)
+            self.assertEqual([e["name"] for e in decl.get("events", [])],
+                             ["click"] if ctype in self.CLICK else ["position-selected"] if ctype in self.SELECTED else [], ctype)
 
     def test_the_enumerations_and_defaults_come_from_the_element(self):
         badge = schema_of("cadre.ob.automationbadge")["properties"]
@@ -1116,8 +1133,8 @@ class GlyphComponents(unittest.TestCase):
         self.assertEqual(readout["position"]["enum"], ["left", "right", "top", "bottom"])
         self.assertEqual((readout["position"]["default"], readout["numberOfDigits"]["default"], readout["unit"]["default"]),
                          ("bottom", 3, ""))
-        for ctype in self.CLICK:
-            self.assertNotIn("events", COMPONENTS[ctype], ctype)    # the click is not carried
+        for ctype in self.CLICK | self.SELECTED:
+            self.assertNotIn("events", COMPONENTS[ctype], ctype)    # the click and the position selection are not carried
 
     def test_the_wrapper_converts_a_series_to_numbers_and_reads_it_as_data(self):
         for ctype in ("cadre.ob.battery", "cadre.ob.tankatmospheric"):
@@ -1189,8 +1206,8 @@ class ModuleOnlyKinds(unittest.TestCase):
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
         self.assertEqual(sorted(self.glyph_kinds()), [
             "automation-badge", "automation-readout", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
-            "hydraulic-separator", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
-            "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+            "hydraulic-separator", "hydraulic-valve-4-3", "hydraulic-valve-x-2", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
+            "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
             c = self.contracts[self.screen.view_of({"kind": kind})]
@@ -1228,7 +1245,11 @@ class ModuleOnlyKinds(unittest.TestCase):
                       "hydraulic-separator": {"medium": "regular", "static": True, "badgeInterlock": "interlock"},
                       "gauge-generator": {"value": 60, "type": "double", "priority": "enhanced", "label": "kW", "large": True},
                       "gauge-motors-and-pumps": {"value": 40, "type": "negative", "sector": "270", "unit": "rpm"},
-                      "gauge-valve": {"value": 50, "bottomValue": 25, "type": "three-way", "barStyle": "fill"}}[kind]
+                      "gauge-valve": {"value": 50, "bottomValue": 25, "type": "three-way", "barStyle": "fill"},
+                      "hydraulic-valve-4-3": {"type": "3", "selectedPosition": 2, "vertical": True},
+                      "hydraulic-valve-x-2": {"type": "3/2", "selectedPosition": 0, "vertical": True},
+                      "transmitter-button": {"variant": "value", "size": "large", "value": 12.5, "unit": "bar", "hasAdvice": True,
+                                             "adviceValue": 10, "hasSetPoint": True, "setpointValue": 11}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
@@ -1253,7 +1274,11 @@ class ModuleOnlyKinds(unittest.TestCase):
             # B7: the measurement, the optional second measurement, the state and the scheme; the setpoints are shown only
             "gauge-generator": ("value", "secondaryValue", "state", "priority", "setpoint", "newSetpoint"),
             "gauge-motors-and-pumps": ("value", "secondaryValue", "state", "priority", "setpoint", "newSetpoint"),
-            "gauge-valve": ("value", "bottomValue", "priority", "setpoint", "newSetpoint")}
+            "gauge-valve": ("value", "bottomValue", "priority", "setpoint", "newSetpoint"),
+            # B8: the selected position is shown from a tag; the `position-selected` event is not wired, nothing is written
+            "hydraulic-valve-4-3": ("selectedPosition",), "hydraulic-valve-x-2": ("selectedPosition",),
+            # the transmitter button's three segments; its click is not wired, so nothing is written
+            "transmitter-button": ("value", "adviceValue", "setpointValue")}
 
     def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
         # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
@@ -1284,6 +1309,16 @@ class ModuleOnlyKinds(unittest.TestCase):
             self.assertEqual((rep.errors, rep.gaps, node["props"]), ([], [], {}), kind)
             self.assertEqual(node["custom"], {"idText": "HX-1"}, kind)
             self.assertIn("{view.custom.showTag}", node["propConfig"]["props.tag"]["binding"]["config"]["expression"], kind)
+
+    def test_the_transmitter_buttons_tag_case_carries_a_label_and_its_nullable_numbers_are_stated(self):
+        cases = {c.caption: c.params for c in self.testbench.module_only_cases(
+            "transmitter-button", self.contracts[self.screen.view_of({"kind": "transmitter-button"})])}
+        self.assertEqual(cases["variant tag"]["label"], "TT")
+        self.assertNotIn("label", cases["variant value"])
+        self.assertEqual({cases[f"{k} {v}"][k] for k in ("value", "adviceValue", "setpointValue") for v in (50, 100)}, {50, 100})
+        # a nullable number outside `GLYPH_NULLABLE` (a gauge's setpoint) stays unstated
+        gauge = self.testbench.module_only_cases("gauge-valve", self.contracts[self.screen.view_of({"kind": "gauge-valve"})])
+        self.assertFalse(any("setpoint" in c.params for c in gauge))
 
     def test_the_live_attributes_are_properties_of_their_component(self):
         for kind, live in self.LIVE.items():
@@ -1340,7 +1375,7 @@ class ModuleOnlyKinds(unittest.TestCase):
                     self.assertEqual(stated[name], set(p["enum"]), (kind, name))
                 elif p["type"] == "boolean":
                     self.assertIn(not p["default"], stated[name], (kind, name))
-                elif p["type"] == "number":
+                elif p["type"] == "number" or (p["type"] == ["number", "null"] and name in self.testbench.GLYPH_NULLABLE):
                     self.assertTrue(set(self.testbench.GLYPH_NUMBER_VALUES.get(name, self.testbench.GLYPH_NUMBERS)) <= stated[name],
                                     (kind, name))
             self.assertEqual({k for s in mine for k in s["params"]} - set(props), set(), kind)
@@ -1350,7 +1385,7 @@ class ModuleOnlyKinds(unittest.TestCase):
                 self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
                                          "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
-                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26}[kind], kind)
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)

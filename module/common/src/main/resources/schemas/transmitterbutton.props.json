@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "value",
+        "tag"
+      ],
+      "default": "value",
+      "description": "OpenBridge `obc-transmitter-button` property `variant`."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-transmitter-button` property `size`."
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "OpenBridge `obc-transmitter-button` property `value`."
+    },
+    "unit": {
+      "type": "string",
+      "default": "",
+      "description": "OpenBridge `obc-transmitter-button` property `unit`."
+    },
+    "fractionDigits": {
+      "type": "number",
+      "default": 1,
+      "description": "OpenBridge `obc-transmitter-button` property `fractionDigits`."
+    },
+    "maxDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "Integer digits to reserve / hint (independent of fractionDigits)."
+    },
+    "hintedZeros": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-transmitter-button` property `hintedZeros`."
+    },
+    "hasSignSpacer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Reserve a minus-sign column on every segment, filled by the real sign only while a value is negative, so the width does not change across zero."
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-transmitter-button` property `hasIcon`."
+    },
+    "hasAdvice": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-transmitter-button` property `hasAdvice`."
+    },
+    "adviceValue": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Advisory value shown in the leading advice segment when hasAdvice."
+    },
+    "hasSetPoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-transmitter-button` property `hasSetPoint`."
+    },
+    "setpointValue": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Target value shown in the setpoint segment when hasSetPoint."
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "Short tag identifier shown in the tag variant (e.g. TT)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}
