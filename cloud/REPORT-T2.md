@@ -65,19 +65,20 @@ Each step ran in one Sonnet 5.5 subagent at medium effort; tokens are the Agent 
 | F7 | Glass and gate variants | 364,709 | 133 | 45 |
 | F8 | G10 and the walk on the new frames | 137,116 | 46 | 80 |
 | Docs | Configuration file, catalogue, wiki | 301,005 | 72 | 22 |
-| Total | | 3,409,944 | 1,090 | about 6 h |
+| A-02 | Diagnosis and fix of the intermittent walk row | 190,435 | 105 | 119 |
+| Total | | 3,600,379 | 1,195 | about 8 h |
 
 The T1 report estimated T2 at 3 to 5 million tokens, and the frame design (F0) at about 3.3 million before the owner
-asked for the ASM variant as well; the subagents spent 3.4 million, and the main session's orchestration, joint builds,
-gateway checks and diagnosis add an estimated 0.5 million by the same measure. Wall time was about 9 hours (07:20 to
-about 16:30 UTC), with the gate runs overlapping the batches. The owner reads the billed figure from the
+asked for the ASM variant as well; the subagents spent 3.6 million, and the main session's orchestration, joint builds,
+gateway checks and diagnosis add an estimated 0.5 million by the same measure. Wall time was about 12 hours (07:20 to
+19:40 UTC), with the gate runs overlapping the batches; the final runs alone took about 4 hours. The owner reads the billed figure from the
 account's usage page.
 
 ## 4. Gates
 
 ### 4.1 Offline
 
-The full suite passes: 1313 tests (1191 after T1). G0 to G7 pass on the component test page after every batch (19
+The full suite passes: 1318 tests (1191 after T1). G0 to G7 pass on the component test page after every batch (19
 devices, 21 device symbols) and on the samples of all four frames. A stock build of a module-only kind, and any build with
 `--frame ob` or `--frame obasm` without `--render module`, is refused with an error, as decided.
 
@@ -94,11 +95,12 @@ the sweep starting on an unsettled page, and the sweep clicking animated frame c
 | Check | Outcome |
 |---|---|
 | Install | "Registered 88 Cadre OpenBridge components", script 2,753,602 bytes |
-| `cadre_hmi_wtp` (`openbridge`, stock) | FINAL_WTP |
-| `cadre_hmi_wtpob` (`openbridge`, module) | FINAL_WTPOB |
-| `cadre_hmi_wtpobf` (`ob`) | FINAL_WTPOBF |
-| `cadre_hmi_wtpoba` (`obasm`) | FINAL_WTPOBA |
-| G11 on `/component-test` | FINAL_G11 |
+| The full suite, four projects | 123 min, the code of `068b48a`; the trial reset once by the suite |
+| `cadre_hmi_wtp` (`openbridge`, stock) | PASS: G8 6 of 6 routes, G11 44 of 44, G10 17 of 17 signed in, the walk in every group, the plant restored |
+| `cadre_hmi_wtpob` (`openbridge`, module) | G8 6 of 6, G11 44 of 44, G10 21 of 21 signed in; the walk in every group but A-02, an intermittent glass defect then fixed (5.1 item 7) and proved by three full walks in a row passing every group |
+| `cadre_hmi_wtpobf` (`ob`) | PASS: G8 6 of 6, G11 44 of 44, G10 21 of 21 signed in, the walk in every group, the plant restored |
+| `cadre_hmi_wtpoba` (`obasm`) | PASS: G8 6 of 6, G11 44 of 44, G10 21 of 21 signed in, the walk in every group, the plant restored |
+| G11 on `/component-test` | PASS on a fresh run after the fixes of 5.1 items 4 and 8: 21 of 21 devices, 274 leaves, nothing missing or unexpected, no fault (62 min) |
 
 ## 5. Findings
 
@@ -115,6 +117,13 @@ the sweep starting on an unsettled page, and the sweep clicking animated frame c
    the menu stayed open over the faceplate dock (G10 on `ob`); `glass.click_alert_row` presses the row's body.
 6. **The ASM variant's Trends and Alerts pages** are in the support list, not the tree; the walk now opens it
    (`glass.open_support_list`).
+7. **Walk row A-02 was intermittent on the old frame's module rendering** (2 passes, 5 failures over all runs): the
+   module alert panel draws its own toolbar over the bottom of its list, and the second row's ACK sometimes lay under
+   it, so the press hit the toolbar. The glass now scrolls the row clear before pressing and refuses a covered cell;
+   three full walks in a row passed after the fix.
+8. **The instrument field's identity in G11** (open since T0): the sweep expected an instrument's faceplate under its
+   tag else its identifier, while the library titles it by its tag else its label (`library.SELECT_INSTRUMENT`); the
+   sweep now follows the library's rule (`faceplates.faceplate_title`).
 
 ### 5.2 Open, for the Owner's Review
 
@@ -127,12 +136,14 @@ the sweep starting on an unsettled page, and the sweep clicking animated frame c
 3. **Departures recorded in `cloud/FRAME-DESIGN.md`**: the alert strip lies beneath the top bar, not beside it; the
    `obasm` head is 132 px; a row's ACK in the new alert menu acts at once as the module panel does, while Ack all keeps
    its Confirm; a tree group press only toggles, so a node's first page is one press further.
-4. **Not wrapped**: `obc-alert-list` (slotted rows), `obc-automation-input-modal` (T1), and the nine line elements (the
+4. **For an operator**: the module alert panel's own toolbar covers the second row's ACK until the list is scrolled
+   (OpenBridge's layout, found by the A-02 diagnosis, unchanged).
+5. **Not wrapped**: `obc-alert-list` (slotted rows), `obc-automation-input-modal` (T1), and the nine line elements (the
    owner's decision of T1).
-5. **The glass gates that write** (alarm, ack, banner, search and zoom with a raised alarm) need an ASM sample with an
+6. **The glass gates that write** (alarm, ack, banner, search and zoom with a raised alarm) need an ASM sample with an
    ASM model, which the cloud copy does not have; F7 measured the read-only ASM gates on `obasm` (menus, panels, search
    and zoom pass).
-6. **GF numbering**: GF-99 to GF-114 may collide with numbers the source has used since `d9f8655`; renumber at merge.
+7. **GF numbering**: GF-99 to GF-114 may collide with numbers the source has used since `d9f8655`; renumber at merge.
 
 ## 6. The Merge Back
 
@@ -155,4 +166,4 @@ mirrored paths, besides `cloud/`:
 Generated, to be regenerated at the source rather than merged: `module/components.json`, `module/web/defaults.json`, the
 131 new schema files under `module/common/src/main/resources/schemas/`, `module/gateway/src/main/resources/mounted/`,
 `library/contracts.json`, `build/cadre_hmi_base` (the new `Framework/OB` and `Framework/OBASM` views) and
-`module/CATALOGUE.md`. Regenerate as `CONFIGURATION.md` section 10 describes, then run the full suite (1313 in the cloud).
+`module/CATALOGUE.md`. Regenerate as `CONFIGURATION.md` section 10 describes, then run the full suite (1318 in the cloud).

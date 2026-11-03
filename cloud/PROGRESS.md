@@ -341,3 +341,7 @@
 - 2026-11-03 19:23: A-02 diagnosis cost, recorded by the orchestrator: 190,435 tokens, 105 tool calls, 119 min (mostly walk
   runs). For the owner: the panel's own toolbar also covers the second row's ACK for an operator until the list scrolls
   (OpenBridge's layout, unchanged).
+- 2026-11-03 19:50: Delivery. Fresh G11 on the component test page PASS (21 of 21 devices, 274 leaves, nothing missing or
+  unexpected, no fault, 62 min). Final full offline suite: 1318 tests, all passing. `cloud/REPORT-T2.md` completed with the
+  final results; `CONFIGURATION.md`, `wiki/14` and GF-113 brought up to date (the tree group only toggles; the bell and
+  menu counts differ by design). Scratch worktrees removed. T2 ends here.

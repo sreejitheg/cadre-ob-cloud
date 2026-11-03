@@ -76,7 +76,7 @@ volume and module intact. Whether the image and volume survive into a later sess
 ### 2.5 Offline Tests
 
 `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests` is the full offline suite: one test assumes the variable is absent. Recorded:
-1081 (T0 baseline), 1102 (end of T0), 1191 (end of T1), 1299 (end of T2), 1304 with the catalogue tests.
+1081 (T0 baseline), 1102 (end of T0), 1191 (end of T1), 1299 (end of T2), 1304 with the catalogue tests, 1318 at delivery.
 
 ## 3. The Gateway
 
@@ -232,8 +232,9 @@ Table 7. The waits.
 ### 7.4 Results to Date
 
 The suite on module 0.6.0, both renderings: SUITE PASS (stock and module: G8 6 of 6, G11 44 of 44, G10 17 of 17 and 21 of 21, the walk passing in every
-group, plant restored). G11 on the component test page at 0.6.0: 21 of 21 devices, 831 leaves, one finding (section 9 item 2). The run on 0.7.0 over the four
-samples was in progress when this page was written.
+group, plant restored). G11 on the component test page at 0.6.0: 21 of 21 devices, 831 leaves, one finding (section 9 item 2). The final run on 0.7.0 over the
+four samples: three PASS in every gate and the fourth in every gate but walk row A-02, an intermittent defect of the glass then fixed and proved by
+three full walks in a row; G11 on the component test page on a fresh run: 21 of 21 devices, no fault (`cloud/REPORT-T2.md` section 4.3).
 
 ## 8. The Owner's Decisions
 
@@ -245,16 +246,18 @@ samples was in progress when this page was written.
 
 ## 9. Open Items and Limits
 
-1. The 0.7.0 gateway gates on the two new frames are pending; the unverified lists are page 04 sections 10.5 and 11.6 and page 13 section 13.11.5.
-2. The instrument field's faceplate title reads `Temp` (the field's label), so G11 counts `TB_FIELD` missing; present before any wrap, cause not established.
-3. Walk row A-02 on the module rendering depends on run order; not diagnosed.
+1. Fixed during delivery: the instrument field identity of G11 (the sweep follows the library's title rule) and the intermittent walk row A-02
+   (the glass scrolls an alarm row clear of the panel's toolbar before pressing its ACK).
+2. For an operator, the module alert panel's toolbar covers the second row's ACK until the list is scrolled (OpenBridge's layout).
+3. The glass gates that write on the ASM variant need an ASM sample with an ASM model, which the cloud copy does not have; the read-only ASM gates pass.
 4. The gauges' 240 by 280 box is not measured and the gauges overflow it.
 5. Writes of module-only kinds are deferred: the hydraulic valves' selection, the gauges' setpoints and several `click` events are carried or shown, never wired.
 6. Not wrapped: the nine line elements, `obc-automation-input-modal`, `obc-alert-list`. Not carried: the user menu's credentials and others listed per component in the catalogue.
 7. The script is 2.75 MB and loads on every page of a project that uses a module component (GF-29).
-8. The component test page is large; a G11 sweep took about 70 min at T1.
-9. Findings to settle at the gateway run: a tree group fires both toggle and click (GF-113, correcting page 04 section 11.3); the bell shows 2 where the menu lists 6
-   rows; the toggletips float over the row above on the test page; the page title runs into the first tab on `obasm`.
+8. The component test page is large; a G11 sweep of its 21 devices takes about 62 min.
+9. Settled at the gateway run: a tree group press only toggles (GF-113; page 04 section 11.3 holds); the bell counts active alarms while the menu also lists
+   cleared unacknowledged events, by design (page 13 section 13.11.6). Cosmetic: the toggletips float over the row above on the test page; the page title
+   runs into the first tab on `obasm`.
 10. The committed sample builds of `cadre_hmi_wtp` and `cadre_hmi_wtpob` predate the generator at `d9f8655`.
 11. GF-99 to GF-114 may collide with numbers the source has used since `d9f8655`; renumber at the merge.
 
@@ -262,7 +265,7 @@ samples was in progress when this page was written.
 
 Work returns to the source repository as a diff of the mirrored paths (`git diff 26f38c8 <tip> -- . ':!cloud'`). Generated files are regenerated at the source,
 not merged: `module/components.json`, the schemas, `mounted/`, `library/contracts.json`, `library/profile.json`, `module/CATALOGUE.md` and the parent build.
-Then the full suite (1304 in the cloud), the signed build and its install with the owner's restart (page 12 section 17.6). Ranges and the list of paths are in
+Then the full suite (1318 in the cloud), the signed build and its install with the owner's restart (page 12 section 17.6). Ranges and the list of paths are in
 `CONFIGURATION.md` section 10; the reports are `cloud/REPORT-T0.md` and `cloud/REPORT-T1.md`.
 
 ## 11. References

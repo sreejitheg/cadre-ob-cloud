@@ -72,7 +72,7 @@ The other keys of `CLAUDE.md` section 4 (the table of paths from the source repo
 `python -m unittest discover -s tests` is offline. One test, `test_glass_gates_plan.FakeGatewayTests.test_without_the_test_login_the_ack_gate_fails_and_says_why`,
 assumes `CADRE_TEST_LOGIN` is absent from the shell, so run the full suite as
 `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests`. Recorded counts: 1081 at the T0 baseline, 1102 after T0, 1191
-after T1, 1299 after T2 (2026-11-03 12:57 to 13:02 UTC, 304 s), 1304 with the catalogue tests.
+after T1, 1299 after T2 (2026-11-03 12:57 to 13:02 UTC, 304 s), 1304 with the catalogue tests, 1318 at delivery (the fixes of the final gateway runs, 2026-11-03 19:50 UTC).
 
 ### 1.5 The Docker Daemon
 
@@ -462,8 +462,11 @@ python tools/compare/wtp_suite.py --project cadre_hmi_wtp --project cadre_hmi_wt
 The suite restores the plant (re-imports the tag model, verifies an export of the plant's folder) before and after each gate that
 changes it. Exit 1 when any gate fails. `faceplates.py --faceplate` defaults to `openbridge`; judge an ASM project with `--faceplate asm`
 or every device reports tab faults that are the style, not the page. Results to date: `wtp_suite.py` on 0.6.0, both renderings, SUITE PASS (50
-min: G8 6 of 6, G11 44 of 44, G10 17 of 17 stock and 21 of 21 module, walk PASS in every group, plant restored). The run on 0.7.0 over
-the four projects was in progress when this document was written and its result is not recorded here.
+min: G8 6 of 6, G11 44 of 44, G10 17 of 17 stock and 21 of 21 module, walk PASS in every group, plant restored). The final run on 0.7.0
+over the four projects (123 min): `cadre_hmi_wtp`, `cadre_hmi_wtpobf` (`ob`) and `cadre_hmi_wtpoba` (`obasm`) PASS in every gate (G8 6 of 6,
+G11 44 of 44, G10 17 of 17 or 21 of 21 signed in, the walk in every group, the plant restored); `cadre_hmi_wtpob` PASS in G8, G11 and G10 and
+in every walk group but A-02, an intermittent glass defect then fixed (section 9) and proved by three full walks in a row. G11 on the
+component test page on a fresh run: 21 of 21 devices, 274 leaves, nothing missing or unexpected, no fault.
 
 ### 6.3 The Glass Variants for Each Frame
 
@@ -535,15 +538,14 @@ account's usage page.
 
 Numbers refer to the record they come from.
 
-1. **Gateway regression of 0.7.0.** The offline suite passes (1299, then 1304 with the catalogue tests); the gateway gates G8, G10, G11 and
-   the walk on `cadre_hmi_wtpobf` and `cadre_hmi_wtpoba` were still running when this document was written. The frames' "not verified
-   without the gateway" lists are `wiki/04` sections 10.5 and 11.6 and `wiki/13` section 13.11.5 (row ACK enabled and pressed, ACK visible,
-   Sign out after login, the acknowledging user's name, the strip's ACK latch, the palette's effect on the page).
-2. **Instrument field identity (T0 2.4, T1 5.2 item 7).** The faceplate opened from `TB_FIELD` reads its title as `Temp`, the field's label;
-   G11 reports `TB_FIELD` missing and `Temp` unexpected. Present at 0.4.3 before any wrap; the cause (the title or the sweep's reading) is not
-   established. It is the only G11 finding on the component test page.
-3. **Walk row A-02** (acknowledge from the alarm menu, module rendering) depends on run order: it failed in four runs of the walk alone on
-   0.5.0 and passed inside the suite on 0.4.4 and 0.6.0. Not diagnosed.
+1. **Fixed during delivery, kept here for the record.** The instrument field identity of G11 (the sweep now titles an instrument's
+   faceplate by its tag else its label, as the library does; `faceplates.faceplate_title`) and the intermittent walk row A-02 (the module
+   alert panel's toolbar covered the second row's ACK; the glass scrolls the row clear before pressing). Both are in `cloud/REPORT-T2.md`
+   section 5.1.
+2. **For an operator.** The module alert panel's own toolbar covers the second row's ACK until the list is scrolled (OpenBridge's layout,
+   unchanged).
+3. **The glass gates that write on the ASM variant** (alarm, ack, banner, and search and zoom with a raised alarm) need an ASM sample with an
+   ASM model, which the cloud copy does not have; the read-only ASM gates (menus, panels, search, zoom) pass on `obasm`.
 4. **The gauges overflow their boxes.** The 240 by 280 box of the three gauges is not measured; G5 checks boxes, not drawings.
 5. **Deferred writes.** The hydraulic valves' `position-selected`, the gauges' setpoints, and the `click` of the heat exchanger, heat pump,
    hydraulic separator, automation readout and transmitter button are carried or shown and never wired. No event of a module-only kind writes a tag.
@@ -560,10 +562,11 @@ Numbers refer to the record they come from.
 10. **Cosmetic findings** for the owner's visual review: the toggletips float over the row above them on the test page; the line graph and donut chart
     draw in greys; the page title runs into the first tab on `obasm` ("Plant OverviewMimic"); the brilliance popup's size (320 by 280) is to be
     measured; the F4 top bar's command text ran on from the page name ("Engine roomCommand"), avoided in `ob` by leaving the text empty.
-11. **A tree group fires both its toggle and the item's click** (`wiki/13` section 13.11.4 item 1); `wiki/04` section 11.3 says a group fires only its
-    toggle. The dock reopens after a group press in the glass; the wiki text is to be corrected after the gateway run.
-12. **The bell and the alert menu counts differ** in one measurement (2 against 6 rows; two rows name TK-501): the bell binds `custom.alarm.count`
-    (`alarm_summary`) and the menu `alarm_list`. To be explained at the gateway run.
+11. **A tree group press only toggles** (measured by F8 on five click points; `wiki/04` section 11.3 holds; GF-113): a node's first page is one
+    press further on `obasm` than on `asm`.
+12. **The bell and the alert menu count differently, by design**: the bell counts the active alarms (`custom.alarm.count`, `alarm_summary`), the
+    menu lists `alarm_list`, which also holds cleared unacknowledged and repeated events; the old frames work the same way (`wiki/13` section
+    13.11.6).
 13. **Icons.** The icon allow list is the icons imported in `module/web/icons.js`, not the package's 2,104; a navigation item draws an icon only
     where its Cadre icon name is also a bundled icon.
 14. **Tools of the source.** `CHROME_PATH` is ignored by the tools; the committed `build/cadre_hmi_wtp` and `build/cadre_hmi_wtpob` predate the generator.
@@ -594,12 +597,12 @@ Steps:
    `wtp_suite.py`); `schemas/screen-descriptor.schema.json`; `tests/` (including `test_catalogue.py`, `test_ob_frame.py`, `test_obasm_frame.py`);
    `wiki/04`, `07`, `12`, `13`, `14` and `index.md`; this file.
 4. Regenerate and test: the commands of 3.3, `python tools/hmi/parent.py --out build`, then
-   `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests` (1304 in the cloud), then the signed build and its install with the owner's restart, as
+   `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests` (1318 in the cloud), then the signed build and its install with the owner's restart, as
    `wiki/12` section 17.6 describes.
 5. Not merged: the cloud's `build/cadre_hmi_base_asm`, `build/cadre_hmi_ctest` and the four sample builds rebuilt in the cloud.
 6. Check that the new GF numbers do not collide (9 item 16).
 
 ## 11. What This Document Does Not Cover
 
-The per-component properties, events and exclusions (see `module/CATALOGUE.md`); the 0.7.0 gateway results (still running); the Figma file (a design
+The per-component properties, events and exclusions (see `module/CATALOGUE.md`); the 0.7.0 gateway results (in `cloud/REPORT-T2.md` section 4.3); the Figma file (a design
 reference only); the signing certificate and the owner's local gateway, which no cloud session reaches.
