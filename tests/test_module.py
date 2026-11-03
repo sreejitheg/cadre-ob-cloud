@@ -2554,9 +2554,9 @@ class RadialInstrumentFillsItsBox(unittest.TestCase):
 
 
 class Release(unittest.TestCase):
-    def test_the_version_is_plain_and_0_6_0(self):
+    def test_the_version_is_plain_and_0_7_0(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")
-        self.assertIn('version = "0.6.0"', text)      # GF-27: plain major.minor.revision (tranche T1, B0 to B8)
+        self.assertIn('version = "0.7.0"', text)      # GF-27: plain major.minor.revision (tranche T2)
         self.assertNotRegex(text, r'version = "[^"]*-')
 
     def test_the_description_names_the_canvas_zoom(self):

@@ -52,7 +52,9 @@ TAGS_FOLDER = "cadre_hmi_wtp"   # both renderings bind the tags of this one fold
 EFFECTS = ROOT / "screens" / "wtp" / "walk-effects.json"
 # The rendering each project was built with (`screen.py --render`): the generated walk reads a module
 # component from its element, a library symbol from its text.
-RENDER = {"cadre_hmi_wtpob": "module"}
+RENDER = {"cadre_hmi_wtpob": "module",
+          # the samples of the two new frames (T2: `--frame ob` and `--frame obasm`), built with the module rendering
+          "cadre_hmi_wtpobf": "module", "cadre_hmi_wtpoba": "module"}
 # The Alarms tab in the plant's initial state (COB-PLAN-01 6.2 acceptance): P-502 starts faulted,
 # so its list shows its one fault alarm; the sludge pump P-202 has none.
 EXPECT_INITIAL = {"P-502": 1, "P-202": 0}
