@@ -34,3 +34,9 @@ import '@oicl/openbridge-webcomponents/dist/automation/indicator-battery/indicat
 import '@oicl/openbridge-webcomponents/dist/automation/indicator-engine/indicator-engine.js';
 import '@oicl/openbridge-webcomponents/dist/automation/indicator-tank-atmospheric/indicator-tank-atmospheric.js';
 import '@oicl/openbridge-webcomponents/dist/automation/automation-readout/automation-readout.js';
+import '@oicl/openbridge-webcomponents/dist/automation/heat-exchanger/heat-exchanger.js';
+import '@oicl/openbridge-webcomponents/dist/automation/heat-pump/heat-pump.js';
+import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-separator/hydraulic-separator.js';
+import '@oicl/openbridge-webcomponents/dist/automation/gauge-generator/gauge-generator.js';
+import '@oicl/openbridge-webcomponents/dist/automation/gauge-motors-and-pumps/gauge-motors-and-pumps.js';
+import '@oicl/openbridge-webcomponents/dist/automation/gauge-valve/gauge-valve.js';

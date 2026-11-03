@@ -5272,6 +5272,919 @@
    }
   }
  },
+ "cadre.ob.heatexchanger": {
+  "element": "obc-heat-exchanger",
+  "title": "OB Heat Exchanger",
+  "palette": "OpenBridge heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+  "schema": "schemas/heatexchanger.props.json",
+  "defaultSize": {
+   "width": 152,
+   "height": 96
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "graphic",
+     "medium"
+    ],
+    "default": "regular"
+   },
+   "static": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "button"
+    ],
+    "default": "button"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.heatpump": {
+  "element": "obc-heat-pump",
+  "title": "OB Heat Pump",
+  "palette": "OpenBridge heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+  "schema": "schemas/heatpump.props.json",
+  "defaultSize": {
+   "width": 152,
+   "height": 96
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "graphic",
+     "medium"
+    ],
+    "default": "regular"
+   },
+   "static": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "button"
+    ],
+    "default": "button"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.hydraulicseparator": {
+  "element": "obc-hydraulic-separator",
+  "title": "OB Hydraulic Separator",
+  "palette": "OpenBridge hydraulic separator: a specialty tank with badges and alert frame, display only",
+  "schema": "schemas/hydraulicseparator.props.json",
+  "defaultSize": {
+   "width": 152,
+   "height": 96
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "graphic",
+     "medium"
+    ],
+    "default": "regular"
+   },
+   "static": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "button"
+    ],
+    "default": "button"
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "badgeControl": {
+    "type": "string",
+    "enum": [
+     "none",
+     "local",
+     "local-only",
+     "manual",
+     "manual-only",
+     "auto"
+    ],
+    "default": "none"
+   },
+   "badgeAlert": {
+    "type": "string",
+    "enum": [
+     "none",
+     "silence",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "none"
+   },
+   "badgeInterlock": {
+    "type": "string",
+    "enum": [
+     "none",
+     "interlock",
+     "interlock-inhibit"
+    ],
+    "default": "none"
+   },
+   "badgeCommandLocked": {
+    "type": "string",
+    "enum": [
+     "none",
+     "command-locked"
+    ],
+    "default": "none"
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.gaugegenerator": {
+  "element": "obc-gauge-generator",
+  "title": "OB Generator Gauge",
+  "palette": "OpenBridge generator gauge: a dial with value, optional second value and setpoint marks, display only",
+  "schema": "schemas/gaugegenerator.props.json",
+  "defaultSize": {
+   "width": 240,
+   "height": 280
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "double"
+    ],
+    "default": "regular"
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 2
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100
+   },
+   "minValue": {
+    "type": "number",
+    "default": 0
+   },
+   "secondaryValue": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "state": {
+    "type": "string",
+    "enum": [
+     "active",
+     "loading",
+     "off"
+    ],
+    "default": "active"
+   },
+   "sector": {
+    "type": "string",
+    "enum": [
+     "360",
+     "270",
+     "270-pos-neg"
+    ],
+    "default": "360"
+   },
+   "alignment": {
+    "type": "string",
+    "enum": [
+     "outside",
+     "inside",
+     "max-min"
+    ],
+    "default": "outside"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "medium",
+     "off"
+    ],
+    "default": "regular"
+   },
+   "showLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "primaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 50
+   },
+   "secondaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 10
+   },
+   "tickmarkStyle": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "hasReadout": {
+    "type": "boolean",
+    "default": true
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "secondaryLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "secondaryUnit": {
+    "type": "string",
+    "default": ""
+   },
+   "fractionDigits": {
+    "type": "number",
+    "default": 0
+   },
+   "name": {
+    "type": "string",
+    "default": ""
+   },
+   "faceDiameter": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "large": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.gaugemotorspumps": {
+  "element": "obc-gauge-motors-and-pumps",
+  "title": "OB Motor and Pump Gauge",
+  "palette": "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
+  "schema": "schemas/gaugemotorspumps.props.json",
+  "defaultSize": {
+   "width": 240,
+   "height": 280
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "negative",
+     "double"
+    ],
+    "default": "regular"
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 2
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "maxValue": {
+    "type": "number",
+    "default": 100
+   },
+   "minValue": {
+    "type": "number",
+    "default": 0
+   },
+   "secondaryValue": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "state": {
+    "type": "string",
+    "enum": [
+     "active",
+     "loading",
+     "off"
+    ],
+    "default": "active"
+   },
+   "sector": {
+    "type": "string",
+    "enum": [
+     "360",
+     "270",
+     "270-pos-neg"
+    ],
+    "default": "270"
+   },
+   "alignment": {
+    "type": "string",
+    "enum": [
+     "outside",
+     "inside",
+     "max-min"
+    ],
+    "default": "outside"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "medium",
+     "off"
+    ],
+    "default": "regular"
+   },
+   "showLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "primaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 50
+   },
+   "secondaryTickmarkInterval": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": 10
+   },
+   "tickmarkStyle": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "hasReadout": {
+    "type": "boolean",
+    "default": true
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "secondaryLabel": {
+    "type": "string",
+    "default": ""
+   },
+   "secondaryUnit": {
+    "type": "string",
+    "default": ""
+   },
+   "fractionDigits": {
+    "type": "number",
+    "default": 0
+   },
+   "name": {
+    "type": "string",
+    "default": ""
+   },
+   "faceDiameter": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "large": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.gaugevalve": {
+  "element": "obc-gauge-valve",
+  "title": "OB Valve Gauge",
+  "palette": "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
+  "schema": "schemas/gaugevalve.props.json",
+  "defaultSize": {
+   "width": 240,
+   "height": 280
+  },
+  "props": {
+   "type": {
+    "type": "string",
+    "enum": [
+     "two-way",
+     "three-way"
+    ],
+    "default": "two-way"
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "medium",
+     "off"
+    ],
+    "default": "regular"
+   },
+   "barStyle": {
+    "type": "string",
+    "enum": [
+     "fill",
+     "tint"
+    ],
+    "default": "tint"
+   },
+   "scalePosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "right",
+     "bottom",
+     "left"
+    ],
+    "default": "top"
+   },
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "bottomValue": {
+    "type": "number",
+    "default": 0
+   },
+   "large": {
+    "type": "boolean",
+    "default": false
+   },
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "faceDiameter": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "setpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "newSetpoint": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "touching": {
+    "type": "boolean",
+    "default": false
+   },
+   "autoAtSetpointDeadband": {
+    "type": "number",
+    "default": 2
+   },
+   "setpointAtZeroDeadband": {
+    "type": "number",
+    "default": 0.5
+   },
+   "setpointOverride": {
+    "type": "boolean",
+    "default": false
+   },
+   "animateSetpoint": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

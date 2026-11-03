@@ -78,7 +78,8 @@ GALLERY_PARAMS = frozenset({
     "alertFrameStatus", "alertFrameMode", "badgeControl", "badgeInterlock", "badgeCommandLocked", "badgeDuty",
     "outOfService", "progress",
     "value2", "closed",   # the state of the valve glyphs (B4), which no earlier kind has
-    "level"})             # the level of the battery and tank indicators (B5); their `value` is the scheme and is bound too
+    "level",              # the level of the battery and tank indicators (B5); their `value` is the scheme and is bound too
+    "state", "priority", "medium", "bottomValue"})   # the live state of the specialty tanks and the gauges (B6, B7)
 GALLERY_PREFIXES = ("S_", "N_", "B_")   # the ids of the symbols of the static grids
 
 
@@ -599,7 +600,10 @@ def module_only_cases(kind: str, contract: dict) -> list[Case]:
 # `dist/` source of the valve icons divides by 100) or of a level (the indicators), so mid travel and full travel show the
 # drawing change. A number whose scale is not a percentage has its own pair (the readout's digit count is a width).
 GLYPH_NUMBERS = (50, 100)
-GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6)}
+GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
+                       # the gauges' scale and their deadbands (B7): the first value is the element's own default
+                       "maxValue": (100, 200), "minValue": (0, -50), "autoAtSetpointDeadband": (2, 5),
+                       "setpointAtZeroDeadband": (0.5, 1), "fractionDigits": (0, 2)}
 # The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
 # free string property is shown with, where a glyph has one (the readout's unit).
 GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]

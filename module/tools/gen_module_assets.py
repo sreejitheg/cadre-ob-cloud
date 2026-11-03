@@ -165,6 +165,24 @@ COMPONENTS = [
      "title": "OB Automation Readout",
      "palette": "OpenBridge automation readout: a value with its unit in a bordered chip, display only",
      "size": {"width": 72, "height": 48}, "exclude": ["lineType"]},
+    {"tag": "obc-heat-exchanger", "type": "cadre.ob.heatexchanger", "name": "heatexchanger", "title": "OB Heat Exchanger",
+     "palette": "OpenBridge heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+     "size": {"width": 152, "height": 96}, "exclude": []},
+    {"tag": "obc-heat-pump", "type": "cadre.ob.heatpump", "name": "heatpump", "title": "OB Heat Pump",
+     "palette": "OpenBridge heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+     "size": {"width": 152, "height": 96}, "exclude": []},
+    {"tag": "obc-hydraulic-separator", "type": "cadre.ob.hydraulicseparator", "name": "hydraulicseparator", "title": "OB Hydraulic Separator",
+     "palette": "OpenBridge hydraulic separator: a specialty tank with badges and alert frame, display only",
+     "size": {"width": 152, "height": 96}, "exclude": []},
+    {"tag": "obc-gauge-generator", "type": "cadre.ob.gaugegenerator", "name": "gaugegenerator", "title": "OB Generator Gauge",
+     "palette": "OpenBridge generator gauge: a dial with value, optional second value and setpoint marks, display only",
+     "size": {"width": 240, "height": 280}, "exclude": []},
+    {"tag": "obc-gauge-motors-and-pumps", "type": "cadre.ob.gaugemotorspumps", "name": "gaugemotorspumps", "title": "OB Motor and Pump Gauge",
+     "palette": "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
+     "size": {"width": 240, "height": 280}, "exclude": []},
+    {"tag": "obc-gauge-valve", "type": "cadre.ob.gaugevalve", "name": "gaugevalve", "title": "OB Valve Gauge",
+     "palette": "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
+     "size": {"width": 240, "height": 280}, "exclude": []},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -345,7 +363,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         elif base == "number" and not nullable:
             p, kind = {"type": "number", "default": default if isinstance(default, (int, float)) else 0}, "number"
         elif base == "number":
-            p, kind = {"type": ["number", "null"], "default": None}, "nnumber"
+            p, kind = {"type": ["number", "null"], "default": default if isinstance(default, (int, float)) else None}, "nnumber"
         elif base == "string":
             p, kind = {"type": "string", "default": default if isinstance(default, str) else ""}, ("nstring" if nullable else "string")
         elif base in enum_map:

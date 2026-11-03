@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "two-way",
+        "three-way"
+      ],
+      "default": "two-way",
+      "description": "OpenBridge `obc-gauge-valve` property `type`."
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced",
+        "medium",
+        "off"
+      ],
+      "default": "regular",
+      "description": "Colour emphasis of the value graphics (the Figma \"Type\" axis); off blanks them on a flat disc"
+    },
+    "barStyle": {
+      "type": "string",
+      "enum": [
+        "fill",
+        "tint"
+      ],
+      "default": "tint",
+      "description": "Bar rendering (the Figma \"Style\" axis): tint (default) shows a tint bar with strong cap pills, fill a strong bar without pills"
+    },
+    "scalePosition": {
+      "type": "string",
+      "enum": [
+        "top",
+        "right",
+        "bottom",
+        "left"
+      ],
+      "default": "top",
+      "description": "Rotates the whole layout \u2014 ports, scale, setpoint and readout side (the designs' two-way Direction / three-way Scale axis)"
+    },
+    "value": {
+      "type": "number",
+      "default": 0,
+      "description": "Through-flow of the right outlet port, 0-100 (%)"
+    },
+    "bottomValue": {
+      "type": "number",
+      "default": 0,
+      "description": "Bottom outlet flow, 0-100 (%). Available when type==three-way."
+    },
+    "large": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show scale, labels, readout and setpoint layer"
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "Readout label text. Available when large==true."
+    },
+    "unit": {
+      "type": "string",
+      "default": "",
+      "description": "Readout unit text. Available when large==true."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "Identifier line under the compact readout stack, e.g. '#0001'. Available when large==false && hasLabelStack==true."
+    },
+    "faceDiameter": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Ring diameter in CSS pixels. When set, the face renders at a fixed intrinsic size (equal circumference across instruments sharing the value); when unset (default), the face contain-fits its container."
+    },
+    "setpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Target setpoint value. undefined = no setpoint marker shown."
+    },
+    "newSetpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Adjustment preview for 2-step interface. When defined, two markers are shown: original (dimmed) + new (focus). Available when setpoint!=undefined."
+    },
+    "touching": {
+      "type": "boolean",
+      "default": false,
+      "description": "User is physically interacting with the control. Suppresses at-setpoint calculation and triggers focus visual. Available when setpoint!=undefined."
+    },
+    "autoAtSetpointDeadband": {
+      "type": "number",
+      "default": 2,
+      "description": "Tolerance for auto at-setpoint detection. Available when setpoint!=undefined && autoAtSetpoint==true."
+    },
+    "setpointAtZeroDeadband": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Tolerance for zero-snap visual state. Available when setpoint!=undefined."
+    },
+    "setpointOverride": {
+      "type": "boolean",
+      "default": false,
+      "description": "Override to derive the setpoint color from the instrument's priority regardless of instrument state. Available when setpoint!=undefined."
+    },
+    "animateSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable CSS-animated confirm transition. Available when setpoint!=undefined."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

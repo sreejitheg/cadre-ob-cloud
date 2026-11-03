@@ -1140,6 +1140,75 @@ polyline, the bar cases a part-filled bar.
 device kind. The binding of `data` to an array tag. The icon slots of the battery and the tank indicator. The overlap with `readout`
 (17.18.4).
 
+### 17.19 Batches B6 and B7: Three Specialty Tanks and Three Gauges (`cadre.ob.heatexchanger`, `heatpump`, `hydraulicseparator`, `gaugegenerator`, `gaugemotorspumps`, `gaugevalve`)
+
+Batches B6 and B7 of tranche T1 wrap `obc-heat-exchanger`, `obc-heat-pump`, `obc-hydraulic-separator`, `obc-gauge-generator`,
+`obc-gauge-motors-and-pumps` and `obc-gauge-valve` as module-only kinds (section 17.13) of the glyph form (section 17.17.1): none has
+`on` or `readoutPosition`, so the geometry check gives each the component's own properties, a `box` anchor and no state. All six are
+display only (owner's decision, section 6 item 4 of the recipe): no event writes a tag, no setpoint is written and none opens a
+faceplate (a module-only kind names no device kind). Facts are from the pinned manifest and the `dist/` sources, read and not recalled.
+
+17.19.1 Heat exchanger (`heat-exchanger.js`, base `abstract-specialty-tank.js`; 14 attributes, all carried). A pressurised specialty tank
+frame with the heat exchanger icon. `medium` (`regular`, `graphic`, `medium`) selects a single area, or a hot and a cold area split on
+the diagonal; `static` draws the frame and icon only. The element carries its own `tag`, `activated`, four badge enumerations and an
+alert frame (`alert`, `alertFrameType`, `alertFrameThickness`, `alertFrameStatus`, `showAlertIcon`), so the alert frame is the element's
+and none is invented. Live attributes: `alert` and `alertFrameStatus` (the frame), `medium` (the scheme, a state a screen may bind),
+`activated`, the badge enumerations and `tag` (text). Size 152 by 96, the element's own width and height.
+
+17.19.2 Heat pump (`heat-pump.js`; the same 14 attributes and base). The same drawing with the heat pump icon; its frame is
+pressurised and its split diagonal. Live attributes as for the heat exchanger.
+
+17.19.3 Hydraulic separator (`hydraulic-separator.js`; the same 14 attributes and base). The same, with the separator icon and a
+horizontal split in place of the diagonal one. Live attributes as for the heat exchanger.
+
+17.19.4 Generator gauge (`gauge-generator.js`, base `gauge-proportional.js`; 30 attributes, all carried). A dial of a full circle
+(sector `360` by default) with a needle, a value band and, in the `double` type, a split track for a second value. `value` (clamped
+between `minValue` and `maxValue`) and `secondaryValue` are the measurements; `state` (`active`, `loading`, `off`) hides the graphics
+unless active; `priority` (`regular`, `enhanced`, `medium`, `off`) is the colour scheme and `off` draws a flat disc. `label`, `unit`,
+`secondaryLabel`, `secondaryUnit` and `tag` are text; `maxValue`, `minValue`, the tickmark intervals, `showLabels`, `fractionDigits`,
+`large` and `faceDiameter` are presentation. `setpoint` and `newSetpoint` draw marks on the large face only, and the deadbands,
+`touching`, `setpointOverride` and `animateSetpoint` shape the setpoint mark. The `icon` and `secondary-icon` slots are not carried
+(a property cannot fill a slot). Size 240 by 280, the compact dial's design box with its label stack.
+
+17.19.5 Motor and pump gauge (`gauge-motors-and-pumps.js`; the same 30 attributes). The same dial in a 270 degree sector. The type
+`regular`, `negative` (a positive and negative scale, sector `270-pos-neg`, the minimum following `maxValue`) or `double` (a second
+track). Live attributes as for the generator gauge.
+
+17.19.6 Valve gauge (`gauge-valve.js`; 18 attributes, all carried). A dial of a two-way or three-way valve. `value` is the opening
+through the valve (a percentage, clamped) and `bottomValue` the second opening of the three-way type; `priority` is the scheme;
+`barStyle` (`fill`, `tint`), `scalePosition` (`top`, `right`, `bottom`, `left`), `large`, `label`, `unit` and `tag` are presentation
+and text. The setpoint attributes are those of the generator gauge. It has no `state`, no `sector` and no readout switch.
+
+17.19.7 How a symbol binds them. No change to `embed_module` was needed; each live attribute binds through `bind` as in section
+17.18.2, and a test builds one symbol of each kind with a `bind` for each live attribute (`ModuleOnlyKinds.LIVE`). `setpoint` and
+`newSetpoint` are in that list as shown values, bound to a tag read only. The identifier (`tag`) of the three tanks takes the
+toolbar route of the other tanks (the text in `custom.idText`, the ID-tag button's flag in the binding); a test checks it. A glyph has
+no `deviceId`, so the alert frame does not follow `custom.alerts`: a screen binds `alert` and `alertFrameStatus` to tags. The
+property `positioning` of the three tanks is not stated for a glyph (the generator states it for a symbol only), so the element keeps
+its default `button`, which fills its box.
+
+17.19.8 The change to the generator. The nullable numbers (`number | undefined`) took the schema default `null` whether or not the
+element had a number there, which gave the gauges no tickmarks (their intervals are 50 and 10 by default). The entry now takes the
+measured default when it is a number (`gen_module_assets.schema_for`); no earlier schema changed. The page's number pairs gain the
+gauges' scale and deadbands (`testbench.GLYPH_NUMBER_VALUES`: `maxValue` 100 and 200, `minValue` 0 and minus 50, the deadbands,
+`fractionDigits`), so that a case keeps a span; `state`, `priority`, `medium` and `bottomValue` join the gallery parameters
+(`testbench.GALLERY_PARAMS`) and are read from memory tags.
+
+17.19.9 Components and tests. Properties (with `componentSize`; a tank's `positioning` is among them): three tanks 15 each,
+generator gauge and motor and pump gauge 31 each, valve gauge 19. The registered components move from 35 to 41. Tests: six rows of
+`GlyphComponents` (attribute sets, sizes, Java and bundle registration, the event not carried), the live binding and tag tests and the
+updated page counts in `ModuleOnlyKinds` (`tests/test_module.py`). The component test page under `--render module` still passes G0
+to G7 with 19 devices and 21 device symbols; a stock build of its descriptor stops with 233 refusals for these six kinds. What the
+gateway step finds on `/component-test`, in the "Module only" section: `obc-heat-exchanger` 44, `obc-heat-pump` 44,
+`obc-hydraulic-separator` 44, `obc-gauge-generator` 37, `obc-gauge-motors-and-pumps` 38 and `obc-gauge-valve` 26, each with a size and
+no console error.
+
+17.19.10 Open items. The `click` event of the three tanks is not wired (display only, no device kind). The setpoint writes of the three
+gauges (`setpoint`, `newSetpoint`, `touching`) are not wired: a setpoint is shown as a bound value only, and a write needs a member and
+a write path of the device model (wiki 13 section 5). The icon slots of the gauges and the slotted badges, tag and alert text of the
+tanks. The sizes chosen for the gauges (240 by 280) are not measured on the gateway. The large face (`large`) is the only one that
+draws the setpoint marks.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

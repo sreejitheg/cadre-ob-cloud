@@ -54,6 +54,7 @@ lit-html/directives/map.js:
 
 lit-html/directives/class-map.js:
 lit-html/directives/if-defined.js:
+lit-html/directives/style-map.js:
   /**
    * @license
    * Copyright 2018 Google LLC

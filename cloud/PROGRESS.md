@@ -181,3 +181,15 @@
   bind through `bind` as for the other module components; a data kind `numbers` added for the trend lists. Tests 1185
   to 1189. Open: the readout's `click`, an array tag reaching `data` (not measured), the overlap of the automation
   readout with the `readout` kind (for the owner).
+- 2026-11-03 05:36: T1 B6 in a Sonnet 5.5 subagent: heat exchanger, heat pump and hydraulic separator, module-only glyphs, display only;
+  the element's own tag, badge and alert attributes bind through `bind`; the `click` is not wired. Tests `tests.test_module` 132 passing.
+  Open: the tanks' `click`, the slots, the glyph's alert frame follows tags and not `custom.alerts`.
+- 2026-11-03 05:36: T1 B7 in a Sonnet 5.5 subagent: generator, motor and pump, and valve gauges, module-only glyphs, display only; value,
+  secondary value, state, priority and the setpoints bind through `bind` (the setpoints are shown, never written). One generator change:
+  a nullable number takes its measured default (the gauges' tick intervals). Component test page G0 to G7 pass (19 devices, 21 device
+  symbols); the stock build refuses 233 symbols. Open: the setpoint writes, the sizes (unmeasured).
+- 2026-11-03 05:40: T1 B6 and B7 in one Sonnet 5.5 subagent at medium effort: 171,593 tokens, 59 tool calls, 9 min 6 s
+  for six module-only glyphs (heat exchanger, heat pump, hydraulic separator, and the generator, motor and pump, and
+  valve gauges), display only: events unwired, setpoints shown and never written. `schema_for` keeps a measured
+  numeric default for a nullable number (no earlier schema changed). Tests 1189 to 1190 (the table-driven module-only
+  tests of B0 cover the new kinds).

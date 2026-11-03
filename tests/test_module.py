@@ -989,6 +989,19 @@ class GlyphComponents(unittest.TestCase):
     """The four glyphs of batch B4 (module-only kinds whose attributes differ from the filter's): each carries exactly
     the attributes its manifest declares, no events, and none of the symbol's properties."""
     # component type: (tag, manifest path, the manifest's attributes, default size)
+    SPECIALTY = {"medium", "static", "tag", "positioning", "activated", "badgeControl", "badgeAlert", "badgeInterlock",
+                 "badgeCommandLocked", "alert", "alertFrameType", "alertFrameThickness", "alertFrameStatus", "showAlertIcon"}
+    GAUGE = {"type", "setpoint", "newSetpoint", "touching", "autoAtSetpointDeadband", "setpointAtZeroDeadband",
+             "setpointOverride", "animateSetpoint", "value", "maxValue", "minValue", "secondaryValue", "state", "sector",
+             "alignment", "priority", "showLabels", "primaryTickmarkInterval", "secondaryTickmarkInterval", "tickmarkStyle",
+             "hasReadout", "label", "unit", "secondaryLabel", "secondaryUnit", "fractionDigits", "name", "faceDiameter",
+             "large", "tag"}
+    GAUGE_VALVE = {"type", "priority", "barStyle", "scalePosition", "value", "bottomValue", "large", "label", "unit", "tag",
+                   "faceDiameter", "setpoint", "newSetpoint", "touching", "autoAtSetpointDeadband", "setpointAtZeroDeadband",
+                   "setpointOverride", "animateSetpoint"}
+    # the one DOM event of an element, which is not carried (display only)
+    CLICK = {"cadre.ob.automationreadout", "cadre.ob.heatexchanger", "cadre.ob.heatpump",
+             "cadre.ob.hydraulicseparator"}
     GLYPHS = {
         "cadre.ob.automationbadge": ("obc-automation-badge", "src/automation/automation-badge/automation-badge.ts",
                                      {"mode", "type"}, {"width": 32, "height": 32}),
@@ -1011,11 +1024,29 @@ class GlyphComponents(unittest.TestCase):
         # `lineType` is left out: an object type the generator does not map, and the readout sits on no line
         "cadre.ob.automationreadout": ("obc-automation-readout", "src/automation/automation-readout/automation-readout.ts",
                                        {"value", "unit", "numberOfDigits", "position"}, {"width": 72, "height": 48}),
+        # batch B6: the specialty tank equipment (module-only, display only): the tank's own tag, alert and badge attributes
+        "cadre.ob.heatexchanger": ("obc-heat-exchanger", "src/automation/heat-exchanger/heat-exchanger.ts",
+                                   SPECIALTY, {"width": 152, "height": 96}),
+        "cadre.ob.heatpump": ("obc-heat-pump", "src/automation/heat-pump/heat-pump.ts", SPECIALTY, {"width": 152, "height": 96}),
+        "cadre.ob.hydraulicseparator": ("obc-hydraulic-separator", "src/automation/hydraulic-separator/hydraulic-separator.ts",
+                                        SPECIALTY, {"width": 152, "height": 96}),
+        # batch B7: the gauges (module-only, display only): the setpoint is shown, never written
+        "cadre.ob.gaugegenerator": ("obc-gauge-generator", "src/automation/gauge-generator/gauge-generator.ts",
+                                    GAUGE, {"width": 240, "height": 280}),
+        "cadre.ob.gaugemotorspumps": ("obc-gauge-motors-and-pumps",
+                                      "src/automation/gauge-motors-and-pumps/gauge-motors-and-pumps.ts",
+                                      GAUGE, {"width": 240, "height": 280}),
+        "cadre.ob.gaugevalve": ("obc-gauge-valve", "src/automation/gauge-valve/gauge-valve.ts",
+                                GAUGE_VALVE, {"width": 240, "height": 280}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
              "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
              "cadre.ob.battery": "battery", "cadre.ob.engine": "engine", "cadre.ob.tankatmospheric": "tankatmospheric",
-             "cadre.ob.automationreadout": "automationreadout"}
+             "cadre.ob.automationreadout": "automationreadout", "cadre.ob.heatexchanger": "heatexchanger",
+             "cadre.ob.heatpump": "heatpump",
+             "cadre.ob.hydraulicseparator": "hydraulicseparator",
+             "cadre.ob.gaugegenerator": "gaugegenerator",
+             "cadre.ob.gaugemotorspumps": "gaugemotorspumps", "cadre.ob.gaugevalve": "gaugevalve"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1033,9 +1064,8 @@ class GlyphComponents(unittest.TestCase):
                         for d in m.get("declarations", []) if d.get("tagName") == tag)
             declared = {a["fieldName"] for a in decl["attributes"]}
             self.assertEqual(declared - ({"lineType"} if ctype == "cadre.ob.automationreadout" else set()), attrs, ctype)
-            # the readout's `click` is the only event among them, and it is not wired (display only, wiki 17.18)
-            self.assertEqual([e["name"] for e in decl.get("events", [])],
-                             ["click"] if ctype == "cadre.ob.automationreadout" else [], ctype)
+            # a `click` is the only event among them, and it is not wired (display only, wiki 17.18 and 17.19)
+            self.assertEqual([e["name"] for e in decl.get("events", [])], ["click"] if ctype in self.CLICK else [], ctype)
 
     def test_the_enumerations_and_defaults_come_from_the_element(self):
         badge = schema_of("cadre.ob.automationbadge")["properties"]
@@ -1086,7 +1116,8 @@ class GlyphComponents(unittest.TestCase):
         self.assertEqual(readout["position"]["enum"], ["left", "right", "top", "bottom"])
         self.assertEqual((readout["position"]["default"], readout["numberOfDigits"]["default"], readout["unit"]["default"]),
                          ("bottom", 3, ""))
-        self.assertNotIn("events", COMPONENTS["cadre.ob.automationreadout"])    # the click is not carried
+        for ctype in self.CLICK:
+            self.assertNotIn("events", COMPONENTS[ctype], ctype)    # the click is not carried
 
     def test_the_wrapper_converts_a_series_to_numbers_and_reads_it_as_data(self):
         for ctype in ("cadre.ob.battery", "cadre.ob.tankatmospheric"):
@@ -1156,13 +1187,15 @@ class ModuleOnlyKinds(unittest.TestCase):
         self.assertNotIn("resistor", self.library_profile.build(self.contracts)["kinds"])
 
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
-        self.assertEqual(sorted(self.glyph_kinds()), ["automation-badge", "automation-readout", "hydraulic-check-valve",
-                                                      "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
-                                                      "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+        self.assertEqual(sorted(self.glyph_kinds()), [
+            "automation-badge", "automation-readout", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
+            "hydraulic-separator", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
+            "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
             c = self.contracts[self.screen.view_of({"kind": kind})]
-            self.assertEqual(c["params"], {k: p["default"] for k, p in sorted(spec["props"].items())}, kind)
+            # `positioning` is the generator's to state, for a symbol only (`screen.module_contract`): a tank-based glyph fills its box
+            self.assertEqual(c["params"], {k: p["default"] for k, p in sorted(spec["props"].items()) if k != "positioning"}, kind)
             self.assertEqual((c["anchor"], c["flow"], c["size"], c["kind"]),
                              ("box", "none", [spec["defaultSize"]["width"], spec["defaultSize"]["height"]], kind))
             for key in ("state", "symbolSize", "identifier", "readoutExtent", "statusMode"):
@@ -1189,7 +1222,13 @@ class ModuleOnlyKinds(unittest.TestCase):
                       "indicator-battery": {"level": 40, "variant": "trend", "data": [10, 20, 30]},
                       "indicator-engine": {"value": "regular", "direction": "horizontal"},
                       "indicator-tank-atmospheric": {"level": 60, "value": "medium"},
-                      "automation-readout": {"value": 12, "unit": "kn", "position": "left"}}[kind]
+                      "automation-readout": {"value": 12, "unit": "kn", "position": "left"},
+                      "heat-exchanger": {"medium": "graphic", "alert": True, "alertFrameStatus": "warning"},
+                      "heat-pump": {"medium": "medium", "activated": True, "badgeControl": "auto"},
+                      "hydraulic-separator": {"medium": "regular", "static": True, "badgeInterlock": "interlock"},
+                      "gauge-generator": {"value": 60, "type": "double", "priority": "enhanced", "label": "kW", "large": True},
+                      "gauge-motors-and-pumps": {"value": 40, "type": "negative", "sector": "270", "unit": "rpm"},
+                      "gauge-valve": {"value": 50, "bottomValue": 25, "type": "three-way", "barStyle": "fill"}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
@@ -1206,7 +1245,15 @@ class ModuleOnlyKinds(unittest.TestCase):
 
     # The live attributes of the B5 kinds, read from the pinned `dist/` sources (wiki 12 section 17.18): what a screen binds to a tag.
     LIVE = {"indicator-battery": ("level", "value", "data"), "indicator-engine": ("value",),
-            "indicator-tank-atmospheric": ("level", "value", "data"), "automation-readout": ("value", "unit")}
+            "indicator-tank-atmospheric": ("level", "value", "data"), "automation-readout": ("value", "unit"),
+            # B6: the scheme, the activation and the element's own alert frame (it has no device state of its own)
+            "heat-exchanger": ("medium", "activated", "alert", "alertFrameStatus"),
+            "heat-pump": ("medium", "activated", "alert", "alertFrameStatus"),
+            "hydraulic-separator": ("medium", "activated", "alert", "alertFrameStatus"),
+            # B7: the measurement, the optional second measurement, the state and the scheme; the setpoints are shown only
+            "gauge-generator": ("value", "secondaryValue", "state", "priority", "setpoint", "newSetpoint"),
+            "gauge-motors-and-pumps": ("value", "secondaryValue", "state", "priority", "setpoint", "newSetpoint"),
+            "gauge-valve": ("value", "bottomValue", "priority", "setpoint", "newSetpoint")}
 
     def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
         # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
@@ -1230,6 +1277,13 @@ class ModuleOnlyKinds(unittest.TestCase):
             self.screen.RENDER["target"] = "module"
             _doc, info = self.screen.build_screen(desc, self.contracts)
             self.assertEqual((info["errors"], info["gaps"]), ([], []), kind)
+
+    def test_a_tank_based_glyph_takes_its_identifier_through_the_toolbar_as_the_other_tanks_do(self):
+        for kind in ("heat-exchanger", "heat-pump", "hydraulic-separator"):
+            node, rep = self.embed(self.symbol(kind, params={"tag": "HX-1"}), "module")
+            self.assertEqual((rep.errors, rep.gaps, node["props"]), ([], [], {}), kind)
+            self.assertEqual(node["custom"], {"idText": "HX-1"}, kind)
+            self.assertIn("{view.custom.showTag}", node["propConfig"]["props.tag"]["binding"]["config"]["expression"], kind)
 
     def test_the_live_attributes_are_properties_of_their_component(self):
         for kind, live in self.LIVE.items():
@@ -1280,7 +1334,9 @@ class ModuleOnlyKinds(unittest.TestCase):
                     stated.setdefault(k, set()).add(tuple(v) if isinstance(v, list) else v)
             self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])
             for name, p in props.items():
-                if "enum" in p and name != "componentSize":
+                if name == "positioning":
+                    self.assertNotIn(name, stated, kind)     # the page leaves the default, which fills the box
+                elif "enum" in p and name != "componentSize":
                     self.assertEqual(stated[name], set(p["enum"]), (kind, name))
                 elif p["type"] == "boolean":
                     self.assertIn(not p["default"], stated[name], (kind, name))
@@ -1294,7 +1350,7 @@ class ModuleOnlyKinds(unittest.TestCase):
                 self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
                                          "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
-                                         "indicator-tank-atmospheric": 11, "automation-readout": 10}[kind], kind)
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)

@@ -104,7 +104,19 @@ public final class CadreOb {
         descriptor("cadre.ob.tankatmospheric", "tankatmospheric", "OB Atmospheric Tank Indicator",
             "OpenBridge atmospheric tank indicator: the level of a tank as a bar or a trend graph, display only.", "obTankAtmospheric", List.of()),
         descriptor("cadre.ob.automationreadout", "automationreadout", "OB Automation Readout",
-            "OpenBridge automation readout: a value with its unit in a bordered chip, display only.", "obAutomationReadout", List.of())
+            "OpenBridge automation readout: a value with its unit in a bordered chip, display only.", "obAutomationReadout", List.of()),
+        descriptor("cadre.ob.heatexchanger", "heatexchanger", "OB Heat Exchanger",
+            "OpenBridge heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only.", "obHeatExchanger", List.of()),
+        descriptor("cadre.ob.heatpump", "heatpump", "OB Heat Pump",
+            "OpenBridge heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only.", "obHeatPump", List.of()),
+        descriptor("cadre.ob.hydraulicseparator", "hydraulicseparator", "OB Hydraulic Separator",
+            "OpenBridge hydraulic separator: a specialty tank with badges and alert frame, display only.", "obHydraulicSeparator", List.of()),
+        descriptor("cadre.ob.gaugegenerator", "gaugegenerator", "OB Generator Gauge",
+            "OpenBridge generator gauge: a dial with value, optional second value and setpoint marks, display only.", "obGaugeGenerator", List.of()),
+        descriptor("cadre.ob.gaugemotorspumps", "gaugemotorspumps", "OB Motor and Pump Gauge",
+            "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only.", "obGaugeMotorsPumps", List.of()),
+        descriptor("cadre.ob.gaugevalve", "gaugevalve", "OB Valve Gauge",
+            "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only.", "obGaugeValve", List.of())
     );
 
     private CadreOb() {
