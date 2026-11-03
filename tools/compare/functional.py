@@ -74,7 +74,7 @@ from glass import (BADGE_AT, BELL, CHART_AXIS, CHART_LINE, CRAFTED_CLICK, DISABL
 # The new frames (`--frame ob`, `--frame obasm`) draw the head with the module's top bar: the helpers below locate the same
 # parts there (the bell, the menu and brilliance buttons, the alarm menu's rows and ACK, the palette) and fall back to the
 # older selectors on the openbridge and asm frames, selected by the structure of the top dock (`glass.frame_variant`).
-from glass import (alert_list, alert_row, bell, click_nav_entry, close_alarm_menu, dimming_button,  # noqa: E402
+from glass import (alert_list, alert_row, bell, click_alert_row, click_nav_entry, close_alarm_menu, dimming_button,  # noqa: E402
                    enabled_acks, frame_variant, menu_button, panel, pick_palette, press_ack)
 
 
@@ -156,7 +156,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     fewer = later is not None and len([a for a in later if not a["acked"]]) == len(unacked) - 1
     newly = [a for a in (later or []) if a["acked"] and a["id"] in {u["id"] for u in unacked}]
     by_user = bool(newly) and all(a.get("by") == user for a in newly) if user else None
-    row = click_text_in(page, panel(page), "P-502 Fault")
+    row = click_alert_row(page, "P-502 Fault")
     page.wait_for_timeout(2500)
     txt = right.inner_text() if right.count() else ""
     check("F11", "The alarm menu acknowledges an alarm, and a row opens its device's faceplate",
@@ -191,7 +191,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     check("F14", "ACK visible in the alarm menu acknowledges every unacknowledged alarm the menu shows",
           bool(unacked) and pressed and later is not None and not left and frame and frame.get("mode") == "acked-active",
           f"unacked {len(unacked)} pressed {pressed} left {len(left)} frame {frame and frame.get('mode')}")
-    click_text_in(page, panel(page), "P-502 Fault")   # a row closes the menu
+    click_alert_row(page, "P-502 Fault")   # a row closes the menu
     page.wait_for_timeout(1500)
     ensure_initial(page, base, restore)
 

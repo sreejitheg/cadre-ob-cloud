@@ -3759,5 +3759,84 @@ class UserMenuTests(unittest.TestCase):
         self.assertIn("the top bar shows 0 icons", rep["note"])
 
 
+class RowFake:
+    """A page that answers `frame_variant` from what was kept for its project and records the clicks and the scripts."""
+
+    def __init__(self, frame, at=None):
+        self.url = "http://x/data/perspective/client/p/disinfection"
+        self._cadre_frame = ("http://x/data/perspective/client/p", frame)
+        self.at, self.clicks, self.scripts = at, [], []
+        self.mouse = self
+
+    def click(self, x, y):
+        self.clicks.append((x, y))
+
+    def evaluate(self, script, arg=None):
+        self.scripts.append((script, arg))
+        return self.at
+
+    def locator(self, sel):
+        self.scripts.append(("locator", sel))
+        return self
+
+    def get_by_text(self, text, exact=False):
+        self.scripts.append(("text", text))
+        return self
+
+    def count(self):
+        return 0
+
+
+class AlertMenuRowTests(unittest.TestCase):
+    """Batch F8 (wiki 13 section 13.11.6): the new frames' alert menu is left by pressing a row's body, the support pages are
+    reached by the apps button, and F11 and F14 no longer press a text the new menu does not print as an element."""
+
+    def test_a_row_of_the_new_menu_is_pressed_on_its_body_clear_of_the_ack(self):
+        for frame in ("ob", "obasm"):
+            page = RowFake(frame, at={"x": 1071, "y": 130})
+            self.assertTrue(glass.click_alert_row(page, "P-502 Fault"), frame)
+            self.assertEqual(page.clicks, [(1071, 130)], frame)
+            self.assertEqual(page.scripts[0][1], ["obc-alert-menu", "P-502 Fault"], frame)
+
+    def test_a_row_that_is_not_drawn_is_not_pressed(self):
+        page = RowFake("ob", at=None)
+        self.assertFalse(glass.click_alert_row(page, "P-502 Fault"))
+        self.assertEqual(page.clicks, [])
+
+    def test_the_older_frames_still_press_the_rows_text(self):
+        page = RowFake("default")
+        self.assertFalse(glass.click_alert_row(page, "P-502 Fault"))    # the fake prints no text: the text path was taken
+        self.assertIn(("locator", glass.PANEL), page.scripts)
+        self.assertIn(("text", "P-502 Fault"), page.scripts)
+        self.assertEqual(page.clicks, [])
+
+    def test_the_row_script_reads_the_item_properties_and_aims_clear_of_its_ack(self):
+        src = glass.ALERT_MENU_ROW_BODY
+        for part in ("obc-alert-menu-item", "data-item-id", "x.description", "x.title", "Math.min(120, r.width / 3)"):
+            self.assertIn(part, src)
+
+    def test_f11_f14_and_the_sequence_step_use_the_row_helper(self):
+        text = (ROOT / "tools" / "compare" / "functional.py").read_text(encoding="utf-8")
+        self.assertEqual(text.count('click_alert_row(page, "P-502 Fault")'), 2)
+        self.assertNotIn("click_text_in(page, panel(page)", text)
+        self.assertNotIn("click_text_in(page, panel(page)", (ROOT / "tools" / "compare" / "glass.py").read_text(encoding="utf-8"))
+
+    def test_the_obasm_menu_reaches_the_support_list_by_the_apps_button(self):
+        import inspect
+        src = inspect.getsource(glass.navigate_by_menu)
+        self.assertIn("FRAME_OBASM and open_support_list(page)", src)
+        body = inspect.getsource(glass.open_support_list)
+        self.assertIn('bar_button(page, "apps")', body)
+        self.assertEqual(glass.BAR_LABELS["apps"], "Apps")
+
+    def test_the_frame_closes_the_menu_and_opens_the_faceplate_on_a_row(self):
+        from hmi import obframe
+        menu = obframe.alert_menu()
+        handler = json.dumps(menu["root"]["children"][0]["events"])
+        self.assertIn("closePopup", handler)
+        self.assertIn("select_alarm_device", handler)
+        self.assertIn("openDock", handler)
+
+
 if __name__ == "__main__":
     unittest.main()

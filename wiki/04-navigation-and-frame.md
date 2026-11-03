@@ -686,6 +686,12 @@ node's Alarms page. With a query the list is flat and every row a leaf. The view
 or the Alarms or Trend page of the node (`contentNode`), then the device's faceplate through `library.open_device`, then closing the
 dock. The support list is the same with `obc-navigation-item` rows.
 
+Measured on the gateway on 2026-11-03 (batch F8, `cadre_hmi_wtpoba`): a press on a group, at five points of its row and for a closed and an open
+group, only toggles it (its `expanded` flips and its pages are drawn or not); the route does not change and the dock stays open. A press on a leaf
+runs the row action and closes the dock. The batch F7 reading, that a group press also navigates, is withdrawn. The pages that belong to no node
+(Trends, Alerts, All alarms) are not in the tree: they are the support list, shown by the apps button (`obc-navigation-menu` is drawn without a
+size while the dock shows the tree).
+
 ### 11.4 Events and the Functions They Call
 
 Every component event is a script action whose first line cites the shape measured in GF-37; no write path is new.

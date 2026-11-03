@@ -563,6 +563,32 @@ def open_alarm_menu(page):
     return alerts
 
 
+ALERT_MENU_ROW_BODY = r"""([host, match]) => {
+  // the body of the module alert menu's row whose alarm id is `match`, or whose source or text contains it: a point on the row clear
+  // of its ACK button (the row's own text lies in its shadow root, and its properties `title` and `description` are the alert's
+  // text and source, so no text node of the page can be pressed)
+  const el = [...document.querySelectorAll(host)].find(e => e.getBoundingClientRect().width > 0);
+  if (!el) return null;
+  const it = [...el.querySelectorAll('obc-alert-menu-item')].find(x => x.getAttribute('data-item-id') === match
+    || String(x.description).includes(match) || String(x.title).includes(match));
+  if (!it) return null;
+  const r = it.getBoundingClientRect();
+  return r.width > 0 ? {x: r.x + Math.min(120, r.width / 3), y: r.y + r.height / 2} : null }"""
+
+
+def click_alert_row(page, match: str) -> bool:
+    """Press the body of the open alarm menu's row whose source or text contains `match`, as an operator does to open its device
+    (the row closes the menu and opens the faceplate): the row's text of the older frames' panel; in the new frames a point on the
+    `obc-alert-menu-item` clear of its ACK (`ALERT_MENU_ROW_BODY`), since the text there is no element of the page's own."""
+    if not is_module_frame(page):
+        return click_text_in(page, PANEL, match)
+    at = page.evaluate(ALERT_MENU_ROW_BODY, [PANEL_OB, match])
+    if not at:
+        return False
+    page.mouse.click(at["x"], at["y"])
+    return True
+
+
 def press_ack(page, alert: dict) -> bool:
     """Press the ACK of the unacknowledged `alert` (a record of `alert_list`) in the open alarm menu: the first visible ACK text of
     the older frames' panel (it draws ACK on the unacknowledged rows alone); in the new frames the ACK button of that alert's
@@ -907,7 +933,7 @@ def ack_alarm(page, match: str) -> bool:
                 break
         text = next((a["text"] for a in (alert_list(page) or [])
                      if match in str(a["source"]) or match in str(a["text"])), match)
-        click_text_in(page, panel(page), text)   # the row closes the menu; the device stays selected
+        click_alert_row(page, text)   # the row closes the menu; the device stays selected
         page.wait_for_timeout(2000)
         return acked
     right.locator('[data-component="ia.input.button"]', has_text=re.compile(r"^\s*Alarms")).first.click()
@@ -1347,10 +1373,10 @@ GROUP_OF = """([label, loose]) => { const d = document.querySelector('.docked-vi
 
 def open_tree_groups(page, label: str, loose: bool = False) -> bool:
     """The tree of the obasm frame draws a page only inside an open group: press the closed group, in view, that holds the page
-    `label` (an exact label; with `loose`, one that contains it) until the page's item is drawn. Measured on 2026-11-03
-    (cadre_hmi_wtpoba): the press of a group toggles it and also fires the item click, so the row action runs, the page of the
-    node opens and the dock closes; the dock is opened again (the current branch is then open) before the next press. True when
-    the page's item is drawn."""
+    `label` (an exact label; with `loose`, one that contains it) until the page's item is drawn. Measured again on 2026-11-03 (batch F8,
+    cadre_hmi_wtpoba, at five points of the group's row, for a closed and an open group): the press of a group only toggles it, the
+    route does not change and the dock stays open, as `wiki/04` section 11.3 says (batch F7 had read a navigation and a closed dock).
+    The loop still opens the dock again when it finds it closed, which costs nothing. True when the page's item is drawn."""
     def drawn() -> bool:
         return any(x == label or (loose and label in x) for x in nav_item_labels(page, leaves=True))
     for _ in range(6):
@@ -1383,12 +1409,34 @@ def click_nav_entry(page, label: str) -> bool:
     return True
 
 
+def open_support_list(page) -> bool:
+    """Show the obasm frame's second navigation state, the support list (`session.custom.navPanel` `support`, wiki 04 section 11.4),
+    which holds the pages that belong to no node (Trends, Alerts, All alarms): the dock is closed if it is open on the tree (the
+    modal overlay takes the press, as `navigate_by_menu` closes it) and the apps button of the top bar pressed. True when the dock
+    is open afterwards."""
+    if dock_open(page, "left"):
+        press_centre(page, menu_button(page))
+        page.wait_for_timeout(1000)
+    apps = bar_button(page, "apps")
+    if apps.count() == 0:
+        return False
+    apps.click()
+    for _ in range(10):
+        page.wait_for_timeout(300)
+        if dock_open(page, "left"):
+            break
+    page.wait_for_timeout(500)
+    return dock_open(page, "left")
+
+
 def navigate_by_menu(page, label: str) -> bool:
     """Navigate as an operator does: the top bar's menu button, then the entry `label` of the
     navigation menu, which closes the menu. False when the menu has no such entry."""
     found = label in nav_labels(page)
     if is_module_frame(page):   # a page's entry, never a group of the tree: the group's label may be the page's
         found = label in nav_item_labels(page, leaves=True) or (frame_variant(page) == FRAME_OBASM and open_tree_groups(page, label))
+        if not found and frame_variant(page) == FRAME_OBASM and open_support_list(page):
+            found = label in nav_item_labels(page, leaves=True)   # Trends, Alerts and the like lie in the apps button's list
     if not found:
         # the menu is modal (GF-71): left open, its overlay would take the next step's click
         if is_module_frame(page):

@@ -1434,13 +1434,13 @@ Table 1. What each helper finds on the older frames and on the new ones.
 
 #### 13.11.4 Measured Facts
 
-1. A press on a tree group both toggles it and fires the item's click (the pinned item dispatches `expand-toggle` and `click`): the row action
-   runs, the node's first page opens and the dock closes. `wiki/04` section 11.3 says a group fires only its toggle; the glass opens the dock
-   again after pressing a group.
+1. A press on a tree group only toggles it; the route is unchanged and the dock stays open (`wiki/04` section 11.3). Batch F7 had read a navigation
+   and a closed dock; batch F8 measured otherwise (section 13.11.6 item 4).
 2. Nobody signed in, the alarm menu draws every row's ACK disabled (`primaryActionState` disabled), unlike the default frame's panel, which hides it.
 3. The alert menu closes on a click outside, on Escape and on the bell pressed again; no close button.
-4. The bell read 2 where the menu listed 6 rows (two of the rows name TK-501): the bell binds `custom.alarm.count`
-   (`alarm_summary`) and the menu `alarm_list`. To be explained at the gateway run.
+4. The bell and the menu count different things, as in the older frames: the bell is `custom.alarm.count` (`alarm_summary`, the active alarms
+   of the scope), the menu lists `alarm_list`, which adds the cleared alarms not yet acknowledged and repeated events of one source (section 13.11.6
+   item 5).
 5. `obc-alert-menu-item`'s `title`, `description`, `status` and `primaryActionState` and the `obc-alert-icon` child's `type`, `active` and
    `acknowledged` are readable as properties of the elements.
 
@@ -1448,4 +1448,23 @@ Table 1. What each helper finds on the older frames and on the new ones.
 
 The row ACK enabled and pressed, ACK visible pressed, Sign out offered after the login, the acknowledging user's name from `custom.alarms.alerts`
 (F18), the strip's ACK pressed (F7, the latch step) and the palette's effect on the page (F9 was measured to reach `palette/night` and back to
-`palette/day` in a throwaway session). Each is for the first G10 run on a sample of either frame.
+`palette/day` in a throwaway session). Each is for the first G10 run on a sample of either frame. Measured by batch F8: all passed on both samples (section 13.11.6 item 3).
+
+#### 13.11.6 Fixes of Batch F8
+
+Measured and fixed on 2026-11-03 against `cadre_hmi_wtpobf` and `cadre_hmi_wtpoba` (module 0.7.0). The frames themselves needed no change; each
+fix is in the glass.
+
+1. The alert menu left open over the faceplate dock (G10 F13 on `ob`). Cause: F11 and F14 closed the menu by pressing the row's text with
+   `click_text_in(panel, "P-502 Fault")`. The older panel prints the text as an element; the new menu keeps it in the item's `title` and
+   `description` properties and in a shadow root, where Playwright finds the text but with no size, so nothing was pressed (F11 would also have
+   failed). The frame behaves as the older frames do: a press on the row closes the popup and opens the device's faceplate (measured). Fix:
+   `glass.click_alert_row`, which presses a point on the `obc-alert-menu-item` clear of its ACK (`ALERT_MENU_ROW_BODY`) in the new frames and the
+   older text press otherwise; `functional` F11, F14 and `glass` (the sequence step) call it. Held by `tests.test_walk.FrameGlassTests`.
+2. Walk rows N-05 and N-06 on `obasm` (Trends and Alerts not found). Cause: those pages are in the support list, which the apps button shows; the
+   tree does not hold them. Fix: `glass.open_support_list`, which `navigate_by_menu` calls on `obasm` when the tree has no such entry. Held by
+   `FrameGlassTests`.
+3. The signed in steps (row ACK enabled and pressed, ACK visible, the strip's ACK, F18, Sign out) passed on both samples without a change.
+4. The tree group press navigates (F7): not reproduced. A group press only toggles (section 11.3 of `wiki/04` corrected).
+5. The bell read 2 where the menu listed 6 rows: not a defect. See 13.11.4 item 4.
+
