@@ -154,3 +154,15 @@
   G0 to G7 pass on the test page (19 devices, 21 device symbols); stock build refuses 19 symbols per kind.
 - 2026-11-03 04:56: T1 B2 in a Sonnet 5.5 subagent at medium effort: 106,413 tokens, 31 tool calls, 6 min 17 s for five
   elements (about 21,000 tokens each).
+- 2026-11-03 05:05: T1 B3 done (bipolar-transistor, mosfet, logic, router as module-only kinds; all on the filter's 22
+  attributes, no module_contract change). Full suite 1158 to 1178, all passing. G0 to G7 pass on the test page (19 devices,
+  21 device symbols); stock build refuses 19 symbols per kind.
+- 2026-11-03 05:05: T1 B3 in a Sonnet 5.5 subagent at medium effort: 87,753 tokens, 16 tool calls, 5 min 13 s for four
+  elements (about 22,000 tokens each). Tests 1158 to 1178.
+- 2026-11-03 05:07: Gateway step for B0 and B1 (module 0.5.0: installed by REST, restart about 15 s, no commissioning
+  step, "Registered 18 Cadre OpenBridge components"). Component test page redeployed (962 tags): G8 PASS, 3410
+  components, no overlay or error badge; browser counts all drawn with a size, no console error: filter 12, generator 12,
+  button 1, resistor 19, damper 13, switch 17, capacitor 19. G11 (`--faceplate asm`): 21 of 21 devices, 314 leaf views,
+  no fault; only the instrument field identity of the baseline. Walk of `cadre_hmi_wtpob` alone on 0.5.0: C 15 of 15
+  (the C-10 fix holds), T 3 of 3, A 1 of 2 (A-02: the acknowledgement in the alarm menu did not take; it passed in the
+  run before); plant restored, no difference.

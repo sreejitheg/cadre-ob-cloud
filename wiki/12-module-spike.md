@@ -1003,6 +1003,27 @@ has 23 properties.
 Tests: `DiodesComponent`, `GroundComponent`, `SourceComponent`, `ConverterComponent` and `TransformerComponent` in
 `tests/test_module.py` (five tests each). Gates G0 to G7 pass on the component test page with 19 devices and 21 device symbols.
 
+### 17.16 Batch B3: the Bipolar Transistor, the MOSFET, the Logic Symbol and the Router (`cadre.ob.bipolartransistor`, `cadre.ob.mosfet`, `cadre.ob.logic`, `cadre.ob.router`)
+
+Batch B3 of tranche T1 wraps four more static symbols, none with events or a command of its own and none with a library kind.
+Each has the filter's 22 attributes (checked against the pinned manifest, so `module_contract` needed no change), is a
+module-only kind (section 17.13: one row in `screen.MODULE_ONLY`) and gains 19 symbols in the "Module only" section of the test
+page. A stock build of that page refuses every such symbol with one error each. The kinds are `bipolar-transistor`, `mosfet`,
+`logic` and `router`; the component ids carry no hyphen. The module is not built or installed by the wraps.
+
+Bipolar transistor (`src/automation/bipolar-transistor/bipolar-transistor.ts`). `alternativeIcon` is `bipolarTransistor01` to
+`bipolarTransistor04`, `bipolarTransistor03Flat` or `bipolarTransistor04Flat`; the component has 23 properties.
+
+MOSFET (`src/automation/mosfet/mosfet.ts`). `alternativeIcon` is `mosfetNtype1` to `mosfetNtype4` or `mosfetPtype1` to
+`mosfetPtype4`; the component has 23 properties.
+
+Logic (`src/automation/logic/logic.ts`). `alternativeIcon` is `logic01` to `logic06`; the component has 23 properties.
+
+Router (`src/automation/router/router.ts`). `alternativeIcon` is `router` or `router2`; the component has 23 properties.
+
+Tests: `BipolarTransistorComponent`, `MosfetComponent`, `LogicComponent` and `RouterComponent` in `tests/test_module.py` (five
+tests each).
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -81,7 +81,7 @@ class DeviceProps(unittest.TestCase):
         carried = {"cadre.ob.valve": ("showStatus",), "cadre.ob.analogvalve": ("showStatus",),
                    "cadre.ob.filter": ("showStatus",), "cadre.ob.resistor": ("showStatus",),
                    "cadre.ob.damper": ("showStatus",), "cadre.ob.switch": ("showStatus",), "cadre.ob.capacitor": ("showStatus",),
-                   "cadre.ob.diodes": ("showStatus",), "cadre.ob.ground": ("showStatus",), "cadre.ob.source": ("showStatus",), "cadre.ob.converter": ("showStatus",), "cadre.ob.transformer": ("showStatus",),
+                   "cadre.ob.diodes": ("showStatus",), "cadre.ob.ground": ("showStatus",), "cadre.ob.source": ("showStatus",), "cadre.ob.converter": ("showStatus",), "cadre.ob.transformer": ("showStatus",), "cadre.ob.bipolartransistor": ("showStatus",), "cadre.ob.mosfet": ("showStatus",), "cadre.ob.logic": ("showStatus",), "cadre.ob.router": ("showStatus",),
                    "cadre.ob.generator": ("showStatus", "statusText")}
         for ctype, c in COMPONENTS.items():
             if ctype in DEVICES:
@@ -785,6 +785,198 @@ class TransformerComponent(unittest.TestCase):
         self.assertIn("automation/transformer/transformer.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
         self.assertIn('"type":"cadre.ob.transformer","tag":"obc-transformer"', JS)
         self.assertRegex(JS, r'\(\[\w+\("obc-transformer"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class BipolarTransistorComponent(unittest.TestCase):
+    """The static bipolar transistor symbol (batch B3, a module-only kind): `obc-bipolar-transistor`, no events, no command of
+    its own, on the attribute set of the filter."""
+    ctype = "cadre.ob.bipolartransistor"
+
+    # the element's attributes in the manifest (src/automation/bipolar-transistor/bipolar-transistor.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves and the filter
+    MANIFEST_ATTRIBUTES = FilterComponent.MANIFEST_ATTRIBUTES
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-bipolar-transistor")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/bipolar-transistor/bipolar-transistor.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-bipolar-transistor")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["bipolarTransistor01", "bipolarTransistor02", "bipolarTransistor03", "bipolarTransistor04", "bipolarTransistor03Flat", "bipolarTransistor04Flat"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.bipolartransistor", "bipolartransistor"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/bipolartransistor.props.json").exists())
+        self.assertIn("automation/bipolar-transistor/bipolar-transistor.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.bipolartransistor","tag":"obc-bipolar-transistor"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-bipolar-transistor"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class MosfetComponent(unittest.TestCase):
+    """The static MOSFET symbol (batch B3, a module-only kind): `obc-mosfet`, no events, no command of
+    its own, on the attribute set of the filter."""
+    ctype = "cadre.ob.mosfet"
+
+    # the element's attributes in the manifest (src/automation/mosfet/mosfet.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves and the filter
+    MANIFEST_ATTRIBUTES = FilterComponent.MANIFEST_ATTRIBUTES
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-mosfet")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/mosfet/mosfet.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-mosfet")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["mosfetNtype1", "mosfetNtype2", "mosfetNtype3", "mosfetNtype4", "mosfetPtype1", "mosfetPtype2", "mosfetPtype3", "mosfetPtype4"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.mosfet", "mosfet"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/mosfet.props.json").exists())
+        self.assertIn("automation/mosfet/mosfet.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.mosfet","tag":"obc-mosfet"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-mosfet"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class LogicComponent(unittest.TestCase):
+    """The static logic symbol (batch B3, a module-only kind): `obc-logic`, no events, no command of
+    its own, on the attribute set of the filter."""
+    ctype = "cadre.ob.logic"
+
+    # the element's attributes in the manifest (src/automation/logic/logic.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves and the filter
+    MANIFEST_ATTRIBUTES = FilterComponent.MANIFEST_ATTRIBUTES
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-logic")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/logic/logic.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-logic")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["logic01", "logic02", "logic03", "logic04", "logic05", "logic06"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.logic", "logic"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/logic.props.json").exists())
+        self.assertIn("automation/logic/logic.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.logic","tag":"obc-logic"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-logic"\)\]')   # the element's registration decorator is in the bundle
+
+    def test_it_carries_no_speed_status_text_or_duty_props(self):
+        props = COMPONENTS[self.ctype]["props"]
+        for name in ("statusText", "badgeDuty", "outOfService", "hasSpeed", "speed", "selectable"):
+            self.assertNotIn(name, props, name)
+        self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
+
+
+class RouterComponent(unittest.TestCase):
+    """The static router symbol (batch B3, a module-only kind): `obc-router`, no events, no command of
+    its own, on the attribute set of the filter."""
+    ctype = "cadre.ob.router"
+
+    # the element's attributes in the manifest (src/automation/router/router.ts), less none; `showStatus` is the field
+    # the module adds as it does on the valves and the filter
+    MANIFEST_ATTRIBUTES = FilterComponent.MANIFEST_ATTRIBUTES
+
+    def test_the_contract_names_the_element_and_every_attribute_of_the_manifest(self):
+        c = COMPONENTS[self.ctype]
+        self.assertEqual(c["element"], "obc-router")
+        self.assertEqual(set(c["props"]) - {"componentSize", "showStatus"}, self.MANIFEST_ATTRIBUTES)
+        self.assertNotIn("events", c)
+        self.assertEqual(c["defaultSize"], {"width": 96, "height": 96})
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = next(d for m in manifest["modules"] if m["path"] == "src/automation/router/router.ts"
+                    for d in m.get("declarations", []) if d.get("tagName") == "obc-router")
+        self.assertEqual({a["fieldName"] for a in decl["attributes"]}, self.MANIFEST_ATTRIBUTES)
+        self.assertEqual(decl.get("events", []), [])
+
+    def test_the_enumerations_come_from_the_element(self):
+        props = schema_of(self.ctype)["properties"]
+        self.assertEqual(props["alternativeIcon"]["enum"], ["router", "router2"])
+        self.assertEqual(props["variant"]["enum"], ["square", "flat"])
+        self.assertEqual(props["orientation"]["enum"], ["horizontal", "verticalRight", "verticalLeft"])
+        self.assertEqual(props["variant"]["default"], "square")
+        self.assertEqual(props["orientation"]["default"], "horizontal")
+        self.assertEqual(props["alertFrameStatus"]["default"], "alarm")
+
+    def test_the_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        self.assertRegex(java, r'descriptor\("cadre\.ob\.router", "router"')
+        self.assertTrue((MODULE / "common/src/main/resources/schemas/router.props.json").exists())
+        self.assertIn("automation/router/router.js", (MODULE / "web/entry.js").read_text(encoding="utf-8"))
+        self.assertIn('"type":"cadre.ob.router","tag":"obc-router"', JS)
+        self.assertRegex(JS, r'\(\[\w+\("obc-router"\)\]')   # the element's registration decorator is in the bundle
 
     def test_it_carries_no_speed_status_text_or_duty_props(self):
         props = COMPONENTS[self.ctype]["props"]

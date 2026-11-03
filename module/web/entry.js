@@ -22,3 +22,7 @@ import '@oicl/openbridge-webcomponents/dist/automation/ground/ground.js';
 import '@oicl/openbridge-webcomponents/dist/automation/source/source.js';
 import '@oicl/openbridge-webcomponents/dist/automation/converter/converter.js';
 import '@oicl/openbridge-webcomponents/dist/automation/transformer/transformer.js';
+import '@oicl/openbridge-webcomponents/dist/automation/bipolar-transistor/bipolar-transistor.js';
+import '@oicl/openbridge-webcomponents/dist/automation/mosfet/mosfet.js';
+import '@oicl/openbridge-webcomponents/dist/automation/logic/logic.js';
+import '@oicl/openbridge-webcomponents/dist/automation/router/router.js';

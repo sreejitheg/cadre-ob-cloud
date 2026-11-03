@@ -80,7 +80,15 @@ public final class CadreOb {
         descriptor("cadre.ob.converter", "converter", "OB Converter",
             "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obConverter", List.of()),
         descriptor("cadre.ob.transformer", "transformer", "OB Transformer",
-            "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obTransformer", List.of())
+            "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obTransformer", List.of()),
+        descriptor("cadre.ob.bipolartransistor", "bipolartransistor", "OB Bipolar Transistor",
+            "OpenBridge bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obBipolarTransistor", List.of()),
+        descriptor("cadre.ob.mosfet", "mosfet", "OB MOSFET",
+            "OpenBridge MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obMosfet", List.of()),
+        descriptor("cadre.ob.logic", "logic", "OB Logic",
+            "OpenBridge logic: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obLogic", List.of()),
+        descriptor("cadre.ob.router", "router", "OB Router",
+            "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obRouter", List.of())
     );
 
     private CadreOb() {

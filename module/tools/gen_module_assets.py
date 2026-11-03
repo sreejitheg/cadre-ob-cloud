@@ -127,6 +127,18 @@ COMPONENTS = [
     {"tag": "obc-transformer", "type": "cadre.ob.transformer", "name": "transformer", "title": "OB Transformer",
      "palette": "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-bipolar-transistor", "type": "cadre.ob.bipolartransistor", "name": "bipolartransistor", "title": "OB Bipolar Transistor",
+     "palette": "OpenBridge bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-mosfet", "type": "cadre.ob.mosfet", "name": "mosfet", "title": "OB MOSFET",
+     "palette": "OpenBridge MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-logic", "type": "cadre.ob.logic", "name": "logic", "title": "OB Logic",
+     "palette": "OpenBridge logic: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-router", "type": "cadre.ob.router", "name": "router", "title": "OB Router",
+     "palette": "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
