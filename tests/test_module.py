@@ -1008,6 +1008,27 @@ class GlyphComponents(unittest.TestCase):
     # B8: the transmitter button declares no event at all (its inner `button` has a native click that nobody listens to)
     TRANSMITTER = {"variant", "size", "value", "unit", "fractionDigits", "maxDigits", "hintedZeros", "hasSignSpacer", "hasIcon",
                    "hasAdvice", "adviceValue", "hasSetPoint", "setpointValue", "label"}
+    # batch C1: the bars and graphs. The chart elements' series are fields without an attribute (`data`, `datasets`, `labels`,
+    # `colors`, `yAxes`), carried as JSON lists by the generator; the attributes the module does not carry are left out.
+    LINE_DATA = {"data", "datasets", "labels", "colors", "yAxes"}
+    LINE = {"legend", "width", "height", "fixedAspectRatioScaling", "scaleReferenceSize", "xAxisType",
+            "yAxisPosition", "showGrid", "showGridX", "showGridY", "showTickMarks", "rangeLabels", "showPoints", "lineMode",
+            "unit", "timeDisplay", "xTicksLimit", "xStepSize", "yTicksLimit", "yStepSize", "priority"}
+    LINE_LEFT_OUT = {"state", "frameStyle", "borderRadiusPosition", "borderRadiusPositionExternalScales", "instrumentMode",
+                     "borderRadius", "showDebugOverlay"}
+    DONUT = {"priority", "half", "showOuterLabels", "showUnit", "outerLabelUnit", "outerLabelMaxLength", "outerLabelDecimalPlaces",
+             "centerReadoutLabel", "centerReadoutUnit", "max", "thickness", "legend", "fixedHeight"}
+    PIE = {"priority", "showOuterLabels", "showUnit", "sunburst", "outerLabelUnit", "outerLabelMaxLength", "outerLabelDecimalPlaces",
+           "legend", "fixedHeight"}
+    POLAR = {"priority", "monochrome", "discreteColorStops", "showSectorLabels", "showUnit", "showOuterLabels", "outerLabelUnit",
+             "outerLabelMaxLength", "outerLabelDecimalPlaces", "fixedHeight", "legend"}
+    RADIAL = {"priority", "max", "circumference", "legend", "fixedHeight", "minRingThickness"}
+    CHART_DATA = {"cadre.ob.areagraph": LINE_DATA, "cadre.ob.linegraph": LINE_DATA, "cadre.ob.donutchart": {"data", "colors"},
+                  "cadre.ob.piechart": {"data", "colors"}, "cadre.ob.polarchart": {"data", "colors"},
+                  "cadre.ob.radialbarchart": {"data", "colors"}}
+    CHART_LEFT_OUT = {"cadre.ob.areagraph": LINE_LEFT_OUT, "cadre.ob.linegraph": LINE_LEFT_OUT,
+                      "cadre.ob.donutchart": {"showDebugOverlay"}, "cadre.ob.piechart": {"showDebugOverlay"},
+                      "cadre.ob.polarchart": {"showDebugOverlay"}, "cadre.ob.radialbarchart": {"showDebugOverlay"}}
     GLYPHS = {
         "cadre.ob.automationbadge": ("obc-automation-badge", "src/automation/automation-badge/automation-badge.ts",
                                      {"mode", "type"}, {"width": 32, "height": 32}),
@@ -1051,6 +1072,19 @@ class GlyphComponents(unittest.TestCase):
                                       SHUFFLE, {"width": 96, "height": 48}),
         "cadre.ob.transmitterbutton": ("obc-transmitter-button", "src/automation/transmitter-button/transmitter-button.ts",
                                        TRANSMITTER, {"width": 96, "height": 40}),
+        # batch C1: the bars and graphs (module-only, display only)
+        "cadre.ob.areagraph": ("obc-area-graph", "src/bars-graphs/area-graph/area-graph.ts",
+                               LINE | LINE_DATA | {"fillMode", "stacked"}, {"width": 480, "height": 320}),
+        "cadre.ob.donutchart": ("obc-donut-chart", "src/bars-graphs/donut-chart/donut-chart.ts",
+                                DONUT | {"data", "colors"}, {"width": 480, "height": 320}),
+        "cadre.ob.piechart": ("obc-pie-chart", "src/bars-graphs/pie-chart/pie-chart.ts",
+                              PIE | {"data", "colors"}, {"width": 480, "height": 320}),
+        "cadre.ob.polarchart": ("obc-polar-chart", "src/bars-graphs/polar-chart/polar-chart.ts",
+                                POLAR | {"data", "colors"}, {"width": 480, "height": 320}),
+        "cadre.ob.radialbarchart": ("obc-radial-bar-chart", "src/bars-graphs/radial-bar-chart/radial-bar-chart.ts",
+                                    RADIAL | {"data", "colors"}, {"width": 480, "height": 320}),
+        "cadre.ob.linegraph": ("obc-line-graph", "src/bars-graphs/line-graph/line-graph.ts",
+                               LINE | LINE_DATA, {"width": 480, "height": 320}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
              "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
@@ -1062,7 +1096,12 @@ class GlyphComponents(unittest.TestCase):
              "cadre.ob.gaugemotorspumps": "gaugemotorspumps", "cadre.ob.gaugevalve": "gaugevalve",
              "cadre.ob.hydraulicvalve43": "hydraulicvalve43",
              "cadre.ob.hydraulicvalvex2": "hydraulicvalvex2",
-             "cadre.ob.transmitterbutton": "transmitterbutton"}
+             "cadre.ob.transmitterbutton": "transmitterbutton", "cadre.ob.areagraph": "areagraph",
+             "cadre.ob.linegraph": "linegraph",
+             "cadre.ob.donutchart": "donutchart",
+             "cadre.ob.piechart": "piechart",
+             "cadre.ob.polarchart": "polarchart",
+             "cadre.ob.radialbarchart": "radialbarchart"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1079,7 +1118,11 @@ class GlyphComponents(unittest.TestCase):
             decl = next(d for m in manifest["modules"] if m["path"] == path
                         for d in m.get("declarations", []) if d.get("tagName") == tag)
             declared = {a["fieldName"] for a in decl["attributes"]}
-            self.assertEqual(declared - ({"lineType"} if ctype == "cadre.ob.automationreadout" else set()), attrs, ctype)
+            left_out = {"lineType"} if ctype == "cadre.ob.automationreadout" else self.CHART_LEFT_OUT.get(ctype, set())
+            self.assertEqual(declared - left_out, attrs - self.CHART_DATA.get(ctype, set()), ctype)
+            # the series of a chart are public fields the manifest lists without an attribute
+            fields = {m["name"] for m in decl.get("members", []) if m.get("kind") == "field"}
+            self.assertLessEqual(self.CHART_DATA.get(ctype, set()), fields, ctype)
             # a `click` is the only event among them, and it is not wired (display only, wiki 17.18 and 17.19)
             self.assertEqual([e["name"] for e in decl.get("events", [])],
                              ["click"] if ctype in self.CLICK else ["position-selected"] if ctype in self.SELECTED else [], ctype)
@@ -1140,6 +1183,36 @@ class GlyphComponents(unittest.TestCase):
         for ctype in ("cadre.ob.battery", "cadre.ob.tankatmospheric"):
             self.assertIn('"data":[{"name":"data","kind":"numbers"}]', self.spec_of(ctype), ctype)
         self.assertIn("numbers: function (v)", JS)
+
+    def test_the_charts_carry_their_series_as_json_lists_and_the_wrapper_hands_the_element_a_copy(self):
+        line = {"data": "points", "datasets": "datasets", "labels": "labels", "colors": "colors", "yAxes": "yaxes"}
+        kinds = {"cadre.ob.areagraph": line, "cadre.ob.linegraph": line,
+                 "cadre.ob.donutchart": {"data": "segments", "colors": "colors"},
+                 "cadre.ob.piechart": {"data": "piesegments", "colors": "colors"},
+                 "cadre.ob.polarchart": {"data": "segments", "colors": "colors"},
+                 "cadre.ob.radialbarchart": {"data": "rings", "colors": "colors"}}
+        for ctype, data in kinds.items():
+            props = schema_of(ctype)["properties"]
+            for name, kind in data.items():
+                self.assertEqual((props[name]["type"], props[name]["default"]), ("array", []), (ctype, name))
+                self.assertIn(f'{{"name":"{name}","kind":"{kind}"}}', self.spec_of(ctype), (ctype, name))
+            self.assertEqual(props["colors"]["items"], {"type": "string"}, ctype)
+            if ctype == "cadre.ob.radialbarchart":     # one number for each ring
+                self.assertEqual(props["data"]["items"], {"type": "number"})
+            elif "datasets" in props:
+                self.assertEqual(props["data"]["items"]["required"], ["value"], ctype)
+                self.assertEqual(props["datasets"]["items"]["required"], ["data"], ctype)
+                self.assertEqual(sorted(props["yAxes"]["items"]["properties"]), ["grid", "id", "max", "min", "position"], ctype)
+            else:
+                self.assertEqual(props["data"]["items"]["required"], ["label", "value"], ctype)
+            if ctype == "cadre.ob.piechart":     # the sunburst's subsegments
+                self.assertEqual(props["data"]["items"]["properties"]["children"]["items"]["required"], ["label", "value"])
+            for left_out in self.CHART_LEFT_OUT[ctype]:
+                self.assertNotIn(left_out, props, (ctype, left_out))
+        # Chart.js writes to the arrays it is given: the wrapper copies the list the property tree holds
+        self.assertIn("function toRecords(v)", JS)
+        self.assertIn("rings: function (v)", JS)
+        self.assertIn("points: toRecords, datasets: toRecords", JS)
 
     @staticmethod
     def spec_of(ctype):
@@ -1205,9 +1278,9 @@ class ModuleOnlyKinds(unittest.TestCase):
 
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
         self.assertEqual(sorted(self.glyph_kinds()), [
-            "automation-badge", "automation-readout", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
+            "area-graph", "automation-badge", "automation-readout", "donut-chart", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
             "hydraulic-separator", "hydraulic-valve-4-3", "hydraulic-valve-x-2", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
-            "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+            "line-graph", "pie-chart", "polar-chart", "radial-bar-chart", "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
             c = self.contracts[self.screen.view_of({"kind": kind})]
@@ -1249,7 +1322,27 @@ class ModuleOnlyKinds(unittest.TestCase):
                       "hydraulic-valve-4-3": {"type": "3", "selectedPosition": 2, "vertical": True},
                       "hydraulic-valve-x-2": {"type": "3/2", "selectedPosition": 0, "vertical": True},
                       "transmitter-button": {"variant": "value", "size": "large", "value": 12.5, "unit": "bar", "hasAdvice": True,
-                                             "adviceValue": 10, "hasSetPoint": True, "setpointValue": 11}}[kind]
+                                             "adviceValue": 10, "hasSetPoint": True, "setpointValue": 11},
+                      "area-graph": {"fillMode": "solid", "stacked": True, "legend": True, "xAxisType": "time",
+                                     "data": [{"x": 1767225600000, "value": 12}, {"x": 1767226200000, "value": 18}],
+                                     "datasets": [{"label": "A", "data": [{"x": 1767225600000, "y": 3}]}],
+                                     "colors": ["#7a4aa8"], "yAxes": [{"id": "a", "position": "right", "min": 0}]},
+                      "line-graph": {"lineMode": "stepped", "showPoints": True, "xAxisType": "number", "unit": "m3/h",
+                                     "data": [{"x": 1, "value": 12}, {"x": 5, "value": 18}],
+                                     "datasets": [{"label": "A", "data": [{"x": 1, "y": 3}]}],
+                                     "colors": ["#7a4aa8"], "yAxes": [{"id": "a", "min": 0, "max": 40, "grid": True}]},
+                      "donut-chart": {"half": True, "showOuterLabels": True, "max": 200, "thickness": 40, "centerReadoutLabel": "Load",
+                                      "data": [{"label": "Pumps", "value": 42}, {"label": "Fans", "value": 18}],
+                                      "colors": ["#7a4aa8", "#2e8b57"]},
+                      "pie-chart": {"sunburst": True, "showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
+                                    "data": [{"label": "Pumps", "value": 42, "children": [{"label": "Duty", "value": 30}]},
+                                             {"label": "Fans", "value": 18}]},
+                      "polar-chart": {"discreteColorStops": True, "showOuterLabels": True, "showSectorLabels": True,
+                                      "monochrome": True, "outerLabelUnit": "deg",
+                                      "data": [{"label": "A", "value": 20}, {"label": "B", "value": 35}],
+                                      "colors": ["#3a6ea5", "#2e8b57"]},
+                      "radial-bar-chart": {"max": 200, "circumference": 360, "minRingThickness": 8, "data": [120, 80, 40],
+                                           "colors": ["#7a4aa8"]}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
@@ -1278,7 +1371,13 @@ class ModuleOnlyKinds(unittest.TestCase):
             # B8: the selected position is shown from a tag; the `position-selected` event is not wired, nothing is written
             "hydraulic-valve-4-3": ("selectedPosition",), "hydraulic-valve-x-2": ("selectedPosition",),
             # the transmitter button's three segments; its click is not wired, so nothing is written
-            "transmitter-button": ("value", "adviceValue", "setpointValue")}
+            "transmitter-button": ("value", "adviceValue", "setpointValue"),
+            # C1: the series and the colours of a chart are lists of JSON (a Document tag or a binding that returns one)
+            "area-graph": ("data", "datasets", "labels", "colors", "yAxes", "legend", "unit"),
+            "line-graph": ("data", "datasets", "labels", "colors", "yAxes", "legend", "unit"),
+            "donut-chart": ("data", "colors", "max", "centerReadoutLabel", "centerReadoutUnit"),
+            "pie-chart": ("data", "colors", "legend"), "polar-chart": ("data", "colors", "legend"),
+            "radial-bar-chart": ("data", "colors", "max", "legend")}
 
     def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
         # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
@@ -1366,7 +1465,7 @@ class ModuleOnlyKinds(unittest.TestCase):
             stated = {}
             for s in mine:
                 for k, v in {**s["params"], **{b: mod.gallery[s["id"]][b] for b in s.get("bind", {})}}.items():
-                    stated.setdefault(k, set()).add(tuple(v) if isinstance(v, list) else v)
+                    stated.setdefault(k, set()).add(json.dumps(v) if isinstance(v, list) else v)
             self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])
             for name, p in props.items():
                 if name == "positioning":
@@ -1379,13 +1478,13 @@ class ModuleOnlyKinds(unittest.TestCase):
                     self.assertTrue(set(self.testbench.GLYPH_NUMBER_VALUES.get(name, self.testbench.GLYPH_NUMBERS)) <= stated[name],
                                     (kind, name))
             self.assertEqual({k for s in mine for k in s["params"]} - set(props), set(), kind)
-            if "data" in props:   # a trend case carries the series; no other case does
+            if "data" in props and "variant" in props:   # a trend case carries the series; no other case does
                 self.assertEqual({tuple(s["params"]["data"]) for s in mine if "data" in s["params"]},
                                  {tuple(self.testbench.GLYPH_SERIES)}, kind)
                 self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
                                          "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
-                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22}[kind], kind)
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22, "area-graph": 39, "line-graph": 35, "donut-chart": 22, "pie-chart": 17, "polar-chart": 20, "radial-bar-chart": 15}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)

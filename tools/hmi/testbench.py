@@ -608,16 +608,75 @@ GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
                        # the selected position of the hydraulic valves (B8): a zero-based index, the first is the element's own default
                        "selectedPosition": (1, 0, 2),
                        # the transmitter button's reserved integer digits (B8)
-                       "maxDigits": (0, 4)}
+                       "maxDigits": (0, 4),
+                       # the bars and graphs (C1): the size of a line chart, the scale reference, and the donut, pie, polar and
+                       # radial charts' own scales; the first value is the element's own default
+                       "width": (480, 240), "height": (320, 160), "scaleReferenceSize": (384, 192),
+                       "max": (100, 200), "thickness": (24, 40), "outerLabelMaxLength": (0, 6), "outerLabelDecimalPlaces": (0, 2),
+                       "fixedHeight": (320, 160), "circumference": (270, 360), "minRingThickness": (16, 8)}
 # The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
 # free string property is shown with, where a glyph has one (the readout's unit).
 GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
 GLYPH_TEXT = {"unit": "kn"}
+# The data of the bars and graphs (C1), our own samples: a week of a made up flow in m3/h for the line charts (the category
+# label and the time in epoch milliseconds, ten minutes apart from 2026-01-01T00:00Z, so that every axis type has its value).
+GLYPH_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+GLYPH_POINTS = [{"label": d, "x": 1767225600000 + i * 600000, "value": v}
+                for i, (d, v) in enumerate(zip(GLYPH_DAYS, [12, 18, 15, 24, 30, 27, 36]))]
+# kind to the properties every case but the default states (an empty chart draws nothing the case could show)
+GLYPH_SEGMENTS = [{"label": "Pumps", "value": 42}, {"label": "Fans", "value": 18}, {"label": "Lighting", "value": 12.5},
+                  {"label": "Galley", "value": 9}]
+GLYPH_SECTORS = [{"label": f"Zone {i + 1}", "value": v} for i, v in enumerate([35, 62, 48, 80, 25, 55])]
+GLYPH_DATA = {"area-graph": {"data": GLYPH_POINTS}, "line-graph": {"data": GLYPH_POINTS},
+              "donut-chart": {"data": GLYPH_SEGMENTS}, "pie-chart": {"data": GLYPH_SEGMENTS},
+              "polar-chart": {"data": GLYPH_SECTORS}, "radial-bar-chart": {"data": [78, 54, 31]}}
+# the subsegments of the pie chart's sunburst: the first two segments split in two
+GLYPH_SUNBURST = [{**GLYPH_SEGMENTS[0], "children": [{"label": "Duty", "value": 30}, {"label": "Standby", "value": 12}]},
+                  {**GLYPH_SEGMENTS[1], "children": [{"label": "Bow", "value": 10}, {"label": "Stern", "value": 8}]},
+                  GLYPH_SEGMENTS[2], GLYPH_SEGMENTS[3]]
+# kind to extra cases (caption, params) that the schema alone does not give: several series, two value axes, colours
+GLYPH_EXTRA = {}
+for _kind in ("area-graph", "line-graph"):
+    GLYPH_EXTRA[_kind] = [
+        ("two series", {"datasets": [{"label": "Pump A", "data": [12, 18, 15, 24, 30, 27, 36]},
+                                     {"label": "Pump B", "data": [8, 10, 14, 12, 18, 20, 22]}],
+                        "labels": GLYPH_DAYS, "legend": True, "data": []}),
+        ("two series, two axes", {"datasets": [{"label": "Flow", "data": [12, 18, 15, 24, 30, 27, 36], "yAxisID": "flow"},
+                                               {"label": "Level", "data": [40, 44, 43, 52, 60, 58, 66], "yAxisID": "level"}],
+                                  "labels": GLYPH_DAYS, "legend": True, "data": [],
+                                  "yAxes": [{"id": "flow", "position": "left", "min": 0, "max": 40},
+                                            {"id": "level", "position": "right", "min": 0, "max": 100}]}),
+        ("two series, time axis", {"datasets": [
+            {"label": "Pump A", "data": [{"x": p["x"], "y": p["value"]} for p in GLYPH_POINTS]},
+            {"label": "Pump B", "data": [{"x": p["x"], "y": 40 - p["value"]} for p in GLYPH_POINTS]}],
+            "xAxisType": "time", "timeDisplay": "minutes", "legend": True, "data": []}),
+        ("custom colours", {"colors": ["#7a4aa8", "#2e8b57"]})]
+GLYPH_EXTRA["donut-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                              ("half, labelled", {"half": True, "showOuterLabels": True}),
+                              ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
+                                                    "outerLabelDecimalPlaces": 1, "centerReadoutUnit": "kW"}),
+                              ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 6}),
+                              ("capacity left", {"max": 150, "legend": True})]
+GLYPH_EXTRA["polar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                              ("sector names", {"showOuterLabels": True}),
+                              ("sector angles", {"showOuterLabels": True, "showSectorLabels": True}),
+                              ("bands", {"discreteColorStops": True, "colors": ["#3a6ea5", "#2e8b57", "#c07a1a", "#b03a3a"]}),
+                              ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 4})]
+GLYPH_EXTRA["radial-bar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a"]}),
+                                   ("five rings", {"data": [90, 72, 55, 40, 18]}),
+                                   ("full circle, legend", {"circumference": 360, "legend": True})]
+GLYPH_EXTRA["pie-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                            ("sunburst with children", {"sunburst": True, "data": GLYPH_SUNBURST}),
+                            ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
+                                                  "outerLabelDecimalPlaces": 1}),
+                            ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 6})]
 # The nullable numbers a glyph shows live and so states at the values of `GLYPH_NUMBERS` (B8: the transmitter button's three
 # segments, which draw dashes while empty). A nullable number outside this set (a gauge's setpoint) is left unstated.
 GLYPH_NULLABLE = ("value", "adviceValue", "setpointValue")
 # A companion a value of an enumeration needs to show anything: the tag variant of the transmitter button is its label.
-GLYPH_COMPANION = {("variant", "tag"): {"label": "TT"}}
+GLYPH_COMPANION = {("variant", "tag"): {"label": "TT"},
+                   # a time axis in the default `date` display warns on the console; the minutes display is the one the samples suit
+                   ("xAxisType", "time"): {"timeDisplay": "minutes"}}
 
 
 def glyph_cases(schema: dict, contract: dict) -> list[Case]:
@@ -634,18 +693,23 @@ def glyph_cases(schema: dict, contract: dict) -> list[Case]:
                if p["type"] == "number" or (p["type"] == ["number", "null"] and k in GLYPH_NULLABLE)}
     series = [k for k, p in props.items() if p["type"] == "array" and p.get("items", {}).get("type") == "number"]
     mid = {k: v[0] for k, v in numbers.items()}
+    data = GLYPH_DATA.get(contract.get("kind"), {})   # the samples of a chart: every case but the default draws them
     out = [Case("default", {})]
     for k, p in props.items():
         if "enum" in p:
-            out += [Case(f"{k} {v}", {**mid, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {}),
+            out += [Case(f"{k} {v}", {**mid, **data, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {}),
                                       **GLYPH_COMPANION.get((k, v), {})})
                     for v in p["enum"]]
         elif k in numbers:
-            out += [Case(f"{k} {v}", {k: v}) for v in numbers[k]]
+            out += [Case(f"{k} {v}", {**data, k: v}) for v in numbers[k]]
         elif p["type"] == "boolean":
-            out.append(Case(k if not default[k] else f"not {k}", {**mid, k: not default[k]}))
+            out.append(Case(k if not default[k] else f"not {k}", {**mid, **data, k: not default[k]}))
         elif p["type"] == "string" and k in GLYPH_TEXT:
             out.append(Case(f"{k} {GLYPH_TEXT[k]}", {**mid, k: GLYPH_TEXT[k]}))
+    out += [Case(caption, {**mid, **data, **params}) for caption, params in GLYPH_EXTRA.get(contract.get("kind"), [])]
+    if "width" in props and "height" in props:   # a chart draws at the size it is given: its box is that size
+        for c in out:
+            c.size = (c.params.get("width", default["width"]), c.params.get("height", default["height"]))
     return [c for c in out if all(k in contract["params"] for k in c.params)]
 
 

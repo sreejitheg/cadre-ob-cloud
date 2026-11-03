@@ -216,3 +216,14 @@
 - 2026-11-03 07:35: T2 started on the owner's word. The owner chose: a new frame option beside `openbridge` and `asm`
   (both unchanged) with its own gates, and all 33 frame components wrapped (recipe section 6.1). C1 (the six bars and
   graphs, module-only, display only) and F0 (a read-only frame design survey, `cloud/FRAME-DESIGN.md`) running.
+- 2026-11-03 07:40: T2 batch C1 (area graph, line graph, donut, pie, polar and radial bar charts as module-only kinds; tokens not
+  known to the subagent). Lists of objects carried as JSON properties (`DATA_SCHEMA` kinds, `toRecords` copy in the wrapper); the
+  stylesheet generator now keeps variables named in strings (chart palette). `tests.test_module` 134 passing (133 before); G0 to G7
+  pass, 19 devices and 21 device symbols; stock build refuses all 148 new symbols. Bundle 1,954,229 to 2,007,401 bytes. Full suite
+  and gateway step pending.
+- 2026-11-03 07:43: T2 C1 in a Sonnet 5.5 subagent at medium effort: about 239,000 tokens, 106 tool calls, 20 min for the
+  six bars and graphs (module-only glyphs, display only, data as lists of objects through `bind`). Real defect fixed on
+  the way: `scoped_css` dropped the CSS variables the bundle names in strings, so every chart series drew black; the
+  stylesheet gained 52 lines and lost none. Bundle 1,954,229 to 2,007,401 bytes (Chart.js was already bundled). F0 in a
+  Sonnet 5.5 subagent: 159,726 tokens, 23 tool calls, 3 min 10 s, `cloud/FRAME-DESIGN.md` (frame estimate 3.3 M
+  tokens before the ASM variant the owner then asked for).

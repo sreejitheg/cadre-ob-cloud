@@ -43,3 +43,9 @@ import '@oicl/openbridge-webcomponents/dist/automation/gauge-valve/gauge-valve.j
 import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-valve-4-3/hydraulic-valve-4-3.js';
 import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-valve-x-2/hydraulic-valve-x-2.js';
 import '@oicl/openbridge-webcomponents/dist/automation/transmitter-button/transmitter-button.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/area-graph/area-graph.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/line-graph/line-graph.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/donut-chart/donut-chart.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/pie-chart/pie-chart.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/polar-chart/polar-chart.js';
+import '@oicl/openbridge-webcomponents/dist/bars-graphs/radial-bar-chart/radial-bar-chart.js';

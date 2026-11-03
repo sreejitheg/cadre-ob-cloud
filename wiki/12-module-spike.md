@@ -1261,6 +1261,74 @@ under `--render module` passes G0 to G7 with 19 devices and 21 device symbols; a
 refusals for these kinds. What the gateway step finds on `/component-test`, in the "Module only" section: `obc-hydraulic-valve-4-3` 10,
 `obc-hydraulic-valve-x-2` 8 and `obc-transmitter-button` 22, each with a size and no console error.
 
+### 17.21 Batch C1: Six Bars and Graphs (`cadre.ob.areagraph`, `linegraph`, `donutchart`, `piechart`, `polarchart`, `radialbarchart`)
+
+Batch C1 of tranche T2 wraps the six elements of the manifest group `bars-graphs` as module-only kinds (section 17.13) of the glyph form
+(section 17.17.1). They draw with Chart.js 4.5.1, which is a dependency of the pinned package and was already in the bundle when the
+batch began, so no charting dependency is added. All six are display only: none of them declares an
+event, and none opens a faceplate. Their data are public fields without an attribute (`data`, `datasets`, `labels`, `colors`,
+`yAxes`), which `schema_for` skips; the entry names them in `data`, and the module carries each as a JSON list property with an item
+schema of our own wording (`gen_module_assets.DATA_SCHEMA`: `points`, `datasets`, `yaxes`, `labels`, `colors`, `segments`,
+`piesegments`, `rings`). The wrapper hands the element a copy made with `JSON.parse(JSON.stringify(...))` (`toRecords`), because
+Chart.js writes to the arrays it is given and the property tree holds immutable data. A symbol binds a list through `bind`, as for the
+alert lists (GF-38): a Document tag, or a binding that returns a list of objects, drives the property; a fixed list is a parameter.
+The sample data of the test page are our own (`testbench.GLYPH_POINTS`, `GLYPH_SEGMENTS`, `GLYPH_SECTORS`, `GLYPH_SUNBURST`).
+
+17.21.1 Area graph (`area-graph.ts`; 30 attributes). A line chart that is always filled. Data: `data` (objects `{label, x, value}`: a
+single series, `label` on the category axis, `x` on a time axis in epoch milliseconds or an ISO string or on a number axis) or
+`datasets` (objects `{label, data, yAxisID}`; `data` holds numbers, or `{x, y}` points on a time or number axis), which replaces
+`data` when it is not empty; `labels` (the category labels of `datasets`), `colors` (CSS colours) and `yAxes` (objects `{id, position,
+min, max, grid}`). Presentation: `fillMode` (`semitransparent`, `solid`, `threshold`; threshold applies to one series), `stacked`,
+`legend`, `width` and `height` (480 by 320), `fixedAspectRatioScaling`, `scaleReferenceSize`, `xAxisType`, `yAxisPosition`, the three
+grid flags, `showTickMarks`, `rangeLabels`, `showPoints`, `lineMode`, `unit`, `timeDisplay`, the four tick limits and steps (nullable
+numbers) and `priority`. Left out (`LINE_FRAME`): `state`, `frameStyle`, the border radius family and `instrumentMode`, which serve a
+slotted external scale or an instrument panel (a nullable enumeration such as `borderRadiusPosition` adds a border plugin for any
+value, so the contract cannot carry it with a default), and `showDebugOverlay`; the object `xAxis` (a pinned range) is not carried.
+Component properties 29. Bundle growth 2,524 bytes (1,954,229 to 1,956,753).
+
+17.21.2 Line graph (`line-graph.ts`; 28 attributes). The same base and data as the area graph, without the fill: the attributes of
+17.21.1 less `fillMode` and `stacked`. Properties 27. Growth 1,759 bytes (to 1,958,512).
+
+17.21.3 Donut chart (`donut-chart.ts`; 14 attributes). Segments of a ring with a total in the centre. `data` is a list of `{label,
+value}`; the centre total is their sum. `max` (100) leaves an unfilled remainder in a distinct colour when it exceeds the total.
+Presentation: `half`, `showOuterLabels`, `showUnit`, `outerLabelUnit`, `outerLabelMaxLength`, `outerLabelDecimalPlaces`,
+`centerReadoutLabel`, `centerReadoutUnit`, `thickness`, `legend`, `fixedHeight` (the element hides labels below 192) and `priority`.
+`showDebugOverlay` is left out. Properties 16. Growth 20,349 bytes (to 1,978,861).
+
+17.21.4 Pie chart (`pie-chart.ts`; 10 attributes). `data` is a list of `{label, value, children}`; `children` (objects `{label,
+value}`) are drawn as the outer ring when `sunburst` is true. Presentation as the donut's, with no total or `max`. Properties 12.
+Growth 10,173 bytes (to 1,989,034).
+
+17.21.5 Polar chart (`polar-chart.ts`; 12 attributes). Sectors of equal angle whose reach shows the value. `data` is a list of
+`{label, value}`; `colors` are the series colours, or the threshold steps of the bands when `discreteColorStops` is true.
+Presentation: `monochrome`, `showSectorLabels` (angles in place of names), `showUnit`, `showOuterLabels`, `outerLabelUnit` (a degree
+sign by default), `outerLabelMaxLength`, `outerLabelDecimalPlaces`, `fixedHeight`, `legend`, `priority`. Properties 14. Growth 11,841
+bytes (to 2,000,875).
+
+17.21.6 Radial bar chart (`radial-bar-chart.ts`; 7 attributes). Concentric rings, one for each value. `data` is a list of numbers (the
+generic `numbers` kind of 17.18 with another description, `rings`) on the scale 0 to `max` (100); `colors` as above. Presentation:
+`circumference` (270 or 360), `minRingThickness`, `legend`, `fixedHeight`, `priority`. Properties 9. Growth 6,526 bytes (to 2,007,401).
+
+17.21.7 Two generator changes beyond table rows. First, the stylesheet generator kept a CSS variable only where the bundle writes
+`var(--name)`; the charts read their palette (`--base-gray-100` to `500`, `--base-blue-400`), fonts and frame colours by name from the
+computed style (`charthelpers/constants.js`), so those variables were missing and every series drew black in a stand-in page. The
+generator now also keeps a variable the bundle names in a string (`scoped_css`): 52 lines were added to `cadre-ob.css` (the grey and
+blue base colours, three font weights, a frame radius and the overlay colour) and none was removed. Second, `testbench.glyph_cases` states the sample data of a kind (`GLYPH_DATA`) in every case
+but the default, sets a chart's box from its `width` and `height`, adds the extra cases of `GLYPH_EXTRA` (several series, two axes,
+a time axis, colours, labels, a sunburst, bands), and states `timeDisplay` `minutes` beside a time axis (`GLYPH_COMPANION`; the
+default `date` display logs a console warning). The number pairs of the charts join `GLYPH_NUMBER_VALUES`.
+
+17.21.8 Components and tests. The registered components move from 44 to 50. In a stand-in page (Chrome, the bundle, the generated
+stylesheet) every case of the six kinds drew a canvas without a console message; a chart's box measured 480 by 320 for the two line
+charts and 320 by 320 for the others (with the legend or labels up to 458 wide, which the default 480 by 320 holds). Tests:
+six rows of `GlyphComponents`, one test of the list schemas and the wrapper copy, the live binding rows (`LIVE`) and the page counts of
+`ModuleOnlyKinds`. The component test page under `--render module` passes G0 to G7 with 19 devices and 21 device symbols; a stock
+build of its descriptor stops with one refusal for each of the 148 new symbols. What the gateway step finds on `/component-test`, in
+the "Module only" section: `obc-area-graph` 39, `obc-line-graph` 35, `obc-donut-chart` 22, `obc-pie-chart` 17, `obc-polar-chart` 20 and
+`obc-radial-bar-chart` 15, each with a canvas and no console error. Open items: a bound list needs a Document tag or an expression that
+returns a list of objects, not yet tried on the gateway; the charts' interactive tooltips and legend clicks are the element's own and are
+not wired to anything.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

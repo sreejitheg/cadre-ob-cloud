@@ -6369,6 +6369,863 @@
    }
   }
  },
+ "cadre.ob.areagraph": {
+  "element": "obc-area-graph",
+  "title": "OB Area Graph",
+  "palette": "OpenBridge area graph: one or several series drawn as filled areas, display only",
+  "schema": "schemas/areagraph.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "fillMode": {
+    "type": "string",
+    "enum": [
+     "semitransparent",
+     "solid",
+     "threshold"
+    ],
+    "default": "semitransparent"
+   },
+   "stacked": {
+    "type": "boolean",
+    "default": false
+   },
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "width": {
+    "type": "number",
+    "default": 480
+   },
+   "height": {
+    "type": "number",
+    "default": 320
+   },
+   "fixedAspectRatioScaling": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleReferenceSize": {
+    "type": "number",
+    "default": 384
+   },
+   "xAxisType": {
+    "type": "string",
+    "enum": [
+     "category",
+     "time",
+     "number"
+    ],
+    "default": "category"
+   },
+   "yAxisPosition": {
+    "type": "string",
+    "enum": [
+     "left",
+     "right"
+    ],
+    "default": "left"
+   },
+   "showGrid": {
+    "type": "boolean",
+    "default": false
+   },
+   "showGridX": {
+    "type": "boolean",
+    "default": false
+   },
+   "showGridY": {
+    "type": "boolean",
+    "default": false
+   },
+   "showTickMarks": {
+    "type": "boolean",
+    "default": false
+   },
+   "rangeLabels": {
+    "type": "string",
+    "enum": [
+     "none",
+     "y",
+     "x",
+     "xy"
+    ],
+    "default": "none"
+   },
+   "showPoints": {
+    "type": "boolean",
+    "default": false
+   },
+   "lineMode": {
+    "type": "string",
+    "enum": [
+     "smooth",
+     "straight",
+     "stepped"
+    ],
+    "default": "smooth"
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "timeDisplay": {
+    "type": "string",
+    "enum": [
+     "minutes",
+     "date"
+    ],
+    "default": "date"
+   },
+   "xTicksLimit": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "xStepSize": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "yTicksLimit": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "yStepSize": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "x": {
+       "type": [
+        "number",
+        "string"
+       ]
+      },
+      "value": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "value"
+     ]
+    }
+   },
+   "datasets": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "data": {
+       "type": "array",
+       "description": "Numbers, or `{x, y}` objects on a time or number axis."
+      },
+      "yAxisID": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "data"
+     ]
+    }
+   },
+   "labels": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": [
+      "string",
+      "number"
+     ]
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "yAxes": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "position": {
+       "type": "string",
+       "enum": [
+        "left",
+        "right"
+       ]
+      },
+      "min": {
+       "type": "number"
+      },
+      "max": {
+       "type": "number"
+      },
+      "grid": {
+       "type": "boolean"
+      }
+     }
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.linegraph": {
+  "element": "obc-line-graph",
+  "title": "OB Line Graph",
+  "palette": "OpenBridge line graph: one or several series drawn as lines, display only",
+  "schema": "schemas/linegraph.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "width": {
+    "type": "number",
+    "default": 480
+   },
+   "height": {
+    "type": "number",
+    "default": 320
+   },
+   "fixedAspectRatioScaling": {
+    "type": "boolean",
+    "default": false
+   },
+   "scaleReferenceSize": {
+    "type": "number",
+    "default": 384
+   },
+   "xAxisType": {
+    "type": "string",
+    "enum": [
+     "category",
+     "time",
+     "number"
+    ],
+    "default": "category"
+   },
+   "yAxisPosition": {
+    "type": "string",
+    "enum": [
+     "left",
+     "right"
+    ],
+    "default": "left"
+   },
+   "showGrid": {
+    "type": "boolean",
+    "default": false
+   },
+   "showGridX": {
+    "type": "boolean",
+    "default": false
+   },
+   "showGridY": {
+    "type": "boolean",
+    "default": false
+   },
+   "showTickMarks": {
+    "type": "boolean",
+    "default": false
+   },
+   "rangeLabels": {
+    "type": "string",
+    "enum": [
+     "none",
+     "y",
+     "x",
+     "xy"
+    ],
+    "default": "none"
+   },
+   "showPoints": {
+    "type": "boolean",
+    "default": false
+   },
+   "lineMode": {
+    "type": "string",
+    "enum": [
+     "smooth",
+     "straight",
+     "stepped"
+    ],
+    "default": "smooth"
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "timeDisplay": {
+    "type": "string",
+    "enum": [
+     "minutes",
+     "date"
+    ],
+    "default": "date"
+   },
+   "xTicksLimit": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "xStepSize": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "yTicksLimit": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "yStepSize": {
+    "type": [
+     "number",
+     "null"
+    ],
+    "default": null
+   },
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "x": {
+       "type": [
+        "number",
+        "string"
+       ]
+      },
+      "value": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "value"
+     ]
+    }
+   },
+   "datasets": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "data": {
+       "type": "array",
+       "description": "Numbers, or `{x, y}` objects on a time or number axis."
+      },
+      "yAxisID": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "data"
+     ]
+    }
+   },
+   "labels": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": [
+      "string",
+      "number"
+     ]
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "yAxes": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "id": {
+       "type": "string"
+      },
+      "position": {
+       "type": "string",
+       "enum": [
+        "left",
+        "right"
+       ]
+      },
+      "min": {
+       "type": "number"
+      },
+      "max": {
+       "type": "number"
+      },
+      "grid": {
+       "type": "boolean"
+      }
+     }
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.donutchart": {
+  "element": "obc-donut-chart",
+  "title": "OB Donut Chart",
+  "palette": "OpenBridge donut chart: labelled segments of a ring with a centre total, display only",
+  "schema": "schemas/donutchart.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "half": {
+    "type": "boolean",
+    "default": false
+   },
+   "showOuterLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "showUnit": {
+    "type": "boolean",
+    "default": false
+   },
+   "outerLabelUnit": {
+    "type": "string",
+    "default": "%"
+   },
+   "outerLabelMaxLength": {
+    "type": "number",
+    "default": 0
+   },
+   "outerLabelDecimalPlaces": {
+    "type": "number",
+    "default": 0
+   },
+   "centerReadoutLabel": {
+    "type": "string",
+    "default": "Total"
+   },
+   "centerReadoutUnit": {
+    "type": "string",
+    "default": "%"
+   },
+   "max": {
+    "type": "number",
+    "default": 100
+   },
+   "thickness": {
+    "type": "number",
+    "default": 24
+   },
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "fixedHeight": {
+    "type": "number",
+    "default": 320
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "value": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "label",
+      "value"
+     ]
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.piechart": {
+  "element": "obc-pie-chart",
+  "title": "OB Pie Chart",
+  "palette": "OpenBridge pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
+  "schema": "schemas/piechart.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "showOuterLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "showUnit": {
+    "type": "boolean",
+    "default": false
+   },
+   "sunburst": {
+    "type": "boolean",
+    "default": false
+   },
+   "outerLabelUnit": {
+    "type": "string",
+    "default": "%"
+   },
+   "outerLabelMaxLength": {
+    "type": "number",
+    "default": 0
+   },
+   "outerLabelDecimalPlaces": {
+    "type": "number",
+    "default": 0
+   },
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "fixedHeight": {
+    "type": "number",
+    "default": 320
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "value": {
+       "type": "number"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "label": {
+          "type": "string"
+         },
+         "value": {
+          "type": "number"
+         }
+        },
+        "required": [
+         "label",
+         "value"
+        ]
+       }
+      }
+     },
+     "required": [
+      "label",
+      "value"
+     ]
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.polarchart": {
+  "element": "obc-polar-chart",
+  "title": "OB Polar Chart",
+  "palette": "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only",
+  "schema": "schemas/polarchart.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "monochrome": {
+    "type": "boolean",
+    "default": false
+   },
+   "discreteColorStops": {
+    "type": "boolean",
+    "default": false
+   },
+   "showSectorLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "showUnit": {
+    "type": "boolean",
+    "default": false
+   },
+   "showOuterLabels": {
+    "type": "boolean",
+    "default": false
+   },
+   "outerLabelUnit": {
+    "type": "string",
+    "default": "\u00b0"
+   },
+   "outerLabelMaxLength": {
+    "type": "number",
+    "default": 0
+   },
+   "outerLabelDecimalPlaces": {
+    "type": "number",
+    "default": 0
+   },
+   "fixedHeight": {
+    "type": "number",
+    "default": 320
+   },
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "value": {
+       "type": "number"
+      }
+     },
+     "required": [
+      "label",
+      "value"
+     ]
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.radialbarchart": {
+  "element": "obc-radial-bar-chart",
+  "title": "OB Radial Bar Chart",
+  "palette": "OpenBridge radial bar chart: concentric rings, one for each value, display only",
+  "schema": "schemas/radialbarchart.props.json",
+  "defaultSize": {
+   "width": 480,
+   "height": 320
+  },
+  "props": {
+   "priority": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "max": {
+    "type": "number",
+    "default": 100
+   },
+   "circumference": {
+    "type": "number",
+    "default": 270
+   },
+   "legend": {
+    "type": "boolean",
+    "default": false
+   },
+   "fixedHeight": {
+    "type": "number",
+    "default": 320
+   },
+   "minRingThickness": {
+    "type": "number",
+    "default": 16
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "number"
+    }
+   },
+   "colors": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "string"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

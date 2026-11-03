@@ -122,7 +122,19 @@ public final class CadreOb {
         descriptor("cadre.ob.hydraulicvalvex2", "hydraulicvalvex2", "OB Hydraulic X/2 Valve",
             "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only.", "obHydraulicValveX2", List.of()),
         descriptor("cadre.ob.transmitterbutton", "transmitterbutton", "OB Transmitter Button",
-            "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only.", "obTransmitterButton", List.of())
+            "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only.", "obTransmitterButton", List.of()),
+        descriptor("cadre.ob.areagraph", "areagraph", "OB Area Graph",
+            "OpenBridge area graph: one or several series drawn as filled areas, display only.", "obAreaGraph", List.of()),
+        descriptor("cadre.ob.linegraph", "linegraph", "OB Line Graph",
+            "OpenBridge line graph: one or several series drawn as lines, display only.", "obLineGraph", List.of()),
+        descriptor("cadre.ob.donutchart", "donutchart", "OB Donut Chart",
+            "OpenBridge donut chart: labelled segments of a ring with a centre total, display only.", "obDonutChart", List.of()),
+        descriptor("cadre.ob.piechart", "piechart", "OB Pie Chart",
+            "OpenBridge pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only.", "obPieChart", List.of()),
+        descriptor("cadre.ob.polarchart", "polarchart", "OB Polar Chart",
+            "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only.", "obPolarChart", List.of()),
+        descriptor("cadre.ob.radialbarchart", "radialbarchart", "OB Radial Bar Chart",
+            "OpenBridge radial bar chart: concentric rings, one for each value, display only.", "obRadialBarChart", List.of())
     );
 
     private CadreOb() {

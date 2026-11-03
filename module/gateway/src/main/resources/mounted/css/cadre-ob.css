@@ -217,8 +217,10 @@
   --menu-navigation-components-table-header-item-margin-horizontal: 4px;
   --menu-navigation-components-scroll-bar-padding: 4px;
   --global-typography-instrument-label-font-size: 11.5px;
+  --global-typography-instrument-label-font-weight: var(--font-weight-semibold);
   --global-typography-instrument-label-line-height: var(--line-height-075);
   --global-typography-instrument-unit-font-size: 11.5px;
+  --global-typography-instrument-unit-font-weight: var(--font-weight-regular);
   --global-typography-instrument-unit-line-height: var(--line-height-075);
   --global-typography-instrument-value-large-container-height: 32px;
   --global-typography-instrument-value-large-font-size: 34px;
@@ -227,6 +229,9 @@
   );
   --global-typography-instrument-value-large-line-height: 32px;
   --global-typography-instrument-value-regular-font-size: 16px;
+  --global-typography-instrument-value-regular-font-weight-active: var(
+    --font-weight-semibold
+  );
   --global-typography-instrument-value-regular-line-height: 20px;
   --global-typography-instrument-value-small-font-size: 11.5px;
   --global-typography-instrument-value-small-line-height: 16px;
@@ -376,6 +381,7 @@
   --automation-components-button-new-border-radius: 6px;
   --automation-components-badge-new-icon-size-flat: 16px;
   --ui-components-progressbars-progress-bar--circular-bar-weight-small: 2px;
+  --instrument-components-watchface-frame-regular-border-radius: 4px;
   --global-typography-generic-l-font-weight-regular: var(
     --typography-primitives-font-weight-250
   );
@@ -605,8 +611,10 @@
   --menu-navigation-components-table-header-item-margin-horizontal: 4px;
   --menu-navigation-components-scroll-bar-padding: 4px;
   --global-typography-instrument-label-font-size: 16px;
+  --global-typography-instrument-label-font-weight: var(--font-weight-semibold);
   --global-typography-instrument-label-line-height: 20px;
   --global-typography-instrument-unit-font-size: 16px;
+  --global-typography-instrument-unit-font-weight: var(--font-weight-regular);
   --global-typography-instrument-unit-line-height: 20px;
   --global-typography-instrument-value-large-container-height: 40px;
   --global-typography-instrument-value-large-font-size: 46px;
@@ -615,6 +623,9 @@
   );
   --global-typography-instrument-value-large-line-height: 40px;
   --global-typography-instrument-value-regular-font-size: 22px;
+  --global-typography-instrument-value-regular-font-weight-active: var(
+    --font-weight-semibold
+  );
   --global-typography-instrument-value-regular-line-height: 24px;
   --global-typography-instrument-value-small-font-size: 16px;
   --global-typography-instrument-value-small-line-height: 20px;
@@ -762,6 +773,7 @@
   --automation-components-button-new-border-radius: 6px;
   --automation-components-badge-new-icon-size-flat: 20px;
   --ui-components-progressbars-progress-bar--circular-bar-weight-small: 2px;
+  --instrument-components-watchface-frame-regular-border-radius: 8px;
   --global-typography-generic-l-font-weight-regular: 0;
   --global-typography-generic-l-font-weight-medium: 0;
   --global-typography-generic-l-font-weight-bold: 0;
@@ -983,8 +995,10 @@
   --menu-navigation-components-table-header-item-margin-horizontal: 6px;
   --menu-navigation-components-scroll-bar-padding: 6px;
   --global-typography-instrument-label-font-size: 22px;
+  --global-typography-instrument-label-font-weight: var(--font-weight-semibold);
   --global-typography-instrument-label-line-height: 32px;
   --global-typography-instrument-unit-font-size: 24px;
+  --global-typography-instrument-unit-font-weight: var(--font-weight-regular);
   --global-typography-instrument-unit-line-height: 32px;
   --global-typography-instrument-value-large-container-height: 64px;
   --global-typography-instrument-value-large-font-size: 68px;
@@ -993,6 +1007,9 @@
   );
   --global-typography-instrument-value-large-line-height: 64px;
   --global-typography-instrument-value-regular-font-size: 34px;
+  --global-typography-instrument-value-regular-font-weight-active: var(
+    --font-weight-semibold
+  );
   --global-typography-instrument-value-regular-line-height: 40px;
   --global-typography-instrument-value-small-font-size: 22px;
   --global-typography-instrument-value-small-line-height: 32px;
@@ -1140,6 +1157,7 @@
   --automation-components-button-new-border-radius: 6px;
   --automation-components-badge-new-icon-size-flat: 24px;
   --ui-components-progressbars-progress-bar--circular-bar-weight-small: 4px;
+  --instrument-components-watchface-frame-regular-border-radius: 12px;
   --global-typography-generic-l-font-weight-regular: 0;
   --global-typography-generic-l-font-weight-medium: 0;
   --global-typography-generic-l-font-weight-bold: 0;
@@ -1361,8 +1379,10 @@
   --menu-navigation-components-table-header-item-margin-horizontal: 8px;
   --menu-navigation-components-scroll-bar-padding: 8px;
   --global-typography-instrument-label-font-size: var(--font-size-200);
+  --global-typography-instrument-label-font-weight: var(--font-weight-semibold);
   --global-typography-instrument-label-line-height: var(--line-height-200);
   --global-typography-instrument-unit-font-size: var(--font-size-200);
+  --global-typography-instrument-unit-font-weight: var(--font-weight-regular);
   --global-typography-instrument-unit-line-height: var(--line-height-200);
   --global-typography-instrument-value-large-container-height: var(
     --font-size-500
@@ -1373,6 +1393,9 @@
   );
   --global-typography-instrument-value-large-line-height: var(--font-size-500);
   --global-typography-instrument-value-regular-font-size: var(--font-size-250);
+  --global-typography-instrument-value-regular-font-weight-active: var(
+    --font-weight-semibold
+  );
   --global-typography-instrument-value-regular-line-height: var(
     --line-height-250
   );
@@ -1524,6 +1547,7 @@
   --automation-components-button-new-border-radius: 6px;
   --automation-components-badge-new-icon-size-flat: 24px;
   --ui-components-progressbars-progress-bar--circular-bar-weight-small: 8px;
+  --instrument-components-watchface-frame-regular-border-radius: 16px;
   --global-typography-generic-l-font-weight-regular: 0;
   --global-typography-generic-l-font-weight-medium: 0;
   --global-typography-generic-l-font-weight-bold: 0;
@@ -1706,6 +1730,7 @@
   --base-blue-600: rgb(29, 60, 103);
   --base-blue-100: rgb(202, 222, 252);
   --base-blue-200: rgb(156, 193, 245);
+  --base-blue-400: rgb(66, 113, 179);
   --base-blue-500: rgb(45, 84, 139);
   --base-cyan-050: rgb(223, 240, 249);
   --base-cyan-100: rgb(191, 226, 243);
@@ -1775,7 +1800,13 @@
   --integration-selected-pressed-border-color: rgb(235, 235, 235);
   --integration-selected-disabled-background-color: rgb(0, 0, 0, 0);
   --integration-selected-disabled-border-color: rgb(0, 0, 0, 0);
+  --overlay-border-silhouette-color: rgb(0, 0, 0, 0.5400000214576721);
   --instrument-tick-mark-label-secondary-color: rgb(112, 112, 112);
+  --base-gray-100: rgb(221, 221, 221);
+  --base-gray-200: rgb(190, 190, 190);
+  --base-gray-300: rgb(142, 142, 142);
+  --base-gray-400: rgb(112, 112, 112);
+  --base-gray-500: rgb(83, 83, 83);
   --element-neutral-enhanced-color: rgb(45, 84, 139);
   --integration-flat-enabled-background-color: rgb(255, 255, 255, 0);
   --integration-flat-enabled-border-color: rgb(255, 255, 255, 0);
@@ -1949,6 +1980,7 @@
   --base-blue-600: rgb(169, 209, 255);
   --base-blue-100: rgb(40, 53, 69);
   --base-blue-200: rgb(59, 79, 105);
+  --base-blue-400: rgb(99, 139, 188);
   --base-blue-500: rgb(128, 174, 234);
   --base-cyan-050: rgb(24, 43, 50);
   --base-cyan-100: rgb(30, 55, 65);
@@ -2018,7 +2050,13 @@
   --integration-selected-pressed-border-color: rgb(64, 64, 64);
   --integration-selected-disabled-background-color: rgb(0, 0, 0, 0);
   --integration-selected-disabled-border-color: rgb(0, 0, 0, 0);
+  --overlay-border-silhouette-color: rgb(0, 0, 0, 0.5400000214576721);
   --instrument-tick-mark-label-secondary-color: rgb(137, 137, 137);
+  --base-gray-100: rgb(52, 52, 52);
+  --base-gray-200: rgb(77, 77, 77);
+  --base-gray-300: rgb(108, 108, 108);
+  --base-gray-400: rgb(137, 137, 137);
+  --base-gray-500: rgb(171, 171, 171);
   --element-neutral-enhanced-color: rgb(128, 174, 234);
   --integration-flat-enabled-background-color: rgb(255, 255, 255, 0);
   --integration-flat-enabled-border-color: rgb(255, 255, 255, 0);
@@ -2192,6 +2230,7 @@
   --base-blue-600: rgb(131, 183, 255);
   --base-blue-100: rgb(23, 30, 42);
   --base-blue-200: rgb(43, 56, 77);
+  --base-blue-400: rgb(83, 118, 170);
   --base-blue-500: rgb(105, 151, 217);
   --base-cyan-050: rgb(9, 21, 26);
   --base-cyan-100: rgb(15, 32, 39);
@@ -2261,7 +2300,13 @@
   --integration-selected-pressed-border-color: rgb(0, 41, 17);
   --integration-selected-disabled-background-color: rgb(0, 10, 4);
   --integration-selected-disabled-border-color: rgb(0, 0, 0, 0);
+  --overlay-border-silhouette-color: rgb(0, 0, 0);
   --instrument-tick-mark-label-secondary-color: rgb(156, 106, 52);
+  --base-gray-100: rgb(30, 30, 30);
+  --base-gray-200: rgb(56, 56, 56);
+  --base-gray-300: rgb(90, 90, 90);
+  --base-gray-400: rgb(116, 116, 116);
+  --base-gray-500: rgb(149, 149, 149);
   --element-neutral-enhanced-color: rgb(56, 167, 132);
   --integration-flat-enabled-background-color: rgb(230, 175, 112, 0);
   --integration-flat-enabled-border-color: rgb(230, 175, 112, 0);
@@ -2425,6 +2470,7 @@
   --base-blue-600: rgb(7, 35, 70);
   --base-blue-100: rgb(156, 189, 232);
   --base-blue-200: rgb(89, 138, 203);
+  --base-blue-400: rgb(32, 80, 139);
   --base-blue-500: rgb(15, 52, 97);
   --base-cyan-050: rgb(186, 217, 229);
   --base-cyan-100: rgb(144, 194, 213);
@@ -2494,7 +2540,13 @@
   --integration-selected-pressed-border-color: rgb(250, 250, 250);
   --integration-selected-disabled-background-color: rgb(0, 0, 0, 0);
   --integration-selected-disabled-border-color: rgb(0, 0, 0, 0);
+  --overlay-border-silhouette-color: rgb(0, 0, 0, 0.6000000238418579);
   --instrument-tick-mark-label-secondary-color: rgb(108, 108, 108);
+  --base-gray-100: rgb(186, 186, 186);
+  --base-gray-200: rgb(136, 136, 136);
+  --base-gray-300: rgb(108, 108, 108);
+  --base-gray-400: rgb(79, 79, 80);
+  --base-gray-500: rgb(52, 52, 52);
   --element-neutral-enhanced-color: rgb(15, 52, 97);
   --integration-flat-enabled-background-color: rgb(255, 255, 255, 0);
   --integration-flat-enabled-border-color: rgb(255, 255, 255, 0);

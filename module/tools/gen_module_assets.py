@@ -50,6 +50,12 @@ ALERT_EVENTS = {
     "click": ("onPress", "none", "The button was pressed. The event carries nothing; the page's script decides what it "
                                  "commands (the library's confirmed pulse, write path W18)."),
 }
+# The attributes of the two line chart elements that serve a slotted external scale or an instrument panel (`state`,
+# `frameStyle`, the border radius family, `instrumentMode`) and the element's debug overlay: the module draws the chart
+# alone, and a nullable enumeration (`borderRadiusPosition` is undefined by default, and any value adds a border) is not
+# a property the contract carries.
+LINE_FRAME = ["state", "frameStyle", "borderRadiusPosition", "borderRadiusPositionExternalScales", "instrumentMode",
+              "borderRadius", "showDebugOverlay"]
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
      "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
@@ -192,6 +198,31 @@ COMPONENTS = [
     {"tag": "obc-transmitter-button", "type": "cadre.ob.transmitterbutton", "name": "transmitterbutton", "title": "OB Transmitter Button",
      "palette": "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
      "size": {"width": 96, "height": 40}, "exclude": []},
+    # batch C1: the bars and graphs (module-only, display only). The series and segments are lists of objects (`data`).
+    {"tag": "obc-area-graph", "type": "cadre.ob.areagraph", "name": "areagraph", "title": "OB Area Graph",
+     "palette": "OpenBridge area graph: one or several series drawn as filled areas, display only",
+     "size": {"width": 480, "height": 320}, "exclude": LINE_FRAME,
+     "data": {"data": "points", "datasets": "datasets", "labels": "labels", "colors": "colors", "yAxes": "yaxes"}},
+    {"tag": "obc-line-graph", "type": "cadre.ob.linegraph", "name": "linegraph", "title": "OB Line Graph",
+     "palette": "OpenBridge line graph: one or several series drawn as lines, display only",
+     "size": {"width": 480, "height": 320}, "exclude": LINE_FRAME,
+     "data": {"data": "points", "datasets": "datasets", "labels": "labels", "colors": "colors", "yAxes": "yaxes"}},
+    {"tag": "obc-donut-chart", "type": "cadre.ob.donutchart", "name": "donutchart", "title": "OB Donut Chart",
+     "palette": "OpenBridge donut chart: labelled segments of a ring with a centre total, display only",
+     "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
+     "data": {"data": "segments", "colors": "colors"}},
+    {"tag": "obc-pie-chart", "type": "cadre.ob.piechart", "name": "piechart", "title": "OB Pie Chart",
+     "palette": "OpenBridge pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
+     "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
+     "data": {"data": "piesegments", "colors": "colors"}},
+    {"tag": "obc-polar-chart", "type": "cadre.ob.polarchart", "name": "polarchart", "title": "OB Polar Chart",
+     "palette": "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only",
+     "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
+     "data": {"data": "segments", "colors": "colors"}},
+    {"tag": "obc-radial-bar-chart", "type": "cadre.ob.radialbarchart", "name": "radialbarchart", "title": "OB Radial Bar Chart",
+     "palette": "OpenBridge radial bar chart: concentric rings, one for each value, display only",
+     "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
+     "data": {"data": "rings", "colors": "colors"}},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -220,7 +251,44 @@ DATA_SCHEMA = {"alerts": {"type": "array", "default": [], "items": {"type": "obj
                           "description": "Alert records (OpenBridge types.d.ts Alert): id, tagId, source, text, note, "
                                          "acknowledged, active, type, time (epoch milliseconds), shelved."},
              "numbers": {"type": "array", "default": [], "items": {"type": "number"},
-                         "description": "The samples of a trend graph, oldest first, as plain numbers (the element's `data`)."}}
+                         "description": "The samples of a trend graph, oldest first, as plain numbers (the element's `data`)."},
+             # Lists of objects, carried as JSON like the alerts (GF-38). A chart draws a list the property tree holds as
+             # plain data; the wrapper hands the element a mutable copy (`toRecords`), because Chart.js writes to the
+             # arrays it is given. The item schemas are our own wording of the pinned `dist/` declarations.
+             "points": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                            "label": {"type": "string"}, "x": {"type": ["number", "string"]}, "value": {"type": "number"}},
+                            "required": ["value"]},
+                        "description": "A single series, one object per point: `value`, and `label` (a category axis) or `x` "
+                                       "(a time axis in epoch milliseconds or an ISO string, or a number axis)."},
+             "datasets": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                              "label": {"type": "string"},
+                              "data": {"type": "array", "description": "Numbers, or `{x, y}` objects on a time or number axis."},
+                              "yAxisID": {"type": "string"}}, "required": ["data"]},
+                          "description": "Several series, one object each: `label` and `data` (numbers, or `{x, y}` points on a "
+                                         "time or number axis). When the list is not empty it replaces `data`."},
+             "yaxes": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                           "id": {"type": "string"}, "position": {"type": "string", "enum": ["left", "right"]},
+                           "min": {"type": "number"}, "max": {"type": "number"}, "grid": {"type": "boolean"}}},
+                       "description": "The value axes, one object each: `id` (named by a series' `yAxisID`), `position`, "
+                                      "`min`, `max` and `grid`. Empty draws the one default axis."},
+             "labels": {"type": "array", "default": [], "items": {"type": ["string", "number"]},
+                        "description": "The category labels shared by the objects of `datasets`, in order."},
+             "colors": {"type": "array", "default": [], "items": {"type": "string"},
+                        "description": "Colours of the series or segments in order, as CSS colour strings. Empty uses the "
+                                       "palette of the scheme."},
+             "rings": {"type": "array", "default": [], "items": {"type": "number"},
+                       "description": "The value of each ring, outermost first, as plain numbers on the scale 0 to `max` "
+                                      "(the element's `data`)."},
+             "segments": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                              "label": {"type": "string"}, "value": {"type": "number"}}, "required": ["label", "value"]},
+                          "description": "The segments, one object each: `label` and `value`."},
+             "piesegments": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                                 "label": {"type": "string"}, "value": {"type": "number"}, "children": {
+                                     "type": "array", "items": {"type": "object", "properties": {
+                                         "label": {"type": "string"}, "value": {"type": "number"}},
+                                         "required": ["label", "value"]}}}, "required": ["label", "value"]},
+                             "description": "The segments, one object each: `label`, `value` and, for the sunburst, `children` "
+                                            "(objects with `label` and `value`)."}}
 # Properties of the module's own, not the element's: the wrapper applies them (`speedless`, `tankSlots` in the
 # WRAPPER below). Each lifts a case the element cannot show (COB-110): a device with no speed reads no speed, a
 # tank states the unit of its level, and a vessel that states no capacity draws no capacity line.
@@ -438,7 +506,9 @@ def declarations(body: str) -> list[tuple[str, str]]:
 def scoped_css(bundle_js: str) -> tuple[str, dict]:
     css = (PKG / "dist/openbridge.css").read_text(encoding="utf-8")
     rules = parse_rules(css)
-    used = set(re.findall(r"var\(\s*(--[\w-]+)", bundle_js))
+    # A variable is used where the bundle writes `var(--name)`, and also where it names the variable in a string and reads
+    # it from the computed style (the charts' palette and fonts, `charthelpers/constants.js`, from C1).
+    used = set(re.findall(r"var\(\s*(--[\w-]+)", bundle_js)) | set(re.findall(r"[\"'](--[a-z][\w-]*)[\"']", bundle_js))
     defs: dict[str, set[str]] = {}
     for _, body in rules:
         for k, v in declarations(body):
@@ -553,7 +623,12 @@ WRAPPER = r"""
       return o;
     });
   }
-  var CONVERT = { alerts: toAlerts, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
+  // A list of objects or strings the property tree holds, as a mutable copy: Chart.js writes to the arrays it is given.
+  function toRecords(v) { return Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; }
+  var CONVERT = { alerts: toAlerts, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
+                  points: toRecords, datasets: toRecords, yaxes: toRecords, labels: toRecords, colors: toRecords,
+                  segments: toRecords, piesegments: toRecords,
+                  rings: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
 
   // The payload of a Perspective component event, from the element's event detail.
   function payload(kind, e, el) {

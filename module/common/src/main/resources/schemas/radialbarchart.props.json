@@ -1,0 +1,73 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-radial-bar-chart` property `priority`."
+    },
+    "max": {
+      "type": "number",
+      "default": 100,
+      "description": "Maximum value for calculating remaining empty area, default: 100"
+    },
+    "circumference": {
+      "type": "number",
+      "default": 270,
+      "description": "Arc span in degrees: 360 for full circle, 270 for 3/4 circle, default: 270"
+    },
+    "legend": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display the legend below the chart, default: false"
+    },
+    "fixedHeight": {
+      "type": "number",
+      "default": 320,
+      "description": "Fixed height of the chart in pixels (determines chart circumference), default: 320. The chart's circumference is always based on this fixed height to match other radial instruments."
+    },
+    "minRingThickness": {
+      "type": "number",
+      "default": 16,
+      "description": "Minimum thickness of each ring in pixels, excluding borders, default: 16"
+    },
+    "data": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "number"
+      },
+      "description": "The value of each ring, outermost first, as plain numbers on the scale 0 to `max` (the element's `data`)."
+    },
+    "colors": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "description": "Colours of the series or segments in order, as CSS colour strings. Empty uses the palette of the scheme."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}
