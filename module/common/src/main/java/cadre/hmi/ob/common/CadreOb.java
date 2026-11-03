@@ -88,7 +88,15 @@ public final class CadreOb {
         descriptor("cadre.ob.logic", "logic", "OB Logic",
             "OpenBridge logic: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obLogic", List.of()),
         descriptor("cadre.ob.router", "router", "OB Router",
-            "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obRouter", List.of())
+            "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame.", "obRouter", List.of()),
+        descriptor("cadre.ob.automationbadge", "automationbadge", "OB Automation Badge",
+            "OpenBridge automation badge: the small corner badge of an automation symbol, drawn on its own.", "obAutomationBadge", List.of()),
+        descriptor("cadre.ob.checkvalve", "checkvalve", "OB Check Valve",
+            "OpenBridge hydraulic check valve: a display-only glyph on a hydraulic diagram.", "obCheckValve", List.of()),
+        descriptor("cadre.ob.valvetwoway", "valvetwoway", "OB Two-Way Valve Glyph",
+            "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame.", "obValveTwoWay", List.of()),
+        descriptor("cadre.ob.valvethreeway", "valvethreeway", "OB Three-Way Valve Glyph",
+            "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame.", "obValveThreeWay", List.of())
     );
 
     private CadreOb() {

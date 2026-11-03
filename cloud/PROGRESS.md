@@ -166,3 +166,12 @@
   no fault; only the instrument field identity of the baseline. Walk of `cadre_hmi_wtpob` alone on 0.5.0: C 15 of 15
   (the C-10 fix holds), T 3 of 3, A 1 of 2 (A-02: the acknowledgement in the alarm menu did not take; it passed in the
   run before); plant restored, no difference.
+- 2026-11-03 05:17: T1 B4 done (automation-badge, hydraulic-check-valve, valve-analog-two-way-icon,
+  valve-analog-three-way-icon as module-only glyphs; none left unwrapped). `screen.module_contract` extended once, by geometry
+  (`module_geometry`): the symbol contract is byte-identical (76 earlier contracts compared; a test restates it), a glyph
+  carries exactly its manifest's properties. Test page cases from the schema (21, 2, 5, 7 symbols); `value2` and `closed`
+  added to `GALLERY_PARAMS`. Full suite 1178 to 1185, all passing. G0 to G7 pass (19 devices, 21 device symbols); stock build
+  refuses every glyph symbol. Not built, installed or committed.
+- 2026-11-03 05:17: T1 B4 in a Sonnet 5.5 subagent at medium effort: 167,231 tokens, 44 tool calls, 8 min 22 s for four
+  glyphs and the glyph form of `module_contract` (an element without `on`, `tag` and `readoutPosition` carries exactly
+  its manifest's properties; the 76 earlier contracts unchanged, held by a test). Tests 1178 to 1185.

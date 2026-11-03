@@ -985,6 +985,73 @@ class RouterComponent(unittest.TestCase):
         self.assertEqual(props["showStatus"], {"type": "boolean", "default": True})
 
 
+class GlyphComponents(unittest.TestCase):
+    """The four glyphs of batch B4 (module-only kinds whose attributes differ from the filter's): each carries exactly
+    the attributes its manifest declares, no events, and none of the symbol's properties."""
+    # component type: (tag, manifest path, the manifest's attributes, default size)
+    GLYPHS = {
+        "cadre.ob.automationbadge": ("obc-automation-badge", "src/automation/automation-badge/automation-badge.ts",
+                                     {"mode", "type"}, {"width": 32, "height": 32}),
+        "cadre.ob.checkvalve": ("obc-hydraulic-check-valve", "src/automation/hydraulic-check-valve/hydraulic-check-valve.ts",
+                                {"ariaLabel", "vertical"}, {"width": 48, "height": 48}),
+        "cadre.ob.valvetwoway": ("obc-valve-analog-two-way-icon",
+                                 "src/automation/valve-analoge-two-way-icon/valve-analog-two-way-icon.ts",
+                                 {"value", "closed", "vertical"}, {"width": 48, "height": 48}),
+        "cadre.ob.valvethreeway": ("obc-valve-analog-three-way-icon",
+                                   "src/automation/valve-analog-three-way-icon/valve-analog-three-way-icon.ts",
+                                   {"value", "value2", "closed", "horisontal"}, {"width": 48, "height": 48}),
+    }
+    NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
+             "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway"}
+
+    def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
+        for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
+            c = COMPONENTS[ctype]
+            self.assertEqual(c["element"], tag)
+            self.assertEqual(set(c["props"]) - {"componentSize"}, attrs, ctype)
+            self.assertNotIn("events", c)
+            self.assertEqual(c["defaultSize"], size, ctype)
+
+    def test_the_manifest_and_the_contract_agree(self):
+        manifest = json.loads((MODULE / "web/node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        for ctype, (tag, path, attrs, _size) in self.GLYPHS.items():
+            decl = next(d for m in manifest["modules"] if m["path"] == path
+                        for d in m.get("declarations", []) if d.get("tagName") == tag)
+            self.assertEqual({a["fieldName"] for a in decl["attributes"]}, attrs, ctype)
+            self.assertEqual(decl.get("events", []), [], ctype)
+
+    def test_the_enumerations_and_defaults_come_from_the_element(self):
+        badge = schema_of("cadre.ob.automationbadge")["properties"]
+        self.assertEqual(badge["mode"]["enum"], ["flat", "regular", "enhanced"])
+        self.assertEqual(len(badge["type"]["enum"]), 17)
+        self.assertEqual(badge["type"]["enum"][:3], ["auto", "manual", "manual-only"])
+        self.assertEqual((badge["mode"]["default"], badge["type"]["default"]), ("flat", "auto"))
+        self.assertEqual(schema_of("cadre.ob.checkvalve")["properties"]["ariaLabel"]["default"], "Check valve")
+        for ctype in ("cadre.ob.valvetwoway", "cadre.ob.valvethreeway"):
+            props = schema_of(ctype)["properties"]
+            self.assertEqual((props["value"]["type"], props["value"]["default"]), ("number", 0), ctype)
+            self.assertEqual(props["closed"]["default"], False, ctype)
+
+    def test_each_component_is_registered_in_java_bundled_and_wrapped(self):
+        java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
+        entry = (MODULE / "web/entry.js").read_text(encoding="utf-8")
+        for ctype, (tag, path, _attrs, _size) in self.GLYPHS.items():
+            name = self.NAMES[ctype]
+            self.assertRegex(java, rf'descriptor\("{ctype.replace(".", chr(92) + ".")}", "{name}"')
+            self.assertTrue((MODULE / f"common/src/main/resources/schemas/{name}.props.json").exists(), ctype)
+            self.assertIn(path.replace("src/", "").replace(".ts", ".js"), entry)
+            self.assertIn(f'"type":"{ctype}","tag":"{tag}"', JS)
+            self.assertRegex(JS, rf'\(\[\w+\("{tag}"\)\]')
+
+    def test_a_glyph_carries_none_of_the_symbols_properties(self):
+        for ctype in self.GLYPHS:
+            props = COMPONENTS[ctype]["props"]
+            for name in ("on", "tag", "readoutPosition", "showStatus", "statusText", "badgeDuty", "outOfService", "alert",
+                         "alertFrameStatus", "alertFrameMode", "variant", "orientation", "positioning", "selectable"):
+                self.assertNotIn(name, props, f"{ctype}.{name}")
+
+
 class ModuleOnlyKinds(unittest.TestCase):
     """The module-only kinds (batch B0, wiki page 12 section 17.13): a descriptor kind with no library view, drawn by the
     module's component alone. The table is `screen.MODULE_ONLY`; the tests run over its rows, so a later row is covered."""
@@ -1001,7 +1068,17 @@ class ModuleOnlyKinds(unittest.TestCase):
         self.screen.RENDER["target"] = "stock"
 
     def symbol(self, kind, **kw):
-        return dict({"id": "X1", "kind": kind, "x": 100, "y": 100, "w": 48, "h": 48, "params": {"tag": "X-1"}}, **kw)
+        params = {"tag": "X-1"} if self.is_symbol(kind) else {}   # a glyph has no tag
+        return dict({"id": "X1", "kind": kind, "x": 100, "y": 100, "w": 48, "h": 48, "params": params}, **kw)
+
+    def is_symbol(self, kind):
+        return self.screen.module_geometry(self.screen.MODULE_ONLY[kind]) == "symbol"
+
+    def symbol_kinds(self):
+        return [k for k in self.screen.MODULE_ONLY if self.is_symbol(k)]
+
+    def glyph_kinds(self):
+        return [k for k in self.screen.MODULE_ONLY if not self.is_symbol(k)]
 
     def embed(self, sym, render):
         self.screen.RENDER["target"] = render
@@ -1017,7 +1094,8 @@ class ModuleOnlyKinds(unittest.TestCase):
             self.assertNotIn(kind, self.screen.MODULE_KIND, kind)
 
     def test_the_contract_is_derived_from_the_modules_contract(self):
-        for kind, ctype in self.screen.MODULE_ONLY.items():
+        for kind in self.symbol_kinds():
+            ctype = self.screen.MODULE_ONLY[kind]
             c = self.contracts[self.screen.view_of({"kind": kind})]
             props = COMPONENTS[ctype]["props"]
             self.assertEqual(self.screen.view_of({"kind": kind}), "Module/" + kind)
@@ -1030,8 +1108,44 @@ class ModuleOnlyKinds(unittest.TestCase):
         # the library's own contracts are not changed, and its profile lists no module-only kind
         self.assertNotIn("resistor", self.library_profile.build(self.contracts)["kinds"])
 
+    def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
+        self.assertEqual(sorted(self.glyph_kinds()), ["automation-badge", "hydraulic-check-valve",
+                                                      "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+        for kind in self.glyph_kinds():
+            spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
+            c = self.contracts[self.screen.view_of({"kind": kind})]
+            self.assertEqual(c["params"], {k: p["default"] for k, p in sorted(spec["props"].items())}, kind)
+            self.assertEqual((c["anchor"], c["flow"], c["size"], c["kind"]),
+                             ("box", "none", [spec["defaultSize"]["width"], spec["defaultSize"]["height"]], kind))
+            for key in ("state", "symbolSize", "identifier", "readoutExtent", "statusMode"):
+                self.assertNotIn(key, c, f"{kind}.{key}")
+            self.assertFalse(set(c["params"]) & set(self.screen._MODULE_ONLY_MARKS), kind)
+
+    def test_the_contracts_of_the_other_kinds_are_the_same_as_before_the_glyph_geometry(self):
+        # the symbol branch of `module_contract` is the one B0 wrote: the filter's geometry and marks, the component's properties
+        for kind in self.symbol_kinds():
+            c = self.contracts[self.screen.view_of({"kind": kind})]
+            template = self.contracts[self.screen.KIND_VIEW["filter"]]
+            props = COMPONENTS[self.screen.MODULE_ONLY[kind]]["props"]
+            want = {**self.screen._MODULE_ONLY_MARKS, **{k: p["default"] for k, p in props.items() if k != "positioning"}}
+            self.assertEqual(c, {**{k: template[k] for k in ("anchor", "identifier", "readoutExtent", "size", "symbolSize",
+                                                              "state", "statusMode")},
+                                 "kind": kind, "view": "Module/" + kind, "params": dict(sorted(want.items()))}, kind)
+
     def test_the_module_rendering_draws_the_component(self):
-        for kind, ctype in self.screen.MODULE_ONLY.items():
+        for kind in self.glyph_kinds():
+            ctype = self.screen.MODULE_ONLY[kind]
+            stated = {"automation-badge": {"type": "manual", "mode": "regular"}, "hydraulic-check-valve": {"vertical": True},
+                      "valve-analog-two-way-icon": {"value": 50, "closed": True},
+                      "valve-analog-three-way-icon": {"value": 50, "value2": 25, "horisontal": True}}[kind]
+            node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
+            self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
+            self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
+            self.assertNotIn("events", node)
+            node, rep = self.embed(self.symbol(kind, params={"on": True}), "module")      # a symbol's property is refused
+            self.assertTrue(any("'on' is not in the" in e for e in rep.errors), kind)
+        for kind in self.symbol_kinds():
+            ctype = self.screen.MODULE_ONLY[kind]
             node, rep = self.embed(self.symbol(kind, params={"tag": "X-1", "on": True, "variant": "flat"}), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"]["variant"], "flat")
@@ -1073,7 +1187,26 @@ class ModuleOnlyKinds(unittest.TestCase):
         sections = [s for s in mod.descriptor["sections"] if s["id"] == "ModuleOnly"]
         self.assertEqual(len(sections), 1)
         self.assertTrue(sections[0]["label"].startswith("Module only"))
-        for kind in self.screen.MODULE_ONLY:
+        for kind in self.glyph_kinds():
+            # a case for each value of each enumerated attribute (the module's own componentSize apart), the numbers and the flags
+            mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
+            props = COMPONENTS[self.screen.MODULE_ONLY[kind]]["props"]
+            stated = {}
+            for s in mine:
+                for k, v in {**s["params"], **{b: mod.gallery[s["id"]][b] for b in s.get("bind", {})}}.items():
+                    stated.setdefault(k, set()).add(v)
+            self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])
+            for name, p in props.items():
+                if "enum" in p and name != "componentSize":
+                    self.assertEqual(stated[name], set(p["enum"]), (kind, name))
+                elif p["type"] == "boolean":
+                    self.assertIn(not p["default"], stated[name], (kind, name))
+                elif p["type"] == "number":
+                    self.assertTrue({50, 100} <= stated[name], (kind, name))
+            self.assertEqual({k for s in mine for k in s["params"]} - set(props), set(), kind)
+            self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
+                                         "valve-analog-three-way-icon": 7}[kind], kind)
+        for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)
             self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])

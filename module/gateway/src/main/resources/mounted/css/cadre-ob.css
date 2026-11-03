@@ -1300,6 +1300,7 @@
   --base-teal-600: rgb(0, 67, 70);
   --border-focus-color: rgb(66, 113, 179);
   --automation-pipe-primary-color: rgb(255, 255, 255);
+  --automation-pipe-tertiary-color: rgb(83, 83, 83);
   --on-running-active-color: rgb(255, 255, 255);
   --alert-caution-outline-color: rgb(179, 135, 0);
   --alert-warning-outline-color: rgb(233, 103, 0);
@@ -1532,6 +1533,7 @@
   --base-teal-600: rgb(132, 220, 219);
   --border-focus-color: rgb(128, 174, 234);
   --automation-pipe-primary-color: rgb(171, 171, 171);
+  --automation-pipe-tertiary-color: rgb(171, 171, 171);
   --on-running-active-color: rgb(255, 255, 255);
   --alert-caution-outline-color: rgb(215, 164, 0);
   --alert-warning-outline-color: rgb(250, 125, 0);
@@ -1764,6 +1766,7 @@
   --base-teal-600: rgb(50, 199, 203);
   --border-focus-color: rgb(44, 131, 102);
   --automation-pipe-primary-color: rgb(199, 136, 66);
+  --automation-pipe-tertiary-color: rgb(199, 136, 66);
   --on-running-active-color: rgb(0, 0, 0);
   --alert-caution-outline-color: rgb(107, 89, 0);
   --alert-warning-outline-color: rgb(147, 68, 0);
@@ -1986,6 +1989,7 @@
   --base-teal-600: rgb(0, 40, 40);
   --border-focus-color: rgb(7, 35, 70);
   --automation-pipe-primary-color: rgb(255, 255, 255);
+  --automation-pipe-tertiary-color: rgb(52, 52, 52);
   --on-running-active-color: rgb(255, 255, 255);
   --alert-caution-outline-color: rgb(138, 103, 0);
   --alert-warning-outline-color: rgb(178, 79, 0);

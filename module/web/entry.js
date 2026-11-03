@@ -26,3 +26,7 @@ import '@oicl/openbridge-webcomponents/dist/automation/bipolar-transistor/bipola
 import '@oicl/openbridge-webcomponents/dist/automation/mosfet/mosfet.js';
 import '@oicl/openbridge-webcomponents/dist/automation/logic/logic.js';
 import '@oicl/openbridge-webcomponents/dist/automation/router/router.js';
+import '@oicl/openbridge-webcomponents/dist/automation/automation-badge/automation-badge.js';
+import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-check-valve/hydraulic-check-valve.js';
+import '@oicl/openbridge-webcomponents/dist/automation/valve-analoge-two-way-icon/valve-analog-two-way-icon.js';
+import '@oicl/openbridge-webcomponents/dist/automation/valve-analog-three-way-icon/valve-analog-three-way-icon.js';

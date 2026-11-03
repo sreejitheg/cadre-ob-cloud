@@ -584,5 +584,24 @@
   "badgeCommandLocked": "none",
   "badgeInterlock": "none",
   "badgeAlert": "none"
+ },
+ "obc-automation-badge": {
+  "mode": "flat",
+  "type": "__undefined__"
+ },
+ "obc-hydraulic-check-valve": {
+  "ariaLabel": "Check valve",
+  "vertical": false
+ },
+ "obc-valve-analog-two-way-icon": {
+  "value": 0,
+  "closed": false,
+  "vertical": false
+ },
+ "obc-valve-analog-three-way-icon": {
+  "value": 0,
+  "value2": 0,
+  "closed": false,
+  "horisontal": false
  }
 }

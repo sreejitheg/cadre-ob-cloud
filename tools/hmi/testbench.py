@@ -76,7 +76,8 @@ MODULE_STATUS = ("alarm", "warning", "caution")   # the alert statuses both rend
 GALLERY_PARAMS = frozenset({
     "on", "open", "speed", "value", "trend", "setpoint", "output", "manual", "text", "step", "activated", "alert",
     "alertFrameStatus", "alertFrameMode", "badgeControl", "badgeInterlock", "badgeCommandLocked", "badgeDuty",
-    "outOfService", "progress"})
+    "outOfService", "progress",
+    "value2", "closed"})   # the last two: the state of the valve glyphs (B4), which no earlier kind has
 GALLERY_PREFIXES = ("S_", "N_", "B_")   # the ids of the symbols of the static grids
 
 
@@ -577,6 +578,8 @@ def module_only_cases(kind: str, contract: dict) -> list[Case]:
     state both ways, each other value of `variant`, `orientation` and `readoutPosition` the component lists, each alert
     level, the badges, and the identifier and status hidden. A kind needs no case list of its own."""
     schema = json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))[screen.MODULE_ONLY[kind]]["props"]
+    if contract.get("anchor") == "box":   # a glyph (`screen.module_geometry`): only the component's own properties
+        return glyph_cases(schema, contract)
     base = {"hasTag": True, "tag": ident_of(kind)}
     out = [Case("off", {**base, "on": False}), Case("on", {**base, "on": True})]
     for param in ("variant", "orientation", "readoutPosition"):
@@ -588,6 +591,32 @@ def module_only_cases(kind: str, contract: dict) -> list[Case]:
                             "badgeCommandLocked": BADGE_LOCKED}),
             Case("no ID tag", {**base, "on": True, "hasTag": False}),
             Case("status hidden", {**base, "on": True, "showStatus": False})]
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+# The values a glyph's number properties are shown at: the element draws them as a percentage of travel (the pinned
+# `dist/` source of the valve icons divides by 100), so mid travel and full travel show the drawing change.
+GLYPH_NUMBERS = (50, 100)
+
+
+def glyph_cases(schema: dict, contract: dict) -> list[Case]:
+    """The cases of a glyph, table driven from its component's schema: the defaults, each value of each enumerated
+    property (the module's `componentSize` is no attribute of the element and is left out), each number at the values of
+    `GLYPH_NUMBERS`, and each boolean against its default with the numbers at mid travel, so that a flag which changes
+    only what an opening looks like (orientation, a second opening) shows. A glyph has no tag, readout or alert frame, so
+    none of those is stated."""
+    props = {k: p for k, p in schema.items() if k not in ("positioning", "componentSize")}
+    default = {k: p["default"] for k, p in props.items()}
+    numbers = [k for k, p in props.items() if p["type"] == "number"]
+    mid = {k: GLYPH_NUMBERS[0] for k in numbers}
+    out = [Case("default", {})]
+    for k, p in props.items():
+        if "enum" in p:
+            out += [Case(f"{k} {v}", {k: v}) for v in p["enum"]]
+        elif p["type"] == "number":
+            out += [Case(f"{k} {v}", {k: v}) for v in GLYPH_NUMBERS]
+        elif p["type"] == "boolean":
+            out.append(Case(k if not default[k] else f"not {k}", {**mid, k: not default[k]}))
     return [c for c in out if all(k in contract["params"] for k in c.params)]
 
 

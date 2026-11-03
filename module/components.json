@@ -4909,6 +4909,162 @@
    }
   }
  },
+ "cadre.ob.automationbadge": {
+  "element": "obc-automation-badge",
+  "title": "OB Automation Badge",
+  "palette": "OpenBridge automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
+  "schema": "schemas/automationbadge.props.json",
+  "defaultSize": {
+   "width": 32,
+   "height": 32
+  },
+  "props": {
+   "mode": {
+    "type": "string",
+    "enum": [
+     "flat",
+     "regular",
+     "enhanced"
+    ],
+    "default": "flat"
+   },
+   "type": {
+    "type": "string",
+    "enum": [
+     "auto",
+     "manual",
+     "manual-only",
+     "local",
+     "local-only",
+     "command-locked",
+     "interlock",
+     "interlock-inhibit",
+     "alert-silenced",
+     "caution",
+     "warning",
+     "alarm",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "auto"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.checkvalve": {
+  "element": "obc-hydraulic-check-valve",
+  "title": "OB Check Valve",
+  "palette": "OpenBridge hydraulic check valve: a display-only glyph on a hydraulic diagram",
+  "schema": "schemas/checkvalve.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "ariaLabel": {
+    "type": "string",
+    "default": "Check valve"
+   },
+   "vertical": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.valvetwoway": {
+  "element": "obc-valve-analog-two-way-icon",
+  "title": "OB Two-Way Valve Glyph",
+  "palette": "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame",
+  "schema": "schemas/valvetwoway.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "closed": {
+    "type": "boolean",
+    "default": false
+   },
+   "vertical": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.valvethreeway": {
+  "element": "obc-valve-analog-three-way-icon",
+  "title": "OB Three-Way Valve Glyph",
+  "palette": "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame",
+  "schema": "schemas/valvethreeway.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "value2": {
+    "type": "number",
+    "default": 0
+   },
+   "closed": {
+    "type": "boolean",
+    "default": false
+   },
+   "horisontal": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

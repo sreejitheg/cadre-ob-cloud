@@ -475,3 +475,20 @@ implementation.
 
 When a test class of `tests/test_module.py` is copied for a new element, the copy ends at the line before the next
 `class ` statement; a scripted copy that ran on into `ModuleOnlyKinds` duplicated its blocks in B2.
+
+### 8.10 A Note from B4: an Element with Another Attribute Set
+
+`screen.module_contract` decides the geometry from the component's properties (`screen.module_geometry`): an element with `on`, `tag`
+and `readoutPosition` is a symbol (section 8, as above); any other is a glyph, and nothing more is added to the code for it. A later
+element with a non-filter attribute set (a gauge, an indicator) is added by sections 2.1 to 2.5 and one `MODULE_ONLY` row, and its
+contract then holds exactly the properties its manifest declares, a `box` anchor, no state and the component's `defaultSize` as its
+size (give the entry in `gen_module_assets.py` the size the symbol should have on a diagram). Then:
+
+1. Parameters the component lacks (`tag`, a status word) are refused by the contract check, so a descriptor states only what exists.
+2. The test page's cases come from the schema (`testbench.glyph_cases`): every enumeration value, each number at 50 and 100, each flag
+   once. A state attribute that a screen would bind (a number or flag read from a tag) is added to `testbench.GALLERY_PARAMS` so the
+   page reads it from a gallery memory tag (B4 added `value2` and `closed`).
+3. Copy the check of `GlyphComponents` (`tests/test_module.py`, one row of `GLYPHS`) and the counts of
+   `ModuleOnlyKinds.test_the_component_test_page_has_one_module_only_section_under_the_module_rendering_only`.
+4. An element that needs more than a box (a state word, an alert frame, a readout) is a stateful device (section 3.2): its wrapper
+   adds `extra` properties, and the geometry check stays `glyph` unless it has the three symbol properties.

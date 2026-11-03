@@ -1024,6 +1024,61 @@ Router (`src/automation/router/router.ts`). `alternativeIcon` is `router` or `ro
 Tests: `BipolarTransistorComponent`, `MosfetComponent`, `LogicComponent` and `RouterComponent` in `tests/test_module.py` (five
 tests each).
 
+### 17.17 Batch B4: Four Glyphs with Their Own Attributes (`cadre.ob.automationbadge`, `cadre.ob.checkvalve`, `cadre.ob.valvetwoway`, `cadre.ob.valvethreeway`)
+
+Batch B4 of tranche T1 wraps four elements whose attributes are not the filter's: none has `on`, `tag`, `readoutPosition`, a status
+word or an alert frame, and none has an event. All four are display-only (owner's decision of section 6 item 4 of the recipe: no
+binding writes) and all four are module-only kinds (section 17.13): `automation-badge`, `hydraulic-check-valve`,
+`valve-analog-two-way-icon` and `valve-analog-three-way-icon`. The component test page gains 21, 2, 5 and 7 symbols for them in the
+"Module only" section, a stock build of the page refuses each one with one error, and the module is not built or installed by the
+wraps.
+
+17.17.1 The change to `screen.module_contract`. B0 assumed the filter's attribute set. A component now falls in one of two
+geometries, decided from its own properties by `screen.module_geometry` (a symbol has `on`, `tag` and `readoutPosition`; any other is
+a glyph). A symbol's contract is unchanged, byte for byte (`screen.load_contracts()` was compared before and after for all 76
+earlier contracts, and a test restates the symbol form). A glyph's contract holds exactly the properties of its component with their
+defaults (so no `on`, no marks, no alert set), `anchor` `box`, `flow` `none`, no `state`, `symbolSize`, `identifier`, `readoutExtent`
+or `statusMode`, and its `size` is the component's `defaultSize`. A glyph is therefore laid out as a box kind (the descriptor's `w`
+and `h`), `embed_module` states nothing beyond the descriptor's own parameters (no `positioning`, no identifier, no status), and a
+parameter the component lacks is refused by the existing contract check. The test page's cases for a glyph come from its schema
+(`testbench.glyph_cases`): the defaults, every value of every enumerated property (the module's `componentSize` apart), each number
+at 50 and 100 and each flag against its default with the numbers at 50. `value2` and `closed` joined `GALLERY_PARAMS`, so the state
+of a valve glyph is read from a gallery memory tag as `value` is.
+
+17.17.2 What each element draws, from the pinned `dist/` source (read, not recalled), and which attributes are state.
+
+1. Automation badge (`automation-badge.ts`; 2 attributes). A square badge of 16 px at regular size, with an icon chosen by `type`.
+   `mode` (`flat`, `regular`, `enhanced`) is presentation: no frame, a framed neutral plate or a raised plate; an alert type always
+   draws flat. `type` has 17 values (`auto`, `manual`, `manual-only`, `local`, `local-only`, `command-locked`, `interlock`,
+   `interlock-inhibit`, `alert-silenced`, `caution`, `warning`, `alarm`, `level-critical`, `level-high`, `level-medium`, `level-low`,
+   `level-diagnostic`) and is the state the badge signals (a control mode, a lock or an alert level). The element's own default for
+   `type` is undefined, which draws nothing; the generator maps an optional enumeration to its first value, so the component's
+   default is `auto`. It draws the badge useful on its own (it is the same badge the symbols carry in their corners), so it is wrapped;
+   its two slots (`icon-silhouette` and the default) are not carried, because a Perspective property cannot fill a slot and the
+   built-in types cover the owner's use.
+2. Hydraulic check valve (`hydraulic-check-valve.ts`; 2 attributes). A `role="img"` tile in the style of the shuffle button
+   (track and thumb) holding the hydraulic icon 13, the check valve symbol. `vertical` turns the tile and is presentation;
+   `ariaLabel` (default `Check valve`) is the accessible name and presentation. It has no state; the stylesheet states the cursor as
+   not selectable.
+3. Analog two-way valve glyph (`valve-analog-two-way-icon.ts`; 3 attributes). A 24 unit drawing of a two-way valve with a handle and
+   a travel gauge. `value` (0 to 100, the element divides by 100) is state, the opening; `closed` is state and replaces the
+   drawing with the closed valve; `vertical` rotates the drawing by 90 degrees and is presentation.
+4. Analog three-way valve glyph (`valve-analog-three-way-icon.ts`; 4 attributes). The same for a three-way valve. `value` and
+   `value2` (0 to 100) are state, the two openings (the handle sits at 50 + value/2 - value2/2 percent of its travel); `closed` is
+   state; `horisontal` (spelt so in the manifest, kept as is) is presentation and turns the handle through 180 degrees instead of 90 and
+   swaps which opening a gauge shows.
+
+None of the four was left unwrapped. The glyphs have no tag, readout or alert frame, so the page's `custom.alerts` bindings do not
+reach them, and they open no faceplate (no device mark in the contract). A screen that needs the valve's state alarmed uses the
+library valve or `analogvalve`, which the module draws as before.
+
+17.17.3 Components and tests. Properties (with the module's `componentSize`): badge 3, check valve 3, two-way 4, three-way 5. The
+registered components move from 27 to 31 (the gateway hook logs the count). Tests: `GlyphComponents` in `tests/test_module.py` (five tests over the four elements)
+and, in `ModuleOnlyKinds`, the glyph contract, the unchanged symbol contract, the drawing, and the cases of the page, now split by
+geometry. What the gateway step finds: `obc-automation-badge` 21, `obc-hydraulic-check-valve` 2, `obc-valve-analog-two-way-icon` 5 and
+`obc-valve-analog-three-way-icon` 7 on `/component-test`, each with a size and no console error. Open: the badge default, and whether
+a screen needs the badge's slots.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -1,0 +1,57 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "regular",
+        "enhanced"
+      ],
+      "default": "flat",
+      "description": "OpenBridge `obc-automation-badge` property `mode`."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "manual",
+        "manual-only",
+        "local",
+        "local-only",
+        "command-locked",
+        "interlock",
+        "interlock-inhibit",
+        "alert-silenced",
+        "caution",
+        "warning",
+        "alarm",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "auto",
+      "description": "OpenBridge `obc-automation-badge` property `type`."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

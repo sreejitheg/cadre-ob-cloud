@@ -139,6 +139,18 @@ COMPONENTS = [
     {"tag": "obc-router", "type": "cadre.ob.router", "name": "router", "title": "OB Router",
      "palette": "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
+    {"tag": "obc-automation-badge", "type": "cadre.ob.automationbadge", "name": "automationbadge", "title": "OB Automation Badge",
+     "palette": "OpenBridge automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
+     "size": {"width": 32, "height": 32}, "exclude": []},
+    {"tag": "obc-hydraulic-check-valve", "type": "cadre.ob.checkvalve", "name": "checkvalve", "title": "OB Check Valve",
+     "palette": "OpenBridge hydraulic check valve: a display-only glyph on a hydraulic diagram",
+     "size": {"width": 48, "height": 48}, "exclude": []},
+    {"tag": "obc-valve-analog-two-way-icon", "type": "cadre.ob.valvetwoway", "name": "valvetwoway", "title": "OB Two-Way Valve Glyph",
+     "palette": "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame",
+     "size": {"width": 48, "height": 48}, "exclude": []},
+    {"tag": "obc-valve-analog-three-way-icon", "type": "cadre.ob.valvethreeway", "name": "valvethreeway", "title": "OB Three-Way Valve Glyph",
+     "palette": "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame",
+     "size": {"width": 48, "height": 48}, "exclude": []},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).

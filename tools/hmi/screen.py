@@ -179,7 +179,9 @@ def pulse_members(kind: str) -> list[str]:
 # under `--render stock` the build refuses it (`embed_symbol`, an error gate G7 contract reports). The component test
 # page shows these kinds in one section (`testbench.module_only_block`) and the glass gates find them by the
 # component's element. A later wrap adds one row here (wiki page 12 section 17.13, `cloud/WRAP-RECIPE.md` section 8).
-MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router"}
+MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
+               "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
+               "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway"}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
@@ -347,16 +349,39 @@ def module_element(ctype: str) -> str:
     return _MODULE_SCHEMA.get(ctype, {}).get("element", "")
 
 
+# What a module-only kind's contract states beyond its component's own properties, by the kind of element (decided from
+# the component's properties, `module_geometry`). A symbol is an element on the filter's attribute set (`on`, `tag`,
+# `readoutPosition`): it takes the marks of `_MODULE_ONLY_MARKS` and the geometry of the library's static symbol (48 px
+# symbol box, `symbol-centre`, a state `on`, the readout and identifier boxes). A glyph is an element without them (a
+# badge, a valve icon): its contract holds only the properties its component declares, a box anchor, no flow and no
+# state, and its size is the component's default size (`defaultSize` of `module/components.json`).
+_MODULE_SYMBOL_PROPS = ("on", "tag", "readoutPosition")
+_MODULE_GLYPH = {"anchor": "box", "flow": "none"}
+
+
+def module_geometry(ctype: str) -> str:
+    """`symbol` for a component on the filter's attribute set, `glyph` for any other (see above)."""
+    listed = module_props(ctype)
+    return "symbol" if all(k in listed for k in _MODULE_SYMBOL_PROPS) else "glyph"
+
+
 def module_contract(kind: str, template: dict) -> dict:
     """The contract of a module-only kind, derived from the module's own contract (`module/components.json`): the
-    component's properties with their defaults, the marks of `_MODULE_ONLY_MARKS`, and the geometry of an automation
-    symbol (48 px symbol box, `symbol-centre`, a state `on`, the readout and identifier boxes), taken from `template`, the
-    library's static symbol. `positioning` is the generator's to state (`embed_module`), so it is no parameter."""
-    module_props(MODULE_ONLY[kind])
-    props = _MODULE_SCHEMA.get(MODULE_ONLY[kind], {}).get("props", {})
-    params = {**_MODULE_ONLY_MARKS, **{k: p["default"] for k, p in props.items() if k != "positioning" and "default" in p}}
+    component's properties with their defaults, and the geometry of its class (`module_geometry`). A symbol also takes
+    the marks of `_MODULE_ONLY_MARKS` and the geometry of `template`, the library's static symbol. A glyph takes
+    neither: it carries exactly the properties its component declares. `positioning` is the generator's to state
+    (`embed_module`), so it is no parameter."""
+    ctype = MODULE_ONLY[kind]
+    module_props(ctype)
+    spec = _MODULE_SCHEMA.get(ctype, {})
+    props = spec.get("props", {})
+    own = {k: p["default"] for k, p in props.items() if k != "positioning" and "default" in p}
+    if module_geometry(ctype) == "glyph":
+        size = spec.get("defaultSize", {"width": 48, "height": 48})
+        return {**_MODULE_GLYPH, "kind": kind, "view": MODULE_VIEW + kind, "size": [size["width"], size["height"]],
+                "params": dict(sorted(own.items()))}
     keep = {k: template[k] for k in ("anchor", "identifier", "readoutExtent", "size", "symbolSize", "state", "statusMode")}
-    return {**keep, "kind": kind, "view": MODULE_VIEW + kind, "params": dict(sorted(params.items()))}
+    return {**keep, "kind": kind, "view": MODULE_VIEW + kind, "params": dict(sorted({**_MODULE_ONLY_MARKS, **own}.items()))}
 
 
 def module_props(ctype: str) -> set[str]:
