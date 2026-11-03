@@ -38,7 +38,9 @@ ensure_dockerd() {
   if docker info >/dev/null 2>&1; then return 0; fi
   say "starting dockerd"
   mkdir -p "$CADRE/logs"
-  nohup dockerd >"$CADRE/logs/dockerd.log" 2>&1 &
+  # setsid: a daemon in its own session survives a restart of the session's worker process (measured: a plain
+  # background dockerd stopped with the worker)
+  setsid nohup dockerd >"$CADRE/logs/dockerd.log" 2>&1 < /dev/null &
   for _ in $(seq 1 60); do docker info >/dev/null 2>&1 && return 0; sleep 1; done
   say "dockerd did not answer within 60 s; see $CADRE/logs/dockerd.log"; return 1
 }
@@ -163,7 +165,32 @@ PY
   local code
   code=$(curl -s -o /dev/null -w '%{http_code}' -H "X-Ignition-API-Token: $(cat "$CADRE/ignition-token")" \
          "$GW/data/api/v1/projects/names")
-  [ "$code" = 200 ] && say "gateway ready; API token answers 200" || { say "API token answered $code"; return 1; }
+  [ "$code" = 200 ] || { say "API token answered $code"; return 1; }
+  history_provider
+  say "gateway ready; API token answers 200"
+}
+
+history_provider() {
+  # The sample tag models record history to `Sample_SQLite_Database` (wiki/07 GF-53), which the source gateway has
+  # and a fresh one does not: without it no trend draws (G10 F19, walk T). Created through the REST resource routes
+  # as an SQLite connection and an SQL historian of the same name (our own minimal configuration, not the vendor's
+  # quick start, which would also install a sample project). No restart is needed.
+  local api="$GW/data/api/v1" tok; tok="$(cat "$CADRE/ignition-token")"
+  local name=Sample_SQLite_Database
+  if ! curl -s -H "X-Ignition-API-Token: $tok" "$api/resources/names/ignition/database-connection" | grep -q "\"$name\""; then
+    curl -s -o /dev/null -X POST -H "X-Ignition-API-Token: $tok" -H 'Content-Type: application/json' \
+      "$api/resources/ignition/database-connection" -d '[{"name":"'$name'","collection":"core","enabled":true,
+      "description":"Cadre cloud: SQLite store of the tag history the sample tag models name",
+      "config":{"driver":"SQLite","translator":"SQLITE","connectURL":"jdbc:sqlite:${data}/local/cadre/history.db","validationQuery":"SELECT 1"}}]'
+    say "database connection $name created"
+  fi
+  if ! curl -s -H "X-Ignition-API-Token: $tok" "$api/resources/names/com.inductiveautomation.historian/historian-provider" | grep -q "\"$name\""; then
+    curl -s -o /dev/null -X POST -H "X-Ignition-API-Token: $tok" -H 'Content-Type: application/json' \
+      "$api/resources/com.inductiveautomation.historian/historian-provider" -d '[{"name":"'$name'","collection":"core",
+      "enabled":true,"description":"Cadre cloud: SQL historian over the connection of the same name",
+      "config":{"profile":{"type":"SqlHistorian"},"settings":{}}}]'
+    say "history provider $name created"
+  fi
 }
 
 trust_module() {
