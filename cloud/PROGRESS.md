@@ -175,3 +175,9 @@
 - 2026-11-03 05:17: T1 B4 in a Sonnet 5.5 subagent at medium effort: 167,231 tokens, 44 tool calls, 8 min 22 s for four
   glyphs and the glyph form of `module_contract` (an element without `on`, `tag` and `readoutPosition` carries exactly
   its manifest's properties; the 76 earlier contracts unchanged, held by a test). Tests 1178 to 1185.
+- 2026-11-03 05:22: T1 B5 in a Sonnet 5.5 subagent at medium effort, started 05:18: battery, engine, atmospheric tank indicator and automation readout as module-only glyphs (wiki 12 section 17.18). The numbers series (`data`) joined the wrapper generator; `embed_module` unchanged (binding tested for each live attribute). full suite 1185 to 1189, all passing (tests.test_module 127 to 131); G0 to G7 pass (19 devices, 21 device symbols); page counts 11, 6, 11, 10; stock build refuses each symbol. Not built, installed or committed.
+- 2026-11-03 05:26: T1 B5 in a Sonnet 5.5 subagent at medium effort: 160,169 tokens, 42 tool calls, 7 min 57 s for four
+  stateful indicators (battery, engine, atmospheric tank, automation readout), module-only, display only; live values
+  bind through `bind` as for the other module components; a data kind `numbers` added for the trend lists. Tests 1185
+  to 1189. Open: the readout's `click`, an array tag reaching `data` (not measured), the overlap of the automation
+  readout with the `readout` kind (for the owner).

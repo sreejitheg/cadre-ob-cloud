@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "direction": {
+      "type": "string",
+      "enum": [
+        "vertical",
+        "horizontal"
+      ],
+      "default": "vertical",
+      "description": "OpenBridge `obc-indicator-battery` property `direction`."
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "bar",
+        "trend"
+      ],
+      "default": "bar",
+      "description": "OpenBridge `obc-indicator-battery` property `variant`."
+    },
+    "value": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced",
+        "categorical"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-indicator-battery` property `value`."
+    },
+    "level": {
+      "type": "number",
+      "default": 0,
+      "description": "Current charge, 0-100 (%)"
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-indicator-battery` property `hasIcon`."
+    },
+    "data": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "number"
+      },
+      "description": "The samples of a trend graph, oldest first, as plain numbers (the element's `data`)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

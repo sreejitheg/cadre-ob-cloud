@@ -5065,6 +5065,213 @@
    }
   }
  },
+ "cadre.ob.battery": {
+  "element": "obc-indicator-battery",
+  "title": "OB Battery Indicator",
+  "palette": "OpenBridge battery indicator: a battery drawn as a level bar or a trend graph, display only",
+  "schema": "schemas/battery.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "direction": {
+    "type": "string",
+    "enum": [
+     "vertical",
+     "horizontal"
+    ],
+    "default": "vertical"
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "bar",
+     "trend"
+    ],
+    "default": "bar"
+   },
+   "value": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "categorical"
+    ],
+    "default": "regular"
+   },
+   "level": {
+    "type": "number",
+    "default": 0
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "number"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.engine": {
+  "element": "obc-indicator-engine",
+  "title": "OB Engine Indicator",
+  "palette": "OpenBridge engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
+  "schema": "schemas/engine.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "value": {
+    "type": "string",
+    "enum": [
+     "static",
+     "regular",
+     "enhanced"
+    ],
+    "default": "static"
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "vertical",
+     "horizontal"
+    ],
+    "default": "vertical"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.tankatmospheric": {
+  "element": "obc-indicator-tank-atmospheric",
+  "title": "OB Atmospheric Tank Indicator",
+  "palette": "OpenBridge atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
+  "schema": "schemas/tankatmospheric.props.json",
+  "defaultSize": {
+   "width": 48,
+   "height": 48
+  },
+  "props": {
+   "direction": {
+    "type": "string",
+    "enum": [
+     "vertical",
+     "horizontal"
+    ],
+    "default": "vertical"
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "bar",
+     "trend"
+    ],
+    "default": "bar"
+   },
+   "value": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "medium"
+    ],
+    "default": "regular"
+   },
+   "level": {
+    "type": "number",
+    "default": 0
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "data": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "number"
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.automationreadout": {
+  "element": "obc-automation-readout",
+  "title": "OB Automation Readout",
+  "palette": "OpenBridge automation readout: a value with its unit in a bordered chip, display only",
+  "schema": "schemas/automationreadout.props.json",
+  "defaultSize": {
+   "width": 72,
+   "height": 48
+  },
+  "props": {
+   "value": {
+    "type": "number",
+    "default": 0
+   },
+   "unit": {
+    "type": "string",
+    "default": ""
+   },
+   "numberOfDigits": {
+    "type": "number",
+    "default": 3
+   },
+   "position": {
+    "type": "string",
+    "enum": [
+     "left",
+     "right",
+     "top",
+     "bottom"
+    ],
+    "default": "bottom"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

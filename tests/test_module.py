@@ -1000,9 +1000,22 @@ class GlyphComponents(unittest.TestCase):
         "cadre.ob.valvethreeway": ("obc-valve-analog-three-way-icon",
                                    "src/automation/valve-analog-three-way-icon/valve-analog-three-way-icon.ts",
                                    {"value", "value2", "closed", "horisontal"}, {"width": 48, "height": 48}),
+        # batch B5: the stateful indicators and the readout (module-only, display only)
+        "cadre.ob.battery": ("obc-indicator-battery", "src/automation/indicator-battery/indicator-battery.ts",
+                             {"direction", "variant", "value", "level", "data", "hasIcon"}, {"width": 48, "height": 48}),
+        "cadre.ob.engine": ("obc-indicator-engine", "src/automation/indicator-engine/indicator-engine.ts",
+                            {"value", "direction"}, {"width": 48, "height": 48}),
+        "cadre.ob.tankatmospheric": ("obc-indicator-tank-atmospheric",
+                                     "src/automation/indicator-tank-atmospheric/indicator-tank-atmospheric.ts",
+                                     {"direction", "variant", "value", "level", "data", "hasIcon"}, {"width": 48, "height": 48}),
+        # `lineType` is left out: an object type the generator does not map, and the readout sits on no line
+        "cadre.ob.automationreadout": ("obc-automation-readout", "src/automation/automation-readout/automation-readout.ts",
+                                       {"value", "unit", "numberOfDigits", "position"}, {"width": 72, "height": 48}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
-             "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway"}
+             "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
+             "cadre.ob.battery": "battery", "cadre.ob.engine": "engine", "cadre.ob.tankatmospheric": "tankatmospheric",
+             "cadre.ob.automationreadout": "automationreadout"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1018,8 +1031,11 @@ class GlyphComponents(unittest.TestCase):
         for ctype, (tag, path, attrs, _size) in self.GLYPHS.items():
             decl = next(d for m in manifest["modules"] if m["path"] == path
                         for d in m.get("declarations", []) if d.get("tagName") == tag)
-            self.assertEqual({a["fieldName"] for a in decl["attributes"]}, attrs, ctype)
-            self.assertEqual(decl.get("events", []), [], ctype)
+            declared = {a["fieldName"] for a in decl["attributes"]}
+            self.assertEqual(declared - ({"lineType"} if ctype == "cadre.ob.automationreadout" else set()), attrs, ctype)
+            # the readout's `click` is the only event among them, and it is not wired (display only, wiki 17.18)
+            self.assertEqual([e["name"] for e in decl.get("events", [])],
+                             ["click"] if ctype == "cadre.ob.automationreadout" else [], ctype)
 
     def test_the_enumerations_and_defaults_come_from_the_element(self):
         badge = schema_of("cadre.ob.automationbadge")["properties"]
@@ -1049,7 +1065,38 @@ class GlyphComponents(unittest.TestCase):
             props = COMPONENTS[ctype]["props"]
             for name in ("on", "tag", "readoutPosition", "showStatus", "statusText", "badgeDuty", "outOfService", "alert",
                          "alertFrameStatus", "alertFrameMode", "variant", "orientation", "positioning", "selectable"):
+                if name in self.GLYPHS[ctype][2]:   # an attribute of the element itself (the indicators' `variant`)
+                    continue
                 self.assertNotIn(name, props, f"{ctype}.{name}")
+
+    def test_the_indicators_and_the_readout_carry_the_enumerations_defaults_and_series_of_the_element(self):
+        for ctype in ("cadre.ob.battery", "cadre.ob.tankatmospheric"):
+            props = schema_of(ctype)["properties"]
+            self.assertEqual(props["direction"]["enum"], ["vertical", "horizontal"])
+            self.assertEqual((props["variant"]["enum"], props["variant"]["default"]), (["bar", "trend"], "bar"), ctype)
+            self.assertEqual((props["level"]["type"], props["level"]["default"]), ("number", 0), ctype)
+            self.assertEqual(props["hasIcon"]["default"], False)
+            self.assertEqual((props["data"]["type"], props["data"]["items"], props["data"]["default"]),
+                             ("array", {"type": "number"}, []), ctype)
+        self.assertEqual(schema_of("cadre.ob.battery")["properties"]["value"]["enum"], ["regular", "enhanced", "categorical"])
+        self.assertEqual(schema_of("cadre.ob.tankatmospheric")["properties"]["value"]["enum"], ["regular", "enhanced", "medium"])
+        engine = schema_of("cadre.ob.engine")["properties"]
+        self.assertEqual((engine["value"]["enum"], engine["value"]["default"]), (["static", "regular", "enhanced"], "static"))
+        readout = schema_of("cadre.ob.automationreadout")["properties"]
+        self.assertEqual(readout["position"]["enum"], ["left", "right", "top", "bottom"])
+        self.assertEqual((readout["position"]["default"], readout["numberOfDigits"]["default"], readout["unit"]["default"]),
+                         ("bottom", 3, ""))
+        self.assertNotIn("events", COMPONENTS["cadre.ob.automationreadout"])    # the click is not carried
+
+    def test_the_wrapper_converts_a_series_to_numbers_and_reads_it_as_data(self):
+        for ctype in ("cadre.ob.battery", "cadre.ob.tankatmospheric"):
+            self.assertIn('"data":[{"name":"data","kind":"numbers"}]', self.spec_of(ctype), ctype)
+        self.assertIn("numbers: function (v)", JS)
+
+    @staticmethod
+    def spec_of(ctype):
+        start = JS.index('{"type":"%s"' % ctype)
+        return JS[start:JS.index('"events":', start)]
 
 
 class ModuleOnlyKinds(unittest.TestCase):
@@ -1109,7 +1156,8 @@ class ModuleOnlyKinds(unittest.TestCase):
         self.assertNotIn("resistor", self.library_profile.build(self.contracts)["kinds"])
 
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
-        self.assertEqual(sorted(self.glyph_kinds()), ["automation-badge", "hydraulic-check-valve",
+        self.assertEqual(sorted(self.glyph_kinds()), ["automation-badge", "automation-readout", "hydraulic-check-valve",
+                                                      "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
                                                       "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
@@ -1137,7 +1185,11 @@ class ModuleOnlyKinds(unittest.TestCase):
             ctype = self.screen.MODULE_ONLY[kind]
             stated = {"automation-badge": {"type": "manual", "mode": "regular"}, "hydraulic-check-valve": {"vertical": True},
                       "valve-analog-two-way-icon": {"value": 50, "closed": True},
-                      "valve-analog-three-way-icon": {"value": 50, "value2": 25, "horisontal": True}}[kind]
+                      "valve-analog-three-way-icon": {"value": 50, "value2": 25, "horisontal": True},
+                      "indicator-battery": {"level": 40, "variant": "trend", "data": [10, 20, 30]},
+                      "indicator-engine": {"value": "regular", "direction": "horizontal"},
+                      "indicator-tank-atmospheric": {"level": 60, "value": "medium"},
+                      "automation-readout": {"value": 12, "unit": "kn", "position": "left"}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
             self.assertEqual(node["props"], stated, kind)           # nothing is added: no positioning, no tag, no status
@@ -1151,6 +1203,37 @@ class ModuleOnlyKinds(unittest.TestCase):
             self.assertEqual(node["props"]["variant"], "flat")
             self.assertEqual(node["props"]["positioning"], "symbol")
             self.assertNotIn("deviceId", node["props"])
+
+    # The live attributes of the B5 kinds, read from the pinned `dist/` sources (wiki 12 section 17.18): what a screen binds to a tag.
+    LIVE = {"indicator-battery": ("level", "value", "data"), "indicator-engine": ("value",),
+            "indicator-tank-atmospheric": ("level", "value", "data"), "automation-readout": ("value", "unit")}
+
+    def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
+        # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
+        # module-only glyph included: the symbol states no value beside the binding (GF-61)
+        for kind, live in self.LIVE.items():
+            ctype = self.screen.MODULE_ONLY[kind]
+            for name in live:
+                sym = self.symbol(kind, bind={name: f"Plant/{kind}/{name}"})
+                node, rep = self.embed(sym, "module")
+                self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), (kind, name))
+                self.assertEqual(node["propConfig"], {f"props.{name}": {"binding": {"type": "tag", "config": {
+                    "mode": "direct", "tagPath": f"[default]t/Plant/{kind}/{name}"}}}}, (kind, name))
+                self.assertNotIn(name, node["props"], (kind, name))
+                self.assertNotIn("events", node)
+            # all the live attributes at once, with a static one beside them
+            sym = self.symbol(kind, params={"direction": "horizontal"} if "direction" in COMPONENTS[ctype]["props"] else {},
+                              bind={n: f"Plant/{kind}/{n}" for n in live})
+            node, rep = self.embed(sym, "module")
+            self.assertEqual((rep.errors, set(node["propConfig"])), ([], {f"props.{n}" for n in live}), kind)
+            desc = {"tagRoot": "[default]t", "tagModel": "external", "screen": {"width": 400, "height": 300}, "symbols": [sym]}
+            self.screen.RENDER["target"] = "module"
+            _doc, info = self.screen.build_screen(desc, self.contracts)
+            self.assertEqual((info["errors"], info["gaps"]), ([], []), kind)
+
+    def test_the_live_attributes_are_properties_of_their_component(self):
+        for kind, live in self.LIVE.items():
+            self.assertLessEqual(set(live), set(COMPONENTS[self.screen.MODULE_ONLY[kind]]["props"]), kind)
 
     def test_the_stock_rendering_is_refused_with_an_error_not_a_silent_gap(self):
         for kind, ctype in self.screen.MODULE_ONLY.items():
@@ -1194,7 +1277,7 @@ class ModuleOnlyKinds(unittest.TestCase):
             stated = {}
             for s in mine:
                 for k, v in {**s["params"], **{b: mod.gallery[s["id"]][b] for b in s.get("bind", {})}}.items():
-                    stated.setdefault(k, set()).add(v)
+                    stated.setdefault(k, set()).add(tuple(v) if isinstance(v, list) else v)
             self.assertEqual(self.testbench.check(mod.descriptor, self.contracts), [])
             for name, p in props.items():
                 if "enum" in p and name != "componentSize":
@@ -1202,10 +1285,16 @@ class ModuleOnlyKinds(unittest.TestCase):
                 elif p["type"] == "boolean":
                     self.assertIn(not p["default"], stated[name], (kind, name))
                 elif p["type"] == "number":
-                    self.assertTrue({50, 100} <= stated[name], (kind, name))
+                    self.assertTrue(set(self.testbench.GLYPH_NUMBER_VALUES.get(name, self.testbench.GLYPH_NUMBERS)) <= stated[name],
+                                    (kind, name))
             self.assertEqual({k for s in mine for k in s["params"]} - set(props), set(), kind)
+            if "data" in props:   # a trend case carries the series; no other case does
+                self.assertEqual({tuple(s["params"]["data"]) for s in mine if "data" in s["params"]},
+                                 {tuple(self.testbench.GLYPH_SERIES)}, kind)
+                self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
-                                         "valve-analog-three-way-icon": 7}[kind], kind)
+                                         "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)

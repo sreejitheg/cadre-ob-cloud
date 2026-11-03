@@ -492,3 +492,17 @@ size (give the entry in `gen_module_assets.py` the size the symbol should have o
    `ModuleOnlyKinds.test_the_component_test_page_has_one_module_only_section_under_the_module_rendering_only`.
 4. An element that needs more than a box (a state word, an alert frame, a readout) is a stateful device (section 3.2): its wrapper
    adds `extra` properties, and the geometry check stays `glyph` unless it has the three symbol properties.
+
+### 8.11 A Note from B5: Live Attributes and a Series
+
+1. A symbol's `bind` needs no change for a module-only kind: `embed_module` turns every `bind` entry into the tag binding of the
+   component's property `props.<name>` (a glyph has no `state`, so none takes the device-state route). Read the element's `dist/`
+   source, list the attributes that are live (a level, a value, a scheme chosen by state), and add a test that a symbol with a `bind`
+   for each produces the binding (`ModuleOnlyKinds.LIVE`).
+2. An attribute of the type `number[]` (a trend's `data`) is skipped by `schema_for` unless the entry names it in `data`
+   (`"data": {"data": "numbers"}`); the kind `numbers` of `DATA_SCHEMA` and `CONVERT` carries it. The test page states such a property
+   as a fixed list (a gallery memory tag holds no array); `testbench.GLYPH_SERIES` is the sample.
+3. A number whose scale is not a percentage (the readout's `numberOfDigits`) takes its own values in `testbench.GLYPH_NUMBER_VALUES`.
+   An attribute of the element that has the name of a symbol property (the indicators' `variant`) is allowed by the "carries none of
+   the symbol's properties" test through the row's attribute set.
+4. An element's click event on a module-only kind is left unwired (display only, no device kind); record it as an open item.

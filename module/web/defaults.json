@@ -603,5 +603,32 @@
   "value2": 0,
   "closed": false,
   "horisontal": false
+ },
+ "obc-indicator-battery": {
+  "direction": "vertical",
+  "variant": "bar",
+  "value": "regular",
+  "level": 0,
+  "data": [],
+  "hasIcon": false
+ },
+ "obc-indicator-engine": {
+  "value": "static",
+  "direction": "vertical"
+ },
+ "obc-indicator-tank-atmospheric": {
+  "direction": "vertical",
+  "variant": "bar",
+  "value": "regular",
+  "level": 0,
+  "data": [],
+  "hasIcon": false
+ },
+ "obc-automation-readout": {
+  "value": 0,
+  "unit": "",
+  "numberOfDigits": 3,
+  "position": "bottom",
+  "lineType": "__undefined__"
  }
 }

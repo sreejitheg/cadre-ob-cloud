@@ -1278,6 +1278,7 @@
   --normal-activated-background-color: rgb(240, 240, 240);
   --normal-activated-border-color: rgb(190, 190, 190);
   --base-blue-050: rgb(228, 238, 253);
+  --base-blue-300: rgb(93, 143, 213);
   --base-blue-600: rgb(29, 60, 103);
   --base-blue-100: rgb(202, 222, 252);
   --base-blue-500: rgb(45, 84, 139);
@@ -1511,6 +1512,7 @@
   --normal-activated-background-color: rgb(52, 52, 52);
   --normal-activated-border-color: rgb(52, 52, 52);
   --base-blue-050: rgb(32, 42, 55);
+  --base-blue-300: rgb(80, 110, 149);
   --base-blue-600: rgb(169, 209, 255);
   --base-blue-100: rgb(40, 53, 69);
   --base-blue-500: rgb(128, 174, 234);
@@ -1744,6 +1746,7 @@
   --normal-activated-background-color: rgb(39, 27, 16);
   --normal-activated-border-color: rgb(72, 52, 31);
   --base-blue-050: rgb(14, 19, 28);
+  --base-blue-300: rgb(66, 92, 130);
   --base-blue-600: rgb(131, 183, 255);
   --base-blue-100: rgb(23, 30, 42);
   --base-blue-500: rgb(105, 151, 217);
@@ -1967,6 +1970,7 @@
   --normal-activated-background-color: rgb(186, 186, 186);
   --normal-activated-border-color: rgb(136, 136, 136);
   --base-blue-050: rgb(192, 214, 242);
+  --base-blue-300: rgb(57, 109, 176);
   --base-blue-600: rgb(7, 35, 70);
   --base-blue-100: rgb(156, 189, 232);
   --base-blue-500: rgb(15, 52, 97);

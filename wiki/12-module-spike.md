@@ -1079,6 +1079,67 @@ geometry. What the gateway step finds: `obc-automation-badge` 21, `obc-hydraulic
 `obc-valve-analog-three-way-icon` 7 on `/component-test`, each with a size and no console error. Open: the badge default, and whether
 a screen needs the badge's slots.
 
+### 17.18 Batch B5: Four Stateful Indicators (`cadre.ob.battery`, `cadre.ob.engine`, `cadre.ob.tankatmospheric`, `cadre.ob.automationreadout`)
+
+Batch B5 of tranche T1 wraps `obc-indicator-battery`, `obc-indicator-engine`, `obc-indicator-tank-atmospheric` and
+`obc-automation-readout` as module-only kinds (section 17.13) of the glyph form (section 17.17.1): none has `on`, `tag` or
+`readoutPosition`, a status word or an alert frame, and the manifest gives none of them an alert, so none is given one. They show
+live values, but they are display only (owner's decision, section 6 item 4 of the recipe): no event writes a tag and none opens a
+faceplate (a module-only kind names no device kind).
+
+17.18.1 What each element draws and which attributes are live, from the pinned `dist/` sources (read, not recalled).
+
+1. Battery (`indicator-battery.ts`; 6 attributes). A 48 unit battery outline. `level` (0 to 100, clamped by the element) is the live
+   value: the height of the fill in the `bar` variant. `data` (a list of numbers, each 0 to 100, oldest first) is live in the `trend`
+   variant: a polyline and area over the bar's rectangle, with `level` as a thin bar at its right; fewer than two samples draw no line.
+   `value` (`regular`, `enhanced`, `categorical`) is the colour scheme of the fill and is a state a screen may bind (a tag that selects
+   the scheme), but it is not a measurement. `variant` (`bar`, `trend`), `direction` (`vertical`, `horizontal`) and `hasIcon` (the
+   battery icon over the bar variant) are presentation. Its `icon` slot is not carried (a property cannot fill a slot).
+2. Atmospheric tank indicator (`indicator-tank-atmospheric.ts`; 6 attributes). The same attributes and meanings with a tank outline;
+   `value` is `regular`, `enhanced` or `medium` (the third is the categorical scheme). `level` and `data` are live.
+3. Engine indicator (`indicator-engine.ts`; 2 attributes). A frame with four cylinders. `value` (`static`, `regular`, `enhanced`) is
+   the only state: the colour of the cylinders, by the stylesheet, so a screen binds it to a tag that gives the engine's condition.
+   `direction` is presentation. It has no number.
+4. Automation readout (`automation-readout.ts`; 4 attributes carried of 5). A bordered chip printing `value` rounded to a whole number
+   (`toFixed(0)`) beside `unit`, in a minimum width of `numberOfDigits` characters, and a 48 px minimum height. `value` is live; `unit`
+   is text, which a screen may bind. `numberOfDigits` and `position` (`left`, `right`, `top`, `bottom`: the side of a line the chip
+   sits on) are presentation. `lineType` (`LineType | undefined`, an object type the generator does not map, as for the transmitter)
+   is left out, which loses only a half-line-width offset of the chip.
+
+17.18.2 How a symbol binds them. No change to `embed_module` was needed. For any symbol the generator turns each entry of `bind`
+(parameter to tag member) into the tag binding of the component's property `props.<name>` and removes the parameter's stated value
+(`embed_module`, the loop over `sym["bind"]`); a glyph's contract has no `state`, so none of its attributes is the dual
+`view.custom.g_<id>` route of a device state, and every bind key is a plain tag binding. A test builds one symbol of each kind with a
+`bind` for each live attribute and checks the `propConfig`, and a whole screen build with all of them at once. The binding of `data`
+to a tag is accepted by the descriptor, but whether a gateway tag of an array type reaches the property as a list of numbers is not
+measured here; the test page therefore states `data` as a fixed list. `value` and `level` join the gallery parameters of the page
+(`testbench.GALLERY_PARAMS`: `value` was there; `level` is added), so the page reads them from gallery memory tags and G11 can
+exercise the binding.
+
+17.18.3 The change to the wrapper generator. The element's `data` is a list of numbers, which `schema_for` skipped. A data kind
+`numbers` joins `gen_module_assets.DATA_SCHEMA` (an array of numbers) and the wrapper's `CONVERT` (each sample read as a number); the
+data path (`readArray`, GF-38) is the one the alert lists already use. No earlier contract changes. The page's cases
+(`testbench.glyph_cases`) now give every enumeration case the numbers at their first value, so that a scheme shows on a part-filled
+bar; a case with `trend` carries a seven sample series; `numberOfDigits` has its own pair of values (1 and 6, as it is a width) and the
+unit a text (`kn`).
+
+17.18.4 The overlap of the automation readout with the readout kind. The library kind `readout` (component `cadre.ob.readout`,
+`obc-transmitter`) also prints a value with a unit in a chip, and section 15 rejected `obc-automation-readout` for it. The two overlap
+in the chip, the value and the unit. The automation readout differs in showing integers only, in having no identifier, setpoint,
+advice, alert or fraction digits, in being a button (its `click` event) and in being positioned by a side of a line. It is wrapped as
+asked and the overlap is left for the owner to decide: a screen that needs decimals or an identifier uses `readout`.
+
+17.18.5 Components and tests. Properties (with `componentSize`): battery 7, engine 3, tank indicator 7, automation readout 5. The
+registered components move from 31 to 35. Tests: five more tests in `GlyphComponents` (the four rows, the series, the enumerations),
+the live binding tests and the updated page counts in `ModuleOnlyKinds` (`tests/test_module.py`). What the gateway step finds on
+`/component-test`, in the "Module only" section: `obc-indicator-battery` 11, `obc-indicator-engine` 6,
+`obc-indicator-tank-atmospheric` 11 and `obc-automation-readout` 10, each with a size and no console error; the trend cases show a
+polyline, the bar cases a part-filled bar.
+
+17.18.6 Open items. The readout's `click` event is not carried: a click would at most open a faceplate, and a module-only kind has no
+device kind. The binding of `data` to an array tag. The icon slots of the battery and the tank indicator. The overlap with `readout`
+(17.18.4).
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

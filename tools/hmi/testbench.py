@@ -77,7 +77,8 @@ GALLERY_PARAMS = frozenset({
     "on", "open", "speed", "value", "trend", "setpoint", "output", "manual", "text", "step", "activated", "alert",
     "alertFrameStatus", "alertFrameMode", "badgeControl", "badgeInterlock", "badgeCommandLocked", "badgeDuty",
     "outOfService", "progress",
-    "value2", "closed"})   # the last two: the state of the valve glyphs (B4), which no earlier kind has
+    "value2", "closed",   # the state of the valve glyphs (B4), which no earlier kind has
+    "level"})             # the level of the battery and tank indicators (B5); their `value` is the scheme and is bound too
 GALLERY_PREFIXES = ("S_", "N_", "B_")   # the ids of the symbols of the static grids
 
 
@@ -595,28 +596,40 @@ def module_only_cases(kind: str, contract: dict) -> list[Case]:
 
 
 # The values a glyph's number properties are shown at: the element draws them as a percentage of travel (the pinned
-# `dist/` source of the valve icons divides by 100), so mid travel and full travel show the drawing change.
+# `dist/` source of the valve icons divides by 100) or of a level (the indicators), so mid travel and full travel show the
+# drawing change. A number whose scale is not a percentage has its own pair (the readout's digit count is a width).
 GLYPH_NUMBERS = (50, 100)
+GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6)}
+# The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
+# free string property is shown with, where a glyph has one (the readout's unit).
+GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
+GLYPH_TEXT = {"unit": "kn"}
 
 
 def glyph_cases(schema: dict, contract: dict) -> list[Case]:
     """The cases of a glyph, table driven from its component's schema: the defaults, each value of each enumerated
     property (the module's `componentSize` is no attribute of the element and is left out), each number at the values of
-    `GLYPH_NUMBERS`, and each boolean against its default with the numbers at mid travel, so that a flag which changes
-    only what an opening looks like (orientation, a second opening) shows. A glyph has no tag, readout or alert frame, so
+    `GLYPH_NUMBERS`, each boolean against its default, and a text for a property of `GLYPH_TEXT`. Every case but the
+    default and the numbers' own carries the numbers at their first value, so that a flag which changes only what an
+    opening looks like (orientation, a second opening) or a level drawn in another scheme shows. A case that sets the
+    value `trend` also carries `GLYPH_SERIES` for each array of numbers. A glyph has no tag, readout or alert frame, so
     none of those is stated."""
     props = {k: p for k, p in schema.items() if k not in ("positioning", "componentSize")}
     default = {k: p["default"] for k, p in props.items()}
-    numbers = [k for k, p in props.items() if p["type"] == "number"]
-    mid = {k: GLYPH_NUMBERS[0] for k in numbers}
+    numbers = {k: GLYPH_NUMBER_VALUES.get(k, GLYPH_NUMBERS) for k, p in props.items() if p["type"] == "number"}
+    series = [k for k, p in props.items() if p["type"] == "array" and p.get("items", {}).get("type") == "number"]
+    mid = {k: v[0] for k, v in numbers.items()}
     out = [Case("default", {})]
     for k, p in props.items():
         if "enum" in p:
-            out += [Case(f"{k} {v}", {k: v}) for v in p["enum"]]
+            out += [Case(f"{k} {v}", {**mid, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {})})
+                    for v in p["enum"]]
         elif p["type"] == "number":
-            out += [Case(f"{k} {v}", {k: v}) for v in GLYPH_NUMBERS]
+            out += [Case(f"{k} {v}", {k: v}) for v in numbers[k]]
         elif p["type"] == "boolean":
             out.append(Case(k if not default[k] else f"not {k}", {**mid, k: not default[k]}))
+        elif p["type"] == "string" and k in GLYPH_TEXT:
+            out.append(Case(f"{k} {GLYPH_TEXT[k]}", {**mid, k: GLYPH_TEXT[k]}))
     return [c for c in out if all(k in contract["params"] for k in c.params)]
 
 

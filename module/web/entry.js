@@ -30,3 +30,7 @@ import '@oicl/openbridge-webcomponents/dist/automation/automation-badge/automati
 import '@oicl/openbridge-webcomponents/dist/automation/hydraulic-check-valve/hydraulic-check-valve.js';
 import '@oicl/openbridge-webcomponents/dist/automation/valve-analoge-two-way-icon/valve-analog-two-way-icon.js';
 import '@oicl/openbridge-webcomponents/dist/automation/valve-analog-three-way-icon/valve-analog-three-way-icon.js';
+import '@oicl/openbridge-webcomponents/dist/automation/indicator-battery/indicator-battery.js';
+import '@oicl/openbridge-webcomponents/dist/automation/indicator-engine/indicator-engine.js';
+import '@oicl/openbridge-webcomponents/dist/automation/indicator-tank-atmospheric/indicator-tank-atmospheric.js';
+import '@oicl/openbridge-webcomponents/dist/automation/automation-readout/automation-readout.js';

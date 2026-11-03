@@ -96,7 +96,15 @@ public final class CadreOb {
         descriptor("cadre.ob.valvetwoway", "valvetwoway", "OB Two-Way Valve Glyph",
             "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame.", "obValveTwoWay", List.of()),
         descriptor("cadre.ob.valvethreeway", "valvethreeway", "OB Three-Way Valve Glyph",
-            "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame.", "obValveThreeWay", List.of())
+            "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame.", "obValveThreeWay", List.of()),
+        descriptor("cadre.ob.battery", "battery", "OB Battery Indicator",
+            "OpenBridge battery indicator: the level of a battery as a bar or a trend graph, display only.", "obBattery", List.of()),
+        descriptor("cadre.ob.engine", "engine", "OB Engine Indicator",
+            "OpenBridge engine indicator: an engine block in a static, regular or enhanced scheme, display only.", "obEngine", List.of()),
+        descriptor("cadre.ob.tankatmospheric", "tankatmospheric", "OB Atmospheric Tank Indicator",
+            "OpenBridge atmospheric tank indicator: the level of a tank as a bar or a trend graph, display only.", "obTankAtmospheric", List.of()),
+        descriptor("cadre.ob.automationreadout", "automationreadout", "OB Automation Readout",
+            "OpenBridge automation readout: a value with its unit in a bordered chip, display only.", "obAutomationReadout", List.of())
     );
 
     private CadreOb() {

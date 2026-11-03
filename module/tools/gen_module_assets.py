@@ -151,6 +151,20 @@ COMPONENTS = [
     {"tag": "obc-valve-analog-three-way-icon", "type": "cadre.ob.valvethreeway", "name": "valvethreeway", "title": "OB Three-Way Valve Glyph",
      "palette": "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame",
      "size": {"width": 48, "height": 48}, "exclude": []},
+    {"tag": "obc-indicator-battery", "type": "cadre.ob.battery", "name": "battery", "title": "OB Battery Indicator",
+     "palette": "OpenBridge battery indicator: a battery drawn as a level bar or a trend graph, display only",
+     "size": {"width": 48, "height": 48}, "exclude": [], "data": {"data": "numbers"}},
+    {"tag": "obc-indicator-engine", "type": "cadre.ob.engine", "name": "engine", "title": "OB Engine Indicator",
+     "palette": "OpenBridge engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
+     "size": {"width": 48, "height": 48}, "exclude": []},
+    {"tag": "obc-indicator-tank-atmospheric", "type": "cadre.ob.tankatmospheric", "name": "tankatmospheric",
+     "title": "OB Atmospheric Tank Indicator",
+     "palette": "OpenBridge atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
+     "size": {"width": 48, "height": 48}, "exclude": [], "data": {"data": "numbers"}},
+    {"tag": "obc-automation-readout", "type": "cadre.ob.automationreadout", "name": "automationreadout",
+     "title": "OB Automation Readout",
+     "palette": "OpenBridge automation readout: a value with its unit in a bordered chip, display only",
+     "size": {"width": 72, "height": 48}, "exclude": ["lineType"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -177,7 +191,9 @@ CANVAS_ZOOM = {
 }
 DATA_SCHEMA = {"alerts": {"type": "array", "default": [], "items": {"type": "object"},
                           "description": "Alert records (OpenBridge types.d.ts Alert): id, tagId, source, text, note, "
-                                         "acknowledged, active, type, time (epoch milliseconds), shelved."}}
+                                         "acknowledged, active, type, time (epoch milliseconds), shelved."},
+             "numbers": {"type": "array", "default": [], "items": {"type": "number"},
+                         "description": "The samples of a trend graph, oldest first, as plain numbers (the element's `data`)."}}
 # Properties of the module's own, not the element's: the wrapper applies them (`speedless`, `tankSlots` in the
 # WRAPPER below). Each lifts a case the element cannot show (COB-110): a device with no speed reads no speed, a
 # tank states the unit of its level, and a vessel that states no capacity draws no capacity line.
@@ -510,7 +526,7 @@ WRAPPER = r"""
       return o;
     });
   }
-  var CONVERT = { alerts: toAlerts };
+  var CONVERT = { alerts: toAlerts, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
 
   // The payload of a Perspective component event, from the element's event detail.
   function payload(kind, e, el) {
