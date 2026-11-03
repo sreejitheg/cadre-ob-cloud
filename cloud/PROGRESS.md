@@ -108,3 +108,9 @@
   measured path `T[0].0:5`, but the generator has since put the alert message there and the button at index 6, so
   the alarm menu never opened (F16, F21, F11, F14, A-01, A-02). `glass.BELL` corrected and held to
   `framework.top_bar` by a new unit test (fails on the old path). The trial expired during the module run's G10.
+- 2026-11-03 03:45: T1 preparation. The owner chose: a wrap recipe first, then T1 in batches with a review before
+  T2; the nine line elements skipped; Press then Confirm for every command control; module-only kinds (Option B)
+  for elements without a library kind; display only for elements that imply writes. `cloud/WRAP-RECIPE.md` written
+  by a Sonnet 5.5 subagent at medium effort (179,845 tokens, 33 tool calls, 4 min 33 s): the steps of a wrap, the
+  extras per class, verification, pitfalls, and the survey of the 31 T1 elements in batches B0 (module-only
+  infrastructure, pilot `resistor`) to B8. Only `damper` and `switch` have a library kind.

@@ -291,6 +291,15 @@ the element's enumerations (section 5.1) and map or except each mismatch. No `AL
    `vertical-line`, `three-way-line`, `line-cross`, `line-overlap`) are skipped for now: they overlap the library's
    pipes and the flow solver (G6). Do not wrap them and do not add them to `MODULE_KIND`.
 2. Command controls use Press then Confirm. No component event writes a tag.
+3. An element without a library kind becomes a module-only kind (section 7.2, Option B, decided 2026-11-03): its
+   contract comes from `module/components.json`, the component test page shows it in one "Module only" section,
+   and under `--render stock` the build refuses it with an error rather than draw a gap silently. Batch B0 builds
+   this once; every later batch adds its elements to the module-only table and follows section 2. A kind is
+   promoted to a library kind later, and only when a stock screen needs it.
+4. Elements whose events or properties imply a write (the `position-selected` event of `hydraulic-valve-4-3` and
+   `hydraulic-valve-x-2`, the setpoints of the gauges) are wrapped for display and state only in T1; the write is
+   recorded as an open item in the wiki subsection, and no binding writes. `automation-input-modal` is examined and,
+   if it has no faithful wrap, recorded as not wrapped.
 
 ## 7. The T1 Survey
 
