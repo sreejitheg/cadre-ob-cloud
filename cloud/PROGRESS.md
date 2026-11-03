@@ -323,3 +323,6 @@
   the walk in every group, the plant restored with no difference. `cadre_hmi_wtpob` (`openbridge`, module) PASS in G8,
   G11 44 of 44 and G10 21 of 21; its walk failed one row, A-02 (TK-101's alarm not acknowledged from the alarm menu),
   intermittent: 2 passes and 5 failures over all runs. Diagnosis started; G11 on the component test page running.
+- 2026-11-03 17:43: Final G11 on the component test page (module 0.7.0, device components only): 21 of 21 devices, 274
+  leaves, no fault, 63 min; the only finding the instrument field's identity carried since T0 (`TB_FIELD` read as
+  `Temp`), to be fixed after the A-02 diagnosis.
