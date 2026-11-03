@@ -201,3 +201,10 @@
   click unwired) as module-only glyphs; `obc-automation-input-modal` not wrapped: four bare slots and no attribute,
   which a property cannot fill (a container component is outside T1). Tests 1190 to 1191. T1 offline complete: 30 of
   the 31 elements wrapped.
+- 2026-11-03 06:10: Module 0.6.0 (T1 B0 to B8) built offline (775,929 bytes), full suite 1191 passing, installed:
+  "Registered 44 Cadre OpenBridge components", script 1,954,229 bytes (twice that of 0.4.3). All projects redeployed
+  from the current tree, G0 to G7 clean; component test page 2052 tags; G8 PASS 4444 components, no overlay or error
+  badge; all 33 wrapped elements drawn with a size, no console error. Visual finding: the gauges overflow their
+  unmeasured 240 by 280 box. G11 first stopped at once: the page's 830 leaves had not settled after the fixed wait (830
+  then 831 before any click); `faceplates.settled_points` now waits for a still count (tests added), and G11 rerun.
+  The walk with the tools of `b82abe1` fails A-02 the same way, so A-02 does not come from the walk rows.
