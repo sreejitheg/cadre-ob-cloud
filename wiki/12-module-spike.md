@@ -1545,6 +1545,103 @@ message. The component test page passes G0 to G7 with 19 devices and 21 device s
 click on a bell fires `onPress` or `onAlertClick`, a click on a row's ACK fires `onAckClick`; none is wired. The registered components
 (the log line of the gateway hook) move from 62 to 66.
 
+### 17.25 Batch F3: Navigation, Tree Navigation and the Breadcrumb (`cadre.ob.navigationitem`, `navigationitemgroup`, `navigationmenu`, `treenavigationitem`, `treenavigationgroup`, `treenavigation`, `breadcrumb`)
+
+Batch F3 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2 and 3). Each child was wrapped before its parent, by generator entries,
+Java descriptors and table rows (`cloud/WRAP-RECIPE.md` section 9). The seven are module-only kinds of `FRAME_ONLY`. The navigation menu and
+the tree navigation are the first parents that nest more than one level: a group holds items and groups, to any depth.
+
+17.25.1 Nesting. `ITEM_CHILDREN` lists, for a navigation group, the navigation item and the navigation group itself, and for a tree
+group, the tree item and the tree group. An item object is built with its `children` to a depth of `ITEM_DEPTH` (8). A nested item sets
+its own `slot` only through the object; the navigation menu's `items` entry puts every top level object in the slot `main` and its
+`footerItems` entry in the slot `footer`. The page's sample (`NAV_ITEMS`, `TREE_ROWS` of `tools/hmi/testbench.py`, of our own) holds a
+group in a group in the navigation menu (two levels below the menu) and a group in a group holding rows in the tree (three levels).
+`ITEM_FIELDS` gains the two fields that a tree row has and no attribute carries: `hasLeadingIcon` (tree item) and `hasIcon` (tree group),
+which a row object may set.
+
+17.25.2 Events. The component events carry the item's identity.
+
+| Component | Events (the element's event) | Payload |
+|---|---|---|
+| `navigationitem` | `onPress` (`click`) | none |
+| `navigationitemgroup` | `onOpen` (`open`) | none |
+| `navigationmenu` | `onItemClick` (`click` of any item at any depth), `onGroupOpen` (`open` of any group at any depth) | `id`, `tag` |
+| `treenavigationitem` | `onPress` (`click`), `onExpandToggle` (`expand-toggle`) | none; `expanded` |
+| `treenavigationgroup` | `onExpandToggle` (`expand-toggle`) | `expanded` |
+| `treenavigation` | `onItemClick` (`click` of any row at any depth), `onExpandToggle` (`expand-toggle` of any row at any depth) | `id`, `tag`; `id`, `tag`, `expanded` |
+| `breadcrumb` | `onBreadcrumbClick` (`breadcrumb-click`) | `label`, `href`, `index` |
+
+None is wired and none writes a tag; F6 binds them to the existing navigation. `expanded` is the state the press asks for. Four
+additions to the wrapper carry the cases that F1 and F2 did not meet. (a) The `open`, `expand-toggle` and tree `click` events do not
+bubble (they are plain custom events), so the wrapper hears them on each item it built, at every depth (`listenItem` walks the built
+subtree); a native event that does bubble (the navigation item's `click`) reaches every item above its target, so an item answers only when
+it is the nearest item to the target, and one press is one event. (b) The payload of an item event names the item that heard it
+(a nested item without an `id` reports an empty `id`, never its parent's). (c) The tree item fires its own `click` as a `CustomEvent`
+(only when the row is neither disabled nor already checked) and the user's native click reaches the host as well, so an entry key
+`customEvents` marks the events that count only as a `CustomEvent`: one press is one `onPress`, a disabled row fires none (measured in
+Chromium). (d) The entry keys `eventNames` (the navigation menu names the shared DOM event `click` `onItemClick`) and `enums` (the
+terminal type is typed `string` in the manifest and is the enumeration `TreeTerminalType`: `regular`, `aggregated-header`,
+`group-header`).
+
+17.25.3 The alerts object. The attribute `alerts` of the navigation and tree rows is `TreeNavigationItemAlerts` of the pinned package: the
+counts `countLevelCritical`, `countAlarm`, `countLevelHigh`, `countWarning`, `countLevelMedium`, `countCaution`, `countLevelLow`,
+`countLevelDiagnostic` and `combine` (one badge with the total). The design table of `cloud/FRAME-DESIGN.md` section 2.2 names the fields
+`critical`, `high`, `medium`, `low`, `diagnostic` and `combine`; the pinned `types.d.ts` and `alert-severity.js` are authoritative, and the
+schema follows them. The five Cadre priorities map onto the counts as `wiki/13` section 11.1 says (the same mapping as the alert button,
+17.24.1): Critical `countLevelCritical`, High `countAlarm`, Medium `countWarning`, Low `countCaution`, Diagnostic `countLevelDiagnostic`;
+the description of the property in the four schemas records it. The property is a new field kind `object`: the wrapper reads it with
+`tree.read` (GF-38 measured `read` for arrays; an object is read the same way and is copied as JSON, which also unwraps any wrapper), gives
+the element undefined while no count is set, and writes it only when its value changes. The reading of an object through the property
+tree is not yet measured on a gateway: the gateway step checks that a row with `{"countAlarm": 2}` draws a badge. An open group draws no
+badge of its own (the element's rule), so the counts of an open group show on its rows.
+
+17.25.4 The components.
+
+| Component | Element | Attributes and fields | Items and slot properties | Not carried |
+|---|---|---|---|---|
+| `cadre.ob.navigationitem` | `obc-navigation-item` | 11 attributes (`treeBranches` excluded); `href` and `alerts` undefined while empty | `iconName`, `trailingIconName` | `treeBranches` |
+| `cadre.ob.navigationitemgroup` | `obc-navigation-item-group` | 10 attributes (`treeBranches` excluded) | `iconName`; `items` (navigation items and groups, to any depth) | `treeBranches`, the `expanded` getter |
+| `cadre.ob.navigationmenu` | `obc-navigation-menu` | `variant` (`full`, `icon-only`, `icon-only-large`, `compact`, `tree`), `flyoutVariant`, `smallScreen` | `items` (slot `main`), `footerItems` (slot `footer`) | the `logo` slot (design table, section 2.3) |
+| `cadre.ob.treenavigationitem` | `obc-tree-navigation-item` | 8 attributes (`branches` excluded), field `hasLeadingIcon` | `iconName` | `branches`, `focusable` |
+| `cadre.ob.treenavigationgroup` | `obc-tree-navigation-group` | 7 attributes (`branches` excluded), field `hasIcon` | `iconName`; `items` (tree rows, to any depth) | `branches` |
+| `cadre.ob.treenavigation` | `obc-tree-navigation` | none | `items` (tree groups and items) | none |
+| `cadre.ob.breadcrumb` | `obc-breadcrumb` | field `iconOnly`; the crumbs are the data property `items` | none | a crumb's `icon` (a template function) |
+
+The container sets `treeBranches` of the navigation rows (menu variant `tree`) and `branches` of the tree rows itself, so they are not
+properties. In the tree variant the navigation menu draws each row as a tree row in its shadow root and keeps footer items flat. The
+breadcrumb carries its items as the element's own array (no child elements): objects of `label` and `href`; the wrapper drops any other
+key, because the element calls a crumb's `icon` as a function. A crumb with no `href` is a crumb without one; the last crumb is the
+current page and is not a button. `href` of a row navigates the browser (`window.location.href` in the tree row, an anchor in the
+navigation item): the frame leaves it empty and navigates through the events (F6).
+
+17.25.5 The breadcrumb is not used by the frame. The owner decided (`cloud/FRAME-DESIGN.md`, owner's answer 2) that the new frame keeps the
+Cadre `Framework/Crumb` view with its node badges, which `obc-breadcrumb` cannot draw (it carries no counts). The breadcrumb is wrapped
+and drawn on the component test page and the frame will not use it.
+
+17.25.6 Measured sizes in Chromium (module defaults in brackets): navigation item 104 by 48 with a label and an icon (280 by 48), group
+112 by 48 (280 by 48), menu 320 wide and as high as its rows, 258 with the sample (320 by 480), tree item 197 by 48 (280 by 48), tree group
+202 by 240 (280 by 240), tree navigation 245 by 240 (320 by 240), breadcrumb of three crumbs 296 by 48 (320 by 48). A navigation or tree
+row is as wide as its content when centred, so the stylesheet stretches the five row components to their box, as it does for an alert row.
+An open group of the flat menu draws its flyout to the right of the menu, outside the component box.
+
+17.25.7 The test page. The section "Frame components" gains `obc-navigation-item` 17, `obc-navigation-item-group` 15,
+`obc-navigation-menu` 11, `obc-tree-navigation-item` 12, `obc-tree-navigation-group` 9, `obc-tree-navigation` 3 and `obc-breadcrumb` 4
+elements (71 more; 241 in all). The menu's cases include the five variants, and one case of the tree variant with every group open, so
+that the two levels of the sample show inline (a flyout of the flat menu floats over the next cell, cosmetic).
+
+17.25.8 Bundle size of `cadre-ob.js`: 2,295,305 bytes before F3 and 2,314,333 after (+19,028). The elements were largely in the bundle already
+(the navigation item imports the tree item for its enumerations, so the esbuild output stayed at 2,178,754 bytes for the navigation item, group,
+menu and tree item, then rose to 2,180,857 with the tree group, 2,182,996 with the tree navigation and 2,188,866 with the breadcrumb); the rest
+is the wrapper, the seven specs and the generated stylesheet rule.
+
+17.25.9 Tests and gateway checks. `tests.test_module` holds 158 tests (156 before; the class `FrameComponents` gained seven rows, the
+keys `EXCLUDED` and `DATA`, and two tests); `module/tools/harness/frame.mjs` holds 51 checks (32 before) and `items.mjs` 11, all passing in
+Chromium, among them nested events with the id of the nested item (one event for one press), the branches of rows two levels down, the
+alert badges, the custom-only click and the breadcrumb's press. The component test page passes G0 to G7 with 19 devices and 21 device
+symbols. What the gateway step finds on `/component-test`, in the section "Frame components": the seven counts of 17.25.7, each with a
+non-zero box and no console error; the tree rows with a badge (`countAlarm`) draw it; a click on a nested navigation item, a nested tree row
+or a crumb fires its event with the identity; none is wired. The registered components (the log line of the gateway hook) move from 66 to 73.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

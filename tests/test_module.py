@@ -1687,7 +1687,7 @@ class ButtonComponent(unittest.TestCase):
         self.assertIn('"events":[{"dom":"click","name":"onPress","payload":"none"}]', JS)
         # the wrapper listens on the element and fires through Perspective's componentEvents (GF-37), as for the alert lists
         self.assertIn("el.addEventListener(ev.dom, f)", JS)
-        self.assertIn("ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el))", JS)
+        self.assertIn("ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node))", JS)
 
     def test_the_enumerations_come_from_the_element(self):
         props = schema_of(self.ctype)["properties"]
@@ -1886,9 +1886,39 @@ class FrameComponents(unittest.TestCase):
                                {"onAckAllClick": "ack-all-visible-click", "onSilenceClick": "silence-click",
                                 "onGoToAlertListClick": "go-to-alert-list-click", "onItemClick": "item-click", "onAckClick": "ack-click",
                                 "onAckSecondaryClick": "ack-secondary-click"}),
+        # batch F3: navigation, tree navigation and the breadcrumb (the attributes include the ones the container computes, see EXCLUDED)
+        "cadre.ob.navigationitem": ("obc-navigation-item", "src/components/navigation-item/navigation-item.ts",
+                                    {"label", "href", "checked", "variant", "group", "groupSelected", "hasIcon", "hasTrailingIcon", "treeMode",
+                                     "treeBranches", "terminalType", "alerts"}, set(), {"iconName", "trailingIconName"}, {"onPress": "click"}),
+        "cadre.ob.navigationitemgroup": ("obc-navigation-item-group", "src/components/navigation-item-group/navigation-item-group.ts",
+                                         {"label", "href", "checked", "variant", "hug", "hasIcon", "treeMode", "treeBranches", "terminalType",
+                                          "alerts", "defaultOpen"}, set(), {"iconName"}, {"onOpen": "open"}),
+        "cadre.ob.navigationmenu": ("obc-navigation-menu", "src/components/navigation-menu/navigation-menu.ts",
+                                    {"variant", "flyoutVariant", "smallScreen"}, set(), set(),
+                                    {"onItemClick": "click", "onGroupOpen": "open"}),
+        "cadre.ob.treenavigationitem": ("obc-tree-navigation-item", "src/components/tree-navigation-item/tree-navigation-item.ts",
+                                        {"label", "branches", "expandable", "expanded", "checked", "disabled", "terminalType", "alerts", "href"},
+                                        {"hasLeadingIcon"}, {"iconName"}, {"onPress": "click", "onExpandToggle": "expand-toggle"}),
+        "cadre.ob.treenavigationgroup": ("obc-tree-navigation-group", "src/components/tree-navigation-group/tree-navigation-group.ts",
+                                         {"label", "branches", "expanded", "checked", "disabled", "terminalType", "alerts", "href"},
+                                         {"hasIcon"}, {"iconName"}, {"onExpandToggle": "expand-toggle"}),
+        "cadre.ob.treenavigation": ("obc-tree-navigation", "src/components/tree-navigation/tree-navigation.ts", set(), set(), set(),
+                                    {"onItemClick": "click", "onExpandToggle": "expand-toggle"}),
+        "cadre.ob.breadcrumb": ("obc-breadcrumb", "src/components/breadcrumb/breadcrumb.ts", set(), {"iconOnly"}, set(),
+                                {"onBreadcrumbClick": "breadcrumb-click"}),
     }
+    # the attributes the container computes, left out of the contract (the navigation menu in the tree variant, the tree navigation)
+    EXCLUDED = {"cadre.ob.navigationitem": {"treeBranches"}, "cadre.ob.navigationitemgroup": {"treeBranches"},
+                "cadre.ob.treenavigationitem": {"branches"}, "cadre.ob.treenavigationgroup": {"branches"}}
+    # the properties that are plain data (a list read as JSON, not child elements): the breadcrumb's own array
+    DATA = {"cadre.ob.breadcrumb": {"items"}}
     # the `items` properties of a frame component (a list of child elements), with the tags each allows at the top level
-    ITEMS = {"cadre.ob.alertmenuitem": {"alertIcon": ["obc-alert-icon"]}, "cadre.ob.alertmenu": {"items": ["obc-alert-menu-item"]}}
+    ITEMS = {"cadre.ob.alertmenuitem": {"alertIcon": ["obc-alert-icon"]}, "cadre.ob.alertmenu": {"items": ["obc-alert-menu-item"]},
+             "cadre.ob.navigationitemgroup": {"items": ["obc-navigation-item", "obc-navigation-item-group"]},
+             "cadre.ob.navigationmenu": {"items": ["obc-navigation-item", "obc-navigation-item-group"],
+                                         "footerItems": ["obc-navigation-item", "obc-navigation-item-group"]},
+             "cadre.ob.treenavigationgroup": {"items": ["obc-tree-navigation-item", "obc-tree-navigation-group"]},
+             "cadre.ob.treenavigation": {"items": ["obc-tree-navigation-group", "obc-tree-navigation-item"]}}
 
     @classmethod
     def setUpClass(cls):
@@ -1907,8 +1937,10 @@ class FrameComponents(unittest.TestCase):
         for ctype, (tag, path, attrs, fields, slots, events) in self.ROWS.items():
             c = COMPONENTS[ctype]
             self.assertEqual(c["element"], tag)
-            self.assertEqual({a["fieldName"] for a in self.decl(path, tag)["attributes"]}, attrs, ctype)
-            self.assertEqual(set(c["props"]) - {"componentSize"}, attrs | fields | slots | set(self.ITEMS.get(ctype, {})), ctype)
+            self.assertEqual({a["fieldName"] for a in self.decl(path, tag).get("attributes", [])}, attrs, ctype)
+            self.assertEqual(set(c["props"]) - {"componentSize"},
+                             (attrs - self.EXCLUDED.get(ctype, set())) | fields | slots | set(self.ITEMS.get(ctype, {}))
+                             | self.DATA.get(ctype, set()), ctype)
             self.assertEqual(set(c.get("slots", {})), slots, ctype)
             self.assertEqual({n: i["tags"] for n, i in c.get("items", {}).items()}, self.ITEMS.get(ctype, {}), ctype)
 
@@ -1940,7 +1972,15 @@ class FrameComponents(unittest.TestCase):
                             ("alertmenu.onSilenceClick", {}), ("alertmenu.onGoToAlertListClick", {}),
                             ("alertmenu.onItemClick", {"id": "string", "tag": "string"}),
                             ("alertmenu.onAckClick", {"id": "string", "tag": "string"}),
-                            ("alertmenu.onAckSecondaryClick", {"id": "string", "tag": "string"})):
+                            ("alertmenu.onAckSecondaryClick", {"id": "string", "tag": "string"}),
+                            ("navigationitem.onPress", {}), ("navigationitemgroup.onOpen", {}),
+                            ("navigationmenu.onItemClick", {"id": "string", "tag": "string"}),
+                            ("navigationmenu.onGroupOpen", {"id": "string", "tag": "string"}),
+                            ("treenavigationitem.onPress", {}), ("treenavigationitem.onExpandToggle", {"expanded": "boolean"}),
+                            ("treenavigationgroup.onExpandToggle", {"expanded": "boolean"}),
+                            ("treenavigation.onItemClick", {"id": "string", "tag": "string"}),
+                            ("treenavigation.onExpandToggle", {"id": "string", "tag": "string", "expanded": "boolean"}),
+                            ("breadcrumb.onBreadcrumbClick", {"label": "string", "href": "string", "index": "number"})):
             schema = json.loads((MODULE / f"common/src/main/resources/schemas/{name}.json").read_text(encoding="utf-8"))
             self.assertEqual({k: v["type"] for k, v in schema["properties"].items()}, props, name)
 
@@ -1974,6 +2014,77 @@ class FrameComponents(unittest.TestCase):
             text = schema_of(f"cadre.ob.{ctype}")["properties"]["alertType"]["description"]
             for word in ("Critical level-critical", "High alarm", "Medium warning", "Low caution", "Diagnostic empty"):
                 self.assertIn(word, text, ctype)
+
+    def test_the_navigation_and_tree_enumerations_and_the_alerts_object_come_from_the_pinned_package(self):
+        variants = ["full", "icon-only", "icon-only-large", "compact", "tree"]
+        terminals = ["regular", "aggregated-header", "group-header"]
+        for ctype in ("navigationitem", "navigationitemgroup", "navigationmenu"):
+            self.assertEqual(schema_of(f"cadre.ob.{ctype}")["properties"]["variant"]["enum"], variants, ctype)
+        self.assertEqual(schema_of("cadre.ob.navigationmenu")["properties"]["flyoutVariant"]["enum"], ["full", "compact"])
+        for ctype in ("navigationitem", "navigationitemgroup", "treenavigationitem", "treenavigationgroup"):
+            p = schema_of(f"cadre.ob.{ctype}")["properties"]
+            self.assertEqual(p["terminalType"]["enum"], terminals, ctype)
+            # the object of counts is the pinned `AlertCounts` (not the design table's severity names) and `combine`
+            self.assertEqual(p["alerts"]["type"], "object", ctype)
+            self.assertEqual(set(p["alerts"]["properties"]), {"countLevelCritical", "countAlarm", "countLevelHigh", "countWarning",
+                                                              "countLevelMedium", "countCaution", "countLevelLow", "countLevelDiagnostic",
+                                                              "combine"}, ctype)
+            for word in ("Critical countLevelCritical", "High countAlarm", "Medium countWarning", "Low countCaution",
+                         "Diagnostic countLevelDiagnostic"):
+                self.assertIn(word, p["alerts"]["description"], ctype)
+            self.assertNotIn("branches", p)                    # the container computes them
+            self.assertNotIn("treeBranches", p)
+        # the leading icon of a tree row is a field at the element's own default (on); the header of a group likewise
+        self.assertIs(schema_of("cadre.ob.treenavigationitem")["properties"]["hasLeadingIcon"]["default"], True)
+        self.assertIs(schema_of("cadre.ob.treenavigationgroup")["properties"]["hasIcon"]["default"], True)
+        # the navigation menu's logo slot is not carried
+        self.assertNotIn("logo", json.dumps(COMPONENTS["cadre.ob.navigationmenu"].get("slots", {})))
+        self.assertEqual(set(COMPONENTS["cadre.ob.navigationmenu"]["items"]), {"items", "footerItems"})
+        self.assertEqual(COMPONENTS["cadre.ob.navigationmenu"]["items"]["items"]["slot"], "main")
+        self.assertEqual(COMPONENTS["cadre.ob.navigationmenu"]["items"]["footerItems"]["slot"], "footer")
+
+    def test_the_nested_item_lists_the_events_that_do_not_bubble_and_the_custom_click(self):
+        sys_path = str(MODULE / "tools")
+        import sys
+        sys.path.insert(0, sys_path)
+        import gen_module_assets
+        # a group lists itself and its leaf: the nesting is to any depth (the wrapper builds up to ITEM_DEPTH)
+        self.assertEqual(gen_module_assets.ITEM_CHILDREN["obc-navigation-item-group"], ["obc-navigation-item", "obc-navigation-item-group"])
+        self.assertEqual(gen_module_assets.ITEM_CHILDREN["obc-tree-navigation-group"],
+                         ["obc-tree-navigation-item", "obc-tree-navigation-group"])
+        # item events are heard on each item at any depth; the tree's own click is a CustomEvent only (the native click also reaches the host)
+        self.assertRegex(JS, r'"dom":"click","name":"onItemClick","payload":"item","onItems":true\}')
+        self.assertRegex(JS, r'"dom":"open","name":"onGroupOpen","payload":"item","onItems":true\}')
+        self.assertRegex(JS, r'"dom":"click","name":"onItemClick","payload":"item","onItems":true,"custom":true')
+        self.assertRegex(JS, r'"dom":"expand-toggle","name":"onExpandToggle","payload":"itemexpanded","onItems":true')
+        self.assertRegex(JS, r'"dom":"click","name":"onPress","payload":"none","custom":true')
+        self.assertRegex(JS, r'"dom":"breadcrumb-click","name":"onBreadcrumbClick","payload":"crumb"')
+        # the breadcrumb's crumbs are data, not child elements, and carry label and href only
+        crumbs = schema_of("cadre.ob.breadcrumb")["properties"]["items"]
+        self.assertEqual(set(crumbs["items"]["properties"]), {"label", "href"})
+        self.assertNotIn("items", COMPONENTS["cadre.ob.breadcrumb"])
+        # the sample rows use only tags and attributes the wrapper knows, and nest at least two levels
+        known = {t: {a["fieldName"] for m in self.manifest["modules"] for d in m.get("declarations", []) if d.get("tagName") == t
+                     for a in d.get("attributes", [])} | set(gen_module_assets.ITEM_FIELDS.get(t, []))
+                 for t in ("obc-navigation-item", "obc-navigation-item-group", "obc-tree-navigation-item", "obc-tree-navigation-group")}
+
+        def walk(rows, depth, seen, ids):
+            for r in rows:
+                tag = r["tag"]
+                if tag.startswith("obi-"):
+                    continue
+                self.assertTrue(set(r) - {"tag", "id", "children"} <= known[tag], r)
+                self.assertNotIn(r["id"], ids)
+                ids.add(r["id"])
+                seen.append(depth)
+                walk(r.get("children", []), depth + 1, seen, ids)
+        for rows in ([self.testbench.NAV_ITEMS, self.testbench.NAV_FOOTER], [self.testbench.NAV_ITEMS_OPEN], [self.testbench.TREE_ROWS]):
+            depths, ids = [], set()
+            for part in rows:
+                walk(part, 0, depths, ids)
+            self.assertGreaterEqual(max(depths), 2, rows)
+        for crumb in self.testbench.CRUMBS:
+            self.assertTrue(set(crumb) <= {"label", "href"}, crumb)
 
     def test_the_items_of_the_alert_menu_are_rows_of_the_menu_item_with_an_alert_icon_slot(self):
         sys_path = str(MODULE / "tools")
@@ -2037,7 +2148,9 @@ class FrameComponents(unittest.TestCase):
         counts = {k: sum(1 for s in bench.descriptor["symbols"] if s["kind"] == k) for k in self.screen.FRAME_ONLY}
         self.assertEqual(counts, {"tooltip": 13, "toggletip": 14, "clock": 15, "user-button": 14, "app-button": 7,
                                   "notification-button": 11, "notification-badge-button": 9,
-                                  "alert-button-item": 26, "alert-button": 31, "alert-menu-item": 22, "alert-menu": 8})
+                                  "alert-button-item": 26, "alert-button": 31, "alert-menu-item": 22, "alert-menu": 8,
+                                  "navigation-item": 17, "navigation-item-group": 15, "navigation-menu": 11,
+                                  "tree-navigation-item": 12, "tree-navigation-group": 9, "tree-navigation": 3, "breadcrumb": 4})
         stock = self.testbench.build(contracts, prof, "[default]cadre_hmi_ctest", render="stock")
         self.assertNotIn("FrameComponents", [s["id"] for s in stock.descriptor["sections"]])
         self.assertEqual(self.testbench.check(bench.descriptor, contracts), [])

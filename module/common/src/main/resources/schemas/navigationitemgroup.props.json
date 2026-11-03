@@ -1,0 +1,184 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Label",
+      "description": "The label text displayed for the navigation group."
+    },
+    "href": {
+      "type": "string",
+      "default": "",
+      "description": "Optional URL to navigate to when the group label is clicked. If set, clicking the group label will navigate to this URL."
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the group is currently checked/selected. Use to highlight the group as active."
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "full",
+        "icon-only",
+        "icon-only-large",
+        "compact",
+        "tree"
+      ],
+      "default": "full",
+      "description": "Visual variant of the navigation group. Accepts values from ObcNavigationMenuVariant (e.g., 'full', 'compact'). Controls the styling and layout of the group and its flyout."
+    },
+    "hug": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, the flyout panel appears tightly anchored to the group label with compact styling."
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-navigation-item-group` property `hasIcon`."
+    },
+    "treeMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set by obc-navigation-menu in its Tree variant \u2014 renders the group as a tree row."
+    },
+    "terminalType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "aggregated-header",
+        "group-header"
+      ],
+      "default": "regular",
+      "description": "Terminal type for the group header in the Tree variant \u2014 one of regular (default), aggregated-header, or group-header. No effect in flat variants."
+    },
+    "alerts": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "countLevelCritical": {
+          "type": "number"
+        },
+        "countAlarm": {
+          "type": "number"
+        },
+        "countLevelHigh": {
+          "type": "number"
+        },
+        "countWarning": {
+          "type": "number"
+        },
+        "countLevelMedium": {
+          "type": "number"
+        },
+        "countCaution": {
+          "type": "number"
+        },
+        "countLevelLow": {
+          "type": "number"
+        },
+        "countLevelDiagnostic": {
+          "type": "number"
+        },
+        "combine": {
+          "type": "boolean"
+        }
+      },
+      "description": "The active alerts at or beneath the row, as a badge for each severity with a count above zero: an object with the counts countLevelCritical, countAlarm, countLevelHigh, countWarning, countLevelMedium, countCaution, countLevelLow, countLevelDiagnostic and combine (one badge with the total, in the colour of the highest severity). The Cadre priorities map onto the counts as wiki 13 section 11.1 says: Critical countLevelCritical, High countAlarm, Medium countWarning, Low countCaution, Diagnostic countLevelDiagnostic. An open group shows no badge of its own."
+    },
+    "defaultOpen": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the group starts expanded. Useful for trees that open by default."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Custom icon displayed next to the group label."
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": [
+              "obc-navigation-item",
+              "obc-navigation-item-group"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
+      "description": "The rows of the flyout, navigation items and groups (a group holds more, to any depth), as a list with one object for each: `tag` and then the element's attributes by name, `text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). Tags and attributes: `obc-navigation-item` (label, href, checked, variant, group, groupSelected, hasIcon, hasTrailingIcon, treeMode, treeBranches, terminalType, alerts); `obc-navigation-item-group` (label, href, checked, variant, hug, hasIcon, treeMode, treeBranches, terminalType, alerts, defaultOpen)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

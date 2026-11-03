@@ -67,6 +67,13 @@ ALERT_EVENTS = {
     "ack-secondary-click": ("onAckSecondaryClick", "none", "The secondary action of the row was pressed. The event carries nothing."),
     "go-to-alert-list-click": ("onGoToAlertListClick", "none", "The Alerts button of the menu was pressed. The event carries nothing; "
                                "the page's script decides where it goes."),
+    # Navigation, tree navigation and the breadcrumb (T2, batch F3). A component changes the name with `eventNames`, the payload
+    # with `eventKinds` and the text with `eventText`; `customEvents` names the events that only a CustomEvent of the element counts.
+    "open": ("onOpen", "none", "The group was opened. The event carries nothing."),
+    "expand-toggle": ("onExpandToggle", "expanded", "The row asks to open or close its children. event.expanded is the state the "
+                      "press asks for; the group applies it itself."),
+    "breadcrumb-click": ("onBreadcrumbClick", "crumb", "A crumb was pressed. event.label and event.href are the crumb's, event.index is "
+                         "its position in `items` (the last crumb is the current page and is not a button)."),
 }
 # The properties of the object a Perspective component event carries, by payload kind (the wrapper's `payload` builds the
 # object from the element's event detail). A kind a later wrap needs is one entry here and one branch of `payload`.
@@ -86,6 +93,14 @@ PAYLOAD_PROPS = {
                     "ids": {"type": "array", "description": "The `id` of each visible row that has one."}},
     "item": {"id": {"type": "string", "description": "The id of the item the event came from (empty if it has none)."},
              "tag": {"type": "string", "description": "The tag of the item the event came from."}},
+    # batch F3: the state a row asks for (a row of the tree, alone or inside a list) and the crumb that was pressed
+    "expanded": {"expanded": {"type": "boolean", "description": "The state the press asks for: true opens the row, false closes it."}},
+    "itemexpanded": {"id": {"type": "string", "description": "The id of the item the event came from (empty if it has none)."},
+                     "tag": {"type": "string", "description": "The tag of the item the event came from."},
+                     "expanded": {"type": "boolean", "description": "The state the press asks for: true opens the row, false closes it."}},
+    "crumb": {"label": {"type": "string", "description": "The label of the crumb that was pressed."},
+              "href": {"type": "string", "description": "The href of the crumb (empty if it has none)."},
+              "index": {"type": "number", "description": "The position of the crumb in `items`, from 0."}},
 }
 # The attributes of the two line chart elements that serve a slotted external scale or an instrument panel (`state`,
 # `frameStyle`, the border radius family, `instrumentMode`) and the element's debug overlay: the module draws the chart
@@ -104,6 +119,19 @@ BAR_LEFT_OUT = ["barContainerStyle", "borderRadiusPosition", "instrumentMode", "
 ALERT_TYPE_TEXT = ("The alert type that selects the icon and colours. The Cadre priorities map onto it as wiki 13 section 11.1 says: "
                    "Critical level-critical, High alarm, Medium warning, Low caution, Diagnostic empty (no alert colour); "
                    "level-high, level-medium and level-low draw the same colours as alarm, warning and caution. Empty draws the idle state.")
+# The per-severity counts a navigation or tree row shows as badges (`TreeNavigationItemAlerts`, the pinned `types.d.ts`
+# `AlertCounts` and `combine`). The five Cadre priorities map onto the count fields as wiki 13 section 11.1 says (the same
+# mapping as the alert button's `alertType`): Critical countLevelCritical, High countAlarm, Medium countWarning, Low countCaution,
+# Diagnostic countLevelDiagnostic. A count of zero or less draws no badge.
+ALERT_COUNT_FIELDS = ["countLevelCritical", "countAlarm", "countLevelHigh", "countWarning", "countLevelMedium", "countCaution",
+                      "countLevelLow", "countLevelDiagnostic"]
+ALERTS_TEXT = ("The active alerts at or beneath the row, as a badge for each severity with a count above zero: an object with the counts "
+               + ", ".join(ALERT_COUNT_FIELDS) + " and combine (one badge with the total, in the colour of the highest severity). The "
+               "Cadre priorities map onto the counts as wiki 13 section 11.1 says: Critical countLevelCritical, High countAlarm, Medium "
+               "countWarning, Low countCaution, Diagnostic countLevelDiagnostic. An open group shows no badge of its own.")
+ALERTS_SCHEMA = {"type": "object", "default": {},
+                 "properties": {**{f: {"type": "number"} for f in ALERT_COUNT_FIELDS}, "combine": {"type": "boolean"}},
+                 "description": ALERTS_TEXT}
 COMPONENTS = [
     {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
      "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
@@ -368,6 +396,69 @@ COMPONENTS = [
          "item-click": "A row was pressed. event.id is the row's `id` (empty if it has none) and event.tag its tag.",
          "ack-click": "The ACK action of a row was pressed. event.id is the row's `id` (empty if it has none) and event.tag its tag.",
          "ack-secondary-click": "The secondary action of a row was pressed. event.id is the row's `id` and event.tag its tag."}},
+    # batch F3 (T2): navigation, tree navigation and the breadcrumb, each child before its parent. `treeBranches` and `branches` are
+    # the container's (the navigation menu in the tree variant and the tree navigation compute them), so they are excluded. The
+    # navigation menu's `logo` slot is not carried.
+    {"tag": "obc-navigation-item", "type": "cadre.ob.navigationitem", "name": "navigationitem", "title": "OB Navigation Item",
+     "palette": "OpenBridge navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
+     "size": {"width": 280, "height": 48}, "exclude": ["treeBranches"], "events": ["click"], "undefinedWhenEmpty": ["href"],
+     "types": {"variant": "ObcNavigationMenuVariant"}, "enums": {"terminalType": "TreeTerminalType"},
+     "slots": [{"slot": "icon", "kind": "icon"}, {"slot": "trailing-icon", "kind": "icon"}],
+     "eventText": {"click": "The item was pressed. The event carries nothing; the page's script decides where it goes."}},
+    {"tag": "obc-navigation-item-group", "type": "cadre.ob.navigationitemgroup", "name": "navigationitemgroup",
+     "title": "OB Navigation Item Group",
+     "palette": "OpenBridge navigation item group: a row that opens a flyout of navigation items and groups",
+     "size": {"width": 280, "height": 48}, "exclude": ["treeBranches"], "events": ["open"], "undefinedWhenEmpty": ["href"],
+     "types": {"variant": "ObcNavigationMenuVariant"}, "enums": {"terminalType": "TreeTerminalType"},
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "items": {"items": {"tags": ["obc-navigation-item", "obc-navigation-item-group"], "slot": "",
+                         "describe": "The rows of the flyout, navigation items and groups (a group holds more, to any depth)"}},
+     "eventText": {"open": "The group was opened. The event carries nothing."}},
+    {"tag": "obc-navigation-menu", "type": "cadre.ob.navigationmenu", "name": "navigationmenu", "title": "OB Navigation Menu",
+     "palette": "OpenBridge navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
+     "size": {"width": 320, "height": 480}, "exclude": [],
+     "events": ["click", "open"], "itemEvents": ["click", "open"], "eventKinds": {"click": "item", "open": "item"},
+     "eventNames": {"click": "onItemClick", "open": "onGroupOpen"},
+     "items": {"items": {"tags": ["obc-navigation-item", "obc-navigation-item-group"], "slot": "main",
+                         "describe": "The items and groups of the `main` slot (a group holds more, to any depth)"},
+               "footerItems": {"tags": ["obc-navigation-item", "obc-navigation-item-group"], "slot": "footer",
+                               "describe": "The items and groups of the `footer` slot (settings, help)"}},
+     "eventText": {"click": "A navigation item was pressed (at any depth). event.id is the item's `id` (empty if it has none) and event.tag "
+                            "its tag.",
+                   "open": "A group was opened (at any depth). event.id is the group's `id` (empty if it has none) and event.tag its tag."}},
+    {"tag": "obc-tree-navigation-item", "type": "cadre.ob.treenavigationitem", "name": "treenavigationitem",
+     "title": "OB Tree Navigation Item",
+     "palette": "OpenBridge tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
+     "size": {"width": 280, "height": 48}, "exclude": ["branches"], "events": ["click", "expand-toggle"], "customEvents": ["click"],
+     "undefinedWhenEmpty": ["href"], "enums": {"terminalType": "TreeTerminalType"}, "properties": ["hasLeadingIcon"],
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "eventText": {"click": "The row was pressed and was neither disabled nor already checked. The event carries nothing; the page's "
+                            "script decides where it goes."}},
+    {"tag": "obc-tree-navigation-group", "type": "cadre.ob.treenavigationgroup", "name": "treenavigationgroup",
+     "title": "OB Tree Navigation Group",
+     "palette": "OpenBridge tree navigation group: a tree row that discloses child rows",
+     "size": {"width": 280, "height": 240}, "exclude": ["branches"], "events": ["expand-toggle"],
+     "undefinedWhenEmpty": ["href"], "enums": {"terminalType": "TreeTerminalType"}, "properties": ["hasIcon"],
+     "slots": [{"slot": "icon", "kind": "icon"}],
+     "items": {"items": {"tags": ["obc-tree-navigation-item", "obc-tree-navigation-group"], "slot": "",
+                         "describe": "The child rows of the group, tree items and groups (a group holds more, to any depth)"}},
+     "eventText": {"expand-toggle": "The header asks to open or close the group. event.expanded is the state the press asks for; the "
+                                    "group applies it itself."}},
+    {"tag": "obc-tree-navigation", "type": "cadre.ob.treenavigation", "name": "treenavigation", "title": "OB Tree Navigation",
+     "palette": "OpenBridge tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
+     "size": {"width": 320, "height": 240}, "exclude": [],
+     "events": ["click", "expand-toggle"], "itemEvents": ["click", "expand-toggle"], "customEvents": ["click"],
+     "eventKinds": {"click": "item", "expand-toggle": "itemexpanded"}, "eventNames": {"click": "onItemClick"},
+     "items": {"items": {"tags": ["obc-tree-navigation-group", "obc-tree-navigation-item"], "slot": "",
+                         "describe": "The rows of the tree, groups and items (a group holds more, to any depth)"}},
+     "eventText": {"click": "A row was pressed (at any depth) and was neither disabled nor already checked. event.id is the row's `id` "
+                            "(empty if it has none) and event.tag its tag.",
+                   "expand-toggle": "A row asks to open or close its children (at any depth). event.id and event.tag name the row; "
+                                    "event.expanded is the state the press asks for; the group applies it itself."}},
+    {"tag": "obc-breadcrumb", "type": "cadre.ob.breadcrumb", "name": "breadcrumb", "title": "OB Breadcrumb",
+     "palette": "OpenBridge breadcrumb: the crumbs from the first to the current page",
+     "size": {"width": 320, "height": 48}, "exclude": [], "data": {"items": "crumbs"}, "properties": ["iconOnly"],
+     "events": ["breadcrumb-click"]},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -392,7 +483,11 @@ CANVAS_ZOOM = {
                        "The target's measured height in px, written by the component when it changes (0 until measured)."},
     },
 }
-DATA_SCHEMA = {"alerts": {"type": "array", "default": [], "items": {"type": "object"},
+DATA_SCHEMA = {"crumbs": {"type": "array", "default": [], "items": {"type": "object", "properties": {
+                              "label": {"type": "string"}, "href": {"type": "string"}}, "required": ["label"]},
+                          "description": "The crumbs from the first to the current page, one object each: `label` and `href`. A crumb's "
+                                         "icon (a template function in the element) is not carried. The last crumb is the current page."},
+               "alerts": {"type": "array", "default": [], "items": {"type": "object"},
                           "description": "Alert records (OpenBridge types.d.ts Alert): id, tagId, source, text, note, "
                                          "acknowledged, active, type, time (epoch milliseconds), shelved."},
              "numbers": {"type": "array", "default": [], "items": {"type": "number"},
@@ -522,6 +617,16 @@ PROPERTIES = {
     "showSilenceButton": {"type": "boolean", "default": False, "description":
                           "Whether the menu draws its Silence button. False by default; the element's own default is true."},
     "showAlertListButton": {"type": "boolean", "default": True, "description": "Whether the menu draws its Alerts button."},
+    # the tree rows (F3): fields without an attribute, at the element's own default
+    "hasLeadingIcon": {"type": "boolean", "default": True, "description":
+                       "Whether the row reserves and draws the leading icon (the `icon` slot). A row with no icon is drawn without "
+                       "the space when this is false."},
+    "hasIcon": {"type": "boolean", "default": True, "description":
+                "Whether the group header reserves and draws the leading icon (the `icon` slot). A group with no icon is drawn "
+                "without the space when this is false."},
+    "iconOnly": {"type": "boolean", "default": False, "description":
+                 "Draws the crumbs before the last as their icon alone. The module carries no crumb icon (a crumb's icon is a "
+                 "template function), so a crumb with only an icon is not possible; true hides every label but the last."},
 }
 # ------------------------------------------------------------------------------- frame mechanisms (T2, batch F1)
 # Slotted children of a frame component are carried by three mechanisms, each driven by a key of the component's entry.
@@ -543,8 +648,13 @@ PROPERTIES = {
 # A tag allowed as an item must be an element of the manifest. `ITEM_CHILDREN` maps an item tag to the item tags it may
 # hold; `ITEM_FIELDS` lists fields a tag has with no attribute that an item may set (rows are added by the batch that needs them).
 ICONS_JS = HERE / "web/icons.js"
-ITEM_CHILDREN: dict[str, list[str]] = {"obc-alert-menu-item": ["obc-alert-icon"]}
-ITEM_FIELDS: dict[str, list[str]] = {}
+# A navigation group holds navigation items and groups to any depth (ITEM_DEPTH); a tree group holds tree rows. A tree row has a
+# leading icon field and a tree group an icon field, neither an attribute (batch F3).
+ITEM_CHILDREN: dict[str, list[str]] = {
+    "obc-alert-menu-item": ["obc-alert-icon"],
+    "obc-navigation-item-group": ["obc-navigation-item", "obc-navigation-item-group"],
+    "obc-tree-navigation-group": ["obc-tree-navigation-item", "obc-tree-navigation-group"]}
+ITEM_FIELDS: dict[str, list[str]] = {"obc-tree-navigation-item": ["hasLeadingIcon"], "obc-tree-navigation-group": ["hasIcon"]}
 ITEM_PLAIN = ["span"]          # elements that are not custom elements and may hold text anywhere below a top level item
 ITEM_DEPTH = 8                 # the deepest nesting of `children` the wrapper builds
 
@@ -710,7 +820,8 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         name = a.get("fieldName")
         if not name or name in spec["exclude"] or name in spec.get("data", {}):
             continue
-        ttext = ((a.get("type") or {}).get("text") or "").strip() or spec.get("types", {}).get(name, "")
+        ttext = (spec.get("enums", {}).get(name)      # an attribute the manifest types as `string` that is an enumeration
+                 or ((a.get("type") or {}).get("text") or "").strip() or spec.get("types", {}).get(name, ""))
         desc = clean((members.get(name) or {}).get("description") or a.get("description"))
         default = defaults.get(name)
         base = ttext.replace(" | undefined", "").replace(" | null", "")
@@ -727,6 +838,8 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
             p, kind = {"type": "string", "default": default if isinstance(default, str) else ""}, ("nstring" if nullable else "string")
             if name in spec.get("undefinedWhenEmpty", []):
                 kind = "ustring"
+        elif base == "TreeNavigationItemAlerts":      # an object of counts; undefined while there is none (T2, batch F3)
+            p, kind = json.loads(json.dumps(ALERTS_SCHEMA)), "object"
         elif base in enum_map:
             vals = enum_map[base]
             d = default if default in vals else vals[0]
@@ -736,7 +849,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         else:
             print(f"  skipped {spec['tag']}.{name}: type {ttext!r} not mapped")
             continue
-        p["description"] = desc or f"OpenBridge `{spec['tag']}` property `{name}`."
+        p["description"] = ALERTS_TEXT if kind == "object" else desc or f"OpenBridge `{spec['tag']}` property `{name}`."
         props[name] = p
         fields.append({"name": name, "kind": kind, "def": p["default"]})
     for name in spec.get("properties", []):
@@ -883,7 +996,12 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                "  height: 100%;\n  min-height: 0;\n}\n"
                # A row of the alert menu has no width of its own and collapses to its icon when centred (F2, measured in Chromium).
                "/* An alert menu row fills the width of its component box. */\n"
-               ".cadre-ob > obc-alert-menu-item {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
+               ".cadre-ob > obc-alert-menu-item {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n"
+               # A navigation or tree row is as wide as its content when centred; a row is meant to fill a menu (F3, measured).
+               "/* A navigation or tree row, and the tree, fill the width of their component box. */\n"
+               ".cadre-ob > obc-navigation-item,\n.cadre-ob > obc-navigation-item-group,\n.cadre-ob > obc-tree-navigation-item,\n"
+               ".cadre-ob > obc-tree-navigation-group,\n.cadre-ob > obc-tree-navigation {\n  align-self: stretch;\n  flex: 1 1 auto;\n"
+               "  width: 100%;\n}\n")
     return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
 
 
@@ -911,6 +1029,7 @@ WRAPPER = r"""
       case 'nvalue': { var q = tree.read(f.name); return (q === null || q === undefined || q === '') ? null : (typeof q === 'number' ? q : String(q)); }
       case 'nstring': { var s = tree.readString(f.name, ''); return s === '' ? null : s; }
       case 'ustring': { var u = tree.readString(f.name, ''); return u === '' ? undefined : u; }
+      case 'object': { var o = tree.read(f.name); return (o && typeof o === 'object' && Object.keys(o).length) ? JSON.parse(JSON.stringify(o)) : undefined; }
       default: return tree.readString(f.name, f.def);
     }
   }
@@ -935,13 +1054,18 @@ WRAPPER = r"""
   }
   // A list of objects or strings the property tree holds, as a mutable copy: Chart.js writes to the arrays it is given.
   function toRecords(v) { return Array.isArray(v) ? JSON.parse(JSON.stringify(v)) : []; }
-  var CONVERT = { alerts: toAlerts, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
+  // The crumbs of the breadcrumb: label and href only (the element calls a crumb's `icon`, which data cannot be).
+  function toCrumbs(v) {
+    return Array.isArray(v) ? v.filter(function (c) { return c && typeof c === 'object'; })
+      .map(function (c) { return { label: String(c.label === undefined || c.label === null ? '' : c.label), href: c.href ? String(c.href) : undefined }; }) : [];
+  }
+  var CONVERT = { alerts: toAlerts, crumbs: toCrumbs, numbers: function (v) { return Array.isArray(v) ? v.map(Number) : []; },
                   points: toRecords, datasets: toRecords, yaxes: toRecords, labels: toRecords, colors: toRecords,
                   segments: toRecords, piesegments: toRecords, linearadvices: toRecords, radialadvices: toRecords,
                   rings: function (v) { return Array.isArray(v) ? v.map(Number) : []; } };
 
   // The payload of a Perspective component event, from the element's event detail.
-  function payload(kind, e, el) {
+  function payload(kind, e, el, node) {
     var d = (e && e.detail) || {};
     if (kind === 'alert') {
       var a = d.alert || {};
@@ -963,9 +1087,18 @@ WRAPPER = r"""
       return { mode: String(d.tabName || 'unacked'), ids: vis };
     }
     if (kind === 'label') return { label: String(d.label === undefined || d.label === null ? '' : d.label) };
-    if (kind === 'item') {
-      var from = e && e.target && e.target.closest ? e.target.closest('[data-item-id],[data-cadre-item]') : null;
-      return { id: from ? String(from.getAttribute('data-item-id') || '') : '', tag: from ? String(from.tagName).toLowerCase() : '' };
+    if (kind === 'item' || kind === 'itemexpanded') {
+      // the item that heard the event (a nested item hears its own), else the nearest item above the target
+      var from = node || (e && e.target && e.target.closest ? e.target.closest('[data-item-id],[data-cadre-item]') : null);
+      var o = { id: from ? String(from.getAttribute('data-item-id') || '') : '', tag: from ? String(from.tagName).toLowerCase() : '' };
+      if (kind === 'itemexpanded') o.expanded = !!(e && e.detail);
+      return o;
+    }
+    if (kind === 'expanded') return { expanded: !!(e && e.detail) };
+    if (kind === 'crumb') {
+      var c = (e && e.detail) || {};
+      return { label: String(c.label === undefined || c.label === null ? '' : c.label), href: c.href ? String(c.href) : '',
+               index: el && Array.isArray(el.items) ? el.items.indexOf(c) : -1 };
     }
     return {};
   }
@@ -1072,9 +1205,12 @@ WRAPPER = r"""
         this.handlers.forEach(function (h) { h[0].removeEventListener(h[1], h[2]); });
         this.handlers = [];
       }
-      fire(ev, e) {
+      fire(ev, e, node) {
+        // an event of the element that only a CustomEvent counts (the tree row fires its own `click`; the user's native click
+        // reaches the host as well, also for a disabled row)
+        if (ev.custom && typeof MouseEvent === 'function' && e instanceof MouseEvent) return;
         var ce = this.props.componentEvents;
-        if (ce && typeof ce.fireComponentEvent === 'function') ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el));
+        if (ce && typeof ce.fireComponentEvent === 'function') ce.fireComponentEvent(ev.name, payload(ev.payload, e, this.el, node));
       }
       apply() {
         var el = this.el;
@@ -1086,6 +1222,11 @@ WRAPPER = r"""
           var n = spec.fields[i].name;
           if (speedless && (n === 'speed' || n === 'speedInPercent')) { if (el[n] !== undefined) el[n] = undefined; continue; }
           if (spec.generator && n === 'value') continue;      // set from the running state (applyGenerator)
+          if (spec.fields[i].kind === 'object') {      // an object is compared by value: the property tree hands a new copy each time
+            var ok = JSON.stringify(p[n] === undefined ? null : p[n]);
+            if (this.applied['o:' + n] !== ok) { this.applied['o:' + n] = ok; el[n] = p[n]; }
+            continue;
+          }
           if (el[n] !== p[n]) el[n] = p[n];
         }
         if (spec.endAligned) el.toggleAttribute('data-center', !!p.center);
@@ -1101,9 +1242,19 @@ WRAPPER = r"""
       }
       // An event of an item that does not bubble (the alert menu's rows fire plain CustomEvents) is heard on the item itself;
       // the item node is dropped with its listeners when the list changes.
+      // A nested item hears its own events too (a navigation group holds items, a tree group holds rows, to any depth). An event that
+      // bubbles (a native click) reaches every item above its target, so an item answers only when it is the nearest item.
       listenItem(n) {
-        (spec.events || []).filter((ev) => ev.onItems).forEach((ev) => {
-          n.addEventListener(ev.dom, (e) => this.fire(ev, e));
+        var on = (spec.events || []).filter((ev) => ev.onItems);
+        if (!on.length) return;
+        var nodes = [n].concat(Array.prototype.slice.call(n.querySelectorAll('*')).filter(function (x) { return !!ITEMS[x.tagName.toLowerCase()]; }));
+        nodes.forEach((m) => {
+          on.forEach((ev) => {
+            m.addEventListener(ev.dom, (e) => {
+              var near = e.target && e.target.closest ? e.target.closest(Object.keys(ITEMS).join(',')) : null;
+              if (near === m) this.fire(ev, e, m);
+            });
+          });
         });
       }
       // The children an `items` property builds (module 0.7.0): rebuilt when the list changes, marked data-cadre-item so that
@@ -1407,9 +1558,11 @@ def main() -> int:
             if dom not in declared:
                 raise SystemExit(f"{spec['tag']} declares no event {dom!r} in the manifest")
             name, kind, text = ALERT_EVENTS[dom]
+            name = spec.get("eventNames", {}).get(dom, name)     # and name it (the navigation menu's `click` is `onItemClick`)
             text = spec.get("eventText", {}).get(dom, text)      # a component may word the event for itself
             kind = spec.get("eventKinds", {}).get(dom, kind)     # and change its payload (the alert menu's rows report their `id`)
-            events.append({"dom": dom, "name": name, "payload": kind, **({"onItems": True} if dom in spec.get("itemEvents", []) else {})})
+            events.append({"dom": dom, "name": name, "payload": kind, **({"onItems": True} if dom in spec.get("itemEvents", []) else {}),
+                           **({"custom": True} if dom in spec.get("customEvents", []) else {})})
             props = PAYLOAD_PROPS[kind]
             (SCHEMAS / f"{spec['name']}.{name}.json").write_text(json.dumps(
                 {"type": "object", "description": text, "properties": props}, indent=2) + "\n", encoding="utf-8")

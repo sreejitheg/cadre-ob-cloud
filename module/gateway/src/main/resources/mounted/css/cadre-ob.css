@@ -184,6 +184,21 @@
     --global-size-spacing-touch-target-min
   );
   --global-size-spacing-icon-icon-size-small: 16px;
+  --app-components-breadcrumb-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-breadcrumb-item-label-spacing: 4px;
+  --app-components-breadcrumb-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-breadcrumb-item-chevron-container-size: 16px;
+  --app-components-breadcrumb-item-padding-horizontal: 4px;
+  --app-components-breadcrumb-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-breadcrumb-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --app-components-clock-touch-target-size-double: 64px;
   --app-components-topbar-touch-target-tall: 64px;
   --app-components-tool-bar-touch-target-size: var(
@@ -274,6 +289,7 @@
   --automation-components-button-icon-size-flat: 32px;
   --automation-components-button-icon-double-primary-size: 24px;
   --automation-components-button-icon-double-secondary-size: 16px;
+  --app-components-breadcrumbs-padding-horizontal: 0px;
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -716,6 +732,21 @@
     --global-size-spacing-touch-target-min
   );
   --global-size-spacing-icon-icon-size-small: 20px;
+  --app-components-breadcrumb-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-breadcrumb-item-label-spacing: 4px;
+  --app-components-breadcrumb-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-breadcrumb-item-chevron-container-size: 20px;
+  --app-components-breadcrumb-item-padding-horizontal: 4px;
+  --app-components-breadcrumb-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-breadcrumb-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --app-components-clock-touch-target-size-double: 80px;
   --app-components-topbar-touch-target-tall: 80px;
   --app-components-tool-bar-touch-target-size: var(
@@ -808,6 +839,7 @@
   --automation-components-button-icon-size-flat: 48px;
   --automation-components-button-icon-double-primary-size: 24px;
   --automation-components-button-icon-double-secondary-size: 16px;
+  --app-components-breadcrumbs-padding-horizontal: 0px;
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1240,6 +1272,21 @@
     --global-size-spacing-touch-target-min
   );
   --global-size-spacing-icon-icon-size-small: 24px;
+  --app-components-breadcrumb-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-breadcrumb-item-label-spacing: 8px;
+  --app-components-breadcrumb-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-breadcrumb-item-chevron-container-size: 24px;
+  --app-components-breadcrumb-item-padding-horizontal: 8px;
+  --app-components-breadcrumb-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-breadcrumb-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --app-components-clock-touch-target-size-double: 96px;
   --app-components-topbar-touch-target-tall: 96px;
   --app-components-tool-bar-touch-target-size: var(
@@ -1332,6 +1379,7 @@
   --automation-components-button-icon-size-flat: 64px;
   --automation-components-button-icon-double-primary-size: 32px;
   --automation-components-button-icon-double-secondary-size: 24px;
+  --app-components-breadcrumbs-padding-horizontal: 0px;
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -1764,6 +1812,21 @@
     --global-size-spacing-touch-target-min
   );
   --global-size-spacing-icon-icon-size-small: 32px;
+  --app-components-breadcrumb-item-icon-size: var(
+    --global-size-spacing-icon-icon-size-regular
+  );
+  --app-components-breadcrumb-item-label-spacing: 8px;
+  --app-components-breadcrumb-item-touch-target-size: var(
+    --global-size-spacing-touch-target-min
+  );
+  --app-components-breadcrumb-item-chevron-container-size: 32px;
+  --app-components-breadcrumb-item-padding-horizontal: 8px;
+  --app-components-breadcrumb-item-visual-target-size: var(
+    --global-size-spacing-visual-target-min
+  );
+  --app-components-breadcrumb-item-border-radius: var(
+    --global-border-radius-border-radius-base
+  );
   --app-components-clock-touch-target-size-double: 128px;
   --app-components-topbar-touch-target-tall: 128px;
   --app-components-tool-bar-touch-target-size: var(
@@ -1856,6 +1919,7 @@
   --automation-components-button-icon-size-flat: 64px;
   --automation-components-button-icon-double-primary-size: 32px;
   --automation-components-button-icon-double-secondary-size: 24px;
+  --app-components-breadcrumbs-padding-horizontal: 0px;
   --ui-components-context-menu-touch-target-size: var(
     --global-size-spacing-touch-target-min
   );
@@ -3455,6 +3519,16 @@
 }
 /* An alert menu row fills the width of its component box. */
 .cadre-ob > obc-alert-menu-item {
+  align-self: stretch;
+  flex: 1 1 auto;
+  width: 100%;
+}
+/* A navigation or tree row, and the tree, fill the width of their component box. */
+.cadre-ob > obc-navigation-item,
+.cadre-ob > obc-navigation-item-group,
+.cadre-ob > obc-tree-navigation-item,
+.cadre-ob > obc-tree-navigation-group,
+.cadre-ob > obc-tree-navigation {
   align-self: stretch;
   flex: 1 1 auto;
   width: 100%;

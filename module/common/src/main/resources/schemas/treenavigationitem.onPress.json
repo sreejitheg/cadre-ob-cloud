@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The row was pressed and was neither disabled nor already checked. The event carries nothing; the page's script decides where it goes.",
+  "properties": {}
+}

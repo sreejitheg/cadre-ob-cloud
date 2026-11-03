@@ -756,6 +756,44 @@ ALERT_MENU_ROWS = [
      "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "caution", "active": True, "acknowledged": False},
                   {"tag": "obi-info", "slot": "icon"}]},
 ]
+# The navigation and tree samples (F3), of our own: the nesting is two levels in the navigation menu (a group holding a group) and
+# three in the tree (a group holding a group holding rows), the first nesting of more than one level on the test page.
+NAV_ITEMS = [
+    {"tag": "obc-navigation-item", "id": "nav-overview", "label": "Overview", "hasIcon": True, "checked": True,
+     "children": [{"tag": "obi-home", "slot": "icon"}]},
+    {"tag": "obc-navigation-item-group", "id": "nav-plant", "label": "Plant", "hasIcon": True,
+     "children": [{"tag": "obi-dashboard", "slot": "icon"},
+                  {"tag": "obc-navigation-item", "id": "nav-pumps", "label": "Pumps"},
+                  {"tag": "obc-navigation-item-group", "id": "nav-tanks", "label": "Tanks",
+                   "children": [{"tag": "obc-navigation-item", "id": "nav-t201", "label": "Tank T-201"},
+                                {"tag": "obc-navigation-item", "id": "nav-t202", "label": "Tank T-202"}]}]},
+]
+
+
+def _open_groups(rows: list[dict]) -> list[dict]:
+    """The rows with every group open at the start (`defaultOpen`), at every depth."""
+    return [{**r, **({"defaultOpen": True} if r["tag"] == "obc-navigation-item-group" else {}),
+             **({"children": _open_groups(r["children"])} if "children" in r else {})} for r in rows]
+
+
+NAV_ITEMS_OPEN = _open_groups(NAV_ITEMS)
+NAV_FOOTER = [{"tag": "obc-navigation-item", "id": "nav-help", "label": "Help", "hasIcon": True,
+               "children": [{"tag": "obi-help", "slot": "icon"}]}]
+TREE_ROWS = [
+    {"tag": "obc-tree-navigation-group", "id": "tree-vessel", "label": "Vessel", "expanded": True,
+     "alerts": {"countAlarm": 2, "countCaution": 1},
+     "children": [{"tag": "obi-home", "slot": "icon"},
+                  {"tag": "obc-tree-navigation-group", "id": "tree-engine", "label": "Engine room", "expanded": True,
+                   "alerts": {"countLevelCritical": 1, "combine": True},
+                   "children": [{"tag": "obi-dashboard", "slot": "icon"},
+                                {"tag": "obc-tree-navigation-item", "id": "tree-p101", "label": "Pump P-101", "hasLeadingIcon": False,
+                                 "alerts": {"countWarning": 3}},
+                                {"tag": "obc-tree-navigation-item", "id": "tree-p102", "label": "Pump P-102", "hasLeadingIcon": False,
+                                 "checked": True}]},
+                  {"tag": "obc-tree-navigation-item", "id": "tree-deck", "label": "Deck", "hasLeadingIcon": False}]},
+    {"tag": "obc-tree-navigation-item", "id": "tree-shore", "label": "Shore link", "hasLeadingIcon": False, "disabled": True},
+]
+CRUMBS = [{"label": "Vessel", "href": "/vessel"}, {"label": "Engine room", "href": "/engine"}, {"label": "Pump P-101"}]
 FRAME_SAMPLE = {
     "tooltip": {"base": {"label": "Pump P-101 running"},
                 "extra": [("icon only", {"type": "icon", "iconName": "info"}),
@@ -800,6 +838,24 @@ FRAME_SAMPLE = {
                    "extra": [("shelved tab", {"hasShelved": True, "items": ALERT_MENU_ROWS[:2]}),
                              ("no rows", {"items": []}),
                              ("silence shown", {"showSilenceButton": True})]},
+    # navigation, tree navigation and the breadcrumb (F3)
+    "navigation-item": {"base": {"label": "Engine room", "hasIcon": True, "iconName": "dashboard"},
+                        "extra": [("trailing icon", {"hasTrailingIcon": True, "trailingIconName": "chevron-right-google"}),
+                                  ("tree row with alerts", {"treeMode": True, "alerts": {"countAlarm": 2, "countWarning": 1}})]},
+    "navigation-item-group": {"base": {"label": "Plant", "hasIcon": True, "iconName": "dashboard", "items": NAV_ITEMS[1]["children"][1:]},
+                              "extra": [("open", {"defaultOpen": True})]},
+    "navigation-menu": {"base": {"items": NAV_ITEMS, "footerItems": NAV_FOOTER},
+                        "extra": [("no footer", {"footerItems": []}),
+                                  # the tree variant draws the groups inline, so two levels show (a flyout floats over the next cell)
+                                  ("tree variant, groups open", {"variant": "tree", "items": NAV_ITEMS_OPEN})]},
+    "tree-navigation-item": {"base": {"label": "Pump P-101", "iconName": "info"},
+                             "extra": [("with alerts", {"alerts": {"countAlarm": 2, "countCaution": 1}}),
+                                       ("combined alerts", {"alerts": {"countAlarm": 2, "countCaution": 1, "combine": True}}),
+                                       ("expandable", {"expandable": True, "expanded": True})]},
+    "tree-navigation-group": {"base": {"label": "Vessel", "iconName": "home", "items": TREE_ROWS[0]["children"][1:]},
+                              "extra": [("with alerts", {"alerts": {"countAlarm": 2, "countCaution": 1}})]},
+    "tree-navigation": {"base": {"items": TREE_ROWS}, "extra": [("one group", {"items": TREE_ROWS[:1]}), ("no rows", {"items": []})]},
+    "breadcrumb": {"base": {"items": CRUMBS}, "extra": [("one crumb", {"items": CRUMBS[:1]}), ("no crumbs", {"items": []})]},
 }
 # Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
 FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),

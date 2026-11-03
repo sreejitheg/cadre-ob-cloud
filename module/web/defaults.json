@@ -1159,5 +1159,60 @@
  "obc-alert-menu": {
   "hasShelved": false,
   "canAckAll": false
- }
+ },
+ "obc-navigation-item": {
+  "label": "Label",
+  "href": "__undefined__",
+  "checked": false,
+  "variant": "full",
+  "group": false,
+  "groupSelected": false,
+  "hasIcon": false,
+  "hasTrailingIcon": false,
+  "treeMode": false,
+  "treeBranches": [],
+  "terminalType": "regular",
+  "alerts": "__undefined__"
+ },
+ "obc-navigation-item-group": {
+  "label": "Label",
+  "href": "__undefined__",
+  "checked": false,
+  "variant": "full",
+  "hug": false,
+  "hasIcon": false,
+  "treeMode": false,
+  "treeBranches": [],
+  "terminalType": "regular",
+  "alerts": "__undefined__",
+  "defaultOpen": false
+ },
+ "obc-navigation-menu": {
+  "variant": "full",
+  "flyoutVariant": "full",
+  "smallScreen": false
+ },
+ "obc-tree-navigation-item": {
+  "label": "List item",
+  "branches": [],
+  "expandable": false,
+  "expanded": false,
+  "checked": false,
+  "disabled": false,
+  "terminalType": "regular",
+  "alerts": "__undefined__",
+  "href": "__undefined__"
+ },
+ "obc-tree-navigation-group": {
+  "label": "Group",
+  "branches": [],
+  "expanded": false,
+  "checked": false,
+  "disabled": false,
+  "terminalType": "regular",
+  "alerts": "__undefined__",
+  "href": "__undefined__"
+ },
+ "obc-tree-navigation": {},
+ "obc-breadcrumb": {}
 }

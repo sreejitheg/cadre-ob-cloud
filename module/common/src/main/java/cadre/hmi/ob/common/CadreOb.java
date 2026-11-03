@@ -183,7 +183,31 @@ public final class CadreOb {
                     event("alertmenu", "onGoToAlertListClick", "The Alerts button was pressed; the event carries nothing."),
                     event("alertmenu", "onItemClick", "A row was pressed; event.id and event.tag."),
                     event("alertmenu", "onAckClick", "The ACK action of a row was pressed; event.id and event.tag."),
-                    event("alertmenu", "onAckSecondaryClick", "The secondary action of a row was pressed; event.id and event.tag.")))
+                    event("alertmenu", "onAckSecondaryClick", "The secondary action of a row was pressed; event.id and event.tag."))),
+        descriptor("cadre.ob.navigationitem", "navigationitem", "OB Navigation Item",
+            "OpenBridge navigation item: one row of the navigation menu, with a label, a checked state and optional icons.", "obNavigationItem",
+            List.of(event("navigationitem", "onPress", "The item was pressed; the event carries nothing."))),
+        descriptor("cadre.ob.navigationitemgroup", "navigationitemgroup", "OB Navigation Item Group",
+            "OpenBridge navigation item group: a row that opens a flyout of navigation items and groups.", "obNavigationItemGroup",
+            List.of(event("navigationitemgroup", "onOpen", "The group was opened; the event carries nothing."))),
+        descriptor("cadre.ob.navigationmenu", "navigationmenu", "OB Navigation Menu",
+            "OpenBridge navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant.", "obNavigationMenu",
+            List.of(event("navigationmenu", "onItemClick", "A navigation item was pressed, at any depth; event.id and event.tag."),
+                    event("navigationmenu", "onGroupOpen", "A group was opened, at any depth; event.id and event.tag."))),
+        descriptor("cadre.ob.treenavigationitem", "treenavigationitem", "OB Tree Navigation Item",
+            "OpenBridge tree navigation item: one row of a tree, with an optional chevron, icon and alert badges.", "obTreeNavigationItem",
+            List.of(event("treenavigationitem", "onPress", "The row was pressed; the event carries nothing."),
+                    event("treenavigationitem", "onExpandToggle", "The row asks to open or close; event.expanded."))),
+        descriptor("cadre.ob.treenavigationgroup", "treenavigationgroup", "OB Tree Navigation Group",
+            "OpenBridge tree navigation group: a tree row that discloses child rows.", "obTreeNavigationGroup",
+            List.of(event("treenavigationgroup", "onExpandToggle", "The header asks to open or close the group; event.expanded."))),
+        descriptor("cadre.ob.treenavigation", "treenavigation", "OB Tree Navigation",
+            "OpenBridge tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row.", "obTreeNavigation",
+            List.of(event("treenavigation", "onItemClick", "A row was pressed, at any depth; event.id and event.tag."),
+                    event("treenavigation", "onExpandToggle", "A row asks to open or close, at any depth; event.id, event.tag and event.expanded."))),
+        descriptor("cadre.ob.breadcrumb", "breadcrumb", "OB Breadcrumb",
+            "OpenBridge breadcrumb: the crumbs from the first to the current page.", "obBreadcrumb",
+            List.of(event("breadcrumb", "onBreadcrumbClick", "A crumb was pressed; event.label, event.href and event.index.")))
     );
 
     private CadreOb() {

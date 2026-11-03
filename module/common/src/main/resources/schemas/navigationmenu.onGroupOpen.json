@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "A group was opened (at any depth). event.id is the group's `id` (empty if it has none) and event.tag its tag.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of the item the event came from (empty if it has none)."
+    },
+    "tag": {
+      "type": "string",
+      "description": "The tag of the item the event came from."
+    }
+  }
+}

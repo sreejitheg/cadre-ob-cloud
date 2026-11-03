@@ -1,0 +1,189 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Label",
+      "description": "The text label displayed for the navigation item. Hidden in icon-only variants. Available when variant in [Full, Compact]."
+    },
+    "href": {
+      "type": "string",
+      "default": "",
+      "description": "The URL to navigate to when the item is clicked. If set, the item is rendered as a link (<a href=\"...\" />). If undefined, acts as a button."
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the navigation item is currently selected/active. Use to indicate the current location or selection."
+    },
+    "variant": {
+      "type": "string",
+      "enum": [
+        "full",
+        "icon-only",
+        "icon-only-large",
+        "compact",
+        "tree"
+      ],
+      "default": "full",
+      "description": "Visual variant of the navigation item. One of Full (default), IconOnly, IconOnlyLarge, or Compact. Controls layout and visibility of icon/label."
+    },
+    "group": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enables group mode for the item, displaying a flyout indicator and supporting group selection. Use for items that open submenus or represent grouped navigation."
+    },
+    "groupSelected": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the item as selected within a group. Only relevant when group is true. Available when group==true."
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the item has a leading icon."
+    },
+    "hasTrailingIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when group==false || variant==IconOnly."
+    },
+    "treeMode": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set by obc-navigation-menu in its Tree variant \u2014 renders the row as a tree item."
+    },
+    "terminalType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "aggregated-header",
+        "group-header"
+      ],
+      "default": "regular",
+      "description": "Terminal type for the row in the Tree variant \u2014 one of regular (default), aggregated-header, or group-header. Has no effect in the flat variants."
+    },
+    "alerts": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "countLevelCritical": {
+          "type": "number"
+        },
+        "countAlarm": {
+          "type": "number"
+        },
+        "countLevelHigh": {
+          "type": "number"
+        },
+        "countWarning": {
+          "type": "number"
+        },
+        "countLevelMedium": {
+          "type": "number"
+        },
+        "countCaution": {
+          "type": "number"
+        },
+        "countLevelLow": {
+          "type": "number"
+        },
+        "countLevelDiagnostic": {
+          "type": "number"
+        },
+        "combine": {
+          "type": "boolean"
+        }
+      },
+      "description": "The active alerts at or beneath the row, as a badge for each severity with a count above zero: an object with the counts countLevelCritical, countAlarm, countLevelHigh, countWarning, countLevelMedium, countCaution, countLevelLow, countLevelDiagnostic and combine (one badge with the total, in the colour of the highest severity). The Cadre priorities map onto the counts as wiki 13 section 11.1 says: Critical countLevelCritical, High countAlarm, Medium countWarning, Low countCaution, Diagnostic countLevelDiagnostic. An open group shows no badge of its own."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon slot (optional, shown if provided). Set hasIcon to true to show the icon."
+    },
+    "trailingIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `trailing-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Trailing icon slot (optional, shown if provided). Set hasTrailingIcon to true to show."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

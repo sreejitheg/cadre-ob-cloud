@@ -9371,6 +9371,972 @@
    }
   }
  },
+ "cadre.ob.navigationitem": {
+  "element": "obc-navigation-item",
+  "title": "OB Navigation Item",
+  "palette": "OpenBridge navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
+  "schema": "schemas/navigationitem.props.json",
+  "defaultSize": {
+   "width": 280,
+   "height": 48
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": "Label"
+   },
+   "href": {
+    "type": "string",
+    "default": ""
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "full",
+     "icon-only",
+     "icon-only-large",
+     "compact",
+     "tree"
+    ],
+    "default": "full"
+   },
+   "group": {
+    "type": "boolean",
+    "default": false
+   },
+   "groupSelected": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasTrailingIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "treeMode": {
+    "type": "boolean",
+    "default": false
+   },
+   "terminalType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "aggregated-header",
+     "group-header"
+    ],
+    "default": "regular"
+   },
+   "alerts": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "countLevelCritical": {
+      "type": "number"
+     },
+     "countAlarm": {
+      "type": "number"
+     },
+     "countLevelHigh": {
+      "type": "number"
+     },
+     "countWarning": {
+      "type": "number"
+     },
+     "countLevelMedium": {
+      "type": "number"
+     },
+     "countCaution": {
+      "type": "number"
+     },
+     "countLevelLow": {
+      "type": "number"
+     },
+     "countLevelDiagnostic": {
+      "type": "number"
+     },
+     "combine": {
+      "type": "boolean"
+     }
+    }
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "trailingIconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   },
+   "trailingIconName": {
+    "slot": "trailing-icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onPress": {
+    "element": "click",
+    "schema": "schemas/navigationitem.onPress.json"
+   }
+  }
+ },
+ "cadre.ob.navigationitemgroup": {
+  "element": "obc-navigation-item-group",
+  "title": "OB Navigation Item Group",
+  "palette": "OpenBridge navigation item group: a row that opens a flyout of navigation items and groups",
+  "schema": "schemas/navigationitemgroup.props.json",
+  "defaultSize": {
+   "width": 280,
+   "height": 48
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": "Label"
+   },
+   "href": {
+    "type": "string",
+    "default": ""
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "full",
+     "icon-only",
+     "icon-only-large",
+     "compact",
+     "tree"
+    ],
+    "default": "full"
+   },
+   "hug": {
+    "type": "boolean",
+    "default": false
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "treeMode": {
+    "type": "boolean",
+    "default": false
+   },
+   "terminalType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "aggregated-header",
+     "group-header"
+    ],
+    "default": "regular"
+   },
+   "alerts": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "countLevelCritical": {
+      "type": "number"
+     },
+     "countAlarm": {
+      "type": "number"
+     },
+     "countLevelHigh": {
+      "type": "number"
+     },
+     "countWarning": {
+      "type": "number"
+     },
+     "countLevelMedium": {
+      "type": "number"
+     },
+     "countCaution": {
+      "type": "number"
+     },
+     "countLevelLow": {
+      "type": "number"
+     },
+     "countLevelDiagnostic": {
+      "type": "number"
+     },
+     "combine": {
+      "type": "boolean"
+     }
+    }
+   },
+   "defaultOpen": {
+    "type": "boolean",
+    "default": false
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-navigation-item",
+        "obc-navigation-item-group"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-navigation-item",
+     "obc-navigation-item-group"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onOpen": {
+    "element": "open",
+    "schema": "schemas/navigationitemgroup.onOpen.json"
+   }
+  }
+ },
+ "cadre.ob.navigationmenu": {
+  "element": "obc-navigation-menu",
+  "title": "OB Navigation Menu",
+  "palette": "OpenBridge navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
+  "schema": "schemas/navigationmenu.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 480
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "full",
+     "icon-only",
+     "icon-only-large",
+     "compact",
+     "tree"
+    ],
+    "default": "full"
+   },
+   "flyoutVariant": {
+    "type": "string",
+    "enum": [
+     "full",
+     "compact"
+    ],
+    "default": "full"
+   },
+   "smallScreen": {
+    "type": "boolean",
+    "default": false
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-navigation-item",
+        "obc-navigation-item-group"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "footerItems": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-navigation-item",
+        "obc-navigation-item-group"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-navigation-item",
+     "obc-navigation-item-group"
+    ],
+    "slot": "main"
+   },
+   "footerItems": {
+    "tags": [
+     "obc-navigation-item",
+     "obc-navigation-item-group"
+    ],
+    "slot": "footer"
+   }
+  },
+  "events": {
+   "onItemClick": {
+    "element": "click",
+    "schema": "schemas/navigationmenu.onItemClick.json"
+   },
+   "onGroupOpen": {
+    "element": "open",
+    "schema": "schemas/navigationmenu.onGroupOpen.json"
+   }
+  }
+ },
+ "cadre.ob.treenavigationitem": {
+  "element": "obc-tree-navigation-item",
+  "title": "OB Tree Navigation Item",
+  "palette": "OpenBridge tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
+  "schema": "schemas/treenavigationitem.props.json",
+  "defaultSize": {
+   "width": 280,
+   "height": 48
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": "List item"
+   },
+   "expandable": {
+    "type": "boolean",
+    "default": false
+   },
+   "expanded": {
+    "type": "boolean",
+    "default": false
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "terminalType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "aggregated-header",
+     "group-header"
+    ],
+    "default": "regular"
+   },
+   "alerts": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "countLevelCritical": {
+      "type": "number"
+     },
+     "countAlarm": {
+      "type": "number"
+     },
+     "countLevelHigh": {
+      "type": "number"
+     },
+     "countWarning": {
+      "type": "number"
+     },
+     "countLevelMedium": {
+      "type": "number"
+     },
+     "countCaution": {
+      "type": "number"
+     },
+     "countLevelLow": {
+      "type": "number"
+     },
+     "countLevelDiagnostic": {
+      "type": "number"
+     },
+     "combine": {
+      "type": "boolean"
+     }
+    }
+   },
+   "href": {
+    "type": "string",
+    "default": ""
+   },
+   "hasLeadingIcon": {
+    "type": "boolean",
+    "default": true
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "events": {
+   "onPress": {
+    "element": "click",
+    "schema": "schemas/treenavigationitem.onPress.json"
+   },
+   "onExpandToggle": {
+    "element": "expand-toggle",
+    "schema": "schemas/treenavigationitem.onExpandToggle.json"
+   }
+  }
+ },
+ "cadre.ob.treenavigationgroup": {
+  "element": "obc-tree-navigation-group",
+  "title": "OB Tree Navigation Group",
+  "palette": "OpenBridge tree navigation group: a tree row that discloses child rows",
+  "schema": "schemas/treenavigationgroup.props.json",
+  "defaultSize": {
+   "width": 280,
+   "height": 240
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": "Group"
+   },
+   "expanded": {
+    "type": "boolean",
+    "default": false
+   },
+   "checked": {
+    "type": "boolean",
+    "default": false
+   },
+   "disabled": {
+    "type": "boolean",
+    "default": false
+   },
+   "terminalType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "aggregated-header",
+     "group-header"
+    ],
+    "default": "regular"
+   },
+   "alerts": {
+    "type": "object",
+    "default": {},
+    "properties": {
+     "countLevelCritical": {
+      "type": "number"
+     },
+     "countAlarm": {
+      "type": "number"
+     },
+     "countLevelHigh": {
+      "type": "number"
+     },
+     "countWarning": {
+      "type": "number"
+     },
+     "countLevelMedium": {
+      "type": "number"
+     },
+     "countCaution": {
+      "type": "number"
+     },
+     "countLevelLow": {
+      "type": "number"
+     },
+     "countLevelDiagnostic": {
+      "type": "number"
+     },
+     "combine": {
+      "type": "boolean"
+     }
+    }
+   },
+   "href": {
+    "type": "string",
+    "default": ""
+   },
+   "hasIcon": {
+    "type": "boolean",
+    "default": true
+   },
+   "iconName": {
+    "type": "string",
+    "enum": [
+     "",
+     "menu",
+     "user",
+     "user-settings",
+     "notification",
+     "notification-filled",
+     "applications",
+     "alerts",
+     "alarm",
+     "alert-list",
+     "info",
+     "help",
+     "home",
+     "search",
+     "dashboard",
+     "palette-day",
+     "palette-dusk",
+     "palette-night",
+     "palette-day-bright",
+     "palette-dimming",
+     "time",
+     "silence-iec",
+     "settings-default-iec",
+     "chevron-left-google",
+     "chevron-right-google",
+     "close-google",
+     "check-google",
+     "placeholder"
+    ],
+    "default": ""
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-tree-navigation-item",
+        "obc-tree-navigation-group"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "slots": {
+   "iconName": {
+    "slot": "icon",
+    "kind": "icon"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-tree-navigation-item",
+     "obc-tree-navigation-group"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onExpandToggle": {
+    "element": "expand-toggle",
+    "schema": "schemas/treenavigationgroup.onExpandToggle.json"
+   }
+  }
+ },
+ "cadre.ob.treenavigation": {
+  "element": "obc-tree-navigation",
+  "title": "OB Tree Navigation",
+  "palette": "OpenBridge tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
+  "schema": "schemas/treenavigation.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 240
+  },
+  "props": {
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "tag": {
+       "type": "string",
+       "enum": [
+        "obc-tree-navigation-group",
+        "obc-tree-navigation-item"
+       ]
+      },
+      "id": {
+       "type": "string"
+      },
+      "slot": {
+       "type": "string"
+      },
+      "text": {
+       "type": "string"
+      },
+      "children": {
+       "type": "array",
+       "items": {
+        "type": "object"
+       }
+      }
+     },
+     "required": [
+      "tag"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "items": {
+   "items": {
+    "tags": [
+     "obc-tree-navigation-group",
+     "obc-tree-navigation-item"
+    ],
+    "slot": ""
+   }
+  },
+  "events": {
+   "onItemClick": {
+    "element": "click",
+    "schema": "schemas/treenavigation.onItemClick.json"
+   },
+   "onExpandToggle": {
+    "element": "expand-toggle",
+    "schema": "schemas/treenavigation.onExpandToggle.json"
+   }
+  }
+ },
+ "cadre.ob.breadcrumb": {
+  "element": "obc-breadcrumb",
+  "title": "OB Breadcrumb",
+  "palette": "OpenBridge breadcrumb: the crumbs from the first to the current page",
+  "schema": "schemas/breadcrumb.props.json",
+  "defaultSize": {
+   "width": 320,
+   "height": 48
+  },
+  "props": {
+   "iconOnly": {
+    "type": "boolean",
+    "default": false
+   },
+   "items": {
+    "type": "array",
+    "default": [],
+    "items": {
+     "type": "object",
+     "properties": {
+      "label": {
+       "type": "string"
+      },
+      "href": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "label"
+     ]
+    }
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  },
+  "events": {
+   "onBreadcrumbClick": {
+    "element": "breadcrumb-click",
+    "schema": "schemas/breadcrumb.onBreadcrumbClick.json"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

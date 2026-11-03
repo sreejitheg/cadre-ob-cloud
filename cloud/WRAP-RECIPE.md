@@ -617,3 +617,21 @@ registration, regeneration, module test); sections 2.6 to 2.10 are replaced by t
    whatever its box, and a child with no width of its own (the menu row) needs a stylesheet rule that stretches it (see `devices` in
    the generator's `scoped_css`). A decorator list of a registered element can hold more than the registration (`[v("tag"),Ui()]`), so
    `FrameComponents` looks for `v("tag")` inside a list.
+10. **Nested parents, objects, non-bubbling events (F3).** A parent that holds groups lists the group in `ITEM_CHILDREN` under the group's
+    own tag (the navigation group holds `obc-navigation-item` and itself; so does the tree group), and the nesting is built to `ITEM_DEPTH`
+    (8). Two `items` entries on one parent give two slots (`items` with `"slot": "main"`, `footerItems` with `"slot": "footer"`: a slot on
+    the entry overrides the item's own). A field with no attribute that a row may set (`hasLeadingIcon`, `hasIcon`) is a row of `ITEM_FIELDS`
+    and, for the standalone component, a row of `PROPERTIES` at the element's own default. Entry keys added: `"enums": {"terminalType":
+    "TreeTerminalType"}` (an attribute the manifest types `string` that is an enumeration in the package), `"eventNames": {dom: name}` (the
+    component's name for a shared DOM event: the menu's `click` is `onItemClick`), `"customEvents": ["click"]` (only a `CustomEvent` of the
+    element counts; the native click that also reaches the host is dropped, so one press is one event) and, for an excluded container
+    attribute, `"exclude": ["treeBranches"]` (the container computes `treeBranches` and `branches`). Item events (`itemEvents`) are now heard
+    on every built item at any depth, and an item answers only when it is the nearest item to the event's target (a native click bubbles
+    through every group above); the payload kinds `item` and `itemexpanded` name the item that heard the event (an item without an `id`
+    reports an empty one). New payload kinds: `expanded` (`{expanded}`), `itemexpanded` (`{id, tag, expanded}`), `crumb` (`{label, href,
+    index}`). `TreeNavigationItemAlerts` is the field kind `object` (read with `tree.read`, copied as JSON, undefined while empty, written only
+    when it changes); its fields are the pinned `AlertCounts` (`countAlarm` and the others) and `combine`, not the severity names of the
+    design table. A native array property with no attribute (`obc-breadcrumb.items`) is a `data` entry with a `DATA_SCHEMA` kind and a
+    `CONVERT` function (`crumbs`: label and href only, because the element calls a crumb's `icon`). A row component has no width of its own:
+    add its tag to the stretch rule of `scoped_css`. Measure in Chromium with the harness page (`module/tools/harness/harness.html`), where
+    a menu's flyout opens outside the component box.

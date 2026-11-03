@@ -1,0 +1,119 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "full",
+        "icon-only",
+        "icon-only-large",
+        "compact",
+        "tree"
+      ],
+      "default": "full",
+      "description": "Controls the visual style and layout of the navigation menu. - full: Standard menu with icons and labels (default). - icon-only: Compact, icon-only menu (use only when no flyouts/groups are present). -..."
+    },
+    "flyoutVariant": {
+      "type": "string",
+      "enum": [
+        "full",
+        "compact"
+      ],
+      "default": "full",
+      "description": "Visual variant of the flyout. One of Full (default) or Compact. Available when variant==Full."
+    },
+    "smallScreen": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, adapts the layout for small screens (e.g., moves logo into the footer area and adjusts item layout)."
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": [
+              "obc-navigation-item",
+              "obc-navigation-item-group"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
+      "description": "The items and groups of the `main` slot (a group holds more, to any depth), as a list with one object for each: `tag` and then the element's attributes by name, `text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). Tags and attributes: `obc-navigation-item` (label, href, checked, variant, group, groupSelected, hasIcon, hasTrailingIcon, treeMode, treeBranches, terminalType, alerts); `obc-navigation-item-group` (label, href, checked, variant, hug, hasIcon, treeMode, treeBranches, terminalType, alerts, defaultOpen)."
+    },
+    "footerItems": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": [
+              "obc-navigation-item",
+              "obc-navigation-item-group"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
+      "description": "The items and groups of the `footer` slot (settings, help), as a list with one object for each: `tag` and then the element's attributes by name, `text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). Tags and attributes: `obc-navigation-item` (label, href, checked, variant, group, groupSelected, hasIcon, hasTrailingIcon, treeMode, treeBranches, terminalType, alerts); `obc-navigation-item-group` (label, href, checked, variant, hug, hasIcon, treeMode, treeBranches, terminalType, alerts, defaultOpen)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

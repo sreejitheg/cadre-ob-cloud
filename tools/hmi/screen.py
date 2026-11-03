@@ -188,7 +188,11 @@ FRAME_ONLY = {"tooltip": "cadre.ob.tooltip", "toggletip": "cadre.ob.toggletip", 
               "notification-button": "cadre.ob.notificationbutton",
               "notification-badge-button": "cadre.ob.notificationbadgebutton",
               "alert-button-item": "cadre.ob.alertbuttonitem", "alert-button": "cadre.ob.alertbutton",
-              "alert-menu-item": "cadre.ob.alertmenuitem", "alert-menu": "cadre.ob.alertmenu"}
+              "alert-menu-item": "cadre.ob.alertmenuitem", "alert-menu": "cadre.ob.alertmenu",
+              "navigation-item": "cadre.ob.navigationitem", "navigation-item-group": "cadre.ob.navigationitemgroup",
+              "navigation-menu": "cadre.ob.navigationmenu", "tree-navigation-item": "cadre.ob.treenavigationitem",
+              "tree-navigation-group": "cadre.ob.treenavigationgroup", "tree-navigation": "cadre.ob.treenavigation",
+              "breadcrumb": "cadre.ob.breadcrumb"}
 MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
                "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
                "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway",

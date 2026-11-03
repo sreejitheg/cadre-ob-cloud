@@ -1,0 +1,167 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "Group",
+      "description": "The text label displayed for the group header row."
+    },
+    "expanded": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the group is expanded, disclosing its children. Rotates the chevron."
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the group header is the current selection."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the group header, removing it from the tab order and dimming it."
+    },
+    "terminalType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "aggregated-header",
+        "group-header"
+      ],
+      "default": "regular",
+      "description": "Terminal type for the header row, controlling the alert-header marker shown in the terminal. One of regular (default), aggregated-header, or group-header."
+    },
+    "alerts": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "countLevelCritical": {
+          "type": "number"
+        },
+        "countAlarm": {
+          "type": "number"
+        },
+        "countLevelHigh": {
+          "type": "number"
+        },
+        "countWarning": {
+          "type": "number"
+        },
+        "countLevelMedium": {
+          "type": "number"
+        },
+        "countCaution": {
+          "type": "number"
+        },
+        "countLevelLow": {
+          "type": "number"
+        },
+        "countLevelDiagnostic": {
+          "type": "number"
+        },
+        "combine": {
+          "type": "boolean"
+        }
+      },
+      "description": "The active alerts at or beneath the row, as a badge for each severity with a count above zero: an object with the counts countLevelCritical, countAlarm, countLevelHigh, countWarning, countLevelMedium, countCaution, countLevelLow, countLevelDiagnostic and combine (one badge with the total, in the colour of the highest severity). The Cadre priorities map onto the counts as wiki 13 section 11.1 says: Critical countLevelCritical, High countAlarm, Medium countWarning, Low countCaution, Diagnostic countLevelDiagnostic. An open group shows no badge of its own."
+    },
+    "href": {
+      "type": "string",
+      "default": "",
+      "description": "The URL to navigate to when the header is activated. If set, the header row renders as a link; otherwise it acts as a button."
+    },
+    "hasIcon": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the group header reserves and draws the leading icon (the `icon` slot). A group with no icon is drawn without the space when this is false."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon for the group header (shown when hasIcon is true)."
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": [
+              "obc-tree-navigation-item",
+              "obc-tree-navigation-group"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
+      "description": "The child rows of the group, tree items and groups (a group holds more, to any depth), as a list with one object for each: `tag` and then the element's attributes by name, `text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). Tags and attributes: `obc-tree-navigation-item` (label, branches, expandable, expanded, checked, disabled, terminalType, alerts, href, hasLeadingIcon); `obc-tree-navigation-group` (label, branches, expanded, checked, disabled, terminalType, alerts, href, hasIcon)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

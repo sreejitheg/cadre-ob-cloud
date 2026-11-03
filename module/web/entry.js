@@ -67,4 +67,12 @@ import '@oicl/openbridge-webcomponents/dist/components/alert-button-item/alert-b
 import '@oicl/openbridge-webcomponents/dist/components/alert-button/alert-button.js';
 import '@oicl/openbridge-webcomponents/dist/components/alert-menu-item/alert-menu-item.js';
 import '@oicl/openbridge-webcomponents/dist/components/alert-menu/alert-menu.js';
+// tranche T2, batch F3: navigation and tree navigation (each child before its parent) and the breadcrumb
+import '@oicl/openbridge-webcomponents/dist/components/navigation-item/navigation-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/navigation-item-group/navigation-item-group.js';
+import '@oicl/openbridge-webcomponents/dist/components/navigation-menu/navigation-menu.js';
+import '@oicl/openbridge-webcomponents/dist/components/tree-navigation-item/tree-navigation-item.js';
+import '@oicl/openbridge-webcomponents/dist/components/tree-navigation-group/tree-navigation-group.js';
+import '@oicl/openbridge-webcomponents/dist/components/tree-navigation/tree-navigation.js';
+import '@oicl/openbridge-webcomponents/dist/components/breadcrumb/breadcrumb.js';
 import './icons.js';

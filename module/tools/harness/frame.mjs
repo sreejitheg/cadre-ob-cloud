@@ -116,7 +116,90 @@ check('alert menu carries silence-click and go-to-alert-list-click', r.includes(
 r = await probe('cadre.ob.alertmenu', 'obc-alert-menu', { items: [rows[0], { tag: 'obc-notanitem' }] }, '(el) => el.children.length');
 check('alert menu drops a tag that is not allowed', r === 1, r);
 
-const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem'));      // provoked above
+// ---- batch F3: navigation, tree navigation and the breadcrumb
+const navRows = [{ tag: 'obc-navigation-item', id: 'n-home', label: 'Home', hasIcon: true, checked: true, children: [{ tag: 'obi-home', slot: 'icon' }] },
+  { tag: 'obc-navigation-item-group', id: 'g-plant', label: 'Plant', hasIcon: true, defaultOpen: true, children: [
+    { tag: 'obi-dashboard', slot: 'icon' },
+    { tag: 'obc-navigation-item', id: 'n-pumps', label: 'Pumps' },
+    { tag: 'obc-navigation-item-group', id: 'g-tanks', label: 'Tanks', children: [{ tag: 'obc-navigation-item', id: 'n-t201', label: 'T-201' }] }] }];
+const navFoot = [{ tag: 'obc-navigation-item', id: 'n-help', label: 'Help' }];
+r = await probe('cadre.ob.navigationitem', 'obc-navigation-item', { label: 'Home', hasIcon: true, iconName: 'home', hasTrailingIcon: true, trailingIconName: 'info' }, kids);
+check('navigation item: both icon slots hold the named icons', r.sort().join() === 'obi-home[icon],obi-info[trailing-icon]', r);
+r = await probe('cadre.ob.navigationitem', 'obc-navigation-item', { label: 'Home' }, '(el) => [el.href === undefined, el.alerts === undefined, el.variant, el.terminalType]');
+check('navigation item: href and alerts are undefined while empty', r[0] === true && r[1] === true && r[2] === 'full' && r[3] === 'regular', r);
+r = await probe('cadre.ob.navigationitem', 'obc-navigation-item', { label: 'Home' }, '(el) => { el.shadowRoot.querySelector("a").click(); return window.fired; }');
+check('navigation item carries its click as onPress with no detail', JSON.stringify(r) === JSON.stringify([['onPress', {}]]), r);
+r = await probe('cadre.ob.navigationitemgroup', 'obc-navigation-item-group', { label: 'Plant', items: navRows[1].children.slice(1), iconName: 'dashboard', hasIcon: true }, kids);
+check('navigation group builds its child items and has the named icon', r.sort().join() === 'obc-navigation-item-group[null],obc-navigation-item[null],obi-dashboard[icon]', r);
+r = await probe('cadre.ob.navigationitemgroup', 'obc-navigation-item-group', { label: 'Plant', items: navRows[1].children.slice(1) },
+  '(el) => { el.shadowRoot.querySelector("a, .group-item, obc-navigation-item").click(); return window.fired; }');
+check('navigation group carries open with no detail', JSON.stringify(r) === JSON.stringify([['onOpen', {}]]), r);
+r = await probe('cadre.ob.navigationmenu', 'obc-navigation-menu', { items: navRows, footerItems: navFoot },
+  '(el) => [...el.children].map(n => n.tagName.toLowerCase() + "[" + n.getAttribute("slot") + "]:" + n.getAttribute("data-item-id") + ":" + n.querySelectorAll("*").length)');
+check('navigation menu puts items in main and footer and nests to two levels', r.join() === 'obc-navigation-item[main]:n-home:1,obc-navigation-item-group[main]:g-plant:4,obc-navigation-item[footer]:n-help:0', r);
+r = await probe('cadre.ob.navigationmenu', 'obc-navigation-menu', { items: navRows, footerItems: navFoot },
+  `async (el) => { await new Promise(r => setTimeout(r, 200)); const q = (id) => el.querySelector('[data-item-id="' + id + '"]');
+     q('n-t201').shadowRoot.querySelector('a').click(); q('n-pumps').shadowRoot.querySelector('a').click(); q('n-help').shadowRoot.querySelector('a').click();
+     q('g-tanks').open(); await new Promise(r => setTimeout(r, 100)); return window.fired; }`);
+check('navigation menu reports each press once, with the id of the nested item that was pressed',
+  JSON.stringify(r) === JSON.stringify([['onItemClick', { id: 'n-t201', tag: 'obc-navigation-item' }], ['onItemClick', { id: 'n-pumps', tag: 'obc-navigation-item' }],
+    ['onItemClick', { id: 'n-help', tag: 'obc-navigation-item' }], ['onGroupOpen', { id: 'g-tanks', tag: 'obc-navigation-item-group' }]]), r);
+r = await probe('cadre.ob.navigationmenu', 'obc-navigation-menu', { items: navRows, footerItems: navFoot, variant: 'tree' },
+  `async (el) => { await new Promise(r => setTimeout(r, 300)); const q = (id) => el.querySelector('[data-item-id="' + id + '"]'); return [q('n-t201').treeMode, q('n-t201').treeBranches.length, q('n-help').treeMode]; }`);
+check('navigation menu in the tree variant sets the tree mode and the branches of nested rows itself', r[0] === true && r[1] === 2 && r[2] === false, r);
+
+const alerts = { countAlarm: 2, countCaution: 1 };
+const treeRows = [{ tag: 'obc-tree-navigation-group', id: 't-vessel', label: 'Vessel', expanded: true, alerts, children: [
+    { tag: 'obi-home', slot: 'icon' },
+    { tag: 'obc-tree-navigation-group', id: 't-engine', label: 'Engine room', expanded: true, alerts: { countLevelCritical: 1, combine: true }, children: [
+      { tag: 'obi-dashboard', slot: 'icon' },
+      { tag: 'obc-tree-navigation-item', id: 't-p101', label: 'Pump P-101', hasLeadingIcon: false, alerts: { countWarning: 3 } },
+      { tag: 'obc-tree-navigation-item', id: 't-p102', label: 'Pump P-102', hasLeadingIcon: false }] },
+    { tag: 'obc-tree-navigation-item', id: 't-deck', label: 'Deck', hasLeadingIcon: false }] }];
+r = await probe('cadre.ob.treenavigationitem', 'obc-tree-navigation-item', { label: 'Pump', alerts: { countAlarm: 2, countCaution: 1 }, iconName: 'info' },
+  `async (el) => { await el.updateComplete; return [[...el.shadowRoot.querySelectorAll('obc-badge')].map(b => b.number).join(), [...el.childNodes].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join()]; }`);
+check('tree item: the alerts object draws a badge for each severity and the icon is in its slot', r[0] === '2,1' && r[1] === 'obi-info[icon]', r);
+r = await probe('cadre.ob.treenavigationitem', 'obc-tree-navigation-item', { label: 'Pump' }, '(el) => [el.alerts === undefined, el.href === undefined, el.hasLeadingIcon, el.terminalType]');
+check('tree item: alerts and href are undefined while empty, the leading icon is on, terminal regular', r[0] && r[1] && r[2] === true && r[3] === 'regular', r);
+r = await probe('cadre.ob.treenavigationitem', 'obc-tree-navigation-item', { label: 'Pump', expandable: true },
+  '(el) => { el.shadowRoot.querySelector(".wrapper").click(); return window.fired; }');
+check('tree item carries one expand-toggle (the state asked for) and one press for one click, not the native click as well',
+  JSON.stringify(r) === JSON.stringify([['onExpandToggle', { expanded: true }], ['onPress', {}]]), r);
+r = await probe('cadre.ob.treenavigationitem', 'obc-tree-navigation-item', { label: 'Pump', disabled: true }, '(el) => { el.shadowRoot.querySelector(".wrapper").click(); return window.fired; }');
+check('a disabled tree item fires nothing', r.length === 0, r);
+r = await probe('cadre.ob.treenavigationgroup', 'obc-tree-navigation-group', { label: 'Vessel', items: treeRows[0].children.slice(1), iconName: 'home' },
+  `async (el) => { el.shadowRoot.querySelector('obc-tree-navigation-item').shadowRoot.querySelector('.wrapper').click(); await new Promise(r => setTimeout(r, 100));
+     return [window.fired, el.expanded, [...el.childNodes].map(n => n.tagName.toLowerCase() + '[' + n.getAttribute('slot') + ']').join()]; }`);
+check('tree group builds its rows and the icon, and carries expand-toggle once with the state asked for',
+  JSON.stringify(r[0]) === JSON.stringify([['onExpandToggle', { expanded: true }]]) && r[1] === true &&
+  r[2] === 'obi-home[icon],obc-tree-navigation-group[null],obc-tree-navigation-item[null]', r);
+r = await probe('cadre.ob.treenavigation', 'obc-tree-navigation', { items: treeRows },
+  `async (el) => { await new Promise(r => setTimeout(r, 300)); const q = (id) => el.querySelector('[data-item-id="' + id + '"]');
+     return [q('t-p101').branches.join(), q('t-engine').branches.join(), q('t-vessel').branches.length, q('t-deck').branches.join(),
+             q('t-vessel').alerts.countAlarm, q('t-engine').alerts.combine]; }`);
+check('tree navigation: branches of the nested rows are set by the container (two levels)', r[0].split(',').length === 2 && r[3] === 'corner' && r[2] === 0 && r[4] === 2 && r[5] === true, r);
+r = await probe('cadre.ob.treenavigation', 'obc-tree-navigation', { items: treeRows },
+  `async (el) => { await new Promise(r => setTimeout(r, 300)); const q = (id) => el.querySelector('[data-item-id="' + id + '"]');
+     q('t-p101').shadowRoot.querySelector('.wrapper').click(); q('t-p102').shadowRoot.querySelector('.wrapper').click();
+     q('t-engine').shadowRoot.querySelector('obc-tree-navigation-item').shadowRoot.querySelector('.wrapper').click();
+     await new Promise(r => setTimeout(r, 100)); return window.fired; }`);
+check('tree navigation reports a press of a nested row once, with its id, and the toggle of a nested group with the state asked for',
+  JSON.stringify(r) === JSON.stringify([['onItemClick', { id: 't-p101', tag: 'obc-tree-navigation-item' }], ['onItemClick', { id: 't-p102', tag: 'obc-tree-navigation-item' }],
+    ['onExpandToggle', { id: 't-engine', tag: 'obc-tree-navigation-group', expanded: false }]]), r);
+r = await probe('cadre.ob.treenavigation', 'obc-tree-navigation', { items: [treeRows[0], { tag: 'obc-navigation-item' }] }, '(el) => el.children.length');
+check('tree navigation drops a tag that is not allowed', r === 1, r);
+
+const crumbs = [{ label: 'Vessel', href: '/vessel' }, { label: 'Engine room', href: '/engine' }, { label: 'Pump P-101', icon: 'x' }];
+r = await probe('cadre.ob.breadcrumb', 'obc-breadcrumb', { items: crumbs }, '(el) => [el.items.length, "icon" in el.items[2], [...el.shadowRoot.querySelectorAll(".label")].map(l => l.textContent).join()]');
+check('breadcrumb: the crumbs are the element\'s own array, carrying label and href only', r[0] === 3 && r[1] === false && r[2] === 'Vessel,Engine room,Pump P-101', r);
+r = await probe('cadre.ob.breadcrumb', 'obc-breadcrumb', { items: crumbs },
+  '(el) => { const b = [...el.shadowRoot.querySelectorAll("button")]; b.forEach(x => x.click()); return [b.length, window.fired]; }');
+check('breadcrumb carries a press as onBreadcrumbClick with label, href and index; the last crumb is no button',
+  r[0] === 2 && JSON.stringify(r[1]) === JSON.stringify([['onBreadcrumbClick', { label: 'Vessel', href: '/vessel', index: 0 }], ['onBreadcrumbClick', { label: 'Engine room', href: '/engine', index: 1 }]]), r);
+r = await probe('cadre.ob.breadcrumb', 'obc-breadcrumb', { items: crumbs, iconOnly: true }, '(el) => [...el.shadowRoot.querySelectorAll(".label")].map(l => l.textContent).join()');
+check('breadcrumb iconOnly hides every label but the last', r === 'Pump P-101', r);
+
+const unexpected = errors.filter(e => !e.includes('item tag not allowed here: obc-notanitem') && !e.includes('item tag not allowed here: obc-navigation-item'));      // provoked above
 check('no console error or warning', unexpected.length === 0, unexpected);
 for (const [s, n, d] of results) console.log(s, n, d);
 await browser.close();
