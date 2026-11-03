@@ -1,7 +1,7 @@
 ---
 title: Cadre-Sandbox-OpenBridge wiki index
 type: wiki-index
-updated: 2026-10-09
+updated: 2026-11-03
 ---
 # Cadre-Sandbox-OpenBridge: Wiki Index
 
@@ -20,13 +20,14 @@ vendor's own demo on a live 8.3.6 gateway.
 | [04 Navigation and frame](04-navigation-and-frame.md) | The navigation philosophy and the recreated application frame |
 | [05 Component catalogue](05-component-catalogue.md) | All 135 vendor catalogue entries, their 1,788 properties, and the Cadre equivalents; property tables in [catalogue/](catalogue/) |
 | [06 Parent project and library](06-parent-project-and-library.md) | What `cadre_hmi_base` carries and the contract of each library view |
-| [07 Gateway facts](07-gateway-facts.md) | 41 facts measured on the gateway, and feedback for the Ignition-Wiki |
+| [07 Gateway facts](07-gateway-facts.md) | The facts measured on the gateway (GF-01 to GF-114, including the cloud sessions' commissioning, token, trust step and history provider facts), and feedback for the Ignition-Wiki |
 | [08 Generation and validation](08-generation-and-validation.md) | The screen descriptor, the generator, the twelve gates, and use by the Cadre tools |
 | [09 One-to-one comparison](09-one-to-one-comparison.md) | The vendor process overview rebuilt and measured, and the exact gap register |
 | [10 Roadmap](10-roadmap.md) | What to build next, and the owner's decisions |
 | [11 Water treatment sample](11-water-treatment-sample.md) | How good a project the library supports: a small water treatment plant, simulated, run from the glass and gated |
 | [12 Module spike](12-module-spike.md) | Assessment report: a Perspective module of our own wrapping the OpenBridge pump and tank, compared with the stock library; version 0.2.0 adds the alarm lists |
 | [13 Faceplates, alarm lists and interlocks](13-faceplates-alarm-lists-interlocks.md) | How a faceplate is tabbed, how it finds and lists the device's alarms, the module's alarm components, the provisional interlock contract, and the instrument faceplate with its limits and trend |
+| [14 Library configuration](14-library-configuration.md) | Every configuration of the library as delivered: the cloud environment, the gateway, the module (88 components), building and deploying, the four frames, the gates, the owner's decisions, the open items and the merge back; the generated component list is `module/CATALOGUE.md` and the operational reference `CONFIGURATION.md` |
 
 ## 2. Summary
 
