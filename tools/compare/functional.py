@@ -71,6 +71,11 @@ from glass import (BADGE_AT, BELL, CHART_AXIS, CHART_LINE, CRAFTED_CLICK, DISABL
                    open_alarm_menu,
                    open_device, pipes_in, popup_open, pump_off, read_login, readout_text, sign_in, speed_shown,
                    status_shown, symbol, value_of, visible_text_count)
+# The new frames (`--frame ob`, `--frame obasm`) draw the head with the module's top bar: the helpers below locate the same
+# parts there (the bell, the menu and brilliance buttons, the alarm menu's rows and ACK, the palette) and fall back to the
+# older selectors on the openbridge and asm frames, selected by the structure of the top dock (`glass.frame_variant`).
+from glass import (alert_list, alert_row, bell, click_nav_entry, close_alarm_menu, dimming_button,  # noqa: E402
+                   enabled_acks, frame_variant, menu_button, panel, pick_palette, press_ack)
 
 
 def frame_state(page, tag: str = "P-502"):
@@ -141,17 +146,17 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     page.wait_for_timeout(1000)
     alerts = open_alarm_menu(page)
     unacked = [a for a in (alerts or []) if not a["acked"]]
-    acked_one = click_text_in(page, PANEL, "ACK") if unacked else False
+    acked_one = press_ack(page, unacked[0]) if unacked else False
     later = None
     for _ in range(12):
         page.wait_for_timeout(500)
-        later = page.evaluate(LIST_INFO, PANEL)
+        later = alert_list(page)
         if later is not None and len([a for a in later if not a["acked"]]) == len(unacked) - 1:
             break
     fewer = later is not None and len([a for a in later if not a["acked"]]) == len(unacked) - 1
     newly = [a for a in (later or []) if a["acked"] and a["id"] in {u["id"] for u in unacked}]
     by_user = bool(newly) and all(a.get("by") == user for a in newly) if user else None
-    row = click_text_in(page, PANEL, "P-502 Fault")
+    row = click_text_in(page, panel(page), "P-502 Fault")
     page.wait_for_timeout(2500)
     txt = right.inner_text() if right.count() else ""
     check("F11", "The alarm menu acknowledges an alarm, and a row opens its device's faceplate",
@@ -170,7 +175,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
         page.wait_for_timeout(1000)
     alerts = open_alarm_menu(page)
     unacked = [a for a in (alerts or []) if not a["acked"]]
-    btn = page.locator(f'{PANEL} [data-testid="ack-all-visible-button"]').first
+    btn = page.locator(f'{panel(page)} [data-testid="ack-all-visible-button"]').first
     pressed = False
     if unacked and btn.count():
         btn.click()
@@ -178,7 +183,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     later, frame = None, None
     for _ in range(16):
         page.wait_for_timeout(500)
-        later = page.evaluate(LIST_INFO, PANEL)
+        later = alert_list(page)
         frame = module_pump(page, "P-502")
         if later is not None and not [a for a in later if not a["acked"]] and frame and frame.get("mode") == "acked-active":
             break
@@ -186,7 +191,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     check("F14", "ACK visible in the alarm menu acknowledges every unacknowledged alarm the menu shows",
           bool(unacked) and pressed and later is not None and not left and frame and frame.get("mode") == "acked-active",
           f"unacked {len(unacked)} pressed {pressed} left {len(left)} frame {frame and frame.get('mode')}")
-    click_text_in(page, PANEL, "P-502 Fault")   # a row closes the menu
+    click_text_in(page, panel(page), "P-502 Fault")   # a row closes the menu
     page.wait_for_timeout(1500)
     ensure_initial(page, base, restore)
 
@@ -271,15 +276,17 @@ def refusal_steps(page, base: str, check) -> None:
     page.wait_for_timeout(4000)
     before = frame_state(page)
     top = dock(page, "top")
-    ack = button(top, "ACK")
+    ack = button(top, "ACK")   # the strip's ACK in the new frames (both keep the Cadre alert message), else the bar's
     ack_disabled = ack.count() == 0 or ack.is_disabled()
     if page.locator('[data-component^="cadre.ob."]').count():
+        # "ack shown" counts the acknowledge controls the menu offers: the visible ACK texts of the older panel, the drawn and
+        # enabled row ACK buttons of the new frames' alert menu (which draws them disabled); ACK visible disabled in both
         alerts = open_alarm_menu(page)
-        btn = page.locator(f'{PANEL} [data-testid="ack-all-visible-button"]').first
-        menu = {"rows": len(alerts or []), "ack shown": visible_text_count(page, PANEL, "ACK"),
+        btn = page.locator(f'{panel(page)} [data-testid="ack-all-visible-button"]').first
+        menu = {"rows": len(alerts or []), "ack shown": enabled_acks(page),
                 "ack visible disabled": btn.count() > 0 and btn.evaluate("e => !!e.disabled")}
     else:   # the stock menu: its alarm status table offers no Acknowledge
-        top.locator(BELL).first.click()
+        bell(page).click()
         page.wait_for_timeout(4000)
         tbl = page.locator('.popup [data-component="ia.display.alarmstatustable"], '
                            '[class*="popup"] [data-component="ia.display.alarmstatustable"]').first
@@ -391,19 +398,17 @@ def frame_steps(page, base: str, check) -> None:
     outside_closes = alerts and not popup_open(page)
     open_alarm_menu(page)
     again = popup_open(page)
-    close = page.locator('.ia_popup [data-component="ia.container.coord"]')   # the header's close button
-    if again and close.count():
-        close.first.click()
-        page.wait_for_timeout(1500)
-    close_closes = again and not popup_open(page)
-    top = dock(page, "top")
-    menu = top.locator('[data-component="ia.container.coord"]').first                # the menu button
+    # its own close control: the header's close button (the first coordinate container of the popup); the new frames' alert
+    # menu has none, and the bell that opened it is pressed again (`glass.close_alarm_menu`)
+    close_closes = again and close_alarm_menu(page)
+    menu = menu_button(page)                # the menu button: the top dock's first coordinate container, or the module bar's Menu
     menu.click()
     page.wait_for_timeout(1500)
     nav = dock_open(page, "left")
     page.mouse.click(OUTSIDE[0] + 600, OUTSIDE[1])
     page.wait_for_timeout(1500)
     nav_outside = nav and not dock_open(page, "left")
+    menu = menu_button(page)
     menu.click()
     page.wait_for_timeout(1500)
     nav_again = dock_open(page, "left")
@@ -620,15 +625,14 @@ def run(base: str, out: Path, restore=None, login: dict | None = None, trends: i
               "P-101" in txt and "Raw water feed pump" in txt, txt[:120].replace("\n", " | "))
         if not commands:   # COBD-024: every write needs the admin role; without the test login stop here
             top = dock(page, "top")
-            top.locator('[data-component="ia.container.coord"]').first.click()
+            menu_button(page).click()
             page.wait_for_timeout(1500)
-            dock(page, "left").locator('[data-component="ia.display.label"]', has_text="Filtration").first.click()
+            click_nav_entry(page, "Filtration")
             page.wait_for_timeout(3000)
             check("F6", "Navigation menu opens and navigates", page.url.rstrip("/").endswith("/filtration"), page.url)
-            top.locator('[data-component="ia.container.coord"]').nth(1).click()
+            dimming_button(page).click()
             page.wait_for_timeout(1500)
-            page.locator('[data-component="ia.display.label"]', has_text=re.compile(r"^\s*Night\s*$")).first.click()
-            page.wait_for_timeout(2000)
+            pick_palette(page, "Night")
             cls = page.evaluate("() => document.querySelector('.ia_container--root').className")
             check("F9", "Brilliance menu switches to the night palette", "palette/night" in cls, cls[:80])
             browser.close()
@@ -661,9 +665,9 @@ def run(base: str, out: Path, restore=None, login: dict | None = None, trends: i
         page.wait_for_timeout(1500)
         # F6 navigation menu
         top = dock(page, "top")
-        top.locator('[data-component="ia.container.coord"]').first.click()
+        menu_button(page).click()
         page.wait_for_timeout(1500)
-        dock(page, "left").locator('[data-component="ia.display.label"]', has_text="Filtration").first.click()
+        click_nav_entry(page, "Filtration")
         page.wait_for_timeout(3000)
         check("F6", "Navigation menu opens and navigates", page.url.rstrip("/").endswith("/filtration"), page.url)
         # F7 acknowledge from the top bar
@@ -689,10 +693,9 @@ def run(base: str, out: Path, restore=None, login: dict | None = None, trends: i
         final = frame_classes()
         check("F8", "Reset fault clears the fault and the frame", final and final[1] == "hidden", f"{final}")
         # F9 palette
-        top.locator('[data-component="ia.container.coord"]').nth(1).click()
+        dimming_button(page).click()
         page.wait_for_timeout(1500)
-        page.locator('[data-component="ia.display.label"]', has_text=re.compile(r"^\s*Night\s*$")).first.click()
-        page.wait_for_timeout(2000)
+        pick_palette(page, "Night")
         cls = page.evaluate("() => document.querySelector('.ia_container--root').className")
         check("F9", "Brilliance menu switches to the night palette", "palette/night" in cls, cls[:80])
         page.screenshot(path=str(out / "night.png"))

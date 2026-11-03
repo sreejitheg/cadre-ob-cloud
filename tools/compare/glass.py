@@ -341,16 +341,307 @@ BELL = '[data-component-path="T[0].0:6"]'
 PANEL = "obc-alert-list-page-small"
 
 
+# ---------------------------------------------------------------------------------------
+# The new frames (`screen.py --frame ob` and `--frame obasm`, tranche T2 batches F6a and F6b, wiki 04 sections 10 and 11)
+# draw the head with the module's top bar (`cadre.ob.topbar`, `obframe.bar_node`). Its buttons, bell and clock are the
+# elements of the OpenBridge top bar, not Perspective children, so the positional selectors of the openbridge and asm
+# frames (`BELL`, the third coordinate container, the first of the top dock, the SVG icons by position) find nothing in the
+# head. The two frames are told apart from the older ones by the structure of the top dock, which is what the page shows
+# (`frame_variant`): a module top bar in it. Every selector above and below stays as it was for the older frames; the
+# variants are the ones named `*_OB`, `BAR_*` and `ALERT_MENU_*`. Measured on 2026-11-03 on cadre_hmi_wtpobf (ob) and
+# cadre_hmi_wtpoba (obasm), nobody signed in, nothing written:
+#
+#   * The bar's host is `[data-component="cadre.ob.topbar"]` (path T[0].0:0, 48 px) and holds `obc-top-bar` with its
+#     `obc-alert-button` (slot alerts) and `obc-clock` (slot clock) as light DOM children. The bell is the host's
+#     `obc-alert-button` (64 by 48 px, `nAlerts` and `counter` properties, its digits in shadow DOM).
+#   * The bar's buttons are `obc-icon-button` in the shadow root of `obc-top-bar`, named by `aria-label`: Menu, Dimming,
+#     User (`part` user-button), and in the obasm frame Apps; a More button is in the shadow root at zero size. A
+#     Playwright CSS selector reaches them through the shadow root.
+#   * The bell opens the popup `popup-alertMenu` (640 by 600): `obc-alert-menu`, whose rows are its light DOM children
+#     `obc-alert-menu-item` (`data-item-id` the alarm event's id, `status`, `primaryActionState` enabled or disabled, `title`,
+#     `description`), an `obc-alert-icon` child, then the `ack-all-visible-button` and the Alerts button. A row's ACK is an
+#     `obc-button` in the item's shadow root; nobody signed in it is drawn and disabled (the default frame's menu hides it).
+#     The popup has no close button of its own: it closes on a click outside, on Escape, and on the bell pressed again.
+#   * The user button opens `popup-userMenu`, whose `obc-user-menu` has the button Sign in (Sign out where signed in);
+#     the dimming button opens `popup-brilliance`: `obc-brilliance-menu`, one palette at a time (Night, Dusk, Day, Bright) with
+#     two `obc-button`s that name the neighbours (Dusk and Bright from Day); the menu button opens the left dock, whose header
+#     holds the close button as the older docks' (the first coordinate container of the dock).
+#   * The head of the obasm frame is 132 px and holds, beside the bar, a `cadre.ob.pivotitemgroup` and a
+#     `cadre.ob.tabrow` (in the DOM whether or not drawn), the Cadre search field and the page header's title.
+# ---------------------------------------------------------------------------------------
+TOP_BAR_HOST = '[data-component="cadre.ob.topbar"]'
+BELL_OB = f"{TOP_BAR_HOST} obc-alert-button"
+BAR_LABELS = {"menu": "Menu", "dimming": "Dimming", "user": "User", "apps": "Apps"}   # `aria-label` of the bar's buttons
+PANEL_OB = "obc-alert-menu"
+PIVOT_HOST, TABROW_HOST = '[data-component="cadre.ob.pivotitemgroup"]', '[data-component="cadre.ob.tabrow"]'
+FRAME_OB, FRAME_OBASM, FRAME_DEFAULT = "ob", "obasm", "default"   # `default`: the openbridge and asm frames
+PALETTES = ("Night", "Dusk", "Day", "Bright")   # the order the brilliance menu steps through
+
+FRAME_PROBE = r"""() => {
+  // `ob` or `obasm` once the module top bar stands in the top dock; `default` as soon as the dock holds a coordinate container
+  // (the openbridge frame's buttons are, `by_container` of `_open_user_menu`) and no module bar; else null (not drawn yet: the
+  // module's elements load after the Perspective components, so a dock with other components may still get its bar)
+  const top = document.querySelector('.docked-view-top');
+  if (!top) return null;
+  if (top.querySelector('[data-component="cadre.ob.topbar"]'))
+    return top.querySelector('[data-component="cadre.ob.pivotitemgroup"], [data-component="cadre.ob.tabrow"]') ? 'obasm' : 'ob';
+  return top.querySelector('[data-component="ia.container.coord"]') ? 'default' : null }"""
+
+
+def _project_of(page) -> str:
+    """The project's client address of the page (up to the project's name), which the answer of `frame_variant` is kept for."""
+    m = re.match(r"(https?://[^/]+/data/perspective/client/[^/?#]+)", str(getattr(page, "url", "") or ""))
+    return m.group(1) if m else ""
+
+
+def frame_variant(page, tries: int = 12) -> str:
+    """Which frame the page shows, from the structure of its top dock (design section 4.3 item 4): `obasm` where the top dock
+    holds the module top bar and the module pivot group or tab row (the page header of `--frame obasm`), `ob` where it holds the
+    module top bar alone (`--frame ob`), else `default` (the openbridge and asm frames, whose selectors are the older ones).
+    A frame is a property of the project, so the answer is kept on the page for its project: a dock that shows neither the
+    module bar nor a coordinate container is waited for (about four seconds, the module's elements load late) once, and
+    taken for an older frame after that."""
+    key = _project_of(page)
+    kept = getattr(page, "_cadre_frame", None)
+    if kept and kept[0] == key and key:
+        return kept[1]
+    found = None
+    for _ in range(tries):
+        found = page.evaluate(FRAME_PROBE)
+        if found:
+            break
+        page.wait_for_timeout(350)
+    found = found if found in (FRAME_OB, FRAME_OBASM, FRAME_DEFAULT) else FRAME_DEFAULT   # anything else the page answers is no frame of ours
+    if key:
+        try:
+            page._cadre_frame = (key, found)
+        except AttributeError:
+            pass
+    return found
+
+
+def is_module_frame(page) -> bool:
+    """Whether the page's head is the module top bar (`--frame ob` or `--frame obasm`)."""
+    return frame_variant(page) != FRAME_DEFAULT
+
+
+def bell(page):
+    """The top bar's alarm button: the `BELL` path in the openbridge and asm frames, the module top bar's own
+    `obc-alert-button` (`BELL_OB`) in the new frames."""
+    return dock(page, "top").locator(BELL_OB if is_module_frame(page) else BELL).first
+
+
+def bar_button(page, name: str):
+    """A button of the module top bar (`BAR_LABELS`: menu, dimming, user, and apps in the obasm frame), found by its aria label
+    through the bar's shadow root."""
+    return dock(page, "top").locator(f'{TOP_BAR_HOST} [aria-label="{BAR_LABELS[name]}"]').first
+
+
+def menu_button(page):
+    """The top bar's menu button, which opens the navigation dock: the first coordinate container of the top dock in the
+    openbridge and asm frames, the module bar's Menu button in the new frames."""
+    if is_module_frame(page):
+        return bar_button(page, "menu")
+    return dock(page, "top").locator('[data-component="ia.container.coord"]').first
+
+
+def dimming_button(page):
+    """The top bar's brilliance button: the second coordinate container of the top dock, or the module bar's Dimming button."""
+    if is_module_frame(page):
+        return bar_button(page, "dimming")
+    return dock(page, "top").locator('[data-component="ia.container.coord"]').nth(1)
+
+
+def press_centre(page, loc) -> None:
+    """A mouse click at the centre of `loc`: it reaches the element that lies there, so that a bell or a menu button under a
+    modal popup's overlay is pressed as an operator would press it (a locator's own click waits for the element to
+    receive the event, which a modal overlay prevents)."""
+    b = loc.bounding_box()
+    page.mouse.click(b["x"] + b["width"] / 2, b["y"] + b["height"] / 2)
+
+
+BELL_COUNT = r"""(sel) => {
+  // the count the module bell draws: the first whole number it prints down its shadow roots (style elements left out), else
+  // the property the frame binds to the alarm summary
+  const e = document.querySelector(sel); if (!e) return null;
+  const printed = (root) => { let t = '';
+    for (const n of root.childNodes) {
+      if (n.nodeType === 3) t += ' ' + n.textContent;
+      else if (n.nodeType === 1 && n.tagName !== 'STYLE') { if (n.shadowRoot) t += ' ' + printed(n.shadowRoot); t += ' ' + printed(n); }
+    } return t; };
+  const m = ((e.shadowRoot ? printed(e.shadowRoot) : '') + ' ' + printed(e)).match(/(^|\s)(\d+)(\s|$)/);
+  return m ? parseInt(m[2], 10) : (Number.isInteger(e.nAlerts) ? e.nAlerts : null) }"""
+
+ALERT_MENU_INFO = r"""(sel) => {
+  // the alerts the module alert menu of the new frames lists (`obc-alert-menu`): its rows are `obc-alert-menu-item` light DOM
+  // children (the alarm event's id kept as data-item-id), their alert icon's type and activity; `by` is read from the
+  // popup view's own records (`custom.alarms.alerts`, read only, as `glass_gates` reads a component's store), since a row
+  // does not show who acknowledged it
+  const el = [...document.querySelectorAll(sel)].find(e => e.getBoundingClientRect().width > 0);
+  if (!el) return null;
+  const by = {};
+  try {
+    const host = el.closest('[data-component="cadre.ob.alertmenu"]') || el;
+    const fk = Object.keys(host).find((k) => k.startsWith('__reactFiber')); let f = host[fk], n = 0;
+    while (f && n < 60) { const mp = f.memoizedProps || {};
+      if (mp.store && mp.store.props) { for (const a of (mp.store.view.custom.read('alarms.alerts') || [])) by[a.id] = a.acknowledged ? a.acknowledged.acknowledgedBy : null; break; }
+      f = f.return; n++; }
+  } catch (e) {}
+  return [...el.querySelectorAll('obc-alert-menu-item')].map(it => { const ic = it.querySelector('obc-alert-icon'); const id = it.getAttribute('data-item-id');
+    return {id: id, source: it.description, text: it.title, type: ic ? ic.type : null, acked: it.status !== 'unacknowledged',
+            active: !!ic && ic.active === true, by: by[id] === undefined ? null : by[id]}; }) }"""
+
+ALERT_MENU_ROW = r"""([host, match]) => {
+  // the row of the module alert menu (new frames) whose alarm id is `match`, or whose source or text contains it, and its ACK button (in the item's
+  // shadow root): `button` is true while the ACK is drawn and enabled, `disabled` while it is drawn and disabled
+  const el = [...document.querySelectorAll(host)].find(e => e.getBoundingClientRect().width > 0);
+  if (!el) return null;
+  const it = [...el.querySelectorAll('obc-alert-menu-item')].find(x => x.getAttribute('data-item-id') === match
+    || String(x.description).includes(match) || String(x.title).includes(match));
+  if (!it) return {found: false};
+  const find = (root, sel) => { const hit = root.querySelector(sel); if (hit) return hit;
+    for (const n of root.querySelectorAll('*')) if (n.shadowRoot) { const h = find(n.shadowRoot, sel); if (h) return h; }
+    return null };
+  const ack = find(it.shadowRoot || it, 'obc-button');
+  const inner = ack && ack.shadowRoot ? ack.shadowRoot.querySelector('button') : null;
+  const off = !!(ack && (ack.disabled || (inner && inner.disabled)));
+  const r = ack ? ack.getBoundingClientRect() : null;
+  return {found: true, row: true, id: it.getAttribute('data-item-id'), noAck: false, acked: it.status !== 'unacknowledged',
+          active: !!(it.querySelector('obc-alert-icon') || {}).active, button: !!ack && !off && r.width > 0, disabled: off,
+          noAckIcon: false, text: ack ? ack.textContent.replace(/\s+/g, ' ').trim() : '',
+          x: r ? r.x + r.width / 2 : 0, y: r ? r.y + r.height / 2 : 0} }"""
+
+ALERT_MENU_ACKS = r"""(sel) => {
+  // the ACK buttons of the module alert menu's rows that are drawn and enabled, and how many rows it lists
+  const el = [...document.querySelectorAll(sel)].find(e => e.getBoundingClientRect().width > 0);
+  if (!el) return null;
+  const find = (root, s) => { const hit = root.querySelector(s); if (hit) return hit;
+    for (const n of root.querySelectorAll('*')) if (n.shadowRoot) { const h = find(n.shadowRoot, s); if (h) return h; }
+    return null };
+  const rows = [...el.querySelectorAll('obc-alert-menu-item')];
+  let enabled = 0;
+  for (const it of rows) { const b = find(it.shadowRoot || it, 'obc-button'); const inner = b && b.shadowRoot ? b.shadowRoot.querySelector('button') : null;
+    if (b && b.getBoundingClientRect().width > 0 && !b.disabled && !(inner && inner.disabled)) enabled++; }
+  return {rows: rows.length, enabled: enabled} }"""
+
+
+def panel(page) -> str:
+    """The selector of the alarm menu's alert list: the module panel's in the older frames, `obc-alert-menu` in the new."""
+    return PANEL_OB if is_module_frame(page) else PANEL
+
+
+def alert_list(page):
+    """The alerts the open alarm menu lists, as `LIST_INFO` reads the older frames' panel (id, source, text, type, acked, active,
+    by), or None: from `obc-alert-menu` in the new frames."""
+    return page.evaluate(ALERT_MENU_INFO if is_module_frame(page) else LIST_INFO, panel(page))
+
+
+def alert_row(page, match: str):
+    """The row of the open alarm menu whose source or text contains `match` and its ACK (`ROW_ACTION`, or `ALERT_MENU_ROW`)."""
+    return page.evaluate(ALERT_MENU_ROW if is_module_frame(page) else ROW_ACTION, [panel(page), match])
+
+
+def enabled_acks(page) -> int:
+    """How many acknowledge controls the open alarm menu offers a signed out operator, which the F16 check requires to be none:
+    the visible `ACK` texts of the older frames' panel (the menu hides the controls it refuses), the drawn and enabled row ACK
+    buttons of the new frames' menu (which draws them disabled)."""
+    if is_module_frame(page):
+        return (page.evaluate(ALERT_MENU_ACKS, PANEL_OB) or {}).get("enabled", 0)
+    return visible_text_count(page, PANEL, "ACK")
+
+
 def open_alarm_menu(page):
-    """Open the top bar's alarm menu and wait for the module panel's alerts."""
-    dock(page, "top").locator(BELL).first.click()
+    """Open the top bar's alarm menu and wait for the alerts: the module panel's in the older frames, the module alert menu's
+    in the new frames (`ALERT_MENU_INFO`, the same keys)."""
+    bell(page).click()
     alerts = None
     for _ in range(20):
         page.wait_for_timeout(500)
-        alerts = page.evaluate(LIST_INFO, PANEL)
+        alerts = alert_list(page)
         if alerts:
             break
     return alerts
+
+
+def press_ack(page, alert: dict) -> bool:
+    """Press the ACK of the unacknowledged `alert` (a record of `alert_list`) in the open alarm menu: the first visible ACK text of
+    the older frames' panel (it draws ACK on the unacknowledged rows alone); in the new frames the ACK button of that alert's
+    own row, found by its id, which must be drawn and enabled (a signed out operator's is disabled)."""
+    if not is_module_frame(page):
+        return click_text_in(page, PANEL, "ACK")
+    row = alert_row(page, str(alert["id"])) or {}
+    if not row.get("button"):
+        return False
+    page.mouse.click(row["x"], row["y"])
+    return True
+
+
+def close_alarm_menu(page) -> bool:
+    """Close the open alarm menu by a control of its own and report whether it closed: its close button (the first coordinate
+    container of the popup) where it has one; the new frames' menu has none, and the bell that opened it is pressed again
+    (the popup is modal, the press lands on its overlay). False where the popup stays."""
+    close = page.locator('.ia_popup [data-component="ia.container.coord"]')
+    if close.count() == 0:
+        if not is_module_frame(page):
+            return False
+        press_centre(page, bell(page))
+    else:
+        close.first.click()
+    page.wait_for_timeout(1500)
+    return not popup_open(page)
+
+
+NAV_LABELS = """(leaves) => { const d = document.querySelector('.docked-view-left'); if (!d) return [];
+  return [...d.querySelectorAll(leaves ? 'obc-navigation-item, obc-tree-navigation-item'
+                                       : 'obc-navigation-item, obc-tree-navigation-item, obc-tree-navigation-group')]
+    .filter(e => e.getBoundingClientRect().width > 0).map(e => String(e.label || '').trim()).filter(Boolean) }"""
+LEAF_AT = """(label) => { const d = document.querySelector('.docked-view-left'); if (!d) return null;
+  const e = [...d.querySelectorAll('obc-navigation-item, obc-tree-navigation-item')]
+    .find(x => String(x.label || '').trim() === label && x.getBoundingClientRect().width > 0);
+  if (!e) return null; const r = e.getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2] }"""
+
+
+def nav_item_labels(page, leaves: bool = False) -> list[str]:
+    """The labels the module navigation dock draws (new frames): an item of the navigation menu, a leaf or group of the tree,
+    in document order, those with a size only (a leaf inside a closed group has none); with `leaves`, the items that open a
+    page and not the groups that hold them."""
+    return page.evaluate(NAV_LABELS, leaves)
+
+
+def press_nav_leaf(page, label: str) -> bool:
+    """Press the navigation item `label` that opens a page (never a group of the tree, which only opens or closes): a mouse
+    click at its centre. False when no such item is drawn."""
+    at = page.evaluate(LEAF_AT, label)
+    if not at:
+        return False
+    page.mouse.click(*at)
+    return True
+
+
+PALETTE_SHOWN = """() => { const m = document.querySelector('.ia_popup obc-brilliance-menu');
+  const v = m && m.shadowRoot ? m.shadowRoot.querySelector('.value') : null; return v ? v.textContent.trim() : '' }"""
+
+
+def pick_palette(page, name: str) -> bool:
+    """Choose the palette `name` in the opened brilliance menu. The older frames list the four palettes as labels (a click on
+    the label); the new frames' menu shows one at a time and steps by the two buttons that name the neighbours, so the
+    button toward `name` is pressed until the menu shows it (at most four presses). True when the menu shows `name`."""
+    if not is_module_frame(page):
+        page.locator('[data-component="ia.display.label"]', has_text=re.compile(rf"^\s*{name}\s*$")).first.click()
+        page.wait_for_timeout(2000)
+        return True
+    shown = lambda: page.evaluate(PALETTE_SHOWN)   # noqa: E731
+    for _ in range(len(PALETTES)):
+        now = shown()
+        if now == name:
+            return True
+        if now not in PALETTES:
+            return False
+        step_to = PALETTES.index(name) - PALETTES.index(now)
+        buttons = page.locator('.ia_popup obc-brilliance-menu obc-button')
+        buttons.nth(0 if step_to < 0 else buttons.count() - 1).click()
+        page.wait_for_timeout(1500)
+    return shown() == name
 
 
 def frame_state(page, tag: str):
@@ -423,11 +714,16 @@ def _open_user_menu(page, caption: str, press: bool = True) -> bool:
     the last of the top bar's three menu icons (COB-205, as `glass_gates.gate_menus`: right[2]). The entry is
     looked for in the opened popup alone (`.ia_popup`, GF-70), a text of the page behind it never counts, and
     the icon fallback is tried only where the top bar shows its three menu icons: otherwise nothing is clicked
-    and `SIGN_IN_WHY` says what was seen. False when neither shows the entry."""
+    and `SIGN_IN_WHY` says what was seen. In the new frames (`--frame ob`, `--frame obasm`) the user button is the
+    module top bar's User button (`by_bar`, found by its aria label through the bar's shadow root) and the menu is the
+    module user menu, whose Sign in or Sign out is an `obc-button` that the text locator finds through the shadow root; the
+    positional strategies are not tried there (the head holds other coordinate containers). False when none shows the entry."""
     global SIGN_IN_WHY
     popup = page.locator(".ia_popup")
     button = popup.locator('[data-component="ia.input.button"]', has_text=re.compile(rf"^\s*{caption}\s*$")).first
     text = popup.locator(f':text-is("{caption}"):visible').first
+    # the module user menu prints Sign in as its title as well as on its button: the button is the `obc-button`
+    module_button = popup.locator("obc-button", has_text=re.compile(rf"^\s*{caption}\s*$")).first
     holders = dock(page, "top").locator('[data-component="ia.container.coord"]')
 
     def by_container():
@@ -443,14 +739,21 @@ def _open_user_menu(page, caption: str, press: bool = True) -> bool:
         page.mouse.click(*icons[-1])
         return ""
 
+    def by_bar():
+        user = bar_button(page, "user")
+        if user.count() == 0:
+            return "the module top bar has no User button"
+        user.click()
+        return ""
+
     reasons = []
-    for open_menu in (by_container, by_icon):
+    for open_menu in ((by_bar,) if is_module_frame(page) else (by_container, by_icon)):
         refused = open_menu()
         if refused:
             reasons.append(refused)
             continue
         page.wait_for_timeout(1500)
-        for loc in (button, text):
+        for loc in ((module_button, button, text) if is_module_frame(page) else (button, text)):
             if loc.count() > 0 and loc.is_visible():
                 if press:
                     loc.click()
@@ -589,7 +892,7 @@ def ack_alarm(page, match: str) -> bool:
         open_alarm_menu(page)
         cell = {}
         for _ in range(12):
-            cell = page.evaluate(ROW_ACTION, [PANEL, match]) or {}
+            cell = alert_row(page, match) or {}
             if cell.get("button"):
                 break
             page.wait_for_timeout(500)
@@ -599,12 +902,12 @@ def ack_alarm(page, match: str) -> bool:
         acked = False
         for _ in range(12):
             page.wait_for_timeout(500)
-            if (page.evaluate(ROW_ACTION, [PANEL, match]) or {}).get("acked"):
+            if (alert_row(page, match) or {}).get("acked"):
                 acked = True
                 break
-        text = next((a["text"] for a in (page.evaluate(LIST_INFO, PANEL) or [])
+        text = next((a["text"] for a in (alert_list(page) or [])
                      if match in str(a["source"]) or match in str(a["text"])), match)
-        click_text_in(page, PANEL, text)   # the row closes the menu; the device stays selected
+        click_text_in(page, panel(page), text)   # the row closes the menu; the device stays selected
         page.wait_for_timeout(2000)
         return acked
     right.locator('[data-component="ia.input.button"]', has_text=re.compile(r"^\s*Alarms")).first.click()
@@ -980,7 +1283,10 @@ def big_value(page) -> float | None:
 
 def frame_alarm_count(page) -> int | None:
     """The count on the top bar's alarm button: the active alarms in the project's scope."""
-    text = dock(page, "top").locator(BELL).first.inner_text().strip()
+    if is_module_frame(page):   # the bell's digits are drawn in shadow DOM (`BELL_COUNT`)
+        n = page.evaluate(BELL_COUNT, BELL_OB)
+        return n if isinstance(n, int) else None
+    text = bell(page).inner_text().strip()
     return int(text) if text.isdigit() else None
 
 
@@ -993,7 +1299,7 @@ def alarm_menu_rows(page, module: bool) -> list[str] | None:
         alerts = open_alarm_menu(page)
         rows = None if alerts is None else [f"{a.get('source') or ''} {a.get('text') or ''}" for a in alerts]
     else:
-        dock(page, "top").locator(BELL).first.click()
+        bell(page).click()
         tbl = page.locator('.popup [data-component="ia.display.alarmstatustable"], '
                            '[class*="popup"] [data-component="ia.display.alarmstatustable"]').first
         rows = None
@@ -1010,29 +1316,93 @@ def alarm_menu_rows(page, module: bool) -> list[str] | None:
 
 
 def nav_labels(page) -> list[str]:
-    """The entries of the navigation menu, opened with the top bar's menu button and left open."""
+    """The entries of the navigation menu, opened with the top bar's menu button and left open. In the new frames the entries
+    are the module menu's or the tree's items (`nav_item_labels`), the tree's pages only once their group is open."""
     if not dock_open(page, "left"):
-        dock(page, "top").locator('[data-component="ia.container.coord"]').first.click()
+        menu_button(page).click()
         for _ in range(10):
             page.wait_for_timeout(200)
             if dock_open(page, "left"):
                 break
         page.wait_for_timeout(500)
+    if is_module_frame(page):
+        return nav_item_labels(page)
     # the entries of the two repeaters, not the menu's header title
     labs = dock(page, "left").locator('[data-component="ia.display.flex-repeater"] [data-component="ia.display.label"]')
     return [labs.nth(k).inner_text().strip() for k in range(labs.count())]
 
 
+# the closed group, in view, that holds the page `label` (the page's item is a light DOM child of its groups, drawn without a size while they
+# are closed): the nearest ancestor group that is drawn, its header's centre
+GROUP_OF = """([label, loose]) => { const d = document.querySelector('.docked-view-left'); if (!d) return null;
+  const items = [...d.querySelectorAll('obc-tree-navigation-item')];
+  const want = items.find(x => String(x.label || '').trim() === label)
+    || (loose ? items.find(x => String(x.label || '').includes(label)) : null);
+  if (!want) return null;
+  let g = want.parentElement, hit = null;
+  while (g && g !== d) { if (g.tagName.toLowerCase() === 'obc-tree-navigation-group' && g.getBoundingClientRect().width > 0 && !g.expanded) hit = g; g = g.parentElement; }
+  if (!hit) return null;
+  const r = hit.getBoundingClientRect(); return [r.x + r.width / 2, r.y + 24] }"""
+
+
+def open_tree_groups(page, label: str, loose: bool = False) -> bool:
+    """The tree of the obasm frame draws a page only inside an open group: press the closed group, in view, that holds the page
+    `label` (an exact label; with `loose`, one that contains it) until the page's item is drawn. Measured on 2026-11-03
+    (cadre_hmi_wtpoba): the press of a group toggles it and also fires the item click, so the row action runs, the page of the
+    node opens and the dock closes; the dock is opened again (the current branch is then open) before the next press. True when
+    the page's item is drawn."""
+    def drawn() -> bool:
+        return any(x == label or (loose and label in x) for x in nav_item_labels(page, leaves=True))
+    for _ in range(6):
+        if not dock_open(page, "left"):
+            menu_button(page).click()
+            page.wait_for_timeout(1500)
+        if drawn():
+            return True
+        at = page.evaluate(GROUP_OF, [label, loose])
+        if not at:
+            return False
+        page.mouse.click(*at)
+        page.wait_for_timeout(1200)
+    if not dock_open(page, "left"):
+        menu_button(page).click()
+        page.wait_for_timeout(1500)
+    return drawn()
+
+
+def click_nav_entry(page, label: str) -> bool:
+    """Press the entry `label` of the open navigation dock, as G10's F6 does: the label in the dock's repeaters in the older
+    frames, the item that opens that page in the new frames (the tree's groups opened first, `open_tree_groups`)."""
+    if is_module_frame(page):
+        leaf = next((x for x in nav_item_labels(page, leaves=True) if x == label), None) \
+            or next((x for x in nav_item_labels(page, leaves=True) if label in x), None)   # the older entries match by substring
+        if leaf is None and open_tree_groups(page, label, loose=True):
+            leaf = next((x for x in nav_item_labels(page, leaves=True) if label in x), None)
+        return leaf is not None and press_nav_leaf(page, leaf)
+    dock(page, "left").locator('[data-component="ia.display.label"]', has_text=label).first.click()
+    return True
+
+
 def navigate_by_menu(page, label: str) -> bool:
     """Navigate as an operator does: the top bar's menu button, then the entry `label` of the
     navigation menu, which closes the menu. False when the menu has no such entry."""
-    if label not in nav_labels(page):
+    found = label in nav_labels(page)
+    if is_module_frame(page):   # a page's entry, never a group of the tree: the group's label may be the page's
+        found = label in nav_item_labels(page, leaves=True) or (frame_variant(page) == FRAME_OBASM and open_tree_groups(page, label))
+    if not found:
         # the menu is modal (GF-71): left open, its overlay would take the next step's click
-        dock(page, "top").locator('[data-component="ia.container.coord"]').first.click()
+        if is_module_frame(page):
+            press_centre(page, menu_button(page))   # the modal dock's overlay lies over the button
+        else:
+            menu_button(page).click()
         page.wait_for_timeout(1000)
         return False
-    dock(page, "left").locator('[data-component="ia.display.label"]',
-                               has_text=re.compile(rf"^\s*{re.escape(label)}\s*$")).first.click()
+    if is_module_frame(page):
+        if not press_nav_leaf(page, label):
+            return False
+    else:
+        dock(page, "left").locator('[data-component="ia.display.label"]',
+                                   has_text=re.compile(rf"^\s*{re.escape(label)}\s*$")).first.click()
     page.wait_for_timeout(3000)
     return True
 
@@ -1094,8 +1464,23 @@ def badge_icon(name: str) -> str:
 #     gateway itself must refuse, which the click with the flag removed is not. Wiki page 07 records
 #     the fact as GF-59.
 # ---------------------------------------------------------------------------------------
+# The page's name in the new frames: the ob frame's bar prints it in its shadow root (`.page-name`); the obasm bar leaves it
+# empty while the page names a node, and the page header's title (the first child of the head's third row, a unit test holds
+# the path to the generator, test_walk FrameGlassTests) carries it.
+PAGE_NAME_OB = """() => { const b = document.querySelector('.docked-view-top [data-component="cadre.ob.topbar"] obc-top-bar');
+  const n = b && b.shadowRoot ? b.shadowRoot.querySelector('.page-name') : null; return n ? n.textContent.trim() : '' }"""
+TITLE_OBASM = '[data-component-path="T[0].0:2:0"]'
+
+
 def page_name(page) -> str:
-    """The page's name in the top bar: its second label."""
+    """The page's name in the top bar: its second label; the module bar's page name in the ob frame; the page header's title in
+    the obasm frame."""
+    variant = frame_variant(page)
+    if variant == FRAME_OB:
+        return page.evaluate(PAGE_NAME_OB)
+    if variant == FRAME_OBASM:
+        title = dock(page, "top").locator(TITLE_OBASM)
+        return title.first.inner_text().strip() if title.count() else ""
     labs = dock(page, "top").locator('[data-component="ia.display.label"]')
     return labs.nth(1).inner_text().strip() if labs.count() > 1 else ""
 

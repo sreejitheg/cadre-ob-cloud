@@ -1378,3 +1378,74 @@ The control flow is proven on a fake gateway's client page (`tests/glass_fake.py
 lifted from the slice's scripts, which were measured on the glass; two readings of the alert list (the unacknowledged
 rows and the state of the Ack selected button) are made from the page's text and attributes and not from its component
 stores, and are the first thing the integrated run on the gateway must confirm.
+
+### 13.11 The Glass on the New Frames (`--frame ob`, `--frame obasm`)
+
+Built and tested offline on 2026-11-03 (tranche T2, batch F7; `cloud/FRAME-DESIGN.md` section 4.3). The two new frames (`wiki/04`
+sections 10 and 11) draw the head with the module top bar, whose buttons, bell and clock are elements in a shadow root, not
+Perspective children, so the positional selectors of the openbridge and asm frames find nothing in it (G10 on `cadre_hmi_wtpobf`
+stopped in `refusal_steps` at `open_alarm_menu`, the bell path `T[0].0:6` not existing). The glass takes a variant for each of those
+selectors, chosen by the frame the page shows, and the older frames keep their selectors as they were. Code: `tools/compare/glass.py`,
+`functional.py`, `glass_gates.py`; tests `tests/test_walk.py` (`FrameGlassTests`, held to `obframe.py`, `obasm.py` and the pinned elements).
+The selectors were measured read only on the deployed samples `cadre_hmi_wtpobf` (`ob`) and `cadre_hmi_wtpoba` (`obasm`), nobody signed in
+and nothing written (the trial was reset once, GF-03).
+
+#### 13.11.1 Telling the Frames Apart
+
+`glass.frame_variant(page)` reads the structure of the top dock: `obasm` where it holds the module top bar and a module pivot group or tab
+row (the header of section 11, in the DOM whether or not drawn), `ob` where it holds the module top bar alone, `default` otherwise (the
+openbridge and asm frames). The module's elements load after the Perspective components, so a dock with no module bar and no coordinate
+container (the older frames' buttons) is waited for, about four seconds, then taken for an older frame; the answer is kept on the page for its
+project. `glass_gates.Session.frame()` is the same call, its wait following `--settle`.
+
+#### 13.11.2 The Variants
+
+Table 1. What each helper finds on the older frames and on the new ones.
+
+| Helper | openbridge and asm (unchanged) | ob and obasm |
+|---|---|---|
+| Bell, `glass.bell` | `BELL`, the top bar's seventh child `T[0].0:6` | `BELL_OB`: the host's `obc-alert-button` (64 by 48 px) |
+| Menu, brilliance, user and apps buttons | first and second coordinate container of the top dock, the third (`by_container`) or the last of three SVG icons (`TOP_ICONS`) | `bar_button`: `obc-icon-button` in the shadow root of `obc-top-bar`, by `aria-label` (Menu, Dimming, User, Apps) |
+| Alarm menu rows, `alert_list`, `alert_row`, `press_ack` | `obc-alert-list-page-small`, `LIST_INFO`, `ROW_ACTION` | `obc-alert-menu`, `ALERT_MENU_INFO`, `ALERT_MENU_ROW`: rows are `obc-alert-menu-item` (`data-item-id`, `status`, `title`, `description`); `by` is read from the popup view's `custom.alarms.alerts` |
+| Acknowledge controls offered, `enabled_acks` | the visible `ACK` texts of the panel | the drawn and enabled row ACK buttons (the menu draws them disabled without the permission) |
+| Alarm menu close, `close_alarm_menu` | the first coordinate container of the popup | the bell pressed again (the popup has no close button) |
+| Sign in and Sign out, `_open_user_menu` | the older strategies, the entry a button or text of the popup | `by_bar` (User button), the entry the `obc-button` that carries the caption (the menu prints Sign in as its title too) |
+| Navigation entries, `nav_labels`, `navigate_by_menu`, `click_nav_entry` | labels of the dock's repeaters | `obc-navigation-item`, `obc-tree-navigation-item` and group labels (`NAV_LABELS`); the page's item, never a group; a closed group is pressed first (`GROUP_OF`) |
+| Palette, `pick_palette` | the label Night | the two `obc-button`s step through Night, Dusk, Day, Bright; pressed until `.value` shows the name |
+| Page name, `page_name` | the second label of the top dock | `ob`: the bar's `.page-name`; `obasm`: the header's title, `T[0].0:2:0` |
+| Alarm count, `frame_alarm_count` | the bell's text | the first whole number the bell prints in its shadow roots (`BELL_COUNT`) |
+| Gates: icons, `Session.icons` | `TOP_ICONS` | `BAR_POINTS`: menu, apps, alert, dimming, user, so that the last three are as the older frames list them |
+| Gates: head rectangle, `Session.measure` | `MEASURE` (head 80 to 90 px, which the ob head of 84 px meets) | `MEASURE_OBASM` (head 128 to 136 px, the obasm head of 132) |
+
+#### 13.11.3 The Checks
+
+1. F16 (nobody signed in) keeps its meaning: the strip's ACK, which both new frames keep (`T[0].0:1:2:3` on `ob`), is disabled, the alerts page
+   offers no Acknowledge, and the alarm menu offers no acknowledge control: no enabled row ACK, ACK visible disabled, and rows listed.
+2. F21 closes the alarm menu by a click outside and by a control of its own (the bell for the new menu, which has no close button), and the
+   navigation dock by a click outside and by its header's close button, found where the Menu button opens it.
+3. F6 and F9 press the Menu and Dimming buttons and the entry or palette through the variants; F11, F14 and F18 take the menu's rows and ACK
+   through `alert_list`, `press_ack` and the store's `by`.
+4. `glass_gates`: `menus` (user, brilliance and alert menus by the bar's points; the crumb popup step on `obasm` only, the `ob` crumb opening
+   its node's page), `alarm` and `ack` (the bell's count, the Sign in entry), `banner` (on `obasm` the ASM banner dock; on `ob` the text of the
+   strip and the alert menu, the shows steps only, since the frame has no subtree rule), `fill` (a device opened by its symbol on `ob`).
+   `search`, `zoom` and `panels` are ASM gates: on `obasm` the field, the zoom measures (the header zoom steps use the head rectangle of 132 px)
+   and the tree and support list (the page titles looked for among the tree's items, drawn or not, the support entries among the drawn items);
+   on `ob`, which has no field, tree or floating faceplate, they are skipped with the reason in `gates.json`.
+
+#### 13.11.4 Measured Facts
+
+1. A press on a tree group both toggles it and fires the item's click (the pinned item dispatches `expand-toggle` and `click`): the row action
+   runs, the node's first page opens and the dock closes. `wiki/04` section 11.3 says a group fires only its toggle; the glass opens the dock
+   again after pressing a group.
+2. Nobody signed in, the alarm menu draws every row's ACK disabled (`primaryActionState` disabled), unlike the default frame's panel, which hides it.
+3. The alert menu closes on a click outside, on Escape and on the bell pressed again; no close button.
+4. The bell read 2 where the menu listed 6 rows (two of the rows name TK-501): the bell binds `custom.alarm.count`
+   (`alarm_summary`) and the menu `alarm_list`. To be explained at the gateway run.
+5. `obc-alert-menu-item`'s `title`, `description`, `status` and `primaryActionState` and the `obc-alert-icon` child's `type`, `active` and
+   `acknowledged` are readable as properties of the elements.
+
+#### 13.11.5 Not Verified Without a Signed In Run
+
+The row ACK enabled and pressed, ACK visible pressed, Sign out offered after the login, the acknowledging user's name from `custom.alarms.alerts`
+(F18), the strip's ACK pressed (F7, the latch step) and the palette's effect on the page (F9 was measured to reach `palette/night` and back to
+`palette/day` in a throwaway session). Each is for the first G10 run on a sample of either frame.

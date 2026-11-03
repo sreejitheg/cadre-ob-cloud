@@ -6,6 +6,7 @@ Run from the repository root:  python -m unittest discover -s tests
 """
 import copy
 import json
+import re
 import sys
 import unittest
 from pathlib import Path
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools" / "compare"))
 
+import glass  # noqa: E402
 import walk  # noqa: E402
 import walk_plan  # noqa: E402
 import walk_run  # noqa: E402
@@ -664,6 +666,334 @@ class TopBarPathTests(unittest.TestCase):
         from hmi import framework
         names = [c["meta"]["name"] for c in framework.top_bar()["root"]["children"]]
         self.assertEqual(glass.BELL, f'[data-component-path="T[0].0:{names.index("AlertButton")}"]')
+
+
+def _types(node):
+    """Every component type in a view node's subtree."""
+    out = [node.get("type")]
+    for c in node.get("children", []):
+        out += _types(c)
+    return out
+
+
+class FrameGlassTests(unittest.TestCase):
+    """The glass of the new frames (`--frame ob`, `--frame obasm`, batch F7) is held to the generators and to the pinned
+    elements, in the pattern of `TopBarPathTests`: a part that moves, a name that changes or an element that drops a property
+    fails here, not in a gateway run. The older frames' selectors are held to their literal text, so that a variant never
+    changes what an older frame finds."""
+
+    @classmethod
+    def setUpClass(cls):
+        import glass_gates
+        from hmi import navigation, obasm, obframe
+        cls.glass, cls.gates = glass, glass_gates
+        cls.ob, cls.obasm, cls.nav = obframe, obasm, navigation
+        cls.comp = json.loads((ROOT / "module" / "components.json").read_text(encoding="utf-8"))
+        cls.pin_dir = (ROOT / "module" / "web" / "node_modules" / "@oicl" / "openbridge-webcomponents" / "dist" / "components")
+
+    def pin(self, rel):
+        return (self.pin_dir / rel).read_text(encoding="utf-8")
+
+    # ---- the older frames' selectors are as they were -------------------------------------------------------------
+    def test_the_older_frames_selectors_are_the_literal_text_they_were(self):
+        g, gg = self.glass, self.gates
+        self.assertEqual(g.BELL, '[data-component-path="T[0].0:6"]')
+        self.assertEqual(g.PANEL, "obc-alert-list-page-small")
+        self.assertTrue(g.TOP_ICONS.startswith("() => [...document.querySelectorAll('svg')]"))
+        self.assertIn(".filter((r) => r.top < 44 && r.top >= 0 && r.height > 8 && r.height < 44)", g.TOP_ICONS)
+        self.assertEqual(gg.TOP_ICONS, g.TOP_ICONS)
+        self.assertEqual(gg.MEASURE.count("r.height >= 80 && r.height <= 90"), 1)    # the asm head of 84 px, and the ob head
+        self.assertEqual(gg.MEASURE.count("r.top === 0"), 1)
+        self.assertNotEqual(gg.MEASURE_OBASM, gg.MEASURE)
+        self.assertEqual(gg.MEASURE_OBASM.replace("r.height >= 128 && r.height <= 136", gg.HEAD_HEIGHT), gg.MEASURE)
+        self.assertEqual(gg.ASM_ONLY, ("search", "zoom", "panels"))
+
+    # ---- the head: the module top bar is the first child, its parts are the ones the glass names ---------------------
+    def test_both_heads_put_the_module_top_bar_first_and_the_strip_second(self):
+        for name, head in (("ob", self.ob.head()), ("obasm", self.obasm.head())):
+            kids = head["root"]["children"]
+            self.assertEqual((kids[0]["type"], kids[0]["meta"]["name"]), ("cadre.ob.topbar", "TopBar"), name)
+            self.assertEqual(kids[1]["meta"]["name"], "Strip", name)
+        self.assertEqual(self.glass.TOP_BAR_HOST, '[data-component="cadre.ob.topbar"]')   # path T[0].0:0, as measured
+
+    def test_the_bar_draws_the_buttons_the_glass_presses_and_wires_their_events(self):
+        for name, bar, apps in (("ob", self.ob.bar_node(), False),
+                                ("obasm", self.obasm.head()["root"]["children"][0], True)):
+            props = bar["props"]
+            self.assertTrue(props["showDimmingButton"], name)
+            self.assertIn("props.showUserButton", bar["propConfig"], name)           # the user button, bound to the head's `showUser`
+            self.assertEqual("showAppsButton" in props, apps, name)                  # the apps button: the obasm frame's support list
+            events = set(bar["events"]["component"])
+            self.assertTrue({"onMenuButtonClick", "onAlertClick", "onDimmingButtonClick", "onUserButtonClick"} <= events, name)
+            self.assertEqual("onAppsButtonClick" in events, apps, name)
+        for head in (self.ob.head(), self.obasm.head()):
+            self.assertTrue(head["params"]["showUser"])                              # the head's default: the user button shown
+
+    def test_the_bar_labels_and_parts_are_the_pinned_top_bars(self):
+        src = self.pin("top-bar/top-bar.js")
+        for key, label in self.glass.BAR_LABELS.items():
+            self.assertIn(f'msg("{label}")', src, key)
+            if key != "menu":                                      # the menu button's label is chosen by its icon: Menu or Home
+                self.assertIn(f'aria-label=${{msg("{label}")}}', src, key)
+        for part in ("dimming-button", "user-button", "apps-button", "left-more-button"):
+            self.assertIn(f'part="{part}"', src)
+        self.assertIn('<slot name="alerts">', src)                  # the bell is the host's `obc-alert-button`, slot alerts
+        self.assertIn('class="page-name"', src)                     # `PAGE_NAME_OB`
+        self.assertIn("'.page-name'", self.glass.PAGE_NAME_OB)
+        wiring = (ROOT / "module" / "tools" / "gen_module_assets.py").read_text(encoding="utf-8")
+        self.assertIn('{"tag": "obc-alert-button", "slot": "alerts"', wiring)
+        self.assertEqual(self.glass.BELL_OB, '[data-component="cadre.ob.topbar"] obc-alert-button')
+        self.assertEqual(self.comp["cadre.ob.topbar"]["element"], "obc-top-bar")
+
+    def test_the_head_heights_are_the_ones_the_measurement_looks_for(self):
+        self.assertEqual(self.ob.HEAD_HEIGHT, 84)
+        self.assertEqual(self.obasm.HEAD_HEIGHT, 132)
+        self.assertTrue(80 <= self.ob.HEAD_HEIGHT <= 90)             # `MEASURE`'s head range, unchanged for ob
+        self.assertTrue(128 <= self.obasm.HEAD_HEIGHT <= 136)        # `MEASURE_OBASM`
+        self.assertEqual(self.ob.TOP_BAR_HEIGHT, 48)                 # the zoom gate's header point (y 40) lies on the bar
+        self.assertEqual(self.obasm.TOP_BAR_HEIGHT + self.obasm.STRIP_HEIGHT + self.obasm.HEADER_HEIGHT, self.obasm.HEAD_HEIGHT)
+
+    # ---- how the frames are told apart -------------------------------------------------------------------------
+    def test_the_frames_differ_in_the_structure_the_probe_reads(self):
+        ob, obasm = _types(self.ob.head()["root"]), _types(self.obasm.head()["root"])
+        self.assertIn("cadre.ob.topbar", ob)
+        self.assertIn("cadre.ob.topbar", obasm)
+        pivots = {"cadre.ob.pivotitemgroup", "cadre.ob.tabrow"}
+        self.assertFalse(pivots & set(ob))                           # `ob`: the bar alone
+        self.assertTrue(pivots <= set(obasm))                        # `obasm`: the header's pivot group and tab row
+        for host in ("cadre.ob.topbar", "cadre.ob.pivotitemgroup", "cadre.ob.tabrow"):
+            self.assertIn(f'"{host}"', self.glass.FRAME_PROBE)
+        # the older frames: no module bar anywhere in their top dock, and the library's coordinate containers (the positive marker)
+        from hmi import framework
+        default = framework.top_bar()["root"]
+        self.assertNotIn("cadre.ob.topbar", _types(default))
+        self.assertIn("ia.container.coord", _types(default))
+        self.assertIn("ia.container.coord", self.glass.FRAME_PROBE)
+        self.assertNotIn("cadre.ob.topbar", _types(self.nav.top_bar()["root"]))
+        self.assertNotIn("cadre.ob.topbar", _types(self.nav.head()["root"]))
+
+    def test_the_session_option_names_the_frames_the_glass_knows(self):
+        self.assertEqual((self.ob.FRAME, self.obasm.FRAME), (self.glass.FRAME_OB, self.glass.FRAME_OBASM))
+        self.assertEqual(self.ob.session_custom(), {"frame": "ob"})
+        self.assertEqual(self.obasm.FRAME, "obasm")
+
+    # ---- the obasm page header's title: the page name the walk reads -------------------------------------------------
+    def test_the_obasm_title_path_is_the_first_label_of_the_headers_row(self):
+        root = self.obasm.head()["root"]["children"]
+        row = next(i for i, c in enumerate(root) if c["meta"]["name"] == "PageHeader")
+        title = next(i for i, c in enumerate(root[row]["children"]) if c["meta"]["name"] == "Title")
+        self.assertEqual(self.glass.TITLE_OBASM, f'[data-component-path="T[0].0:{row}:{title}"]')
+        self.assertEqual(root[row]["children"][title]["type"], "ia.display.label")
+
+    # ---- the alert menu: the elements and properties the readers use --------------------------------------------------
+    def test_the_alert_menu_readers_use_the_elements_and_properties_of_the_pin(self):
+        g = self.glass
+        self.assertEqual(g.PANEL_OB, self.comp["cadre.ob.alertmenu"]["element"])
+        item = self.comp["cadre.ob.alertmenuitem"]
+        self.assertEqual(item["element"], "obc-alert-menu-item")
+        for prop in ("title", "description", "status", "primaryActionState"):
+            self.assertIn(prop, item["props"], prop)
+        for prop in ("title", "description", "status"):          # the properties the readers take from an item
+            self.assertTrue(any(f"it.{prop}" in js or f"x.{prop}" in js for js in (g.ALERT_MENU_INFO, g.ALERT_MENU_ROW)), prop)
+        for js in (g.ALERT_MENU_INFO, g.ALERT_MENU_ROW, g.ALERT_MENU_ACKS):
+            self.assertIn("obc-alert-menu-item", js)
+        self.assertIn("data-item-id", g.ALERT_MENU_INFO)                # the id the wrapper keeps on the item (gen_module_assets)
+        self.assertIn("data-item-id", (ROOT / "module" / "tools" / "gen_module_assets.py").read_text(encoding="utf-8"))
+        icon = self.pin("alert-icon/alert-icon.js")                     # the icon child's properties the reader takes
+        for prop in ("type", "active", "acknowledged"):
+            self.assertIn(f'ObcAlertIcon.prototype, "{prop}"', icon, prop)
+        menu = self.pin("alert-menu/alert-menu.js")
+        self.assertIn("unacknowledged", menu.lower())                    # the status the reader compares against
+        self.assertIn('data-testid="ack-all-visible-button"', menu)
+
+    def test_the_alert_menu_view_gives_the_reader_what_it_looks_for(self):
+        view = self.ob.alert_menu()
+        self.assertEqual(view["root"]["children"][0]["type"], "cadre.ob.alertmenu")
+        self.assertIn("alerts", view["custom"]["alarms"])                # `custom.alarms.alerts`: where `by` is read from, read only
+        self.assertIn("alarms.alerts", self.glass.ALERT_MENU_INFO)
+        self.assertIn("acknowledgedBy", self.glass.ALERT_MENU_INFO)
+        script = self.ob.bar_node()["events"]["component"]["onAlertClick"]["config"]["script"]
+        self.assertIn(f"'{self.ob.ALERT_POPUP}'", script)
+        self.assertEqual(self.ob.ALERT_POPUP, "alertMenu")      # the popup the glass waits for is `.ia_popup`, id popup-alertMenu (measured)
+
+    def test_the_menus_without_a_close_button_close_on_the_bell(self):
+        # the alert menu view holds no coordinate container (a close button): the glass closes it by the bell, outside or Escape
+        self.assertNotIn("ia.container.coord", _types(self.ob.alert_menu()["root"]))
+        # the navigation docks' headers hold one, first of the dock (the close button F21 presses)
+        for dock in (self.ob.nav_dock(), self.obasm.nav_dock()):
+            types = _types(dock["root"])
+            self.assertEqual(types.count("ia.container.coord"), 1)
+            self.assertEqual(types.index("ia.container.coord"), types.index("ia.display.label") + 1)
+
+    # ---- the user menu and the brilliance menu -----------------------------------------------------------------------
+    def test_the_user_menu_button_captions_are_the_pinned_menus(self):
+        src = self.pin("user-menu/user-menu.js")
+        self.assertIn('${msg("Sign in")}', src)
+        self.assertIn('${msg("Sign out")}', src)
+        self.assertEqual(self.comp["cadre.ob.usermenu"]["element"], "obc-user-menu")
+        self.assertEqual(self.ob.USER_POPUP, "userMenu")
+        menu = self.ob.user_menu()["root"]["children"][0]
+        self.assertIn("system.perspective.login()", menu["events"]["component"]["onSignInClick"]["config"]["script"])
+        self.assertIn("system.perspective.logout()", menu["events"]["component"]["onSignOutClick"]["config"]["script"])
+
+    def test_the_palette_order_and_value_are_the_pinned_brilliance_menus(self):
+        src = self.pin("brilliance-menu/brilliance-menu.js")
+        order = [m.group(1) for m in re.finditer(r'\]: msg\("(Night|Dusk|Day|Bright)"\)', src)]
+        self.assertEqual(tuple(order), self.glass.PALETTES)
+        self.assertIn('<div class="value">${currentPaletteName}</div>', src)       # what `PALETTE_SHOWN` reads
+        self.assertIn("'.value'", self.glass.PALETTE_SHOWN)
+        self.assertEqual(self.comp["cadre.ob.brilliancemenu"]["element"], "obc-brilliance-menu")
+        self.assertEqual(self.ob.BRILLIANCE_POPUP, "brilliance")
+        keys = tuple(scripts.constant("PALETTE_THEME"))
+        self.assertEqual({p.lower() for p in self.glass.PALETTES}, set(keys))      # the four palettes the frame sets
+
+    # ---- the navigation dock ----------------------------------------------------------------------------------------
+    def test_the_navigation_readers_use_the_elements_of_the_components(self):
+        for tag in ("obc-navigation-item", "obc-tree-navigation-item", "obc-tree-navigation-group"):
+            self.assertIn(tag, self.glass.NAV_LABELS)
+            self.assertIn(tag, self.gates.NAV_DOCK_LABELS)
+        for ctype, element in (("navigationmenu", "obc-navigation-menu"), ("treenavigation", "obc-tree-navigation"),
+                               ("navigationitem", "obc-navigation-item"), ("treenavigationitem", "obc-tree-navigation-item"),
+                               ("treenavigationgroup", "obc-tree-navigation-group")):
+            self.assertEqual(self.comp[f"cadre.ob.{ctype}"]["element"], element)
+        self.assertIn("label", self.comp["cadre.ob.navigationitem"]["props"])
+        self.assertIn("label", self.comp["cadre.ob.treenavigationitem"]["props"])
+        self.assertIn("expanded", self.comp["cadre.ob.treenavigationgroup"]["props"])
+        self.assertIn("expanded", self.glass.GROUP_OF)
+        # the pin: a group's header is an expandable item, and a press on it fires the item's click as well (measured)
+        src = self.pin("tree-navigation-item/tree-navigation-item.js")
+        self.assertIn('new CustomEvent("expand-toggle"', src)
+        self.assertIn('new CustomEvent("click")', src)
+
+    def test_the_obasm_nav_dock_has_the_tree_and_the_support_menu_the_panels_gate_opens(self):
+        kids = {c["meta"]["name"]: c for c in self.obasm.nav_dock()["root"]["children"]}
+        self.assertEqual(kids["Tree"]["type"], "cadre.ob.treenavigation")
+        self.assertEqual(kids["Support"]["type"], "cadre.ob.navigationmenu")
+        self.assertEqual(kids["Search"]["type"], "ia.input.text-field")
+        # the gates' icon list: the menu button (pages), the apps button (support), then alert, brilliance and user last
+        for key in ("menu", "apps", "alert", "dimming", "user"):
+            self.assertIn(f"'{key}'" if key != "alert" else "out.alert", self.gates.BAR_POINTS)
+        self.assertIn('"menu", "apps", "alert", "dimming", "user"', (ROOT / "tools" / "compare" / "glass_gates.py").read_text(encoding="utf-8"))
+
+    def test_the_search_field_the_asm_gates_type_into_is_the_head_strips_field(self):
+        strip = next(c for c in self.obasm.head()["root"]["children"] if c["meta"]["name"] == "Strip")
+        field = next(c for c in strip["children"] if c["type"] == "ia.input.text-field")
+        self.assertEqual(field["props"]["placeholder"], "Search pages, devices, tags")
+        self.assertIn("Search pages, devices, tags", (ROOT / "tools" / "compare" / "glass_gates.py").read_text(encoding="utf-8"))
+        self.assertNotIn("ia.input.text-field", _types(self.ob.head()["root"]))     # the ob frame has none: the ASM gates are not run there
+
+    # ---- the variants are chosen by the frame -------------------------------------------------------------------------
+    class FakeLoc:
+        def __init__(self, page, chain):
+            self.page, self.chain = page, chain
+
+        def locator(self, sel, **kw):
+            return FrameGlassTests.FakeLoc(self.page, self.chain + [sel])
+
+        @property
+        def first(self):
+            return self
+
+        def nth(self, k):
+            return FrameGlassTests.FakeLoc(self.page, self.chain + [f"nth({k})"])
+
+        def count(self):
+            return 1
+
+        def is_visible(self):
+            return "obc-button" in self.chain      # the module user menu: Sign in is the button, its title is only text
+
+        def click(self, *a, **k):
+            self.page.clicked.append(self.chain)
+
+    class FakePage:
+        def __init__(self, variant, url="http://gw:8088/data/perspective/client/p/x"):
+            self.variant, self.url, self.clicked, self.probes, self.evaluated = variant, url, [], 0, []
+            self.mouse = self.keyboard = self
+
+        def evaluate(self, js, *a):
+            if js == glass.FRAME_PROBE:
+                self.probes += 1
+                return self.variant
+            self.evaluated.append((js, a))
+            return None
+
+        def press(self, key):
+            self.clicked.append(["key", key])
+
+        def click(self, x, y):
+            self.clicked.append(["mouse", x, y])
+
+        def wait_for_timeout(self, ms):
+            pass
+
+        def locator(self, sel, **kw):
+            return FrameGlassTests.FakeLoc(self, [sel])
+
+    def test_the_bell_and_the_buttons_are_the_older_selectors_on_the_older_frames_and_the_bars_on_the_new(self):
+        g = self.glass
+        for variant, bell in ((g.FRAME_DEFAULT, g.BELL), (g.FRAME_OB, g.BELL_OB), (g.FRAME_OBASM, g.BELL_OB)):
+            page = self.FakePage(variant)
+            g.bell(page).click()
+            self.assertEqual(page.clicked, [[".docked-view-top", bell]], variant)
+        page = self.FakePage(g.FRAME_DEFAULT)
+        g.menu_button(page).click()
+        g.dimming_button(page).click()
+        coord = '[data-component="ia.container.coord"]'
+        self.assertEqual(page.clicked, [[".docked-view-top", coord], [".docked-view-top", coord, "nth(1)"]])
+        for variant in (g.FRAME_OB, g.FRAME_OBASM):
+            page = self.FakePage(variant)
+            g.menu_button(page).click()
+            g.dimming_button(page).click()
+            g.bar_button(page, "user").click()
+            self.assertEqual([c[-1] for c in page.clicked], [
+                '[data-component="cadre.ob.topbar"] [aria-label="Menu"]', '[data-component="cadre.ob.topbar"] [aria-label="Dimming"]',
+                '[data-component="cadre.ob.topbar"] [aria-label="User"]'], variant)
+
+    def test_the_alarm_menu_readers_take_the_menu_of_the_frame(self):
+        g = self.glass
+        page = self.FakePage(g.FRAME_DEFAULT)
+        g.alert_list(page)
+        g.alert_row(page, "P-502")
+        self.assertEqual(page.evaluated, [(g.LIST_INFO, (g.PANEL,)), (g.ROW_ACTION, ([g.PANEL, "P-502"],))])
+        for variant in (g.FRAME_OB, g.FRAME_OBASM):
+            page = self.FakePage(variant)
+            g.alert_list(page)
+            g.alert_row(page, "P-502")
+            g.enabled_acks(page)
+            self.assertEqual(page.evaluated, [(g.ALERT_MENU_INFO, (g.PANEL_OB,)), (g.ALERT_MENU_ROW, ([g.PANEL_OB, "P-502"],)),
+                                              (g.ALERT_MENU_ACKS, (g.PANEL_OB,))], variant)
+
+    def test_the_user_menu_of_the_new_frames_is_opened_by_the_bar_and_its_entry_is_the_button(self):
+        g = self.glass
+        for variant in (g.FRAME_OB, g.FRAME_OBASM):
+            page = self.FakePage(variant)
+            self.assertTrue(g._open_user_menu(page, "Sign in"))
+            opened, entry = page.clicked          # no positional strategy: nothing else is clicked
+            self.assertEqual(opened[-1], '[data-component="cadre.ob.topbar"] [aria-label="User"]', variant)
+            self.assertEqual(entry[0], ".ia_popup")
+            self.assertEqual(entry[1], "obc-button", variant)    # the title text of the menu is never pressed
+
+    def test_the_frame_is_asked_of_the_page_once_for_a_project(self):
+        g = self.glass
+        page = self.FakePage(g.FRAME_OB)
+        for _ in range(5):
+            self.assertEqual(g.frame_variant(page), "ob")
+        self.assertEqual(page.probes, 1)
+        page = self.FakePage(None)           # nothing drawn: waited for, then taken for an older frame, and kept
+        self.assertEqual(g.frame_variant(page), g.FRAME_DEFAULT)
+        first = page.probes
+        self.assertEqual(g.frame_variant(page), g.FRAME_DEFAULT)
+        self.assertEqual(page.probes, first)
+        self.assertGreater(first, 1)
+
+    def test_the_gates_ask_the_page_and_the_ob_frame_skips_only_the_asm_gates(self):
+        text = (ROOT / "tools" / "compare" / "glass_gates.py").read_text(encoding="utf-8")
+        self.assertIn("if name in ASM_ONLY:", text)
+        self.assertIn("if s.frame() == glass.FRAME_OB:", text)
+        # the gates that stay on the ob frame are those with an ob variant: menus, alarm (the bell's count), ack (sign in), banner
+        self.assertTrue({"menus", "alarm", "ack", "banner"}.isdisjoint(self.gates.ASM_ONLY))
+        self.assertNotIn("s.p.evaluate(ALERT_COUNT)", text)       # the count goes through `Session.alert_count`
 
 
 class ConfirmedPressTests(unittest.TestCase):
