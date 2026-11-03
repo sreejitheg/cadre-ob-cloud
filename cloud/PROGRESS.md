@@ -84,3 +84,9 @@
   click writes nothing (`TB_GEN/cmdStart` false); signed in as the test user (`Administrator`) through the
   project's identity provider, Confirm is enabled, `cmdStart` true 3 s after and false again after 62 s, and the
   test generator `GEN` draws running. Test tags restored (836). Full offline suite: 1102 run, all passing, 3 min 52 s.
+- 2026-11-03 01:37: G11 on the component test page with 0.4.4 and `--faceplate asm`: 21 of 21 devices, no tab fault,
+  the generator `GEN` opens `Faceplate/ASM/Generator` from the module component; the only finding is the baseline's
+  instrument field identity (`TB_FIELD` read as `Temp`). 14 min 38 s.
+- 2026-11-03 01:45: Section 5 report `cloud/REPORT-T0.md` written (environment, baseline, wraps, extrapolation,
+  merge back). Wraps total 554,947 subagent tokens and 32 min; main session estimated at about 0.3 M tokens by the
+  same measure (about 150 turns). Spike T0 ends here; T1 and T2 wait for the owner's word.
