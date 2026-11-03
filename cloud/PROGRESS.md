@@ -208,3 +208,8 @@
   unmeasured 240 by 280 box. G11 first stopped at once: the page's 830 leaves had not settled after the fixed wait (830
   then 831 before any click); `faceplates.settled_points` now waits for a still count (tests added), and G11 rerun.
   The walk with the tools of `b82abe1` fails A-02 the same way, so A-02 does not come from the walk rows.
+- 2026-11-03 07:20: T1 regressions on module 0.6.0. `wtp_suite.py` SUITE PASS (50 min): stock G8 6 of 6, G11 44 of 44,
+  G10 17 of 17, walk PASS in every group; module G8 6 of 6, G11 44 of 44, G10 21 of 21, walk PASS in every group, A-02
+  included; plant restored. G11 on the component test page: 21 of 21 devices, 831 leaves, no fault, only the
+  instrument field identity of T0 (about 70 min). `cloud/REPORT-T1.md` completed. T1 ends here; T2 waits for the
+  owner's review.

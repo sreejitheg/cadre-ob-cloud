@@ -80,8 +80,8 @@ error per module-only symbol (515 at the end of B7), as decided.
 | Deploy | `cadre_hmi_base_asm`, `cadre_hmi_ctest` (2052 tags), `cadre_hmi_wtp` and `cadre_hmi_wtpob`, all G0 to G7 clean |
 | G8 `/component-test` | PASS, 4444 components, no quality overlay, no error badge |
 | Elements drawn | All 33 wrapped elements found and drawn with a size, no console error: filter 12, generator 12, button 1, resistor 19, damper 13, switch 17, capacitor 19, diodes 19, ground 19, source 19, converter 19, transformer 19, bipolar transistor 19, MOSFET 19, logic 19, router 19, badge 23, check valve 2, two-way glyph 5, three-way glyph 7, battery 11, engine 6, atmospheric tank 11, automation readout 10, heat exchanger 44, heat pump 44, hydraulic separator 44, generator gauge 37, motor and pump gauge 38, valve gauge 26, hydraulic valve 4/3 10, hydraulic valve x/2 8, transmitter button 22 |
-| G11 `/component-test` | PENDING |
-| `wtp_suite.py`, both renderings | PENDING |
+| G11 `/component-test` | 21 of 21 devices, 831 leaf views, no fault (`--faceplate asm`, about 70 min); FAIL only on the instrument field identity carried from T0 (5.2 item 7). The first attempt stopped at once on an unsettled page (5.1 item 6) |
+| `wtp_suite.py`, both renderings | SUITE PASS (50 min): stock G8 6 of 6 routes, G11 44 of 44, G10 17 of 17, the walk PASS in every group; module G8 6 of 6, G11 44 of 44, G10 21 of 21, the walk PASS in every group (A-02 included); the plant restored with no difference |
 
 On module 0.5.0 (after B1): G11 21 of 21 devices, 314 leaf views, no fault (the damper device and the five alarm
 lamps included); the only finding the instrument field identity carried from T0.
@@ -98,16 +98,20 @@ lamps included); the only finding the instrument field identity carried from T0.
    created as an SQLite connection and an SQL historian of our own configuration; now part of `setup.sh gateway`.
 4. **The walk could not read a module filter** (C-10): `walk_plan.MODULE_PROP` had no row for the filter (W1) or
    the switch (B1). Fixed, and a test holds every kind of `MODULE_KIND` to a row.
-5. With 1 to 4: G10 PASS 17 of 17 (stock) and 21 of 21 (module), signed in; the walk PASS in every group on the stock
-   rendering, and in every group but one row on the module rendering (5.2 item 1).
+5. With 1 to 4: G10 PASS 17 of 17 (stock) and 21 of 21 (module), signed in, and the walk PASS in every group on both
+   renderings in the full suite on 0.6.0 (5.2 item 1).
+6. **The faceplate sweep started on an unsettled page.** The component test page of 0.6.0 (830 leaves) still sized an
+   element after the load and the fixed wait, and the sweep's guard took that for a change made by its first click.
+   `faceplates.settled_points` now waits for a still count before the sweep; the guard itself is unchanged (tests
+   added).
 
 ### 5.2 Open
 
-1. **Walk row A-02 on the module rendering.** Acknowledging TK-101's high level alarm from the alarm menu does not
-   take. It passed once on 0.4.4 and has failed in four runs since 0.5.0, from a clean alarm state too. The generated
-   project is byte-identical to the passing one, and the walk tools of the passing commit fail the same way, so the
-   cause lies on the gateway side of 0.5.0 (the bundle) or in the gateway's state; A-01 (AIT-301, same path) passes.
-   Not yet diagnosed.
+1. **Walk row A-02 on the module rendering depends on the order of the runs.** Acknowledging TK-101's high level
+   alarm from the alarm menu passed inside the full suite on 0.4.4 and on 0.6.0, and failed in four runs of the walk
+   alone on 0.5.0 (one from a clean alarm state, one with the walk tools of the passing commit). The generated project
+   was byte-identical throughout. The suite runs G8, G11 and G10 before the walk; the walk alone does not. Not
+   diagnosed; to be watched in T2's regressions.
 2. **The gauges overflow their boxes.** Their 240 by 280 box is not measured (B7); on the page the lower part of a
    gauge (the setpoint row) runs under the next section. G5 checks boxes, not drawings, so it cannot see it. The fix
    is a measurement of the element's size, as `measure_instruments.py` did for the instruments.
@@ -122,7 +126,8 @@ lamps included); the only finding the instrument field identity carried from T0.
 8. **The bundle doubled**: the module's script is 1.95 MB (0.99 MB at 0.4.3), and a module's browser resources load
    in every Perspective session of the gateway (wiki 12 section 7.4). Splitting the bundle by element, or loading the
    module-only kinds on demand, would bound the cost; not measured on a page.
-9. **The component test page is large**: 4444 components and 2052 tags; a G11 sweep takes about 18 minutes.
+9. **The component test page is large**: 4444 components, 831 leaves and 2052 tags; a G11 sweep now takes about 70
+   minutes, since it clicks every leaf. The module-only gallery could move to a page of its own, swept by G8 only.
 10. **The worker restart of the session stops background processes**: the Docker daemon and a running suite stopped
     once. `setup.sh` now starts `dockerd` in its own session, and long gate runs were started the same way.
 
