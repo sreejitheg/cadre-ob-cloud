@@ -4,6 +4,7 @@ Run from the repository root:  python -m unittest discover -s tests
 """
 import copy
 import json
+import os
 import re
 import sys
 import tempfile
@@ -2519,7 +2520,7 @@ class DeviceGateTests(unittest.TestCase):
 # ---------------------------------------------------------------------------------------
 SEQ = ["step", "stepText", "trigger", "fault"]
 SQ = "[default]t/SQ1"
-IGW = Path("F:/repos/Ignition-Wiki/schemas")
+IGW = Path(os.environ.get("CADRE_IGNITION_WIKI", "F:/repos/Ignition-Wiki")) / "schemas"
 
 
 def seq_tags(**members):

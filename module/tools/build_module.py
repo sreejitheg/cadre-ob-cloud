@@ -6,6 +6,7 @@ owner's file outside the repository (`~/.cadre/signing/signing.properties`) and 
 console or a file. `--offline` uses only the Gradle cache: the build never downloads.
 
 Usage:  python module/tools/build_module.py [--jdk C:/Users/<user>/.jdks/jdk-17...]
+        (without --jdk: CADRE_JDK17, else the newest jdk-17 of the owner's Windows locations)
 Prints the built file, its size and its SHA-256.
 """
 from __future__ import annotations
@@ -22,6 +23,9 @@ SIGNING = Path.home() / ".cadre" / "signing" / "signing.properties"
 
 
 def jdk17() -> Path | None:
+    # CADRE_JDK17 names the JDK where the owner's Windows locations below do not exist (a cloud session)
+    if os.environ.get("CADRE_JDK17"):
+        return Path(os.environ["CADRE_JDK17"])
     for base in (Path.home() / ".jdks", Path("C:/Program Files/Eclipse Adoptium"), Path("C:/Program Files/Java")):
         if base.exists():
             for d in sorted(base.iterdir(), reverse=True):
@@ -52,7 +56,8 @@ def main() -> int:
     r = subprocess.run([str(gradlew), "clean", a.task, "--offline", "--console=plain"], cwd=HERE, env=env)
     if r.returncode:
         return r.returncode
-    out = HERE / "build" / "CadreOpenBridge.modl"
+    # the module plugin names an unsigned build `<fileName>.unsigned.modl`
+    out = HERE / "build" / ("CadreOpenBridge.modl" if SIGNING.exists() else "CadreOpenBridge.unsigned.modl")
     data = out.read_bytes()
     print(f"built {out} {len(data)} bytes sha256 {hashlib.sha256(data).hexdigest()}")
     return 0
