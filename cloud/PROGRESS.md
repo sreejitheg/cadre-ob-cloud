@@ -213,3 +213,6 @@
   included; plant restored. G11 on the component test page: 21 of 21 devices, 831 leaves, no fault, only the
   instrument field identity of T0 (about 70 min). `cloud/REPORT-T1.md` completed. T1 ends here; T2 waits for the
   owner's review.
+- 2026-11-03 07:35: T2 started on the owner's word. The owner chose: a new frame option beside `openbridge` and `asm`
+  (both unchanged) with its own gates, and all 33 frame components wrapped (recipe section 6.1). C1 (the six bars and
+  graphs, module-only, display only) and F0 (a read-only frame design survey, `cloud/FRAME-DESIGN.md`) running.

@@ -301,6 +301,14 @@ the element's enumerations (section 5.1) and map or except each mismatch. No `AL
    recorded as an open item in the wiki subsection, and no binding writes. `automation-input-modal` is examined and,
    if it has no faithful wrap, recorded as not wrapped.
 
+### 6.1 The Owner's Decisions for T2 (2026-11-03)
+
+5. The parent framework moves onto OpenBridge's frame components through a **new frame option** beside
+   `--frame openbridge` and `--frame asm`, which stay unchanged; the new frame has its own gates, with G10's frame
+   checks adapted to it, and existing projects change only when switched over.
+6. **All 33 frame components** of the pinned release are wrapped, not only the set the current frame uses.
+7. The bars and graphs and the building blocks are module-only kinds, display only, as in T1.
+
 ## 7. The T1 Survey
 
 ### 7.1 The 31 elements
