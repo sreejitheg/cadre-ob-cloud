@@ -266,6 +266,11 @@ uploads, accepts the certificate and the EULA, and installs (`POST /modules/uplo
 `/modules/install`, GF-28). A restart interrupts every project on the gateway: at the source ask the owner first; in the cloud it is allowed.
 Each registration logs "Registered N Cadre OpenBridge components"; N must equal the component count (88 at 0.7.0).
 
+### 3.3.1 The Built File in the Repository
+
+A copy of the unsigned 0.7.0 build, the exact file tested at the end of T2, is kept with its SHA-256 in `cloud/release/`
+(cloud only, outside the merge back); its `README.md` says how a gateway accepts an unsigned module.
+
 ### 3.4 Sizes
 
 Measured on the build of 2026-11-03 12:45 UTC (0.7.0).

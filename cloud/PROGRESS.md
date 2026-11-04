@@ -345,3 +345,6 @@
   unexpected, no fault, 62 min). Final full offline suite: 1318 tests, all passing. `cloud/REPORT-T2.md` completed with the
   final results; `CONFIGURATION.md`, `wiki/14` and GF-113 brought up to date (the tree group only toggles; the bell and
   menu counts differ by design). Scratch worktrees removed. T2 ends here.
+- 2026-11-04: At the owner's request, the built module is kept in the repository: `cloud/release/` holds
+  `CadreOpenBridge-0.7.0-unsigned.modl` (the tested 0.7.0 build, 988,279 bytes), its SHA-256 and a README; cloud only,
+  so the source keeps `*.modl` ignored and builds signed from source. `CONFIGURATION.md` section 3.3.1 points to it.
