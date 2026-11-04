@@ -1,0 +1,110 @@
+{
+  "pages": {
+    "/": {
+      "title": "Devices",
+      "viewPath": "Showcase/Devices"
+    },
+    "/alarms": {
+      "title": "Alarm lists and zoom",
+      "viewPath": "Showcase/Alarms"
+    },
+    "/alerts": {
+      "title": "Alerts",
+      "viewPath": "Framework/AlertsPage"
+    },
+    "/charts": {
+      "title": "Charts and bars",
+      "viewPath": "Showcase/Charts"
+    },
+    "/frame-1": {
+      "title": "Frame components 1 of 3",
+      "viewPath": "Showcase/Frame1"
+    },
+    "/frame-2": {
+      "title": "Frame components 2 of 3",
+      "viewPath": "Showcase/Frame2"
+    },
+    "/frame-3": {
+      "title": "Frame components 3 of 3",
+      "viewPath": "Showcase/Frame3"
+    },
+    "/glyphs-1": {
+      "title": "Glyphs 1 of 2",
+      "viewPath": "Showcase/Glyphs1"
+    },
+    "/glyphs-2": {
+      "title": "Glyphs 2 of 2",
+      "viewPath": "Showcase/Glyphs2"
+    },
+    "/pipes": {
+      "title": "Pipes and bus",
+      "viewPath": "Showcase/Pipes"
+    },
+    "/symbols": {
+      "title": "Electrical symbols",
+      "viewPath": "Showcase/Symbols"
+    },
+    "/views-1": {
+      "title": "Library views 1 of 2",
+      "viewPath": "Showcase/Views1"
+    },
+    "/views-2": {
+      "title": "Library views 2 of 2",
+      "viewPath": "Showcase/Views2"
+    }
+  },
+  "sharedDocks": {
+    "cornerPriority": "top-bottom",
+    "left": [
+      {
+        "anchor": "fixed",
+        "autoBreakpoint": 768,
+        "content": "cover",
+        "handle": "hide",
+        "iconUrl": "",
+        "id": "nav",
+        "modal": true,
+        "resizable": false,
+        "show": "onDemand",
+        "size": 320,
+        "viewParams": {},
+        "viewPath": "Framework/OB/NavDock"
+      }
+    ],
+    "right": [
+      {
+        "anchor": "fixed",
+        "autoBreakpoint": 480,
+        "content": "push",
+        "handle": "hide",
+        "iconUrl": "",
+        "id": "faceplate",
+        "modal": false,
+        "resizable": false,
+        "show": "onDemand",
+        "size": 400,
+        "viewParams": {},
+        "viewPath": "Framework/SideMenu"
+      }
+    ],
+    "top": [
+      {
+        "anchor": "fixed",
+        "autoBreakpoint": 480,
+        "content": "push",
+        "handle": "hide",
+        "iconUrl": "",
+        "id": "topbar",
+        "modal": false,
+        "resizable": false,
+        "show": "visible",
+        "size": 84,
+        "viewParams": {
+          "appName": "Showcase",
+          "showUser": true
+        },
+        "viewPath": "Framework/OB/Head"
+      }
+    ]
+  }
+}

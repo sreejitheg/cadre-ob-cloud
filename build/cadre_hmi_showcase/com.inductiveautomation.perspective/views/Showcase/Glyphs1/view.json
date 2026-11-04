@@ -1,0 +1,4939 @@
+{
+  "custom": {
+    "live_automationreadout": true,
+    "live_battery": true,
+    "live_heatexchanger": true,
+    "live_tankatmospheric": true,
+    "live_valvethreeway": true,
+    "live_valvetwoway": true,
+    "s_battery_data": "sample",
+    "s_tankatmospheric_data": "sample",
+    "sim_battery_data": [],
+    "sim_tankatmospheric_data": [],
+    "tick": 0,
+    "v_automationbadge_componentSize": "regular",
+    "v_automationbadge_mode": "flat",
+    "v_automationbadge_type": "auto",
+    "v_automationreadout_componentSize": "regular",
+    "v_automationreadout_numberOfDigits": 3,
+    "v_automationreadout_position": "bottom",
+    "v_automationreadout_unit": "",
+    "v_automationreadout_value": 0,
+    "v_battery_componentSize": "regular",
+    "v_battery_data": [
+      20,
+      35,
+      30,
+      55,
+      70,
+      60,
+      85
+    ],
+    "v_battery_direction": "vertical",
+    "v_battery_hasIcon": false,
+    "v_battery_level": 0,
+    "v_battery_value": "regular",
+    "v_battery_variant": "trend",
+    "v_checkvalve_ariaLabel": "Check valve",
+    "v_checkvalve_componentSize": "regular",
+    "v_checkvalve_vertical": false,
+    "v_engine_componentSize": "regular",
+    "v_engine_direction": "vertical",
+    "v_engine_value": "static",
+    "v_heatexchanger_activated": false,
+    "v_heatexchanger_alert": false,
+    "v_heatexchanger_alertFrameStatus": "alarm",
+    "v_heatexchanger_alertFrameThickness": "small",
+    "v_heatexchanger_alertFrameType": "small-side-flip",
+    "v_heatexchanger_badgeAlert": "none",
+    "v_heatexchanger_badgeCommandLocked": "none",
+    "v_heatexchanger_badgeControl": "none",
+    "v_heatexchanger_badgeInterlock": "none",
+    "v_heatexchanger_componentSize": "regular",
+    "v_heatexchanger_medium": "regular",
+    "v_heatexchanger_positioning": "button",
+    "v_heatexchanger_showAlertIcon": false,
+    "v_heatexchanger_static": false,
+    "v_heatexchanger_tag": "",
+    "v_tankatmospheric_componentSize": "regular",
+    "v_tankatmospheric_data": [
+      20,
+      35,
+      30,
+      55,
+      70,
+      60,
+      85
+    ],
+    "v_tankatmospheric_direction": "vertical",
+    "v_tankatmospheric_hasIcon": false,
+    "v_tankatmospheric_level": 0,
+    "v_tankatmospheric_value": "regular",
+    "v_tankatmospheric_variant": "trend",
+    "v_valvethreeway_closed": false,
+    "v_valvethreeway_componentSize": "regular",
+    "v_valvethreeway_horisontal": false,
+    "v_valvethreeway_value": 0,
+    "v_valvethreeway_value2": 0,
+    "v_valvetwoway_closed": false,
+    "v_valvetwoway_componentSize": "regular",
+    "v_valvetwoway_value": 0,
+    "v_valvetwoway_vertical": false
+  },
+  "params": {},
+  "propConfig": {
+    "custom.sim_battery_data": {
+      "binding": {
+        "config": {
+          "path": "view.custom.tick"
+        },
+        "transforms": [
+          {
+            "code": "\timport math\n\tt = value / 1000.0\n\treturn [round(55 + 35 * math.sin(t / 5.0 + i * 0.8)) for i in range(7)]",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.sim_tankatmospheric_data": {
+      "binding": {
+        "config": {
+          "path": "view.custom.tick"
+        },
+        "transforms": [
+          {
+            "code": "\timport math\n\tt = value / 1000.0\n\treturn [round(55 + 35 * math.sin(t / 5.0 + i * 0.8)) for i in range(7)]",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.tick": {
+      "binding": {
+        "config": {
+          "expression": "toMillis(now(1000))"
+        },
+        "type": "expr"
+      }
+    },
+    "custom.v_battery_data": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_battery_data"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"sample\": [20, 35, 30, 55, 70, 60, 85], \"short series\": [20, 35, 30], \"empty\": []}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.v_tankatmospheric_data": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_tankatmospheric_data"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"sample\": [20, 35, 30, 55, 70, 60, 85], \"short series\": [20, 35, 30], \"empty\": []}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 2300,
+      "width": 1400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "card_automationbadge"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_automationbadge"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 20
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Automation Badge"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_automationbadge"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.automationbadge"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_automationbadge"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationbadge_mode",
+                      "name": "l_automationbadge_mode"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "mode"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationbadge_mode",
+                      "name": "e_automationbadge_mode"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationbadge_mode"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "flat",
+                          "value": "flat"
+                        },
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "enhanced",
+                          "value": "enhanced"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationbadge_type",
+                      "name": "l_automationbadge_type"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "type"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationbadge_type",
+                      "name": "e_automationbadge_type"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationbadge_type"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "auto",
+                          "value": "auto"
+                        },
+                        {
+                          "label": "manual",
+                          "value": "manual"
+                        },
+                        {
+                          "label": "manual-only",
+                          "value": "manual-only"
+                        },
+                        {
+                          "label": "local",
+                          "value": "local"
+                        },
+                        {
+                          "label": "local-only",
+                          "value": "local-only"
+                        },
+                        {
+                          "label": "command-locked",
+                          "value": "command-locked"
+                        },
+                        {
+                          "label": "interlock",
+                          "value": "interlock"
+                        },
+                        {
+                          "label": "interlock-inhibit",
+                          "value": "interlock-inhibit"
+                        },
+                        {
+                          "label": "alert-silenced",
+                          "value": "alert-silenced"
+                        },
+                        {
+                          "label": "caution",
+                          "value": "caution"
+                        },
+                        {
+                          "label": "warning",
+                          "value": "warning"
+                        },
+                        {
+                          "label": "alarm",
+                          "value": "alarm"
+                        },
+                        {
+                          "label": "level-critical",
+                          "value": "level-critical"
+                        },
+                        {
+                          "label": "level-high",
+                          "value": "level-high"
+                        },
+                        {
+                          "label": "level-medium",
+                          "value": "level-medium"
+                        },
+                        {
+                          "label": "level-low",
+                          "value": "level-low"
+                        },
+                        {
+                          "label": "level-diagnostic",
+                          "value": "level-diagnostic"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationbadge_componentSize",
+                      "name": "l_automationbadge_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationbadge_componentSize",
+                      "name": "e_automationbadge_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationbadge_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_automationbadge"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "automationbadge",
+                      "name": "automationbadge"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 32,
+                      "x": 128.0,
+                      "y": 136.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationbadge_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.mode": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationbadge_mode"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.type": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationbadge_type"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.automationbadge"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_checkvalve"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 260
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_checkvalve"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 268
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Check Valve"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_checkvalve"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 292
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.checkvalve"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_checkvalve"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 292
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Hydraulic check valve: a display-only glyph on a hydraulic diagram."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_checkvalve_ariaLabel",
+                      "name": "l_checkvalve_ariaLabel"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "ariaLabel"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_checkvalve_ariaLabel",
+                      "name": "e_checkvalve_ariaLabel"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_checkvalve_ariaLabel"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.text-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_checkvalve_vertical",
+                      "name": "l_checkvalve_vertical"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "vertical"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_checkvalve_vertical",
+                      "name": "e_checkvalve_vertical"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_checkvalve_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_checkvalve_componentSize",
+                      "name": "l_checkvalve_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_checkvalve_componentSize",
+                      "name": "e_checkvalve_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_checkvalve_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_checkvalve"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "checkvalve",
+                      "name": "checkvalve"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 376.0
+                    },
+                    "propConfig": {
+                      "props.ariaLabel": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_checkvalve_ariaLabel"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_checkvalve_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.vertical": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_checkvalve_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.checkvalve"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_valvetwoway"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 508
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_valvetwoway"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 516
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Two-Way Valve Glyph"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_valvetwoway"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 540
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.valvetwoway"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_valvetwoway"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 540
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Analog two-way valve glyph: the valve with its opening, without readout or alert frame."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvetwoway_value",
+                      "name": "l_valvetwoway_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvetwoway_value",
+                      "name": "e_valvetwoway_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvetwoway_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvetwoway_closed",
+                      "name": "l_valvetwoway_closed"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "closed"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvetwoway_closed",
+                      "name": "e_valvetwoway_closed"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvetwoway_closed"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvetwoway_vertical",
+                      "name": "l_valvetwoway_vertical"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "vertical"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvetwoway_vertical",
+                      "name": "e_valvetwoway_vertical"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvetwoway_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvetwoway_componentSize",
+                      "name": "l_valvetwoway_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvetwoway_componentSize",
+                      "name": "e_valvetwoway_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvetwoway_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_valvetwoway"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "valvetwoway",
+                      "name": "valvetwoway"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 624.0
+                    },
+                    "propConfig": {
+                      "props.closed": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvetwoway_closed"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvetwoway_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_valvetwoway}, (round(50 + 40 * sin(toMillis(now(1000)) / 1432 + 0))), {view.custom.v_valvetwoway_value})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.vertical": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvetwoway_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.valvetwoway"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_valvetwoway",
+                      "name": "live_valvetwoway"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 520
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_valvetwoway"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_valvethreeway"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 756
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_valvethreeway"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 764
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Three-Way Valve Glyph"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_valvethreeway"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 788
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.valvethreeway"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_valvethreeway"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 788
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Analog three-way valve glyph: the valve with two openings, without readout or alert frame."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvethreeway_value",
+                      "name": "l_valvethreeway_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvethreeway_value",
+                      "name": "e_valvethreeway_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvethreeway_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvethreeway_value2",
+                      "name": "l_valvethreeway_value2"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value2"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvethreeway_value2",
+                      "name": "e_valvethreeway_value2"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvethreeway_value2"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvethreeway_closed",
+                      "name": "l_valvethreeway_closed"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "closed"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvethreeway_closed",
+                      "name": "e_valvethreeway_closed"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvethreeway_closed"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvethreeway_horisontal",
+                      "name": "l_valvethreeway_horisontal"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "horisontal"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvethreeway_horisontal",
+                      "name": "e_valvethreeway_horisontal"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvethreeway_horisontal"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_valvethreeway_componentSize",
+                      "name": "l_valvethreeway_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 868
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_valvethreeway_componentSize",
+                      "name": "e_valvethreeway_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 886
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_valvethreeway_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_valvethreeway"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "valvethreeway",
+                      "name": "valvethreeway"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 872.0
+                    },
+                    "propConfig": {
+                      "props.closed": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvethreeway_closed"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvethreeway_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.horisontal": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvethreeway_horisontal"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_valvethreeway}, (round(50 + 40 * sin(toMillis(now(1000)) / 1432 + 0))), {view.custom.v_valvethreeway_value})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.value2": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_valvethreeway_value2"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.valvethreeway"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_valvethreeway",
+                      "name": "live_valvethreeway"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 768
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_valvethreeway"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_battery"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1004
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_battery"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1012
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Battery Indicator"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_battery"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1036
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.battery"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_battery"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1036
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Battery indicator: a battery drawn as a level bar or a trend graph, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_direction",
+                      "name": "l_battery_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_direction",
+                      "name": "e_battery_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "vertical",
+                          "value": "vertical"
+                        },
+                        {
+                          "label": "horizontal",
+                          "value": "horizontal"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_variant",
+                      "name": "l_battery_variant"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "variant"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_variant",
+                      "name": "e_battery_variant"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_variant"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "bar",
+                          "value": "bar"
+                        },
+                        {
+                          "label": "trend",
+                          "value": "trend"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_value",
+                      "name": "l_battery_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_value",
+                      "name": "e_battery_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "enhanced",
+                          "value": "enhanced"
+                        },
+                        {
+                          "label": "categorical",
+                          "value": "categorical"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_level",
+                      "name": "l_battery_level"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "level (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_level",
+                      "name": "e_battery_level"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_level"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_hasIcon",
+                      "name": "l_battery_hasIcon"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1116
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "hasIcon"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_hasIcon",
+                      "name": "e_battery_hasIcon"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1134
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_hasIcon"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_data",
+                      "name": "l_battery_data"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1116
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "data (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_data",
+                      "name": "e_battery_data"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1134
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_battery_data"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "sample",
+                          "value": "sample"
+                        },
+                        {
+                          "label": "short series",
+                          "value": "short series"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_battery_componentSize",
+                      "name": "l_battery_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1116
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_battery_componentSize",
+                      "name": "e_battery_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1134
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_battery_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_battery"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "battery",
+                      "name": "battery"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 1120.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_battery_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.data": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_battery}, ({view.custom.sim_battery_data}), {view.custom.v_battery_data})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_battery_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.hasIcon": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_battery_hasIcon"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.level": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_battery}, (round(50 + 40 * sin(toMillis(now(1000)) / 2387 + 2.1))), {view.custom.v_battery_level})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_battery_value"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.variant": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_battery_variant"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.battery"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_battery",
+                      "name": "live_battery"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 1016
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_battery"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_engine"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1252
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_engine"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1260
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Engine Indicator"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_engine"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1284
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.engine"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_engine"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1284
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_engine_value",
+                      "name": "l_engine_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_engine_value",
+                      "name": "e_engine_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_engine_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "static",
+                          "value": "static"
+                        },
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "enhanced",
+                          "value": "enhanced"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_engine_direction",
+                      "name": "l_engine_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_engine_direction",
+                      "name": "e_engine_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_engine_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "vertical",
+                          "value": "vertical"
+                        },
+                        {
+                          "label": "horizontal",
+                          "value": "horizontal"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_engine_componentSize",
+                      "name": "l_engine_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_engine_componentSize",
+                      "name": "e_engine_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_engine_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_engine"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "engine",
+                      "name": "engine"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 1368.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_engine_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_engine_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_engine_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.engine"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1500
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1508
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Atmospheric Tank Indicator"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1532
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.tankatmospheric"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1532
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_direction",
+                      "name": "l_tankatmospheric_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_direction",
+                      "name": "e_tankatmospheric_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "vertical",
+                          "value": "vertical"
+                        },
+                        {
+                          "label": "horizontal",
+                          "value": "horizontal"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_variant",
+                      "name": "l_tankatmospheric_variant"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "variant"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_variant",
+                      "name": "e_tankatmospheric_variant"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_variant"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "bar",
+                          "value": "bar"
+                        },
+                        {
+                          "label": "trend",
+                          "value": "trend"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_value",
+                      "name": "l_tankatmospheric_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_value",
+                      "name": "e_tankatmospheric_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "enhanced",
+                          "value": "enhanced"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_level",
+                      "name": "l_tankatmospheric_level"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "level (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_level",
+                      "name": "e_tankatmospheric_level"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_level"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_hasIcon",
+                      "name": "l_tankatmospheric_hasIcon"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1612
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "hasIcon"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_hasIcon",
+                      "name": "e_tankatmospheric_hasIcon"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1630
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_hasIcon"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_data",
+                      "name": "l_tankatmospheric_data"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1612
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "data (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_data",
+                      "name": "e_tankatmospheric_data"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1630
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_tankatmospheric_data"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "sample",
+                          "value": "sample"
+                        },
+                        {
+                          "label": "short series",
+                          "value": "short series"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_tankatmospheric_componentSize",
+                      "name": "l_tankatmospheric_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1612
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_tankatmospheric_componentSize",
+                      "name": "e_tankatmospheric_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1630
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_tankatmospheric_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "tankatmospheric",
+                      "name": "tankatmospheric"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 1616.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_tankatmospheric_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.data": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_tankatmospheric}, ({view.custom.sim_tankatmospheric_data}), {view.custom.v_tankatmospheric_data})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_tankatmospheric_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.hasIcon": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_tankatmospheric_hasIcon"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.level": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_tankatmospheric}, (round(50 + 40 * sin(toMillis(now(1000)) / 2387 + 2.1))), {view.custom.v_tankatmospheric_level})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_tankatmospheric_value"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.variant": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_tankatmospheric_variant"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.tankatmospheric"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_tankatmospheric",
+                      "name": "live_tankatmospheric"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 1512
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_tankatmospheric"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_automationreadout"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1748
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_automationreadout"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1756
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Automation Readout"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_automationreadout"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1780
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.automationreadout"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_automationreadout"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1780
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Automation readout: a value with its unit in a bordered chip, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationreadout_value",
+                      "name": "l_automationreadout_value"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "value (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationreadout_value",
+                      "name": "e_automationreadout_value"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationreadout_value"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationreadout_unit",
+                      "name": "l_automationreadout_unit"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "unit"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationreadout_unit",
+                      "name": "e_automationreadout_unit"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationreadout_unit"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.text-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationreadout_numberOfDigits",
+                      "name": "l_automationreadout_numberOfDigits"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "numberOfDigits"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationreadout_numberOfDigits",
+                      "name": "e_automationreadout_numberOfDigits"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationreadout_numberOfDigits"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationreadout_position",
+                      "name": "l_automationreadout_position"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "position"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationreadout_position",
+                      "name": "e_automationreadout_position"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationreadout_position"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "left",
+                          "value": "left"
+                        },
+                        {
+                          "label": "right",
+                          "value": "right"
+                        },
+                        {
+                          "label": "top",
+                          "value": "top"
+                        },
+                        {
+                          "label": "bottom",
+                          "value": "bottom"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_automationreadout_componentSize",
+                      "name": "l_automationreadout_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1860
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_automationreadout_componentSize",
+                      "name": "e_automationreadout_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1878
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_automationreadout_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_automationreadout"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "automationreadout",
+                      "name": "automationreadout"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 72,
+                      "x": 108.0,
+                      "y": 1864.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationreadout_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.numberOfDigits": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationreadout_numberOfDigits"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.position": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationreadout_position"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.unit": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_automationreadout_unit"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_automationreadout}, (round(50 + 40 * sin(toMillis(now(1000)) / 1432 + 0))), {view.custom.v_automationreadout_value})"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.automationreadout"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_automationreadout",
+                      "name": "live_automationreadout"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 1760
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_automationreadout"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_heatexchanger"
+                    },
+                    "position": {
+                      "height": 292,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1996
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_heatexchanger"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 2004
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Heat Exchanger"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_heatexchanger"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 2028
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.heatexchanger"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_heatexchanger"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 2028
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_medium",
+                      "name": "l_heatexchanger_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_medium",
+                      "name": "e_heatexchanger_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "graphic",
+                          "value": "graphic"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_static",
+                      "name": "l_heatexchanger_static"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "static"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_static",
+                      "name": "e_heatexchanger_static"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_static"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_tag",
+                      "name": "l_heatexchanger_tag"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "tag"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_tag",
+                      "name": "e_heatexchanger_tag"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_tag"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.text-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_positioning",
+                      "name": "l_heatexchanger_positioning"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "positioning"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_positioning",
+                      "name": "e_heatexchanger_positioning"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_positioning"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "point",
+                          "value": "point"
+                        },
+                        {
+                          "label": "button",
+                          "value": "button"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_activated",
+                      "name": "l_heatexchanger_activated"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "activated"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_activated",
+                      "name": "e_heatexchanger_activated"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_activated"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_badgeControl",
+                      "name": "l_heatexchanger_badgeControl"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "badgeControl"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_badgeControl",
+                      "name": "e_heatexchanger_badgeControl"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_badgeControl"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "none",
+                          "value": "none"
+                        },
+                        {
+                          "label": "local",
+                          "value": "local"
+                        },
+                        {
+                          "label": "local-only",
+                          "value": "local-only"
+                        },
+                        {
+                          "label": "manual",
+                          "value": "manual"
+                        },
+                        {
+                          "label": "manual-only",
+                          "value": "manual-only"
+                        },
+                        {
+                          "label": "auto",
+                          "value": "auto"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_badgeAlert",
+                      "name": "l_heatexchanger_badgeAlert"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "badgeAlert"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_badgeAlert",
+                      "name": "e_heatexchanger_badgeAlert"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_badgeAlert"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "none",
+                          "value": "none"
+                        },
+                        {
+                          "label": "silence",
+                          "value": "silence"
+                        },
+                        {
+                          "label": "caution",
+                          "value": "caution"
+                        },
+                        {
+                          "label": "warning",
+                          "value": "warning"
+                        },
+                        {
+                          "label": "alarm",
+                          "value": "alarm"
+                        },
+                        {
+                          "label": "level-critical",
+                          "value": "level-critical"
+                        },
+                        {
+                          "label": "level-high",
+                          "value": "level-high"
+                        },
+                        {
+                          "label": "level-medium",
+                          "value": "level-medium"
+                        },
+                        {
+                          "label": "level-low",
+                          "value": "level-low"
+                        },
+                        {
+                          "label": "level-diagnostic",
+                          "value": "level-diagnostic"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_badgeInterlock",
+                      "name": "l_heatexchanger_badgeInterlock"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "badgeInterlock"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_badgeInterlock",
+                      "name": "e_heatexchanger_badgeInterlock"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_badgeInterlock"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "none",
+                          "value": "none"
+                        },
+                        {
+                          "label": "interlock",
+                          "value": "interlock"
+                        },
+                        {
+                          "label": "interlock-inhibit",
+                          "value": "interlock-inhibit"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_badgeCommandLocked",
+                      "name": "l_heatexchanger_badgeCommandLocked"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2164
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "badgeCommandLocked"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_badgeCommandLocked",
+                      "name": "e_heatexchanger_badgeCommandLocked"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2182
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_badgeCommandLocked"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "none",
+                          "value": "none"
+                        },
+                        {
+                          "label": "command-locked",
+                          "value": "command-locked"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_alert",
+                      "name": "l_heatexchanger_alert"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2164
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alert (live)"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_alert",
+                      "name": "e_heatexchanger_alert"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2182
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_alert"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_alertFrameType",
+                      "name": "l_heatexchanger_alertFrameType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2164
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alertFrameType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_alertFrameType",
+                      "name": "e_heatexchanger_alertFrameType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2182
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_alertFrameType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "small-side-flip",
+                          "value": "small-side-flip"
+                        },
+                        {
+                          "label": "large-side-flip",
+                          "value": "large-side-flip"
+                        },
+                        {
+                          "label": "bottom-flip",
+                          "value": "bottom-flip"
+                        },
+                        {
+                          "label": "top-flip",
+                          "value": "top-flip"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_alertFrameThickness",
+                      "name": "l_heatexchanger_alertFrameThickness"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2164
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alertFrameThickness"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_alertFrameThickness",
+                      "name": "e_heatexchanger_alertFrameThickness"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 2182
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_alertFrameThickness"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "small",
+                          "value": "small"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_alertFrameStatus",
+                      "name": "l_heatexchanger_alertFrameStatus"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2220
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alertFrameStatus"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_alertFrameStatus",
+                      "name": "e_heatexchanger_alertFrameStatus"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 2238
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_alertFrameStatus"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "alarm",
+                          "value": "alarm"
+                        },
+                        {
+                          "label": "warning",
+                          "value": "warning"
+                        },
+                        {
+                          "label": "caution",
+                          "value": "caution"
+                        },
+                        {
+                          "label": "level-critical",
+                          "value": "level-critical"
+                        },
+                        {
+                          "label": "level-high",
+                          "value": "level-high"
+                        },
+                        {
+                          "label": "level-medium",
+                          "value": "level-medium"
+                        },
+                        {
+                          "label": "level-low",
+                          "value": "level-low"
+                        },
+                        {
+                          "label": "level-diagnostic",
+                          "value": "level-diagnostic"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_showAlertIcon",
+                      "name": "l_heatexchanger_showAlertIcon"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2220
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "showAlertIcon"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_showAlertIcon",
+                      "name": "e_heatexchanger_showAlertIcon"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 2238
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_showAlertIcon"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_heatexchanger_componentSize",
+                      "name": "l_heatexchanger_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2220
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_heatexchanger_componentSize",
+                      "name": "e_heatexchanger_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 2238
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_heatexchanger_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_heatexchanger"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "heatexchanger",
+                      "name": "heatexchanger"
+                    },
+                    "position": {
+                      "height": 96,
+                      "width": 152,
+                      "x": 68.0,
+                      "y": 2088.0
+                    },
+                    "propConfig": {
+                      "props.activated": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_activated"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.live_heatexchanger}, (floor(toMillis(now(1000)) / 5000) % 4 = 3), {view.custom.v_heatexchanger_alert})"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.alertFrameStatus": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_alertFrameStatus"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.alertFrameThickness": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_alertFrameThickness"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.alertFrameType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_alertFrameType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.badgeAlert": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_badgeAlert"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.badgeCommandLocked": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_badgeCommandLocked"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_badgeControl"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.badgeInterlock": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_badgeInterlock"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_medium"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.positioning": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_positioning"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.showAlertIcon": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_showAlertIcon"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.static": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_static"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_heatexchanger_tag"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.heatexchanger"
+                  },
+                  {
+                    "meta": {
+                      "domId": "live_heatexchanger",
+                      "name": "live_heatexchanger"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 128,
+                      "x": 1248,
+                      "y": 2008
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.live_heatexchanger"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "label": {
+                        "position": "right",
+                        "text": "Live"
+                      }
+                    },
+                    "type": "ia.input.toggle-switch"
+                  }
+                ],
+                "meta": {
+                  "name": "Diagram"
+                },
+                "position": {
+                  "basis": "2300px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "height": "2300px",
+                    "minWidth": "1400px",
+                    "overflow": "hidden",
+                    "width": "1400px"
+                  }
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "Sizer"
+            },
+            "position": {
+              "basis": "2300px",
+              "grow": 0,
+              "shrink": 0
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "height": "2300px",
+                "overflow": "hidden",
+                "width": "1400px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Canvas"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}
