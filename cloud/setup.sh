@@ -7,7 +7,7 @@
 #   cloud/setup.sh gateway      start and commission the Ignition 8.3.6 gateway in Docker on port 8088: admin user,
 #                               API token, test user, unsigned modules allowed. Needs ACCEPT_IGNITION_EULA=Y, set by
 #                               the owner on the cloud environment; this script never sets it.
-#   cloud/setup.sh trust-module after a module install and restart: trust the unsigned Cadre OpenBridge module at the
+#   cloud/setup.sh trust-module after a module install and restart: trust the unsigned Cadre HMI Components module at the
 #                               gateway's commissioning step and restart the container, so that the module starts.
 #
 # Measured in the T0 session (2026-11-03) on Ubuntu 24.04 with Docker CLI 29.9.2:
@@ -200,9 +200,11 @@ trust_module() {
   if [[ "$s" == *COMMISSIONING* ]]; then
     local jar; jar=$(mktemp)
     curl -s -c "$jar" -b "$jar" "$GW/bootstrap" >/dev/null
-    curl -s -c "$jar" -b "$jar" "$GW/get-step?step=modules&name=modules" >/dev/null
+    local step lic='[]'; step=$(curl -s -c "$jar" -b "$jar" "$GW/get-step?step=modules&name=modules" || true)
+    # A module whose licence page changed (0.8.0) also lists a licence entry at this step; accept the module's own page.
+    [[ "$step" == *license* ]] && lic='["cadre.hmi.ob"]'
     curl -s -c "$jar" -b "$jar" -H 'Content-Type: application/json' -X POST "$GW/post-step" \
-      -d '{"id":"modules","step":"modules","data":{"acceptedLicenses":[],"acceptedCertificates":["cadre.hmi.ob"]}}' >/dev/null
+      -d '{"id":"modules","step":"modules","data":{"acceptedLicenses":'"$lic"',"acceptedCertificates":["cadre.hmi.ob"]}}' >/dev/null
     rm -f "$jar"
     say "unsigned module trusted; restarting $CONTAINER"
     docker restart "$CONTAINER" >/dev/null

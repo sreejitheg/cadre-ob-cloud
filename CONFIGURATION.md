@@ -170,7 +170,7 @@ commissioning page does:
 2. `POST /post-step` with `{"id":"modules","step":"modules","data":{"acceptedLicenses":[],"acceptedCertificates":["cadre.hmi.ob"]}}`.
 3. `docker restart cadre-gw`; wait for `RUNNING`.
 
-A module whose licence page changed (0.8.0 changed `license.html`) lists a `license` entry at the same step (`GET /get-step`), and `trust-module`, which sends an empty `acceptedLicenses`, leaves the gateway at the step. The same `POST /post-step` with `"acceptedLicenses":["cadre.hmi.ob"]`, followed by `docker restart cadre-gw`, completes it (measured 2026-11-04).
+A module whose licence page changed (0.8.0 changed `license.html`) lists a `license` entry at the same step (`GET /get-step`), and `trust-module`, which sends an empty `acceptedLicenses`, leaves the gateway at the step. The same `POST /post-step` with `"acceptedLicenses":["cadre.hmi.ob"]`, followed by `docker restart cadre-gw`, completes it (measured 2026-11-04). `cloud/setup.sh trust-module` now reads the step first and accepts the module's own licence page when the step lists one.
 
 The module then starts and logs "Registered N Cadre HMI Components components". An upgrade of a module already trusted needs no step
 (GF-106). A signed module would need none; the source host signs and the cloud does not.
