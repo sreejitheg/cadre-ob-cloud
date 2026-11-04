@@ -266,6 +266,26 @@ uploads, accepts the certificate and the EULA, and installs (`POST /modules/uplo
 `/modules/install`, GF-28). A restart interrupts every project on the gateway: at the source ask the owner first; in the cloud it is allowed.
 Each registration logs "Registered N Cadre OpenBridge components"; N must equal the component count (88 at 0.7.0).
 
+### 3.3.0 Signing
+
+Measured on 2026-11-04 from the module plugin `io.ia.sdk.modl` 0.1.1 (`gradle-module-plugin-0.1.1.jar`) and the signer it calls
+(`com.inductiveautomation.ignitionsdk:module-signer:0.0.1.ia`), both in the Gradle cache after the first build:
+
+1. `module/build.gradle.kts` signs when the Gradle property `ignition.signing.keystoreFile` is given and skips signing otherwise
+   (`skipModlSigning`). The plugin then requires five properties: `ignition.signing.keystoreFile`, `ignition.signing.keystorePassword`,
+   `ignition.signing.certAlias`, `ignition.signing.certFile` and `ignition.signing.certPassword`.
+2. `module/tools/build_module.py` reads them from `~/.cadre/signing/signing.properties` (one `name=value` per line, outside the repository)
+   and passes each as an environment variable `ORG_GRADLE_PROJECT_<name>`, so no secret reaches the command line or a file of the
+   repository. With the file present the build writes `CadreOpenBridge.modl`, without it `CadreOpenBridge.unsigned.modl`.
+3. The keystore is read as JKS, or as PKCS#12 when its file name ends in `.pfx`. The key under the alias must be an RSA private key: the
+   signer signs with SHA256withRSA. The file named by `certFile` is the certificate chain; the signer stores it in the module as
+   `certificates.p7b`, so it is a PKCS#7 chain file.
+4. The signer also has a command line (`com.inductiveautomation.ignitionsdk.ModuleSigner$Main`, with `commons-cli` and `commons-io` on the
+   class path) taking `-keystore`, `-keystore-pwd`, `-alias`, `-alias-pwd`, `-chain`, `-module-in` and `-module-out`: it signs an already
+   built `.modl` without a rebuild (not tried in the cloud).
+5. A gateway asks an administrator once to accept a module's certificate; a later module signed with the same certificate installs without
+   asking again. Signing stays on the owner's host: the cloud sessions build unsigned and hold no signing key.
+
 ### 3.3.1 The Built File in the Repository
 
 A copy of the unsigned 0.7.0 build, the exact file tested at the end of T2, is kept with its SHA-256 in `cloud/release/`

@@ -348,3 +348,6 @@
 - 2026-11-04: At the owner's request, the built module is kept in the repository: `cloud/release/` holds
   `CadreOpenBridge-0.7.0-unsigned.modl` (the tested 0.7.0 build, 988,279 bytes), its SHA-256 and a README; cloud only,
   so the source keeps `*.modl` ignored and builds signed from source. `CONFIGURATION.md` section 3.3.1 points to it.
+- 2026-11-04: Module signing documented in `CONFIGURATION.md` section 3.3.0 from the plugin and signer jars in the Gradle cache: the
+  five `ignition.signing.*` properties, JKS or PKCS#12 (`.pfx`) keystores, an RSA key (SHA256withRSA), the chain stored as
+  `certificates.p7b`, and the signer's command line for signing a built file.
