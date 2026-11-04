@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "An option was pressed (also an option that opens a flyout). event.value and event.label name it.",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The `value` of the option that was pressed."
+    },
+    "label": {
+      "type": "string",
+      "description": "The `label` of the option that was pressed."
+    }
+  }
+}

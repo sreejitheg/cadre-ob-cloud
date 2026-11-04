@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The group was opened. The event carries nothing.",
+  "properties": {}
+}

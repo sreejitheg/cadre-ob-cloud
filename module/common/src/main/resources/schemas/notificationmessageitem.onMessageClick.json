@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The message was pressed outside its action. The event carries nothing.",
+  "properties": {}
+}

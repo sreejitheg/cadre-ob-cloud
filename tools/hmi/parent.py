@@ -26,9 +26,9 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, theme, library, framework, scripts, navigation  # noqa: E402
+    from hmi import pv, theme, library, framework, scripts, navigation, obframe, obasm  # noqa: E402
 else:
-    from . import pv, theme, library, framework, scripts, navigation
+    from . import pv, theme, library, framework, scripts, navigation, obframe, obasm
 
 ROOT = Path(__file__).resolve().parents[2]
 PARENT = "cadre_hmi_base"
@@ -77,7 +77,7 @@ def build_parent(name: str = PARENT) -> tuple[pv.Project, dict]:
         prj.add_view(path, doc)
         contracts[path] = {"view": path, "kind": "framework",
                            "params": doc.get("params", {})}
-    for path, doc in sorted(navigation.views().items()):   # the ASM frame's views (COB-160), used only by a child with --frame asm
+    for path, doc in sorted({**navigation.views(), **obframe.views(), **obasm.views()}.items()):   # the ASM (COB-160), OpenBridge and OpenBridge ASM frames' views, used only by a child with --frame asm, ob or obasm
         prj.add_view(path, doc)
         contracts[path] = {"view": path, "kind": "framework", "params": doc.get("params", {})}
     prj.add_script_library("cadre/hmi", scripts.HMI)

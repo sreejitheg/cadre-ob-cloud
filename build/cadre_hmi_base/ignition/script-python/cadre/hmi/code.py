@@ -1744,9 +1744,10 @@ def _clock(ms):
 
 # --- several floating faceplates (COB-160, DESIGN section 6) ---------------------------------------------
 def asm_frame(session):
-	"""True while the session runs the ASM frame (`session.custom.frame`, written by `screen.py --frame asm`);
+	"""True while the session runs the ASM frame (`session.custom.frame`, written by `screen.py --frame asm`, or its OpenBridge
+	component variant `--frame obasm`);
 	a project built without the option, or before it, answers False and keeps the single floating faceplate."""
-	return _text(_custom(session, "frame", "openbridge")) == "asm"
+	return _text(_custom(session, "frame", "openbridge")) in ("asm", "obasm")
 
 
 def float_id(device):
@@ -2200,3 +2201,179 @@ def banner_alarms(session, route=""):
 			"state": state, "deviceId": folder if d is not None else "", "deviceKind": _text(d["kind"]) if d is not None else "",
 			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else ""})
 	return out
+
+
+# --- the OpenBridge frame (`--frame ob`, tools/hmi/obframe.py) ----------------------------------------------
+# The Cadre priority to the count of OpenBridge's `AlertCounts` (wiki 13 section 11.1: Critical the critical colour,
+# High alarm, Medium warning, Low caution, Diagnostic its own level), for the `alerts` of a navigation item.
+OB_COUNT_OF = {"Critical": "countLevelCritical", "High": "countAlarm", "Medium": "countWarning", "Low": "countCaution",
+	"Diagnostic": "countLevelDiagnostic"}
+
+
+def ob_items(kind, rows, state=None, icons=None):
+	"""The item objects of the module's frame components (`items` of `cadre.ob.alertmenu` and
+	`cadre.ob.navigationmenu`: `tag`, the element's attributes, `id`, `children`), built from rows the library already
+	answers. It reads nothing but its arguments (and formats the times).
+
+	`kind` "alerts": `rows` are `alarm_list` records, `state` whether the session may acknowledge (W8). A row is an
+	`obc-alert-menu-item` whose `id` is the alarm event's id; ACK shows while the alarm is unacknowledged and is disabled
+	without the permission (the scripts refuse anyway, `ack`).
+	`kind` "nav": `rows` are navigation items (`nav_items`, or the footer: `label`, `path`, `icon`, optional `counts`),
+	`state` the current route, `icons` the OpenBridge icon names the module bundles. An item's `id` is its route and an
+	item that names a node shows the node's counts as `alerts`. An icon outside `icons` is left out."""
+	out = []
+	if kind == "alerts":
+		for r in (rows or []):
+			acked = r["acknowledged"] is not False
+			day = ""
+			try:
+				day = system.date.format(system.date.fromMillis(long(r["time"])), "d MMM")
+			except Exception:
+				pass
+			out.append({"tag": "obc-alert-menu-item", "id": _text(r["id"]), "title": _text(r["text"]),
+				"description": _text(r["source"]), "day": day, "time": _clock(r["time"]),
+				"status": "acknowledged" if acked else "unacknowledged",
+				"primaryActionState": "enabled" if state else "disabled",
+				"children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": r["type"],
+					"active": r["active"] is True, "acknowledged": acked}]})
+		return out
+	for it in (rows or []):
+		path = _text(it["path"])
+		icon = ""
+		counts = None
+		try:
+			icon = _text(it["icon"])
+		except Exception:
+			pass
+		try:
+			counts = it["counts"]
+		except Exception:
+			pass
+		item = {"tag": "obc-navigation-item", "id": path, "label": _text(it["label"]), "checked": path == _text(state)}
+		if icon and icon in (icons or []):
+			item["hasIcon"] = True
+			item["children"] = [{"tag": "obi-" + icon, "slot": "icon"}]
+		if counts is not None and counts["total"] > 0:
+			item["alerts"] = dict((OB_COUNT_OF[p], counts[p]) for p in OB_COUNT_OF)
+		out.append(item)
+	return out
+
+
+# --- the OpenBridge frame, ASM variant (`--frame obasm`, tools/hmi/obasm.py) ---------------------------------
+PIVOT_PAGES = (("mimic", "Mimic"), ("alarms", "Alarms"), ("trend", "Trend"))
+ROW_ACTION_KEYS = ("action", "route", "nodeId", "deviceId", "deviceKind", "deviceTitle", "deviceLabel", "tab", "close")
+
+
+def _alerts_of(counts):
+	"""The `alerts` object of a row of the tree or the navigation menu from a node's counts (the same table as `ob_items`), else None."""
+	if counts is None or counts["total"] <= 0:
+		return None
+	return dict((OB_COUNT_OF[p], counts[p]) for p in OB_COUNT_OF)
+
+
+def _tree_rows(rows, route):
+	"""The tree rows of `nav_tree`'s list: a node row is followed by the rows beneath it, deeper by one. A row that is followed by
+	deeper rows is a group (open while the page of `route` stands in it), any other a leaf; a node group with no page of its own
+	gets an Alarms leaf, so that its destination (the Alarms page of the node) stays reachable. Each row gets an `id`."""
+	roots = []
+	stack = []
+	for i in range(len(rows)):
+		r = rows[i]
+		rid = "n:" + _text(r["nodeId"]) if r["kind"] == "node" else "p:" + _text(r["route"]) if _text(r["route"]) else "r" + unicode(i)
+		item = {"row": r, "id": rid, "children": [], "checked": r["selected"] is True}
+		depth = int(r["depth"] or 0)
+		while stack and stack[-1][0] >= depth:
+			stack.pop()
+		if stack:
+			stack[-1][1]["children"].append(item)
+		else:
+			roots.append(item)
+		stack.append((depth, item))
+	return roots
+
+
+def _tree_item(node):
+	"""The tree object of `_tree_rows`' node, and whether it holds the checked row."""
+	r = node["row"]
+	open_ = node["checked"]
+	kids = []
+	for k in node["children"]:
+		o, inside = _tree_item(k)
+		kids.append(o)
+		open_ = open_ or inside
+	out = {"id": node["id"], "label": _text(r["label"])}
+	alerts = _alerts_of(r["counts"]) if r["kind"] == "node" else None
+	if alerts is not None:
+		out["alerts"] = alerts
+	if kids:
+		out["tag"] = "obc-tree-navigation-group"
+		out["hasIcon"] = False
+		out["expanded"] = open_
+		if r["kind"] == "node" and not _text(r["route"]):
+			kids.insert(0, {"tag": "obc-tree-navigation-item", "id": node["id"] + ":alarms", "label": "Alarms", "hasLeadingIcon": False})
+		out["children"] = kids
+	else:
+		out["tag"] = "obc-tree-navigation-item"
+		out["hasLeadingIcon"] = False
+		out["checked"] = node["checked"]
+	return out, open_
+
+
+def _stored(r, rid):
+	"""The part of a row a press needs, with its `id` (kept in the view for the event script)."""
+	out = dict((k, _text(r[k])) for k in ROW_ACTION_KEYS)
+	out["id"] = rid
+	return out
+
+
+def obasm_items(kind, data, state=None, icons=None):
+	"""The items of the ASM variant's components, built from lists the library already answers; it reads nothing but its
+	arguments.
+
+	`kind` "pivot": `data` is the node's first page route (the head's `mimicRoute`); the three `obc-pivot-item` of the header, Mimic
+	disabled while the node has no page. `kind` "tabs": `data` is the head's `tabs`; the `tabs` of the tab row (`id` the page's route).
+	`kind` "tab": the same `data`; the id of the selected tab.
+	`kind` "tree": `data` is `nav_tree`'s rows, `state` the current route, `icons` as for `ob_items`; answers {"rows", "items"}: the rows
+	a press looks up by `id`, and the tree (`obc-tree-navigation-group` and `-item`, `alerts` from the node's counts).
+	`kind` "support": `data` is `nav_support`'s rows; answers {"rows", "items"} with `obc-navigation-item` (an icon outside `icons` is left out)."""
+	if kind == "pivot":
+		return [{"tag": "obc-pivot-item", "id": k, "value": k, "label": label, "hasLabel": True,
+			"disabled": k == "mimic" and _text(data) == ""} for k, label in PIVOT_PAGES]
+	if kind == "tabs":
+		return [{"id": _text(t["route"]), "title": _text(t["label"])} for t in (data or [])]
+	if kind == "tab":
+		for t in (data or []):
+			if t["selected"] is True:
+				return _text(t["route"])
+		return ""
+	rows = list(data or [])
+	if kind == "tree":
+		items = []
+		stored = []
+		nodes = _tree_rows(rows, state)
+		todo = list(nodes)
+		while todo:
+			n = todo.pop(0)
+			stored.append(_stored(n["row"], n["id"]))
+			if n["children"] and n["row"]["kind"] == "node" and not _text(n["row"]["route"]):
+				a = _stored(n["row"], n["id"] + ":alarms")
+				a["route"] = ""
+				a["action"] = "alarms"
+				stored.append(a)
+			todo = n["children"] + todo
+		for n in nodes:
+			items.append(_tree_item(n)[0])
+		return {"rows": stored, "items": items}
+	out = []
+	stored = []
+	for i in range(len(rows)):
+		r = rows[i]
+		rid = "s:" + (_text(r["route"]) or _text(r["action"]) or unicode(i))
+		stored.append(_stored(r, rid))
+		item = {"tag": "obc-navigation-item", "id": rid, "label": _text(r["label"]), "checked": r["selected"] is True}
+		icon = _text(r["icon"])
+		if icon and icon in (icons or []):
+			item["hasIcon"] = True
+			item["children"] = [{"tag": "obi-" + icon, "slot": "icon"}]
+		out.append(item)
+	return {"rows": stored, "items": out}

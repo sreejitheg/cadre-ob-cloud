@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "A battery mode was chosen. event.mode is its name.",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "description": "The name of the mode chosen."
+    }
+  }
+}

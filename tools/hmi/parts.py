@@ -278,6 +278,8 @@ def check(desc: dict, rep) -> None:
                 rep.errors.append(f"{k}: the id {p['id']!r} is also a symbol's")
     for b in desc.get("buttons", []):
         a = b["action"]
+        if b.get("render") == "module" and a["type"] != "pulse":
+            rep.errors.append(f"button {b['id']}: `render: module` is for a pulse button; this action is {a['type']}")
         if a["type"] == "faceplate":
             sym, _folder = _device_of(desc, a["device"])
             if sym is None and not a.get("kind"):
@@ -378,11 +380,13 @@ def _button_classes(b: dict) -> str:
     return "cadre/button/%s cadre/font/button" % ("flat" if b.get("style") == "flat" else "normal")
 
 
-def button_node(b: dict, desc: dict, rep) -> tuple[dict, dict, dict]:
+def button_node(b: dict, desc: dict, rep, module: bool = False) -> tuple[dict, dict, dict]:
     """(node, view custom defaults, view custom bindings) of one command button, a flex row at the descriptor's
     box. A route or a faceplate opener is a button alone. A pulse is a button, a question with Confirm and
     Cancel in its place once pressed (P10), and the pulse made by `cadre.hmi.page_pulse` (write path W18):
-    the buttons that call it bind `enabled` to the permission of that path (gate G7 commands)."""
+    the buttons that call it bind `enabled` to the permission of that path (gate G7 commands). `module` is whether the
+    page is built under the module rendering with the module's button available: a pulse that asks for `render: module`
+    then has the module's `cadre.ob.button` as its question button, and the library's button otherwise."""
     screen = _screen()
     a, bid, label = b["action"], safe(b["id"]), b["label"]
     pos = pv.cpos(b["x"], b["y"], b["w"], b["h"])
@@ -406,12 +410,24 @@ def button_node(b: dict, desc: dict, rep) -> tuple[dict, dict, dict]:
     pend, msg = f"pend_{bid}", f"msg_{bid}"
     can = pv.bind(pv.expr("{view.custom.can.%s}" % PULSE_PATH))
     question = a.get("confirm") or f"{label}?"
-    main = pv.node("ia.input.button", "Press", pv.fpos(grow=1, basis="0px"), {"text": label, "style": style},
-                   prop_config={"position.display": pv.bind(pv.expr("!{view.custom.%s}" % pend)),
-                                "props.enabled": can,
-                                "props.text": pv.bind(pv.expr("if(len({view.custom.%s}) > 0, {view.custom.%s}, %s)"
-                                                              % (msg, msg, quote(label))))},
-                   events=pv.on_action([f"self.view.custom.{msg} = ''", f"self.view.custom.{pend} = True"]))
+    ask_lines = [f"self.view.custom.{msg} = ''", f"self.view.custom.{pend} = True"]
+    shown = pv.bind(pv.expr("if(len({view.custom.%s}) > 0, {view.custom.%s}, %s)" % (msg, msg, quote(label))))
+    if module and b.get("render") == "module":
+        # The module's button (spike T0 wrap W3, wiki page 12 section 17.12) takes the place of the Press button: its
+        # `onPress` asks the same question, and the Confirm button below makes the pulse through `page_pulse`, which
+        # asks for the role again. The component has no `enabled`, so it is made static while the session lacks the
+        # permission of the path (the role check is in the Confirm button and in `page_pulse`, not in this button).
+        main = pv.node("cadre.ob.button", "Press", pv.fpos(grow=1, basis="0px"), {
+            "tag": label, "positioning": "button", "readoutPosition": "right"},
+            prop_config={"position.display": pv.bind(pv.expr("!{view.custom.%s}" % pend)),
+                         "props.static": pv.bind(pv.expr("!{view.custom.can.%s}" % PULSE_PATH)),
+                         "props.tag": shown},
+            events={"component": {"onPress": pv.script_handler(ask_lines)}})
+    else:
+        main = pv.node("ia.input.button", "Press", pv.fpos(grow=1, basis="0px"), {"text": label, "style": style},
+                       prop_config={"position.display": pv.bind(pv.expr("!{view.custom.%s}" % pend)),
+                                    "props.enabled": can, "props.text": shown},
+                       events=pv.on_action(ask_lines))
     ask = pv.node("ia.display.label", "Question", pv.fpos(grow=1, basis="0px"), {
         "text": question, "style": {"classes": "cadre/font/label cadre/text/active", "padding": "0 6px",
                                     "overflow": "hidden", "textOverflow": "ellipsis", "whiteSpace": "nowrap"}},
@@ -640,9 +656,9 @@ def emphasised_label(lb: dict, tag_root: str) -> tuple[dict, dict, dict]:
 # ---------------------------------------------------------------------------------------
 # The diagram's parts, and fit
 # ---------------------------------------------------------------------------------------
-def diagram_parts(desc: dict, contracts: dict, limits: dict, rep) -> dict:
+def diagram_parts(desc: dict, contracts: dict, limits: dict, rep, module: bool = False) -> dict:
     """The nodes the parts add to a diagram page: `under` (lines, drawn with the pipes) and `over` (bars,
-    trends, buttons, on top of the symbols), and the view custom they need."""
+    trends, buttons, on top of the symbols), and the view custom they need. `module`: see `button_node`."""
     check(desc, rep)
     out = {"under": [], "over": [], "custom": {}, "custom_cfg": {}}
     if rep.errors and desc.get("screen", {}).get("layout", "diagram") != "diagram":
@@ -687,7 +703,7 @@ def diagram_parts(desc: dict, contracts: dict, limits: dict, rep) -> dict:
         if (library.ICONS / f"{lk.get('icon', LINK_ICON)}.json").exists():   # (a missing icon is an error of `check`)
             out["over"].append(link_node(lk))
     for b in desc.get("buttons", []):
-        node, c, cc = button_node(b, desc, rep)
+        node, c, cc = button_node(b, desc, rep, module)
         out["over"].append(node)
         out["custom"].update(c)
         out["custom_cfg"].update(cc)

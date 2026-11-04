@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "medium": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "graphic",
+        "medium"
+      ],
+      "default": "regular",
+      "description": "What the graphic area shows: regular (one grey area), graphic (two grey halves) or medium (hot/cold halves)."
+    },
+    "static": {
+      "type": "boolean",
+      "default": false,
+      "description": "Display-only tile with a flat grey frame and a bare icon, rendered as a non-interactive <div role=\"img\">. Hides the graphic area."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "Identifier rendered in the tag readout below the frame (for example #0000); also the accessible name. The cell collapses when empty."
+    },
+    "positioning": {
+      "type": "string",
+      "enum": [
+        "point",
+        "button"
+      ],
+      "default": "button",
+      "description": "Host positioning model \u2014 see TankPositioning. button (default) fills the parent, point uses the fixed design footprint with the P&ID anchor."
+    },
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Paints the activated background on the halo. Needs an interactive tile. Available when clickable==true."
+    },
+    "badgeControl": {
+      "type": "string",
+      "enum": [
+        "none",
+        "local",
+        "local-only",
+        "manual",
+        "manual-only",
+        "auto"
+      ],
+      "default": "none",
+      "description": "Mode badge (auto / manual / local variants), first in the badge row."
+    },
+    "badgeAlert": {
+      "type": "string",
+      "enum": [
+        "none",
+        "silence",
+        "caution",
+        "warning",
+        "alarm",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "none",
+      "description": "Alert badge, second in the badge row."
+    },
+    "badgeInterlock": {
+      "type": "string",
+      "enum": [
+        "none",
+        "interlock",
+        "interlock-inhibit"
+      ],
+      "default": "none",
+      "description": "Interlock badge, third in the badge row."
+    },
+    "badgeCommandLocked": {
+      "type": "string",
+      "enum": [
+        "none",
+        "command-locked"
+      ],
+      "default": "none",
+      "description": "Command-locked badge, last in the badge row."
+    },
+    "alert": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show an alert-frame overlay around the halo, mirroring obc-automation-tank."
+    },
+    "alertFrameType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "small-side-flip",
+        "large-side-flip",
+        "bottom-flip",
+        "top-flip"
+      ],
+      "default": "small-side-flip",
+      "description": "Shape of the alert frame. Available when alert==true."
+    },
+    "alertFrameThickness": {
+      "type": "string",
+      "enum": [
+        "small",
+        "large"
+      ],
+      "default": "small",
+      "description": "Thickness of the alert frame. Available when alert==true."
+    },
+    "alertFrameStatus": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "alarm",
+      "description": "Alert status the frame is coloured for. Available when alert==true."
+    },
+    "showAlertIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows the slotted alert icon inside the frame. Available when alert==true."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

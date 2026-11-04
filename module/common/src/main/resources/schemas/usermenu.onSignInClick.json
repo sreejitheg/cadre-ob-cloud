@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Sign in button was pressed. The event carries nothing: the module never reads a user name or a password, and the page's script opens the gateway's own login.",
+  "properties": {}
+}

@@ -1,0 +1,217 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "condensed": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-system-menu` property `condensed`."
+    },
+    "showSettingsButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-system-menu` property `showSettingsButton`."
+    },
+    "activeSubMenu": {
+      "type": "string",
+      "enum": [
+        "main",
+        "wifi",
+        "audio",
+        "microphone",
+        "battery"
+      ],
+      "default": "main",
+      "description": "OpenBridge `obc-system-menu` property `activeSubMenu`."
+    },
+    "externalControl": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-system-menu` property `externalControl`."
+    },
+    "smallScreen": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-system-menu` property `smallScreen`."
+    },
+    "wifiState": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "connected": {
+          "type": "boolean"
+        },
+        "networkName": {
+          "type": "string"
+        },
+        "strength": {
+          "type": "number"
+        },
+        "status": {
+          "type": "string"
+        },
+        "networks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "signalStrength": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "otherNetworks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "signalStrength": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      },
+      "description": "The Wi-Fi section: whether it is on and connected, the network joined and its strength, a status word, and the networks to choose from (`networks`, then `otherNetworks`). Empty draws no Wi-Fi section."
+    },
+    "audioState": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "muted": {
+          "type": "boolean"
+        },
+        "volume": {
+          "type": "number"
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "selectedOutput": {
+          "type": "string"
+        },
+        "controlMode": {
+          "type": "string",
+          "enum": [
+            "mute-button",
+            "icon-only",
+            "hidden"
+          ]
+        }
+      },
+      "description": "The audio section: whether it is muted, the volume, the outputs to choose from, the output chosen and how the mute control is drawn (`controlMode`: mute-button, icon-only or hidden). Empty draws no audio section."
+    },
+    "microphoneState": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "muted": {
+          "type": "boolean"
+        },
+        "currentLevel": {
+          "type": "number"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "selectedInput": {
+          "type": "string"
+        },
+        "pushToTalk": {
+          "type": "boolean"
+        },
+        "controlMode": {
+          "type": "string",
+          "enum": [
+            "mute-button",
+            "icon-only",
+            "hidden"
+          ]
+        }
+      },
+      "description": "The microphone section: whether it is muted, the level now heard, the inputs to choose from, the input chosen, the push to talk state and how the mute control is drawn (`controlMode`). Empty draws no microphone section."
+    },
+    "batteryState": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "level": {
+          "type": "number"
+        },
+        "charging": {
+          "type": "boolean"
+        },
+        "poweredNotCharging": {
+          "type": "boolean"
+        },
+        "notification": {
+          "type": "boolean"
+        },
+        "batterySavingMode": {
+          "type": "boolean"
+        },
+        "hasUsageButton": {
+          "type": "boolean"
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "selectedMode": {
+          "type": "string"
+        }
+      },
+      "description": "The battery section: the charge level, whether it charges, whether the device is powered and not charging, a notification flag, the battery saving mode, whether a usage button is drawn, and the modes to choose from. Empty draws no battery section."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

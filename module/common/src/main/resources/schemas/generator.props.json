@@ -1,0 +1,117 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "button",
+        "bar",
+        "double-bar"
+      ],
+      "default": "button",
+      "description": "OpenBridge `obc-indicator-generator` property `variant`."
+    },
+    "value": {
+      "type": "string",
+      "enum": [
+        "off",
+        "regular",
+        "filled",
+        "enhanced",
+        "categorical"
+      ],
+      "default": "off",
+      "description": "OpenBridge `obc-indicator-generator` property `value`."
+    },
+    "level": {
+      "type": "number",
+      "default": 0,
+      "description": "Outer progress ring sweep, 0-100 (%)"
+    },
+    "secondaryLevel": {
+      "type": "number",
+      "default": 0,
+      "description": "Inner progress ring sweep, 0-100 (%), double-bar only"
+    },
+    "on": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the generator is running. A generator that runs draws the scheme of `value` (the regular scheme where `value` is off); one that does not run draws the element's off scheme."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "The identifier printed with the symbol; empty prints none."
+    },
+    "readoutPosition": {
+      "type": "string",
+      "enum": [
+        "top",
+        "bottom",
+        "left",
+        "right",
+        "none"
+      ],
+      "default": "bottom",
+      "description": "The side of the symbol on which the identifier and the status word lie; none draws neither."
+    },
+    "showStatus": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the symbol draws its status word (On or Off, or statusText). False hides the word; the identifier stays. The diagram toolbar's Readout button binds it."
+    },
+    "statusText": {
+      "type": "string",
+      "default": "",
+      "description": "When not empty, the status word drawn beside the symbol in place of On or Off."
+    },
+    "alert": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the symbol is framed by the OpenBridge alert frame."
+    },
+    "alertFrameStatus": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "alarm",
+      "description": "Available when alert==true."
+    },
+    "alertFrameMode": {
+      "type": "string",
+      "enum": [
+        "acked-active",
+        "unacked-active",
+        "unacked-rectified"
+      ],
+      "default": "acked-active",
+      "description": "Available when alert==true."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

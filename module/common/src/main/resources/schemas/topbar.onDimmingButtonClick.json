@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The dimming button was pressed. The event carries nothing.",
+  "properties": {}
+}

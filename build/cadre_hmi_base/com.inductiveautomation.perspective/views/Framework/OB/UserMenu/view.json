@@ -1,0 +1,111 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 280,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onSignInClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing (no credential); the gateway's login opens\n\tsystem.perspective.login()"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onSignOutClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing\n\tsystem.perspective.logout()"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Menu"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.type": {
+            "binding": {
+              "config": {
+                "expression": "if({session.props.auth.authenticated}, 'signed-in', 'sign-in')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.userInitials": {
+            "binding": {
+              "config": {
+                "expression": "{session.props.auth.user.userName}"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn (value or '')[:2].upper()",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.userLabel": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.props.auth.user.userName}, '')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.userRole": {
+            "binding": {
+              "config": {
+                "expression": "{session.props.auth.user.roles}"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn ', '.join([unicode(r) for r in (value or [])])",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {},
+        "type": "cadre.ob.usermenu"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

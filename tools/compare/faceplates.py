@@ -35,6 +35,13 @@ import re
 from pathlib import Path
 
 LEAF_MARK = "data-g11-leaf"   # the attribute the measure stamps on each leaf's clicked element: its index (COB-201)
+# The module components a click opens a device's faceplate from: those of the kinds the module draws for the library
+# (`screen.MODULE_KIND`; a unit test holds the two together). The module-only glyphs, the charts and the 33 frame
+# components open no faceplate, and some animate (a blinking alert button, an indeterminate progress ring, a clock):
+# swept as leaves they changed the count under the guard of `sweep` (T2, 1641 leaves, 2026-11-03).
+DEVICE_COMPONENTS = ("cadre.ob.analogvalve", "cadre.ob.damper", "cadre.ob.fan", "cadre.ob.filter", "cadre.ob.generator",
+                     "cadre.ob.instrumentfield", "cadre.ob.motor", "cadre.ob.pump", "cadre.ob.readout", "cadre.ob.switch",
+                     "cadre.ob.tank", "cadre.ob.valve")
 LEAF_POINTS = """() => {
   const out = [], seen = new Set();
   document.querySelectorAll('[data-g11-leaf]').forEach(e => e.removeAttribute('data-g11-leaf'));
@@ -50,14 +57,15 @@ LEAF_POINTS = """() => {
     const p = [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)];
     if (!seen.has(p.join(','))) { seen.add(p.join(',')); mark(sym || v, p); }
   }
-  // components of the Cadre OpenBridge module: their box is the symbol (pump) or the tank
-  for (const m of document.querySelectorAll('[data-component^="cadre.ob."]')) {
+  // components of the Cadre OpenBridge module that draw a device: their box is the symbol (pump) or the tank
+  for (const m of document.querySelectorAll('__DEVICE_COMPONENTS__')) {
     if (m.closest('[class*="docked-view"]')) continue;
     const r = m.getBoundingClientRect();
     const p = [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)];
     if (r.width >= 8 && !seen.has(p.join(','))) { seen.add(p.join(',')); mark(m, p); }
   }
   return out }"""
+LEAF_POINTS = LEAF_POINTS.replace("__DEVICE_COMPONENTS__", ", ".join(f'[data-component="{c}"]' for c in DEVICE_COMPONENTS))
 
 
 def bring_into_view(page, index: int) -> bool:
@@ -87,7 +95,22 @@ def expected_devices(desc: dict) -> set[str]:
             if "body" in card:
                 items += list(walk(card["body"]))
     # a plain symbol with `faceplate` (a device id, COB-165) opens that device's faceplate as a device symbol does
-    return {s.get("params", {}).get("tag") or s["id"] for s in items if s.get("device") or s.get("faceplate")}
+    return {faceplate_title(s) for s in items if s.get("device") or s.get("faceplate")}
+
+
+# The instrument kinds, whose faceplate is titled by the symbol's tag, else its label (`library.SELECT_INSTRUMENT`, and
+# `screen.embed_module` for `screen.MODULE_INSTRUMENTS`; a unit test holds the two lists together). Every other device
+# symbol's faceplate is titled by its tag, else its identifier. The sweep expected the identifier for an instrument with
+# a label and no tag, and so counted the component test page's field `TB_FIELD`, titled `Temp`, as missing (T0 to T2).
+INSTRUMENT_KINDS = ("readout", "instrument-field")
+
+
+def faceplate_title(sym: dict) -> str:
+    """The title the faceplate a symbol opens carries, by the library's rule for its kind."""
+    params = sym.get("params", {})
+    if sym.get("kind") in INSTRUMENT_KINDS:
+        return params.get("tag") or params.get("label") or sym["id"]
+    return params.get("tag") or sym["id"]
 
 
 QUALITY_LINE = "Bad quality:"   # framework._quality_line: a present member whose quality is not good
@@ -298,6 +321,20 @@ def open_tabs(page, right, title: str, expect: dict, expect_ilk: dict | None = N
     return out, faults
 
 
+def settled_points(page, tries: int = 30, pause: int = 1000) -> list:
+    """The leaves of the page once their count holds still between two measures `pause` ms apart (at most `tries`
+    measures). A large page (the component test page of tranche T1, 830 leaves) still sizes an element after the
+    load and the fixed wait, and the guard of `sweep` then took that for a change made by a click."""
+    points = page.evaluate(LEAF_POINTS)
+    for _ in range(tries):
+        page.wait_for_timeout(pause)
+        again = page.evaluate(LEAF_POINTS)
+        if len(again) == len(points):
+            return again
+        points = again
+    return points
+
+
 def sweep(page, base: str, route: str, expected: set[str], expect_alarms: dict | None = None,
           expect_ilk: dict | None = None, devices: dict | None = None, shallow: set[str] | None = None) -> dict:
     """Sweep one page. A device whose title is in `shallow` is checked by its opener only: its record is
@@ -305,7 +342,7 @@ def sweep(page, base: str, route: str, expected: set[str], expect_alarms: dict |
     page.goto(base + route, wait_until="networkidle", timeout=60000)
     page.wait_for_timeout(4000)
     right = page.locator(".docked-view-right")
-    points = page.evaluate(LEAF_POINTS)
+    points = settled_points(page)
     opened, faults = {}, []
     for i in range(len(points)):
         now = page.evaluate(LEAF_POINTS)
@@ -366,6 +403,9 @@ def main() -> int:
                     help="the viewport's height; a long page (the component test page, 8,600 px) needs its own")
     ap.add_argument("--viewport", default=None, metavar="WxH",
                     help="the viewport, WIDTHxHEIGHT (default 2700 wide and --height high, as before)")
+    ap.add_argument("--faceplate", choices=("openbridge", "asm"), default="openbridge",
+                    help="the project's default faceplate style (screen.py --faceplate, COBD-045), against which a "
+                         "device without a style of its own in the device model is judged")
     a = ap.parse_args()
     width, height = 2700, a.height
     if a.viewport:
@@ -382,7 +422,8 @@ def main() -> int:
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     devices = None
     if a.devices_file:
-        devices = device_expectations(descs, json.loads(Path(a.devices_file).read_text(encoding="utf-8")))
+        devices = device_expectations(descs, json.loads(Path(a.devices_file).read_text(encoding="utf-8")),
+                                     a.faceplate)
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_context(viewport={"width": width, "height": height}).new_page()

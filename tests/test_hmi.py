@@ -4,6 +4,7 @@ Run from the repository root:  python -m unittest discover -s tests
 """
 import copy
 import json
+import os
 import re
 import sys
 import tempfile
@@ -1708,7 +1709,7 @@ class NewKindTests(unittest.TestCase):
 
     def test_contracts(self):
         from hmi import parent as par
-        contracts = screen.load_contracts()
+        contracts = screen.library_contracts()      # the file; `load_contracts` adds the module-only kinds (B0)
         self.assertEqual(par.build_parent()[1], contracts)                       # the generated file is current
         c = contracts["Instrument/Controller"]
         self.assertEqual((c["kind"], c["anchor"], c["flow"]), ("controller", "box", "pass"))
@@ -2519,7 +2520,7 @@ class DeviceGateTests(unittest.TestCase):
 # ---------------------------------------------------------------------------------------
 SEQ = ["step", "stepText", "trigger", "fault"]
 SQ = "[default]t/SQ1"
-IGW = Path("F:/repos/Ignition-Wiki/schemas")
+IGW = Path(os.environ.get("CADRE_IGNITION_WIKI", "F:/repos/Ignition-Wiki")) / "schemas"
 
 
 def seq_tags(**members):
@@ -3564,7 +3565,7 @@ class FirstRenderTests(unittest.TestCase):
         node, errors = self.embed(dict(pump, params={"tag": "P-9", "hasSpeed": True}), render="module")
         self.assertEqual((node["type"], node["props"]["hasSpeed"], errors), ("cadre.ob.pump", True, []))
         # the motor and the valves are the module's (COB-074); a vertical fan has no module artwork
-        for kind in ("motor", "valve", "analogvalve", "fan"):
+        for kind in ("motor", "valve", "analogvalve", "fan", "filter", "damper", "switch"):
             node, errors = self.embed(dict(pump, kind=kind, params={"tag": "X-9"}), render="module")
             self.assertEqual((node["type"], errors), (screen.MODULE_KIND[kind], []), kind)
         node, errors = self.embed(dict(pump, kind="fan", params={"tag": "F-9", "vertical": True}), render="module")
@@ -3573,8 +3574,66 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
         self.assertEqual((screen.MODULE_NEEDS, screen.MODULE_EXCEPT), (
             {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
+             "filter": {"variant": ["regular", "flat"]}, "damper": {"variant": ["regular", "flat"]},
+             "switch": {"variant": ["regular", "flat"]},
+             "generator": {"variant": ["regular"], "activated": [False], "progress": [False],
+                           "badgeControl": ["none"], "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]},
              "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}},
-            {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
+            {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "damper": [{"vertical": True}],
+            "switch": [{"vertical": True}], "generator": [{"picture": "genset"}],
+             "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
+        # a filter: the library's regular variant is the element's square; a vertical one stays on the library's view
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "square", []))
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.filter", "flat", []))
+        node, errors = self.embed(dict(pump, kind="filter", params={"tag": "FL-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
+        # a damper, as a filter (batch B1)
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.damper", "square", []))
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.damper", "flat", []))
+        node, errors = self.embed(dict(pump, kind="damper", params={"tag": "DM-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
+        # a switch that names an indicator device (the test page's alarm lamps) opens the indicator's faceplate
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "AL", "hasTag": True, "deviceId": "[default]t/ALM", "deviceKind": "indicator"}), render="module")
+        self.assertEqual((node["type"], node["custom"]["deviceKind"], errors), ("cadre.ob.switch", "indicator", []))
+        # a switch, as a filter (batch B1)
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "variant": "regular"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.switch", "square", []))
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "variant": "flat"}), render="module")
+        self.assertEqual((node["type"], node["props"]["variant"], errors), ("cadre.ob.switch", "flat", []))
+        node, errors = self.embed(dict(pump, kind="switch", params={"tag": "SW-9", "vertical": True}), render="module")
+        self.assertEqual((node["type"], errors), ("ia.display.view", []))
+
+    def test_a_generator_is_the_modules_indicator_unless_it_asks_for_what_the_disc_lacks(self):
+        # spike T0 wrap W2: the plain generator symbol is `cadre.ob.generator`; the generator set, another variant, the
+        # activated ground, a progress ring (stated or bound), a badge and the duty and out of service marks stay on the library's view
+        gen = {"id": "G", "kind": "generator", "x": 0, "y": 0, "w": 48, "h": 48}
+        node, errors = self.embed(dict(gen, params={"tag": "GEN-9", "picture": "symbol"}), render="module")
+        self.assertEqual((node["type"], errors), ("cadre.ob.generator", []))
+        # the library's own parameters the disc has no property for are not passed (gate G1)
+        self.assertEqual(set(node["props"]) - set(json.loads((ROOT / "module/components.json").read_text(
+            encoding="utf-8"))["cadre.ob.generator"]["props"]), set())
+        for params in ({"picture": "genset"}, {"variant": "flat"}, {"activated": True}, {"progress": True},
+                       {"badgeControl": "manual"}, {"badgeInterlock": "interlock"}, {"badgeDuty": True},
+                       {"outOfService": True}):
+            node, errors = self.embed(dict(gen, params=dict(params, tag="GEN-9")), render="module")
+            self.assertEqual((node["type"], errors), ("ia.display.view", []), params)
+        for bound in ("progress", "activated"):
+            node, errors = self.embed(dict(gen, params={"tag": "GEN-9"}, bind={bound: "G/" + bound}), render="module")
+            self.assertEqual(node["type"], "ia.display.view", bound)
+        # the state binds `on`; the identifier and the status word follow the toolbar; the click opens the generator faceplate
+        node, errors = self.embed(dict(gen, device="G1", label="Genset", params={"tag": "GEN-9"}, bind={"on": "G1/state"}),
+                                  render="module")
+        self.assertEqual(node["type"], "cadre.ob.generator")
+        self.assertIn("props.on", node["propConfig"])
+        # the alarm state follows the device's alarms as the other module symbols do (wiki page 13 section 11.2)
+        for prop, field in (("alert", "alertAny"), ("alertFrameStatus", "level"), ("alertFrameMode", "mode")):
+            self.assertIn(f".{field}}}", json.dumps(node["propConfig"][f"props.{prop}"]))
+        self.assertEqual(node["custom"]["deviceKind"], "generator")
+        self.assertIn("cadre.hmi.select_device", json.dumps(node["events"]))
 
     def test_every_module_property_the_generator_states_is_in_the_components_schema(self):
         # a property of the library's contract that the generator passes to a module component must be one the
@@ -4622,7 +4681,7 @@ class ToolbarTests(unittest.TestCase):
                              s["id"])
             # no value beside the binding (GF-61)
             self.assertNotIn("showStatus", n["props"].get("params", n["props"]), s["id"])
-        self.assertEqual(kinds, {"cadre.ob.pump", "cadre.ob.valve", "ia.display.view"})   # module and library alike
+        self.assertEqual(kinds, {"cadre.ob.pump", "cadre.ob.valve", "cadre.ob.filter"})   # module and library alike
         # a symbol whose descriptor refuses its state readout keeps it hidden whichever way the button stands
         desc = copy.deepcopy(self.desc)
         next(s for s in desc["symbols"] if s["id"] == "P301")["params"]["showStatus"] = False

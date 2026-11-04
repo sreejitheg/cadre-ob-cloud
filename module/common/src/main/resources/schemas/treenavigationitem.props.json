@@ -1,0 +1,144 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "label": {
+      "type": "string",
+      "default": "List item",
+      "description": "The text label displayed for the row."
+    },
+    "expandable": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the row shows an expand/collapse chevron. Leave false for leaf nodes."
+    },
+    "expanded": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the node is expanded. Rotates the chevron and sets aria-expanded."
+    },
+    "checked": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the row is the current selection. Applies the amplified style and makes the row inert to re-selection (no hover/pressed feedback, no click or navigation); it remains keyboard-focusable. An expandable checked..."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the row, removing it from the tab order and dimming its appearance."
+    },
+    "terminalType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "aggregated-header",
+        "group-header"
+      ],
+      "default": "regular",
+      "description": "Terminal type, controlling the alert-header marker shown in the terminal. One of regular (default), aggregated-header, or group-header."
+    },
+    "alerts": {
+      "type": "object",
+      "default": {},
+      "properties": {
+        "countLevelCritical": {
+          "type": "number"
+        },
+        "countAlarm": {
+          "type": "number"
+        },
+        "countLevelHigh": {
+          "type": "number"
+        },
+        "countWarning": {
+          "type": "number"
+        },
+        "countLevelMedium": {
+          "type": "number"
+        },
+        "countCaution": {
+          "type": "number"
+        },
+        "countLevelLow": {
+          "type": "number"
+        },
+        "countLevelDiagnostic": {
+          "type": "number"
+        },
+        "combine": {
+          "type": "boolean"
+        }
+      },
+      "description": "The active alerts at or beneath the row, as a badge for each severity with a count above zero: an object with the counts countLevelCritical, countAlarm, countLevelHigh, countWarning, countLevelMedium, countCaution, countLevelLow, countLevelDiagnostic and combine (one badge with the total, in the colour of the highest severity). The Cadre priorities map onto the counts as wiki 13 section 11.1 says: Critical countLevelCritical, High countAlarm, Medium countWarning, Low countCaution, Diagnostic countLevelDiagnostic. An open group shows no badge of its own."
+    },
+    "href": {
+      "type": "string",
+      "default": "",
+      "description": "The URL to navigate to when the row is activated. If set, the row renders as a link; otherwise it acts as a button."
+    },
+    "hasLeadingIcon": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the row reserves and draws the leading icon (the `icon` slot). A row with no icon is drawn without the space when this is false."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Leading icon slot (shown when hasLeadingIcon is true)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

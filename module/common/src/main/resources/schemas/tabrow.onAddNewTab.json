@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The button that adds a tab was pressed. The event carries nothing.",
+  "properties": {}
+}

@@ -1,0 +1,70 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 280,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onPaletteChanged": {
+              "config": {
+                "script": "\t# GF-37: event.value is the palette chosen: night, dusk, day or bright\n\tif event.value in ('day', 'bright', 'dusk', 'night'):\n\t\tcadre.hmi.set_palette(self.session, event.value)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Menu"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.palette": {
+            "binding": {
+              "config": {
+                "expression": "coalesce({session.custom.palette}, 'day')"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "showBrightness": false
+        },
+        "type": "cadre.ob.brilliancemenu"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "double",
+        "forward",
+        "square",
+        "flat",
+        "flat-forward"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-automation-button` property `variant`."
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "closed",
+        "open"
+      ],
+      "default": "open",
+      "description": "OpenBridge `obc-automation-button` property `state`."
+    },
+    "static": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-automation-button` property `static`."
+    },
+    "activated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enables the activated background color, used to indicate that the button is activated/selected."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "Available when showReadoutStack==true."
+    },
+    "readoutPosition": {
+      "type": "string",
+      "enum": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+      ],
+      "default": "bottom",
+      "description": "Available when showReadoutStack==true."
+    },
+    "readoutSize": {
+      "type": "string",
+      "enum": [
+        "small",
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "Available when showReadoutStack==true."
+    },
+    "alert": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-automation-button` property `alert`."
+    },
+    "alertFrameType": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "small-side-flip",
+        "large-side-flip",
+        "bottom-flip",
+        "top-flip"
+      ],
+      "default": "small-side-flip",
+      "description": "Available when alert==true."
+    },
+    "alertFrameThickness": {
+      "type": "string",
+      "enum": [
+        "small",
+        "large"
+      ],
+      "default": "small",
+      "description": "Available when alert==true."
+    },
+    "alertFrameStatus": {
+      "type": "string",
+      "enum": [
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "alarm",
+      "description": "Available when alert==true."
+    },
+    "alertFrameMode": {
+      "type": "string",
+      "enum": [
+        "acked-active",
+        "unacked-active",
+        "unacked-rectified"
+      ],
+      "default": "acked-active",
+      "description": "Available when alert==true."
+    },
+    "showAlertIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Available when alert==true."
+    },
+    "progress": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-automation-button` property `progress`."
+    },
+    "progressMode": {
+      "type": "string",
+      "enum": [
+        "determinate",
+        "indeterminate",
+        "progressive-indeterminate"
+      ],
+      "default": "indeterminate",
+      "description": "Available when progress==true."
+    },
+    "progressValue": {
+      "type": "number",
+      "default": 0,
+      "description": "Available when progress==true && progressMode in [determinate, progressive-indeterminate]."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "forward",
+        "forward-fast",
+        "forward-stopped",
+        "backward",
+        "backward-fast",
+        "backward-stopped",
+        "standby"
+      ],
+      "default": "forward",
+      "description": "Available when variant in [double, forward, flatForward]."
+    },
+    "positioning": {
+      "type": "string",
+      "enum": [
+        "point",
+        "symbol",
+        "button"
+      ],
+      "default": "point",
+      "description": "OpenBridge `obc-automation-button` property `positioning`."
+    },
+    "orientation": {
+      "type": "string",
+      "enum": [
+        "horizontal",
+        "verticalRight",
+        "verticalLeft"
+      ],
+      "default": "horizontal",
+      "description": "OpenBridge `obc-automation-button` property `orientation`."
+    },
+    "hasBadgeSpacer": {
+      "type": "boolean",
+      "default": false,
+      "description": "Badge spacer should be set to true if there is a badge on the same side as the label"
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

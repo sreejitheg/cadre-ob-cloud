@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The Wi-Fi switch was changed. event.enabled is the state the switch asks for.",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "The state the Wi-Fi switch asks for."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The action button (or the action icon) was pressed. The event carries nothing.",
+  "properties": {}
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The link brightness switch was changed. event.value is the state of the switch.",
+  "properties": {
+    "value": {
+      "type": "boolean",
+      "description": "The state of the link brightness switch."
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hasShelved": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, displays the \"Shelved\" tab and enables shelving support for alerts. Set to false to hide the \"Shelved\" tab and related filtering. Default: false."
+    },
+    "canAckAll": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, enables the \"ACK visible\" button, allowing users to acknowledge all currently visible alerts in the active tab. Should be set to true only when there are unacknowledged alerts in view. Default: false."
+    },
+    "showSilenceButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the menu draws its Silence button. False by default: no Cadre function silences an alarm, so the button stays hidden until one exists (the element's own default is true)."
+    },
+    "showAlertListButton": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the menu draws its Alerts button, which asks for the page of the full alert list."
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "tag": {
+            "type": "string",
+            "enum": [
+              "obc-alert-menu-item"
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "slot": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "tag"
+        ]
+      },
+      "description": "The alert rows of the menu, one `obc-alert-menu-item` for each, as a list with one object for each: `tag` and then the element's attributes by name, `text`, `id` (reported by the element's events), `slot` and `children` (objects of the same form). Tags and attributes: `obc-alert-menu-item` (hasIcon, shelved, title, description, day, time, status, open, size, animateIntro, secondaryActionLabel, primaryActionState, secondaryActionState)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

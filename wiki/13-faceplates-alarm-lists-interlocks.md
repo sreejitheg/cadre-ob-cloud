@@ -924,6 +924,8 @@ OpenBridge alert levels already colour so (`level-critical` on the critical colo
 alarm), and the frame follows the same table: the top bar's colour (`framework.PRIORITY_VAR`), the
 library symbols' frame and flap (the status `critical`, drawn with the alarm's triangle), and the
 classes `cadre/alert/flash-critical` and `cadre/alert/badge-critical`.
+The alert button and its item take the same mapping in their `alertType` property (wiki 12 section 17.24.1): the empty value is
+Diagnostic, which has no alert colour.
 
 ### 11.2 A Symbol's Alarm State
 
@@ -1042,8 +1044,10 @@ faceplate only, and either style opens it (`framework.FACEPLATE_VIEW`).
    `library/icons/generator.json` with `tools/convert_icons.py` for use as a navigation icon; it has no running and stopped
    pair, so the two forms, `generator-on` and `generator-off`, are drawn in `library.py` from primitives (a stroked arc
    for the G). The symbol takes the alarm frame of F016 (section 11.2) and the click that opens its faceplate; it passes
-   the medium (`PASS_KINDS`) and its status row reads On or Off like the others. The module draws no generator, so under
-   `--render module` the kind keeps this stock view.
+   the medium (`PASS_KINDS`) and its status row reads On or Off like the others. Under `--render module` the plain symbol is drawn by the module's
+   `cadre.ob.generator` (wiki page 12 section 17.11), which carries the state, the identifier, the status word, the alarm frame
+   of section 11.2 and the click; a symbol that asks for what that disc lacks (another variant, the activated ground, a
+   progress ring, a badge, the duty or out of service mark) and the generator set keep this stock view.
 2. **The generator set.** A descriptor symbol of kind `generator` with `params.picture` set to `genset` is drawn by
    `Automation/GeneratorSet` (gap GG-01): a vector drawing of our own, an engine block with three cylinder heads and an
    exhaust, a coupling and an alternator with its terminal box and louvres, on a base frame, 240 by 150 px by default. It
@@ -1262,7 +1266,9 @@ one alarm of each priority, or all five, and sets the pump's fault or the input 
 lamp: raise it (the frame flashes: active, unacknowledged), acknowledge it on the faceplate Alarms tab or on the alert
 banner (steady: active, acknowledged), or let the minute pass without acknowledging (dashed: cleared, unacknowledged). The
 faceplate buttons open each device's faceplate on its Alarms tab; a symbol opens the faceplate in the project's mode (dock),
-and the pin on the faceplate floats it.
+and the pin on the faceplate floats it. Under the module rendering the page also has "Start generator", a pulse button drawn as
+the module's `cadre.ob.button` (page 12 section 17.12): it asks first and holds `TB_GEN/cmdStart` true for 60 s through the same
+`page_pulse`, and the test generator, whose state latches on that command, then runs.
 
 ### 13.5 Adding the Page to a Migration
 
@@ -1372,3 +1378,117 @@ The control flow is proven on a fake gateway's client page (`tests/glass_fake.py
 lifted from the slice's scripts, which were measured on the glass; two readings of the alert list (the unacknowledged
 rows and the state of the Ack selected button) are made from the page's text and attributes and not from its component
 stores, and are the first thing the integrated run on the gateway must confirm.
+
+### 13.11 The Glass on the New Frames (`--frame ob`, `--frame obasm`)
+
+Built and tested offline on 2026-11-03 (tranche T2, batch F7; `cloud/FRAME-DESIGN.md` section 4.3). The two new frames (`wiki/04`
+sections 10 and 11) draw the head with the module top bar, whose buttons, bell and clock are elements in a shadow root, not
+Perspective children, so the positional selectors of the openbridge and asm frames find nothing in it (G10 on `cadre_hmi_wtpobf`
+stopped in `refusal_steps` at `open_alarm_menu`, the bell path `T[0].0:6` not existing). The glass takes a variant for each of those
+selectors, chosen by the frame the page shows, and the older frames keep their selectors as they were. Code: `tools/compare/glass.py`,
+`functional.py`, `glass_gates.py`; tests `tests/test_walk.py` (`FrameGlassTests`, held to `obframe.py`, `obasm.py` and the pinned elements).
+The selectors were measured read only on the deployed samples `cadre_hmi_wtpobf` (`ob`) and `cadre_hmi_wtpoba` (`obasm`), nobody signed in
+and nothing written (the trial was reset once, GF-03).
+
+#### 13.11.1 Telling the Frames Apart
+
+`glass.frame_variant(page)` reads the structure of the top dock: `obasm` where it holds the module top bar and a module pivot group or tab
+row (the header of section 11, in the DOM whether or not drawn), `ob` where it holds the module top bar alone, `default` otherwise (the
+openbridge and asm frames). The module's elements load after the Perspective components, so a dock with no module bar and no coordinate
+container (the older frames' buttons) is waited for, about four seconds, then taken for an older frame; the answer is kept on the page for its
+project. `glass_gates.Session.frame()` is the same call, its wait following `--settle`.
+
+#### 13.11.2 The Variants
+
+Table 1. What each helper finds on the older frames and on the new ones.
+
+| Helper | openbridge and asm (unchanged) | ob and obasm |
+|---|---|---|
+| Bell, `glass.bell` | `BELL`, the top bar's seventh child `T[0].0:6` | `BELL_OB`: the host's `obc-alert-button` (64 by 48 px) |
+| Menu, brilliance, user and apps buttons | first and second coordinate container of the top dock, the third (`by_container`) or the last of three SVG icons (`TOP_ICONS`) | `bar_button`: `obc-icon-button` in the shadow root of `obc-top-bar`, by `aria-label` (Menu, Dimming, User, Apps) |
+| Alarm menu rows, `alert_list`, `alert_row`, `press_ack` | `obc-alert-list-page-small`, `LIST_INFO`, `ROW_ACTION` | `obc-alert-menu`, `ALERT_MENU_INFO`, `ALERT_MENU_ROW`: rows are `obc-alert-menu-item` (`data-item-id`, `status`, `title`, `description`); `by` is read from the popup view's `custom.alarms.alerts` |
+| Acknowledge controls offered, `enabled_acks` | the visible `ACK` texts of the panel | the drawn and enabled row ACK buttons (the menu draws them disabled without the permission) |
+| Alarm menu close, `close_alarm_menu` | the first coordinate container of the popup | the bell pressed again (the popup has no close button) |
+| Sign in and Sign out, `_open_user_menu` | the older strategies, the entry a button or text of the popup | `by_bar` (User button), the entry the `obc-button` that carries the caption (the menu prints Sign in as its title too) |
+| Navigation entries, `nav_labels`, `navigate_by_menu`, `click_nav_entry` | labels of the dock's repeaters | `obc-navigation-item`, `obc-tree-navigation-item` and group labels (`NAV_LABELS`); the page's item, never a group; a closed group is pressed first (`GROUP_OF`) |
+| Palette, `pick_palette` | the label Night | the two `obc-button`s step through Night, Dusk, Day, Bright; pressed until `.value` shows the name |
+| Page name, `page_name` | the second label of the top dock | `ob`: the bar's `.page-name`; `obasm`: the header's title, `T[0].0:2:0` |
+| Alarm count, `frame_alarm_count` | the bell's text | the first whole number the bell prints in its shadow roots (`BELL_COUNT`) |
+| Gates: icons, `Session.icons` | `TOP_ICONS` | `BAR_POINTS`: menu, apps, alert, dimming, user, so that the last three are as the older frames list them |
+| Gates: head rectangle, `Session.measure` | `MEASURE` (head 80 to 90 px, which the ob head of 84 px meets) | `MEASURE_OBASM` (head 128 to 136 px, the obasm head of 132) |
+
+#### 13.11.3 The Checks
+
+1. F16 (nobody signed in) keeps its meaning: the strip's ACK, which both new frames keep (`T[0].0:1:2:3` on `ob`), is disabled, the alerts page
+   offers no Acknowledge, and the alarm menu offers no acknowledge control: no enabled row ACK, ACK visible disabled, and rows listed.
+2. F21 closes the alarm menu by a click outside and by a control of its own (the bell for the new menu, which has no close button), and the
+   navigation dock by a click outside and by its header's close button, found where the Menu button opens it.
+3. F6 and F9 press the Menu and Dimming buttons and the entry or palette through the variants; F11, F14 and F18 take the menu's rows and ACK
+   through `alert_list`, `press_ack` and the store's `by`.
+4. `glass_gates`: `menus` (user, brilliance and alert menus by the bar's points; the crumb popup step on `obasm` only, the `ob` crumb opening
+   its node's page), `alarm` and `ack` (the bell's count, the Sign in entry), `banner` (on `obasm` the ASM banner dock; on `ob` the text of the
+   strip and the alert menu, the shows steps only, since the frame has no subtree rule), `fill` (a device opened by its symbol on `ob`).
+   `search`, `zoom` and `panels` are ASM gates: on `obasm` the field, the zoom measures (the header zoom steps use the head rectangle of 132 px)
+   and the tree and support list (the page titles looked for among the tree's items, drawn or not, the support entries among the drawn items);
+   on `ob`, which has no field, tree or floating faceplate, they are skipped with the reason in `gates.json`.
+
+#### 13.11.4 Measured Facts
+
+1. A press on a tree group only toggles it; the route is unchanged and the dock stays open (`wiki/04` section 11.3). Batch F7 had read a navigation
+   and a closed dock; batch F8 measured otherwise (section 13.11.6 item 4).
+2. Nobody signed in, the alarm menu draws every row's ACK disabled (`primaryActionState` disabled), unlike the default frame's panel, which hides it.
+3. The alert menu closes on a click outside, on Escape and on the bell pressed again; no close button.
+4. The bell and the menu count different things, as in the older frames: the bell is `custom.alarm.count` (`alarm_summary`, the active alarms
+   of the scope), the menu lists `alarm_list`, which adds the cleared alarms not yet acknowledged and repeated events of one source (section 13.11.6
+   item 5).
+5. `obc-alert-menu-item`'s `title`, `description`, `status` and `primaryActionState` and the `obc-alert-icon` child's `type`, `active` and
+   `acknowledged` are readable as properties of the elements.
+
+#### 13.11.5 Not Verified Without a Signed In Run
+
+The row ACK enabled and pressed, ACK visible pressed, Sign out offered after the login, the acknowledging user's name from `custom.alarms.alerts`
+(F18), the strip's ACK pressed (F7, the latch step) and the palette's effect on the page (F9 was measured to reach `palette/night` and back to
+`palette/day` in a throwaway session). Each is for the first G10 run on a sample of either frame. Measured by batch F8: all passed on both samples (section 13.11.6 item 3).
+
+#### 13.11.6 Fixes of Batch F8
+
+Measured and fixed on 2026-11-03 against `cadre_hmi_wtpobf` and `cadre_hmi_wtpoba` (module 0.7.0). The frames themselves needed no change; each
+fix is in the glass.
+
+1. The alert menu left open over the faceplate dock (G10 F13 on `ob`). Cause: F11 and F14 closed the menu by pressing the row's text with
+   `click_text_in(panel, "P-502 Fault")`. The older panel prints the text as an element; the new menu keeps it in the item's `title` and
+   `description` properties and in a shadow root, where Playwright finds the text but with no size, so nothing was pressed (F11 would also have
+   failed). The frame behaves as the older frames do: a press on the row closes the popup and opens the device's faceplate (measured). Fix:
+   `glass.click_alert_row`, which presses a point on the `obc-alert-menu-item` clear of its ACK (`ALERT_MENU_ROW_BODY`) in the new frames and the
+   older text press otherwise; `functional` F11, F14 and `glass` (the sequence step) call it. Held by `tests.test_walk.FrameGlassTests`.
+2. Walk rows N-05 and N-06 on `obasm` (Trends and Alerts not found). Cause: those pages are in the support list, which the apps button shows; the
+   tree does not hold them. Fix: `glass.open_support_list`, which `navigate_by_menu` calls on `obasm` when the tree has no such entry. Held by
+   `FrameGlassTests`.
+3. The signed in steps (row ACK enabled and pressed, ACK visible, the strip's ACK, F18, Sign out) passed on both samples without a change.
+4. The tree group press navigates (F7): not reproduced. A group press only toggles (section 11.3 of `wiki/04` corrected).
+5. The bell read 2 where the menu listed 6 rows: not a defect. See 13.11.4 item 4.
+
+
+#### 13.11.7 Walk Row A-02 and the Older Panel's Toolbar
+
+Measured and fixed on 2026-11-03 against `cadre_hmi_wtpob` (the older frame, module 0.7.0). The frame and the module needed no change; the fix is in the glass.
+
+1. Symptom. Row A-02 (TK-101's high level alarm, acknowledged from the top bar's alarm menu) failed in some runs with "acknowledged in the alarm menu:
+   False", leaving a cleared, unacknowledged event; A-01 (AIT-301) never did. The generated project was the same in passing and failing runs.
+2. Cause. The older frame's menu is the module's `obc-alert-list-page-small`. The panel draws its toolbar (the All filter, silence and ACK VISIBLE)
+   over the bottom of its list, and the list shows one row clear of it. The walk's plant holds P-502's unacknowledged fault, which sorts first, so
+   TK-101's row is the second, and the centre of its ACK cell (y 280) lay at the toolbar's lower edge. `glass.ack_alarm` pressed the cell's centre
+   as read, the press landed on the toolbar's `div.action` (the pointer event's target, measured), no `ack-click` followed, and the six tries of
+   `walk_run.acknowledge` read the same position. Whether the edge reached the cell varied between runs (a layout difference of a pixel or two, inferred), hence the
+   intermittence; AIT-301's row is the first and was never covered. Each failed run left one more unacknowledged cleared event on TK-101, which
+   the following runs counted (the Alarms tab read 2, 3 and 5 before the step).
+3. Fix. `ROW_ACTION` also answers `clear`: whether the element at the cell's centre, followed through shadow roots, is the cell or inside it.
+   `ROW_REVEAL` scrolls the row to the top of the list's own scroll area. `glass.ack_alarm`, on the older frames, scrolls the row and reads it again
+   while `clear` is false, and returns False rather than press a covered cell. The new frames' menu (`ALERT_MENU_ROW`) has no toolbar over its rows
+   and is unchanged. Held by `tests.test_walk.AlertMenuRowTests` (a covered cell is scrolled before the press; one that stays covered is not pressed).
+4. Evidence. In the runs that failed, every press of the six tries had the same target (the toolbar) and the same position; the faceplate probe read
+   the element at the cell's centre as the toolbar's `div.action` (49 px high) while the row query still said the ACK was drawn and enabled. The
+   dependence on a pixel or two of layout is inferred from runs that passed at the same position. With the fix, see the runs recorded in
+   `cloud/PROGRESS.md`.
+5. For the product: an operator meets the same overlap in the small panel, where the second row's ACK is under the toolbar until the list is scrolled.
+   The panel is OpenBridge's layout and is not changed here (rule 7 of the operating manual).

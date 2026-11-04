@@ -76,7 +76,11 @@ MODULE_STATUS = ("alarm", "warning", "caution")   # the alert statuses both rend
 GALLERY_PARAMS = frozenset({
     "on", "open", "speed", "value", "trend", "setpoint", "output", "manual", "text", "step", "activated", "alert",
     "alertFrameStatus", "alertFrameMode", "badgeControl", "badgeInterlock", "badgeCommandLocked", "badgeDuty",
-    "outOfService", "progress"})
+    "outOfService", "progress",
+    "value2", "closed",   # the state of the valve glyphs (B4), which no earlier kind has
+    "level",              # the level of the battery and tank indicators (B5); their `value` is the scheme and is bound too
+    "state", "priority", "medium", "bottomValue",   # the live state of the specialty tanks and the gauges (B6, B7)
+    "selectedPosition", "adviceValue", "setpointValue"})   # the hydraulic valves' position and the transmitter button's segments (B8)
 GALLERY_PREFIXES = ("S_", "N_", "B_")   # the ids of the symbols of the static grids
 
 
@@ -333,7 +337,7 @@ _COMPONENTS: dict = {}   # module/components.json, read once
 
 def module_enum(kind: str, param: str) -> list | None:
     """The values the module's component accepts for `param`, None where its schema states no enumeration."""
-    ctype = screen.MODULE_KIND.get(kind)
+    ctype = screen.module_type(kind)
     if not _COMPONENTS:
         _COMPONENTS.update(json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))
                            if screen.MODULE_COMPONENTS.exists() else {"": {}})
@@ -346,7 +350,8 @@ def module_value_ok(kind: str, params: dict, param: str) -> bool:
     allows, the module's component only those of its enumeration, unless the generator keeps the symbol on the
     library's view for it (`screen.module_draws`)."""
     enum = module_enum(kind, param)
-    if enum is None or params.get(param) in enum:
+    value = screen.MODULE_VALUE.get(kind, {}).get(param, {}).get(params.get(param), params.get(param))
+    if enum is None or value in enum:
         return True
     return not screen.module_draws(kind, params, target="module")
 
@@ -569,6 +574,419 @@ def kind_block(kind: str, contracts: dict, prof: dict) -> Block:
     view = screen.view_of({"kind": kind})
     cases = kind_cases(kind, contracts[view], prof)
     return grid(f"S_{kind.replace('-', '_')}_", kind, cases, contracts)
+
+
+def module_only_cases(kind: str, contract: dict) -> list[Case]:
+    """The cases of a module-only kind, derived from its contract (`screen.module_contract`, the module's own schema): the
+    state both ways, each other value of `variant`, `orientation` and `readoutPosition` the component lists, each alert
+    level, the badges, and the identifier and status hidden. A kind needs no case list of its own."""
+    schema = json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))[screen.MODULE_ONLY[kind]]["props"]
+    if contract.get("anchor") == "box":   # a glyph (`screen.module_geometry`): only the component's own properties
+        return glyph_cases(schema, contract)
+    base = {"hasTag": True, "tag": ident_of(kind)}
+    out = [Case("off", {**base, "on": False}), Case("on", {**base, "on": True})]
+    for param in ("variant", "orientation", "readoutPosition"):
+        values = schema.get(param, {}).get("enum", [])
+        out += [Case(f"{param} {v}", {**base, "on": True, param: v}) for v in values if v != contract["params"].get(param)]
+    out += [Case(f"alert {v}", {**base, "on": True, "alert": True, "alertFrameStatus": v, "alertFrameMode": "unacked-active"})
+            for v in schema.get("alertFrameStatus", {}).get("enum", [])]
+    out += [Case("badges", {**base, "on": True, "badgeControl": "manual", "badgeInterlock": "interlock",
+                            "badgeCommandLocked": BADGE_LOCKED}),
+            Case("no ID tag", {**base, "on": True, "hasTag": False}),
+            Case("status hidden", {**base, "on": True, "showStatus": False})]
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+# The values a glyph's number properties are shown at: the element draws them as a percentage of travel (the pinned
+# `dist/` source of the valve icons divides by 100) or of a level (the indicators), so mid travel and full travel show the
+# drawing change. A number whose scale is not a percentage has its own pair (the readout's digit count is a width).
+GLYPH_NUMBERS = (50, 100)
+GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
+                       # the gauges' scale and their deadbands (B7): the first value is the element's own default
+                       "maxValue": (100, 200), "minValue": (0, -50), "autoAtSetpointDeadband": (2, 5),
+                       "setpointAtZeroDeadband": (0.5, 1), "fractionDigits": (0, 2),
+                       # the selected position of the hydraulic valves (B8): a zero-based index, the first is the element's own default
+                       "selectedPosition": (1, 0, 2),
+                       # the transmitter button's reserved integer digits (B8)
+                       "maxDigits": (0, 4),
+                       # the bars and graphs (C1): the size of a line chart, the scale reference, and the donut, pie, polar and
+                       # radial charts' own scales; the first value is the element's own default
+                       "width": (480, 240), "height": (320, 160), "scaleReferenceSize": (384, 192),
+                       "max": (100, 200), "thickness": (24, 40), "outerLabelMaxLength": (0, 6), "outerLabelDecimalPlaces": (0, 2),
+                       "fixedHeight": (320, 160), "circumference": (270, 360), "minRingThickness": (16, 8),
+                       # the bars (C2): the thickness of the bar, the ticks and the labels, and the padding of the scale
+                       "barThickness": (24, 40), "tickThickness": (24, 12), "labelThickness": (60, 40),
+                       "paddingLeft": (32, 0), "paddingRight": (32, 0), "paddingTop": (32, 0), "paddingBottom": (32, 0),
+                       # the circular progress (C2): the ring's stroke, its view box and its padding
+                       "strokeWidth": (4, 8), "viewBoxSize": (42, 84), "padding": (0, 4),
+                       # the radial instrument (C2): the clip of the face
+                       "clipTop": (0, 20), "clipBottom": (0, 20), "clipLeft": (0, 20), "clipRight": (0, 20)}
+# The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
+# free string property is shown with, where a glyph has one (the readout's unit).
+GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
+GLYPH_TEXT = {"unit": "kn"}
+# The data of the bars and graphs (C1), our own samples: a week of a made up flow in m3/h for the line charts (the category
+# label and the time in epoch milliseconds, ten minutes apart from 2026-01-01T00:00Z, so that every axis type has its value).
+GLYPH_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+GLYPH_POINTS = [{"label": d, "x": 1767225600000 + i * 600000, "value": v}
+                for i, (d, v) in enumerate(zip(GLYPH_DAYS, [12, 18, 15, 24, 30, 27, 36]))]
+# kind to the properties every case but the default states (an empty chart draws nothing the case could show)
+GLYPH_SEGMENTS = [{"label": "Pumps", "value": 42}, {"label": "Fans", "value": 18}, {"label": "Lighting", "value": 12.5},
+                  {"label": "Galley", "value": 9}]
+GLYPH_SECTORS = [{"label": f"Zone {i + 1}", "value": v} for i, v in enumerate([35, 62, 48, 80, 25, 55])]
+GLYPH_DATA = {"area-graph": {"data": GLYPH_POINTS}, "line-graph": {"data": GLYPH_POINTS},
+              "donut-chart": {"data": GLYPH_SEGMENTS}, "pie-chart": {"data": GLYPH_SEGMENTS},
+              "polar-chart": {"data": GLYPH_SECTORS}, "radial-bar-chart": {"data": [78, 54, 31]}}
+# the subsegments of the pie chart's sunburst: the first two segments split in two
+GLYPH_SUNBURST = [{**GLYPH_SEGMENTS[0], "children": [{"label": "Duty", "value": 30}, {"label": "Standby", "value": 12}]},
+                  {**GLYPH_SEGMENTS[1], "children": [{"label": "Bow", "value": 10}, {"label": "Stern", "value": 8}]},
+                  GLYPH_SEGMENTS[2], GLYPH_SEGMENTS[3]]
+# kind to extra cases (caption, params) that the schema alone does not give: several series, two value axes, colours
+GLYPH_EXTRA = {}
+for _kind in ("area-graph", "line-graph"):
+    GLYPH_EXTRA[_kind] = [
+        ("two series", {"datasets": [{"label": "Pump A", "data": [12, 18, 15, 24, 30, 27, 36]},
+                                     {"label": "Pump B", "data": [8, 10, 14, 12, 18, 20, 22]}],
+                        "labels": GLYPH_DAYS, "legend": True, "data": []}),
+        ("two series, two axes", {"datasets": [{"label": "Flow", "data": [12, 18, 15, 24, 30, 27, 36], "yAxisID": "flow"},
+                                               {"label": "Level", "data": [40, 44, 43, 52, 60, 58, 66], "yAxisID": "level"}],
+                                  "labels": GLYPH_DAYS, "legend": True, "data": [],
+                                  "yAxes": [{"id": "flow", "position": "left", "min": 0, "max": 40},
+                                            {"id": "level", "position": "right", "min": 0, "max": 100}]}),
+        ("two series, time axis", {"datasets": [
+            {"label": "Pump A", "data": [{"x": p["x"], "y": p["value"]} for p in GLYPH_POINTS]},
+            {"label": "Pump B", "data": [{"x": p["x"], "y": 40 - p["value"]} for p in GLYPH_POINTS]}],
+            "xAxisType": "time", "timeDisplay": "minutes", "legend": True, "data": []}),
+        ("custom colours", {"colors": ["#7a4aa8", "#2e8b57"]})]
+GLYPH_EXTRA["donut-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                              ("half, labelled", {"half": True, "showOuterLabels": True}),
+                              ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
+                                                    "outerLabelDecimalPlaces": 1, "centerReadoutUnit": "kW"}),
+                              ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 6}),
+                              ("capacity left", {"max": 150, "legend": True})]
+GLYPH_EXTRA["polar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                              ("sector names", {"showOuterLabels": True}),
+                              ("sector angles", {"showOuterLabels": True, "showSectorLabels": True}),
+                              ("bands", {"discreteColorStops": True, "colors": ["#3a6ea5", "#2e8b57", "#c07a1a", "#b03a3a"]}),
+                              ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 4})]
+GLYPH_EXTRA["radial-bar-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a"]}),
+                                   ("five rings", {"data": [90, 72, 55, 40, 18]}),
+                                   ("full circle, legend", {"circumference": 360, "legend": True})]
+# the advice zones of the bars (C2), our own sample: a hinted caution zone and an advice zone on the scale 0 to 100
+GLYPH_ZONES = [{"min": 60, "max": 80, "type": "advice", "hinted": False}, {"min": 80, "max": 100, "type": "caution", "hinted": True}]
+GLYPH_EXTRA["bar-horizontal"] = [("advice zones", {"hasBar": True, "advices": GLYPH_ZONES}),
+                                 ("setpoint", {"hasBar": True, "setpoint": 70}),
+                                 ("scale without labels", {"showLabels": False, "hasBar": True})]
+GLYPH_EXTRA["bar-vertical"] = GLYPH_EXTRA["bar-horizontal"]
+GLYPH_RADIAL_ZONES = [{"minValue": 60, "maxValue": 80, "type": "advice", "hinted": False},
+                      {"minValue": 80, "maxValue": 100, "type": "caution", "hinted": True}]
+GLYPH_EXTRA["instrument-radial"] = [("advice zones", {"showLabels": True, "advices": GLYPH_RADIAL_ZONES}),
+                                    ("setpoint", {"showLabels": True, "setpoint": 70}),
+                                    ("colours", {"needleColor": "#7a4aa8", "barColor": "#2e8b57"})]
+# the readout block (C2): a value in every case but the default (which shows the unavailable dash), and a text case
+GLYPH_DATA["readout-block"] = {"value": 12.5}
+GLYPH_EXTRA["readout-block"] = [("text value", {"valueType": "text", "value": "AUTO"}),
+                                ("text, left", {"valueType": "text", "value": "STBY", "alignment": "left"}),
+                                ("off text", {"off": True, "offText": "N/A"})]
+GLYPH_EXTRA["pie-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
+                            ("sunburst with children", {"sunburst": True, "data": GLYPH_SUNBURST}),
+                            ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
+                                                  "outerLabelDecimalPlaces": 1}),
+                            ("labels trimmed", {"showOuterLabels": True, "outerLabelMaxLength": 6})]
+# The nullable numbers a glyph shows live and so states at the values of `GLYPH_NUMBERS` (B8: the transmitter button's three
+# segments, which draw dashes while empty). A nullable number outside this set (a gauge's setpoint) is left unstated.
+GLYPH_NULLABLE = ("value", "adviceValue", "setpointValue")
+# A companion a value of an enumeration needs to show anything: the tag variant of the transmitter button is its label.
+GLYPH_COMPANION = {("variant", "tag"): {"label": "TT"},
+                   # a time axis in the default `date` display warns on the console; the minutes display is the one the samples suit
+                   ("xAxisType", "time"): {"timeDisplay": "minutes"}}
+
+
+def glyph_cases(schema: dict, contract: dict) -> list[Case]:
+    """The cases of a glyph, table driven from its component's schema: the defaults, each value of each enumerated
+    property (the module's `componentSize` is no attribute of the element and is left out), each number at the values of
+    `GLYPH_NUMBERS`, each boolean against its default, and a text for a property of `GLYPH_TEXT`. Every case but the
+    default and the numbers' own carries the numbers at their first value, so that a flag which changes only what an
+    opening looks like (orientation, a second opening) or a level drawn in another scheme shows. A case that sets the
+    value `trend` also carries `GLYPH_SERIES` for each array of numbers. A glyph has no tag, readout or alert frame, so
+    none of those is stated."""
+    props = {k: p for k, p in schema.items() if k not in ("positioning", "componentSize")}
+    default = {k: p["default"] for k, p in props.items()}
+    numbers = {k: GLYPH_NUMBER_VALUES.get(k, GLYPH_NUMBERS) for k, p in props.items()
+               if p["type"] == "number" or (p["type"] == ["number", "null"] and k in GLYPH_NULLABLE)}
+    series = [k for k, p in props.items() if p["type"] == "array" and p.get("items", {}).get("type") == "number"]
+    mid = {k: v[0] for k, v in numbers.items()}
+    data = GLYPH_DATA.get(contract.get("kind"), {})   # the samples of a chart: every case but the default draws them
+    out = [Case("default", {})]
+    for k, p in props.items():
+        if "enum" in p:
+            out += [Case(f"{k} {v}", {**mid, **data, k: v, **({a: GLYPH_SERIES for a in series} if v == "trend" else {}),
+                                      **GLYPH_COMPANION.get((k, v), {})})
+                    for v in p["enum"]]
+        elif k in numbers:
+            out += [Case(f"{k} {v}", {**data, k: v}) for v in numbers[k]]
+        elif p["type"] == "boolean":
+            out.append(Case(k if not default[k] else f"not {k}", {**mid, **data, k: not default[k]}))
+        elif p["type"] == "string" and k in GLYPH_TEXT:
+            out.append(Case(f"{k} {GLYPH_TEXT[k]}", {**mid, k: GLYPH_TEXT[k]}))
+    out += [Case(caption, {**mid, **data, **params}) for caption, params in GLYPH_EXTRA.get(contract.get("kind"), [])]
+    if "width" in props and "height" in props:   # a chart draws at the size it is given: its box is that size
+        for c in out:
+            c.size = (c.params.get("width", default["width"]), c.params.get("height", default["height"]))
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+# The frame components (T2, F1 to F5), shown in the section "Frame components" (`frame_block`). The cases come from the
+# component's own schema like a glyph's (`glyph_cases`: each value of each enumeration, each flag, each number), minus the
+# properties of the icon slots (an enumeration of every bundled icon), which would draw one case for each icon; the samples
+# below are our own: `base` is stated in every case (it gives the element something to draw: a label, a time), and `extra`
+# adds named cases (a slot property, a combination). A later batch adds one row of each table for its component.
+ALERT_MENU_ROWS = [
+    {"tag": "obc-alert-menu-item", "id": "A-1001", "title": "Critical, bilge pump P-101", "description": "Bilge level very high",
+     "day": "Today", "time": "09:41", "status": "no-ack-alarm",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "level-critical", "active": True, "acknowledged": False}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1002", "title": "High level, tank T-201", "description": "Level above 90 percent",
+     "day": "Today", "time": "09:38", "status": "unacknowledged",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "alarm", "active": True, "acknowledged": False}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1003", "title": "Filter F-3 differential", "description": "Pressure drop rising",
+     "day": "Yesterday", "time": "22:15", "status": "acknowledged",
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "warning", "active": True, "acknowledged": True}]},
+    {"tag": "obc-alert-menu-item", "id": "A-1004", "title": "Low caution, fan K-2", "description": "Vibration above normal",
+     "day": "Yesterday", "time": "18:02", "status": "caution", "hasIcon": True,
+     "children": [{"tag": "obc-alert-icon", "slot": "alert-icon", "type": "caution", "active": True, "acknowledged": False},
+                  {"tag": "obi-info", "slot": "icon"}]},
+]
+# The system menu's four sections (F4), of our own: a network, an audio output, a microphone input and a battery mode to choose from
+SYSTEM_STATES = {
+    "wifiState": {"enabled": True, "connected": True, "networkName": "Bridge network", "strength": 3, "status": "Connected",
+                  "networks": [{"name": "Bridge network", "signalStrength": 3}, {"name": "Engine room link", "signalStrength": 2}],
+                  "otherNetworks": [{"name": "Shore link", "signalStrength": 1}]},
+    "audioState": {"muted": False, "volume": 40, "outputs": [{"name": "Speakers"}, {"name": "Headset"}], "selectedOutput": "Speakers"},
+    "microphoneState": {"muted": True, "currentLevel": 30, "inputs": [{"name": "Handset"}, {"name": "Headset"}], "selectedInput": "Handset",
+                        "pushToTalk": False},
+    "batteryState": {"level": 80, "charging": False, "hasUsageButton": True, "modes": [{"name": "Normal"}, {"name": "Saving"}],
+                     "selectedMode": "Normal"},
+}
+# The app menu's buttons (F4), of our own: eight, so that the grid of four columns shows two rows
+APP_BUTTONS = [{"tag": "obc-app-button", "id": f"app-{name}", "label": label, "children": [{"tag": f"obi-{name}", "slot": "icon"}]}
+               for name, label in (("home", "Home"), ("dashboard", "Overview"), ("alerts", "Alerts"), ("alarm", "Alarms"),
+                                   ("time", "Trends"), ("help", "Help"), ("user", "Users"), ("settings-default-iec", "Settings"))]
+# The navigation and tree samples (F3), of our own: the nesting is two levels in the navigation menu (a group holding a group) and
+# three in the tree (a group holding a group holding rows), the first nesting of more than one level on the test page.
+NAV_ITEMS = [
+    {"tag": "obc-navigation-item", "id": "nav-overview", "label": "Overview", "hasIcon": True, "checked": True,
+     "children": [{"tag": "obi-home", "slot": "icon"}]},
+    {"tag": "obc-navigation-item-group", "id": "nav-plant", "label": "Plant", "hasIcon": True,
+     "children": [{"tag": "obi-dashboard", "slot": "icon"},
+                  {"tag": "obc-navigation-item", "id": "nav-pumps", "label": "Pumps"},
+                  {"tag": "obc-navigation-item-group", "id": "nav-tanks", "label": "Tanks",
+                   "children": [{"tag": "obc-navigation-item", "id": "nav-t201", "label": "Tank T-201"},
+                                {"tag": "obc-navigation-item", "id": "nav-t202", "label": "Tank T-202"}]}]},
+]
+
+
+def _open_groups(rows: list[dict]) -> list[dict]:
+    """The rows with every group open at the start (`defaultOpen`), at every depth."""
+    return [{**r, **({"defaultOpen": True} if r["tag"] == "obc-navigation-item-group" else {}),
+             **({"children": _open_groups(r["children"])} if "children" in r else {})} for r in rows]
+
+
+NAV_ITEMS_OPEN = _open_groups(NAV_ITEMS)
+NAV_FOOTER = [{"tag": "obc-navigation-item", "id": "nav-help", "label": "Help", "hasIcon": True,
+               "children": [{"tag": "obi-help", "slot": "icon"}]}]
+TREE_ROWS = [
+    {"tag": "obc-tree-navigation-group", "id": "tree-vessel", "label": "Vessel", "expanded": True,
+     "alerts": {"countAlarm": 2, "countCaution": 1},
+     "children": [{"tag": "obi-home", "slot": "icon"},
+                  {"tag": "obc-tree-navigation-group", "id": "tree-engine", "label": "Engine room", "expanded": True,
+                   "alerts": {"countLevelCritical": 1, "combine": True},
+                   "children": [{"tag": "obi-dashboard", "slot": "icon"},
+                                {"tag": "obc-tree-navigation-item", "id": "tree-p101", "label": "Pump P-101", "hasLeadingIcon": False,
+                                 "alerts": {"countWarning": 3}},
+                                {"tag": "obc-tree-navigation-item", "id": "tree-p102", "label": "Pump P-102", "hasLeadingIcon": False,
+                                 "checked": True}]},
+                  {"tag": "obc-tree-navigation-item", "id": "tree-deck", "label": "Deck", "hasLeadingIcon": False}]},
+    {"tag": "obc-tree-navigation-item", "id": "tree-shore", "label": "Shore link", "hasLeadingIcon": False, "disabled": True},
+]
+CRUMBS = [{"label": "Vessel", "href": "/vessel"}, {"label": "Engine room", "href": "/engine"}, {"label": "Pump P-101"}]
+# Sample tabs of our own for the tab row (F5): ids are unique, the icons are bundled ones
+TABS = [{"id": "t-overview", "title": "Overview", "iconName": "dashboard"},
+        {"id": "t-alarms", "title": "Alarms", "iconName": "alarm", "hasBadge": True, "badgeCount": 3, "badgeType": "alarm"},
+        {"id": "t-trends", "title": "Trends", "iconName": "info"},
+        {"id": "t-reports", "title": "Reports", "iconName": "help", "disabled": True}]
+PIVOTS = [{"tag": "obc-pivot-item", "id": "pv-alarms", "value": "alarms", "hasLabel": True, "label": "Alarms", "hasLeadingIcon": True,
+           "children": [{"tag": "obi-alarm", "slot": "icon"}]},
+          {"tag": "obc-pivot-item", "id": "pv-trends", "value": "trends", "hasLabel": True, "label": "Trends", "hasLeadingIcon": True,
+           "children": [{"tag": "obi-info", "slot": "icon"}]},
+          {"tag": "obc-pivot-item", "id": "pv-reports", "value": "reports", "hasLabel": True, "label": "Reports", "disabled": True}]
+# Sample options of our own for the context menu input (F5): values are unique
+MENU_OPTIONS = [{"value": "show-alarms", "label": "Alarms"}, {"value": "show-trends", "label": "Trends"},
+                {"value": "show-faceplate", "label": "Faceplate"}, {"value": "show-notes", "label": "Notes"}]
+MENU_NESTED = [{"value": "area-engine", "label": "Engine room", "level": 0,
+                "children": [{"value": "area-pumps", "label": "Pumps", "level": 1}, {"value": "area-tanks", "label": "Tanks", "level": 1}]},
+               {"value": "area-deck", "label": "Deck", "level": 0}]
+MENU_COLUMNS = [{"title": "Show", "columns": 1, "options": MENU_OPTIONS[:3]},
+                {"title": "Areas", "columns": 1, "options": [{"value": "area-engine", "label": "Engine room"},
+                                                              {"value": "area-deck", "label": "Deck"}]}]
+FRAME_SAMPLE = {
+    "tooltip": {"base": {"label": "Pump P-101 running"},
+                "extra": [("icon only", {"type": "icon", "iconName": "info"}),
+                          ("label with icon", {"showIcon": True, "iconName": "alarm"})]},
+    "toggletip": {"base": {"title": "Bilge pump P-101", "description": "Running since 09:30 in local control.",
+                           "customWidth": 280, "content": "Duty pump of group 2", "leadingIconName": "info",
+                           "trailingIconName": "close-google"},
+                  "extra": [("two actions", {"hasActions": True, "primaryButtonLabel": "Open", "secondaryButtonLabel": "Close"}),
+                            ("all parts", {"hasContent": True, "hasLeadingIcon": True, "hasTrailingIcon": True, "hasActions": True,
+                                           "primaryButtonLabel": "Open", "secondaryButtonLabel": "Close"})]},
+    "clock": {"base": {"date": "2026-01-01T09:30:45Z"},
+              "extra": [("date, weekday, year and zone", {"showDate": True, "showWeekday": True, "showYear": True,
+                                                          "showTimezone": True, "showSeconds": True, "timeZoneOffsetHours": 5})]},
+    "user-button": {"base": {"initials": "AB"},
+                    "extra": [("icon with label", {"label": "Alex Bravo", "sublabel": "Operator"}),
+                              ("initials with label", {"variant": "initials", "label": "Alex Bravo", "sublabel": "Operator"}),
+                              ("large with label", {"variant": "initials", "size": "large", "label": "Alex Bravo",
+                                                    "sublabel": "Administrator"}),
+                              ("custom icon", {"iconName": "user-settings"})]},
+    "app-button": {"base": {"label": "Home", "iconName": "home"}, "extra": []},
+    "notification-button": {"base": {},
+                            "extra": [("active with count", {"isActive": True, "buttonStyle": "normal", "showCount": True, "count": 12}),
+                                      ("enhanced with count", {"isActive": True, "buttonStyle": "enhanced", "showCount": True, "count": 3}),
+                                      ("custom icon", {"iconName": "alarm"})]},
+    "notification-badge-button": {"base": {"label": "12"},
+                                  "extra": [("icon", {"icon": True, "label": "", "iconName": "info"})]},
+    # the alert button and the alert menu (F2): rows of our own, as the frame will build them from the alarm list
+    "alert-button-item": {"base": {"nAlerts": 3, "counter": True, "alertType": "alarm"}, "extra": []},
+    "alert-button": {"base": {"nAlerts": 3, "counter": True, "alertType": "alarm"},
+                     "extra": [("global counter", {"globalCounter": True, "shelvedCount": 2, "alertType": "warning"}),
+                               ("blinking critical", {"blinking": True, "alertType": "level-critical"}),
+                               ("silence disabled", {"showSilenceButton": True, "silenceButtonDisabled": True})]},
+    "alert-menu-item": {"base": {"title": "High level, tank T-201", "description": "Level above 90 percent", "day": "Today",
+                                 "time": "09:41",
+                                 "alertIcon": [{"tag": "obc-alert-icon", "type": "alarm", "active": True, "acknowledged": False}]},
+                        "extra": [("secondary action", {"secondaryActionLabel": "Shelve", "secondaryActionState": "enabled",
+                                                        "size": "double-line"}),
+                                  ("source icon", {"hasIcon": True, "iconName": "info"}),
+                                  ("acknowledged", {"status": "acknowledged", "alertIcon": [
+                                      {"tag": "obc-alert-icon", "type": "warning", "active": True, "acknowledged": True}]})]},
+    "alert-menu": {"base": {"canAckAll": True, "items": ALERT_MENU_ROWS},
+                   "extra": [("shelved tab", {"hasShelved": True, "items": ALERT_MENU_ROWS[:2]}),
+                             ("no rows", {"items": []}),
+                             ("silence shown", {"showSilenceButton": True})]},
+    # navigation, tree navigation and the breadcrumb (F3)
+    "navigation-item": {"base": {"label": "Engine room", "hasIcon": True, "iconName": "dashboard"},
+                        "extra": [("trailing icon", {"hasTrailingIcon": True, "trailingIconName": "chevron-right-google"}),
+                                  ("tree row with alerts", {"treeMode": True, "alerts": {"countAlarm": 2, "countWarning": 1}})]},
+    "navigation-item-group": {"base": {"label": "Plant", "hasIcon": True, "iconName": "dashboard", "items": NAV_ITEMS[1]["children"][1:]},
+                              "extra": [("open", {"defaultOpen": True})]},
+    "navigation-menu": {"base": {"items": NAV_ITEMS, "footerItems": NAV_FOOTER},
+                        "extra": [("no footer", {"footerItems": []}),
+                                  # the tree variant draws the groups inline, so two levels show (a flyout floats over the next cell)
+                                  ("tree variant, groups open", {"variant": "tree", "items": NAV_ITEMS_OPEN})]},
+    "tree-navigation-item": {"base": {"label": "Pump P-101", "iconName": "info"},
+                             "extra": [("with alerts", {"alerts": {"countAlarm": 2, "countCaution": 1}}),
+                                       ("combined alerts", {"alerts": {"countAlarm": 2, "countCaution": 1, "combine": True}}),
+                                       ("expandable", {"expandable": True, "expanded": True})]},
+    "tree-navigation-group": {"base": {"label": "Vessel", "iconName": "home", "items": TREE_ROWS[0]["children"][1:]},
+                              "extra": [("with alerts", {"alerts": {"countAlarm": 2, "countCaution": 1}})]},
+    "tree-navigation": {"base": {"items": TREE_ROWS}, "extra": [("one group", {"items": TREE_ROWS[:1]}), ("no rows", {"items": []})]},
+    "breadcrumb": {"base": {"items": CRUMBS}, "extra": [("one crumb", {"items": CRUMBS[:1]}), ("no crumbs", {"items": []})]},
+    # the menus and the top bar (F4)
+    "brilliance-menu": {"base": {"palette": "day", "brightness": 60}, "extra": []},
+    "app-menu": {"base": {"items": APP_BUTTONS}, "extra": [("three apps", {"items": APP_BUTTONS[:3]}), ("no apps", {"items": []})]},
+    "command-menu": {"base": {"commandIconName": "joystick", "commandStatus": "Joystick", "commandDescription": "Bridge wing, port",
+                              "commandLocation": "Bridge", "takeCommandLabel": "Take command", "releaseCommandLabel": "Release command",
+                              "inCommandLabel": "In command", "noCommandLabel": "No command", "inCommandIconName": "command-in"},
+                     "extra": [("no command", {"commandIconName": "command-no", "commandStatus": "NO CMD", "commandDescription": "Not assigned",
+                                               "commandLocation": ""})]},
+    "top-bar": {"base": {"appTitle": "Cadre HMI", "pageName": "Engine room", "showClock": True, "showUserButton": True,
+                         "showDimmingButton": True, "date": "2026-01-01T09:30:45Z", "showSeconds": True, "nAlerts": 3,
+                         "alertType": "alarm", "appIconName": "dashboard", "showAppIcon": True, "commandButtonText": "Command"},
+                "extra": [("apps button and no clock", {"showAppsButton": True, "showClock": False}),
+                          ("critical, blinking", {"alertType": "level-critical", "blinking": True, "nAlerts": 12}),
+                          ("silence shown", {"showSilenceButton": True}),
+                          ("settings mode", {"settings": True, "breadcrumbItems": CRUMBS})]},
+    "system-menu": {"base": dict(SYSTEM_STATES),
+                    "extra": [("wifi only", {"audioState": {}, "microphoneState": {}, "batteryState": {}, "showSettingsButton": True}),
+                              ("battery charging", {"wifiState": {}, "audioState": {}, "microphoneState": {},
+                                                    "batteryState": {**SYSTEM_STATES["batteryState"], "charging": True}})]},
+    "user-menu": {"base": {"type": "signed-in", "userInitials": "AB", "userLabel": "Alex Bravo", "userRole": "Operator"},
+                  "extra": [("sign in, small", {"type": "sign-in", "size": "small"})]},
+    # tabs, pivots, the modal window, the context menu input and the notification items (F5)
+    "tab-item": {"base": {"hasTitle": True, "title": "Engine room", "hasLeadingIcon": True, "hasBadge": True, "badgeCount": 3,
+                          "leadingIconName": "dashboard", "badgeIconName": "info"},
+                 "extra": [("subtitle", {"showSubtitle": True, "subtitle": "Pumps and tanks"}),
+                           ("close and divider", {"hasClose": True, "hasDivider": True}),
+                           ("badge with icon", {"badgeType": "alarm", "showLeadingBadgeIcon": True})]},
+    "tab-row": {"base": {"tabs": TABS, "selectedTabId": "t-overview"},
+                "extra": [("with subtitles", {"showSubtitle": True, "tabs": [dict(t, subtitle="Plant " + str(i + 1)) for i, t in enumerate(TABS)]}),
+                          ("second tab selected", {"selectedTabId": "t-alarms"}),
+                          ("no icons", {"tabs": [dict(t, hasLeadingIcon=False) for t in TABS]}),
+                          ("no tabs", {"tabs": []})]},
+    "pivot-item": {"base": {"value": "alarms", "hasLabel": True, "label": "Alarms", "hasLeadingIcon": True, "iconName": "alarm"},
+                   "extra": [("icon only", {"hasLabel": False}), ("label only", {"hasLeadingIcon": False})]},
+    "pivot-item-group": {"base": {"items": PIVOTS, "selectedValue": "alarms"},
+                         "extra": [("second selected", {"selectedValue": "trends"}), ("no pivots", {"items": []})]},
+    "modal-window": {"base": {"title": "Release command", "content": "The bridge wing gives up command. Machinery control moves to the engine "
+                                                                      "control room.",
+                              "optionLabel": "Details", "cancelLabel": "Keep command", "doneLabel": "Release", "leadingIconName": "info"},
+                     "extra": [("optional action", {"hasOptionalAction": True}), ("leading icon", {"hasLeadingIcon": True}),
+                               ("medium with action", {"size": "medium", "hasOptionalAction": True})]},
+    "context-menu-input": {"base": {"options": MENU_OPTIONS, "selectedValues": ["show-trends"], "title": "Show", "itemsPerColumn": 5},
+                           "extra": [("title bar", {"hasTitleBar": True}),
+                                     ("checkboxes", {"type": "checkboxes", "selectedValues": ["show-alarms", "show-notes"]}),
+                                     ("nested checkboxes", {"type": "nested-checkboxes", "options": MENU_NESTED,
+                                                            "selectedValues": ["area-pumps"]}),
+                                     ("flyout", {"type": "flyout", "options": MENU_NESTED, "selectedValues": []}),
+                                     ("two column groups", {"type": "multi-with-subtitles", "options": [], "columnGroups": MENU_COLUMNS,
+                                                            "selectedValues": ["show-alarms", "area-deck"]}),
+                                     ("several selected", {"multiSelect": True, "selectedValues": ["show-alarms", "show-notes"]}),
+                                     ("one for each group", {"type": "multi", "selectPerGroup": True, "options": [],
+                                                             "columnGroups": MENU_COLUMNS, "selectedValues": ["show-alarms", "area-deck"]}),
+                                     ("no options", {"options": [], "selectedValues": []})]},
+    "notification-menu-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator from the engine control room",
+                                        "day": "Today", "time": "09:41", "primaryActionLabel": "View", "secondaryActionLabel": "Dismiss",
+                                        "iconName": "info"},
+                               "extra": [("opened with actions", {"open": True, "size": "double-line"}), ("source icon", {"hasIcon": True})]},
+    "notification-message-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator", "time": "09:41",
+                                           "timeSecondary": "09:52", "actionLabel": "View", "emptyText": "No active notification",
+                                           "secondaryIconName": "info", "type": "with-button"},
+                                  "extra": [("secondary icon and time", {"hasSecondaryIcon": True, "hasTimestamp2": True})]},
+    "notification-floating-item": {"base": {"title": "Pump P-101 stopped", "description": "Stopped by the operator", "time": "09:41", "day": "Today",
+                                            "hasTimestamp": True, "action": True, "actionLabel": "View", "action2": True,
+                                            "action2Label": "Dismiss", "primaryIconName": "info"},
+                                  "extra": [("application with day", {"type": "application", "hasDay": True}),
+                                            ("vertical, multi line", {"direction": "vertical", "lineType": "multi-line"})]},
+}
+# Properties a frame component's cases leave out: the clock's breakpoint hides it on a narrow viewport.
+FRAME_SKIP = {"clock": ("blinkOnlyBreakpointPx",),
+              "top-bar": ("appButtonBreakpointPx", "dimmingButtonBreakpointPx", "appTitleBreakpointPx", "userButtonBreakpointPx",
+                          "appIconBreakpointPx"),      # a breakpoint depends on the viewport
+              "alert-button": ("flatMaxBreakpointPx", "silenceButtonMinBreakpointPx")}     # a breakpoint depends on the viewport
+GLYPH_NUMBER_VALUES.update({"count": (0, 12), "timeZoneOffsetHours": (0, 5), "brightness": (20, 80), "brightnessMax": (100, 200),
+                            "brightnessMinorStep": (5, 10), "brightnessMajorStep": (25, 50), "badgeCount": (0, 12), "itemsPerColumn": (2, 8)})
+
+
+def frame_cases(kind: str, contract: dict) -> list[Case]:
+    """The cases of a frame component (see `FRAME_SAMPLE`): the glyph cases of its schema without the icon slot properties,
+    each stating the kind's base sample, then its named cases."""
+    spec = json.loads(screen.MODULE_COMPONENTS.read_text(encoding="utf-8"))[screen.MODULE_ONLY[kind]]
+    icons = {n for n, sl in spec.get("slots", {}).items() if sl["kind"] == "icon"}
+    props = {k: p for k, p in spec["props"].items() if k not in icons and k not in FRAME_SKIP.get(kind, ())}
+    sample = FRAME_SAMPLE[kind]
+    out = glyph_cases(props, {**contract, "kind": "<frame>"})        # no GLYPH_DATA or GLYPH_EXTRA row: the samples are ours
+    out = [Case(c.caption, {**sample["base"], **c.params}) for c in out]
+    out += [Case(caption, {**sample["base"], **params}) for caption, params in sample["extra"]]
+    return [c for c in out if all(k in contract["params"] for k in c.params)]
+
+
+def frame_block(kind: str, contracts: dict) -> Block:
+    """One kind of `screen.FRAME_ONLY` as a grid of its cases."""
+    return grid(f"S_{kind.replace('-', '_')}_", kind, frame_cases(kind, contracts[screen.view_of({"kind": kind})]), contracts)
+
+
+def module_only_block(kind: str, contracts: dict) -> Block:
+    """One kind of `screen.MODULE_ONLY` as a grid of its cases."""
+    return grid(f"S_{kind.replace('-', '_')}_", kind, module_only_cases(kind, contracts[screen.view_of({"kind": kind})]), contracts)
 
 
 def genset_block() -> Block:
@@ -820,6 +1238,17 @@ def devices_block(specs: dict, contracts: dict) -> tuple[Block, list[str]]:
                                             "Maintenance are on the faceplate;", bx, py + 40, 840, 16, style="body", align="left"))
     block.add("labels", label("TB_modes_2", "a command a mode does not allow is refused with its reason.",
                               bx, py + 58, 840, 16, style="body", align="left"))
+    # the module's command button (spike T0 wrap W3, wiki page 12 section 17.12): the same confirmed pulse of the library
+    # (`page_pulse`, write path W18) on the test generator's Start command, which its state tag latches; drawn as the
+    # module's `cadre.ob.button` under `--render module` and as the library's button otherwise
+    tag = f"{FOLDER}/TB_GEN/cmdStart"
+    pulses.append(tag)
+    block.add("buttons", {**button("TB_press_GEN_start", "Start generator", bx, y2 + 270, 220,
+                                   {"type": "pulse", "tag": tag, "ms": PULSE_MS,
+                                    "confirm": "Start the test generator?"}, h=56), "render": "module"})
+    block.add("labels", label("TB_press_GEN_start_c", "OB button: Start generator pulses TB_GEN/cmdStart for a minute; the "
+                                                      "generator then runs.", bx + 230, y2 + 288, 600, 16,
+                              style="body", align="left"))
     block.w, block.h = 1500, y2 + 365
     return block, pulses
 
@@ -881,7 +1310,7 @@ def galleryize(symbols: list[dict]) -> dict[str, dict]:
     return out
 
 
-def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component test") -> Bench:
+def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component test", render: str = "stock") -> Bench:
     """The component test page, its test devices and its tags for a project whose tags sit under `tag_root`
     (for example `[default]cadre_hmi_eng02_asm`). Everything comes from `contracts` (library/contracts.json) and
     `prof` (library/profile.json)."""
@@ -901,6 +1330,17 @@ def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component 
     if gen is not None:
         sections.append(("Kind_generator", f"Generator  ({screen.view_of({'kind': 'generator'})})", gen))
         sections.append(("Kind_genset", f"Generator set  ({screen.GENSET_VIEW}) in boxes of several sizes", genset_block()))
+    plain = [k for k in screen.MODULE_ONLY if k not in screen.FRAME_ONLY]
+    if render == "module" and plain:   # the kinds with no library view: only the module draws them
+        only = Block()
+        for kind in plain:
+            only.extend(module_only_block(kind, contracts), 0, only.h)
+        sections.append(("ModuleOnly", "Module only: " + ", ".join(plain), only))
+    if render == "module" and screen.FRAME_ONLY:   # the frame components (T2): their own section, below the module only kinds
+        frame = Block()
+        for kind in screen.FRAME_ONLY:
+            frame.extend(frame_block(kind, contracts), 0, frame.h)
+        sections.append(("FrameComponents", "Frame components: " + ", ".join(screen.FRAME_ONLY), frame))
     sections.append(("Media", "Colour by medium (toolbar: Color)", medium_block()))
     alarm_part, alarm_pulses = alarm_block(specs)
     sections.append(("Alarms", "Test alarms: one lamp for each priority (Critical, High, Medium, Low, Diagnostic)", alarm_part))

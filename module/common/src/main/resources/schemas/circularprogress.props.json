@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "determinate",
+        "indeterminate",
+        "progressive-indeterminate"
+      ],
+      "default": "indeterminate",
+      "description": "OpenBridge `obc-circular-progress` property `mode`."
+    },
+    "value": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-circular-progress` property `value`."
+    },
+    "strokeWidth": {
+      "type": "number",
+      "default": 4,
+      "description": "OpenBridge `obc-circular-progress` property `strokeWidth`."
+    },
+    "viewBoxSize": {
+      "type": "number",
+      "default": 42,
+      "description": "OpenBridge `obc-circular-progress` property `viewBoxSize`."
+    },
+    "padding": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-circular-progress` property `padding`."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

@@ -32,11 +32,11 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts  # noqa: E402
+    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, obasm, parent as par, parts  # noqa: E402
     from hmi.framework import root_classes, search_panel  # noqa: E402
     from hmi.library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE  # noqa: E402
 else:
-    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts
+    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, obframe, obasm, parent as par, parts
     from .framework import root_classes, search_panel
     from .library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE
 
@@ -58,6 +58,8 @@ def view_of(sym: dict) -> str:
     kind = sym["kind"].lower()
     if kind == "generator" and (sym.get("params") or {}).get("picture") == "genset":
         return GENSET_VIEW
+    if kind in MODULE_ONLY:
+        return MODULE_VIEW + kind
     return KIND_VIEW.get(kind, "")
 
 READOUT_EXTENT = {"right": (64, 0), "left": (64, 0), "bottom": (24, 44), "top": (24, 44), "none": (0, 0)}
@@ -171,13 +173,75 @@ def pulse_members(kind: str) -> list[str]:
     return [m for m in PULSE_MEMBERS if m in known_members(kind)]
 
 
+# Module-only kinds: a descriptor kind that has no library view, only a component of the module. The table maps the kind
+# to the component id; everything else is derived. The contract is `module_contract` (from `module/components.json`),
+# its pseudo view path `Module/<kind>` (`view_of`), the symbol is drawn by `embed_module` under `--render module`, and
+# under `--render stock` the build refuses it (`embed_symbol`, an error gate G7 contract reports). The component test
+# page shows these kinds in one section (`testbench.module_only_block`) and the glass gates find them by the
+# component's element. A later wrap adds one row here (wiki page 12 section 17.13, `cloud/WRAP-RECIPE.md` section 8).
+# The frame components (tranche T2, batches F1 to F5): module-only kinds, as above, which the component test page shows in
+# its own section "Frame components" (`testbench.frame_block`) and not in "Module only". A row here is a row of
+# `MODULE_ONLY` too (merged below); the kind is the tag without `obc-`, hyphens kept. They are not descriptor symbols of the
+# stock rendering and not library kinds (`MODULE_KIND` is not touched): the frame option draws them in its own views.
+FRAME_ONLY = {"tooltip": "cadre.ob.tooltip", "toggletip": "cadre.ob.toggletip", "clock": "cadre.ob.clock",
+              "user-button": "cadre.ob.userbutton", "app-button": "cadre.ob.appbutton",
+              "notification-button": "cadre.ob.notificationbutton",
+              "notification-badge-button": "cadre.ob.notificationbadgebutton",
+              "alert-button-item": "cadre.ob.alertbuttonitem", "alert-button": "cadre.ob.alertbutton",
+              "alert-menu-item": "cadre.ob.alertmenuitem", "alert-menu": "cadre.ob.alertmenu",
+              "navigation-item": "cadre.ob.navigationitem", "navigation-item-group": "cadre.ob.navigationitemgroup",
+              "navigation-menu": "cadre.ob.navigationmenu", "tree-navigation-item": "cadre.ob.treenavigationitem",
+              "tree-navigation-group": "cadre.ob.treenavigationgroup", "tree-navigation": "cadre.ob.treenavigation",
+              "breadcrumb": "cadre.ob.breadcrumb", "brilliance-menu": "cadre.ob.brilliancemenu",
+              "user-menu": "cadre.ob.usermenu",
+              "system-menu": "cadre.ob.systemmenu",
+              "app-menu": "cadre.ob.appmenu",
+              "command-menu": "cadre.ob.commandmenu",
+              "top-bar": "cadre.ob.topbar",
+              "tab-item": "cadre.ob.tabitem",
+              "tab-row": "cadre.ob.tabrow",
+              "pivot-item": "cadre.ob.pivotitem",
+              "pivot-item-group": "cadre.ob.pivotitemgroup",
+              "modal-window": "cadre.ob.modalwindow",
+              "context-menu-input": "cadre.ob.contextmenuinput",
+              "notification-menu-item": "cadre.ob.notificationmenuitem",
+              "notification-message-item": "cadre.ob.notificationmessageitem",
+              "notification-floating-item": "cadre.ob.notificationfloatingitem"}
+MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor", "diodes": "cadre.ob.diodes", "ground": "cadre.ob.ground", "source": "cadre.ob.source", "converter": "cadre.ob.converter", "transformer": "cadre.ob.transformer", "bipolar-transistor": "cadre.ob.bipolartransistor", "mosfet": "cadre.ob.mosfet", "logic": "cadre.ob.logic", "router": "cadre.ob.router",
+               "automation-badge": "cadre.ob.automationbadge", "hydraulic-check-valve": "cadre.ob.checkvalve",
+               "valve-analog-two-way-icon": "cadre.ob.valvetwoway", "valve-analog-three-way-icon": "cadre.ob.valvethreeway",
+               "indicator-battery": "cadre.ob.battery", "indicator-engine": "cadre.ob.engine",
+               "indicator-tank-atmospheric": "cadre.ob.tankatmospheric", "automation-readout": "cadre.ob.automationreadout",
+               "heat-exchanger": "cadre.ob.heatexchanger", "heat-pump": "cadre.ob.heatpump",
+               "hydraulic-separator": "cadre.ob.hydraulicseparator",
+               "gauge-generator": "cadre.ob.gaugegenerator",
+               "gauge-motors-and-pumps": "cadre.ob.gaugemotorspumps", "gauge-valve": "cadre.ob.gaugevalve",
+               "hydraulic-valve-4-3": "cadre.ob.hydraulicvalve43", "hydraulic-valve-x-2": "cadre.ob.hydraulicvalvex2",
+               "transmitter-button": "cadre.ob.transmitterbutton",
+               "area-graph": "cadre.ob.areagraph",
+               "line-graph": "cadre.ob.linegraph",
+               "donut-chart": "cadre.ob.donutchart",
+               "pie-chart": "cadre.ob.piechart",
+               "polar-chart": "cadre.ob.polarchart",
+               "radial-bar-chart": "cadre.ob.radialbarchart",
+               "bar-horizontal": "cadre.ob.barhorizontal",
+               "bar-vertical": "cadre.ob.barvertical",
+               "circular-progress": "cadre.ob.circularprogress",
+               "instrument-radial": "cadre.ob.instrumentradial",
+               "readout-block": "cadre.ob.readoutblock", **FRAME_ONLY}
+MODULE_VIEW = "Module/"
+# The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
+# device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
+_MODULE_ONLY_MARKS = {"hasTag": False, "deviceId": "", "deviceKind": "", "deviceLabel": "", "statusText": "",
+                       "badgeDuty": False, "outOfService": False}
 # The render target. `stock` draws every kind with the library views of the parent; `module`
 # draws the kinds in MODULE_KIND with the Cadre OpenBridge module's components (module/, wiki
 # page 12) and every other kind as before. The descriptor does not change.
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
-               "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve",
-               "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
+               "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve", "filter": "cadre.ob.filter",
+               "damper": "cadre.ob.damper", "switch": "cadre.ob.switch",
+               "generator": "cadre.ob.generator", "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
 # The two kinds of module 0.3.1 (COB-127): a value with its unit, drawn in the box the library gives the block
 # (`symbol_box`) with a digit count in place of a number format, and opening the faceplate of the device
 # kind its parameter names.
@@ -199,14 +263,32 @@ MODULE_INSTRUMENTS = ("readout", "instrument-field")
 # count), keep the library's view (`module_digits`). The enhanced field with a setpoint is 6 px higher than the
 # library's box and the other cases at most 4 px (`module/web/instruments.json`, `measure_instruments.py`): the
 # element is not cut, since its box does not clip, but it is not fitted either, so that case stays on the library's view.
-MODULE_EXCEPT = {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
+# The module's filter, damper and switch have three orientations (`horizontal`, `verticalRight`, `verticalLeft`) where the library's
+# has a `vertical` flag, which does not say which side, so a vertical filter, damper or switch stays on the library's view like a
+# vertical fan.
+# The generator set (`picture` `genset`) is a drawing of the library's own and stays on its view (wiki page 12 section 17.11).
+MODULE_EXCEPT = {"fan": [{"vertical": True}], "filter": [{"vertical": True}], "damper": [{"vertical": True}],
+                 "switch": [{"vertical": True}], "generator": [{"picture": "genset"}],
+                 "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
 MODULE_NEEDS = {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
+                "filter": {"variant": ["regular", "flat"]}, "damper": {"variant": ["regular", "flat"]},
+                "switch": {"variant": ["regular", "flat"]},
+                # The module's generator is the indicator disc: the library's other variants, the activated ground, the
+                # progress ring and the three badges are marks it does not draw, so a symbol that asks for one keeps the
+                # library's view (the duty mark and the out of service greying do so through `parts.SYMBOL_PARAMS`).
+                "generator": {"variant": ["regular"], "activated": [False], "progress": [False],
+                              "badgeControl": ["none"], "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]},
                 "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}}
 # Parameters the module's component states with the contract's default where the symbol gives none: the
 # component's own default differs from the library view's (the module's pump prints a speed, the library's
 # does not).
 MODULE_STATE = {"pump": ("hasSpeed",), "motor": ("hasSpeed",), "fan": ("hasSpeed",),
                 "tank": ("unit", "hasCapacity"), "readout": ("value",), "instrument-field": ("value",)}
+
+# Parameter values the library and the component name differently: the library's `regular` variant of a filter is the
+# element's `square` (its enumeration is `square` and `flat`, `SquaredVariant`), and `flat` is `flat` in both.
+MODULE_VALUE = {"filter": {"variant": {"regular": "square"}}, "damper": {"variant": {"regular": "square"}},
+               "switch": {"variant": {"regular": "square"}}}
 
 _DIGITS = re.compile(r"(?:#,##)?0(?:\.(0+))?")
 
@@ -253,6 +335,14 @@ def _same(value, want) -> bool:
     return type(value) is type(want) and value == want
 
 
+def module_probe(kind: str, params: dict, bound: dict) -> dict:
+    """The symbol's parameters as `module_draws` is asked about them: a bound page part mark (`parts.SYMBOL_PARAMS`) counts
+    as stated (None), and so does a bound parameter that `MODULE_NEEDS` names and the kind's component drops, such as the
+    generator's progress ring: the binding would reach no property of the component, so the symbol keeps the library's view."""
+    marks = set(parts.SYMBOL_PARAMS) | (set(MODULE_NEEDS.get(kind, {})) & MODULE_DROP.get(kind, set()))
+    return {**params, **{k: None for k in bound if k in marks}}
+
+
 def module_drawn(sym: dict) -> bool:
     """Whether a descriptor's symbol is drawn as the module's component under the module rendering: not asked to stay
     on the library's view (`render: view`), and one the component can draw (`module_draws`, with the same probe of the
@@ -260,8 +350,7 @@ def module_drawn(sym: dict) -> bool:
     gates, whose selectors find module components only (COB-198)."""
     kind = sym.get("kind")
     params = sym.get("params") or {}
-    probe = {**params, **{k: None for k in sym.get("bind", {}) if k in parts.SYMBOL_PARAMS}}
-    return sym.get("render") != "view" and module_draws(kind, probe, target="module")
+    return sym.get("render") != "view" and module_draws(kind, module_probe(kind, params, sym.get("bind", {})), target="module")
 
 
 def module_draws(kind: str, params: dict, defaults: dict | None = None, target: str | None = None,
@@ -271,9 +360,9 @@ def module_draws(kind: str, params: dict, defaults: dict | None = None, target: 
     `target` is the rendering asked about, for a caller that builds nothing (the walk's plan); without
     it the rendering of the build in hand. `height` is the height of the box the symbol is drawn in, where the
     caller knows it (`module_height`)."""
-    if (target or RENDER["target"]) != "module" or kind not in MODULE_KIND:
+    if (target or RENDER["target"]) != "module" or module_type(kind) is None:
         return False
-    listed = module_props(MODULE_KIND[kind])
+    listed = module_props(module_type(kind))
     if any(params.get(k, False) is not False for k in parts.SYMBOL_PARAMS if k not in listed):
         return False   # the page parts' marks (COB-159; None: bound) of a component that has no such property
     if any(all(_same(params.get(k), v) for k, v in keep.items()) for keep in MODULE_EXCEPT.get(kind, [])):
@@ -295,6 +384,53 @@ MODULE_COMPONENTS = ROOT / "module" / "components.json"
 _MODULE_SCHEMA: dict = {}
 
 
+def module_type(kind: str) -> str | None:
+    """The module component that draws a descriptor kind under the module rendering: a library kind's (`MODULE_KIND`) or
+    a module-only kind's (`MODULE_ONLY`); None for a kind the module does not draw."""
+    return MODULE_KIND.get(kind) or MODULE_ONLY.get(kind)
+
+
+def module_element(ctype: str) -> str:
+    """The custom element a module component draws (`obc-resistor`), as `module/components.json` states it."""
+    module_props(ctype)
+    return _MODULE_SCHEMA.get(ctype, {}).get("element", "")
+
+
+# What a module-only kind's contract states beyond its component's own properties, by the kind of element (decided from
+# the component's properties, `module_geometry`). A symbol is an element on the filter's attribute set (`on`, `tag`,
+# `readoutPosition`): it takes the marks of `_MODULE_ONLY_MARKS` and the geometry of the library's static symbol (48 px
+# symbol box, `symbol-centre`, a state `on`, the readout and identifier boxes). A glyph is an element without them (a
+# badge, a valve icon): its contract holds only the properties its component declares, a box anchor, no flow and no
+# state, and its size is the component's default size (`defaultSize` of `module/components.json`).
+_MODULE_SYMBOL_PROPS = ("on", "tag", "readoutPosition")
+_MODULE_GLYPH = {"anchor": "box", "flow": "none"}
+
+
+def module_geometry(ctype: str) -> str:
+    """`symbol` for a component on the filter's attribute set, `glyph` for any other (see above)."""
+    listed = module_props(ctype)
+    return "symbol" if all(k in listed for k in _MODULE_SYMBOL_PROPS) else "glyph"
+
+
+def module_contract(kind: str, template: dict) -> dict:
+    """The contract of a module-only kind, derived from the module's own contract (`module/components.json`): the
+    component's properties with their defaults, and the geometry of its class (`module_geometry`). A symbol also takes
+    the marks of `_MODULE_ONLY_MARKS` and the geometry of `template`, the library's static symbol. A glyph takes
+    neither: it carries exactly the properties its component declares. `positioning` is the generator's to state
+    (`embed_module`), so it is no parameter."""
+    ctype = MODULE_ONLY[kind]
+    module_props(ctype)
+    spec = _MODULE_SCHEMA.get(ctype, {})
+    props = spec.get("props", {})
+    own = {k: p["default"] for k, p in props.items() if k != "positioning" and "default" in p}
+    if module_geometry(ctype) == "glyph":
+        size = spec.get("defaultSize", {"width": 48, "height": 48})
+        return {**_MODULE_GLYPH, "kind": kind, "view": MODULE_VIEW + kind, "size": [size["width"], size["height"]],
+                "params": dict(sorted(own.items()))}
+    keep = {k: template[k] for k in ("anchor", "identifier", "readoutExtent", "size", "symbolSize", "state", "statusMode")}
+    return {**keep, "kind": kind, "view": MODULE_VIEW + kind, "params": dict(sorted({**_MODULE_ONLY_MARKS, **own}.items()))}
+
+
 def module_props(ctype: str) -> set[str]:
     """The properties the module's component `ctype` has (`module/components.json`, the schema gate G1 reads). The
     generator emits a property that the library's contract has and the component may lack (`MODULE_IF_LISTED`) only
@@ -314,11 +450,16 @@ _STATUS_DROP = {"showStatus", "statusText", "hasTag", "deviceId", "deviceKind", 
 # chip), a field's label its `tag` (the caption). The number formats become `fractionDigits`, the field's `align`
 # becomes `center`, and the field's own `tag` and `source` are drawn by neither (`embed_module`).
 MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {},
-                "valve": {}, "analogvalve": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
+                "valve": {}, "analogvalve": {}, "filter": {}, "damper": {}, "switch": {}, "generator": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
 MODULE_DROP = {"pump": _STATUS_DROP | {"value"}, "motor": _STATUS_DROP | {"value"},
                "fan": _STATUS_DROP | {"value", "vertical"},
                "valve": _STATUS_DROP | {"hasSpeed", "speed", "value"},
                "analogvalve": _STATUS_DROP | {"hasSpeed", "speed"},
+               "filter": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "damper": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "switch": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical"},
+               "generator": _STATUS_DROP | {"hasSpeed", "speed", "value", "vertical", "variant", "picture", "activated",
+                                            "progress", "badgeControl", "badgeInterlock", "badgeCommandLocked"},
                "tank": {"medium", "showPercent", "chart", "history", "hasTag", "deviceId", "deviceKind",
                         "deviceLabel", "valueFractionDigits"},
                "readout": {"format", "hasTag", "label", "deviceId", "deviceKind", "deviceLabel", "stretch"},
@@ -332,13 +473,16 @@ MODULE_IDENT = {"readout": "idTag", "instrument-field": "tag"}
 # the readout's `stretch`. `module_drop` is the drop in force for the schema in hand.
 _STATUS_PROPS = ("showStatus", "statusText", "badgeDuty", "outOfService")
 MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATUS_PROPS, "valve": _STATUS_PROPS,
-                    "analogvalve": _STATUS_PROPS, "readout": ("stretch",)}
+                    "analogvalve": _STATUS_PROPS, "filter": _STATUS_PROPS, "damper": _STATUS_PROPS, "switch": _STATUS_PROPS,
+                    "generator": ("showStatus", "statusText"), "readout": ("stretch",)}
 
 
 def module_drop(kind: str) -> set[str]:
     """The parameters of the library's contract that the component of `kind` is not given: `MODULE_DROP`, less those
     of `MODULE_IF_LISTED` that the component's schema lists."""
-    listed = module_props(MODULE_KIND[kind])
+    listed = module_props(module_type(kind))
+    if kind in MODULE_ONLY:   # a module-only kind states the status marks that its component lists
+        return _STATUS_DROP - {k for k in _STATUS_PROPS if k in listed}
     return MODULE_DROP[kind] - {k for k in MODULE_IF_LISTED.get(kind, ()) if k in listed}
 
 
@@ -520,8 +664,17 @@ class Report:
         return {"errors": self.errors, "gaps": self.gaps, "notes": self.notes}
 
 
-def load_contracts() -> dict:
+def library_contracts() -> dict:
+    """The library's own contracts, as the parent generator wrote them (`library/contracts.json`)."""
     return json.loads((ROOT / "library" / "contracts.json").read_text(encoding="utf-8"))
+
+
+def load_contracts() -> dict:
+    """The contracts a build reads: the library's and those of the module-only kinds (`module_contract`)."""
+    contracts = library_contracts()
+    for kind in MODULE_ONLY:
+        contracts[MODULE_VIEW + kind] = module_contract(kind, contracts[KIND_VIEW["filter"]])
+    return contracts
 
 
 def tag_path(root: str, member: str) -> str:
@@ -712,7 +865,13 @@ def embed_symbol(sym: dict, contracts: dict, tag_root: str, rep: Report, *, tool
         height = symbol_box(sym, c, limit)[3]
     # a symbol that states the duty mark or the out of service greying stays on the library's view: the module's
     # components have neither (COB-159); a bound one counts as stated
-    probe = {**params, **{k: None for k in sym.get("bind", {}) if k in parts.SYMBOL_PARAMS}}
+    probe = module_probe(kind, params, sym.get("bind", {}))
+    if kind in MODULE_ONLY and not (sym.get("render") != "view" and module_draws(kind, probe, c["params"], height=height)):
+        # no library view exists to fall back on: refuse, never a silent gap (gate G7 contract reports the error)
+        why = ("build it with --render module" if RENDER["target"] != "module" else
+               "the component cannot draw these parameters (or the symbol asks for the library's view)")
+        rep.errors.append(f"{sym['id']}: kind {kind!r} is module only ({MODULE_ONLY[kind]}); {why}")
+        return gap_box(sym, rep, pos), {}, {}
     if sym.get("render") != "view" and module_draws(kind, probe, c["params"], height=height):
         return embed_module(sym, kind, params, c, tag_root, toolbar=toolbar, pos=pos, limit=limit)
     x, y, w, h = symbol_box(sym, c, limit) if pos is None else (0, 0, 0, 0)
@@ -799,12 +958,15 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
     outside it, so the symbol centre is where the descriptor puts it. A tank fills the descriptor's box. A readout
     and an instrument field fill the box the library gives the block (`symbol_box`, `limit` as for the library's
     view). Selection (faceplate dock contract) is a DOM click script reading the component's custom properties."""
-    rename, drop = MODULE_PARAM[kind], module_drop(kind)
+    rename, drop = MODULE_PARAM.get(kind, {}), module_drop(kind)
     props = {rename.get(k, k): v for k, v in params.items() if k not in drop}
     bound = sym.get("bind", {})
     for k in MODULE_STATE.get(kind, ()):
         if k not in bound:            # a default stated beside a binding shows instead of the bound value (GF-61)
             props.setdefault(k, c["params"][k])
+    for k, values in MODULE_VALUE.get(kind, {}).items():
+        if props.get(k) in values:
+            props[k] = values[props[k]]
     if kind == "instrument-field" and params.get("hasSetpoint") and "setpoint" not in bound:
         props.setdefault("setpoint", c["params"]["setpoint"])
     if kind in MODULE_INSTRUMENTS:
@@ -841,8 +1003,10 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         module_status(sym, kind, props, prop_cfg, toolbar=toolbar, drop=drop, gated=state in bound or state in params)
     if symbol:
         # `symbol` positioning makes the element's box the 48 px symbol, centred on our box for
-        # every readout side; `point` draws the symbol 24 px off its anchor (measured, wiki page 12).
-        props["positioning"] = "symbol"
+        # every readout side; `point` draws the symbol 24 px off its anchor (measured, wiki page 12). The
+        # generator indicator is the 48 px disc already and has no such property.
+        if "positioning" in module_props(module_type(kind)):
+            props["positioning"] = "symbol"
         box = pv.cpos(sym["x"], sym["y"], 48, 48)
     elif pos is not None:
         box = None                     # a card lays the symbol out: its position is the flex item's
@@ -856,12 +1020,14 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
         for k in ALERT_PARAMS:
             props.pop(k, None)
         custom["alerts"] = {key: params["deviceId"]}
-    node = pv.node(MODULE_KIND[kind], sym["id"], pos or box, props, prop_config=prop_cfg or None)
+    node = pv.node(module_type(kind), sym["id"], pos or box, props, prop_config=prop_cfg or None)
     if params.get("deviceId"):
         if kind in MODULE_INSTRUMENTS:   # as `library.SELECT_INSTRUMENT`: the kind the symbol names, tag else label
             shows, title = params.get("deviceKind") or "instrument", params.get("tag") or params.get("label") or ""
         else:
-            shows, title = kind, params.get("tag") or params["deviceId"].split("/")[-1]
+            # the kind the device names, as on the library's view (the test page's alarm lamps are `switch` symbols of
+            # indicator devices, and the switch has no faceplate of its own)
+            shows, title = params.get("deviceKind") or kind, params.get("tag") or params["deviceId"].split("/")[-1]
         own_custom.update({"deviceId": params["deviceId"], "deviceKind": shows, "title": title,
                            "label": params.get("deviceLabel", "")})
         node["events"] = pv.on_click([
@@ -1109,7 +1275,9 @@ def diagram_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict
     custom = {"colorMode": False, "showTag": tags_shown_at_start(desc), "showReadout": True}
     custom_cfg = {}
     limits = embed_limits(desc.get("symbols", []), contracts)
-    extra = parts.diagram_parts(desc, contracts, limits, rep)   # COB-159: lines, bars, trends, buttons
+    # COB-159: lines, bars, trends, buttons; a pulse button may be the module's (W3) where the page is built for the module
+    extra = parts.diagram_parts(desc, contracts, limits, rep,
+                                module=RENDER["target"] == "module" and bool(module_props("cadre.ob.button")))
     kids += extra["under"]
     for s in desc.get("symbols", []):
         node, c_def, c_cfg = embed_symbol(s, contracts, tag_root, rep, toolbar=toolbar, limit=limits.get(s["id"]))
@@ -1137,7 +1305,7 @@ def diagram_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict
     merge_custom(custom, scale["custom"])
     custom_cfg.update(scale["custom_config"])
     root_kids = [canvas] + ([toolbar_node(has_media(desc))] if toolbar else [])
-    if FRAME["name"] == "asm":
+    if FRAME["name"] in navigation.ASM_FRAMES:
         root_kids.append(search_panel())
     root = pv.node("ia.container.flex", "root", {}, {"direction": "column", "style": {"overflow": "hidden"}},
                    prop_config={"props.style.classes": root_classes("cadre/surface/page")}, children=root_kids)
@@ -1309,7 +1477,7 @@ def cards_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict]:
                                                       "style": {"overflow": "auto" if scroll else "hidden",
                                                                 "padding": "4px"}},
                    prop_config={"props.style.classes": root_classes("cadre/surface/page")},
-                   children=rows + ([search_panel()] if FRAME["name"] == "asm" else []))
+                   children=rows + ([search_panel()] if FRAME["name"] in navigation.ASM_FRAMES else []))
     scr = desc["screen"]
     doc = pv.view(root, size={"width": scr.get("width", 1600), "height": scr.get("height", 852)},
                   custom=custom, custom_config=custom_cfg)
@@ -1547,7 +1715,9 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
                 frame: str = "openbridge") -> tuple[pv.Project, dict]:
     if frame not in navigation.FRAMES:
         raise ValueError(f"frame {frame!r}: one of {navigation.FRAMES}")
-    if frame == "asm" and (bad := navigation.frame_errors(descs)):
+    if frame in navigation.MODULE_FRAMES and render != "module":   # the frame is drawn with the module's components: a stock build has none
+        raise ValueError(f"--frame {frame} draws the OpenBridge frame components of the module: it needs --render module")
+    if frame in navigation.ASM_FRAMES and (bad := navigation.frame_errors(descs)):
         raise ValueError("; ".join(bad))
     RENDER["target"] = render
     RENDER["devices"] = model_devices(devices)
@@ -1586,8 +1756,12 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     sp["custom"]["commands"] = parts.commands_index(descs)   # the pulse tags the page buttons may write (COB-159)
     if frame == "asm":   # the ASM frame (COB-160): its docks, pivot pages and the data its views read
         sp["custom"].update(navigation.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
+    if frame == "obasm":   # the ASM frame on the OpenBridge frame components (T2 F6b): the ASM data, this frame's name
+        sp["custom"].update(obasm.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
+    if frame == "ob":   # the OpenBridge frame (T2 F6a): the frame's name; its docks are in the page configuration
+        sp["custom"].update(obframe.session_custom())
     child.set_session_props(sp)
-    child.set_page_config(navigation.page_config(app_name, pages) if frame == "asm" else par.page_config(app_name, pages))
+    child.set_page_config({"asm": navigation.page_config, "ob": obframe.page_config, "obasm": obasm.page_config}.get(frame, par.page_config)(app_name, pages))
     return child, reports
 
 
@@ -1649,7 +1823,10 @@ def main() -> int:
                     help="where a session opens a faceplate until its pin moves it: the right dock or a popup")
     ap.add_argument("--frame", choices=list(navigation.FRAMES), default="openbridge",
                     help="asm: the ASM application frame (COB-160): navigation dock, crumb popups, global search, "
-                         "page header, alarm banner and a floating faceplate for each device; the default is unchanged")
+                         "page header, alarm banner and a floating faceplate for each device; "
+                         "ob: the OpenBridge frame, drawn with the module's frame components (needs --render module); "
+                         "obasm: the ASM frame drawn with the same components (needs --render module); "
+                         "the default is unchanged")
     ap.add_argument("--component-test", action="store_true",
                     help="add the component test page (route /component-test, a level 4 support page) generated from "
                          "the library catalogue (tools/hmi/testbench.py, wiki page 13 section 13): every kind with its "
@@ -1673,6 +1850,9 @@ def main() -> int:
     if (a.tag_root or a.write_descriptor or a.write_devices) and not a.component_test:
         print("--tag-root, --write-descriptor and --write-devices go with --component-test")
         return 1
+    if a.frame in navigation.MODULE_FRAMES and a.render != "module":
+        print(f"--frame {a.frame} draws the OpenBridge frame components of the module: it needs --render module")
+        return 1
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     names = list(a.descriptor)
     bench = None
@@ -1687,7 +1867,8 @@ def main() -> int:
         if len(roots) != 1:
             print(f"--component-test needs the descriptors to share one tagRoot, not {sorted(roots)}")
             return 1
-        bench = testbench.build(load_contracts(), library_profile.build(load_contracts(), a.parent), roots.pop())
+        bench = testbench.build(load_contracts(), library_profile.build(load_contracts(), a.parent), roots.pop(),
+                                render=a.render)
         descs.append(bench.descriptor)
         names.append("<component test>")
     bad = schema_errors(descs, names)

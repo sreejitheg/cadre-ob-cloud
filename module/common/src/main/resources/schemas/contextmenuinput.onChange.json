@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "description": "The selection changed. event.selectedValues holds the `value` of each option now selected. The menu shows the selection at once and the component's `selectedValues` follows.",
+  "properties": {
+    "selectedValues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The `value` of each option now selected, in order."
+    }
+  }
+}

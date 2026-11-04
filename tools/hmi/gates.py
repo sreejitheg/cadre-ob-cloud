@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -39,7 +40,9 @@ if __package__ in (None, ""):
 else:
     from . import vessel
 
-VALIDATOR = Path("F:/repos/Ignition-Wiki/tools/validate_view.py")
+# The Ignition-Wiki checkout (validator and schemas); CADRE_IGNITION_WIKI overrides the owner's host path.
+IGNITION_WIKI = Path(os.environ.get("CADRE_IGNITION_WIKI", "F:/repos/Ignition-Wiki"))
+VALIDATOR = IGNITION_WIKI / "tools" / "validate_view.py"
 ROOT = Path(__file__).resolve().parents[2]
 MODULE_CONTRACT = ROOT / "module" / "components.json"
 MODULE_SCHEMAS = ROOT / "module" / "common" / "src" / "main" / "resources"

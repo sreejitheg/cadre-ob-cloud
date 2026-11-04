@@ -23,7 +23,9 @@ from .framework import (SEARCH_VIEW, search_panel, _badges_embed, _icon_button, 
                         root_classes)
 from .library import icon_svg, open_device, svg
 
-FRAMES = ("openbridge", "asm")
+FRAMES = ("openbridge", "asm", "ob", "obasm")   # ob, obasm: the OpenBridge frame components (obframe.py, obasm.py); need --render module
+ASM_FRAMES = ("asm", "obasm")   # the frames that carry the ASM rules: the hierarchy, the pivot pages, search, banner, floating faceplates
+MODULE_FRAMES = ("ob", "obasm")   # the frames drawn with the module's components
 FLOAT_VIEW = "Framework/ASM/FloatFaceplate"
 CRUMB_POPUP = "crumbPopup"
 # a row's `close` that means the in-page search panel (L4): the query is cleared and the panel closes
@@ -182,8 +184,8 @@ def nav_dock() -> dict:
 # ---------------------------------------------------------------------------------------------------------
 # The breadcrumb and its popup (DESIGN section 4)
 # ---------------------------------------------------------------------------------------------------------
-def crumb() -> dict:
-    """`Framework/ASM/Crumb`: one node of the trail. A click opens the node's popup beneath the crumb."""
+def crumb(top: int = 48) -> dict:
+    """`Framework/ASM/Crumb`: one node of the trail. A click opens the node's popup beneath the crumb (`top`: the page row of the crumb's lower edge)."""
     root = pv.node("ia.container.flex", "root", {}, {
         "direction": "row", "alignItems": "center", "style": {"gap": "6px", "overflow": "hidden", "cursor": "pointer"}},
         events={"dom": {"onClick": pv.script_handler([
@@ -194,7 +196,7 @@ def crumb() -> dict:
             "\tx = 48",
             f"system.perspective.closePopup('{CRUMB_POPUP}')",
             _popup_line(CRUMB_POPUP, "Framework/ASM/CrumbPopup", "{'nodeId': self.view.params.nodeId}",
-                        "{'top': 48, 'left': max(0, x - 24)}")])}},
+                        f"{{'top': {top}, 'left': max(0, x - 24)}}")])}},
         children=[icon_svg("Chevron", "chevron-right-google", pv.fpos(basis="16px", shrink=0), visible="!{view.params.first}"),
                   _label("Name", pv.fpos(shrink=1), "{view.params.name}", classes="cadre/font/body-active cadre/text/active",
                          style={"overflow": "hidden", "textOverflow": "ellipsis"}),

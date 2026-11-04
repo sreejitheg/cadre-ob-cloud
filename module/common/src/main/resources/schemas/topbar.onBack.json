@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Back button of the settings mode was pressed. The event carries nothing.",
+  "properties": {}
+}

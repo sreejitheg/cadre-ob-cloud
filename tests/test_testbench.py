@@ -175,7 +175,9 @@ class PageTests(unittest.TestCase):
         pump = [s for s in self.desc["symbols"] if s["kind"] == "pump"]
         self.assertNotIn("none", {s["params"].get("readoutPosition") for s in pump})
         damper = [s for s in self.desc["symbols"] if s["kind"] == "damper"]
-        self.assertIn("none", {s["params"].get("readoutPosition") for s in damper})   # no module damper
+        self.assertNotIn("none", {s["params"].get("readoutPosition") for s in damper})   # the module's damper (B1) has no such value
+        indicator = [s for s in self.desc["symbols"] if s["kind"] == "indicator"]
+        self.assertIn("none", {s["params"].get("readoutPosition") for s in indicator})   # no module indicator
         # a status only the library has is on the pump only forced onto the library's view (module beside view, L5)
         critical = [s for s in pump if stated(self.bench, s).get("alertFrameStatus") == "critical"]
         self.assertTrue(critical)

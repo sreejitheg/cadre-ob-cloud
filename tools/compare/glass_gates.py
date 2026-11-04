@@ -55,7 +55,9 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent))
 from hmi import provenance  # noqa: E402
+from hmi import screen  # noqa: E402
 from hmi.screen import module_drawn  # noqa: E402
+import glass  # noqa: E402  (the frame variant of a page: `glass.frame_variant`; the gates' own helpers stay in this file)
 
 TOOL = "tools/compare/glass_gates.py"
 GATES = ("search", "zoom", "menus", "panels", "readouts", "colour", "sizes", "fill", "routes", "symbols", "alarm", "ack",
@@ -72,9 +74,19 @@ NO_MATCH = "No page, device or tag matches"
 # are `obc-digital-valve` and `obc-analog-valve`: no element named `obc-valve` or `obc-analogvalve` exists, so a selector
 # built from those names counted no valve and the readouts gate expected one device more than it found (COB-194).
 MODULE_TAGS = {"pump": "obc-pump", "motor": "obc-motor", "fan": "obc-fan", "valve": "obc-digital-valve",
-               "analogvalve": "obc-analog-valve"}
+               "analogvalve": "obc-analog-valve", "filter": "obc-filter", "damper": "obc-damper", "switch": "obc-switch",
+               "generator": "obc-indicator-generator"}
+# A module-only kind (`screen.MODULE_ONLY`) is found by the element of its component.
+MODULE_TAGS.update({kind: screen.module_element(ctype) for kind, ctype in screen.MODULE_ONLY.items()})
 EQ_TOL = 4
 TEST_ROUTE = "/component-test"                     # the library's component test page (`screen.py --component-test`)
+# The ASM gates were written for the `asm` frame. The new frames (`--frame ob`, `--frame obasm`, wiki 04 sections 10 and 11) draw
+# the head with the module's top bar, so the selectors that find its parts differ (`TOP_ICONS` has no SVG to find: the bar's
+# icons are in a shadow root) and the head of the obasm frame is 132 px, not 84. A gate asks the page which frame it shows
+# (`Session.frame`, `glass.frame_variant`: the structure of the top dock) and takes the variant; on the older frames every
+# selector below is the one it was. The `ob` frame is not an ASM frame (no search field, tree, pivot, floating faceplate or
+# banner dock: wiki 04 section 10), so the gates that exercise those parts are not run on it and say so.
+ASM_ONLY = ("search", "zoom", "panels")
 
 
 class Fault(Exception):
@@ -292,6 +304,18 @@ MEASURE = """() => {
     scale: d ? +((d.style.transform.match(/scale\\(([\\d.]+)\\)/) || [])[1] || 0) : null,
     scroll: c ? [c.scrollWidth, c.scrollHeight] : null, vv: visualViewport.scale, iw: innerWidth };
 }"""
+# the obasm head is three rows of 48, 36 and 48 px: the head the measurement looks for is 132 px high, not 80 to 90
+HEAD_HEIGHT = "r.height >= 80 && r.height <= 90"
+MEASURE_OBASM = MEASURE.replace(HEAD_HEIGHT, "r.height >= 128 && r.height <= 136")
+# the module top bar's buttons and bell (centres), for the new frames: the bar's buttons are in a shadow root, where TOP_ICONS cannot see an SVG
+BAR_POINTS = """() => { const out = {}; const bar = document.querySelector('.docked-view-top [data-component="cadre.ob.topbar"]');
+  if (!bar) return out;
+  const pt = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 ? [Math.round(r.left + r.width / 2), Math.round(r.top + r.height / 2)] : null; };
+  const sr = (bar.querySelector('obc-top-bar') || {}).shadowRoot;
+  for (const [k, label] of [['menu', 'Menu'], ['apps', 'Apps'], ['dimming', 'Dimming'], ['user', 'User']]) {
+    const b = sr && sr.querySelector('[aria-label="' + label + '"]'); if (b && pt(b)) out[k] = pt(b); }
+  const bell = bar.querySelector('obc-alert-button'); if (bell && pt(bell)) out.alert = pt(bell);
+  return out; }"""
 FILL = """() => { const d = document.querySelector('[style*="scale("]'); const c = document.getElementById('cadre-canvas');
   if (!d || !c) return null; const r = d.getBoundingClientRect(), q = c.getBoundingClientRect();
   return {w: Math.round(r.width), h: Math.round(r.height), cw: Math.round(q.width), ch: Math.round(q.height)}; }"""
@@ -384,9 +408,44 @@ class Session:
           return null; }""")
         return box or {"x": 200, "y": 150, "width": self.window[0] - 400, "height": self.window[1] - 300}
 
+    def frame(self) -> str:
+        """The frame the page shows: `default` (the asm frame, or the openbridge frame), `ob` or `obasm` (`glass.frame_variant`)."""
+        return glass.frame_variant(self.p, tries=max(2, round(12 * self.settle)))   # the wait for the dock follows `--settle`
+
     def banner_text(self):
-        """The text of the frame's banner (the dock along the foot), else of the whole page."""
-        return self.p.evaluate(BANNER_TEXT)
+        """The text of the frame's banner (the dock along the foot), else of the whole page. The `ob` frame has no banner dock:
+        what it shows an operator of an alarm is the alert message in its strip and the alert menu, so its text is theirs (the
+        menu is opened and closed again)."""
+        if self.frame() != glass.FRAME_OB:
+            return self.p.evaluate(BANNER_TEXT)
+        strip = self.p.evaluate("(document.querySelector('.docked-view-top') || document.body).innerText")
+        alerts = glass.open_alarm_menu(self.p) or []
+        self.p.keyboard.press("Escape")
+        self.wait(800)
+        return strip + " " + " ".join(f"{a.get('text')} {a.get('source')}" for a in alerts)
+
+    def alert_count(self) -> int:
+        """The count on the top bar's alert button: its digits in the older frames (`ALERT_COUNT`), the module bell's in the new."""
+        if self.frame() != glass.FRAME_DEFAULT:
+            return glass.frame_alarm_count(self.p) or 0
+        return self.p.evaluate(ALERT_COUNT)
+
+    def open_device(self, tag):
+        """Open a device's faceplate in the dock: by the search field in the asm and obasm frames (their way, and the only one
+        the older gates used); the `ob` frame has no search field, so the device's symbol is pressed (`glass.open_device`)."""
+        if self.frame() == glass.FRAME_OB:
+            glass.open_device(self.p, tag)
+            return
+        self.search(tag)
+
+    def click_entry(self, caption):
+        """Press the popup's entry `caption` (Sign in, Sign out): its text in the older frames; the module user menu prints
+        Sign in as its title too, so in the new frames the entry is the `obc-button` that carries it."""
+        if self.frame() == glass.FRAME_DEFAULT:
+            return self.click_text(caption)
+        loc = self.p.locator(".ia_popup obc-button", has_text=re.compile(rf"^\s*{re.escape(caption)}\s*$")).first
+        bx = loc.bounding_box()
+        self.p.mouse.click(bx["x"] + bx["width"] / 2, bx["y"] + bx["height"] / 2)
 
     def inject(self):
         self.p.evaluate(STORE_JS)
@@ -426,7 +485,7 @@ class Session:
         return self.p.evaluate(CUSTOM, [text, near])
 
     def measure(self):
-        return self.p.evaluate(MEASURE)
+        return self.p.evaluate(MEASURE_OBASM if self.frame() == glass.FRAME_OBASM else MEASURE)
 
     def shot(self, name):
         self.out.mkdir(parents=True, exist_ok=True)
@@ -457,7 +516,14 @@ class Session:
         self.p.mouse.click(bx["x"] + bx["width"] / 2, bx["y"] + bx["height"] / 2)
 
     def icons(self):
-        return self.p.evaluate(TOP_ICONS)
+        """The top bar's icons, left to right as the older frames lay them out (menu, the second navigation button, then the alert
+        menu, brilliance and user icons last): their SVGs by position in the older frames (`TOP_ICONS`); the module bar's
+        own buttons in the new ones, in that order (the apps button stands at the right of the module bar, but it is the
+        second navigation button of the ASM frame, so it is listed second)."""
+        if self.frame() == glass.FRAME_DEFAULT:
+            return self.p.evaluate(TOP_ICONS)
+        pts = self.p.evaluate(BAR_POINTS)
+        return [pts[k] for k in ("menu", "apps", "alert", "dimming", "user") if k in pts]
 
     def url(self):
         return self.p.url
@@ -619,7 +685,7 @@ def gate_menus(s: Session, plan: dict, steps: list, rec: dict) -> None:
     if len(right) < 3:
         step(steps, "the three menu icons are in the top bar", 3, len(right), False)
     root = next((n for n in [plan.get("root_name")] if n), None)
-    if root:
+    if root and s.frame() != glass.FRAME_OB:   # the crumb popup is an ASM part: the ob frame's crumb opens its node's page
         s.click_text(root)
         s.wait(1500)
         crumb = s.p.evaluate("document.querySelectorAll('.ia_popup').length")
@@ -630,6 +696,14 @@ def gate_menus(s: Session, plan: dict, steps: list, rec: dict) -> None:
              crumb == 1 and s.p.evaluate("document.querySelectorAll('.ia_popup').length") == 0)
 
 
+# the labels the navigation dock holds in the obasm frame: the module tree's and menu's items and groups, all of them, and those with a
+# size (the tree draws a page only inside an open group, and the support menu is not drawn while the dock is on the page tree)
+NAV_DOCK_LABELS = """() => { const d = document.querySelector('.docked-view-left'); if (!d) return {all: [], drawn: []};
+  const els = [...d.querySelectorAll('obc-navigation-item, obc-tree-navigation-item, obc-tree-navigation-group')];
+  const lab = (e) => String(e.label || '').trim();
+  return {all: els.map(lab).filter(Boolean), drawn: els.filter((e) => e.getBoundingClientRect().width > 0).map(lab).filter(Boolean)}; }"""
+
+
 def gate_panels(s: Session, plan: dict, steps: list, rec: dict) -> None:
     s.go(plan["search"]["route"])
     pp = plan["panels"]
@@ -637,12 +711,19 @@ def gate_panels(s: Session, plan: dict, steps: list, rec: dict) -> None:
     if len(icons) < 2:
         step(steps, "the navigation buttons are in the top bar", 2, len(icons), False)
         return
+    module = s.frame() != glass.FRAME_DEFAULT
     s.p.mouse.click(*icons[0])
     s.wait(2000)
     text = s.p.evaluate("document.body.innerText")
     m = s.measure()
+    if module:   # the items draw their labels in shadow DOM, which `innerText` does not reach
+        held = s.p.evaluate(NAV_DOCK_LABELS)
+        tree_ok = all(t in held["all"] for t in pp["pages"]) and "Component test" not in held["drawn"]
+        text = " ".join(held["drawn"])
+    else:
+        tree_ok = all(t in text for t in pp["pages"]) and "Component test" not in text.split(pp["pages"][0])[0][-200:]
     step(steps, "the menu button opens the page tree, with no support entry", pp["pages"],
-         {"nav": m["nav"]}, m["nav"] and all(t in text for t in pp["pages"]) and "Component test" not in text.split(pp["pages"][0])[0][-200:],
+         {"nav": m["nav"]}, m["nav"] and tree_ok,
          s.shot("nav_pages"))
     s.p.keyboard.press("Escape")
     s.p.mouse.click(1500, 600)
@@ -651,6 +732,8 @@ def gate_panels(s: Session, plan: dict, steps: list, rec: dict) -> None:
     s.p.mouse.click(*icons[1])
     s.wait(2000)
     text = s.p.evaluate("document.body.innerText")
+    if module:
+        text = " ".join(s.p.evaluate(NAV_DOCK_LABELS)["drawn"])
     m = s.measure()
     step(steps, "the second button opens the support list", pp["support"], {"nav": m["nav"]},
          m["nav"] and all(t in text for t in pp["support"]), s.shot("nav_support"))
@@ -722,7 +805,7 @@ def gate_fill(s: Session, plan: dict, steps: list, rec: dict) -> None:
     z = plan["zoom"]
     if z["device"]:
         s.go(z["route"], 6000)
-        s.search(z["device"])
+        s.open_device(z["device"])
         s.go(plan.get("fill_after_dock") or plan["fill"][-1]["route"], 3000)
         f = s.p.evaluate(FILL)
         step(steps, "a page loaded after a docked faceplate fills the window", "no stale dock width", f,
@@ -754,7 +837,7 @@ def gate_alarm(s: Session, plan: dict, steps: list, rec: dict) -> None:
     a = plan["alarm"]
     lane = rec["lane"]
     s.go(plan["search"]["route"], 5000)
-    n0 = s.p.evaluate(ALERT_COUNT)
+    n0 = s.alert_count()
     reply = lane.set({x["tag"]: x["raise"] for x in plan["alarms"]})
     step(steps, "raise the alarms through their source tags", "the gateway counts the import", reply.get("failed") or "imported",
          not reply.get("failed") and not reply.get("missing"))
@@ -763,7 +846,7 @@ def gate_alarm(s: Session, plan: dict, steps: list, rec: dict) -> None:
     step(steps, "definition: the alarm is listed on /alerts", a["desc"], "listed" if alarm_present(s, a["desc"]) else "absent",
          alarm_present(s, a["desc"]), s.shot("alarm_alerts"))
     s.go(plan["search"]["route"], 5000)
-    n1 = s.p.evaluate(ALERT_COUNT)
+    n1 = s.alert_count()
     step(steps, "frame: the top bar's alert count rises", f"above {n0}", n1, n1 > n0)
     shows = (plan.get("banner") or {}).get("shows") or []
     if shows:
@@ -790,7 +873,7 @@ def sign_in(s: Session, steps: list) -> bool:
     icons = s.icons()
     s.p.mouse.click(*icons[-1])
     s.wait(1500)
-    s.click_text("Sign in")
+    s.click_entry("Sign in")
     s.p.wait_for_url(re.compile(r"/idp/"), timeout=30000)
     s.p.locator('input[name="username"]').click()
     s.p.keyboard.type(login["user"])
@@ -866,6 +949,8 @@ def gate_banner(s: Session, plan: dict, steps: list, rec: dict) -> None:
         step(steps, f"{route}: the banner shows the alarm of the page's node or subtree", a["desc"],
              "shown" if a["desc"] in s.banner_text() else "absent",
              a["desc"] in s.banner_text())
+    if s.frame() == glass.FRAME_OB:
+        return   # the ob frame's alarm surfaces (strip, menu) list the project's alarms: the subtree rule is the ASM frames' own
     for route in b["hides"][:2]:
         s.go(route, 5000)
         step(steps, f"{route}: the banner does not show an alarm of another branch", "absent",
@@ -984,6 +1069,14 @@ def run_gates(plan: dict, base: str, window: tuple[int, int], out: Path, settle:
                 ctx = browser.new_context(viewport={"width": window[0], "height": window[1]}, has_touch=True)
                 page = ctx.new_page()
                 s = Session(page, ctx, ctx.new_cdp_session(page), base, window, out / "pictures", settle, plan["base"])
+                if name in ASM_ONLY:   # the ob frame has no search field, tree, pivot or floating faceplate: said, not run
+                    page.goto(s.base + plan["search"]["route"])
+                    s.wait(5000)
+                    if s.frame() == glass.FRAME_OB:
+                        entry["skipped"] = "the page shows the ob frame, which is not an ASM frame (wiki 04 section 10): no search field, tree, support list or floating faceplate to exercise"
+                        gates.append(entry)
+                        ctx.close()
+                        continue
                 try:
                     RUN[name](s, plan, steps, rec)
                 except Exception as e:   # a gate that could not run is a failed gate, with the reason

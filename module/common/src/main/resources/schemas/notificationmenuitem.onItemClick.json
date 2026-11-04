@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The row was pressed. event.open is the state of the row after the press. The row opens or closes at once and the component's `open` follows the press.",
+  "properties": {
+    "open": {
+      "type": "boolean",
+      "description": "The state of the row after the press: true opened."
+    }
+  }
+}

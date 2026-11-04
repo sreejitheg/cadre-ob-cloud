@@ -1184,6 +1184,67 @@
   "params": {},
   "view": "Framework/NavMenu"
  },
+ "Framework/OB/AlertMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/AlertMenu"
+ },
+ "Framework/OB/Brilliance": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/Brilliance"
+ },
+ "Framework/OB/Head": {
+  "kind": "framework",
+  "params": {
+   "appName": "App",
+   "showUser": true
+  },
+  "view": "Framework/OB/Head"
+ },
+ "Framework/OB/NavDock": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/NavDock"
+ },
+ "Framework/OB/UserMenu": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OB/UserMenu"
+ },
+ "Framework/OBASM/Crumb": {
+  "kind": "framework",
+  "params": {
+   "counts": {
+    "Critical": 0,
+    "Diagnostic": 0,
+    "High": 0,
+    "Low": 0,
+    "Medium": 0,
+    "total": 0,
+    "unacked": 0
+   },
+   "first": true,
+   "last": false,
+   "name": "",
+   "nodeId": "",
+   "route": ""
+  },
+  "view": "Framework/OBASM/Crumb"
+ },
+ "Framework/OBASM/Head": {
+  "kind": "framework",
+  "params": {
+   "appName": "App",
+   "showUser": true
+  },
+  "view": "Framework/OBASM/Head"
+ },
+ "Framework/OBASM/NavDock": {
+  "kind": "framework",
+  "params": {},
+  "view": "Framework/OBASM/NavDock"
+ },
  "Framework/SideMenu": {
   "kind": "framework",
   "params": {},

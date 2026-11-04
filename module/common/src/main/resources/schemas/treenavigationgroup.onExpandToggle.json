@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The header asks to open or close the group. event.expanded is the state the press asks for; the group applies it itself.",
+  "properties": {
+    "expanded": {
+      "type": "boolean",
+      "description": "The state the press asks for: true opens the row, false closes it."
+    }
+  }
+}

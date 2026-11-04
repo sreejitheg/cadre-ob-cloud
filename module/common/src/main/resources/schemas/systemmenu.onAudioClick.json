@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The audio mute button was pressed. event.muted is the state the button asks for.",
+  "properties": {
+    "muted": {
+      "type": "boolean",
+      "description": "The state the audio mute button asks for."
+    }
+  }
+}

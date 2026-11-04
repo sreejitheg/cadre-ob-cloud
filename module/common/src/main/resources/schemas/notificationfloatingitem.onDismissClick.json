@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The dismiss button was pressed. The event carries nothing; the page's script hides the item.",
+  "properties": {}
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The pivot was pressed while enabled and not selected. event.value is the `value` of the pivot. The pivot does not select itself; the page sets `selected`.",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The `value` of the pivot."
+    }
+  }
+}

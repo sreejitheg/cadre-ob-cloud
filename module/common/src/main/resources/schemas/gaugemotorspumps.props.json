@@ -1,0 +1,221 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "negative",
+        "double"
+      ],
+      "default": "regular",
+      "description": "The design's Type axis; drives the sector and the split frame."
+    },
+    "setpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Target setpoint value. undefined = no setpoint marker shown."
+    },
+    "newSetpoint": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Adjustment preview for 2-step interface. When defined, two markers are shown: original (dimmed) + new (focus). Available when setpoint!=undefined."
+    },
+    "touching": {
+      "type": "boolean",
+      "default": false,
+      "description": "User is physically interacting with the control. Suppresses at-setpoint calculation and triggers focus visual. Available when setpoint!=undefined."
+    },
+    "autoAtSetpointDeadband": {
+      "type": "number",
+      "default": 2,
+      "description": "Tolerance for auto at-setpoint detection. Available when setpoint!=undefined && autoAtSetpoint==true."
+    },
+    "setpointAtZeroDeadband": {
+      "type": "number",
+      "default": 0.5,
+      "description": "Tolerance for zero-snap visual state. Available when setpoint!=undefined."
+    },
+    "setpointOverride": {
+      "type": "boolean",
+      "default": false,
+      "description": "Override to derive the setpoint color from the instrument's priority regardless of instrument state. Available when setpoint!=undefined."
+    },
+    "animateSetpoint": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable CSS-animated confirm transition. Available when setpoint!=undefined."
+    },
+    "value": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `value`."
+    },
+    "maxValue": {
+      "type": "number",
+      "default": 100,
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `maxValue`."
+    },
+    "minValue": {
+      "type": "number",
+      "default": 0,
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `minValue`."
+    },
+    "secondaryValue": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Secondary value shown as a thin line arc at the band's inner edge with a second readout (the \"primary-secondary\" frame type). When undefined (default), the regular single-value frame renders."
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "active",
+        "loading",
+        "off"
+      ],
+      "default": "active",
+      "description": "Instrument state (active, loading, off). priority: off also renders the off face."
+    },
+    "sector": {
+      "type": "string",
+      "enum": [
+        "360",
+        "270",
+        "270-pos-neg"
+      ],
+      "default": "270",
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `sector`."
+    },
+    "alignment": {
+      "type": "string",
+      "enum": [
+        "outside",
+        "inside",
+        "max-min"
+      ],
+      "default": "outside",
+      "description": "Available when large==true."
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced",
+        "medium",
+        "off"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `priority`."
+    },
+    "showLabels": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `showLabels`."
+    },
+    "primaryTickmarkInterval": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": 50,
+      "description": "Interval for primary tickmarks in value units. When undefined or <= 0, no primary tickmarks are shown."
+    },
+    "secondaryTickmarkInterval": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": 10,
+      "description": "Interval for secondary tickmarks in value units. When undefined or <= 0, no secondary tickmarks are shown."
+    },
+    "tickmarkStyle": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-gauge-motors-and-pumps` property `tickmarkStyle`."
+    },
+    "hasReadout": {
+      "type": "boolean",
+      "default": true,
+      "description": "When true, shows the center readout (and the secondary readout when the split frame renders \u2014 dashed until secondaryValue is set). Default false. Available when large==true."
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "Available when hasReadout==true."
+    },
+    "unit": {
+      "type": "string",
+      "default": "",
+      "description": "Unit for the in-dial readout (large) and the compact stack rows. Available when hasReadout==true."
+    },
+    "secondaryLabel": {
+      "type": "string",
+      "default": "",
+      "description": "Available when secondaryValue!=undefined."
+    },
+    "secondaryUnit": {
+      "type": "string",
+      "default": "",
+      "description": "Available when secondaryValue!=undefined."
+    },
+    "fractionDigits": {
+      "type": "number",
+      "default": 0,
+      "description": "Available when hasReadout==true."
+    },
+    "name": {
+      "type": "string",
+      "default": "",
+      "description": "Name row shown under the readout (uppercase overline style). Available when large==true."
+    },
+    "faceDiameter": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "default": null,
+      "description": "Outer-ring diameter in CSS pixels. When set, the instrument renders at a fixed intrinsic size; when unset (default), it fills its container."
+    },
+    "large": {
+      "type": "boolean",
+      "default": false,
+      "description": "The design's Large variant: alignment-controlled scale labels, in-dial readouts and the name row. When false (default), the Small variant renders \u2014 the face cropped to the dial with icon-only center content and a..."
+    },
+    "tag": {
+      "type": "string",
+      "default": "",
+      "description": "Identifier line under the compact readout stack, e.g. '#0001'. Available when large==false."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

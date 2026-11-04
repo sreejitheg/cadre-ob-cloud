@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "A microphone input was chosen. event.input is its name.",
+  "properties": {
+    "input": {
+      "type": "string",
+      "description": "The name of the input chosen."
+    }
+  }
+}

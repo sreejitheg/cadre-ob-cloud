@@ -591,18 +591,27 @@ class SampleTests(unittest.TestCase):
         for render in ("stock", "module"):
             child, _reports, _res = self.build(render)
             nodes = view_nodes(json.loads(child.files[VIEW + "Screens/AsmSample/view.json"]))
-            # the module draws no generator: its stock view stands under either rendering
-            self.assertEqual(nodes["GEN1"]["props"]["path"], "Automation/Generator", render)
+            # the plain generator is the module's component under the module rendering (spike T0 wrap W2) and the stock
+            # view otherwise; the generator set keeps its own view under either rendering
+            if render == "module":
+                self.assertEqual(nodes["GEN1"]["type"], "cadre.ob.generator")
+            else:
+                self.assertEqual(nodes["GEN1"]["props"]["path"], "Automation/Generator", render)
             self.assertEqual(nodes["GEN2"]["props"]["path"], "Automation/GeneratorSet", render)
             self.assertEqual(nodes["GEN2"]["position"], {"x": 400, "y": 100, "width": 240, "height": 150})
             self.assertEqual(nodes["GEN1"]["position"]["width"] >= 48, True)
             self.assertEqual(nodes["SQ1"]["props"]["path"], "Instrument/Sequence")
             self.assertEqual(nodes["GEN2"]["props"]["params"]["picture"], "genset")
-            self.assertEqual(nodes["GEN1"]["props"]["params"]["picture"], "symbol")
             # a device symbol follows its device's alarms (F016): the frame is bound to the page's alert states
-            for sym in ("GEN1", "GEN2"):
-                self.assertIn("props.params.alert", nodes[sym]["propConfig"], sym)
-                self.assertEqual(nodes[sym]["props"]["params"]["deviceKind"], "generator", sym)
+            if render == "module":
+                self.assertIn("props.alert", nodes["GEN1"]["propConfig"])
+                self.assertEqual(nodes["GEN1"]["custom"]["deviceKind"], "generator")
+            else:
+                self.assertEqual(nodes["GEN1"]["props"]["params"]["picture"], "symbol")
+                self.assertIn("props.params.alert", nodes["GEN1"]["propConfig"])
+                self.assertEqual(nodes["GEN1"]["props"]["params"]["deviceKind"], "generator")
+            self.assertIn("props.params.alert", nodes["GEN2"]["propConfig"])
+            self.assertEqual(nodes["GEN2"]["props"]["params"]["deviceKind"], "generator")
             self.assertIn("props.params.on", nodes["GEN2"]["propConfig"])
 
     def test_the_generated_tags_and_the_trend_index(self):

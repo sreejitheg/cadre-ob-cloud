@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "variant": {
+      "type": "string",
+      "enum": [
+        "icon",
+        "initials"
+      ],
+      "default": "icon",
+      "description": "Controls whether the button displays a user icon (icon) or user initials (initials). - icon: Shows a user icon (default, or if initials are invalid). - initials: Shows up to two uppercase initials (falls back to icon..."
+    },
+    "size": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "large"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-user-button` property `size`."
+    },
+    "styleType": {
+      "type": "string",
+      "enum": [
+        "flat",
+        "normal",
+        "selected"
+      ],
+      "default": "flat",
+      "description": "Sets the visual style of the button. - flat: Minimal, flat appearance (default). - normal: Outlined with background and border. - selected: Highlighted to indicate selection or active state."
+    },
+    "static": {
+      "type": "boolean",
+      "default": false,
+      "description": "If true, renders the button as a static (non-interactive) element using a <div>. Use for decorative or read-only contexts where user interaction is not required."
+    },
+    "disabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the button, preventing user interaction and applying a disabled style. Available when static==false."
+    },
+    "initials": {
+      "type": "string",
+      "default": "",
+      "description": "The initials to display when variant=\"initials\". - Only the first two non-whitespace characters are used and converted to uppercase. - If empty or longer than two characters, falls back to the user icon."
+    },
+    "label": {
+      "type": "string",
+      "default": "",
+      "description": "Optional label text to display next to the button (not shown in static mode). Available when static==false."
+    },
+    "sublabel": {
+      "type": "string",
+      "default": "",
+      "description": "Optional second line under the label, for a secondary detail such as a role (not shown in static mode). Available when static==false."
+    },
+    "iconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Custom icon for the user button (used only in icon variant; defaults to <obi-user> if not provided)"
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

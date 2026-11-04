@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The primary action was pressed. The event carries nothing.",
+  "properties": {}
+}

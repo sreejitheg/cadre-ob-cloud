@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "iconOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Draws the crumbs before the last as their icon alone. The module carries no crumb icon (a crumb's icon is a template function), so a crumb with only an icon is not possible; true hides every label but the last."
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label"
+        ]
+      },
+      "description": "The crumbs from the first to the current page, one object each: `label` and `href`. A crumb's icon (a template function in the element) is not carried. The last crumb is the current page."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

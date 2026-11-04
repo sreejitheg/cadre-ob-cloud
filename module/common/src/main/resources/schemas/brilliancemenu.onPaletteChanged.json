@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "A palette was chosen. event.value is the palette: night, dusk, day or bright. The menu shows the palette at once and the component's `palette` follows the press; the page's script sets the Cadre palette.",
+  "properties": {
+    "value": {
+      "type": "string",
+      "description": "The palette chosen: night, dusk, day or bright."
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Alerts button of the menu was pressed. The event carries nothing; the page's script decides where it goes.",
+  "properties": {}
+}

@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "description": "The text of the search field changed. event.query is the text now in the field.",
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The text now in the search field."
+    }
+  }
+}

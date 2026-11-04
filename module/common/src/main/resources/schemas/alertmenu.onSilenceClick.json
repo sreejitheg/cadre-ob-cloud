@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The Silence button was clicked.",
+  "properties": {}
+}

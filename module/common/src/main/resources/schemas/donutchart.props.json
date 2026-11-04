@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "priority": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "enhanced"
+      ],
+      "default": "regular",
+      "description": "OpenBridge `obc-donut-chart` property `priority`."
+    },
+    "half": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display as half-circle (180\u00b0) or full circle (360\u00b0), default: false"
+    },
+    "showOuterLabels": {
+      "type": "boolean",
+      "default": false,
+      "description": "Show outer labels, default: false"
+    },
+    "showUnit": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to show unit in labels, default: false"
+    },
+    "outerLabelUnit": {
+      "type": "string",
+      "default": "%",
+      "description": "Unit string to append to outer labels, default: \"%\""
+    },
+    "outerLabelMaxLength": {
+      "type": "number",
+      "default": 0,
+      "description": "Maximum character length for labels before trim (0 = no limit), default: 0 Available when showOuterLabels==true."
+    },
+    "outerLabelDecimalPlaces": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of decimal places in labels, default: 0"
+    },
+    "centerReadoutLabel": {
+      "type": "string",
+      "default": "Total",
+      "description": "Text label shown below the center total value, default: \"Total\""
+    },
+    "centerReadoutUnit": {
+      "type": "string",
+      "default": "%",
+      "description": "Unit string shown inline after the label in the center readout, default: \"%\""
+    },
+    "max": {
+      "type": "number",
+      "default": 100,
+      "description": "Maximum value for calculating remaining empty sector, default: 100"
+    },
+    "thickness": {
+      "type": "number",
+      "default": 24,
+      "description": "Donut ring thickness in pixels, default: 24"
+    },
+    "legend": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to display the legend below the chart, default: false"
+    },
+    "fixedHeight": {
+      "type": "number",
+      "default": 320,
+      "description": "Fixed height of the chart in pixels (determines chart circumference), default: 320. The chart's circumference is always based on this fixed height to match other radial instruments."
+    },
+    "data": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "description": "The segments, one object each: `label` and `value`."
+    },
+    "colors": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "description": "Colours of the series or segments in order, as CSS colour strings. Empty uses the palette of the scheme."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

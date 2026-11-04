@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "A row asks to open or close its children (at any depth). event.id and event.tag name the row; event.expanded is the state the press asks for; the group applies it itself.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The id of the item the event came from (empty if it has none)."
+    },
+    "tag": {
+      "type": "string",
+      "description": "The tag of the item the event came from."
+    },
+    "expanded": {
+      "type": "boolean",
+      "description": "The state the press asks for: true opens the row, false closes it."
+    }
+  }
+}

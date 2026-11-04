@@ -1,0 +1,5 @@
+{
+  "type": "object",
+  "description": "The bell was pressed. The event carries nothing; the page's script decides what it opens.",
+  "properties": {}
+}

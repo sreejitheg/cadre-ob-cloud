@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "description": "The notification button was pressed. event.count is the count the button holds; event.isActive is the state the press asks for (the opposite of the state shown; the component does not toggle itself, the page sets isActive).",
+  "properties": {
+    "count": {
+      "type": "number",
+      "description": "The count the button holds."
+    },
+    "isActive": {
+      "type": "boolean",
+      "description": "The active state the press asks for."
+    }
+  }
+}

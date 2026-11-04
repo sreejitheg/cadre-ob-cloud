@@ -1,0 +1,885 @@
+{
+  "custom": {
+    "alarm": {
+      "count": 0,
+      "highest": "",
+      "topLabel": "",
+      "topTime": "",
+      "unacked": 0
+    },
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "crumbs": [],
+    "head": {
+      "level": "",
+      "mimicRoute": "",
+      "mode": "mimic",
+      "next": {
+        "enabled": false,
+        "route": "",
+        "title": ""
+      },
+      "nodeId": "",
+      "previous": {
+        "enabled": false,
+        "route": "",
+        "title": ""
+      },
+      "tabs": [],
+      "title": ""
+    }
+  },
+  "params": {
+    "appName": "App",
+    "showUser": true
+  },
+  "propConfig": {
+    "custom.alarm": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alarm_summary(self.session.custom.alarmScope)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.crumbs": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.contentNode}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.frame_crumbs(self.session, (value or '').split('|')[0])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.head": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, {page.props.path} + '|' + coalesce({session.custom.contentNode}, ''), '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.page_header(self.session, (value or '').split('|')[0])",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "params.appName": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.showUser": {
+      "paramDirection": "input",
+      "persistent": true
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 132,
+      "width": 1600
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onAlertClick": {
+              "config": {
+                "script": "\t# GF-37: the bell's event carries nothing; the popup is the default bar's, with the alert menu in it\n\tsystem.perspective.openPopup('alertMenu', 'Framework/OB/AlertMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onAppsButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing; the dock opens on the support pages, as the ASM top bar's second button does\n\tself.session.custom.navPanel = 'support'\n\tsystem.perspective.openDock(id='nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onDimmingButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing\n\tsystem.perspective.openPopup('brilliance', 'Framework/OB/Brilliance', params={}, position={'top': 48, 'right': 56}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onMenuButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing; the dock opens on the page tree, as the ASM top bar's menu button does\n\tself.session.custom.navPanel = 'pages'\n\tsystem.perspective.openDock(id='nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            },
+            "onUserButtonClick": {
+              "config": {
+                "script": "\t# GF-37: the event carries nothing\n\tsystem.perspective.openPopup('userMenu', 'Framework/OB/UserMenu', params={}, position={'top': 48, 'right': 8}, showCloseIcon=False, draggable=False, modal=True, overlayDismiss=True)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "TopBar"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "props.alertType": {
+            "binding": {
+              "config": {
+                "expression": "case({view.custom.alarm.highest}, 'Critical', 'level-critical', 'High', 'level-high', 'Medium', 'level-medium', 'Low', 'level-low', '')"
+              },
+              "type": "expr"
+            }
+          },
+          "props.appTitle": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.appName}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.blinking": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarm.unacked} > 0"
+              },
+              "type": "expr"
+            }
+          },
+          "props.date": {
+            "binding": {
+              "config": {
+                "expression": "dateFormat(now(1000), \"yyyy-MM-dd'T'HH:mm:ss'Z'\")"
+              },
+              "type": "expr"
+            }
+          },
+          "props.nAlerts": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.alarm.count}"
+              },
+              "type": "expr"
+            }
+          },
+          "props.pageName": {
+            "binding": {
+              "config": {
+                "expression": "if(len({view.custom.crumbs}) > 0, '', {page.props.path})"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.page_title(self.session, value) if value else ''",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.showUserButton": {
+            "binding": {
+              "config": {
+                "expression": "{view.params.showUser}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "showAppsButton": true,
+          "showClock": true,
+          "showDimmingButton": true
+        },
+        "type": "cadre.ob.topbar"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Crumbs"
+            },
+            "position": {
+              "shrink": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.crumbs}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.instances": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.crumbs}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "row",
+              "elementPosition": {
+                "shrink": 0
+              },
+              "instances": [],
+              "path": "Framework/OBASM/Crumb",
+              "style": {
+                "gap": "4px",
+                "marginLeft": "8px"
+              },
+              "useDefaultViewHeight": false,
+              "useDefaultViewWidth": true
+            },
+            "type": "ia.display.flex-repeater"
+          },
+          {
+            "meta": {
+              "name": "Spacer"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tif len(self.session.custom.searchQuery or '') > 0:\n\t\tself.session.custom.searchOpen = True"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                },
+                "onKeyDown": {
+                  "config": {
+                    "script": "\tk = ''\n\ttry:\n\t\tk = event.key\n\texcept Exception:\n\t\tk = ''\n\tif k == 'Escape':\n\t\tself.session.custom.searchQuery = ''\n\t\tself.session.custom.searchOpen = False\n\telif k == 'Enter':\n\t\tr = cadre.hmi.search_first(self.session, self.session.custom.searchQuery)\n\t\tif r is not None:\n\t\t\tif r['action'] == 'alarms' or r['action'] == 'trend':\n\t\t\t\tself.session.custom.contentNode = r['nodeId']\n\t\t\t\tsystem.perspective.navigate('/node/' + r['action'])\n\t\t\telif r['route']:\n\t\t\t\tsystem.perspective.navigate(r['route'])\n\t\t\tif r['deviceId']:\n\t\t\t\tcadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'])\n\t\t\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\t\telse:\n\t\t\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\t\telse:\n\t\t\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\t\t\tself.session.custom.faceplateDocked = True\n\t\t\tif r['close'] == 'nav':\n\t\t\t\tsystem.perspective.closeDock('nav')\n\t\t\telif r['close'] == 'search':\n\t\t\t\tself.session.custom.searchQuery = ''\n\t\t\t\tself.session.custom.searchOpen = False\n\t\t\telif r['close']:\n\t\t\t\tsystem.perspective.closePopup(r['close'])\n\telse:\n\t\tself.session.custom.searchOpen = True"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "SearchField"
+            },
+            "position": {
+              "basis": "300px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "session.custom.searchQuery"
+                  },
+                  "type": "property"
+                },
+                "onChange": {
+                  "enabled": null,
+                  "script": "\tif currentValue is not None and currentValue.value:\n\t\tself.session.custom.searchOpen = True"
+                }
+              }
+            },
+            "props": {
+              "deferUpdates": false,
+              "placeholder": "Search pages, devices, tags",
+              "rejectUpdatesWhileFocused": false,
+              "style": {
+                "height": "32px",
+                "margin": "0 8px"
+              },
+              "text": ""
+            },
+            "type": "ia.input.text-field"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "basis": "20px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.elements[0].fill.paint": {
+                    "binding": {
+                      "config": {
+                        "expression": "case({view.custom.alarm.highest}, 'Critical', 'var(--alert-critical-color)', 'High', 'var(--alert-alarm-color)', 'Medium', 'var(--alert-warning-color)', 'Low', 'var(--alert-caution-color)', 'var(--element-neutral-color)')"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M10 2L19 18H1Z",
+                      "fill": {
+                        "paint": "var(--alert-alarm-color)"
+                      },
+                      "name": "tri",
+                      "type": "path"
+                    },
+                    {
+                      "d": "M9.2 7H10.8V12.5H9.2ZM9.2 13.8H10.8V15.4H9.2Z",
+                      "fill": {
+                        "paint": "var(--on-alarm-color)"
+                      },
+                      "name": "mark",
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 20 20"
+                },
+                "type": "ia.shapes.svg"
+              },
+              {
+                "meta": {
+                  "name": "Text"
+                },
+                "position": {
+                  "grow": 1
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.topLabel}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/body-active cadre/text/active",
+                    "overflow": "hidden",
+                    "textOverflow": "ellipsis",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "meta": {
+                  "name": "Time"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.topTime}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/font/label cadre/text/neutral",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "type": "ia.display.label"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tcadre.hmi.ack_top(self.session.custom.alarmScope, self.session)"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "Ack"
+                },
+                "position": {
+                  "basis": "56px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "position.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.alarm.unacked} > 0"
+                      },
+                      "type": "expr"
+                    }
+                  },
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.can.W6}"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/normal cadre/font/button",
+                    "height": "28px"
+                  },
+                  "text": "ACK"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "AlertMessage"
+            },
+            "position": {
+              "basis": "420px",
+              "shrink": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.alarm.count} > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "backgroundColor": "var(--normal-enabled-background-color)",
+                "border": "1px solid var(--border-outline-color)",
+                "borderRadius": "6px",
+                "gap": "8px",
+                "height": "32px",
+                "margin": "0 8px",
+                "overflow": "hidden",
+                "padding": "0 4px 0 8px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Strip"
+        },
+        "position": {
+          "basis": "36px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "overflow": "hidden"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.title}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "marginLeft": "8px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Level"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.head.level}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.level}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "marginLeft": "12px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onChange": {
+                  "config": {
+                    "script": "\t# GF-37: event.selectedValue is the value of the pivot pressed: mimic, alarms or trend\n\tv = event.selectedValue\n\tif v == 'mimic':\n\t\tif self.view.custom.head.mimicRoute:\n\t\t\tsystem.perspective.navigate(self.view.custom.head.mimicRoute)\n\telif v == 'alarms' or v == 'trend':\n\t\tself.session.custom.contentNode = self.view.custom.head.nodeId\n\t\tsystem.perspective.navigate('/node/' + v)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Pivot"
+            },
+            "position": {
+              "basis": "240px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.head.nodeId}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.items": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.mimicRoute}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\treturn cadre.hmi.obasm_items('pivot', value)",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              },
+              "props.selectedValue": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.mode}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "horizontal"
+            },
+            "type": "cadre.ob.pivotitemgroup"
+          },
+          {
+            "events": {
+              "component": {
+                "onTabSelected": {
+                  "config": {
+                    "script": "\t# GF-37: event.id is the id of the tab pressed (the route of the page), event.index its place\n\tif event.id:\n\t\tsystem.perspective.navigate(event.id)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Tabs"
+            },
+            "position": {
+              "basis": "480px",
+              "shrink": 1
+            },
+            "propConfig": {
+              "position.display": {
+                "binding": {
+                  "config": {
+                    "expression": "len({view.custom.head.tabs}) > 0"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.selectedTabId": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.tabs}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\treturn cadre.hmi.obasm_items('tab', value)",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              },
+              "props.tabs": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.tabs}"
+                  },
+                  "transforms": [
+                    {
+                      "code": "\treturn cadre.hmi.obasm_items('tabs', value)",
+                      "type": "script"
+                    }
+                  ],
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "hug": true
+            },
+            "type": "cadre.ob.tabrow"
+          },
+          {
+            "meta": {
+              "name": "Spacer"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tif self.view.custom.head.previous.route:\n\t\tsystem.perspective.navigate(self.view.custom.head.previous.route)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Previous"
+            },
+            "position": {
+              "basis": "200px",
+              "shrink": 1
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.previous.enabled}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.head.previous.enabled}, '‹ ' + {view.custom.head.previous.title}, '‹')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              },
+              "text": ""
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tif self.view.custom.head.next.route:\n\t\tsystem.perspective.navigate(self.view.custom.head.next.route)"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Next"
+            },
+            "position": {
+              "basis": "200px",
+              "shrink": 1
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.head.next.enabled}"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.head.next.enabled}, {view.custom.head.next.title} + ' ›', '›')"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "28px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "textOverflow": "ellipsis",
+                "whiteSpace": "nowrap"
+              },
+              "text": ""
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "PageHeader"
+        },
+        "position": {
+          "basis": "48px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "classes": "cadre/divider/bottom",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/bar cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

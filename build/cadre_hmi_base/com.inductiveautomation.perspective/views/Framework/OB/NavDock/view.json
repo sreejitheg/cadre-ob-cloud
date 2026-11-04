@@ -1,0 +1,183 @@
+{
+  "custom": {},
+  "params": {},
+  "propConfig": {},
+  "props": {
+    "defaultSize": {
+      "height": 800,
+      "width": 320
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "Title"
+            },
+            "position": {
+              "grow": 1
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "nowrap"
+              },
+              "text": "Menu"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "Icon"
+                },
+                "position": {
+                  "height": 24,
+                  "width": 24,
+                  "x": 8,
+                  "y": 8
+                },
+                "props": {
+                  "elements": [
+                    {
+                      "d": "M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z",
+                      "fill": {
+                        "paint": "var(--element-active-color)"
+                      },
+                      "type": "path"
+                    }
+                  ],
+                  "viewBox": "0 0 24 24"
+                },
+                "type": "ia.shapes.svg"
+              }
+            ],
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.closeDock('nav')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Close"
+            },
+            "position": {
+              "basis": "40px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat",
+                "height": "40px",
+                "margin": "0 2px",
+                "overflow": "hidden",
+                "width": "40px"
+              }
+            },
+            "type": "ia.container.coord"
+          }
+        ],
+        "meta": {
+          "name": "Header"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "overflow": "hidden",
+            "padding": "0 0 0 8px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "events": {
+          "component": {
+            "onItemClick": {
+              "config": {
+                "script": "\t# GF-37: event.id is the id of the item pressed, at any depth; ob_items sets it to the item's route\n\tif event.id:\n\t\tsystem.perspective.navigate(event.id)\n\t\tsystem.perspective.closeDock('nav')"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Menu"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.footerItems": {
+            "binding": {
+              "config": {
+                "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.ob_items('nav', list(self.session.custom.nav['footer']), value, ['menu', 'user', 'user-settings', 'notification', 'notification-filled', 'applications', 'alerts', 'alarm', 'alert-list', 'info', 'help', 'home', 'search', 'dashboard', 'palette-day', 'palette-dusk', 'palette-night', 'palette-day-bright', 'palette-dimming', 'time', 'silence-iec', 'settings-default-iec', 'chevron-left-google', 'chevron-right-google', 'close-google', 'check-google', 'placeholder', 'command-in', 'command-no', 'command-take', 'command-request', 'command-shared', 'command-locked', 'joystick'])",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          },
+          "props.items": {
+            "binding": {
+              "config": {
+                "expression": "if(toMillis(now(2000)) > 0, {page.props.path}, '')"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn cadre.hmi.ob_items('nav', cadre.hmi.nav_items(self.session), value, ['menu', 'user', 'user-settings', 'notification', 'notification-filled', 'applications', 'alerts', 'alarm', 'alert-list', 'info', 'help', 'home', 'search', 'dashboard', 'palette-day', 'palette-dusk', 'palette-night', 'palette-day-bright', 'palette-dimming', 'time', 'silence-iec', 'settings-default-iec', 'chevron-left-google', 'chevron-right-google', 'close-google', 'check-google', 'placeholder', 'command-in', 'command-no', 'command-take', 'command-request', 'command-shared', 'command-locked', 'joystick'])",
+                  "type": "script"
+                }
+              ],
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "footerItems": [],
+          "items": []
+        },
+        "type": "cadre.ob.navigationmenu"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/menu cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

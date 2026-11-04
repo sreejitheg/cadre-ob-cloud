@@ -1,0 +1,259 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "appTitle": {
+      "type": "string",
+      "default": "App",
+      "description": "Sets the main application title displayed in the top bar."
+    },
+    "pageName": {
+      "type": "string",
+      "default": "Page",
+      "description": "Sets the current page or section name displayed in the top bar. Available when settings==false."
+    },
+    "menuButtonIcon": {
+      "type": "string",
+      "enum": [
+        "menu",
+        "home"
+      ],
+      "default": "menu",
+      "description": "Available when settings==false && inactive==false."
+    },
+    "menuButtonActivated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the menu button as active. Available when settings==false && inactive==false."
+    },
+    "dimmingButtonActivated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the dimming (day/night) button as active. Available when showDimmingButton==true && inactive==false."
+    },
+    "appsButtonActivated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the apps button as active. Available when showAppsButton==true && inactive==false."
+    },
+    "leftMoreButtonActivated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the left more button as active. Available when inactive==false."
+    },
+    "userButtonActivated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Highlights the user/profile button as active. Available when showUserButton==true && inactive==false."
+    },
+    "userButtonDisabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables the user/profile button. Available when showUserButton==true && inactive==false."
+    },
+    "tall": {
+      "type": "boolean",
+      "default": false,
+      "description": "Increases the height of the top bar for larger touch targets."
+    },
+    "wideMenuButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Expands the menu button for wide-rail layouts. Available when settings==false && inactive==false."
+    },
+    "showAppsButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows or hides the apps button."
+    },
+    "showDimmingButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows or hides the dimming (day/night) button."
+    },
+    "showUserButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Shows or hides the user/profile button."
+    },
+    "showClock": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the bar draws its clock (the `date`, `showSeconds` and `timeZoneOffsetHours` below)."
+    },
+    "showAppIcon": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the bar draws the app icon (`appIconName`) before the application title."
+    },
+    "inactive": {
+      "type": "boolean",
+      "default": false,
+      "description": "Disables interaction and visually de-emphasizes the bar."
+    },
+    "appButtonBreakpointPx": {
+      "type": "number",
+      "default": 500,
+      "description": "Controls the breakpoint (in px) for showing/hiding the apps button."
+    },
+    "dimmingButtonBreakpointPx": {
+      "type": "number",
+      "default": 500,
+      "description": "Controls the breakpoint (in px) for showing/hiding the dimming button."
+    },
+    "appTitleBreakpointPx": {
+      "type": "number",
+      "default": 500,
+      "description": "Controls the breakpoint (in px) for showing/hiding the app title."
+    },
+    "userButtonBreakpointPx": {
+      "type": "number",
+      "default": 500,
+      "description": "Controls the breakpoint (in px) for showing/hiding the user button."
+    },
+    "appIconBreakpointPx": {
+      "type": "number",
+      "default": 500,
+      "description": "Controls the breakpoint (in px) for showing/hiding the app icon."
+    },
+    "settings": {
+      "type": "boolean",
+      "default": false,
+      "description": "The settings mode: Close and Back buttons, the application title and the breadcrumb (`breadcrumbItems`) in place of the menu button and the page name. The frame does not use it."
+    },
+    "breadcrumbItems": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "label"
+        ]
+      },
+      "description": "The crumbs of the settings mode, one object each: `label` and `href`. A crumb's icon (a template function) is not carried. Drawn only while `settings` is true; the frame keeps its own crumb row."
+    },
+    "nAlerts": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of active alerts shown in the counter; 0 shows the idle state."
+    },
+    "counter": {
+      "type": "boolean",
+      "default": true,
+      "description": "Shows the alert counter when there are active alerts and the button is not flat."
+    },
+    "alertType": {
+      "type": "string",
+      "enum": [
+        "",
+        "alarm",
+        "warning",
+        "caution",
+        "level-critical",
+        "level-high",
+        "level-medium",
+        "level-low",
+        "level-diagnostic"
+      ],
+      "default": "",
+      "description": "The alert type that selects the icon and colours. The Cadre priorities map onto it as wiki 13 section 11.1 says: Critical level-critical, High alarm, Medium warning, Low caution, Diagnostic empty (no alert colour); level-high, level-medium and level-low draw the same colours as alarm, warning and caution. Empty draws the idle state."
+    },
+    "blinking": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flashes the bell for active alerts of a flashing alert type (never for caution)."
+    },
+    "showSilenceButton": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the silence control is drawn beside the bell. False by default: no Cadre function silences an alarm, so the control stays hidden until one exists."
+    },
+    "date": {
+      "type": "string",
+      "default": "",
+      "description": "The time to draw, an ISO 8601 string in UTC (for example 2026-01-01T09:30:00Z), which the page binds to the current time. The clock does not tick by itself; empty draws NaN."
+    },
+    "showSeconds": {
+      "type": "boolean",
+      "default": false,
+      "description": "OpenBridge `obc-clock` property `showSeconds`."
+    },
+    "timeZoneOffsetHours": {
+      "type": "number",
+      "default": 0,
+      "description": "Timezone offset in hours, from UTC. Defaults to 0."
+    },
+    "appIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `app-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Custom icon representing the application or brand (shown when showAppIcon is true)"
+    },
+    "commandButtonText": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `command-button` slot; empty puts none. Primary command/action button for the current context"
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

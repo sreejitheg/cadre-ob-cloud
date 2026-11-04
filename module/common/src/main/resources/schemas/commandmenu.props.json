@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "inCommand": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the menu is in the \"in command\" state. Controls the toggle and visual state."
+    },
+    "showLocation": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the menu draws the location of the command (the `command-location` text) beside its description."
+    },
+    "commandIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `command-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Main icon representing the current command state."
+    },
+    "commandStatus": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `command-status` slot; empty puts none. Status label (e.g., \"Joystick\", \"NO CMD\")."
+    },
+    "commandDescription": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `command-description` slot; empty puts none. Description of the command state."
+    },
+    "commandLocation": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `command-location` slot; empty puts none. Location label for the command (shown if showLocation is true)."
+    },
+    "takeCommandLabel": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `toogle-action-to-in-command-label` slot; empty puts none. Label for the action to take command."
+    },
+    "releaseCommandLabel": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `toogle-action-to-no-command-label` slot; empty puts none. Label for the action to release command."
+    },
+    "inCommandLabel": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `toogle-state-in-command-label` slot; empty puts none. Status label when in \"in command\" state."
+    },
+    "noCommandLabel": {
+      "type": "string",
+      "default": "",
+      "description": "The text in the `toogle-state-no-command-label` slot; empty puts none. Status label when in \"no command\" state."
+    },
+    "inCommandIconName": {
+      "type": "string",
+      "enum": [
+        "",
+        "menu",
+        "user",
+        "user-settings",
+        "notification",
+        "notification-filled",
+        "applications",
+        "alerts",
+        "alarm",
+        "alert-list",
+        "info",
+        "help",
+        "home",
+        "search",
+        "dashboard",
+        "palette-day",
+        "palette-dusk",
+        "palette-night",
+        "palette-day-bright",
+        "palette-dimming",
+        "time",
+        "silence-iec",
+        "settings-default-iec",
+        "chevron-left-google",
+        "chevron-right-google",
+        "close-google",
+        "check-google",
+        "placeholder",
+        "command-in",
+        "command-no",
+        "command-take",
+        "command-request",
+        "command-shared",
+        "command-locked",
+        "joystick"
+      ],
+      "default": "",
+      "description": "The icon in the `toogle-state-in-command-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Icon for the \"in command\" state (defaults to <obi-command-in>)."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

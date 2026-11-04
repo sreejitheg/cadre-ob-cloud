@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "description": "A crumb was pressed. event.label and event.href are the crumb's, event.index is its position in `items` (the last crumb is the current page and is not a button).",
+  "properties": {
+    "label": {
+      "type": "string",
+      "description": "The label of the crumb that was pressed."
+    },
+    "href": {
+      "type": "string",
+      "description": "The href of the crumb (empty if it has none)."
+    },
+    "index": {
+      "type": "number",
+      "description": "The position of the crumb in `items`, from 0."
+    }
+  }
+}

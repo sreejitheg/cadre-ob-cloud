@@ -132,7 +132,7 @@ class PlanTests(unittest.TestCase):
     def test_readouts_and_colour_come_from_the_build(self):
         p = self.plan()
         self.assertEqual(p["readouts"]["/pumpstation"]["module"], 3)       # two pumps and a valve: the module's On/Off kinds
-        self.assertEqual(p["readouts"]["/overview"]["module"], 1)
+        self.assertEqual(p["readouts"]["/overview"]["module"], 2)       # the design's readout and its switch (the module's since B1)
         self.assertIn("/pumpstation", p["colour"]["with_medium"])
         self.assertIn("/overview", p["colour"]["without_medium"])
 

@@ -178,6 +178,11 @@ _MOTORISED_PROP = {"on": "on", "speed": "speed", "alert": "frame"}
 MODULE_PROP = {"pump": _MOTORISED_PROP, "motor": _MOTORISED_PROP, "fan": _MOTORISED_PROP,
                "tank": {"value": "value"}, "valve": {"open": "on", "alert": "frame"},
                "analogvalve": {"open": "on", "value": "value", "alert": "frame"},
+               "damper": {"on": "on", "alert": "frame"},
+               # the filter and the switch share the element base of the filter (`on`, the alert frame); without a row
+               # the walk read a module filter as a library view and found no state (C-10, 2026-11-03)
+               "filter": {"on": "on", "alert": "frame"}, "switch": {"on": "on", "alert": "frame"},
+               "generator": {"on": "on", "alert": "frame"},
                # module 0.3.1 (COB-127): the element's `value` and `setpoint` are the tags' values as bound
                "readout": {"value": "value"}, "instrument-field": {"value": "value", "setpoint": "setpoint"}}
 STATE_PARAM = {"valve": "open", "analogvalve": "open"}   # every other automation kind: "on"
