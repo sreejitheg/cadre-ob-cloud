@@ -14,7 +14,7 @@ updated: 2026-10-26
 
 ## 1. The Philosophy
 
-The vendor's application frame, as its documentation and demo show it, rests on six rules. The
+The application frame rests on six rules of the maritime design guidance. The
 Cadre frame adopts all six.
 
 1. **One frame for every page.** The header and the navigation are docked views shared by all
@@ -47,15 +47,15 @@ The route `/alerts` (`Framework/AlertsPage`) is added to every child.
 
 ## 3. Components of the Frame
 
-Table 2. Frame views and the vendor equivalents.
+Table 2. Frame views and the reference equivalents.
 
-| Cadre view | Vendor equivalent | Behaviour implemented |
+| Cadre view | Reference equivalent | Behaviour implemented |
 |---|---|---|
 | `Framework/TopBar` | Top Bar | Menu button (`dock` toggle action on `nav`); app name; page name (the navigation label of `page.props.path`, `cadre.hmi.page_title`); the most severe active alarm with its time and an ACK button; the alarm count, coloured by the highest priority, flashing while any alarm is unacknowledged, opening `Framework/AlertMenu`; the brilliance button; the user button; the clock |
 | `Framework/NavMenu`, `Framework/NavItem` | Navigation Bar | Items and footer from `session.custom.nav.items` and `.footer` in two flex repeaters; each item an icon (any converted icon by name, through `cadre.icons.elements`) and a label; selected when its path equals `page.props.path`; a click navigates and closes the dock. A header with a close button; the dock is modal, so a click outside it closes it (GF-71, since 2026-10-22) |
 | `Framework/BrillianceMenu` | Brilliance Menu | Day, dusk, night and bright; the current palette highlighted; `cadre.hmi.set_palette` writes the palette and the Ignition theme. Like every top bar menu, a modal popup that a click outside it or Escape closes (GF-70) |
 | `Framework/UserMenu` | User Menu | The signed-in user, Sign in (`system.perspective.login`), Sign out (`logout`) |
-| `Framework/AlertMenu` | Alert Menu | A header with a close button, `ia.display.alarmstatustable` (under the module rendering OpenBridge's small alert page and the cleared alerts not acknowledged) and an "Alerts" link to `/alerts`; closed by a click outside it (GF-70) |
+| `Framework/AlertMenu` | Alert Menu | A header with a close button, `ia.display.alarmstatustable` (under the module rendering the package's small alert page and the cleared alerts not acknowledged) and an "Alerts" link to `/alerts`; closed by a click outside it (GF-70) |
 | `Framework/AlertsPage` | Alert List Page | Active and History tabs over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable` |
 | `Framework/SideMenu`, `Faceplate/*` | Side menu with pump and valve faceplates | The faceplate of the selected kind, a close button, state, commands (Run and Stop, Open and Close), mode (Manual, Local, Auto), speed for pumps, the device's alarms |
 
@@ -79,7 +79,7 @@ library kind) through `cadre.hmi.select_device`, then opens the `faceplate` dock
 
 ## 6. Not Yet Implemented
 
-Table 3. Frame behaviour the vendor frame has and the Cadre frame does not, with the register item.
+Table 3. Frame behaviour the reference frame has and the Cadre frame does not, with the register item.
 
 | Behaviour | Register |
 |---|---|
@@ -107,7 +107,7 @@ F036, F046 and F047 of the study; COBD-044).
    never counts a sibling's alarms. A native folder metric replaces it if probe E9 proves one (ASMP-009).
 3. **Badges.** `Framework/Badges` draws a pill for each priority with active alarms, the count in the
    priority's colour by rank (page 13 section 11.1), Diagnostic neutral, nothing at 0. One shape serves
-   every priority, so no second shape code stands beside OpenBridge's status shapes.
+   every priority, so no second shape code stands beside the package's status shapes.
 4. **The breadcrumb.** Where the page names a node, the top bar shows the nodes from the root to the
    page's own in place of the page's name (`cadre.hmi.crumbs`, polled every 2 s; `Framework/Crumb`):
    each with its name and its badges, a chevron before every node but the first, and a click that opens
@@ -182,7 +182,7 @@ tab as view parameters (`cadre.hmi.float_params`), written when the popup opens 
 for navigation only; the support pages stand in a second state of the same dock. `session.custom.navPanel` says
 which: `pages` or `support`. Two buttons of the top bar open the dock, each writing the state first and then calling
 `system.perspective.openDock(id='nav')`: the menu button opens `pages`, and the button beside it (the library's
-`dashboard` icon, the nearest of its 92 icons to OpenBridge's `apps`) opens `support`.
+`dashboard` icon, the nearest of its 92 icons to the package's `apps`) opens `support`.
 
 1. **Pages.** A header with Close, a search box bound to `session.custom.navQuery`, and the tree:
    `cadre.hmi.nav_tree(session, query, route)`, every node of `session.custom.hierarchy`, root first, each with its
@@ -464,7 +464,7 @@ and `gaps-after.json`.
 ### 9.3 The Gaps: `tools/hmi/library_gaps.py`
 
 One row for each kind the designs use: its count and pages, whether the module's part (`cadre.ob.<kind>`), the library's
-view or nobody draws it, and why (OpenBridge first with `--module-first`). A kind nobody draws is a gap with a status
+view or nobody draws it, and why (the module first with `--module-first`). A kind nobody draws is a gap with a status
 (`open`, `partial`, `closed`, `accepted`) and a reason; `open_count` is the open and partial gaps that no accepted list
 names. The audit table is also written as `audit.json`. Exit code 2 means open gaps.
 
@@ -535,13 +535,13 @@ The commands are proven offline on synthetic inputs with placeholder names (`tes
 pass the generator's gates G0 to G7, and the previews pass their checks in a browser. A real run on the migrated slice is
 the integrated run's work, not this section's.
 
-## 10. The OpenBridge Frame (`--frame ob`)
+## 10. The Module Frame (`--frame ob`)
 
 Built and tested offline on 2026-11-03 (tranche T2, batch F6a; `cloud/FRAME-DESIGN.md` sections 3 and 4.1 and the owner's
 answers). The frame of sections 2 to 7 stays the default and section 8 the ASM frame; this is a third set of views and docks,
 taken only by a child built with `screen.py --frame ob`, and drawn with the module's frame components (`wiki/12` sections 17.23
 to 17.27). Code: `tools/hmi/obframe.py` (views, page configuration, session data), the function `cadre.hmi.ob_items` of
-`tools/hmi/navigation_scripts.py`, `tests/test_ob_frame.py`. This is the OpenBridge variant; the ASM variant (the navigation
+`tools/hmi/navigation_scripts.py`, `tests/test_ob_frame.py`. This is the module variant; the ASM variant (the navigation
 tree, crumb popups and page header on the same components) is section 11.
 
 ### 10.1 The Option and the Docks
@@ -582,7 +582,7 @@ no command to name there.
 Every component event is a script action whose first line cites the shape measured in GF-37 (`event.id`, `event.ids`,
 `event.value`, or nothing) and which calls a function that exists: no write path is new.
 
-Table 7. The wired events of the OpenBridge frame.
+Table 7. The wired events of the module frame.
 
 | Component | Event | Script |
 |---|---|---|
@@ -624,9 +624,9 @@ G10 and G11 on `cadre_hmi_wtpobf`:
 4. The alert menu rows, the ACK of a row and ACK visible under W8 and W9; nobody signed in: ACK disabled, `canAckAll` false.
 5. The navigation menu's items, the checked item, a node's `alerts` badge, and the dock closing on a click outside it.
 6. The popup sizes (alert 640 by 600, user 320 by 280, brilliance 320 by 280) against the components' measured sizes.
-7. The icons of the navigation items: only those named like a bundled OpenBridge icon (`dashboard`, `alert-list`) draw.
+7. The icons of the navigation items: only those named like a bundled package icon (`dashboard`, `alert-list`) draw.
 
-## 11. The ASM Frame on the OpenBridge Components (`--frame obasm`)
+## 11. The ASM Frame on the Module Components (`--frame obasm`)
 
 Built and tested offline on 2026-11-03 (tranche T2, batch F6b; `cloud/FRAME-DESIGN.md` section 1.2, the owner's answers 1 to 4 and
 the departures at the end). It is the fourth frame option beside `openbridge`, section 8 (`asm`) and section 10 (`ob`), all three

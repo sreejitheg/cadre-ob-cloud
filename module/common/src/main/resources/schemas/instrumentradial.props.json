@@ -10,7 +10,7 @@
         "off"
       ],
       "default": "active",
-      "description": "OpenBridge `obc-instrument-radial` property `state`."
+      "description": "Property `state` of the `obc-instrument-radial` element."
     },
     "priority": {
       "type": "string",
@@ -19,22 +19,22 @@
         "enhanced"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-instrument-radial` property `priority`."
+      "description": "Property `priority` of the `obc-instrument-radial` element."
     },
     "value": {
       "type": "number",
       "default": 0,
-      "description": "OpenBridge `obc-instrument-radial` property `value`."
+      "description": "Property `value` of the `obc-instrument-radial` element."
     },
     "maxValue": {
       "type": "number",
       "default": 100,
-      "description": "OpenBridge `obc-instrument-radial` property `maxValue`."
+      "description": "Property `maxValue` of the `obc-instrument-radial` element."
     },
     "minValue": {
       "type": "number",
       "default": 0,
-      "description": "OpenBridge `obc-instrument-radial` property `minValue`."
+      "description": "Property `minValue` of the `obc-instrument-radial` element."
     },
     "needleColor": {
       "type": "string",
@@ -49,7 +49,7 @@
     "showLabels": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-instrument-radial` property `showLabels`."
+      "description": "Property `showLabels` of the `obc-instrument-radial` element."
     },
     "primaryTickmarkInterval": {
       "type": [
@@ -83,7 +83,7 @@
         "needle"
       ],
       "default": "filled",
-      "description": "OpenBridge `obc-instrument-radial` property `type`."
+      "description": "Property `type` of the `obc-instrument-radial` element."
     },
     "needleType": {
       "type": "string",
@@ -93,12 +93,12 @@
         "needle"
       ],
       "default": "filled",
-      "description": "OpenBridge `obc-instrument-radial` property `needleType`."
+      "description": "Property `needleType` of the `obc-instrument-radial` element."
     },
     "tickmarksInside": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-instrument-radial` property `tickmarksInside`."
+      "description": "Property `tickmarksInside` of the `obc-instrument-radial` element."
     },
     "tickmarkStyle": {
       "type": "string",
@@ -107,7 +107,7 @@
         "enhanced"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-instrument-radial` property `tickmarkStyle`."
+      "description": "Property `tickmarkStyle` of the `obc-instrument-radial` element."
     },
     "clipTop": {
       "type": "number",
@@ -137,7 +137,7 @@
     "zoomToFitArc": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-instrument-radial` property `zoomToFitArc`."
+      "description": "Property `zoomToFitArc` of the `obc-instrument-radial` element."
     },
     "faceDiameter": {
       "type": [
@@ -228,7 +228,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

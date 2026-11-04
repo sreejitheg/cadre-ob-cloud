@@ -139,7 +139,7 @@ def _deep_findings(node, reg, view: str, findings: list, path: str = "root") -> 
 
 def g1_registry(prj: Path) -> dict:
     """The Ignition-Wiki validator, run as a library so that the components of our own module
-    (module/components.json, schemas generated from the OpenBridge manifest) join its registry
+    (module/components.json, schemas generated from the package manifest) join its registry
     and are checked like stock components: declared props and enumerated domains. The validator
     reads the top level of a component's props; `_deep_findings` adds the levels below it (an
     enumerated value, a key of a closed object, a bound path), so that the chart's
@@ -431,7 +431,7 @@ def g7_faceplates(child: Path, parent: Path | None) -> dict:
             if acks:
                 problems.append(f"Faceplate/Alarms: {n['meta']['name']} carries {acks}; the module tab is display only")
     if any(n["type"] == "cadre.ob.alertlist" for n in found):
-        # every record is marked noAck, so OpenBridge draws no ACK in a row (the pin's rule)
+        # every record is marked noAck, so package draws no ACK in a row (the pin's rule)
         cfg = ((lists.get("propConfig") or {}).get("custom.alarms") or {}).get("binding") or {}
         code = " ".join(t.get("code", "") for t in cfg.get("transforms") or [])
         if "no_ack=True" not in code:
@@ -959,7 +959,7 @@ def g7_devices(model: dict, profile: dict, symbols: list[dict], tag_model: dict 
         plates = kinds[kind].get("faceplates", {})
         if d.get("faceplate") == "asm" and plates.get("asm") == kinds[kind]["faceplate"]:   # COBD-045
             warnings.append(f"{did}: kind {kind!r} has no faceplate in the asm style: the device opens its "
-                            f"openbridge faceplate, {kinds[kind]['faceplate']}")
+                            f"stock faceplate, {kinds[kind]['faceplate']}")
         for name, spec in d["members"].items():
             if name.startswith(CONFIG_PREFIX) or "config" in spec:   # a Config row (F010, W19)
                 p, w = _config_faults(did, kind, name, spec, kinds[kind], profile.get("config", {}), tab_label)

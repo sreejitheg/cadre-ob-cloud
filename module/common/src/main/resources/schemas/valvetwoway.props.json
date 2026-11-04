@@ -10,12 +10,12 @@
     "closed": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-valve-analog-two-way-icon` property `closed`."
+      "description": "Property `closed` of the `obc-valve-analog-two-way-icon` element."
     },
     "vertical": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-valve-analog-two-way-icon` property `vertical`."
+      "description": "Property `vertical` of the `obc-valve-analog-two-way-icon` element."
     },
     "componentSize": {
       "type": "string",
@@ -26,7 +26,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

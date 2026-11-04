@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://cadre.local/schemas/cadre-hmi-screen-1.json",
   "title": "Cadre HMI screen descriptor, version 1",
-  "description": "One screen of a child project over the Cadre HMI parent library. Written by a Cadre tool (for example ctig from a Citect page model, or tools/import_openstudio.py from an OpenStudio connector diagram) and consumed by tools/hmi/screen.py. Wiki page 08.",
+  "description": "One screen of a child project over the Cadre HMI parent library. Written by a Cadre tool (for example ctig from a Citect page model) and consumed by tools/hmi/screen.py. Wiki page 08.",
   "type": "object",
   "required": [
     "schema",
@@ -433,7 +433,7 @@
               "view",
               "module"
             ],
-            "description": "A pulse button only: module draws the question button as the Cadre OpenBridge module's cadre.ob.button (wiki page 12 section 17.12) when the page is built with --render module; view (the default) keeps the library's button. The Confirm and Cancel buttons and the pulse are the same."
+            "description": "A pulse button only: module draws the question button as the Cadre HMI Components module's cadre.ob.button (wiki page 12 section 17.12) when the page is built with --render module; view (the default) keeps the library's button. The Confirm and Cancel buttons and the pulse are the same."
           },
           "action": {
             "oneOf": [
@@ -482,7 +482,7 @@
                   },
                   "tab": {
                     "type": "string",
-                    "description": "A tab key of the faceplate: home, config, diagnostics, alarms, interlocks, info, or an openbridge key; a key it lacks opens the first tab"
+                    "description": "A tab key of the faceplate: home, config, diagnostics, alarms, interlocks, info, or a stock key; a key it lacks opens the first tab"
                   },
                   "kind": {
                     "type": "string",

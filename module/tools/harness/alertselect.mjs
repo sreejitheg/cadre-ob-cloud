@@ -1,4 +1,4 @@
-// Offline check of the alarm lists' row selection (module 0.4.2) in Chromium: the real OpenBridge alert list and alert
+// Offline check of the alarm lists' row selection (module 0.4.2) in Chromium: the real alert list and alert
 // panel in the harness page, with a stub Perspective client whose property write comes back after 60 ms, as a two way
 // binding does (module/tools/harness/README.md). Real mouse clicks go through the shadow roots.
 const { chromium } = await import(process.env.PLAYWRIGHT || 'playwright');

@@ -1,6 +1,8 @@
 {
   "custom": {
     "alarmScope": "*cadre_hmi_wtp*",
+    "commands": [],
+    "contentNode": "",
     "deviceModel": false,
     "devices": [
       {
@@ -214,6 +216,98 @@
         "unit": ""
       }
     ],
+    "faceplateDocked": false,
+    "faceplateMode": "dock",
+    "faceplateStyle": "openbridge",
+    "floating": {},
+    "frame": "openbridge",
+    "hierarchy": [
+      {
+        "devices": [],
+        "id": "n0",
+        "name": "WTP",
+        "pages": [
+          {
+            "label": "Plant Overview",
+            "route": "/"
+          }
+        ],
+        "parentId": "",
+        "path": "WTP"
+      },
+      {
+        "devices": [
+          "[default]cadre_hmi_wtp/AIT401",
+          "[default]cadre_hmi_wtp/AIT402",
+          "[default]cadre_hmi_wtp/DP401",
+          "[default]cadre_hmi_wtp/DP402",
+          "[default]cadre_hmi_wtp/FIT501",
+          "[default]cadre_hmi_wtp/P501",
+          "[default]cadre_hmi_wtp/P502",
+          "[default]cadre_hmi_wtp/TK401",
+          "[default]cadre_hmi_wtp/TK402",
+          "[default]cadre_hmi_wtp/TK501"
+        ],
+        "id": "n1",
+        "name": "Disinfection",
+        "pages": [
+          {
+            "label": "Disinfection and Storage",
+            "route": "/disinfection"
+          }
+        ],
+        "parentId": "n0",
+        "path": "WTP/Disinfection"
+      },
+      {
+        "devices": [
+          "[default]cadre_hmi_wtp/AIT301",
+          "[default]cadre_hmi_wtp/DPIT301",
+          "[default]cadre_hmi_wtp/DPIT302",
+          "[default]cadre_hmi_wtp/DPIT303",
+          "[default]cadre_hmi_wtp/FIT301",
+          "[default]cadre_hmi_wtp/P301",
+          "[default]cadre_hmi_wtp/PIT301",
+          "[default]cadre_hmi_wtp/XV301",
+          "[default]cadre_hmi_wtp/XV302",
+          "[default]cadre_hmi_wtp/XV303"
+        ],
+        "id": "n2",
+        "name": "Filtration",
+        "pages": [
+          {
+            "label": "Filtration",
+            "route": "/filtration"
+          }
+        ],
+        "parentId": "n0",
+        "path": "WTP/Filtration"
+      },
+      {
+        "devices": [
+          "[default]cadre_hmi_wtp/AIT101",
+          "[default]cadre_hmi_wtp/DP201",
+          "[default]cadre_hmi_wtp/FIT101",
+          "[default]cadre_hmi_wtp/M201",
+          "[default]cadre_hmi_wtp/P101",
+          "[default]cadre_hmi_wtp/P202",
+          "[default]cadre_hmi_wtp/TK101",
+          "[default]cadre_hmi_wtp/TK201",
+          "[default]cadre_hmi_wtp/TK202",
+          "[default]cadre_hmi_wtp/XV101"
+        ],
+        "id": "n3",
+        "name": "Intake",
+        "pages": [
+          {
+            "label": "Intake and Clarification",
+            "route": "/intake"
+          }
+        ],
+        "parentId": "n0",
+        "path": "WTP/Intake"
+      }
+    ],
     "nav": {
       "footer": [
         {
@@ -226,21 +320,25 @@
         {
           "icon": "dashboard",
           "label": "Plant Overview",
+          "node": "WTP",
           "path": "/"
         },
         {
           "icon": "tank",
           "label": "Intake and Clarification",
+          "node": "WTP/Intake",
           "path": "/intake"
         },
         {
           "icon": "filter",
           "label": "Filtration",
+          "node": "WTP/Filtration",
           "path": "/filtration"
         },
         {
           "icon": "sensor-water-drop-google",
           "label": "Disinfection and Storage",
+          "node": "WTP/Disinfection",
           "path": "/disinfection"
         },
         {
@@ -250,10 +348,18 @@
         }
       ]
     },
+    "navPanel": "pages",
+    "navQuery": "",
+    "pageInfo": {},
     "palette": "day",
+    "searchIndex": {},
+    "searchOpen": false,
+    "searchQuery": "",
     "selectedDevice": "",
     "selectedKind": "",
     "selectedLabel": "",
+    "selectedStyle": "openbridge",
+    "selectedTab": "",
     "selectedTitle": "",
     "trends": [
       {

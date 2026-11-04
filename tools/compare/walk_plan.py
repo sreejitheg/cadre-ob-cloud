@@ -427,7 +427,7 @@ def reading_rule(kind: str, params: dict, param: str, render: str, running: bool
             return None, "the symbol states no speed, so the module's component prints none"
         if prop:
             return {"how": "module", "prop": prop}, ""
-        return None, "a component of the Cadre OpenBridge module draws it inside its own shadow DOM"
+        return None, "a component of the Cadre HMI Components module draws it inside its own shadow DOM"
     if kind == "generator" and params.get("picture") == "genset":
         if param == "on":
             return {"how": "state", "on": {"line": GENSET_STATE[0]}, "off": {"line": GENSET_STATE[1]}}, ""
@@ -1241,7 +1241,7 @@ def build_plan(descs: list[dict], devices: dict | None = None, tags: dict | None
                 d, hit = found
                 add("C", {**base(d, "W11", TRIP["tab"]), "type": "trip", "member": "ilk/resetAt",
                           "tag": tag_of(d, "ilk/resetAt"), **hit, "button": TRIP["reset"],
-                          # the header that reads Interlocked is the asm style's; the openbridge style's
+                          # the header that reads Interlocked is the asm style's; the stock style's
                           # Interlocks tab shows the row and the reset row alone
                           "head": TRIP["head"] if d["style"] == "asm" else None,
                           "cleared": TRIP["cleared"],

@@ -1,4 +1,4 @@
-"""The library gaps of a migration: which kinds the designs use, who draws each (the Cadre OpenBridge module, the
+"""The library gaps of a migration: which kinds the designs use, who draws each (the Cadre HMI Components module, the
 library's own view, or nobody), and the gaps that remain.
 
 Generalised from the eng02 slice's gaps file and the module audit of its Level 4 (ARCH-WFB-01 revision B8 Table 109,
@@ -12,7 +12,7 @@ WFBD-091). The commands reads the catalogue from the repository (`library/contra
                                  and `faceplates[]`, are resolved against the catalogue and the descriptor schema;
                                  `--designs` may then be left out
     --descriptor-schema F        the descriptor schema (`schemas/screen-descriptor.schema.json`), needed with --design
-    --module-first               prefer the module's part where it has one (OpenBridge first)
+    --module-first               prefer the module's part where it has one (the module first)
     --parent P         the parent project the profile must name (default: not checked)
     --accepted LIST              the gaps the owner accepted: a JSON array of ids (or of {"id", "reason"}), a JSON
                                  object with `accepted` or `gaps_settled`, or one id to a line
@@ -235,7 +235,7 @@ def analyse(model: dict, designs: list[dict], catalogue: dict, profile: dict, mo
                       kind not in profile["kinds"] else f"the catalogue holds no view {view} for the kind")
         elif part and module_first:
             choice, resolution = "module", "module"
-            reason = f"OpenBridge first: the module draws the kind with {part}"
+            reason = f"package first: the module draws the kind with {part}"
         elif part:
             choice, resolution = "library", "library"
             reason = f"the library's view is chosen; the module's {part} is not preferred (module-first is off)"

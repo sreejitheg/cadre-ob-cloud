@@ -1,9 +1,40 @@
 {
   "custom": {
+    "ackMessage": "",
+    "ackPending": {
+      "active": false,
+      "ids": [],
+      "text": ""
+    },
     "alarms": {
       "alerts": [],
       "rectified": 0
-    }
+    },
+    "can": {
+      "W1": false,
+      "W10": false,
+      "W11": false,
+      "W12": false,
+      "W13": false,
+      "W14": false,
+      "W15": false,
+      "W16": false,
+      "W17": false,
+      "W18": false,
+      "W19": false,
+      "W2": false,
+      "W3": false,
+      "W4": false,
+      "W5": false,
+      "W6": false,
+      "W7": false,
+      "W8": false,
+      "W9": false
+    },
+    "selected": [],
+    "selectedR": [],
+    "shown": [],
+    "unacked": 0
   },
   "params": {},
   "propConfig": {
@@ -15,6 +46,42 @@
         "transforms": [
           {
             "code": "\talerts = cadre.hmi.alarm_list(self.session.custom.alarmScope, value, no_ack=not cadre.hmi.allowed(self.session, 'W8'), session=self.session)\n\treturn {'alerts': alerts, 'rectified': len([a for a in alerts if a['active'] is not True])}",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.can": {
+      "binding": {
+        "config": {
+          "expression": "now(2000)"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.permissions(self.session)",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
+    "custom.shown": {
+      "binding": {
+        "config": {
+          "expression": "{view.custom.alarms.alerts}"
+        },
+        "type": "expr"
+      }
+    },
+    "custom.unacked": {
+      "binding": {
+        "config": {
+          "expression": "{view.custom.alarms.alerts}"
+        },
+        "transforms": [
+          {
+            "code": "\treturn len(cadre.hmi.unacked_ids(value))",
             "type": "script"
           }
         ],
@@ -141,7 +208,7 @@
             },
             "onRowClick": {
               "config": {
-                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tsystem.perspective.openDock(id='faceplate')"
+                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
               },
               "scope": "G",
               "type": "script"
@@ -163,10 +230,20 @@
               },
               "type": "expr"
             }
+          },
+          "props.selectedIds": {
+            "binding": {
+              "config": {
+                "bidirectional": true,
+                "path": "view.custom.selected"
+              },
+              "type": "property"
+            }
           }
         },
         "props": {
           "alerts": [],
+          "selectable": true,
           "selectedMode": "all",
           "showTime": true
         },
@@ -211,7 +288,7 @@
             },
             "onRowClick": {
               "config": {
-                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tsystem.perspective.openDock(id='faceplate')"
+                "script": "\tif cadre.hmi.select_alarm_device(self.session, event):\n\t\tsystem.perspective.closePopup('alertMenu')\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
               },
               "scope": "G",
               "type": "script"
@@ -241,15 +318,273 @@
               },
               "type": "expr"
             }
+          },
+          "props.selectedIds": {
+            "binding": {
+              "config": {
+                "bidirectional": true,
+                "path": "view.custom.selectedR"
+              },
+              "type": "property"
+            }
           }
         },
         "props": {
           "alerts": [],
+          "selectable": true,
           "selectedMode": "rectified",
           "showTime": true,
           "small": true
         },
         "type": "cadre.ob.alertlist"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AckMessage"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ackMessage}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/label cadre/text/neutral",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tids = cadre.hmi.selected_ids(self.view.custom.selected, self.view.custom.selectedR)\n\tself.view.custom.ackMessage = cadre.hmi.ack_listed(ids, self.session, 'W8')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckSelected"
+            },
+            "position": {
+              "basis": "116px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W8} && len({view.custom.selected}) + len({view.custom.selectedR}) > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "32px"
+              },
+              "text": "Ack selected"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tids = cadre.hmi.unacked_ids(self.view.custom.shown)\n\tif len(ids) > 0:\n\t\tself.view.custom.ackPending = {'active': True, 'ids': ids, 'text': 'Acknowledge ' + str(len(ids)) + (' alarm?' if len(ids) == 1 else ' alarms?')}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckAll"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W9} && {view.custom.unacked} > 0"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "32px"
+              },
+              "text": "Ack all"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "AckBar"
+        },
+        "position": {
+          "basis": "40px",
+          "shrink": 0
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 4px"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "AckConfirmText"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 1
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.ackPending.text}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/font/body-active cadre/text/active",
+                "whiteSpace": "normal"
+              }
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.ackMessage = cadre.hmi.ack_listed(self.view.custom.ackPending.ids, self.session, 'W9')\n\tself.view.custom.ackPending = {'active': False, 'ids': [], 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckConfirmYes"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "config": {
+                    "expression": "{view.custom.can.W9}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/normal cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Confirm"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tself.view.custom.ackPending = {'active': False, 'ids': [], 'text': ''}"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "AckConfirmNo"
+            },
+            "position": {
+              "basis": "96px",
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "classes": "cadre/button/flat cadre/font/button",
+                "height": "36px"
+              },
+              "text": "Cancel"
+            },
+            "type": "ia.input.button"
+          }
+        ],
+        "meta": {
+          "name": "AckConfirm"
+        },
+        "position": {
+          "basis": "44px",
+          "shrink": 0
+        },
+        "propConfig": {
+          "position.display": {
+            "binding": {
+              "config": {
+                "expression": "{view.custom.ackPending.active}"
+              },
+              "type": "expr"
+            }
+          }
+        },
+        "props": {
+          "alignItems": "center",
+          "direction": "row",
+          "style": {
+            "borderRadius": "4px",
+            "classes": "cadre/alert/badge-caution",
+            "gap": "8px",
+            "overflow": "hidden",
+            "padding": "0 8px"
+          }
+        },
+        "type": "ia.container.flex"
       },
       {
         "events": {

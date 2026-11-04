@@ -1,4 +1,4 @@
-"""Author `catalogue/mapping.json`: the disposition of every OpenStudio component in the Cadre
+"""Author `catalogue/mapping.json`: the disposition of every reference component in the Cadre
 HMI library. This file is the authored record (judgement, not parsed fact); re-run it after
 editing to regenerate the JSON, then `tools/render_catalogue.py` to regenerate the wiki pages.
 """
@@ -46,7 +46,7 @@ put("input", "stock", "Stock `ia.input.*` components with `cadre/button/*` and `
 put("button", "stock", "`ia.input.button` with `cadre/button/normal`, `raised`, `flat` or `selected`")
 put("icon-button", "implemented",
     "Icon button pattern: an `ia.shapes.svg` icon in a flat button container (`tools/hmi/framework.py`)")
-put("icon", "implemented", "`ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted OpenBridge icons)")
+put("icon", "implemented", "`ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted icons)")
 put("checkbox", "stock", "`ia.input.checkbox`")
 put("checkbox-list", "stock", "`ia.input.checkbox` instances in an `ia.container.flex`")
 put("radio-button-group", "stock", "`ia.input.radio-group`")
@@ -81,12 +81,12 @@ put("damper", "implemented", "`Automation/Damper`")
 put("filter", "implemented", "`Automation/Filter`")
 put("switch", "implemented", "`Automation/Switch`")
 put("automation-tank", "implemented", "`Automation/Tank` (level, trend, chart, compact, static)",
-    "The chart is a line sparkline, not the vendor's filled area chart (register COB-031).")
+    "The chart is a line sparkline, not the reference filled area chart (register COB-031).")
 put("automation-readout", "implemented", "`Automation/Readout`")
 put("automation-badge", "partial", "Corner badges inside the symbols")
 put("bipolar-transistor capacitor converter diodes ground logic mosfet resistor router source transformer "
     "heat-pump", "factory",
-    "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+    "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
     "Electrical single-line symbols; add when a screen needs them.")
 put("gauge-valve hydraulic-check-valve transmitter transmitter-stack", "gap", "None",
     "Each needs its own layout beyond a two-state icon.")
@@ -95,7 +95,7 @@ put("instrument-field readout", "implemented", "`Instrument/Field`")
 put("readout-list-item", "stock", "`Instrument/Field` rows in an `ia.container.flex`")
 put("gauge-radial gauge-radial-indicator speed-gauge", "stock",
     "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
-    "Visual parity with the vendor gauge is not claimed.")
+    "Visual parity with the reference gauge is not claimed.")
 put("gauge-horizontal gauge-vertical gauge-bar-indicator", "stock", "`ia.display.linear-scale` or `ia.display.progress`")
 put("gauge-trend gauge-trend-indicator", "stock", "`ia.display.sparkline` beside an `Instrument/Field`")
 put("maritime", "out-of-scope", "None", "Common features page of the maritime family.")
@@ -114,13 +114,13 @@ put("indicator-graph radial-bar-chart", "gap", "None")
 put("alert-list alert-list-page", "framework",
     "`Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and "
     "`ia.display.alarmjournaltable`",
-    "Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022).")
+    "Reference row styling, alert categories and the detail pane are not reproduced (register COB-022).")
 put("alert-detail", "gap", "None", "The stock alarm tables offer a details option (`enableDetails`).")
 put("alert-frame-container", "implemented",
     "Alert frame of the automation symbols (status colour, flashing when unacknowledged, dashed when rectified)")
 put("accordion-card accordion-item", "stock", "`ia.display.accordion`")
 
-out = {"meta": {"source": "catalogue/openstudio-interface.json", "authored": "2026-10-07",
+out = {"meta": {"source": "catalogue/reference-interface.json", "authored": "2026-10-07",
                 "statuses": ["implemented", "framework", "generator", "stock", "factory", "partial", "gap",
                              "out-of-scope"]},
        "components": M}

@@ -77,7 +77,7 @@ def _clock(ms):
 
 # --- several floating faceplates (COB-160, DESIGN section 6) ---------------------------------------------
 def asm_frame(session):
-	"""True while the session runs the ASM frame (`session.custom.frame`, written by `screen.py --frame asm`, or its OpenBridge
+	"""True while the session runs the ASM frame (`session.custom.frame`, written by `screen.py --frame asm`, or its module
 	component variant `--frame obasm`);
 	a project built without the option, or before it, answers False and keeps the single floating faceplate."""
 	return _text(_custom(session, "frame", "openbridge")) in ("asm", "obasm")
@@ -536,8 +536,8 @@ def banner_alarms(session, route=""):
 	return out
 
 
-# --- the OpenBridge frame (`--frame ob`, tools/hmi/obframe.py) ----------------------------------------------
-# The Cadre priority to the count of OpenBridge's `AlertCounts` (wiki 13 section 11.1: Critical the critical colour,
+# --- the module frame (`--frame ob`, tools/hmi/obframe.py) ----------------------------------------------
+# The Cadre priority to the count of the package's `AlertCounts` (wiki 13 section 11.1: Critical the critical colour,
 # High alarm, Medium warning, Low caution, Diagnostic its own level), for the `alerts` of a navigation item.
 OB_COUNT_OF = {"Critical": "countLevelCritical", "High": "countAlarm", "Medium": "countWarning", "Low": "countCaution",
 	"Diagnostic": "countLevelDiagnostic"}
@@ -552,7 +552,7 @@ def ob_items(kind, rows, state=None, icons=None):
 	`obc-alert-menu-item` whose `id` is the alarm event's id; ACK shows while the alarm is unacknowledged and is disabled
 	without the permission (the scripts refuse anyway, `ack`).
 	`kind` "nav": `rows` are navigation items (`nav_items`, or the footer: `label`, `path`, `icon`, optional `counts`),
-	`state` the current route, `icons` the OpenBridge icon names the module bundles. An item's `id` is its route and an
+	`state` the current route, `icons` the package icon names the module bundles. An item's `id` is its route and an
 	item that names a node shows the node's counts as `alerts`. An icon outside `icons` is left out."""
 	out = []
 	if kind == "alerts":
@@ -592,7 +592,7 @@ def ob_items(kind, rows, state=None, icons=None):
 	return out
 
 
-# --- the OpenBridge frame, ASM variant (`--frame obasm`, tools/hmi/obasm.py) ---------------------------------
+# --- the module frame, ASM variant (`--frame obasm`, tools/hmi/obasm.py) ---------------------------------
 PIVOT_PAGES = (("mimic", "Mimic"), ("alarms", "Alarms"), ("trend", "Trend"))
 ROW_ACTION_KEYS = ("action", "route", "nodeId", "deviceId", "deviceKind", "deviceTitle", "deviceLabel", "tab", "close")
 

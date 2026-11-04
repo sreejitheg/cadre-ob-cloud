@@ -1,4 +1,4 @@
-"""Tests of the OpenBridge variant of the new frame (`screen.py --frame ob`, tranche T2 batch F6a): its views against the
+"""Tests of the module variant of the new frame (`screen.py --frame ob`, tranche T2 batch F6a): its views against the
 registry (gate G1), the generator's facts the glass will rely on (in the pattern of `TopBarPathTests`), the event scripts
 (each cites the measured event shape and calls the library's own function), the option and its refusal under the stock
 rendering, and the two older frames left as they were.

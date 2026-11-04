@@ -11,7 +11,7 @@
         "left"
       ],
       "default": "bottom",
-      "description": "OpenBridge `obc-transmitter` property `orientation`."
+      "description": "Property `orientation` of the `obc-transmitter` element."
     },
     "type": {
       "type": "string",
@@ -22,7 +22,7 @@
         "vertical-graph"
       ],
       "default": "value",
-      "description": "OpenBridge `obc-transmitter` property `type`."
+      "description": "Property `type` of the `obc-transmitter` element."
     },
     "value": {
       "type": [
@@ -30,17 +30,17 @@
         "null"
       ],
       "default": null,
-      "description": "OpenBridge `obc-transmitter` property `value`."
+      "description": "Property `value` of the `obc-transmitter` element."
     },
     "unit": {
       "type": "string",
       "default": "",
-      "description": "OpenBridge `obc-transmitter` property `unit`."
+      "description": "Property `unit` of the `obc-transmitter` element."
     },
     "fractionDigits": {
       "type": "number",
       "default": 1,
-      "description": "OpenBridge `obc-transmitter` property `fractionDigits`."
+      "description": "Property `fractionDigits` of the `obc-transmitter` element."
     },
     "maxDigits": {
       "type": "number",
@@ -50,7 +50,7 @@
     "hintedZeros": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transmitter` property `hintedZeros`."
+      "description": "Property `hintedZeros` of the `obc-transmitter` element."
     },
     "hasSignSpacer": {
       "type": "boolean",
@@ -65,17 +65,17 @@
         "large"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-transmitter` property `size`."
+      "description": "Property `size` of the `obc-transmitter` element."
     },
     "hasIcon": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transmitter` property `hasIcon`."
+      "description": "Property `hasIcon` of the `obc-transmitter` element."
     },
     "hasAdvice": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transmitter` property `hasAdvice`."
+      "description": "Property `hasAdvice` of the `obc-transmitter` element."
     },
     "hasAlert": {
       "type": "boolean",
@@ -93,7 +93,7 @@
     "hasSetPoint": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transmitter` property `hasSetPoint`."
+      "description": "Property `hasSetPoint` of the `obc-transmitter` element."
     },
     "setpointValue": {
       "type": [
@@ -127,7 +127,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

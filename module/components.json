@@ -1,8 +1,8 @@
 {
  "cadre.ob.pump": {
   "element": "obc-pump",
-  "title": "OB Pump",
-  "palette": "OpenBridge pump: state, speed readout, badges and alert frame",
+  "title": "Pump",
+  "palette": "Pump: state, speed readout, badges and alert frame",
   "schema": "schemas/pump.props.json",
   "defaultSize": {
    "width": 96,
@@ -253,8 +253,8 @@
  },
  "cadre.ob.tank": {
   "element": "obc-automation-tank",
-  "title": "OB Tank",
-  "palette": "OpenBridge tank: level, trend, value and maximum, badges and alert frame",
+  "title": "Tank",
+  "palette": "Tank: level, trend, value and maximum, badges and alert frame",
   "schema": "schemas/tank.props.json",
   "defaultSize": {
    "width": 168,
@@ -496,8 +496,8 @@
  },
  "cadre.ob.motor": {
   "element": "obc-motor",
-  "title": "OB Motor",
-  "palette": "OpenBridge motor: state, speed readout, badges and alert frame",
+  "title": "Motor",
+  "palette": "Motor: state, speed readout, badges and alert frame",
   "schema": "schemas/motor.props.json",
   "defaultSize": {
    "width": 96,
@@ -748,8 +748,8 @@
  },
  "cadre.ob.fan": {
   "element": "obc-fan",
-  "title": "OB Fan",
-  "palette": "OpenBridge fan: state, speed readout, badges and alert frame",
+  "title": "Fan",
+  "palette": "Fan: state, speed readout, badges and alert frame",
   "schema": "schemas/fan.props.json",
   "defaultSize": {
    "width": 96,
@@ -996,8 +996,8 @@
  },
  "cadre.ob.valve": {
   "element": "obc-digital-valve",
-  "title": "OB Valve",
-  "palette": "OpenBridge digital valve: open or closed, badges and alert frame",
+  "title": "Valve",
+  "palette": "Digital valve: open or closed, badges and alert frame",
   "schema": "schemas/valve.props.json",
   "defaultSize": {
    "width": 96,
@@ -1186,8 +1186,8 @@
  },
  "cadre.ob.analogvalve": {
   "element": "obc-analog-valve",
-  "title": "OB Analog Valve",
-  "palette": "OpenBridge analogue valve: opening readout, badges and alert frame",
+  "title": "Analog Valve",
+  "palette": "Analogue valve: opening readout, badges and alert frame",
   "schema": "schemas/analogvalve.props.json",
   "defaultSize": {
    "width": 96,
@@ -1391,8 +1391,8 @@
  },
  "cadre.ob.filter": {
   "element": "obc-filter",
-  "title": "OB Filter",
-  "palette": "OpenBridge filter: a static symbol on a diagram, with readout, badges and alert frame",
+  "title": "Filter",
+  "palette": "Filter: a static symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/filter.props.json",
   "defaultSize": {
    "width": 96,
@@ -1596,8 +1596,8 @@
  },
  "cadre.ob.generator": {
   "element": "obc-indicator-generator",
-  "title": "OB Generator",
-  "palette": "OpenBridge generator indicator: running state, readout and alert frame",
+  "title": "Generator",
+  "palette": "Generator indicator: running state, readout and alert frame",
   "schema": "schemas/generator.props.json",
   "defaultSize": {
    "width": 96,
@@ -1700,8 +1700,8 @@
  },
  "cadre.ob.button": {
   "element": "obc-automation-button",
-  "title": "OB Button",
-  "palette": "OpenBridge automation button: a command button with identifier, state, progress and alert frame",
+  "title": "Button",
+  "palette": "Automation button: a command button with identifier, state, progress and alert frame",
   "schema": "schemas/button.props.json",
   "defaultSize": {
    "width": 96,
@@ -1881,8 +1881,8 @@
  },
  "cadre.ob.readout": {
   "element": "obc-transmitter",
-  "title": "OB Readout",
-  "palette": "OpenBridge transmitter: value chip with unit and an identifier beneath it",
+  "title": "Readout",
+  "palette": "Transmitter: value chip with unit and an identifier beneath it",
   "schema": "schemas/readout.props.json",
   "defaultSize": {
    "width": 72,
@@ -2001,8 +2001,8 @@
  },
  "cadre.ob.instrumentfield": {
   "element": "obc-instrument-field",
-  "title": "OB Instrument Field",
-  "palette": "OpenBridge instrument field: value, optional setpoint, caption and unit",
+  "title": "Instrument Field",
+  "palette": "Instrument field: value, optional setpoint, caption and unit",
   "schema": "schemas/instrumentfield.props.json",
   "defaultSize": {
    "width": 96,
@@ -2105,8 +2105,8 @@
  },
  "cadre.ob.alertlist": {
   "element": "obc-alert-list-details",
-  "title": "OB Alert List",
-  "palette": "OpenBridge alert list: Alert records with ACK and row click",
+  "title": "Alert List",
+  "palette": "Alert list: Alert records with ACK and row click",
   "schema": "schemas/alertlist.props.json",
   "defaultSize": {
    "width": 368,
@@ -2174,8 +2174,8 @@
  },
  "cadre.ob.alertpanel": {
   "element": "obc-alert-list-page-small",
-  "title": "OB Alert Panel",
-  "palette": "OpenBridge alert panel: mode tabs, alert list, ACK visible and Silence",
+  "title": "Alert Panel",
+  "palette": "Alert panel: mode tabs, alert list, ACK visible and Silence",
   "schema": "schemas/alertpanel.props.json",
   "defaultSize": {
    "width": 640,
@@ -2249,8 +2249,8 @@
  },
  "cadre.ob.resistor": {
   "element": "obc-resistor",
-  "title": "OB Resistor",
-  "palette": "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Resistor",
+  "palette": "Resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/resistor.props.json",
   "defaultSize": {
    "width": 96,
@@ -2455,8 +2455,8 @@
  },
  "cadre.ob.damper": {
   "element": "obc-damper",
-  "title": "OB Damper",
-  "palette": "OpenBridge damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame",
+  "title": "Damper",
+  "palette": "Damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame",
   "schema": "schemas/damper.props.json",
   "defaultSize": {
    "width": 96,
@@ -2650,8 +2650,8 @@
  },
  "cadre.ob.switch": {
   "element": "obc-switch",
-  "title": "OB Switch",
-  "palette": "OpenBridge switch: an electrical switch symbol on a diagram, with readout, badges and alert frame",
+  "title": "Switch",
+  "palette": "Switch: an electrical switch symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/switch.props.json",
   "defaultSize": {
    "width": 96,
@@ -2855,8 +2855,8 @@
  },
  "cadre.ob.capacitor": {
   "element": "obc-capacitor",
-  "title": "OB Capacitor",
-  "palette": "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Capacitor",
+  "palette": "Capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/capacitor.props.json",
   "defaultSize": {
    "width": 96,
@@ -3060,8 +3060,8 @@
  },
  "cadre.ob.diodes": {
   "element": "obc-diodes",
-  "title": "OB Diodes",
-  "palette": "OpenBridge diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Diodes",
+  "palette": "Diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/diodes.props.json",
   "defaultSize": {
    "width": 96,
@@ -3267,8 +3267,8 @@
  },
  "cadre.ob.ground": {
   "element": "obc-ground",
-  "title": "OB Ground",
-  "palette": "OpenBridge ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Ground",
+  "palette": "Ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/ground.props.json",
   "defaultSize": {
    "width": 96,
@@ -3471,8 +3471,8 @@
  },
  "cadre.ob.source": {
   "element": "obc-source",
-  "title": "OB Source",
-  "palette": "OpenBridge source: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Source",
+  "palette": "Source: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/source.props.json",
   "defaultSize": {
    "width": 96,
@@ -3677,8 +3677,8 @@
  },
  "cadre.ob.converter": {
   "element": "obc-converter",
-  "title": "OB Converter",
-  "palette": "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Converter",
+  "palette": "Converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/converter.props.json",
   "defaultSize": {
    "width": 96,
@@ -3882,8 +3882,8 @@
  },
  "cadre.ob.transformer": {
   "element": "obc-transformer",
-  "title": "OB Transformer",
-  "palette": "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Transformer",
+  "palette": "Transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/transformer.props.json",
   "defaultSize": {
    "width": 96,
@@ -4085,8 +4085,8 @@
  },
  "cadre.ob.bipolartransistor": {
   "element": "obc-bipolar-transistor",
-  "title": "OB Bipolar Transistor",
-  "palette": "OpenBridge bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Bipolar Transistor",
+  "palette": "Bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/bipolartransistor.props.json",
   "defaultSize": {
    "width": 96,
@@ -4292,8 +4292,8 @@
  },
  "cadre.ob.mosfet": {
   "element": "obc-mosfet",
-  "title": "OB MOSFET",
-  "palette": "OpenBridge MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "MOSFET",
+  "palette": "MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/mosfet.props.json",
   "defaultSize": {
    "width": 96,
@@ -4501,8 +4501,8 @@
  },
  "cadre.ob.logic": {
   "element": "obc-logic",
-  "title": "OB Logic",
-  "palette": "OpenBridge logic: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Logic",
+  "palette": "Logic: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/logic.props.json",
   "defaultSize": {
    "width": 96,
@@ -4708,8 +4708,8 @@
  },
  "cadre.ob.router": {
   "element": "obc-router",
-  "title": "OB Router",
-  "palette": "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame",
+  "title": "Router",
+  "palette": "Router: a static electrical symbol on a diagram, with readout, badges and alert frame",
   "schema": "schemas/router.props.json",
   "defaultSize": {
    "width": 96,
@@ -4911,8 +4911,8 @@
  },
  "cadre.ob.automationbadge": {
   "element": "obc-automation-badge",
-  "title": "OB Automation Badge",
-  "palette": "OpenBridge automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
+  "title": "Automation Badge",
+  "palette": "Automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
   "schema": "schemas/automationbadge.props.json",
   "defaultSize": {
    "width": 32,
@@ -4965,8 +4965,8 @@
  },
  "cadre.ob.checkvalve": {
   "element": "obc-hydraulic-check-valve",
-  "title": "OB Check Valve",
-  "palette": "OpenBridge hydraulic check valve: a display-only glyph on a hydraulic diagram",
+  "title": "Check Valve",
+  "palette": "Hydraulic check valve: a display-only glyph on a hydraulic diagram",
   "schema": "schemas/checkvalve.props.json",
   "defaultSize": {
    "width": 48,
@@ -4995,8 +4995,8 @@
  },
  "cadre.ob.valvetwoway": {
   "element": "obc-valve-analog-two-way-icon",
-  "title": "OB Two-Way Valve Glyph",
-  "palette": "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame",
+  "title": "Two-Way Valve Glyph",
+  "palette": "Analog two-way valve glyph: the valve with its opening, without readout or alert frame",
   "schema": "schemas/valvetwoway.props.json",
   "defaultSize": {
    "width": 48,
@@ -5029,8 +5029,8 @@
  },
  "cadre.ob.valvethreeway": {
   "element": "obc-valve-analog-three-way-icon",
-  "title": "OB Three-Way Valve Glyph",
-  "palette": "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame",
+  "title": "Three-Way Valve Glyph",
+  "palette": "Analog three-way valve glyph: the valve with two openings, without readout or alert frame",
   "schema": "schemas/valvethreeway.props.json",
   "defaultSize": {
    "width": 48,
@@ -5067,8 +5067,8 @@
  },
  "cadre.ob.battery": {
   "element": "obc-indicator-battery",
-  "title": "OB Battery Indicator",
-  "palette": "OpenBridge battery indicator: a battery drawn as a level bar or a trend graph, display only",
+  "title": "Battery Indicator",
+  "palette": "Battery indicator: a battery drawn as a level bar or a trend graph, display only",
   "schema": "schemas/battery.props.json",
   "defaultSize": {
    "width": 48,
@@ -5129,8 +5129,8 @@
  },
  "cadre.ob.engine": {
   "element": "obc-indicator-engine",
-  "title": "OB Engine Indicator",
-  "palette": "OpenBridge engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
+  "title": "Engine Indicator",
+  "palette": "Engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
   "schema": "schemas/engine.props.json",
   "defaultSize": {
    "width": 48,
@@ -5168,8 +5168,8 @@
  },
  "cadre.ob.tankatmospheric": {
   "element": "obc-indicator-tank-atmospheric",
-  "title": "OB Atmospheric Tank Indicator",
-  "palette": "OpenBridge atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
+  "title": "Atmospheric Tank Indicator",
+  "palette": "Atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
   "schema": "schemas/tankatmospheric.props.json",
   "defaultSize": {
    "width": 48,
@@ -5230,8 +5230,8 @@
  },
  "cadre.ob.automationreadout": {
   "element": "obc-automation-readout",
-  "title": "OB Automation Readout",
-  "palette": "OpenBridge automation readout: a value with its unit in a bordered chip, display only",
+  "title": "Automation Readout",
+  "palette": "Automation readout: a value with its unit in a bordered chip, display only",
   "schema": "schemas/automationreadout.props.json",
   "defaultSize": {
    "width": 72,
@@ -5274,8 +5274,8 @@
  },
  "cadre.ob.heatexchanger": {
   "element": "obc-heat-exchanger",
-  "title": "OB Heat Exchanger",
-  "palette": "OpenBridge heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+  "title": "Heat Exchanger",
+  "palette": "Heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
   "schema": "schemas/heatexchanger.props.json",
   "defaultSize": {
    "width": 152,
@@ -5411,8 +5411,8 @@
  },
  "cadre.ob.heatpump": {
   "element": "obc-heat-pump",
-  "title": "OB Heat Pump",
-  "palette": "OpenBridge heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+  "title": "Heat Pump",
+  "palette": "Heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
   "schema": "schemas/heatpump.props.json",
   "defaultSize": {
    "width": 152,
@@ -5548,8 +5548,8 @@
  },
  "cadre.ob.hydraulicseparator": {
   "element": "obc-hydraulic-separator",
-  "title": "OB Hydraulic Separator",
-  "palette": "OpenBridge hydraulic separator: a specialty tank with badges and alert frame, display only",
+  "title": "Hydraulic Separator",
+  "palette": "Hydraulic separator: a specialty tank with badges and alert frame, display only",
   "schema": "schemas/hydraulicseparator.props.json",
   "defaultSize": {
    "width": 152,
@@ -5685,8 +5685,8 @@
  },
  "cadre.ob.gaugegenerator": {
   "element": "obc-gauge-generator",
-  "title": "OB Generator Gauge",
-  "palette": "OpenBridge generator gauge: a dial with value, optional second value and setpoint marks, display only",
+  "title": "Generator Gauge",
+  "palette": "Generator gauge: a dial with value, optional second value and setpoint marks, display only",
   "schema": "schemas/gaugegenerator.props.json",
   "defaultSize": {
    "width": 240,
@@ -5874,8 +5874,8 @@
  },
  "cadre.ob.gaugemotorspumps": {
   "element": "obc-gauge-motors-and-pumps",
-  "title": "OB Motor and Pump Gauge",
-  "palette": "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
+  "title": "Motor and Pump Gauge",
+  "palette": "Motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
   "schema": "schemas/gaugemotorspumps.props.json",
   "defaultSize": {
    "width": 240,
@@ -6064,8 +6064,8 @@
  },
  "cadre.ob.gaugevalve": {
   "element": "obc-gauge-valve",
-  "title": "OB Valve Gauge",
-  "palette": "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
+  "title": "Valve Gauge",
+  "palette": "Valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
   "schema": "schemas/gaugevalve.props.json",
   "defaultSize": {
    "width": 240,
@@ -6187,8 +6187,8 @@
  },
  "cadre.ob.hydraulicvalve43": {
   "element": "obc-hydraulic-valve-4-3",
-  "title": "OB Hydraulic 4/3 Valve",
-  "palette": "OpenBridge hydraulic 4/3 valve: a three position selector showing the selected position, display only",
+  "title": "Hydraulic 4/3 Valve",
+  "palette": "Hydraulic 4/3 valve: a three position selector showing the selected position, display only",
   "schema": "schemas/hydraulicvalve43.props.json",
   "defaultSize": {
    "width": 144,
@@ -6232,8 +6232,8 @@
  },
  "cadre.ob.hydraulicvalvex2": {
   "element": "obc-hydraulic-valve-x-2",
-  "title": "OB Hydraulic X/2 Valve",
-  "palette": "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
+  "title": "Hydraulic X/2 Valve",
+  "palette": "Hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
   "schema": "schemas/hydraulicvalvex2.props.json",
   "defaultSize": {
    "width": 96,
@@ -6275,8 +6275,8 @@
  },
  "cadre.ob.transmitterbutton": {
   "element": "obc-transmitter-button",
-  "title": "OB Transmitter Button",
-  "palette": "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
+  "title": "Transmitter Button",
+  "palette": "Transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
   "schema": "schemas/transmitterbutton.props.json",
   "defaultSize": {
    "width": 96,
@@ -6371,8 +6371,8 @@
  },
  "cadre.ob.areagraph": {
   "element": "obc-area-graph",
-  "title": "OB Area Graph",
-  "palette": "OpenBridge area graph: one or several series drawn as filled areas, display only",
+  "title": "Area Graph",
+  "palette": "Area graph: one or several series drawn as filled areas, display only",
   "schema": "schemas/areagraph.props.json",
   "defaultSize": {
    "width": 480,
@@ -6621,8 +6621,8 @@
  },
  "cadre.ob.linegraph": {
   "element": "obc-line-graph",
-  "title": "OB Line Graph",
-  "palette": "OpenBridge line graph: one or several series drawn as lines, display only",
+  "title": "Line Graph",
+  "palette": "Line graph: one or several series drawn as lines, display only",
   "schema": "schemas/linegraph.props.json",
   "defaultSize": {
    "width": 480,
@@ -6858,8 +6858,8 @@
  },
  "cadre.ob.donutchart": {
   "element": "obc-donut-chart",
-  "title": "OB Donut Chart",
-  "palette": "OpenBridge donut chart: labelled segments of a ring with a centre total, display only",
+  "title": "Donut Chart",
+  "palette": "Donut chart: labelled segments of a ring with a centre total, display only",
   "schema": "schemas/donutchart.props.json",
   "defaultSize": {
    "width": 480,
@@ -6962,8 +6962,8 @@
  },
  "cadre.ob.piechart": {
   "element": "obc-pie-chart",
-  "title": "OB Pie Chart",
-  "palette": "OpenBridge pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
+  "title": "Pie Chart",
+  "palette": "Pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
   "schema": "schemas/piechart.props.json",
   "defaultSize": {
    "width": 480,
@@ -7068,8 +7068,8 @@
  },
  "cadre.ob.polarchart": {
   "element": "obc-polar-chart",
-  "title": "OB Polar Chart",
-  "palette": "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only",
+  "title": "Polar Chart",
+  "palette": "Polar chart: sectors of equal angle whose reach shows each value, display only",
   "schema": "schemas/polarchart.props.json",
   "defaultSize": {
    "width": 480,
@@ -7164,8 +7164,8 @@
  },
  "cadre.ob.radialbarchart": {
   "element": "obc-radial-bar-chart",
-  "title": "OB Radial Bar Chart",
-  "palette": "OpenBridge radial bar chart: concentric rings, one for each value, display only",
+  "title": "Radial Bar Chart",
+  "palette": "Radial bar chart: concentric rings, one for each value, display only",
   "schema": "schemas/radialbarchart.props.json",
   "defaultSize": {
    "width": 480,
@@ -7228,8 +7228,8 @@
  },
  "cadre.ob.barhorizontal": {
   "element": "obc-bar-horizontal",
-  "title": "OB Horizontal Bar",
-  "palette": "OpenBridge horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+  "title": "Horizontal Bar",
+  "palette": "Horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
   "schema": "schemas/barhorizontal.props.json",
   "defaultSize": {
    "width": 480,
@@ -7482,8 +7482,8 @@
  },
  "cadre.ob.barvertical": {
   "element": "obc-bar-vertical",
-  "title": "OB Vertical Bar",
-  "palette": "OpenBridge vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+  "title": "Vertical Bar",
+  "palette": "Vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
   "schema": "schemas/barvertical.props.json",
   "defaultSize": {
    "width": 128,
@@ -7736,8 +7736,8 @@
  },
  "cadre.ob.circularprogress": {
   "element": "obc-circular-progress",
-  "title": "OB Circular Progress",
-  "palette": "OpenBridge circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
+  "title": "Circular Progress",
+  "palette": "Circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
   "schema": "schemas/circularprogress.props.json",
   "defaultSize": {
    "width": 48,
@@ -7783,8 +7783,8 @@
  },
  "cadre.ob.instrumentradial": {
   "element": "obc-instrument-radial",
-  "title": "OB Radial Instrument",
-  "palette": "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
+  "title": "Radial Instrument",
+  "palette": "Radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
   "schema": "schemas/instrumentradial.props.json",
   "defaultSize": {
    "width": 240,
@@ -7992,8 +7992,8 @@
  },
  "cadre.ob.readoutblock": {
   "element": "obc-readout-block",
-  "title": "OB Readout Block",
-  "palette": "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only",
+  "title": "Readout Block",
+  "palette": "Readout block: a number or text with a value, setpoint or advice marker, display only",
   "schema": "schemas/readoutblock.props.json",
   "defaultSize": {
    "width": 144,
@@ -8136,8 +8136,8 @@
  },
  "cadre.ob.tooltip": {
   "element": "obc-tooltip",
-  "title": "OB Tooltip",
-  "palette": "OpenBridge tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
+  "title": "Tooltip",
+  "palette": "Tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
   "schema": "schemas/tooltip.props.json",
   "defaultSize": {
    "width": 224,
@@ -8234,8 +8234,8 @@
  },
  "cadre.ob.toggletip": {
   "element": "obc-toggletip",
-  "title": "OB Toggletip",
-  "palette": "OpenBridge toggletip: a title, description and optional text content and two actions in a bubble",
+  "title": "Toggletip",
+  "palette": "Toggletip: a title, description and optional text content and two actions in a bubble",
   "schema": "schemas/toggletip.props.json",
   "defaultSize": {
    "width": 320,
@@ -8418,8 +8418,8 @@
  },
  "cadre.ob.clock": {
   "element": "obc-clock",
-  "title": "OB Clock",
-  "palette": "OpenBridge clock: the time of day with optional seconds, date, weekday, year and time zone",
+  "title": "Clock",
+  "palette": "Clock: the time of day with optional seconds, date, weekday, year and time zone",
   "schema": "schemas/clock.props.json",
   "defaultSize": {
    "width": 208,
@@ -8500,8 +8500,8 @@
  },
  "cadre.ob.userbutton": {
   "element": "obc-user-button",
-  "title": "OB User Button",
-  "palette": "OpenBridge user button: a round button with a user icon or initials and an optional label and sublabel",
+  "title": "User Button",
+  "palette": "User button: a round button with a user icon or initials and an optional label and sublabel",
   "schema": "schemas/userbutton.props.json",
   "defaultSize": {
    "width": 128,
@@ -8614,8 +8614,8 @@
  },
  "cadre.ob.appbutton": {
   "element": "obc-app-button",
-  "title": "OB App Button",
-  "palette": "OpenBridge app button: an icon above a label, as in the application menu",
+  "title": "App Button",
+  "palette": "App button: an icon above a label, as in the application menu",
   "schema": "schemas/appbutton.props.json",
   "defaultSize": {
    "width": 96,
@@ -8717,8 +8717,8 @@
  },
  "cadre.ob.notificationbutton": {
   "element": "obc-notification-button",
-  "title": "OB Notification Button",
-  "palette": "OpenBridge notification button: a bell, flat or filled, with an optional count",
+  "title": "Notification Button",
+  "palette": "Notification button: a bell, flat or filled, with an optional count",
   "schema": "schemas/notificationbutton.props.json",
   "defaultSize": {
    "width": 64,
@@ -8817,8 +8817,8 @@
  },
  "cadre.ob.notificationbadgebutton": {
   "element": "obc-notification-badge-button",
-  "title": "OB Notification Badge Button",
-  "palette": "OpenBridge notification badge button: a small button with a short text or an icon, used for counts",
+  "title": "Notification Badge Button",
+  "palette": "Notification badge button: a small button with a short text or an icon, used for counts",
   "schema": "schemas/notificationbadgebutton.props.json",
   "defaultSize": {
    "width": 80,
@@ -8928,8 +8928,8 @@
  },
  "cadre.ob.alertbuttonitem": {
   "element": "obc-alert-button-item",
-  "title": "OB Alert Button Item",
-  "palette": "OpenBridge alert button item: one bell with an alert type and a count, as the alert button draws it",
+  "title": "Alert Button Item",
+  "palette": "Alert button item: one bell with an alert type and a count, as the alert button draws it",
   "schema": "schemas/alertbuttonitem.props.json",
   "defaultSize": {
    "width": 96,
@@ -9019,8 +9019,8 @@
  },
  "cadre.ob.alertbutton": {
   "element": "obc-alert-button",
-  "title": "OB Alert Button",
-  "palette": "OpenBridge alert button: a bell with the count of alerts and an alert type, with an optional silence control",
+  "title": "Alert Button",
+  "palette": "Alert button: a bell with the count of alerts and an alert type, with an optional silence control",
   "schema": "schemas/alertbutton.props.json",
   "defaultSize": {
    "width": 160,
@@ -9126,8 +9126,8 @@
  },
  "cadre.ob.alertmenuitem": {
   "element": "obc-alert-menu-item",
-  "title": "OB Alert Menu Item",
-  "palette": "OpenBridge alert menu item: one alert row with a title, description, date, time and an ACK action",
+  "title": "Alert Menu Item",
+  "palette": "Alert menu item: one alert row with a title, description, date, time and an ACK action",
   "schema": "schemas/alertmenuitem.props.json",
   "defaultSize": {
    "width": 360,
@@ -9324,8 +9324,8 @@
  },
  "cadre.ob.alertmenu": {
   "element": "obc-alert-menu",
-  "title": "OB Alert Menu",
-  "palette": "OpenBridge alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
+  "title": "Alert Menu",
+  "palette": "Alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
   "schema": "schemas/alertmenu.props.json",
   "defaultSize": {
    "width": 640,
@@ -9429,8 +9429,8 @@
  },
  "cadre.ob.navigationitem": {
   "element": "obc-navigation-item",
-  "title": "OB Navigation Item",
-  "palette": "OpenBridge navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
+  "title": "Navigation Item",
+  "palette": "Navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
   "schema": "schemas/navigationitem.props.json",
   "defaultSize": {
    "width": 280,
@@ -9634,8 +9634,8 @@
  },
  "cadre.ob.navigationitemgroup": {
   "element": "obc-navigation-item-group",
-  "title": "OB Navigation Item Group",
-  "palette": "OpenBridge navigation item group: a row that opens a flyout of navigation items and groups",
+  "title": "Navigation Item Group",
+  "palette": "Navigation item group: a row that opens a flyout of navigation items and groups",
   "schema": "schemas/navigationitemgroup.props.json",
   "defaultSize": {
    "width": 280,
@@ -9833,8 +9833,8 @@
  },
  "cadre.ob.navigationmenu": {
   "element": "obc-navigation-menu",
-  "title": "OB Navigation Menu",
-  "palette": "OpenBridge navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
+  "title": "Navigation Menu",
+  "palette": "Navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
   "schema": "schemas/navigationmenu.props.json",
   "defaultSize": {
    "width": 320,
@@ -9972,8 +9972,8 @@
  },
  "cadre.ob.treenavigationitem": {
   "element": "obc-tree-navigation-item",
-  "title": "OB Tree Navigation Item",
-  "palette": "OpenBridge tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
+  "title": "Tree Navigation Item",
+  "palette": "Tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
   "schema": "schemas/treenavigationitem.props.json",
   "defaultSize": {
    "width": 280,
@@ -10121,8 +10121,8 @@
  },
  "cadre.ob.treenavigationgroup": {
   "element": "obc-tree-navigation-group",
-  "title": "OB Tree Navigation Group",
-  "palette": "OpenBridge tree navigation group: a tree row that discloses child rows",
+  "title": "Tree Navigation Group",
+  "palette": "Tree navigation group: a tree row that discloses child rows",
   "schema": "schemas/treenavigationgroup.props.json",
   "defaultSize": {
    "width": 280,
@@ -10305,8 +10305,8 @@
  },
  "cadre.ob.treenavigation": {
   "element": "obc-tree-navigation",
-  "title": "OB Tree Navigation",
-  "palette": "OpenBridge tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
+  "title": "Tree Navigation",
+  "palette": "Tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
   "schema": "schemas/treenavigation.props.json",
   "defaultSize": {
    "width": 320,
@@ -10380,8 +10380,8 @@
  },
  "cadre.ob.breadcrumb": {
   "element": "obc-breadcrumb",
-  "title": "OB Breadcrumb",
-  "palette": "OpenBridge breadcrumb: the crumbs from the first to the current page",
+  "title": "Breadcrumb",
+  "palette": "Breadcrumb: the crumbs from the first to the current page",
   "schema": "schemas/breadcrumb.props.json",
   "defaultSize": {
    "width": 320,
@@ -10430,8 +10430,8 @@
  },
  "cadre.ob.brilliancemenu": {
   "element": "obc-brilliance-menu",
-  "title": "OB Brilliance Menu",
-  "palette": "OpenBridge brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
+  "title": "Brilliance Menu",
+  "palette": "Brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
   "schema": "schemas/brilliancemenu.props.json",
   "defaultSize": {
    "width": 320,
@@ -10541,8 +10541,8 @@
  },
  "cadre.ob.usermenu": {
   "element": "obc-user-menu",
-  "title": "OB User Menu",
-  "palette": "OpenBridge user menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
+  "title": "User Menu",
+  "palette": "User menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
   "schema": "schemas/usermenu.props.json",
   "defaultSize": {
    "width": 320,
@@ -10607,8 +10607,8 @@
  },
  "cadre.ob.systemmenu": {
   "element": "obc-system-menu",
-  "title": "OB System Menu",
-  "palette": "OpenBridge system menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
+  "title": "System Menu",
+  "palette": "System menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
   "schema": "schemas/systemmenu.props.json",
   "defaultSize": {
    "width": 320,
@@ -10876,8 +10876,8 @@
  },
  "cadre.ob.appmenu": {
   "element": "obc-app-menu",
-  "title": "OB App Menu",
-  "palette": "OpenBridge app menu: a search field above a grid of app buttons",
+  "title": "App Menu",
+  "palette": "App menu: a search field above a grid of app buttons",
   "schema": "schemas/appmenu.props.json",
   "defaultSize": {
    "width": 360,
@@ -10949,8 +10949,8 @@
  },
  "cadre.ob.commandmenu": {
   "element": "obc-command-menu",
-  "title": "OB Command Menu",
-  "palette": "OpenBridge command menu: the command status, its description and location, and a switch that takes or releases command",
+  "title": "Command Menu",
+  "palette": "Command menu: the command status, its description and location, and a switch that takes or releases command",
   "schema": "schemas/commandmenu.props.json",
   "defaultSize": {
    "width": 360,
@@ -11133,8 +11133,8 @@
  },
  "cadre.ob.topbar": {
   "element": "obc-top-bar",
-  "title": "OB Top Bar",
-  "palette": "OpenBridge top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
+  "title": "Top Bar",
+  "palette": "Top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
   "schema": "schemas/topbar.props.json",
   "defaultSize": {
    "width": 960,
@@ -11437,8 +11437,8 @@
  },
  "cadre.ob.tabitem": {
   "element": "obc-tab-item",
-  "title": "OB Tab Item",
-  "palette": "OpenBridge tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
+  "title": "Tab Item",
+  "palette": "Tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
   "schema": "schemas/tabitem.props.json",
   "defaultSize": {
    "width": 200,
@@ -11646,8 +11646,8 @@
  },
  "cadre.ob.tabrow": {
   "element": "obc-tab-row",
-  "title": "OB Tab Row",
-  "palette": "OpenBridge tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
+  "title": "Tab Row",
+  "palette": "Tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
   "schema": "schemas/tabrow.props.json",
   "defaultSize": {
    "width": 480,
@@ -11779,8 +11779,8 @@
  },
  "cadre.ob.pivotitem": {
   "element": "obc-pivot-item",
-  "title": "OB Pivot Item",
-  "palette": "OpenBridge pivot item: one pivot with an optional icon and label, selected by its group",
+  "title": "Pivot Item",
+  "palette": "Pivot item: one pivot with an optional icon and label, selected by its group",
   "schema": "schemas/pivotitem.props.json",
   "defaultSize": {
    "width": 128,
@@ -11886,8 +11886,8 @@
  },
  "cadre.ob.pivotitemgroup": {
   "element": "obc-pivot-item-group",
-  "title": "OB Pivot Item Group",
-  "palette": "OpenBridge pivot item group: a horizontal or vertical set of pivots, one of them selected",
+  "title": "Pivot Item Group",
+  "palette": "Pivot item group: a horizontal or vertical set of pivots, one of them selected",
   "schema": "schemas/pivotitemgroup.props.json",
   "defaultSize": {
    "width": 240,
@@ -11971,8 +11971,8 @@
  },
  "cadre.ob.modalwindow": {
   "element": "obc-modal-window",
-  "title": "OB Modal Window",
-  "palette": "OpenBridge modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
+  "title": "Modal Window",
+  "palette": "Modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
   "schema": "schemas/modalwindow.props.json",
   "defaultSize": {
    "width": 540,
@@ -12123,8 +12123,8 @@
  },
  "cadre.ob.contextmenuinput": {
   "element": "obc-context-menu-input",
-  "title": "OB Context Menu Input",
-  "palette": "OpenBridge context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
+  "title": "Context Menu Input",
+  "palette": "Context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
   "schema": "schemas/contextmenuinput.props.json",
   "defaultSize": {
    "width": 480,
@@ -12257,8 +12257,8 @@
  },
  "cadre.ob.notificationmenuitem": {
   "element": "obc-notification-menu-item",
-  "title": "OB Notification Menu Item",
-  "palette": "OpenBridge notification menu item: one notification row with a title, description, day and time, opened by a press",
+  "title": "Notification Menu Item",
+  "palette": "Notification menu item: one notification row with a title, description, day and time, opened by a press",
   "schema": "schemas/notificationmenuitem.props.json",
   "defaultSize": {
    "width": 360,
@@ -12380,8 +12380,8 @@
  },
  "cadre.ob.notificationmessageitem": {
   "element": "obc-notification-message-item",
-  "title": "OB Notification Message Item",
-  "palette": "OpenBridge notification message item: one message with a title, description, time and an optional action",
+  "title": "Notification Message Item",
+  "palette": "Notification message item: one message with a title, description, time and an optional action",
   "schema": "schemas/notificationmessageitem.props.json",
   "defaultSize": {
    "width": 640,
@@ -12529,8 +12529,8 @@
  },
  "cadre.ob.notificationfloatingitem": {
   "element": "obc-notification-floating-item",
-  "title": "OB Notification Floating Item",
-  "palette": "OpenBridge notification floating item: a transient notification with a title, description, time and up to two actions",
+  "title": "Notification Floating Item",
+  "palette": "Notification floating item: a transient notification with a title, description, time and up to two actions",
   "schema": "schemas/notificationfloatingitem.props.json",
   "defaultSize": {
    "width": 640,
@@ -12700,8 +12700,8 @@
  },
  "cadre.ob.pipehorizontal": {
   "element": "obc-horizontal-line",
-  "title": "OB Pipe, horizontal",
-  "palette": "OpenBridge horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
+  "title": "Pipe, horizontal",
+  "palette": "Horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
   "schema": "schemas/pipehorizontal.props.json",
   "defaultSize": {
    "width": 96,
@@ -12746,8 +12746,8 @@
  },
  "cadre.ob.pipevertical": {
   "element": "obc-vertical-line",
-  "title": "OB Pipe, vertical",
-  "palette": "OpenBridge vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
+  "title": "Pipe, vertical",
+  "palette": "Vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
   "schema": "schemas/pipevertical.props.json",
   "defaultSize": {
    "width": 24,
@@ -12792,8 +12792,8 @@
  },
  "cadre.ob.pipecorner": {
   "element": "obc-corner-line",
-  "title": "OB Pipe, corner",
-  "palette": "OpenBridge corner line: a pipe bend joining two sides of its box, display only",
+  "title": "Pipe, corner",
+  "palette": "Corner line: a pipe bend joining two sides of its box, display only",
   "schema": "schemas/pipecorner.props.json",
   "defaultSize": {
    "width": 24,
@@ -12844,8 +12844,8 @@
  },
  "cadre.ob.pipetee": {
   "element": "obc-three-way-line",
-  "title": "OB Pipe, tee",
-  "palette": "OpenBridge three-way line: a pipe tee with a run and one branch, display only",
+  "title": "Pipe, tee",
+  "palette": "Three-way line: a pipe tee with a run and one branch, display only",
   "schema": "schemas/pipetee.props.json",
   "defaultSize": {
    "width": 24,
@@ -12896,8 +12896,8 @@
  },
  "cadre.ob.pipecross": {
   "element": "obc-line-cross",
-  "title": "OB Pipe, four-way junction",
-  "palette": "OpenBridge line cross: four pipe ends joined at the centre of the box, display only",
+  "title": "Pipe, four-way junction",
+  "palette": "Line cross: four pipe ends joined at the centre of the box, display only",
   "schema": "schemas/pipecross.props.json",
   "defaultSize": {
    "width": 24,
@@ -12938,8 +12938,8 @@
  },
  "cadre.ob.pipeoverlap": {
   "element": "obc-line-overlap",
-  "title": "OB Pipe, crossover",
-  "palette": "OpenBridge line overlap: one pipe passing over another without joining it, display only",
+  "title": "Pipe, crossover",
+  "palette": "Line overlap: one pipe passing over another without joining it, display only",
   "schema": "schemas/pipeoverlap.props.json",
   "defaultSize": {
    "width": 24,
@@ -12979,8 +12979,8 @@
  },
  "cadre.ob.pipeend": {
   "element": "obc-end-point-line",
-  "title": "OB Pipe, end point",
-  "palette": "OpenBridge end point line: a pipe that ends in a terminal bar on one side of its box, display only",
+  "title": "Pipe, end point",
+  "palette": "End point line: a pipe that ends in a terminal bar on one side of its box, display only",
   "schema": "schemas/pipeend.props.json",
   "defaultSize": {
    "width": 24,
@@ -13030,8 +13030,8 @@
  },
  "cadre.ob.pipedirection": {
   "element": "obc-direction-line",
-  "title": "OB Pipe, flow direction",
-  "palette": "OpenBridge direction line: a pipe segment with a flow direction chevron, display only",
+  "title": "Pipe, flow direction",
+  "palette": "Direction line: a pipe segment with a flow direction chevron, display only",
   "schema": "schemas/pipedirection.props.json",
   "defaultSize": {
    "width": 24,
@@ -13071,8 +13071,8 @@
  },
  "cadre.ob.bus": {
   "element": "obc-bus",
-  "title": "OB Bus",
-  "palette": "OpenBridge bus: a labelled busbar or data bus drawn as a bar, display only",
+  "title": "Bus",
+  "palette": "Bus: a labelled busbar or data bus drawn as a bar, display only",
   "schema": "schemas/bus.props.json",
   "defaultSize": {
    "width": 200,
@@ -13122,7 +13122,7 @@
  },
  "cadre.ob.canvaszoom": {
   "element": null,
-  "title": "OB Canvas Zoom",
+  "title": "Canvas Zoom",
   "palette": "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page",
   "schema": "schemas/canvaszoom.props.json",
   "defaultSize": {

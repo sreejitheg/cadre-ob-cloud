@@ -19,7 +19,7 @@ from hmi import diagram, pv, screen  # noqa: E402
 
 
 def two_tank_desc(closed_pipe=False):
-    """Two tanks joined twice: through a valve, and through a pump (the vendor example shape)."""
+    """Two tanks joined twice: through a valve, and through a pump (the reference example shape)."""
     return {
         "screen": {"width": 800, "height": 400},
         "symbols": [
@@ -194,7 +194,7 @@ class FaceplateContractTests(unittest.TestCase):
 
 
 class ModuleRenderTests(unittest.TestCase):
-    """The render switch of the Cadre OpenBridge module (wiki page 12): the same descriptor, the
+    """The render switch of the Cadre HMI Components module (wiki page 12): the same descriptor, the
     module's components for pumps and tanks, every other kind as before."""
 
     def setUp(self):
@@ -4941,7 +4941,7 @@ class FaceplateStyleTests(unittest.TestCase):
             self.assertTrue(expr("Tab_interlocks", "props.text").startswith("'Interlock' + "))
             self.assertEqual(expr("Tab_config", "position.display"), "{view.custom.dev.mnt} || {view.custom.dev.config} > 0")
             self.assertEqual(doc["custom"]["tab"], "home")
-            # the Home tab holds every row of the openbridge Control tab
+            # the Home tab holds every row of the stock Control tab
             ob = view_nodes(views[framework.FACEPLATE_VIEW[kind]])
             under = lambda ns, pane: {n["meta"]["name"] for n, _ in gates.walk(ns[pane])}
             self.assertEqual(under(nodes, "Pane_home"), under(ob, "Pane_control") - {"Pane_control"} | {"Pane_home"})

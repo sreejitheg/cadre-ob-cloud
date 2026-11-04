@@ -35,7 +35,7 @@
         "handle": "hide",
         "iconUrl": "",
         "id": "nav",
-        "modal": false,
+        "modal": true,
         "resizable": false,
         "show": "onDemand",
         "size": 320,

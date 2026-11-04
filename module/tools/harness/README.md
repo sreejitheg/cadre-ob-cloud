@@ -14,5 +14,5 @@ Run after `npm run build` in `module/web` and `python module/tools/gen_module_as
     node module/tools/harness/items.mjs     # the `items` mechanism (T2, F1) on a synthetic host built by items_bundle.py (run from the repository root)
 
 Each prints one PASS or FAIL line per check. The harness proves the wrappers and the zoom component against real
-OpenBridge elements; it cannot prove the Perspective client's own behaviour (the property write, the binding round
+package elements; it cannot prove the Perspective client's own behaviour (the property write, the binding round
 trip, the Designer), which only the gateway shows.

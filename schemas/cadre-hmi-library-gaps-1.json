@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "cadre-hmi-library-gaps/1",
   "title": "Cadre HMI library gaps, version 1",
-  "description": "The kinds the page designs of a migration use, who draws each (the Cadre OpenBridge module, the library, or nobody) and the gaps that remain, written by tools/hmi/library_gaps.py (ARCH-WFB-01 revision B8 Table 105). Wiki page 04.",
+  "description": "The kinds the page designs of a migration use, who draws each (the Cadre HMI Components module, the library, or nobody) and the gaps that remain, written by tools/hmi/library_gaps.py (ARCH-WFB-01 revision B8 Table 105). Wiki page 04.",
   "type": "object",
   "required": ["schema", "kinds", "gaps", "open_count", "provenance"],
   "properties": {

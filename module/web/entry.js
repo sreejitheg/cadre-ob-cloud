@@ -1,4 +1,4 @@
-// The OpenBridge custom elements this module wraps. Each import defines its element
+// The package custom elements this module wraps. Each import defines its element
 // (customElements.define) as a side effect; only these and their dependencies are bundled.
 import '@oicl/openbridge-webcomponents/dist/automation/pump/pump.js';
 import '@oicl/openbridge-webcomponents/dist/automation/automation-tank/automation-tank.js';

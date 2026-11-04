@@ -37,10 +37,10 @@
    "id": "cadre.hmi.ob",
    "onStartup": "enabled",
    "shouldUpgrade": false,
-   "name": "Cadre OpenBridge",
+   "name": "Cadre HMI Components",
    "version": "0.4.2 (b0)",
    "vendorId": -1,
-   "vendorName": "Cadre HMI OpenBridge development",
+   "vendorName": "Cadre HMI development",
    "selfSigned": true,
    "state": "ACTIVE",
    "licenseState": "Free"

@@ -1,4 +1,4 @@
-"""Measure the runtime default of every property of the wrapped OpenBridge elements.
+"""Measure the runtime default of every property of the wrapped package elements.
 
 The custom elements manifest gives names and types but, for enum-typed fields, no default: the
 default is an initialiser in the element's constructor. Creating each element in a browser and

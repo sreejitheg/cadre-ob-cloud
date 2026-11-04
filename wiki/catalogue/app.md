@@ -1,12 +1,12 @@
-# Catalogue: App - OpenBridge
+# Catalogue: App
 
-Interface facts for the 12 components of the vendor family `App - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 12 components of the reference family `App`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. App Bar
 
 <a id="app-bar"></a>
 
-Source: <https://docs.openstudio.no/app-bar/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Multi-application integration chrome; no requirement in process automation screens so far.
 
@@ -37,7 +37,7 @@ Multi-application integration chrome; no requirement in process automation scree
 
 <a id="badge"></a>
 
-Source: <https://docs.openstudio.no/badge/>. Disposition: `partial`. Cadre equivalent: Corner badges of the automation symbols.
+Disposition: `partial`. Cadre equivalent: Corner badges of the automation symbols.
 
 A free-standing badge view is not implemented.
 
@@ -57,7 +57,7 @@ A free-standing badge view is not implemented.
 
 <a id="card"></a>
 
-Source: <https://docs.openstudio.no/card/>. Disposition: `generator`. Cadre equivalent: Card pattern of the cards layout (`cadre/surface/card` plus a title).
+Disposition: `generator`. Cadre equivalent: Card pattern of the cards layout (`cadre/surface/card` plus a title).
 
 The dialog option is not implemented.
 
@@ -86,7 +86,7 @@ Events: `onDialogOpened`, `onDialogClosed`.
 
 <a id="fleet-button"></a>
 
-Source: <https://docs.openstudio.no/fleet-button/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Multi-application integration chrome; no requirement in process automation screens so far.
 
@@ -114,7 +114,7 @@ Events: `onActionPerformed`.
 
 <a id="integration-bar"></a>
 
-Source: <https://docs.openstudio.no/integration-bar/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Multi-application integration chrome; no requirement in process automation screens so far.
 
@@ -179,7 +179,7 @@ Events: `homeButtonClick`, `linkButtonClick`, `onFleetButtonClick`, `onCommandCl
 
 <a id="integration-button"></a>
 
-Source: <https://docs.openstudio.no/integration-button/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Multi-application integration chrome; no requirement in process automation screens so far.
 
@@ -211,7 +211,7 @@ Events: `onActionPerformed`.
 
 <a id="modal"></a>
 
-Source: <https://docs.openstudio.no/modal/>. Disposition: `stock`. Cadre equivalent: `system.perspective.openPopup` with a `cadre/surface/card` root.
+Disposition: `stock`. Cadre equivalent: `system.perspective.openPopup` with a `cadre/surface/card` root.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -233,7 +233,7 @@ Events: `onCloseClick`, `onCancelClick`, `onDoneClick`, `onOptionClick`.
 
 <a id="navbar"></a>
 
-Source: <https://docs.openstudio.no/navbar/>. Disposition: `framework`. Cadre equivalent: `Framework/NavMenu` and `Framework/NavItem` in the shared left dock.
+Disposition: `framework`. Cadre equivalent: `Framework/NavMenu` and `Framework/NavItem` in the shared left dock.
 
 Items and footer from `session.custom.nav`; the selected item from `page.props.path`; groups, flyouts and alert badges are not implemented (register COB-021).
 
@@ -266,7 +266,7 @@ Items and footer from `session.custom.nav`; the selected item from `page.props.p
 
 <a id="app"></a>
 
-Source: <https://docs.openstudio.no/app/>. Disposition: `framework`. Cadre equivalent: `Framework/*` views and the shared docks (wiki page 04).
+Disposition: `framework`. Cadre equivalent: `Framework/*` views and the shared docks (wiki page 04).
 
 Overview page of the application frame.
 
@@ -276,7 +276,7 @@ No property table on the page.
 
 <a id="pagination"></a>
 
-Source: <https://docs.openstudio.no/pagination/>. Disposition: `stock`. Cadre equivalent: Table pager of `ia.display.table` and the alarm tables.
+Disposition: `stock`. Cadre equivalent: Table pager of `ia.display.table` and the alarm tables.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -293,7 +293,7 @@ Events: `onActionPerformed`.
 
 <a id="tabbed-card"></a>
 
-Source: <https://docs.openstudio.no/tabbed-card/>. Disposition: `stock`. Cadre equivalent: `ia.container.tab` with `cadre/surface/card`.
+Disposition: `stock`. Cadre equivalent: `ia.container.tab` with `cadre/surface/card`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -315,7 +315,7 @@ Events: `onActionPerformed`.
 
 <a id="topbar"></a>
 
-Source: <https://docs.openstudio.no/topbar/>. Disposition: `framework`. Cadre equivalent: `Framework/TopBar` in the shared top dock.
+Disposition: `framework`. Cadre equivalent: `Framework/TopBar` in the shared top dock.
 
 Menu button, app and page name, most severe alarm with ACK, alarm count, brilliance menu, user menu and clock are implemented; the command button, the apps button and the narrow-screen breakpoints are not (register COB-020).
 

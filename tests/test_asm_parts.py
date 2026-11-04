@@ -644,7 +644,7 @@ class MarkTests(GeneratorCase):
             kids = [c["meta"]["name"] for c in n["Symbol"]["children"]]
             self.assertLess(kids.index("OosVeil"), kids.index("Badge_duty"))       # the badges stay readable over the veil
             self.assertEqual(kind == "Indicator", "AlertFrame" not in n)   # the frame is over the whole box (L5)
-        # the duty badge is OpenBridge's own icon
+        # the duty badge is the package's own icon
         doc = json.loads(self.prj.files["com.inductiveautomation.perspective/views/Automation/Pump/view.json"])
         duty = library.icon("duty")["elements"]
         self.assertEqual(self.nodes(doc)["Badge_duty"]["props"]["elements"], duty)

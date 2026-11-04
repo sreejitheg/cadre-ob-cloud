@@ -9,7 +9,7 @@ keeps the inherited views it loaded, GF-10), waits for the view, then records:
   * a 1600 x 900 screenshot.
 
 Runs under an interpreter with Playwright (ctig's `.venv`, Chromium 1228). Only for our own
-gateway: the vendor demo is observed interactively, never automated (its robots.txt
+gateway: the reference demo is observed interactively, never automated (its robots.txt
 disallows automated access).
 
 Usage:

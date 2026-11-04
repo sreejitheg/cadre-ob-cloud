@@ -55,17 +55,17 @@
     "value": {
       "type": "number",
       "default": 0,
-      "description": "OpenBridge `obc-gauge-generator` property `value`."
+      "description": "Property `value` of the `obc-gauge-generator` element."
     },
     "maxValue": {
       "type": "number",
       "default": 100,
-      "description": "OpenBridge `obc-gauge-generator` property `maxValue`."
+      "description": "Property `maxValue` of the `obc-gauge-generator` element."
     },
     "minValue": {
       "type": "number",
       "default": 0,
-      "description": "OpenBridge `obc-gauge-generator` property `minValue`."
+      "description": "Property `minValue` of the `obc-gauge-generator` element."
     },
     "secondaryValue": {
       "type": [
@@ -93,7 +93,7 @@
         "270-pos-neg"
       ],
       "default": "360",
-      "description": "OpenBridge `obc-gauge-generator` property `sector`."
+      "description": "Property `sector` of the `obc-gauge-generator` element."
     },
     "alignment": {
       "type": "string",
@@ -114,12 +114,12 @@
         "off"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-gauge-generator` property `priority`."
+      "description": "Property `priority` of the `obc-gauge-generator` element."
     },
     "showLabels": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-gauge-generator` property `showLabels`."
+      "description": "Property `showLabels` of the `obc-gauge-generator` element."
     },
     "primaryTickmarkInterval": {
       "type": [
@@ -144,7 +144,7 @@
         "enhanced"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-gauge-generator` property `tickmarkStyle`."
+      "description": "Property `tickmarkStyle` of the `obc-gauge-generator` element."
     },
     "hasReadout": {
       "type": "boolean",
@@ -208,7 +208,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

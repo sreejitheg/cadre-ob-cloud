@@ -122,7 +122,7 @@ Table 4. The functional walk (G10), an operator's actions in a new session.
 | F7 | ACK in the top bar on the faulted P-502 | Its frame stops flashing and stays visible |
 | F8 | Reset fault on P-502 | The frame disappears |
 | F9 | Choose Night in the brilliance menu | The session switches to the night palette |
-| F10 | Module rendering: open P-502's Alarms tab and click the action cell of its fault's row | The tab is display only (COBD-025): the fault is listed with OpenBridge's no-acknowledgement icon and no ACK; after the click the alarm is still unacknowledged and the frame still flashes |
+| F10 | Module rendering: open P-502's Alarms tab and click the action cell of its fault's row | The tab is display only (COBD-025): the fault is listed with the package's no-acknowledgement icon and no ACK; after the click the alarm is still unacknowledged and the frame still flashes |
 | F11 | Module rendering: ACK one alarm in the top bar's alarm menu, then click P-502's row | One alarm fewer unacknowledged; P-502's faceplate opens |
 | F12 | P-301 to Manual and Stop; close XV-301 and XV-302 from their faceplates; press Start on P-301. Then, after a restore: ACK in the top bar; P-502 to Manual; Reset fault; Start; the Interlocks tab's Reset; Start | "Start not permitted: 1 condition not met", "Interlocks (1)" with the row not met (live Closed, required Open), the interlock badge on P-301; Start refused, P-301 stays off. P-502: "Interlocked: reset required" once its fault clears, "Interlocks (1)" with the row "Latched", Start refused; after Reset the tab reads "Interlocks" and Start runs the pump |
 | F13 | Click AIT-301's readout; type 0.05 in its high limit; acknowledge the alarm (stock rendering: in the faceplate's Alarms tab; module rendering: ACK on its row in the top bar's alarm menu, then the row); open the Trend tab; restore the plant | The instrument faceplate opens with "Filtered water turbidity" and the high limit; the Alarms label counts one alarm more; the alarm is acknowledged; the trend draws a line of history, with at most five time labels in 24 hour form and the limit dashed; after the restore the label is back to its count before, so no cleared, unacknowledged alarm is left |
@@ -134,7 +134,7 @@ Table 4. The functional walk (G10), an operator's actions in a new session.
 | F19 | Open the trend page; press 8 h; click the first card's title | 17 cards, each drawing its line with 24 hour time labels; the range widens; the device's faceplate opens |
 
 The same G8 and G11 gates pass on the two other children of the parent: the pump station sample
-(1 route, 5 of 5 devices) and the rebuilt vendor demo (2 routes, 31 of 31 devices).
+(1 route, 5 of 5 devices) and the rebuilt reference demo (2 routes, 31 of 31 devices).
 
 ## 6. Defects Found and Fixed
 

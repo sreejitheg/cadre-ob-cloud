@@ -45,7 +45,7 @@ def read_login(path: Path = LOGIN_FILE) -> dict | None:
 
 
 MODULE_PUMP = r"""(tag) => {
-  // a symbol of the Cadre OpenBridge module (pump, motor, fan, valves: the elements that state `tag`) whose
+  // a symbol of the Cadre HMI Components module (pump, motor, fan, valves: the elements that state `tag`) whose
   // (shadow DOM) text shows the tag; a valve states `open` where the others state `on`
   for (const m of document.querySelectorAll('[data-component^="cadre.ob."]')) {
     if (m.closest('[class*="docked-view"]')) continue;
@@ -69,7 +69,7 @@ def module_pump(page, tag):
 
 def symbol(page, tag):
     """The embedded symbol view whose readout shows `tag`, and the centre of its 48 px symbol;
-    for a pump of the Cadre OpenBridge module, (None, centre of its symbol box)."""
+    for a pump of the Cadre HMI Components module, (None, centre of its symbol box)."""
     m = module_pump(page, tag)
     if m:
         return None, (m["x"], m["y"])
@@ -104,7 +104,7 @@ def speed_shown(page, tag, value):
 
 
 VALUE_AT = r"""(find) => {
-  // what a readout or an instrument field of the Cadre OpenBridge module prints, found by its identifier (`idTag`),
+  // what a readout or an instrument field of the Cadre HMI Components module prints, found by its identifier (`idTag`),
   // its caption (the element's `tag` and `unit`), or the text it prints: the value, its unit, the identifier
   const printed = (root) => { let t = '';      // in document order, down the shadow roots, no style element
     for (const n of root.childNodes) {
@@ -286,7 +286,7 @@ class Confirmed:
 
 
 LIST_INFO = r"""(sel) => {
-  // the alerts an OpenBridge alarm list of the module shows: read from the element (shadow DOM)
+  // the alerts a package alarm list of the module shows: read from the element (shadow DOM)
   const el = [...document.querySelectorAll(sel)].find(e => e.getBoundingClientRect().width > 0);
   if (!el) return null;
   return (el.alerts || []).map(a => ({id: a.id, source: a.source, text: a.text, type: a.type,
@@ -309,7 +309,7 @@ def click_text_in(page, host, text):
 
 ROW_ACTION = r"""([host, match]) => {
   // the row of a module alarm list (shadow DOM) whose alert's source or text contains `match`, and
-  // its action cell (the last cell): an ACK button, OpenBridge's no-acknowledgement icon, or nothing
+  // its action cell (the last cell): an ACK button, the package's no-acknowledgement icon, or nothing
   const el = [...document.querySelectorAll(host)].find(e => e.getBoundingClientRect().width > 0);
   if (!el) return null;
   const a = (el.alerts || []).find(x => String(x.source).includes(match) || String(x.text).includes(match));
@@ -367,7 +367,7 @@ PANEL = "obc-alert-list-page-small"
 # ---------------------------------------------------------------------------------------
 # The new frames (`screen.py --frame ob` and `--frame obasm`, tranche T2 batches F6a and F6b, wiki 04 sections 10 and 11)
 # draw the head with the module's top bar (`cadre.ob.topbar`, `obframe.bar_node`). Its buttons, bell and clock are the
-# elements of the OpenBridge top bar, not Perspective children, so the positional selectors of the openbridge and asm
+# elements of the package top bar, not Perspective children, so the positional selectors of the stock and stock ASM
 # frames (`BELL`, the third coordinate container, the first of the top dock, the SVG icons by position) find nothing in the
 # head. The two frames are told apart from the older ones by the structure of the top dock, which is what the page shows
 # (`frame_variant`): a module top bar in it. Every selector above and below stays as it was for the older frames; the
@@ -397,12 +397,12 @@ BELL_OB = f"{TOP_BAR_HOST} obc-alert-button"
 BAR_LABELS = {"menu": "Menu", "dimming": "Dimming", "user": "User", "apps": "Apps"}   # `aria-label` of the bar's buttons
 PANEL_OB = "obc-alert-menu"
 PIVOT_HOST, TABROW_HOST = '[data-component="cadre.ob.pivotitemgroup"]', '[data-component="cadre.ob.tabrow"]'
-FRAME_OB, FRAME_OBASM, FRAME_DEFAULT = "ob", "obasm", "default"   # `default`: the openbridge and asm frames
+FRAME_OB, FRAME_OBASM, FRAME_DEFAULT = "ob", "obasm", "default"   # `default`: the stock and stock ASM frames
 PALETTES = ("Night", "Dusk", "Day", "Bright")   # the order the brilliance menu steps through
 
 FRAME_PROBE = r"""() => {
   // `ob` or `obasm` once the module top bar stands in the top dock; `default` as soon as the dock holds a coordinate container
-  // (the openbridge frame's buttons are, `by_container` of `_open_user_menu`) and no module bar; else null (not drawn yet: the
+  // (the stock frame's buttons are, `by_container` of `_open_user_menu`) and no module bar; else null (not drawn yet: the
   // module's elements load after the Perspective components, so a dock with other components may still get its bar)
   const top = document.querySelector('.docked-view-top');
   if (!top) return null;
@@ -420,7 +420,7 @@ def _project_of(page) -> str:
 def frame_variant(page, tries: int = 12) -> str:
     """Which frame the page shows, from the structure of its top dock (design section 4.3 item 4): `obasm` where the top dock
     holds the module top bar and the module pivot group or tab row (the page header of `--frame obasm`), `ob` where it holds the
-    module top bar alone (`--frame ob`), else `default` (the openbridge and asm frames, whose selectors are the older ones).
+    module top bar alone (`--frame ob`), else `default` (the stock and stock ASM frames, whose selectors are the older ones).
     A frame is a property of the project, so the answer is kept on the page for its project: a dock that shows neither the
     module bar nor a coordinate container is waited for (about four seconds, the module's elements load late) once, and
     taken for an older frame after that."""
@@ -449,7 +449,7 @@ def is_module_frame(page) -> bool:
 
 
 def bell(page):
-    """The top bar's alarm button: the `BELL` path in the openbridge and asm frames, the module top bar's own
+    """The top bar's alarm button: the `BELL` path in the stock and stock ASM frames, the module top bar's own
     `obc-alert-button` (`BELL_OB`) in the new frames."""
     return dock(page, "top").locator(BELL_OB if is_module_frame(page) else BELL).first
 
@@ -462,7 +462,7 @@ def bar_button(page, name: str):
 
 def menu_button(page):
     """The top bar's menu button, which opens the navigation dock: the first coordinate container of the top dock in the
-    openbridge and asm frames, the module bar's Menu button in the new frames."""
+    stock and stock ASM frames, the module bar's Menu button in the new frames."""
     if is_module_frame(page):
         return bar_button(page, "menu")
     return dock(page, "top").locator('[data-component="ia.container.coord"]').first
@@ -759,7 +759,7 @@ SIGN_IN_WHY = ""   # why the last `sign_in` did not sign in, in words ("" after 
 
 def _open_user_menu(page, caption: str, press: bool = True) -> bool:
     """Open the top bar's user menu and find its entry `caption` (Sign in, Sign out); with `press`, press it.
-    The openbridge frame's user button is the third coordinate container of the top dock; the asm frame's is
+    The stock frame's user button is the third coordinate container of the top dock; the asm frame's is
     the last of the top bar's three menu icons (COB-205, as `glass_gates.gate_menus`: right[2]). The entry is
     looked for in the opened popup alone (`.ia_popup`, GF-70), a text of the page behind it never counts, and
     the icon fallback is tried only where the top bar shows its three menu icons: otherwise nothing is clicked
@@ -994,7 +994,7 @@ def ack_alarm(page, match: str) -> bool:
 #     label it shows ("On", "P-1"; "12.5 L/s", "FT-1"; "PIC-1", "▸ 50.0", "50.0", "kPa", "Out 50 %").
 #     A 16 px icon that a symbol does not show is either hidden (`meta.visible`, a coordinate child) or
 #     has no size (`position.display`, a flex child: the controller block's control badge).
-#   * A component of the Cadre OpenBridge module holds one custom element (`obc-pump`,
+#   * A component of the Cadre HMI Components module holds one custom element (`obc-pump`,
 #     `obc-automation-tank`) whose `tag` property is the identifier; a pump's carries `on` and
 #     `speedInPercent`, a tank's `value` and `max`.
 #   * The navigation dock sits at x 0 while open and at minus its width while closed; Escape does not
@@ -1054,7 +1054,7 @@ def close_faceplate(page) -> None:
 
 SYMBOL_AT = r"""(find) => {
   // The symbol that shows the line `find` (an identifier, or a field's label and unit): where to click
-  // it and what it shows. A component of the Cadre OpenBridge module is found by its element: a readout by
+  // it and what it shows. A component of the Cadre HMI Components module is found by its element: a readout by
   // the `idTag` it draws beneath its value, an instrument field by its caption (the element's `tag` and `unit`),
   // every other component by its `tag`. `text` is what the element prints, down its shadow roots.
   const printed = (root) => { let t = '';      // in document order, down the shadow roots, no style element
@@ -1346,7 +1346,7 @@ def frame_alarm_count(page) -> int | None:
 
 def alarm_menu_rows(page, module: bool) -> list[str] | None:
     """The rows the top bar's alarm menu lists, the frame's own list: under stock rendering the rows
-    of its alarm status table, under module rendering the alerts of OpenBridge's small alert page
+    of its alarm status table, under module rendering the alerts of the package's small alert page
     (source and text). The menu is closed again with Escape, which leaves the faceplate dock open
     (measured 2026-10-11 under both renderings). None when the menu rendered no list."""
     if module:

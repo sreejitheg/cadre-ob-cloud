@@ -1,12 +1,12 @@
-# Catalogue: Automation - OpenBridge
+# Catalogue: Automation
 
-Interface facts for the 29 components of the vendor family `Automation - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 29 components of the reference family `Automation`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. Analog Valve
 
 <a id="analog-valve"></a>
 
-Source: <https://docs.openstudio.no/analog-valve/>. Disposition: `implemented`. Cadre equivalent: `Automation/AnalogValve` (`open`, `value`).
+Disposition: `implemented`. Cadre equivalent: `Automation/AnalogValve` (`open`, `value`).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -20,7 +20,7 @@ Source: <https://docs.openstudio.no/analog-valve/>. Disposition: `implemented`. 
 
 <a id="automation-badge"></a>
 
-Source: <https://docs.openstudio.no/automation-badge/>. Disposition: `partial`. Cadre equivalent: Corner badges inside the symbols.
+Disposition: `partial`. Cadre equivalent: Corner badges inside the symbols.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -33,7 +33,7 @@ Source: <https://docs.openstudio.no/automation-badge/>. Disposition: `partial`. 
 
 <a id="automation-readout"></a>
 
-Source: <https://docs.openstudio.no/automation-readout/>. Disposition: `implemented`. Cadre equivalent: `Automation/Readout`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Readout`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -49,9 +49,9 @@ Source: <https://docs.openstudio.no/automation-readout/>. Disposition: `implemen
 
 <a id="automation-tank"></a>
 
-Source: <https://docs.openstudio.no/automation-tank/>. Disposition: `implemented`. Cadre equivalent: `Automation/Tank` (level, trend, chart, compact, static).
+Disposition: `implemented`. Cadre equivalent: `Automation/Tank` (level, trend, chart, compact, static).
 
-The chart is a line sparkline, not the vendor's filled area chart (register COB-031).
+The chart is a line sparkline, not the reference filled area chart (register COB-031).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -97,7 +97,7 @@ The chart is a line sparkline, not the vendor's filled area chart (register COB-
 | Alert Frame / Properties | `showAlertCategoryIcon` | value | true |  |
 | Alert Frame / Properties | `showAlertIcon` | value | false | large-side-flip, bottom-flip, top-flip |
 | Alert Frame / Properties | `alertIcon` | object |  |  |
-| Alert Frame / Properties | `alertIcon.path` | value | openbridge/placeholder |  |
+| Alert Frame / Properties | `alertIcon.path` | value | placeholder |  |
 | Alert Frame / Properties | `alertLabel` | value | empty |  |
 | Alert Frame / Properties | `alertTimer` | value | empty |  |
 | Properties | `style` | object |  |  |
@@ -106,7 +106,7 @@ The chart is a line sparkline, not the vendor's filled area chart (register COB-
 
 <a id="bipolar-transistor"></a>
 
-Source: <https://docs.openstudio.no/bipolar-transistor/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -121,7 +121,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="capacitor"></a>
 
-Source: <https://docs.openstudio.no/capacitor/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -136,7 +136,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="automation-button"></a>
 
-Source: <https://docs.openstudio.no/automation-button/>. Disposition: `implemented`. Cadre equivalent: Common contract of every `Automation/*` symbol view.
+Disposition: `implemented`. Cadre equivalent: Common contract of every `Automation/*` symbol view.
 
 Readout (status row and tag), readout side, activated, alert frame (status, mode), progress, and the four corner badges.
 
@@ -159,7 +159,7 @@ Readout (status row and tag), readout side, activated, alert frame (status, mode
 | Alert Frame / Properties | `showAlertCategoryIcon` | value | true |  |
 | Alert Frame / Properties | `showAlertIcon` | value | false | large-side-flip, bottom-flip, top-flip |
 | Alert Frame / Properties | `alertIcon` | object |  |  |
-| Alert Frame / Properties | `alertIcon.path` | value | openbridge/placeholder |  |
+| Alert Frame / Properties | `alertIcon.path` | value | placeholder |  |
 | Alert Frame / Properties | `alertLabel` | value | empty |  |
 | Alert Frame / Properties | `alertTimer` | value | empty |  |
 | Progress / Properties | `progress` | value | false |  |
@@ -175,7 +175,7 @@ Readout (status row and tag), readout side, activated, alert frame (status, mode
 
 <a id="converter"></a>
 
-Source: <https://docs.openstudio.no/converter/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -190,7 +190,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="damper"></a>
 
-Source: <https://docs.openstudio.no/damper/>. Disposition: `implemented`. Cadre equivalent: `Automation/Damper`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Damper`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -202,7 +202,7 @@ Source: <https://docs.openstudio.no/damper/>. Disposition: `implemented`. Cadre 
 
 <a id="digital-valve"></a>
 
-Source: <https://docs.openstudio.no/digital-valve/>. Disposition: `implemented`. Cadre equivalent: `Automation/Valve` (`open`).
+Disposition: `implemented`. Cadre equivalent: `Automation/Valve` (`open`).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -214,7 +214,7 @@ Source: <https://docs.openstudio.no/digital-valve/>. Disposition: `implemented`.
 
 <a id="diodes"></a>
 
-Source: <https://docs.openstudio.no/diodes/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -229,7 +229,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="fan"></a>
 
-Source: <https://docs.openstudio.no/fan/>. Disposition: `implemented`. Cadre equivalent: `Automation/Fan`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Fan`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -247,7 +247,7 @@ Source: <https://docs.openstudio.no/fan/>. Disposition: `implemented`. Cadre equ
 
 <a id="filter"></a>
 
-Source: <https://docs.openstudio.no/filter/>. Disposition: `implemented`. Cadre equivalent: `Automation/Filter`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Filter`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -260,7 +260,7 @@ Source: <https://docs.openstudio.no/filter/>. Disposition: `implemented`. Cadre 
 
 <a id="gauge-valve"></a>
 
-Source: <https://docs.openstudio.no/gauge-valve/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Each needs its own layout beyond a two-state icon.
 
@@ -293,14 +293,14 @@ Each needs its own layout beyond a two-state icon.
 | Setpoint / Properties | `animateSetpoint` | value | false |  |
 | Icon / Properties | `hasIcon` | value | false |  |
 | Icon / Properties | `icon` | object |  |  |
-| Icon / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon / Properties | `icon.path` | value | placeholder |  |
 | Properties | `style` | object |  |  |
 
 ## 15. Ground
 
 <a id="ground"></a>
 
-Source: <https://docs.openstudio.no/ground/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -315,7 +315,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="heat-pump"></a>
 
-Source: <https://docs.openstudio.no/heat-pump/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -342,7 +342,7 @@ Electrical single-line symbols; add when a screen needs them.
 | Alert Frame / Properties | `showAlertIcon` | value | false |  |
 | Alert Frame / Properties | `hasAlertIcon` | value | false |  |
 | Alert Frame / Properties | `alertIcon` | object |  |  |
-| Alert Frame / Properties | `alertIcon.path` | value | openbridge/placeholder |  |
+| Alert Frame / Properties | `alertIcon.path` | value | placeholder |  |
 | Alert Frame / Properties | `alertLabel` | value | empty |  |
 | Alert Frame / Properties | `alertTimer` | value | empty |  |
 | Properties | `style` | object |  |  |
@@ -351,7 +351,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="hydraulic-check-valve"></a>
 
-Source: <https://docs.openstudio.no/hydraulic-check-valve/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Each needs its own layout beyond a two-state icon.
 
@@ -365,7 +365,7 @@ Each needs its own layout beyond a two-state icon.
 
 <a id="logic"></a>
 
-Source: <https://docs.openstudio.no/logic/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -380,7 +380,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="mosfet"></a>
 
-Source: <https://docs.openstudio.no/mosfet/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -395,7 +395,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="motor"></a>
 
-Source: <https://docs.openstudio.no/motor/>. Disposition: `implemented`. Cadre equivalent: `Automation/Motor`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Motor`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -414,7 +414,7 @@ Source: <https://docs.openstudio.no/motor/>. Disposition: `implemented`. Cadre e
 
 <a id="pump"></a>
 
-Source: <https://docs.openstudio.no/pump/>. Disposition: `implemented`. Cadre equivalent: `Automation/Pump` (`on`, `speed`, `variant` regular or double).
+Disposition: `implemented`. Cadre equivalent: `Automation/Pump` (`on`, `speed`, `variant` regular or double).
 
 `componentSize` medium (52 px holder) is not implemented (register COB-030).
 
@@ -435,7 +435,7 @@ Source: <https://docs.openstudio.no/pump/>. Disposition: `implemented`. Cadre eq
 
 <a id="resistor"></a>
 
-Source: <https://docs.openstudio.no/resistor/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -450,7 +450,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="router"></a>
 
-Source: <https://docs.openstudio.no/router/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -465,7 +465,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="source"></a>
 
-Source: <https://docs.openstudio.no/source/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -480,7 +480,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="switch"></a>
 
-Source: <https://docs.openstudio.no/switch/>. Disposition: `implemented`. Cadre equivalent: `Automation/Switch`.
+Disposition: `implemented`. Cadre equivalent: `Automation/Switch`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -493,7 +493,7 @@ Source: <https://docs.openstudio.no/switch/>. Disposition: `implemented`. Cadre 
 
 <a id="transformer"></a>
 
-Source: <https://docs.openstudio.no/transformer/>. Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists.
+Disposition: `factory`. Cadre equivalent: One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists.
 
 Electrical single-line symbols; add when a screen needs them.
 
@@ -508,7 +508,7 @@ Electrical single-line symbols; add when a screen needs them.
 
 <a id="transmitter"></a>
 
-Source: <https://docs.openstudio.no/transmitter/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Each needs its own layout beyond a two-state icon.
 
@@ -524,7 +524,7 @@ Each needs its own layout beyond a two-state icon.
 | Value / Properties | `hasDegree` | value | false |  |
 | Value / Properties | `hasIcon` | value | false |  |
 | Value / Properties | `icon` | object |  |  |
-| Value / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Value / Properties | `icon.path` | value | placeholder |  |
 | Tags / Properties | `idTag` | value |  |  |
 | Tags / Properties | `tag` | value |  |  |
 | Advice and Setpoint / Properties | `hasAdvice` | value | false |  |
@@ -539,7 +539,7 @@ Each needs its own layout beyond a two-state icon.
 | Alert / Properties | `showAlertCategoryIcon` | value | true |  |
 | Alert / Properties | `showAlertIcon` | value | false | large-side-flip, bottom-flip, top-flip |
 | Alert / Properties | `alertIcon` | object |  |  |
-| Alert / Properties | `alertIcon.path` | value | openbridge/placeholder |  |
+| Alert / Properties | `alertIcon.path` | value | placeholder |  |
 | Alert / Properties | `alertLabel` | value | empty |  |
 | Alert / Properties | `alertTimer` | value | empty |  |
 | Orientation / Properties | `orientation` | value | bottom | top, right, bottom, left |
@@ -553,7 +553,7 @@ Events: `onActionPerformed`.
 
 <a id="transmitter-stack"></a>
 
-Source: <https://docs.openstudio.no/transmitter-stack/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 Each needs its own layout beyond a two-state icon.
 
@@ -569,7 +569,7 @@ Each needs its own layout beyond a two-state icon.
 | Values / Properties | `values[].hasDegree` | value | false |  |
 | Values / Properties | `values[].hasIcon` | value | false |  |
 | Values / Properties | `values[].icon` | object |  |  |
-| Values / Properties | `values[].icon.path` | value | openbridge/placeholder |  |
+| Values / Properties | `values[].icon.path` | value | placeholder |  |
 | Orientation / Properties | `orientation` | value | bottom | top, right, bottom, left |
 | Properties | `componentSize` | value | regular | regular, medium, large |
 | Properties | `style` | object |  |  |
@@ -580,7 +580,7 @@ Events: `onValueClick`.
 
 <a id="valve"></a>
 
-Source: <https://docs.openstudio.no/valve/>. Disposition: `implemented`. Cadre equivalent: `Automation/Valve` (`open`).
+Disposition: `implemented`. Cadre equivalent: `Automation/Valve` (`open`).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|

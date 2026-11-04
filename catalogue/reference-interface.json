@@ -1,6 +1,6 @@
 {
  "meta": {
-  "source": "https://docs.openstudio.no (sitemap, 137 pages, read 2026-10-07)",
+  "source": "Reference component interface facts (137 pages)",
   "note": "Interface facts only: names, property types, parsed defaults and enumerations. Defaults and enumerations are parsed from prose by heuristic and are marked so.",
   "parsed": {
    "default": "heuristic",
@@ -12,15 +12,13 @@
    "slug": "getting-started",
    "title": "Getting Started",
    "group": "Getting Started",
-   "url": "https://docs.openstudio.no/getting-started/",
    "properties": [],
    "events": []
   },
   "index": {
    "slug": "index",
-   "title": "OpenBridge for Ignition",
+   "title": "Overview",
    "group": "Getting Started",
-   "url": "https://docs.openstudio.no/",
    "properties": [],
    "events": []
   },
@@ -28,7 +26,6 @@
    "slug": "connector-diagram",
    "title": "Connector Diagram",
    "group": "Connector Diagram",
-   "url": "https://docs.openstudio.no/connector-diagram/",
    "properties": [
     {
      "section": "Finding a Pipe and Changing Its Properties / Pipe Properties",
@@ -260,16 +257,14 @@
   "app": {
    "slug": "app",
    "title": "Overview",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/app/",
+   "group": "App",
    "properties": [],
    "events": []
   },
   "app-bar": {
    "slug": "app-bar",
    "title": "App Bar",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/app-bar/",
+   "group": "App",
    "properties": [
     {
      "section": "Items",
@@ -420,8 +415,7 @@
   "badge": {
    "slug": "badge",
    "title": "Badge",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/badge/",
+   "group": "App",
    "properties": [
     {
      "section": "Type / Properties",
@@ -498,8 +492,7 @@
   "card": {
    "slug": "card",
    "title": "Card",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/card/",
+   "group": "App",
    "properties": [
     {
      "section": "Title / Properties",
@@ -622,8 +615,7 @@
   "fleet-button": {
    "slug": "fleet-button",
    "title": "Fleet Button",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/fleet-button/",
+   "group": "App",
    "properties": [
     {
      "section": "Name and Status / Properties",
@@ -738,8 +730,7 @@
   "integration-bar": {
    "slug": "integration-bar",
    "title": "Integration Bar",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/integration-bar/",
+   "group": "App",
    "properties": [
     {
      "section": "Vessel Selector / Fleet",
@@ -1129,8 +1120,7 @@
   "integration-button": {
    "slug": "integration-button",
    "title": "Integration Button",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/integration-button/",
+   "group": "App",
    "properties": [
     {
      "section": "Type / Properties",
@@ -1277,8 +1267,7 @@
   "modal": {
    "slug": "modal",
    "title": "Modal",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/modal/",
+   "group": "App",
    "properties": [
     {
      "section": "Size / Properties",
@@ -1372,8 +1361,7 @@
   "navbar": {
    "slug": "navbar",
    "title": "Navigation Bar",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/navbar/",
+   "group": "App",
    "properties": [
     {
      "section": "Items",
@@ -1544,8 +1532,7 @@
   "pagination": {
    "slug": "pagination",
    "title": "Pagination",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/pagination/",
+   "group": "App",
    "properties": [
     {
      "section": "Pages / Properties",
@@ -1601,8 +1588,7 @@
   "tabbed-card": {
    "slug": "tabbed-card",
    "title": "Tabbed Card",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/tabbed-card/",
+   "group": "App",
    "properties": [
     {
      "section": "Tabs",
@@ -1689,8 +1675,7 @@
   "topbar": {
    "slug": "topbar",
    "title": "Top Bar",
-   "group": "App - OpenBridge",
-   "url": "https://docs.openstudio.no/topbar/",
+   "group": "App",
    "properties": [
     {
      "section": "Navigation Menu / Properties",
@@ -2121,8 +2106,7 @@
   "app-button": {
    "slug": "app-button",
    "title": "App Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/app-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Icon and Label / Properties",
@@ -2135,7 +2119,7 @@
      "section": "Icon and Label / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2184,8 +2168,7 @@
   "breadcrumb": {
    "slug": "breadcrumb",
    "title": "Breadcrumb",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/breadcrumb/",
+   "group": "Input",
    "properties": [
     {
      "section": "Items",
@@ -2237,8 +2220,7 @@
   "button": {
    "slug": "button",
    "title": "Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Label and Icons / Properties",
@@ -2258,7 +2240,7 @@
      "section": "Label and Icons / Properties",
      "name": "leadingIcon",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2272,7 +2254,7 @@
      "section": "Label and Icons / Properties",
      "name": "trailingIcon",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2301,8 +2283,7 @@
   "chat-message": {
    "slug": "chat-message",
    "title": "Chat Message",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/chat-message/",
+   "group": "Input",
    "properties": [
     {
      "section": "Message / Properties",
@@ -2378,8 +2359,7 @@
   "checkbox": {
    "slug": "checkbox",
    "title": "Checkbox",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/checkbox/",
+   "group": "Input",
    "properties": [
     {
      "section": "State / Properties",
@@ -2417,8 +2397,7 @@
   "checkbox-list": {
    "slug": "checkbox-list",
    "title": "Checkbox List",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/checkbox-list/",
+   "group": "Input",
    "properties": [
     {
      "section": "Rows",
@@ -2522,8 +2501,7 @@
   "double-slider": {
    "slug": "double-slider",
    "title": "Double Slider",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/double-slider/",
+   "group": "Input",
    "properties": [
     {
      "section": "Low, High and Range / Properties",
@@ -2621,8 +2599,7 @@
   "dropdown-button": {
    "slug": "dropdown-button",
    "title": "Dropdown Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/dropdown-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Options / Properties",
@@ -2681,8 +2658,7 @@
   "filter-chip": {
    "slug": "filter-chip",
    "title": "Filter Chip",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/filter-chip/",
+   "group": "Input",
    "properties": [
     {
      "section": "State / Properties",
@@ -2716,7 +2692,7 @@
      "section": "Icon / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2741,8 +2717,7 @@
   "floating-item": {
    "slug": "floating-item",
    "title": "Floating Item",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/floating-item/",
+   "group": "Input",
    "properties": [
     {
      "section": "Text / Properties",
@@ -2782,14 +2757,14 @@
      "section": "Type and Icons / Properties",
      "name": "primaryIcon",
      "type": "object",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
      "section": "Type and Icons / Properties",
      "name": "secondaryIcon",
      "type": "object",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2855,8 +2830,7 @@
   "icon": {
    "slug": "icon",
    "title": "Icon",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/icon/",
+   "group": "Input",
    "properties": [
     {
      "section": "Choosing an Icon / Properties",
@@ -2869,7 +2843,7 @@
      "section": "Choosing an Icon / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2892,8 +2866,7 @@
   "icon-button": {
    "slug": "icon-button",
    "title": "Icon Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/icon-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Icon and Label / Properties",
@@ -2906,7 +2879,7 @@
      "section": "Icon and Label / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -2978,8 +2951,7 @@
   "icon-check-button": {
    "slug": "icon-check-button",
    "title": "Icon Check Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/icon-check-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Checked / Properties",
@@ -2999,7 +2971,7 @@
      "section": "Icon and Label / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -3031,8 +3003,7 @@
   "input": {
    "slug": "input",
    "title": "Common Features",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/input/",
+   "group": "Input",
    "properties": [
     {
      "section": "Disabled",
@@ -3056,8 +3027,7 @@
   "message-menu-item": {
    "slug": "message-menu-item",
    "title": "Message Menu Item",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/message-menu-item/",
+   "group": "Input",
    "properties": [
     {
      "section": "Text / Properties",
@@ -3143,7 +3113,7 @@
      "section": "Icons / Properties",
      "name": "primaryIcon",
      "type": "object",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -3157,7 +3127,7 @@
      "section": "Icons / Properties",
      "name": "secondaryIcon",
      "type": "object",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -3171,7 +3141,7 @@
      "section": "Icons / Properties",
      "name": "trailingIcon",
      "type": "object",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -3227,8 +3197,7 @@
   "number-input-field": {
    "slug": "number-input-field",
    "title": "Number Input Field",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/number-input-field/",
+   "group": "Input",
    "properties": [
     {
      "section": "Value / Properties",
@@ -3435,8 +3404,7 @@
   "pivot-item-group": {
    "slug": "pivot-item-group",
    "title": "Pivot Item Group",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/pivot-item-group/",
+   "group": "Input",
    "properties": [
     {
      "section": "Items",
@@ -3512,8 +3480,7 @@
   "progress-bar": {
    "slug": "progress-bar",
    "title": "Progress Bar",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/progress-bar/",
+   "group": "Input",
    "properties": [
     {
      "section": "Type / Properties",
@@ -3601,8 +3568,7 @@
   "radio-button-group": {
    "slug": "radio-button-group",
    "title": "Radio Button Group",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/radio-button-group/",
+   "group": "Input",
    "properties": [
     {
      "section": "Options",
@@ -3654,8 +3620,7 @@
   "sequence-loading-spinner": {
    "slug": "sequence-loading-spinner",
    "title": "Sequence Loading Spinner",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/sequence-loading-spinner/",
+   "group": "Input",
    "properties": [
     {
      "section": "Type / Properties",
@@ -3708,8 +3673,7 @@
   "slide-button": {
    "slug": "slide-button",
    "title": "Slide Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/slide-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Sliding / Properties",
@@ -3743,7 +3707,7 @@
      "section": "Label and Icon / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -3761,8 +3725,7 @@
   "slider": {
    "slug": "slider",
    "title": "Slider",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/slider/",
+   "group": "Input",
    "properties": [
     {
      "section": "Value and Range / Properties",
@@ -3860,8 +3823,7 @@
   "status-indicator": {
    "slug": "status-indicator",
    "title": "Status Indicator",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/status-indicator/",
+   "group": "Input",
    "properties": [
     {
      "section": "Status / Properties",
@@ -3890,8 +3852,7 @@
   "stepper-box": {
    "slug": "stepper-box",
    "title": "Stepper Box",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/stepper-box/",
+   "group": "Input",
    "properties": [
     {
      "section": "Value and Steps / Properties",
@@ -3977,8 +3938,7 @@
   "tab-row": {
    "slug": "tab-row",
    "title": "Tab Row",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/tab-row/",
+   "group": "Input",
    "properties": [
     {
      "section": "Tabs",
@@ -4133,8 +4093,7 @@
   "tag": {
    "slug": "tag",
    "title": "Tag",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/tag/",
+   "group": "Input",
    "properties": [
     {
      "section": "Label / Properties",
@@ -4189,7 +4148,7 @@
      "section": "Icon / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -4205,8 +4164,7 @@
   "text-input-field": {
    "slug": "text-input-field",
    "title": "Text Input Field",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/text-input-field/",
+   "group": "Input",
    "properties": [
     {
      "section": "Value / Properties",
@@ -4390,8 +4348,7 @@
   "textarea-field": {
    "slug": "textarea-field",
    "title": "Textarea Field",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/textarea-field/",
+   "group": "Input",
    "properties": [
     {
      "section": "Value / Properties",
@@ -4500,8 +4457,7 @@
   "toggle-button-horizontal": {
    "slug": "toggle-button-horizontal",
    "title": "Toggle Button Horizontal",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/toggle-button-horizontal/",
+   "group": "Input",
    "properties": [
     {
      "section": "Options",
@@ -4597,8 +4553,7 @@
   "toggle-button-vertical": {
    "slug": "toggle-button-vertical",
    "title": "Toggle Button Vertical",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/toggle-button-vertical/",
+   "group": "Input",
    "properties": [
     {
      "section": "Options",
@@ -4692,8 +4647,7 @@
   "toggle-switch": {
    "slug": "toggle-switch",
    "title": "Toggle Switch",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/toggle-switch/",
+   "group": "Input",
    "properties": [
     {
      "section": "State / Properties",
@@ -4717,8 +4671,7 @@
   "user-button": {
    "slug": "user-button",
    "title": "User Button",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/user-button/",
+   "group": "Input",
    "properties": [
     {
      "section": "Icon or Initials / Properties",
@@ -4748,7 +4701,7 @@
      "section": "Icon or Initials / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/user",
+     "default": "user",
      "enum": null
     },
     {
@@ -4784,8 +4737,7 @@
   "user-menu": {
    "slug": "user-menu",
    "title": "User Menu",
-   "group": "Input - OpenBridge",
-   "url": "https://docs.openstudio.no/user-menu/",
+   "group": "Input",
    "properties": [
     {
      "section": "Type / Properties",
@@ -4939,8 +4891,7 @@
   "analog-valve": {
    "slug": "analog-valve",
    "title": "Analog Valve",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/analog-valve/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -4989,8 +4940,7 @@
   "automation-badge": {
    "slug": "automation-badge",
    "title": "Automation Badge",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/automation-badge/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Type and Mode / Properties",
@@ -5034,8 +4984,7 @@
   "automation-button": {
    "slug": "automation-button",
    "title": "Common Features",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/automation-button/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Readout / Properties",
@@ -5198,7 +5147,7 @@
      "section": "Alert Frame / Properties",
      "name": "alertIcon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -5301,8 +5250,7 @@
   "automation-readout": {
    "slug": "automation-readout",
    "title": "Automation Readout",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/automation-readout/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Value and Unit / Properties",
@@ -5373,8 +5321,7 @@
   "automation-tank": {
    "slug": "automation-tank",
    "title": "Automation Tank",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/automation-tank/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Level / Properties",
@@ -5722,7 +5669,7 @@
      "section": "Alert Frame / Properties",
      "name": "alertIcon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -5752,8 +5699,7 @@
   "bipolar-transistor": {
    "slug": "bipolar-transistor",
    "title": "Bipolar Transistor",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/bipolar-transistor/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5793,8 +5739,7 @@
   "capacitor": {
    "slug": "capacitor",
    "title": "Capacitor",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/capacitor/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5834,8 +5779,7 @@
   "converter": {
    "slug": "converter",
    "title": "Converter",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/converter/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5875,8 +5819,7 @@
   "damper": {
    "slug": "damper",
    "title": "Damper",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/damper/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5909,8 +5852,7 @@
   "digital-valve": {
    "slug": "digital-valve",
    "title": "Digital Valve",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/digital-valve/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5939,8 +5881,7 @@
   "diodes": {
    "slug": "diodes",
    "title": "Diodes",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/diodes/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -5980,8 +5921,7 @@
   "fan": {
    "slug": "fan",
    "title": "Fan",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/fan/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6072,8 +6012,7 @@
   "filter": {
    "slug": "filter",
    "title": "Filter",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/filter/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6113,8 +6052,7 @@
   "gauge-valve": {
    "slug": "gauge-valve",
    "title": "Gauge Valve",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-valve/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Value / Properties",
@@ -6329,7 +6267,7 @@
      "section": "Icon / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -6345,8 +6283,7 @@
   "ground": {
    "slug": "ground",
    "title": "Ground",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/ground/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6386,8 +6323,7 @@
   "heat-pump": {
    "slug": "heat-pump",
    "title": "Heat Pump",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/heat-pump/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Medium / Properties",
@@ -6582,7 +6518,7 @@
      "section": "Alert Frame / Properties",
      "name": "alertIcon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -6612,8 +6548,7 @@
   "hydraulic-check-valve": {
    "slug": "hydraulic-check-valve",
    "title": "Hydraulic Check Valve",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/hydraulic-check-valve/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Orientation / Properties",
@@ -6646,8 +6581,7 @@
   "logic": {
    "slug": "logic",
    "title": "Logic",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/logic/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6687,8 +6621,7 @@
   "mosfet": {
    "slug": "mosfet",
    "title": "Mosfet",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/mosfet/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6728,8 +6661,7 @@
   "motor": {
    "slug": "motor",
    "title": "Motor",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/motor/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6827,8 +6759,7 @@
   "pump": {
    "slug": "pump",
    "title": "Pump",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/pump/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6926,8 +6857,7 @@
   "resistor": {
    "slug": "resistor",
    "title": "Resistor",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/resistor/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -6967,8 +6897,7 @@
   "router": {
    "slug": "router",
    "title": "Router",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/router/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -7008,8 +6937,7 @@
   "source": {
    "slug": "source",
    "title": "Source",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/source/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -7049,8 +6977,7 @@
   "switch": {
    "slug": "switch",
    "title": "Switch",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/switch/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -7090,8 +7017,7 @@
   "transformer": {
    "slug": "transformer",
    "title": "Transformer",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/transformer/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -7131,8 +7057,7 @@
   "transmitter": {
    "slug": "transmitter",
    "title": "Transmitter",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/transmitter/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Type / Properties",
@@ -7213,7 +7138,7 @@
      "section": "Value / Properties",
      "name": "icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -7336,7 +7261,7 @@
      "section": "Alert / Properties",
      "name": "alertIcon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -7402,8 +7327,7 @@
   "transmitter-stack": {
    "slug": "transmitter-stack",
    "title": "Transmitter Stack",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/transmitter-stack/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Values / Properties",
@@ -7479,7 +7403,7 @@
      "section": "Values / Properties",
      "name": "values[].icon.path",
      "type": "value",
-     "default": "openbridge/placeholder",
+     "default": "placeholder",
      "enum": null
     },
     {
@@ -7520,8 +7444,7 @@
   "valve": {
    "slug": "valve",
    "title": "Valve",
-   "group": "Automation - OpenBridge",
-   "url": "https://docs.openstudio.no/valve/",
+   "group": "Automation",
    "properties": [
     {
      "section": "Properties",
@@ -7574,8 +7497,7 @@
   "azimuth-thruster": {
    "slug": "azimuth-thruster",
    "title": "Azimuth Thruster",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/azimuth-thruster/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Angle and Thrust / Properties",
@@ -7843,8 +7765,7 @@
   "azimuth-thruster-labeled": {
    "slug": "azimuth-thruster-labeled",
    "title": "Azimuth Thruster Labeled",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/azimuth-thruster-labeled/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Properties",
@@ -8076,8 +7997,7 @@
   "bearing-indicator": {
    "slug": "bearing-indicator",
    "title": "Bearing Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/bearing-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Bearing / Properties",
@@ -8099,8 +8019,7 @@
   "compass": {
    "slug": "compass",
    "title": "Compass",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/compass/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Heading and Course / Properties",
@@ -8377,8 +8296,7 @@
   "compass-flat": {
    "slug": "compass-flat",
    "title": "Compass Flat",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/compass-flat/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Heading and Course / Properties",
@@ -8553,8 +8471,7 @@
   "compass-indicator": {
    "slug": "compass-indicator",
    "title": "Compass Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/compass-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Direction and Type / Properties",
@@ -8604,8 +8521,7 @@
   "compass-sector": {
    "slug": "compass-sector",
    "title": "Compass Sector",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/compass-sector/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Heading and Course / Properties",
@@ -8829,8 +8745,7 @@
   "depth-actual": {
    "slug": "depth-actual",
    "title": "Depth Actual",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/depth-actual/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Depth and Draught / Properties",
@@ -8967,8 +8882,7 @@
   "depth-indicator": {
    "slug": "depth-indicator",
    "title": "Depth Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/depth-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Values / Properties",
@@ -9000,8 +8914,7 @@
   "gauge-bar-indicator": {
    "slug": "gauge-bar-indicator",
    "title": "Gauge Bar Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-bar-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -9043,8 +8956,7 @@
   "gauge-horizontal": {
    "slug": "gauge-horizontal",
    "title": "Gauge Horizontal",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-horizontal/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value and Range / Properties",
@@ -9210,8 +9122,7 @@
   "gauge-radial": {
    "slug": "gauge-radial",
    "title": "Gauge Radial",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-radial/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Range and Scale / Properties",
@@ -9336,8 +9247,7 @@
   "gauge-radial-indicator": {
    "slug": "gauge-radial-indicator",
    "title": "Gauge Radial Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-radial-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -9401,8 +9311,7 @@
   "gauge-trend": {
    "slug": "gauge-trend",
    "title": "Gauge Trend",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-trend/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Data / Properties",
@@ -9726,8 +9635,7 @@
   "gauge-trend-indicator": {
    "slug": "gauge-trend-indicator",
    "title": "Gauge Trend Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-trend-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Data and Value / Properties",
@@ -9812,8 +9720,7 @@
   "gauge-vertical": {
    "slug": "gauge-vertical",
    "title": "Gauge Vertical",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/gauge-vertical/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value and Range / Properties",
@@ -9979,8 +9886,7 @@
   "heading": {
    "slug": "heading",
    "title": "Heading",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/heading/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Heading and Course / Properties",
@@ -10149,8 +10055,7 @@
   "heading-indicator": {
    "slug": "heading-indicator",
    "title": "Heading Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/heading-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Type / Properties",
@@ -10186,8 +10091,7 @@
   "heave": {
    "slug": "heave",
    "title": "Heave",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/heave/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Heave / Properties",
@@ -10261,8 +10165,7 @@
   "heave-indicator": {
    "slug": "heave-indicator",
    "title": "Heave Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/heave-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -10294,8 +10197,7 @@
   "instrument-field": {
    "slug": "instrument-field",
    "title": "Instrument Field",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/instrument-field/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Properties",
@@ -10446,8 +10348,7 @@
   "main-engine": {
    "slug": "main-engine",
    "title": "Main Engine",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/main-engine/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Speed / Properties",
@@ -10574,8 +10475,7 @@
   "main-engine-indicator": {
    "slug": "main-engine-indicator",
    "title": "Main Engine Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/main-engine-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Speed and Thrust / Properties",
@@ -10646,8 +10546,7 @@
   "maritime": {
    "slug": "maritime",
    "title": "Common Features",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/maritime/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "State / Properties",
@@ -10823,8 +10722,7 @@
   "pitch": {
    "slug": "pitch",
    "title": "Pitch",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/pitch/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Pitch / Properties",
@@ -10933,8 +10831,7 @@
   "pitch-indicator": {
    "slug": "pitch-indicator",
    "title": "Pitch Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/pitch-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -10966,8 +10863,7 @@
   "pitch-roll": {
    "slug": "pitch-roll",
    "title": "Pitch Roll",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/pitch-roll/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Pitch and Roll / Properties",
@@ -11174,8 +11070,7 @@
   "pitch-roll-heave": {
    "slug": "pitch-roll-heave",
    "title": "Pitch Roll Heave",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/pitch-roll-heave/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Layout / Properties",
@@ -11410,8 +11305,7 @@
   "pitch-roll-yaw": {
    "slug": "pitch-roll-yaw",
    "title": "Pitch Roll Yaw",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/pitch-roll-yaw/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Variants / Properties",
@@ -11500,8 +11394,7 @@
   "propulsion-azimuth-indicator": {
    "slug": "propulsion-azimuth-indicator",
    "title": "Propulsion Azimuth Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/propulsion-azimuth-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Azimuth / Properties",
@@ -11558,8 +11451,7 @@
   "rate-of-turn": {
    "slug": "rate-of-turn",
    "title": "Rate Of Turn",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rate-of-turn/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Rate of Turn / Properties",
@@ -11701,8 +11593,7 @@
   "readout": {
    "slug": "readout",
    "title": "Readout",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/readout/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -11979,8 +11870,7 @@
   "readout-list-item": {
    "slug": "readout-list-item",
    "title": "Readout List Item",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/readout-list-item/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -12265,8 +12155,7 @@
   "roll": {
    "slug": "roll",
    "title": "Roll",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/roll/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Roll / Properties",
@@ -12382,8 +12271,7 @@
   "roll-indicator": {
    "slug": "roll-indicator",
    "title": "Roll Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/roll-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value / Properties",
@@ -12415,8 +12303,7 @@
   "rot-indicator": {
    "slug": "rot-indicator",
    "title": "Rot Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rot-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Rate of Turn / Properties",
@@ -12469,8 +12356,7 @@
   "rot-linear": {
    "slug": "rot-linear",
    "title": "Rot Linear",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rot-linear/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Rate of Turn / Properties",
@@ -12541,8 +12427,7 @@
   "rot-sector": {
    "slug": "rot-sector",
    "title": "Rot Sector",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rot-sector/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Value and Range / Properties",
@@ -12679,8 +12564,7 @@
   "rudder": {
    "slug": "rudder",
    "title": "Rudder",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rudder/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Angle / Properties",
@@ -12719,8 +12603,7 @@
   "rudder-indicator": {
    "slug": "rudder-indicator",
    "title": "Rudder Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/rudder-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Angle / Properties",
@@ -12767,8 +12650,7 @@
   "speed-arrows": {
    "slug": "speed-arrows",
    "title": "Speed Arrows",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/speed-arrows/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Number of Arrows / Properties",
@@ -12844,8 +12726,7 @@
   "speed-gauge": {
    "slug": "speed-gauge",
    "title": "Speed Gauge",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/speed-gauge/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Speed and Range / Properties",
@@ -12926,8 +12807,7 @@
   "speed-indicator": {
    "slug": "speed-indicator",
    "title": "Speed Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/speed-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Needle / Properties",
@@ -12970,8 +12850,7 @@
   "surge-sway-yaw": {
    "slug": "surge-sway-yaw",
    "title": "Surge Sway Yaw",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/surge-sway-yaw/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Variants / Properties",
@@ -13136,8 +13015,7 @@
   "thruster": {
    "slug": "thruster",
    "title": "Thruster",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/thruster/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Thrust / Properties",
@@ -13286,8 +13164,7 @@
   "tunnel-thruster": {
    "slug": "tunnel-thruster",
    "title": "Tunnel Thruster",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/tunnel-thruster/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Thrust / Properties",
@@ -13334,8 +13211,7 @@
   "velocity-projection-plot": {
    "slug": "velocity-projection-plot",
    "title": "Velocity Projection Plot",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/velocity-projection-plot/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Sectors",
@@ -13420,8 +13296,7 @@
   "wind": {
    "slug": "wind",
    "title": "Wind",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/wind/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Wind / Properties",
@@ -13514,8 +13389,7 @@
   "wind-indicator": {
    "slug": "wind-indicator",
    "title": "Wind Indicator",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/wind-indicator/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Wind Direction / Properties",
@@ -13593,8 +13467,7 @@
   "wind-propulsion": {
    "slug": "wind-propulsion",
    "title": "Wind Propulsion",
-   "group": "Maritime - OpenBridge",
-   "url": "https://docs.openstudio.no/wind-propulsion/",
+   "group": "Maritime",
    "properties": [
     {
      "section": "Sail / Properties",
@@ -13742,8 +13615,7 @@
   "donut-chart": {
    "slug": "donut-chart",
    "title": "Donut Chart",
-   "group": "Chart - OpenBridge",
-   "url": "https://docs.openstudio.no/donut-chart/",
+   "group": "Chart",
    "properties": [
     {
      "section": "Data / Properties",
@@ -13863,8 +13735,7 @@
   "graph-mini": {
    "slug": "graph-mini",
    "title": "Graph Mini",
-   "group": "Chart - OpenBridge",
-   "url": "https://docs.openstudio.no/graph-mini/",
+   "group": "Chart",
    "properties": [
     {
      "section": "Data / Properties",
@@ -13907,8 +13778,7 @@
   "indicator-graph": {
    "slug": "indicator-graph",
    "title": "Indicator Graph",
-   "group": "Chart - OpenBridge",
-   "url": "https://docs.openstudio.no/indicator-graph/",
+   "group": "Chart",
    "properties": [
     {
      "section": "Data / Properties",
@@ -14000,8 +13870,7 @@
   "radial-bar-chart": {
    "slug": "radial-bar-chart",
    "title": "Radial Bar Chart",
-   "group": "Chart - OpenBridge",
-   "url": "https://docs.openstudio.no/radial-bar-chart/",
+   "group": "Chart",
    "properties": [
     {
      "section": "Data / Properties",
@@ -14072,8 +13941,7 @@
   "accordion-card": {
    "slug": "accordion-card",
    "title": "Accordion Card",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/accordion-card/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Embedded View / Properties",
@@ -14189,8 +14057,7 @@
   "accordion-item": {
    "slug": "accordion-item",
    "title": "Accordion Item",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/accordion-item/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Opening and Closing / Properties",
@@ -14235,8 +14102,7 @@
   "alert-detail": {
    "slug": "alert-detail",
    "title": "Alert Detail",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/alert-detail/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Which Alarm Is Shown / Properties",
@@ -14343,8 +14209,7 @@
   "alert-frame-container": {
    "slug": "alert-frame-container",
    "title": "Alert Frame Container",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/alert-frame-container/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Content / Properties",
@@ -14474,8 +14339,7 @@
   "alert-list": {
    "slug": "alert-list",
    "title": "Alert List",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/alert-list/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Which Alarms Are Shown / Properties",
@@ -14660,8 +14524,7 @@
   "alert-list-page": {
    "slug": "alert-list-page",
    "title": "Alert List Page",
-   "group": "Embedding - OpenBridge",
-   "url": "https://docs.openstudio.no/alert-list-page/",
+   "group": "Embedding",
    "properties": [
     {
      "section": "Tabs / Properties",

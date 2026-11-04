@@ -1,12 +1,12 @@
-# Catalogue: Maritime - OpenBridge
+# Catalogue: Maritime
 
-Interface facts for the 50 components of the vendor family `Maritime - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 50 components of the reference family `Maritime`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. Azimuth Thruster
 
 <a id="azimuth-thruster"></a>
 
-Source: <https://docs.openstudio.no/azimuth-thruster/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -53,7 +53,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="azimuth-thruster-labeled"></a>
 
-Source: <https://docs.openstudio.no/azimuth-thruster-labeled/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -94,7 +94,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="bearing-indicator"></a>
 
-Source: <https://docs.openstudio.no/bearing-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -107,7 +107,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="maritime"></a>
 
-Source: <https://docs.openstudio.no/maritime/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Common features page of the maritime family.
 
@@ -141,7 +141,7 @@ Common features page of the maritime family.
 
 <a id="compass"></a>
 
-Source: <https://docs.openstudio.no/compass/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -187,7 +187,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="compass-flat"></a>
 
-Source: <https://docs.openstudio.no/compass-flat/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -221,7 +221,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="compass-indicator"></a>
 
-Source: <https://docs.openstudio.no/compass-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -237,7 +237,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="compass-sector"></a>
 
-Source: <https://docs.openstudio.no/compass-sector/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -278,7 +278,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="depth-actual"></a>
 
-Source: <https://docs.openstudio.no/depth-actual/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -307,7 +307,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="depth-indicator"></a>
 
-Source: <https://docs.openstudio.no/depth-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -321,7 +321,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="gauge-bar-indicator"></a>
 
-Source: <https://docs.openstudio.no/gauge-bar-indicator/>. Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
+Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -334,7 +334,7 @@ Source: <https://docs.openstudio.no/gauge-bar-indicator/>. Disposition: `stock`.
 
 <a id="gauge-horizontal"></a>
 
-Source: <https://docs.openstudio.no/gauge-horizontal/>. Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
+Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -364,9 +364,9 @@ Source: <https://docs.openstudio.no/gauge-horizontal/>. Disposition: `stock`. Ca
 
 <a id="gauge-radial"></a>
 
-Source: <https://docs.openstudio.no/gauge-radial/>. Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
+Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
 
-Visual parity with the vendor gauge is not claimed.
+Visual parity with the reference gauge is not claimed.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -390,9 +390,9 @@ Visual parity with the vendor gauge is not claimed.
 
 <a id="gauge-radial-indicator"></a>
 
-Source: <https://docs.openstudio.no/gauge-radial-indicator/>. Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
+Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
 
-Visual parity with the vendor gauge is not claimed.
+Visual parity with the reference gauge is not claimed.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -409,7 +409,7 @@ Visual parity with the vendor gauge is not claimed.
 
 <a id="gauge-trend"></a>
 
-Source: <https://docs.openstudio.no/gauge-trend/>. Disposition: `stock`. Cadre equivalent: `ia.display.sparkline` beside an `Instrument/Field`.
+Disposition: `stock`. Cadre equivalent: `ia.display.sparkline` beside an `Instrument/Field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -461,7 +461,7 @@ Source: <https://docs.openstudio.no/gauge-trend/>. Disposition: `stock`. Cadre e
 
 <a id="gauge-trend-indicator"></a>
 
-Source: <https://docs.openstudio.no/gauge-trend-indicator/>. Disposition: `stock`. Cadre equivalent: `ia.display.sparkline` beside an `Instrument/Field`.
+Disposition: `stock`. Cadre equivalent: `ia.display.sparkline` beside an `Instrument/Field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -481,7 +481,7 @@ Source: <https://docs.openstudio.no/gauge-trend-indicator/>. Disposition: `stock
 
 <a id="gauge-vertical"></a>
 
-Source: <https://docs.openstudio.no/gauge-vertical/>. Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
+Disposition: `stock`. Cadre equivalent: `ia.display.linear-scale` or `ia.display.progress`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -511,7 +511,7 @@ Source: <https://docs.openstudio.no/gauge-vertical/>. Disposition: `stock`. Cadr
 
 <a id="heading"></a>
 
-Source: <https://docs.openstudio.no/heading/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -543,7 +543,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="heading-indicator"></a>
 
-Source: <https://docs.openstudio.no/heading-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -558,7 +558,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="heave"></a>
 
-Source: <https://docs.openstudio.no/heave/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -578,7 +578,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="heave-indicator"></a>
 
-Source: <https://docs.openstudio.no/heave-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -592,7 +592,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="instrument-field"></a>
 
-Source: <https://docs.openstudio.no/instrument-field/>. Disposition: `implemented`. Cadre equivalent: `Instrument/Field`.
+Disposition: `implemented`. Cadre equivalent: `Instrument/Field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -621,7 +621,7 @@ Source: <https://docs.openstudio.no/instrument-field/>. Disposition: `implemente
 
 <a id="main-engine"></a>
 
-Source: <https://docs.openstudio.no/main-engine/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -649,7 +649,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="main-engine-indicator"></a>
 
-Source: <https://docs.openstudio.no/main-engine-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -668,7 +668,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="pitch"></a>
 
-Source: <https://docs.openstudio.no/pitch/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -693,7 +693,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="pitch-indicator"></a>
 
-Source: <https://docs.openstudio.no/pitch-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -707,7 +707,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="pitch-roll"></a>
 
-Source: <https://docs.openstudio.no/pitch-roll/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -746,7 +746,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="pitch-roll-heave"></a>
 
-Source: <https://docs.openstudio.no/pitch-roll-heave/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -789,7 +789,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="pitch-roll-yaw"></a>
 
-Source: <https://docs.openstudio.no/pitch-roll-yaw/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -811,7 +811,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="propulsion-azimuth-indicator"></a>
 
-Source: <https://docs.openstudio.no/propulsion-azimuth-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -828,7 +828,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rate-of-turn"></a>
 
-Source: <https://docs.openstudio.no/rate-of-turn/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -857,7 +857,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="readout"></a>
 
-Source: <https://docs.openstudio.no/readout/>. Disposition: `implemented`. Cadre equivalent: `Instrument/Field`.
+Disposition: `implemented`. Cadre equivalent: `Instrument/Field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -898,7 +898,7 @@ Source: <https://docs.openstudio.no/readout/>. Disposition: `implemented`. Cadre
 
 <a id="readout-list-item"></a>
 
-Source: <https://docs.openstudio.no/readout-list-item/>. Disposition: `stock`. Cadre equivalent: `Instrument/Field` rows in an `ia.container.flex`.
+Disposition: `stock`. Cadre equivalent: `Instrument/Field` rows in an `ia.container.flex`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -941,7 +941,7 @@ Source: <https://docs.openstudio.no/readout-list-item/>. Disposition: `stock`. C
 
 <a id="roll"></a>
 
-Source: <https://docs.openstudio.no/roll/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -967,7 +967,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="roll-indicator"></a>
 
-Source: <https://docs.openstudio.no/roll-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -981,7 +981,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rot-indicator"></a>
 
-Source: <https://docs.openstudio.no/rot-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -998,7 +998,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rot-linear"></a>
 
-Source: <https://docs.openstudio.no/rot-linear/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1018,7 +1018,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rot-sector"></a>
 
-Source: <https://docs.openstudio.no/rot-sector/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1047,7 +1047,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rudder"></a>
 
-Source: <https://docs.openstudio.no/rudder/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1062,7 +1062,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="rudder-indicator"></a>
 
-Source: <https://docs.openstudio.no/rudder-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1078,7 +1078,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="speed-arrows"></a>
 
-Source: <https://docs.openstudio.no/speed-arrows/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1098,9 +1098,9 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="speed-gauge"></a>
 
-Source: <https://docs.openstudio.no/speed-gauge/>. Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
+Disposition: `stock`. Cadre equivalent: `ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours.
 
-Visual parity with the vendor gauge is not claimed.
+Visual parity with the reference gauge is not claimed.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -1119,7 +1119,7 @@ Visual parity with the vendor gauge is not claimed.
 
 <a id="speed-indicator"></a>
 
-Source: <https://docs.openstudio.no/speed-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1135,7 +1135,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="surge-sway-yaw"></a>
 
-Source: <https://docs.openstudio.no/surge-sway-yaw/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1168,7 +1168,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="thruster"></a>
 
-Source: <https://docs.openstudio.no/thruster/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1198,7 +1198,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="tunnel-thruster"></a>
 
-Source: <https://docs.openstudio.no/tunnel-thruster/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1214,7 +1214,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="velocity-projection-plot"></a>
 
-Source: <https://docs.openstudio.no/velocity-projection-plot/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1236,7 +1236,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="wind"></a>
 
-Source: <https://docs.openstudio.no/wind/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1258,7 +1258,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="wind-indicator"></a>
 
-Source: <https://docs.openstudio.no/wind-indicator/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
@@ -1278,7 +1278,7 @@ Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 
 <a id="wind-propulsion"></a>
 
-Source: <https://docs.openstudio.no/wind-propulsion/>. Disposition: `out-of-scope`. Cadre equivalent: None.
+Disposition: `out-of-scope`. Cadre equivalent: None.
 
 Ship navigation instrument; drawn as a visible gap box if a descriptor names it.
 

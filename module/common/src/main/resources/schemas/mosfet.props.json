@@ -15,12 +15,12 @@
         "mosfetPtype4"
       ],
       "default": "mosfetNtype1",
-      "description": "OpenBridge `obc-mosfet` property `alternativeIcon`."
+      "description": "Property `alternativeIcon` of the `obc-mosfet` element."
     },
     "on": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-mosfet` property `on`."
+      "description": "Property `on` of the `obc-mosfet` element."
     },
     "variant": {
       "type": "string",
@@ -29,7 +29,7 @@
         "flat"
       ],
       "default": "square",
-      "description": "OpenBridge `obc-mosfet` property `variant`."
+      "description": "Property `variant` of the `obc-mosfet` element."
     },
     "orientation": {
       "type": "string",
@@ -39,7 +39,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-mosfet` property `orientation`."
+      "description": "Property `orientation` of the `obc-mosfet` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -75,7 +75,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-mosfet` property `positioning`."
+      "description": "Property `positioning` of the `obc-mosfet` element."
     },
     "activated": {
       "type": "boolean",
@@ -85,7 +85,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-mosfet` property `alert`."
+      "description": "Property `alert` of the `obc-mosfet` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -169,7 +169,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-mosfet` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-mosfet` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -178,7 +178,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-mosfet` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-mosfet` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -188,7 +188,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-mosfet` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-mosfet` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -205,7 +205,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-mosfet` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-mosfet` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -221,7 +221,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

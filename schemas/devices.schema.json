@@ -88,7 +88,7 @@
             "openbridge",
             "asm"
           ],
-          "description": "The device's faceplate style (COBD-045): openbridge, the default, or asm, the anatomy of the ASMP study (a header strip and the tabs Home, Config, Diagnostics, Alarms, Interlock and Info). Left out, the device takes the project's default (screen.py --faceplate). A kind without an asm faceplate opens its openbridge one, and gate G7 devices warns of it."
+          "description": "The device's faceplate style (COBD-045): `openbridge` (the stock style), the default, or `asm`, the anatomy of the ASMP study (a header strip and the tabs Home, Config, Diagnostics, Alarms, Interlock and Info). Left out, the device takes the project's default (screen.py --faceplate). A kind without an asm faceplate opens its openbridge one, and gate G7 devices warns of it."
         },
         "modes": {
           "type": "array",
@@ -173,7 +173,7 @@
           "required": [
             "caption"
           ],
-          "description": "A configuration member (F010 of the ASMP study, COBD-045): a number under the device's subfolder cfg/, shown as a row of the Config tab (the Maintenance tab of an openbridge faceplate) and written through W19 within its bounds. Gate G7 devices requires the member under cfg/, of a numeric type, on a kind whose faceplate draws the rows, and the minimum not above the maximum; it warns of a member without bounds.",
+          "description": "A configuration member (F010 of the ASMP study, COBD-045): a number under the device's subfolder cfg/, shown as a row of the Config tab (the Maintenance tab of a stock faceplate) and written through W19 within its bounds. Gate G7 devices requires the member under cfg/, of a numeric type, on a kind whose faceplate draws the rows, and the minimum not above the maximum; it warns of a member without bounds.",
           "properties": {
             "caption": {
               "type": "string",

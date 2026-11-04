@@ -119,7 +119,7 @@ def hysteresis(level: str, on_below: float | None = None, off_above: float | Non
 # `<device>/ilk/Cnn/` (kind, text, action, ok, liveText, requiredText, bypassed, bypassable, latched,
 # resetRequired) and the device summary in `<device>/ilk/`. A condition holds the device while it is not
 # met and not bypassed, or while it is latched and waits for a reset. `unsatisfied` counts the conditions
-# not met and not bypassed. The badge follows OpenBridge's own drawing of its two values: `interlock`
+# not met and not bypassed. The badge follows the package's own drawing of its two values: `interlock`
 # (drawn with the duty icon) while the device is held, `interlock-inhibit` (the standby icon) while a
 # condition is bypassed (COBD-023).
 #

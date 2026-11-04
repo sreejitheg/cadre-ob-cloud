@@ -7,7 +7,7 @@ must list only the device's alarms, as many as its tab label counts, and the num
 The descriptors are the oracle. Each symbol marked `device` must open the faceplate dock with its
 identifier (its `tag` parameter, else its `id`) as the title. The sweep clicks every leaf embedded
 view on the page (a symbol at the centre of its 48 px box, any other view at its centre) and every
-component of the Cadre OpenBridge module (at the centre of its box), reads
+component of the Cadre HMI Components module (at the centre of its box), reads
 the dock, counts `.ia_qualityOverlay` inside it, and closes the dock again before the next click.
 A device that never opened is reported missing.
 
@@ -57,7 +57,7 @@ LEAF_POINTS = """() => {
     const p = [Math.round(r.x + r.width / 2), Math.round(r.y + r.height / 2)];
     if (!seen.has(p.join(','))) { seen.add(p.join(',')); mark(sym || v, p); }
   }
-  // components of the Cadre OpenBridge module that draw a device: their box is the symbol (pump) or the tank
+  // components of the Cadre HMI Components module that draw a device: their box is the symbol (pump) or the tank
   for (const m of document.querySelectorAll('__DEVICE_COMPONENTS__')) {
     if (m.closest('[class*="docked-view"]')) continue;
     const r = m.getBoundingClientRect();

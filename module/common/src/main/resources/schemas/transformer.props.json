@@ -9,12 +9,12 @@
         "transformer02"
       ],
       "default": "transformer01",
-      "description": "OpenBridge `obc-transformer` property `alternativeIcon`."
+      "description": "Property `alternativeIcon` of the `obc-transformer` element."
     },
     "on": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transformer` property `on`."
+      "description": "Property `on` of the `obc-transformer` element."
     },
     "variant": {
       "type": "string",
@@ -23,7 +23,7 @@
         "flat"
       ],
       "default": "square",
-      "description": "OpenBridge `obc-transformer` property `variant`."
+      "description": "Property `variant` of the `obc-transformer` element."
     },
     "orientation": {
       "type": "string",
@@ -33,7 +33,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-transformer` property `orientation`."
+      "description": "Property `orientation` of the `obc-transformer` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -69,7 +69,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-transformer` property `positioning`."
+      "description": "Property `positioning` of the `obc-transformer` element."
     },
     "activated": {
       "type": "boolean",
@@ -79,7 +79,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-transformer` property `alert`."
+      "description": "Property `alert` of the `obc-transformer` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -163,7 +163,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-transformer` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-transformer` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -172,7 +172,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-transformer` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-transformer` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -182,7 +182,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-transformer` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-transformer` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -199,7 +199,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-transformer` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-transformer` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -215,7 +215,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

@@ -1,10 +1,10 @@
-"""The OpenBridge variant of the new frame (`screen.py --frame ob`, tranche T2 batch F6a; `cloud/FRAME-DESIGN.md`
+"""The module variant of the new frame (`screen.py --frame ob`, tranche T2 batch F6a; `cloud/FRAME-DESIGN.md`
 sections 3, 4.1 and the owner's answers).
 
 The frame is drawn with the module's frame components (`cadre.ob.topbar`, `navigationmenu`, `alertmenu`, `usermenu`,
 `brilliancemenu`, wrapped in batches F1 to F5) and needs `--render module`. The views belong to the parent
 (`views()`, written by `parent.py`) and cost a child nothing until its page configuration names them (`page_config`);
-a child built with `--frame openbridge` or `--frame asm` is not touched.
+a child built with `--frame openbridge` or `--frame asm` (the stock frames) is not touched.
 
 Parts (design section 3, owner's answers 2 to 4):
 
@@ -51,7 +51,7 @@ def _events(**handlers: list[str]) -> dict:
 
 
 def nav_icons() -> list[str]:
-    """The OpenBridge icons the module bundles for a navigation item (the enumeration of its `iconName`, read from the
+    """The package icons the module bundles for a navigation item (the enumeration of its `iconName`, read from the
     module's contract, which the generator checks against the pinned package): a navigation item whose icon is one of them
     shows it, any other shows none."""
     from . import screen   # imported here: screen imports parent, which imports this module
@@ -61,7 +61,7 @@ def nav_icons() -> list[str]:
 
 def alert_type_expr() -> str:
     """The top bar's `alertType` from the highest active priority, by wiki 13 section 11.1 (`PRIORITY_STATUS` says which
-    priorities have an alert colour; `ALERT_TYPE` the OpenBridge level of each): Diagnostic has none, so the bell is idle."""
+    priorities have an alert colour; `ALERT_TYPE` the package level of each): Diagnostic has none, so the bell is idle."""
     status, level = scripts.constant("PRIORITY_STATUS"), scripts.constant("ALERT_TYPE")
     return ("case({view.custom.alarm.highest}, "
             + ", ".join(f"'{p}', '{level[p]}'" for p in status if status[p]) + ", '')")
@@ -74,7 +74,7 @@ def bar_node(menu: list[str] | None = None, apps: list[str] | None = None, page_
     """The module top bar node of the head. `menu` is the script of the menu button (by default it opens the navigation dock), `apps`
     the script of the apps button (given, the button is shown and wired: the ASM variant's second button, `obasm.py`), and
     `page_after_crumbs` gives the page name way to the crumb where the page names a node (wiki 04 section 7 item 4), as the ASM
-    bar's page name does. Called with no argument it is the OpenBridge variant's bar."""
+    bar's page name does. Called with no argument it is the module variant's bar."""
     page = pv.bind(pv.prop("page.props.path"), [pv.script_transform(["return cadre.hmi.page_title(self.session, value)"])])
     if page_after_crumbs:
         page = pv.bind(pv.expr("if(len({view.custom.crumbs}) > 0, '', {page.props.path})"), [pv.script_transform([
@@ -240,7 +240,7 @@ def brilliance_menu() -> dict:
 
 
 def views() -> dict[str, dict]:
-    """The views of the OpenBridge frame, written into the parent beside the library's own."""
+    """The views of the module frame, written into the parent beside the library's own."""
     return {HEAD_VIEW: head(), NAV_VIEW: nav_dock(), ALERT_VIEW: alert_menu(), USER_VIEW: user_menu(),
             BRILLIANCE_VIEW: brilliance_menu()}
 
@@ -249,7 +249,7 @@ def views() -> dict[str, dict]:
 # The child: page configuration and session data
 # ---------------------------------------------------------------------------------------------------------
 def shared_docks(app_name: str = "App") -> dict:
-    """`framework.shared_docks` with the OpenBridge frame: the head (bar and strip) in the one top dock, the module
+    """`framework.shared_docks` with the module frame: the head (bar and strip) in the one top dock, the module
     navigation menu in the left dock (modal, GF-71), the faceplate dock at the right as it is."""
     docks = framework.shared_docks(app_name)
     docks["top"][0].update(viewPath=HEAD_VIEW, size=HEAD_HEIGHT, viewParams={"appName": app_name, "showUser": True})

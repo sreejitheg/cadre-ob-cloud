@@ -12,12 +12,12 @@
         "resistor5"
       ],
       "default": "resistor1",
-      "description": "OpenBridge `obc-resistor` property `alternativeIcon`."
+      "description": "Property `alternativeIcon` of the `obc-resistor` element."
     },
     "on": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-resistor` property `on`."
+      "description": "Property `on` of the `obc-resistor` element."
     },
     "variant": {
       "type": "string",
@@ -26,7 +26,7 @@
         "flat"
       ],
       "default": "square",
-      "description": "OpenBridge `obc-resistor` property `variant`."
+      "description": "Property `variant` of the `obc-resistor` element."
     },
     "orientation": {
       "type": "string",
@@ -36,7 +36,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-resistor` property `orientation`."
+      "description": "Property `orientation` of the `obc-resistor` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -72,7 +72,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-resistor` property `positioning`."
+      "description": "Property `positioning` of the `obc-resistor` element."
     },
     "activated": {
       "type": "boolean",
@@ -82,7 +82,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-resistor` property `alert`."
+      "description": "Property `alert` of the `obc-resistor` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -166,7 +166,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-resistor` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-resistor` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -175,7 +175,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-resistor` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-resistor` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -185,7 +185,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-resistor` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-resistor` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -202,7 +202,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-resistor` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-resistor` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -218,7 +218,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

@@ -1,12 +1,12 @@
-# Catalogue: Embedding - OpenBridge
+# Catalogue: Embedding
 
-Interface facts for the 6 components of the vendor family `Embedding - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 6 components of the reference family `Embedding`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. Accordion Card
 
 <a id="accordion-card"></a>
 
-Source: <https://docs.openstudio.no/accordion-card/>. Disposition: `stock`. Cadre equivalent: `ia.display.accordion`.
+Disposition: `stock`. Cadre equivalent: `ia.display.accordion`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@ Events: `onActionPerformed`.
 
 <a id="accordion-item"></a>
 
-Source: <https://docs.openstudio.no/accordion-item/>. Disposition: `stock`. Cadre equivalent: `ia.display.accordion`.
+Disposition: `stock`. Cadre equivalent: `ia.display.accordion`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -47,7 +47,7 @@ Events: `onActionPerformed`.
 
 <a id="alert-detail"></a>
 
-Source: <https://docs.openstudio.no/alert-detail/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 The stock alarm tables offer a details option (`enableDetails`).
 
@@ -72,7 +72,7 @@ Events: `onAckAlarmClick`.
 
 <a id="alert-frame-container"></a>
 
-Source: <https://docs.openstudio.no/alert-frame-container/>. Disposition: `implemented`. Cadre equivalent: Alert frame of the automation symbols (status colour, flashing when unacknowledged, dashed when rectified).
+Disposition: `implemented`. Cadre equivalent: Alert frame of the automation symbols (status colour, flashing when unacknowledged, dashed when rectified).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -96,9 +96,9 @@ Source: <https://docs.openstudio.no/alert-frame-container/>. Disposition: `imple
 
 <a id="alert-list"></a>
 
-Source: <https://docs.openstudio.no/alert-list/>. Disposition: `framework`. Cadre equivalent: `Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`.
+Disposition: `framework`. Cadre equivalent: `Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`.
 
-Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022).
+Reference row styling, alert categories and the detail pane are not reproduced (register COB-022).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -132,9 +132,9 @@ Events: `onItemClick`, `onAcknowledgeClick`.
 
 <a id="alert-list-page"></a>
 
-Source: <https://docs.openstudio.no/alert-list-page/>. Disposition: `framework`. Cadre equivalent: `Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`.
+Disposition: `framework`. Cadre equivalent: `Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`.
 
-Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022).
+Reference row styling, alert categories and the detail pane are not reproduced (register COB-022).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|

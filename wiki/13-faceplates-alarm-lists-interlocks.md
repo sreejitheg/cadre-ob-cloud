@@ -17,7 +17,7 @@ updated: 2026-10-23
 ## 1. Purpose
 
 This page records how a device faceplate is laid out, how it finds the device's alarms, the alarm
-list functions and the Cadre OpenBridge module's alarm components, the provisional interlock
+list functions and the Cadre HMI Components module's alarm components, the provisional interlock
 and permissive contract, and, in section 9, how a faceplate lists only the members its device
 carries, with the controller, the digital input, the maintenance functions and the sequence built on
 that. Page 06
@@ -84,7 +84,7 @@ filter on the glass).
 ## 4. Alarm List Functions
 
 `cadre.hmi.alarm_list(scope, source, states, max_items, no_ack, session)` returns alarm events as records of the
-OpenBridge `Alert` type of the pinned package (`dist/types.d.ts`), most severe first, then newest
+Package `Alert` type of the pinned package (`dist/types.d.ts`), most severe first, then newest
 first. Table 2 maps each field to its Ignition source; every accessor was measured by experiment E4
 before use (GF-34 to GF-36).
 
@@ -112,8 +112,8 @@ returning nothing before any view used it.
 
 ## 5. Module Alarm Components
 
-The Cadre OpenBridge module (page 12) gains two components in version 0.2.0, generated from the
-manifest of the pinned OpenBridge release like the pump and the tank. Table 3 lists them.
+The Cadre HMI Components module (page 12) gains two components in version 0.2.0, generated from the
+manifest of the pinned component package like the pump and the tank. Table 3 lists them.
 
 Table 3. The module's alarm components.
 
@@ -139,7 +139,7 @@ The generator gained two capabilities for them:
 Each element's enumerations are read from its own declaration file first: the two elements declare
 an `AlertListMode` of the same name with five and three values.
 
-OpenBridge's list draws, in mode `all`, the active alerts that are not shelved, and in mode
+The package's list draws, in mode `all`, the active alerts that are not shelved, and in mode
 `rectified` the cleared ones (`getAlertListModeData` of the pinned release). The faceplate's module
 view therefore shows two lists of the same data: the active alarms, and below them, only while
 there are any, the cleared alarms not yet acknowledged. No alarm the stock table lists is hidden.
@@ -150,7 +150,7 @@ stylesheet since version 0.2.1 (page 12 section 13).
 
 A row's action column follows the record, as `render()` of the pinned `alert-list-details.js`
 decides it: an active, unacknowledged alert of a type that needs acknowledgement shows an ACK
-button, unless the record carries `noAck`, in which case the row draws OpenBridge's
+button, unless the record carries `noAck`, in which case the row draws the package's
 no-acknowledgement icon (`obi-alarm-noack-iec` for the alarm, critical and high types,
 `obi-warning-noack-iec` otherwise) in its place; every other row shows nothing there. The Alert type
 of the pin declares `noAck` as an optional field, and the module's wrapper copies every field of a
@@ -189,7 +189,7 @@ and the stock rendering keeps the alarm status table (page 06 section 6 rule 3).
    alerts page's status and journal tables. A fault in the module cannot hide the existence of an
    alarm.
 
-OpenBridge's list offers ACK only on an active alarm that is not acknowledged. A cleared alarm not
+The package's list offers ACK only on an active alarm that is not acknowledged. A cleared alarm not
 yet acknowledged is shown in both module views and is acknowledged on the alerts page, with the
 stock table's own Acknowledge, or with ACK visible in the menu, each by a session whose user holds the
 admin role (COBD-024; the table's Acknowledge worked with nobody signed in until 2026-10-09, GF-40).
@@ -259,7 +259,7 @@ Rules as built:
    again (found by the review of 2026-10-09, the fix measured on the gateway).
 3. **Badge.** The symbol's `badgeInterlock` follows the summary: `interlock` while the device is held
    (not permitted, or interlocked, a latched trip included), `interlock-inhibit` while a condition is
-   bypassed. The pinned manifest describes neither value; OpenBridge draws `interlock` with its duty
+   bypassed. The pinned manifest describes neither value; the package draws `interlock` with its duty
    icon and `interlock-inhibit` with its standby icon (`automation-badge.js`), and the library draws
    them the same way. The owner confirmed the reading of `interlock-inhibit` as a bypass on
    2026-10-09 (COBD-023).
@@ -488,7 +488,7 @@ Table 10. Members of a controller.
 | `hiHiLimit`, `hiLimit`, `loLimit`, `loLoLimit` | Float8 | The alarm limits of the process value, as section 8 | The limit rows, W4 |
 
 1. **On a page.** `Instrument/Controller` draws the loop as one block in the manner of
-   `Instrument/Field`: the OpenBridge control badge (`auto`, or `manual`) beside the identifier or the
+   `Instrument/Field`: the package control badge (`auto`, or `manual`) beside the identifier or the
    label, the setpoint marked as the instrument field marks it, the process value large with its unit,
    and the output in per cent. Parameters: `value`, `setpoint`, `output`, `manual`, `hasSetpoint`,
    `hasOutput`, `unit`, `format`, `label`, `tag`, `hasTag`, `deviceId`, `deviceKind`, `deviceLabel`.
@@ -522,7 +522,7 @@ Table 10. Members of a controller.
 A digital input shown as a lamp is the kind `indicator`: `Automation/Indicator`, a symbol of the
 automation factory with the state parameter `on`, the status row On or Off, and every other parameter
 of Table 2 of page 06 (`alert`, `badgeControl` and the rest). The pinned release has no lamp, so the
-artwork is drawn in the library from primitives in the two tone style of the OpenBridge automation
+artwork is drawn in the library from primitives in the two tone style of the package automation
 icons: a ring, with a filled centre while lit. Nothing was downloaded. The input passes the medium
 whatever its state. Its faceplate, `Faceplate/Input`, has the tabs Status (the state as On or Off),
 Maintenance and Alarms. Its members are `state` and the maintenance members of section 9.6.
@@ -920,7 +920,7 @@ study's catalogue selected, built and tested offline on 2026-10-23.
 
 The five priorities map onto the four Cadre alert colours by rank (F053): Critical the critical colour,
 High alarm, Medium warning, Low caution, and Diagnostic none (`cadre.hmi.PRIORITY_STATUS`). The module's
-OpenBridge alert levels already colour so (`level-critical` on the critical colour, `level-high` on
+Package alert levels already colour so (`level-critical` on the critical colour, `level-high` on
 alarm), and the frame follows the same table: the top bar's colour (`framework.PRIORITY_VAR`), the
 library symbols' frame and flap (the status `critical`, drawn with the alarm's triangle), and the
 classes `cadre/alert/flash-critical` and `cadre/alert/badge-critical`.
@@ -936,7 +936,7 @@ A device symbol whose descriptor binds and states none of `alert`, `alertFrameSt
 to its device. The state shown is that of the most severe unacknowledged active alarm, else of the
 most severe active one, else of the most severe cleared and unacknowledged one, with the mode
 `unacked-active`, `acked-active` or `unacked-rectified`. A library symbol draws a frame for an alarm
-of a priority with an alert colour; a module component takes OpenBridge's level, Diagnostic included.
+of a priority with an alert colour; a module component takes the package's level, Diagnostic included.
 A symbol that binds its alert to a member keeps it: the pumps of the water treatment sample do.
 
 ### 11.3 The Alarm Form
@@ -1093,7 +1093,7 @@ Table 14. The tabs of the generator faceplate.
    the state and the prerequisite. Interlock: the prerequisite as a permissive of the library's contract
    (`ilk/C01/kind` `permissive`), with its live and required text. The header strip shows the step text, Out of service and
    Disabled while they hold, Fault, Interlocked or Not permitted, and the alarm count. New members: `inService`, `enabled`,
-   `normal` (Boolean) and the pulse members `cmdInService`, `cmdOutOfService`, `cmdEnable` and `cmdDisable`. The openbridge
+   `normal` (Boolean) and the pulse members `cmdInService`, `cmdOutOfService`, `cmdEnable` and `cmdDisable`. The stock
    faceplate of the sequence (section 9.7) is unchanged and still opens in that style.
 2. **`Faceplate/ASM/Instrument`** (readouts, instrument fields and instruments). Home: the value with its unit, the remote
    auto state, the alarm limits and their delays that the device carries (sections 8 and 11.4), the place of the range bar
@@ -1104,7 +1104,7 @@ Table 14. The tabs of the generator faceplate.
    I/O fault and the range flags while they hold.
 3. **Which faceplate a device opens.** In the asm style the sequence, the instrument and the generator open these views
    (`framework.ASM_VIEW`, `FACEPLATE_OF_SELECTION`); this changes section 10.2 item 2, which gave only the pumps and the
-   valves an asm view. A kind with no asm view keeps its openbridge faceplate, and gate G7 devices still warns of a device
+   valves an asm view. A kind with no asm view keeps its stock faceplate, and gate G7 devices still warns of a device
    that asks for `asm` there.
 
 ### 12.5 The Pulse Commands
@@ -1122,12 +1122,12 @@ Table 15. The pulse members.
 | `cmdStart`, `cmdStop`, `cmdReset`, `cmdServiceDone` | generator | Start, Stop, Reset, Service completed |
 | `cmdInService`, `cmdOutOfService`, `cmdEnable`, `cmdDisable` | sequence (asm faceplate) | In service, Out of service, Enable, Disable |
 
-The openbridge faceplate of the sequence still draws a button for `trigger` alone and, with no caption, names it by the
+The stock faceplate of the sequence still draws a button for `trigger` alone and, with no caption, names it by the
 member. The walk's plan names a button as the faceplate draws it (`walk_plan`, `devices_asm.CAPTIONS`).
 
 ### 12.6 Opening on a Named Tab
 
-1. Every faceplate view built by `framework._tabbed` (the seven openbridge faceplates and the five asm ones) takes the input
+1. Every faceplate view built by `framework._tabbed` (the seven stock faceplates and the five asm ones) takes the input
    parameter `tab`; `Faceplate/Empty` takes it and ignores it. On a change of `params.deviceId` the view sets its tab to
    the first and then to `params.tab` where that is one of its tabs; on a change of `params.tab` it sets the tab asked for,
    else the first. The check is of the faceplate's own tab keys, which `framework._tab_lines` writes into both scripts.
@@ -1182,7 +1182,7 @@ because it needs the gateway:
 
 1. The change scripts of the view parameters (`self.params.tab`, `currentValue.value`, `self.custom.tab`) and the
    scripts of `tab_shown` (`device_read` and `interlock_summary` called from `select_device`); the shapes follow the
-   `onChange` examples of the Ignition wiki (page 09 section 6) and the existing deviceId script.
+   `onChange` examples of the Ignition wiki and the existing deviceId script.
 2. The scrolling of the Home tab (`overflow` `auto` on a flex pane, as the popup's body) and the 272 px trend block.
 3. The two coloured states of the generator set and of the symbol on the glass, and the click on the set.
 4. A pulse that the plant does not return to false (the library never writes false), and the owner's refusal text.
@@ -1383,7 +1383,7 @@ stores, and are the first thing the integrated run on the gateway must confirm.
 
 Built and tested offline on 2026-11-03 (tranche T2, batch F7; `cloud/FRAME-DESIGN.md` section 4.3). The two new frames (`wiki/04`
 sections 10 and 11) draw the head with the module top bar, whose buttons, bell and clock are elements in a shadow root, not
-Perspective children, so the positional selectors of the openbridge and asm frames find nothing in it (G10 on `cadre_hmi_wtpobf`
+Perspective children, so the positional selectors of the stock and stock ASM frames find nothing in it (G10 on `cadre_hmi_wtpobf`
 stopped in `refusal_steps` at `open_alarm_menu`, the bell path `T[0].0:6` not existing). The glass takes a variant for each of those
 selectors, chosen by the frame the page shows, and the older frames keep their selectors as they were. Code: `tools/compare/glass.py`,
 `functional.py`, `glass_gates.py`; tests `tests/test_walk.py` (`FrameGlassTests`, held to `obframe.py`, `obasm.py` and the pinned elements).
@@ -1394,7 +1394,7 @@ and nothing written (the trial was reset once, GF-03).
 
 `glass.frame_variant(page)` reads the structure of the top dock: `obasm` where it holds the module top bar and a module pivot group or tab
 row (the header of section 11, in the DOM whether or not drawn), `ob` where it holds the module top bar alone, `default` otherwise (the
-openbridge and asm frames). The module's elements load after the Perspective components, so a dock with no module bar and no coordinate
+stock and stock ASM frames). The module's elements load after the Perspective components, so a dock with no module bar and no coordinate
 container (the older frames' buttons) is waited for, about four seconds, then taken for an older frame; the answer is kept on the page for its
 project. `glass_gates.Session.frame()` is the same call, its wait following `--settle`.
 
@@ -1402,7 +1402,7 @@ project. `glass_gates.Session.frame()` is the same call, its wait following `--s
 
 Table 1. What each helper finds on the older frames and on the new ones.
 
-| Helper | openbridge and asm (unchanged) | ob and obasm |
+| Helper | stock and stock ASM (unchanged) | module and module ASM |
 |---|---|---|
 | Bell, `glass.bell` | `BELL`, the top bar's seventh child `T[0].0:6` | `BELL_OB`: the host's `obc-alert-button` (64 by 48 px) |
 | Menu, brilliance, user and apps buttons | first and second coordinate container of the top dock, the third (`by_container`) or the last of three SVG icons (`TOP_ICONS`) | `bar_button`: `obc-icon-button` in the shadow root of `obc-top-bar`, by `aria-label` (Menu, Dimming, User, Apps) |
@@ -1491,4 +1491,4 @@ Measured and fixed on 2026-11-03 against `cadre_hmi_wtpob` (the older frame, mod
    dependence on a pixel or two of layout is inferred from runs that passed at the same position. With the fix, see the runs recorded in
    `cloud/PROGRESS.md`.
 5. For the product: an operator meets the same overlap in the small panel, where the second row's ACK is under the toolbar until the list is scrolled.
-   The panel is OpenBridge's layout and is not changed here (rule 7 of the operating manual).
+   The panel is the package's layout and is not changed here (rule 7 of the operating manual).

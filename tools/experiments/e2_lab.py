@@ -61,7 +61,7 @@ def symbols_view() -> dict:
     for i, pos in enumerate(("right", "left", "top", "none")):
         kids.append(sym("Pump", f"Readout_{pos}", 24 + i * 140, 830, 120, 64, on=True, hasSpeed=True,
                         speed=50, readoutPosition=pos, hasTag=True, tag="P-101"))
-    # Tanks at the vendor demo's sizes
+    # Tanks at the reference demo's sizes
     for i, (w, h, v) in enumerate(((168, 216, 30), (130, 95, 50), (72, 138, 95), (248, 220, 70))):
         kids.append(pv.node("ia.display.view", f"Tank{i}", pv.cpos(1400 + (i % 2) * 260, 16 + (i // 2) * 240, w, h),
                             {"path": "Automation/Tank", "params": {

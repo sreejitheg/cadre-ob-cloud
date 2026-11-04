@@ -477,7 +477,7 @@ class TabTests(unittest.TestCase):
         tags[f"{device}/serviceHours"] = 12.0                                   # service data shows Config
         ns["select_device"](s, device, "generator", "G-1", "", "config")
         self.assertEqual(s.custom.selectedTab, "config")
-        ns["select_device"](s, device, "generator", "G-1", "", "maintenance")   # the openbridge tab takes no service data
+        ns["select_device"](s, device, "generator", "G-1", "", "maintenance")   # the stock tab takes no service data
         self.assertEqual(s.custom.selectedTab, "")
         self.assertTrue(ns["tab_shown"](s, device, "home"))
         self.assertTrue(ns["tab_shown"](s, device, "no-such-tab"))              # the view refuses it

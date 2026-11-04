@@ -1,6 +1,6 @@
 """The application frame: top bar, navigation menu, faceplate dock, menus, alerts page.
 
-The navigation philosophy is OpenBridge's, as the OpenStudio documentation describes it
+The navigation philosophy is that of the maritime design guidance
 (wiki page 04): a header in a top dock shared by every page; a navigation menu in a left
 dock opened on demand from the header's menu button and closed on navigation; pages that
 group content in cards; device detail in a right dock; one session-wide palette chosen in
@@ -239,7 +239,7 @@ def top_bar() -> dict:
 # Alarm badges of the plant hierarchy (F046 of the ASMP study, COB-141): a pill for each priority with active
 # alarms in the node's devices and beneath, the count in the priority's colour by rank (F053), Diagnostic
 # neutral, nothing at 0. One shape for every priority: the colour codes the rank, as the frame's do, so no
-# second shape code stands beside OpenBridge's status shapes.
+# second shape code stands beside the package's status shapes.
 NO_COUNTS = {**{p: 0 for p in scripts.constant("PRIORITIES")}, "total": 0, "unacked": 0}
 CRUMBS_CFG = pv.bind(pv.expr("if(toMillis(now(2000)) > 0, {page.props.path}, '')"), [pv.script_transform([
     "return cadre.hmi.crumbs(self.session, value)"])])
@@ -829,12 +829,12 @@ def faceplate_alarms() -> dict:
 
 
 def faceplate_alarms_module() -> dict:
-    """`Faceplate/Alarms` for a child built with `--render module`: OpenBridge's alert list over the
+    """`Faceplate/Alarms` for a child built with `--render module`: The package's alert list over the
     device's alarms (a pattern that matches nothing until the device is known, never the whole
     scope). Display only (COBD-025): alarm actions are taken on the alerts page, in the top bar's
-    alarm menu and with the top bar's ACK. Every record carries `noAck`, so a row draws OpenBridge's
+    alarm menu and with the top bar's ACK. Every record carries `noAck`, so a row draws the package's
     no-acknowledgement icon where it would offer ACK (the pin's own rule), and no list carries an
-    acknowledge event. OpenBridge's mode `all` draws the active alerts only, and its mode
+    acknowledge event. The package's mode `all` draws the active alerts only, and its mode
     `rectified` the cleared ones, so a second list shows the cleared alarms still unacknowledged:
     no alarm the stock table lists is hidden."""
     # an empty source would mean the whole scope to alarm_list: use the no-match pattern instead
@@ -879,7 +879,7 @@ def faceplate_alarms_module() -> dict:
 
 
 def alert_menu_module() -> dict:
-    """`Framework/AlertMenu` for a child built with `--render module` (COB-078, WP4): OpenBridge's
+    """`Framework/AlertMenu` for a child built with `--render module` (COB-078, WP4): the package's
     small alert page over the project scope. ACK and ACK visible acknowledge with the session's
     user; a row opens the device's faceplate through the generated device index. The small page
     has no mode for cleared alerts, so a second list shows the cleared alarms still
@@ -1875,7 +1875,7 @@ def framework_views() -> dict[str, dict]:
 
 def shared_docks(app_name: str = "App") -> dict:
     """Page configuration `sharedDocks`: the frame every page shares. Dock keys follow the
-    shape the 8.3 page configuration resource uses (observed in the vendor demo's
+    shape the 8.3 page configuration resource uses (observed in the reference demo's
     page-config and in this gateway's own projects)."""
     def dock(id_, view, size, show, content, params=None, breakpoint=480, modal=False):
         return {"anchor": "fixed", "autoBreakpoint": breakpoint, "content": content, "handle": "hide",

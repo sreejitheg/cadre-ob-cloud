@@ -1,6 +1,6 @@
 {
  "meta": {
-  "source": "catalogue/openstudio-interface.json",
+  "source": "catalogue/reference-interface.json",
   "authored": "2026-10-07",
   "statuses": [
    "implemented",
@@ -91,7 +91,7 @@
   },
   "icon": {
    "status": "implemented",
-   "cadre": "`ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted OpenBridge icons)"
+   "cadre": "`ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted icons)"
   },
   "checkbox": {
    "status": "stock",
@@ -264,7 +264,7 @@
   "automation-tank": {
    "status": "implemented",
    "cadre": "`Automation/Tank` (level, trend, chart, compact, static)",
-   "note": "The chart is a line sparkline, not the vendor's filled area chart (register COB-031)."
+   "note": "The chart is a line sparkline, not the reference filled area chart (register COB-031)."
   },
   "automation-readout": {
    "status": "implemented",
@@ -276,62 +276,62 @@
   },
   "bipolar-transistor": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "capacitor": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "converter": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "diodes": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "ground": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "logic": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "mosfet": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "resistor": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "router": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "source": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "transformer": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "heat-pump": {
    "status": "factory",
-   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the OpenBridge on and off artwork exists",
+   "cadre": "One row in `DEVICE_KINDS` (`tools/hmi/library.py`); the on and off artwork exists",
    "note": "Electrical single-line symbols; add when a screen needs them."
   },
   "gauge-valve": {
@@ -369,17 +369,17 @@
   "gauge-radial": {
    "status": "stock",
    "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
-   "note": "Visual parity with the vendor gauge is not claimed."
+   "note": "Visual parity with the reference gauge is not claimed."
   },
   "gauge-radial-indicator": {
    "status": "stock",
    "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
-   "note": "Visual parity with the vendor gauge is not claimed."
+   "note": "Visual parity with the reference gauge is not claimed."
   },
   "speed-gauge": {
    "status": "stock",
    "cadre": "`ia.chart.gauge` or `ia.chart.simple-gauge` with Cadre colours",
-   "note": "Visual parity with the vendor gauge is not claimed."
+   "note": "Visual parity with the reference gauge is not claimed."
   },
   "gauge-horizontal": {
    "status": "stock",
@@ -615,12 +615,12 @@
   "alert-list": {
    "status": "framework",
    "cadre": "`Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`",
-   "note": "Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022)."
+   "note": "Reference row styling, alert categories and the detail pane are not reproduced (register COB-022)."
   },
   "alert-list-page": {
    "status": "framework",
    "cadre": "`Framework/AlertsPage` and `Framework/AlertMenu` over `ia.display.alarmstatustable` and `ia.display.alarmjournaltable`",
-   "note": "Vendor row styling, alert categories and the detail pane are not reproduced (register COB-022)."
+   "note": "Reference row styling, alert categories and the detail pane are not reproduced (register COB-022)."
   },
   "alert-detail": {
    "status": "gap",

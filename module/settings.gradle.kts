@@ -16,6 +16,6 @@ dependencyResolutionManagement {
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-// Cadre OpenBridge module (spike): OpenBridge web components as Perspective components.
+// Cadre HMI Components module (spike): pinned web components as Perspective components.
 rootProject.name = "cadre-openbridge"
 include(":gateway", ":common", ":designer")

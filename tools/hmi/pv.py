@@ -13,7 +13,7 @@ import json
 import zipfile
 from pathlib import Path
 
-ACTOR = "Cadre-Sandbox-OpenBridge tools/hmi"
+ACTOR = "Cadre HMI Library tools/hmi"
 STAMP = "2026-10-07T00:00:00Z"   # fixed, so a rebuild is byte identical
 PERSPECTIVE = "com.inductiveautomation.perspective"
 CONTAINERS = {"ia.container.flex", "ia.container.coord"}

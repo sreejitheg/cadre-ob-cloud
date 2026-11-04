@@ -37,7 +37,7 @@
     "hasIcon": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-navigation-item-group` property `hasIcon`."
+      "description": "Property `hasIcon` of the `obc-navigation-item-group` element."
     },
     "treeMode": {
       "type": "boolean",
@@ -133,7 +133,7 @@
         "joystick"
       ],
       "default": "",
-      "description": "The icon in the `icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Custom icon displayed next to the group label."
+      "description": "The icon in the `icon` slot, by name (a bundled icon); empty puts none. Custom icon displayed next to the group label."
     },
     "items": {
       "type": "array",
@@ -179,7 +179,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

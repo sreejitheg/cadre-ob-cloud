@@ -1,4 +1,4 @@
-"""Generate the Cadre OpenBridge module's component assets from the OpenBridge package.
+"""Generate the Cadre HMI Components module's component assets from the pinned component package.
 
 From the package's custom elements manifest (`custom-elements.json`), its enum declarations and
 the measured element defaults (`module/web/defaults.json`, `measure_defaults.py`) this writes,
@@ -6,16 +6,16 @@ for every wrapped element:
 
   common/src/main/resources/schemas/<name>.props.json   Perspective property schema (Designer
                                                         property editor, validation, defaults)
-  gateway/src/main/resources/mounted/js/cadre-ob.js     the OpenBridge bundle followed by the
+  gateway/src/main/resources/mounted/js/cadre-ob.js     the component bundle followed by the
                                                         React wrappers and their registration
-  gateway/src/main/resources/mounted/css/cadre-ob.css   OpenBridge's stylesheet, scoped and trimmed
-  gateway/src/main/resources/mounted/fonts/NotoSans-OB.ttf   OpenBridge's variable Noto Sans
+  gateway/src/main/resources/mounted/css/cadre-ob.css   the package stylesheet, scoped and trimmed
+  gateway/src/main/resources/mounted/fonts/NotoSans-OB.ttf   the package's variable Noto Sans
   components.json                                       the contract: id, element, properties
   web/canvaszoom.js                                     (read, not written) the canvas zoom component, appended to
                                                         cadre-ob.js; its schema and contract entry are written here
 
 A module's browser resources load in every Perspective session of the gateway, so the
-stylesheet is scoped: OpenBridge declares its palettes and sizes on `:root` and some variables on
+stylesheet is scoped: the package declares its palettes and sizes on `:root` and some variables on
 `*`; here they are declared on the wrapper (`.cadre-ob`) and keyed to the Cadre palette classes,
 and only the variables the bundled elements use (with their dependencies) are kept.
 
@@ -172,7 +172,7 @@ LINE_FRAME = ["state", "frameStyle", "borderRadiusPosition", "borderRadiusPositi
 # `borderRadiusPosition` are undefined by default, and any explicit value overrides what the element derives), and the
 # instrument mode with the border radius it enables, which serve a bar placed inside another instrument.
 BAR_LEFT_OUT = ["barContainerStyle", "borderRadiusPosition", "instrumentMode", "borderRadius"]
-# The alert type of the alert button family. OpenBridge's `AlertType` has the three IEC names and five severity levels; the five
+# The alert type of the alert button family. The package's `AlertType` has the three IEC names and five severity levels; the five
 # Cadre priorities map onto them as wiki 13 section 11.1 says (the module's colours already follow it): Critical the critical
 # level (`level-critical`), High alarm, Medium warning, Low caution and Diagnostic none (empty). An empty value is the idle state,
 # drawn without an alert colour.
@@ -225,253 +225,253 @@ STATE_OBJECTS = {
                       "selectedMode": {"type": "string"}}),
 }
 COMPONENTS = [
-    {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "OB Pump",
-     "palette": "OpenBridge pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
+    {"tag": "obc-pump", "type": "cadre.ob.pump", "name": "pump", "title": "Pump",
+     "palette": "Pump: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "extra": ["hasSpeed", "showStatus", "statusText", "badgeDuty", "outOfService"], "speedless": True, "status": True},
-    {"tag": "obc-automation-tank", "type": "cadre.ob.tank", "name": "tank", "title": "OB Tank",
-     "palette": "OpenBridge tank: level, trend, value and maximum, badges and alert frame",
+    {"tag": "obc-automation-tank", "type": "cadre.ob.tank", "name": "tank", "title": "Tank",
+     "palette": "Tank: level, trend, value and maximum, badges and alert frame",
      "size": {"width": 168, "height": 216}, "exclude": ["touching"], "extra": ["unit", "hasCapacity"],
      "tankSlots": True},
-    {"tag": "obc-motor", "type": "cadre.ob.motor", "name": "motor", "title": "OB Motor",
-     "palette": "OpenBridge motor: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
+    {"tag": "obc-motor", "type": "cadre.ob.motor", "name": "motor", "title": "Motor",
+     "palette": "Motor: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "extra": ["hasSpeed", "showStatus", "statusText", "badgeDuty", "outOfService"], "speedless": True, "status": True},
-    {"tag": "obc-fan", "type": "cadre.ob.fan", "name": "fan", "title": "OB Fan",
-     "palette": "OpenBridge fan: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
+    {"tag": "obc-fan", "type": "cadre.ob.fan", "name": "fan", "title": "Fan",
+     "palette": "Fan: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "extra": ["hasSpeed", "showStatus", "statusText", "badgeDuty", "outOfService"], "speedless": True, "status": True},
-    {"tag": "obc-digital-valve", "type": "cadre.ob.valve", "name": "valve", "title": "OB Valve",
-     "palette": "OpenBridge digital valve: open or closed, badges and alert frame", "size": {"width": 96, "height": 96},
+    {"tag": "obc-digital-valve", "type": "cadre.ob.valve", "name": "valve", "title": "Valve",
+     "palette": "Digital valve: open or closed, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-analog-valve", "type": "cadre.ob.analogvalve", "name": "analogvalve", "title": "OB Analog Valve",
-     "palette": "OpenBridge analogue valve: opening readout, badges and alert frame", "size": {"width": 96, "height": 96},
+    {"tag": "obc-analog-valve", "type": "cadre.ob.analogvalve", "name": "analogvalve", "title": "Analog Valve",
+     "palette": "Analogue valve: opening readout, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-filter", "type": "cadre.ob.filter", "name": "filter", "title": "OB Filter",
-     "palette": "OpenBridge filter: a static symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-filter", "type": "cadre.ob.filter", "name": "filter", "title": "Filter",
+     "palette": "Filter: a static symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-indicator-generator", "type": "cadre.ob.generator", "name": "generator", "title": "OB Generator",
-     "palette": "OpenBridge generator indicator: running state, readout and alert frame",
+    {"tag": "obc-indicator-generator", "type": "cadre.ob.generator", "name": "generator", "title": "Generator",
+     "palette": "Generator indicator: running state, readout and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "generator": True,
      "extra": ["on", "tag", "readoutPosition", "showStatus", "statusText", "alert", "alertFrameStatus", "alertFrameMode"],
      "describe": {"showStatus": "Whether the symbol draws its status word (On or Off, or statusText). False hides the "
                                "word; the identifier stays. The diagram toolbar's Readout button binds it.",
                   "statusText": "When not empty, the status word drawn beside the symbol in place of On or Off."}},
-    {"tag": "obc-automation-button", "type": "cadre.ob.button", "name": "button", "title": "OB Button",
-     "palette": "OpenBridge automation button: a command button with identifier, state, progress and alert frame",
+    {"tag": "obc-automation-button", "type": "cadre.ob.button", "name": "button", "title": "Button",
+     "palette": "Automation button: a command button with identifier, state, progress and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "events": ["click"]},
-    {"tag": "obc-transmitter", "type": "cadre.ob.readout", "name": "readout", "title": "OB Readout",
-     "palette": "OpenBridge transmitter: value chip with unit and an identifier beneath it",
+    {"tag": "obc-transmitter", "type": "cadre.ob.readout", "name": "readout", "title": "Readout",
+     "palette": "Transmitter: value chip with unit and an identifier beneath it",
      "size": {"width": 72, "height": 24}, "exclude": ["data", "lineType"], "extra": ["stretch"], "sheet": "readout",
      "chipSheet": "readoutchip"},
     {"tag": "obc-instrument-field", "type": "cadre.ob.instrumentfield", "name": "instrumentfield",
-     "title": "OB Instrument Field", "palette": "OpenBridge instrument field: value, optional setpoint, caption and unit",
+     "title": "Instrument Field", "palette": "Instrument field: value, optional setpoint, caption and unit",
      "size": {"width": 96, "height": 64}, "exclude": [], "sheet": "instrumentfield", "endAligned": True},
-    {"tag": "obc-alert-list-details", "type": "cadre.ob.alertlist", "name": "alertlist", "title": "OB Alert List",
-     "palette": "OpenBridge alert list: Alert records with ACK and row click", "size": {"width": 368, "height": 480},
+    {"tag": "obc-alert-list-details", "type": "cadre.ob.alertlist", "name": "alertlist", "title": "Alert List",
+     "palette": "Alert list: Alert records with ACK and row click", "size": {"width": 368, "height": 480},
      "exclude": [], "dts": "components/alert-list-details/alert-list-details.d.ts",
      "data": {"alerts": "alerts"}, "events": ["ack-click", "row-click"],
      "extra": ["selectable", "selectedIds"], "selection": True},
-    {"tag": "obc-alert-list-page-small", "type": "cadre.ob.alertpanel", "name": "alertpanel", "title": "OB Alert Panel",
-     "palette": "OpenBridge alert panel: mode tabs, alert list, ACK visible and Silence",
+    {"tag": "obc-alert-list-page-small", "type": "cadre.ob.alertpanel", "name": "alertpanel", "title": "Alert Panel",
+     "palette": "Alert panel: mode tabs, alert list, ACK visible and Silence",
      "size": {"width": 640, "height": 420}, "exclude": [], "dts": "pages/alert-list-page-small/alert-list-page-small.d.ts",
      "data": {"alerts": "alerts"}, "events": ["ack-click", "row-click", "silence-click", "ack-all-visible-click"],
      "extra": ["selectable", "selectedIds"], "selection": True},
-    {"tag": "obc-resistor", "type": "cadre.ob.resistor", "name": "resistor", "title": "OB Resistor",
-     "palette": "OpenBridge resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-resistor", "type": "cadre.ob.resistor", "name": "resistor", "title": "Resistor",
+     "palette": "Resistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-damper", "type": "cadre.ob.damper", "name": "damper", "title": "OB Damper",
-     "palette": "OpenBridge damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame",
+    {"tag": "obc-damper", "type": "cadre.ob.damper", "name": "damper", "title": "Damper",
+     "palette": "Damper: an air damper symbol on a diagram, open or closed, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-switch", "type": "cadre.ob.switch", "name": "switch", "title": "OB Switch",
-     "palette": "OpenBridge switch: an electrical switch symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-switch", "type": "cadre.ob.switch", "name": "switch", "title": "Switch",
+     "palette": "Switch: an electrical switch symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-capacitor", "type": "cadre.ob.capacitor", "name": "capacitor", "title": "OB Capacitor",
-     "palette": "OpenBridge capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-capacitor", "type": "cadre.ob.capacitor", "name": "capacitor", "title": "Capacitor",
+     "palette": "Capacitor: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-diodes", "type": "cadre.ob.diodes", "name": "diodes", "title": "OB Diodes",
-     "palette": "OpenBridge diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-diodes", "type": "cadre.ob.diodes", "name": "diodes", "title": "Diodes",
+     "palette": "Diodes: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-ground", "type": "cadre.ob.ground", "name": "ground", "title": "OB Ground",
-     "palette": "OpenBridge ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-ground", "type": "cadre.ob.ground", "name": "ground", "title": "Ground",
+     "palette": "Ground: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-source", "type": "cadre.ob.source", "name": "source", "title": "OB Source",
-     "palette": "OpenBridge source: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-source", "type": "cadre.ob.source", "name": "source", "title": "Source",
+     "palette": "Source: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-converter", "type": "cadre.ob.converter", "name": "converter", "title": "OB Converter",
-     "palette": "OpenBridge converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-converter", "type": "cadre.ob.converter", "name": "converter", "title": "Converter",
+     "palette": "Converter: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-transformer", "type": "cadre.ob.transformer", "name": "transformer", "title": "OB Transformer",
-     "palette": "OpenBridge transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-transformer", "type": "cadre.ob.transformer", "name": "transformer", "title": "Transformer",
+     "palette": "Transformer: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-bipolar-transistor", "type": "cadre.ob.bipolartransistor", "name": "bipolartransistor", "title": "OB Bipolar Transistor",
-     "palette": "OpenBridge bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-bipolar-transistor", "type": "cadre.ob.bipolartransistor", "name": "bipolartransistor", "title": "Bipolar Transistor",
+     "palette": "Bipolar transistor: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-mosfet", "type": "cadre.ob.mosfet", "name": "mosfet", "title": "OB MOSFET",
-     "palette": "OpenBridge MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-mosfet", "type": "cadre.ob.mosfet", "name": "mosfet", "title": "MOSFET",
+     "palette": "MOSFET: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-logic", "type": "cadre.ob.logic", "name": "logic", "title": "OB Logic",
-     "palette": "OpenBridge logic: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-logic", "type": "cadre.ob.logic", "name": "logic", "title": "Logic",
+     "palette": "Logic: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-router", "type": "cadre.ob.router", "name": "router", "title": "OB Router",
-     "palette": "OpenBridge router: a static electrical symbol on a diagram, with readout, badges and alert frame",
+    {"tag": "obc-router", "type": "cadre.ob.router", "name": "router", "title": "Router",
+     "palette": "Router: a static electrical symbol on a diagram, with readout, badges and alert frame",
      "size": {"width": 96, "height": 96}, "exclude": [], "properties": ["showStatus"]},
-    {"tag": "obc-automation-badge", "type": "cadre.ob.automationbadge", "name": "automationbadge", "title": "OB Automation Badge",
-     "palette": "OpenBridge automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
+    {"tag": "obc-automation-badge", "type": "cadre.ob.automationbadge", "name": "automationbadge", "title": "Automation Badge",
+     "palette": "Automation badge: the small corner badge of an automation symbol, drawn on its own (mode and type)",
      "size": {"width": 32, "height": 32}, "exclude": []},
-    {"tag": "obc-hydraulic-check-valve", "type": "cadre.ob.checkvalve", "name": "checkvalve", "title": "OB Check Valve",
-     "palette": "OpenBridge hydraulic check valve: a display-only glyph on a hydraulic diagram",
+    {"tag": "obc-hydraulic-check-valve", "type": "cadre.ob.checkvalve", "name": "checkvalve", "title": "Check Valve",
+     "palette": "Hydraulic check valve: a display-only glyph on a hydraulic diagram",
      "size": {"width": 48, "height": 48}, "exclude": []},
-    {"tag": "obc-valve-analog-two-way-icon", "type": "cadre.ob.valvetwoway", "name": "valvetwoway", "title": "OB Two-Way Valve Glyph",
-     "palette": "OpenBridge analog two-way valve glyph: the valve with its opening, without readout or alert frame",
+    {"tag": "obc-valve-analog-two-way-icon", "type": "cadre.ob.valvetwoway", "name": "valvetwoway", "title": "Two-Way Valve Glyph",
+     "palette": "Analog two-way valve glyph: the valve with its opening, without readout or alert frame",
      "size": {"width": 48, "height": 48}, "exclude": []},
-    {"tag": "obc-valve-analog-three-way-icon", "type": "cadre.ob.valvethreeway", "name": "valvethreeway", "title": "OB Three-Way Valve Glyph",
-     "palette": "OpenBridge analog three-way valve glyph: the valve with two openings, without readout or alert frame",
+    {"tag": "obc-valve-analog-three-way-icon", "type": "cadre.ob.valvethreeway", "name": "valvethreeway", "title": "Three-Way Valve Glyph",
+     "palette": "Analog three-way valve glyph: the valve with two openings, without readout or alert frame",
      "size": {"width": 48, "height": 48}, "exclude": []},
-    {"tag": "obc-indicator-battery", "type": "cadre.ob.battery", "name": "battery", "title": "OB Battery Indicator",
-     "palette": "OpenBridge battery indicator: a battery drawn as a level bar or a trend graph, display only",
+    {"tag": "obc-indicator-battery", "type": "cadre.ob.battery", "name": "battery", "title": "Battery Indicator",
+     "palette": "Battery indicator: a battery drawn as a level bar or a trend graph, display only",
      "size": {"width": 48, "height": 48}, "exclude": [], "data": {"data": "numbers"}},
-    {"tag": "obc-indicator-engine", "type": "cadre.ob.engine", "name": "engine", "title": "OB Engine Indicator",
-     "palette": "OpenBridge engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
+    {"tag": "obc-indicator-engine", "type": "cadre.ob.engine", "name": "engine", "title": "Engine Indicator",
+     "palette": "Engine indicator: an engine block drawn in a static, regular or enhanced scheme, display only",
      "size": {"width": 48, "height": 48}, "exclude": []},
     {"tag": "obc-indicator-tank-atmospheric", "type": "cadre.ob.tankatmospheric", "name": "tankatmospheric",
-     "title": "OB Atmospheric Tank Indicator",
-     "palette": "OpenBridge atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
+     "title": "Atmospheric Tank Indicator",
+     "palette": "Atmospheric tank indicator: a tank drawn as a level bar or a trend graph, display only",
      "size": {"width": 48, "height": 48}, "exclude": [], "data": {"data": "numbers"}},
     {"tag": "obc-automation-readout", "type": "cadre.ob.automationreadout", "name": "automationreadout",
-     "title": "OB Automation Readout",
-     "palette": "OpenBridge automation readout: a value with its unit in a bordered chip, display only",
+     "title": "Automation Readout",
+     "palette": "Automation readout: a value with its unit in a bordered chip, display only",
      "size": {"width": 72, "height": 48}, "exclude": ["lineType"]},
-    {"tag": "obc-heat-exchanger", "type": "cadre.ob.heatexchanger", "name": "heatexchanger", "title": "OB Heat Exchanger",
-     "palette": "OpenBridge heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+    {"tag": "obc-heat-exchanger", "type": "cadre.ob.heatexchanger", "name": "heatexchanger", "title": "Heat Exchanger",
+     "palette": "Heat exchanger: a specialty tank with a hot and a cold side, badges and alert frame, display only",
      "size": {"width": 152, "height": 96}, "exclude": []},
-    {"tag": "obc-heat-pump", "type": "cadre.ob.heatpump", "name": "heatpump", "title": "OB Heat Pump",
-     "palette": "OpenBridge heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
+    {"tag": "obc-heat-pump", "type": "cadre.ob.heatpump", "name": "heatpump", "title": "Heat Pump",
+     "palette": "Heat pump: a specialty tank with a hot and a cold side, badges and alert frame, display only",
      "size": {"width": 152, "height": 96}, "exclude": []},
-    {"tag": "obc-hydraulic-separator", "type": "cadre.ob.hydraulicseparator", "name": "hydraulicseparator", "title": "OB Hydraulic Separator",
-     "palette": "OpenBridge hydraulic separator: a specialty tank with badges and alert frame, display only",
+    {"tag": "obc-hydraulic-separator", "type": "cadre.ob.hydraulicseparator", "name": "hydraulicseparator", "title": "Hydraulic Separator",
+     "palette": "Hydraulic separator: a specialty tank with badges and alert frame, display only",
      "size": {"width": 152, "height": 96}, "exclude": []},
-    {"tag": "obc-gauge-generator", "type": "cadre.ob.gaugegenerator", "name": "gaugegenerator", "title": "OB Generator Gauge",
-     "palette": "OpenBridge generator gauge: a dial with value, optional second value and setpoint marks, display only",
+    {"tag": "obc-gauge-generator", "type": "cadre.ob.gaugegenerator", "name": "gaugegenerator", "title": "Generator Gauge",
+     "palette": "Generator gauge: a dial with value, optional second value and setpoint marks, display only",
      "size": {"width": 240, "height": 280}, "exclude": []},
-    {"tag": "obc-gauge-motors-and-pumps", "type": "cadre.ob.gaugemotorspumps", "name": "gaugemotorspumps", "title": "OB Motor and Pump Gauge",
-     "palette": "OpenBridge motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
+    {"tag": "obc-gauge-motors-and-pumps", "type": "cadre.ob.gaugemotorspumps", "name": "gaugemotorspumps", "title": "Motor and Pump Gauge",
+     "palette": "Motor and pump gauge: a dial with value, optional second value and setpoint marks, display only",
      "size": {"width": 240, "height": 280}, "exclude": []},
-    {"tag": "obc-gauge-valve", "type": "cadre.ob.gaugevalve", "name": "gaugevalve", "title": "OB Valve Gauge",
-     "palette": "OpenBridge valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
+    {"tag": "obc-gauge-valve", "type": "cadre.ob.gaugevalve", "name": "gaugevalve", "title": "Valve Gauge",
+     "palette": "Valve gauge: the opening of a two-way or three-way valve as a dial, with setpoint marks, display only",
      "size": {"width": 240, "height": 280}, "exclude": []},
-    {"tag": "obc-hydraulic-valve-4-3", "type": "cadre.ob.hydraulicvalve43", "name": "hydraulicvalve43", "title": "OB Hydraulic 4/3 Valve",
-     "palette": "OpenBridge hydraulic 4/3 valve: a three position selector showing the selected position, display only",
+    {"tag": "obc-hydraulic-valve-4-3", "type": "cadre.ob.hydraulicvalve43", "name": "hydraulicvalve43", "title": "Hydraulic 4/3 Valve",
+     "palette": "Hydraulic 4/3 valve: a three position selector showing the selected position, display only",
      "size": {"width": 144, "height": 48}, "exclude": []},
-    {"tag": "obc-hydraulic-valve-x-2", "type": "cadre.ob.hydraulicvalvex2", "name": "hydraulicvalvex2", "title": "OB Hydraulic X/2 Valve",
-     "palette": "OpenBridge hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
+    {"tag": "obc-hydraulic-valve-x-2", "type": "cadre.ob.hydraulicvalvex2", "name": "hydraulicvalvex2", "title": "Hydraulic X/2 Valve",
+     "palette": "Hydraulic two position valve (2/2, 3/2 or 4/2): a selector showing the selected position, display only",
      "size": {"width": 96, "height": 48}, "exclude": []},
-    {"tag": "obc-transmitter-button", "type": "cadre.ob.transmitterbutton", "name": "transmitterbutton", "title": "OB Transmitter Button",
-     "palette": "OpenBridge transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
+    {"tag": "obc-transmitter-button", "type": "cadre.ob.transmitterbutton", "name": "transmitterbutton", "title": "Transmitter Button",
+     "palette": "Transmitter button: a readout chip with a value and unit, optional advice and setpoint segments, or a tag pill, display only",
      "size": {"width": 96, "height": 40}, "exclude": []},
     # batch C1: the bars and graphs (module-only, display only). The series and segments are lists of objects (`data`).
-    {"tag": "obc-area-graph", "type": "cadre.ob.areagraph", "name": "areagraph", "title": "OB Area Graph",
-     "palette": "OpenBridge area graph: one or several series drawn as filled areas, display only",
+    {"tag": "obc-area-graph", "type": "cadre.ob.areagraph", "name": "areagraph", "title": "Area Graph",
+     "palette": "Area graph: one or several series drawn as filled areas, display only",
      "size": {"width": 480, "height": 320}, "exclude": LINE_FRAME,
      "data": {"data": "points", "datasets": "datasets", "labels": "labels", "colors": "colors", "yAxes": "yaxes"}},
-    {"tag": "obc-line-graph", "type": "cadre.ob.linegraph", "name": "linegraph", "title": "OB Line Graph",
-     "palette": "OpenBridge line graph: one or several series drawn as lines, display only",
+    {"tag": "obc-line-graph", "type": "cadre.ob.linegraph", "name": "linegraph", "title": "Line Graph",
+     "palette": "Line graph: one or several series drawn as lines, display only",
      "size": {"width": 480, "height": 320}, "exclude": LINE_FRAME,
      "data": {"data": "points", "datasets": "datasets", "labels": "labels", "colors": "colors", "yAxes": "yaxes"}},
-    {"tag": "obc-donut-chart", "type": "cadre.ob.donutchart", "name": "donutchart", "title": "OB Donut Chart",
-     "palette": "OpenBridge donut chart: labelled segments of a ring with a centre total, display only",
+    {"tag": "obc-donut-chart", "type": "cadre.ob.donutchart", "name": "donutchart", "title": "Donut Chart",
+     "palette": "Donut chart: labelled segments of a ring with a centre total, display only",
      "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
      "data": {"data": "segments", "colors": "colors"}},
-    {"tag": "obc-pie-chart", "type": "cadre.ob.piechart", "name": "piechart", "title": "OB Pie Chart",
-     "palette": "OpenBridge pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
+    {"tag": "obc-pie-chart", "type": "cadre.ob.piechart", "name": "piechart", "title": "Pie Chart",
+     "palette": "Pie chart: labelled segments of a circle, with an optional sunburst ring of subsegments, display only",
      "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
      "data": {"data": "piesegments", "colors": "colors"}},
-    {"tag": "obc-polar-chart", "type": "cadre.ob.polarchart", "name": "polarchart", "title": "OB Polar Chart",
-     "palette": "OpenBridge polar chart: sectors of equal angle whose reach shows each value, display only",
+    {"tag": "obc-polar-chart", "type": "cadre.ob.polarchart", "name": "polarchart", "title": "Polar Chart",
+     "palette": "Polar chart: sectors of equal angle whose reach shows each value, display only",
      "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
      "data": {"data": "segments", "colors": "colors"}},
-    {"tag": "obc-radial-bar-chart", "type": "cadre.ob.radialbarchart", "name": "radialbarchart", "title": "OB Radial Bar Chart",
-     "palette": "OpenBridge radial bar chart: concentric rings, one for each value, display only",
+    {"tag": "obc-radial-bar-chart", "type": "cadre.ob.radialbarchart", "name": "radialbarchart", "title": "Radial Bar Chart",
+     "palette": "Radial bar chart: concentric rings, one for each value, display only",
      "size": {"width": 480, "height": 320}, "exclude": ["showDebugOverlay"],
      "data": {"data": "rings", "colors": "colors"}},
     # batch C2: the building blocks (module-only, display only). The scale of a bar is drawn by the element itself.
-    {"tag": "obc-bar-horizontal", "type": "cadre.ob.barhorizontal", "name": "barhorizontal", "title": "OB Horizontal Bar",
-     "palette": "OpenBridge horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+    {"tag": "obc-bar-horizontal", "type": "cadre.ob.barhorizontal", "name": "barhorizontal", "title": "Horizontal Bar",
+     "palette": "Horizontal bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
      "size": {"width": 480, "height": 128}, "exclude": BAR_LEFT_OUT, "properties": ["hasScale", "showLabels"],
      "data": {"advices": "linearadvices"}},
-    {"tag": "obc-bar-vertical", "type": "cadre.ob.barvertical", "name": "barvertical", "title": "OB Vertical Bar",
-     "palette": "OpenBridge vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
+    {"tag": "obc-bar-vertical", "type": "cadre.ob.barvertical", "name": "barvertical", "title": "Vertical Bar",
+     "palette": "Vertical bar: a scale with an optional bar, value fill, advice zones and setpoint marker, display only",
      "size": {"width": 128, "height": 320}, "exclude": BAR_LEFT_OUT, "properties": ["hasScale", "showLabels"],
      "data": {"advices": "linearadvices"}},
-    {"tag": "obc-circular-progress", "type": "cadre.ob.circularprogress", "name": "circularprogress", "title": "OB Circular Progress",
-     "palette": "OpenBridge circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
+    {"tag": "obc-circular-progress", "type": "cadre.ob.circularprogress", "name": "circularprogress", "title": "Circular Progress",
+     "palette": "Circular progress: a ring that fills with a value, or spins while the wait has no end, display only",
      "size": {"width": 48, "height": 48}, "exclude": []},
-    {"tag": "obc-instrument-radial", "type": "cadre.ob.instrumentradial", "name": "instrumentradial", "title": "OB Radial Instrument",
-     "palette": "OpenBridge radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
+    {"tag": "obc-instrument-radial", "type": "cadre.ob.instrumentradial", "name": "instrumentradial", "title": "Radial Instrument",
+     "palette": "Radial instrument: a dial with a needle or filled arc, scale, advice zones and setpoint marker, display only",
      "size": {"width": 240, "height": 240}, "exclude": [], "data": {"advices": "radialadvices"}},
     # `valueSize` and `dataQuality` are nullable enumerations (undefined derives the size from `size`, or states the data fully
     # trusted), and `alert` is a flag or a frame configuration object: none is a property the contract carries.
-    {"tag": "obc-readout-block", "type": "cadre.ob.readoutblock", "name": "readoutblock", "title": "OB Readout Block",
-     "palette": "OpenBridge readout block: a number or text with a value, setpoint or advice marker, display only",
+    {"tag": "obc-readout-block", "type": "cadre.ob.readoutblock", "name": "readoutblock", "title": "Readout Block",
+     "palette": "Readout block: a number or text with a value, setpoint or advice marker, display only",
      "size": {"width": 144, "height": 64}, "exclude": ["valueSize", "dataQuality", "alert"]},
     # batch F1 (T2): the frame's leaf components. They are module-only kinds listed in `screen.FRAME_ONLY`; their events are
     # carried and not wired (the frame option wires them), and their slotted children are slot properties (`slots`).
-    {"tag": "obc-tooltip", "type": "cadre.ob.tooltip", "name": "tooltip", "title": "OB Tooltip",
-     "palette": "OpenBridge tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
+    {"tag": "obc-tooltip", "type": "cadre.ob.tooltip", "name": "tooltip", "title": "Tooltip",
+     "palette": "Tooltip: a short label or an icon in a bubble with an arrow, in one of seven variants",
      "size": {"width": 224, "height": 40}, "exclude": [], "slots": [{"slot": "icon", "kind": "icon"}]},
-    {"tag": "obc-toggletip", "type": "cadre.ob.toggletip", "name": "toggletip", "title": "OB Toggletip",
-     "palette": "OpenBridge toggletip: a title, description and optional text content and two actions in a bubble",
+    {"tag": "obc-toggletip", "type": "cadre.ob.toggletip", "name": "toggletip", "title": "Toggletip",
+     "palette": "Toggletip: a title, description and optional text content and two actions in a bubble",
      "size": {"width": 320, "height": 232}, "exclude": [], "types": {"variant": "ToggletipVariant"},
      "undefinedWhenEmpty": ["description"], "events": ["primary-action", "secondary-action"],
      "slots": [{"slot": "leading-icon", "kind": "icon"}, {"slot": "trailing-icon", "kind": "icon"},
                {"slot": "content", "kind": "text"}],
      "describe": {"hasContent": "Whether the toggletip draws the `content` text below the description.",
                   "customWidth": "The width of the toggletip in px; unset sizes it to its content."}},
-    {"tag": "obc-clock", "type": "cadre.ob.clock", "name": "clock", "title": "OB Clock",
-     "palette": "OpenBridge clock: the time of day with optional seconds, date, weekday, year and time zone",
+    {"tag": "obc-clock", "type": "cadre.ob.clock", "name": "clock", "title": "Clock",
+     "palette": "Clock: the time of day with optional seconds, date, weekday, year and time zone",
      "size": {"width": 208, "height": 64}, "exclude": [], "properties": ["isClickable"],
      "describe": {"date": "The time to draw, an ISO 8601 string in UTC (for example 2026-01-01T09:30:00Z), which the page "
                           "binds to the current time. The clock does not tick by itself; empty draws NaN."}},
-    {"tag": "obc-user-button", "type": "cadre.ob.userbutton", "name": "userbutton", "title": "OB User Button",
-     "palette": "OpenBridge user button: a round button with a user icon or initials and an optional label and sublabel",
+    {"tag": "obc-user-button", "type": "cadre.ob.userbutton", "name": "userbutton", "title": "User Button",
+     "palette": "User button: a round button with a user icon or initials and an optional label and sublabel",
      "size": {"width": 128, "height": 136}, "exclude": [], "dts": "components/user-button/user-button.d.ts",
      "undefinedWhenEmpty": ["label", "sublabel"], "slots": [{"slot": "icon", "kind": "icon"}]},
-    {"tag": "obc-app-button", "type": "cadre.ob.appbutton", "name": "appbutton", "title": "OB App Button",
-     "palette": "OpenBridge app button: an icon above a label, as in the application menu",
+    {"tag": "obc-app-button", "type": "cadre.ob.appbutton", "name": "appbutton", "title": "App Button",
+     "palette": "App button: an icon above a label, as in the application menu",
      "size": {"width": 96, "height": 96}, "exclude": [], "types": {"size": "AppButtonSize"}, "events": ["click"],
      "properties": ["showLabel"], "slots": [{"slot": "icon", "kind": "icon"}],
      "eventText": {"click": "The app button was pressed. The event carries nothing; the page's script decides what it opens."}},
     {"tag": "obc-notification-button", "type": "cadre.ob.notificationbutton", "name": "notificationbutton",
-     "title": "OB Notification Button",
-     "palette": "OpenBridge notification button: a bell, flat or filled, with an optional count",
+     "title": "Notification Button",
+     "palette": "Notification button: a bell, flat or filled, with an optional count",
      "size": {"width": 64, "height": 64}, "exclude": [], "events": ["obc-click"], "slots": [{"slot": "icon", "kind": "icon"}]},
     {"tag": "obc-notification-badge-button", "type": "cadre.ob.notificationbadgebutton", "name": "notificationbadgebutton",
-     "title": "OB Notification Badge Button",
-     "palette": "OpenBridge notification badge button: a small button with a short text or an icon, used for counts",
+     "title": "Notification Badge Button",
+     "palette": "Notification badge button: a small button with a short text or an icon, used for counts",
      "size": {"width": 80, "height": 48}, "exclude": [], "events": ["click"],
      "slots": [{"slot": "", "kind": "text", "property": "label"}, {"slot": "", "kind": "icon"}],
      "eventText": {"click": "The badge button was pressed. The event carries nothing."}},
     # batch F2 (T2): the alert button and the alert menu, each child before its parent. The silence control is hidden by default
     # (owner's answer 4 of cloud/FRAME-DESIGN.md): no Cadre function silences an alarm, so `showSilenceButton` is false.
-    {"tag": "obc-alert-button-item", "type": "cadre.ob.alertbuttonitem", "name": "alertbuttonitem", "title": "OB Alert Button Item",
-     "palette": "OpenBridge alert button item: one bell with an alert type and a count, as the alert button draws it",
+    {"tag": "obc-alert-button-item", "type": "cadre.ob.alertbuttonitem", "name": "alertbuttonitem", "title": "Alert Button Item",
+     "palette": "Alert button item: one bell with an alert type and a count, as the alert button draws it",
      "size": {"width": 96, "height": 64}, "exclude": [], "events": ["click"], "undefinedWhenEmpty": ["alertType"],
      "describe": {"alertType": ALERT_TYPE_TEXT},
      "eventText": {"click": "The bell was pressed. The event carries nothing; the page's script decides what it opens."}},
-    {"tag": "obc-alert-button", "type": "cadre.ob.alertbutton", "name": "alertbutton", "title": "OB Alert Button",
-     "palette": "OpenBridge alert button: a bell with the count of alerts and an alert type, with an optional silence control",
+    {"tag": "obc-alert-button", "type": "cadre.ob.alertbutton", "name": "alertbutton", "title": "Alert Button",
+     "palette": "Alert button: a bell with the count of alerts and an alert type, with an optional silence control",
      "size": {"width": 160, "height": 64}, "exclude": [], "events": ["click-alert", "click-silence"],
      "undefinedWhenEmpty": ["alertType"], "types": {"type": "ObcAlertButtonType"},
      "describe": {"alertType": ALERT_TYPE_TEXT,
                   "showSilenceButton": "Whether the silence control is drawn beside the bell. False by default: no Cadre function "
                                        "silences an alarm, so the control stays hidden until one exists."}},
-    {"tag": "obc-alert-menu-item", "type": "cadre.ob.alertmenuitem", "name": "alertmenuitem", "title": "OB Alert Menu Item",
-     "palette": "OpenBridge alert menu item: one alert row with a title, description, date, time and an ACK action",
+    {"tag": "obc-alert-menu-item", "type": "cadre.ob.alertmenuitem", "name": "alertmenuitem", "title": "Alert Menu Item",
+     "palette": "Alert menu item: one alert row with a title, description, date, time and an ACK action",
      "size": {"width": 360, "height": 72}, "exclude": [], "events": ["item-click", "ack-click", "ack-secondary-click"],
      "eventKinds": {"ack-click": "none"}, "types": {"status": "ObcAlertMenuItemStatus"},
      "slots": [{"slot": "icon", "kind": "icon"}],
      "items": {"alertIcon": {"tags": ["obc-alert-icon"], "slot": "alert-icon",
                              "describe": "The alert icon at the start of the row, one `obc-alert-icon`"}},
      "eventText": {"ack-click": "The ACK action of the row was pressed. The event carries nothing."}},
-    {"tag": "obc-alert-menu", "type": "cadre.ob.alertmenu", "name": "alertmenu", "title": "OB Alert Menu",
-     "palette": "OpenBridge alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
+    {"tag": "obc-alert-menu", "type": "cadre.ob.alertmenu", "name": "alertmenu", "title": "Alert Menu",
+     "palette": "Alert menu: tabs of alert rows with ACK visible, Silence and an Alerts button",
      "size": {"width": 640, "height": 560}, "exclude": [],
      "events": ["ack-all-visible-click", "silence-click", "go-to-alert-list-click", "item-click", "ack-click", "ack-secondary-click"],
      "itemEvents": ["item-click", "ack-click", "ack-secondary-click"],
@@ -491,23 +491,23 @@ COMPONENTS = [
     # batch F3 (T2): navigation, tree navigation and the breadcrumb, each child before its parent. `treeBranches` and `branches` are
     # the container's (the navigation menu in the tree variant and the tree navigation compute them), so they are excluded. The
     # navigation menu's `logo` slot is not carried.
-    {"tag": "obc-navigation-item", "type": "cadre.ob.navigationitem", "name": "navigationitem", "title": "OB Navigation Item",
-     "palette": "OpenBridge navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
+    {"tag": "obc-navigation-item", "type": "cadre.ob.navigationitem", "name": "navigationitem", "title": "Navigation Item",
+     "palette": "Navigation item: one row of the navigation menu, with a label, a checked state and optional icons",
      "size": {"width": 280, "height": 48}, "exclude": ["treeBranches"], "events": ["click"], "undefinedWhenEmpty": ["href"],
      "types": {"variant": "ObcNavigationMenuVariant"}, "enums": {"terminalType": "TreeTerminalType"},
      "slots": [{"slot": "icon", "kind": "icon"}, {"slot": "trailing-icon", "kind": "icon"}],
      "eventText": {"click": "The item was pressed. The event carries nothing; the page's script decides where it goes."}},
     {"tag": "obc-navigation-item-group", "type": "cadre.ob.navigationitemgroup", "name": "navigationitemgroup",
-     "title": "OB Navigation Item Group",
-     "palette": "OpenBridge navigation item group: a row that opens a flyout of navigation items and groups",
+     "title": "Navigation Item Group",
+     "palette": "Navigation item group: a row that opens a flyout of navigation items and groups",
      "size": {"width": 280, "height": 48}, "exclude": ["treeBranches"], "events": ["open"], "undefinedWhenEmpty": ["href"],
      "types": {"variant": "ObcNavigationMenuVariant"}, "enums": {"terminalType": "TreeTerminalType"},
      "slots": [{"slot": "icon", "kind": "icon"}],
      "items": {"items": {"tags": ["obc-navigation-item", "obc-navigation-item-group"], "slot": "",
                          "describe": "The rows of the flyout, navigation items and groups (a group holds more, to any depth)"}},
      "eventText": {"open": "The group was opened. The event carries nothing."}},
-    {"tag": "obc-navigation-menu", "type": "cadre.ob.navigationmenu", "name": "navigationmenu", "title": "OB Navigation Menu",
-     "palette": "OpenBridge navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
+    {"tag": "obc-navigation-menu", "type": "cadre.ob.navigationmenu", "name": "navigationmenu", "title": "Navigation Menu",
+     "palette": "Navigation menu: main and footer items and groups, in the full, compact, icon only or tree variant",
      "size": {"width": 320, "height": 480}, "exclude": [],
      "events": ["click", "open"], "itemEvents": ["click", "open"], "eventKinds": {"click": "item", "open": "item"},
      "eventNames": {"click": "onItemClick", "open": "onGroupOpen"},
@@ -519,16 +519,16 @@ COMPONENTS = [
                             "its tag.",
                    "open": "A group was opened (at any depth). event.id is the group's `id` (empty if it has none) and event.tag its tag."}},
     {"tag": "obc-tree-navigation-item", "type": "cadre.ob.treenavigationitem", "name": "treenavigationitem",
-     "title": "OB Tree Navigation Item",
-     "palette": "OpenBridge tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
+     "title": "Tree Navigation Item",
+     "palette": "Tree navigation item: one row of a tree, with an optional chevron, icon and alert badges",
      "size": {"width": 280, "height": 48}, "exclude": ["branches"], "events": ["click", "expand-toggle"], "customEvents": ["click"],
      "undefinedWhenEmpty": ["href"], "enums": {"terminalType": "TreeTerminalType"}, "properties": ["hasLeadingIcon"],
      "slots": [{"slot": "icon", "kind": "icon"}],
      "eventText": {"click": "The row was pressed and was neither disabled nor already checked. The event carries nothing; the page's "
                             "script decides where it goes."}},
     {"tag": "obc-tree-navigation-group", "type": "cadre.ob.treenavigationgroup", "name": "treenavigationgroup",
-     "title": "OB Tree Navigation Group",
-     "palette": "OpenBridge tree navigation group: a tree row that discloses child rows",
+     "title": "Tree Navigation Group",
+     "palette": "Tree navigation group: a tree row that discloses child rows",
      "size": {"width": 280, "height": 240}, "exclude": ["branches"], "events": ["expand-toggle"],
      "undefinedWhenEmpty": ["href"], "enums": {"terminalType": "TreeTerminalType"}, "properties": ["hasIcon"],
      "slots": [{"slot": "icon", "kind": "icon"}],
@@ -536,8 +536,8 @@ COMPONENTS = [
                          "describe": "The child rows of the group, tree items and groups (a group holds more, to any depth)"}},
      "eventText": {"expand-toggle": "The header asks to open or close the group. event.expanded is the state the press asks for; the "
                                     "group applies it itself."}},
-    {"tag": "obc-tree-navigation", "type": "cadre.ob.treenavigation", "name": "treenavigation", "title": "OB Tree Navigation",
-     "palette": "OpenBridge tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
+    {"tag": "obc-tree-navigation", "type": "cadre.ob.treenavigation", "name": "treenavigation", "title": "Tree Navigation",
+     "palette": "Tree navigation: groups and items nested to any depth, with guide lines and alert badges for each row",
      "size": {"width": 320, "height": 240}, "exclude": [],
      "events": ["click", "expand-toggle"], "itemEvents": ["click", "expand-toggle"], "customEvents": ["click"],
      "eventKinds": {"click": "item", "expand-toggle": "itemexpanded"}, "eventNames": {"click": "onItemClick"},
@@ -547,15 +547,15 @@ COMPONENTS = [
                             "(empty if it has none) and event.tag its tag.",
                    "expand-toggle": "A row asks to open or close its children (at any depth). event.id and event.tag name the row; "
                                     "event.expanded is the state the press asks for; the group applies it itself."}},
-    {"tag": "obc-breadcrumb", "type": "cadre.ob.breadcrumb", "name": "breadcrumb", "title": "OB Breadcrumb",
-     "palette": "OpenBridge breadcrumb: the crumbs from the first to the current page",
+    {"tag": "obc-breadcrumb", "type": "cadre.ob.breadcrumb", "name": "breadcrumb", "title": "Breadcrumb",
+     "palette": "Breadcrumb: the crumbs from the first to the current page",
      "size": {"width": 320, "height": 48}, "exclude": [], "data": {"items": "crumbs"}, "properties": ["iconOnly"],
      "events": ["breadcrumb-click"]},
     # batch F4 (T2): the menus and the top bar. The brilliance menu changes its own palette and brightness on a press, so the events
     # write the component's property back (`writeBack`); the frame wires the palette to the existing theme path (F6). The link switches
     # keep their own state, and are hidden by default as the element has them.
-    {"tag": "obc-brilliance-menu", "type": "cadre.ob.brilliancemenu", "name": "brilliancemenu", "title": "OB Brilliance Menu",
-     "palette": "OpenBridge brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
+    {"tag": "obc-brilliance-menu", "type": "cadre.ob.brilliancemenu", "name": "brilliancemenu", "title": "Brilliance Menu",
+     "palette": "Brilliance menu: the palette (night, dusk, day, bright) and the brightness, in the normal, compact or tabbed variant",
      "size": {"width": 320, "height": 460}, "exclude": [], "properties": ["showBrightness", "showPalette"],
      "types": {"variant": "ObcBrillianceMenuVariant", "brightnessInputVariant": "ObcBrillianceInputVariant"},
      "events": ["palette-changed", "brightness-changed", "link-palette-changed", "link-brightness-changed", "screen-control-link-clicked"],
@@ -578,8 +578,8 @@ COMPONENTS = [
     # draw the input boxes are fixed off (`fixed`: the form is the title and the Sign in button), and the event of the Sign in button
     # carries nothing (the element's detail holds the typed values, and the wrapper does not read it). The list of recent users and the
     # signed in actions (with the primary action and the icon slots of the actions) are not carried: Cadre has none.
-    {"tag": "obc-user-menu", "type": "cadre.ob.usermenu", "name": "usermenu", "title": "OB User Menu",
-     "palette": "OpenBridge user menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
+    {"tag": "obc-user-menu", "type": "cadre.ob.usermenu", "name": "usermenu", "title": "User Menu",
+     "palette": "User menu: the signed in user with a Sign out button, or a Sign in button; no credential is carried",
      "size": {"width": 320, "height": 280},
      "exclude": ["username", "password", "usernameError", "passwordError", "hasRecentlySignedIn", "primaryActionId"],
      "fixed": {"showUsername": False, "showPassword": False}, "undefinedWhenEmpty": ["userInitials", "userLabel", "userRole"],
@@ -590,8 +590,8 @@ COMPONENTS = [
     # `eventName` that the manifest lists, which is the parameter name of a private helper of the element (`dispatchClickEvent`) and
     # not an event the element fires. With `externalControl` false the menu opens its sub menus itself, and the press of a heading
     # writes the component's `activeSubMenu` back from the element (the event has no detail), so that an update does not close the sub menu.
-    {"tag": "obc-system-menu", "type": "cadre.ob.systemmenu", "name": "systemmenu", "title": "OB System Menu",
-     "palette": "OpenBridge system menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
+    {"tag": "obc-system-menu", "type": "cadre.ob.systemmenu", "name": "systemmenu", "title": "System Menu",
+     "palette": "System menu: the Wi-Fi, audio, microphone and battery sections with their sub menus, display only",
      "size": {"width": 320, "height": 480}, "exclude": [], "objects": ["wifiState", "audioState", "microphoneState", "batteryState"],
      "writeBack": {"to-sub-menu-click": ("activeSubMenu", "@element")},      # the menu opens its sub menu itself (no detail): keep it open
      "events": ["wifi-click", "audio-click", "audio-volume-change", "microphone-click", "push-to-talk-change", "battery-saving-mode-change",
@@ -611,8 +611,8 @@ COMPONENTS = [
          "battery-mode-change": [("mode", "string", "The name of the mode chosen.")]}},
     # The app menu holds its app buttons as `items` (an `obc-app-button` with an `obi-` icon child in the slot `icon`). A press of a
     # button is the button's own `click`, which bubbles; the menu reports the button's `id` and tag, and the search field its text.
-    {"tag": "obc-app-menu", "type": "cadre.ob.appmenu", "name": "appmenu", "title": "OB App Menu",
-     "palette": "OpenBridge app menu: a search field above a grid of app buttons",
+    {"tag": "obc-app-menu", "type": "cadre.ob.appmenu", "name": "appmenu", "title": "App Menu",
+     "palette": "App menu: a search field above a grid of app buttons",
      "size": {"width": 360, "height": 280}, "exclude": [], "events": ["search", "click"], "itemEvents": ["click"],
      "eventKinds": {"click": "item"}, "eventNames": {"click": "onAppClick"},
      "eventFields": {"search": [("query", "string", "The text now in the search field.")]},
@@ -623,8 +623,8 @@ COMPONENTS = [
     # or releases it. The switch changes the menu's own state, so the event writes the component's `inCommand` back; the frame does not
     # use the switch to command anything (a command stays the Confirm row), and the menu writes no tag. The nine slots are text or
     # icon properties. The element's `toogle-` slot names carry the typo of the pinned release; the properties are spelled correctly.
-    {"tag": "obc-command-menu", "type": "cadre.ob.commandmenu", "name": "commandmenu", "title": "OB Command Menu",
-     "palette": "OpenBridge command menu: the command status, its description and location, and a switch that takes or releases command",
+    {"tag": "obc-command-menu", "type": "cadre.ob.commandmenu", "name": "commandmenu", "title": "Command Menu",
+     "palette": "Command menu: the command status, its description and location, and a switch that takes or releases command",
      "size": {"width": 360, "height": 260}, "exclude": [], "properties": ["showLocation"], "events": ["change"],
      "eventNames": {"change": "onCommandChange"},
      "eventFields": {"change": [("inCommand", "boolean", "The state the switch asks for: true takes command, false releases it.")]},
@@ -644,8 +644,8 @@ COMPONENTS = [
     # and `command-button` slots are an icon and a text property. The element's own `showDate` is not used by the element (the clock
     # is slotted), so it is not carried. The breadcrumb is drawn only in the settings mode, where `breadcrumbItems` (label and href)
     # and the events `back`, `close` and `breadcrumb-click` apply; the frame keeps its own crumb row and does not use that mode.
-    {"tag": "obc-top-bar", "type": "cadre.ob.topbar", "name": "topbar", "title": "OB Top Bar",
-     "palette": "OpenBridge top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
+    {"tag": "obc-top-bar", "type": "cadre.ob.topbar", "name": "topbar", "title": "Top Bar",
+     "palette": "Top bar: menu button, application and page name, alert button, clock and the dimming, user and apps buttons",
      "size": {"width": 960, "height": 48}, "exclude": ["showDate"], "types": {"menuButtonIcon": "ObcTopBarMenuButtonIcon"},
      "data": {"breadcrumbItems": "crumbs"},
      "events": ["menu-button-clicked", "dimming-button-clicked", "apps-button-clicked", "left-more-button-clicked", "user-button-clicked",
@@ -665,8 +665,8 @@ COMPONENTS = [
     # The tab item draws its title from `title` (the `title` slot is not carried: it would repeat the attribute), a leading icon and a
     # badge icon as icon slot properties. Not carried: the unused `icon` attribute (the element never reads it) and the `badges` list
     # (an object list whose entries name icon slots). The tab row builds its own items from `tabs`.
-    {"tag": "obc-tab-item", "type": "cadre.ob.tabitem", "name": "tabitem", "title": "OB Tab Item",
-     "palette": "OpenBridge tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
+    {"tag": "obc-tab-item", "type": "cadre.ob.tabitem", "name": "tabitem", "title": "Tab Item",
+     "palette": "Tab item: one tab with a title, an optional subtitle, leading icon, badge and close button",
      "size": {"width": 200, "height": 48}, "exclude": ["icon"], "events": ["tab-click", "tab-close"],
      "enums": {"badgeType": "BadgeType", "badgeSize": "BadgeSize"},
      "eventFields": {"tab-click": [("title", "string", "The title of the tab.")], "tab-close": [("title", "string", "The title of the tab.")]},
@@ -679,8 +679,8 @@ COMPONENTS = [
     # The row selects a pressed tab itself and removes a closed tab from its own list, so the events write the component's
     # `selectedTabId` back (the closed tab stays in the component's `tabs` until the page drops it). Not carried: the `badges` list of a
     # tab and the per tab badge icon slots.
-    {"tag": "obc-tab-row", "type": "cadre.ob.tabrow", "name": "tabrow", "title": "OB Tab Row",
-     "palette": "OpenBridge tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
+    {"tag": "obc-tab-row", "type": "cadre.ob.tabrow", "name": "tabrow", "title": "Tab Row",
+     "palette": "Tab row: a row of tabs built from a list, with a selected tab, optional close buttons and an add button",
      "size": {"width": 480, "height": 48}, "exclude": [], "data": {"tabs": "tabs"}, "tabIcons": True,
      "events": ["tab-selected", "tab-closed", "add-new-tab"],
      "eventFields": {"tab-selected": [("id", "string", "The `id` of the tab that was pressed."),
@@ -698,8 +698,8 @@ COMPONENTS = [
      "describe": {"selectedTabId": "The `id` of the selected tab."}},
     # The pivot item is selected by its group (the group sets `selected` and `direction` on the items it holds), so a standalone item
     # only reports a press of an enabled item that is not selected; the page sets `selected`. Its leading icon is an icon slot property.
-    {"tag": "obc-pivot-item", "type": "cadre.ob.pivotitem", "name": "pivotitem", "title": "OB Pivot Item",
-     "palette": "OpenBridge pivot item: one pivot with an optional icon and label, selected by its group",
+    {"tag": "obc-pivot-item", "type": "cadre.ob.pivotitem", "name": "pivotitem", "title": "Pivot Item",
+     "palette": "Pivot item: one pivot with an optional icon and label, selected by its group",
      "size": {"width": 128, "height": 48}, "exclude": [], "types": {"direction": "ObcPivotItemDirection"}, "events": ["selected"],
      "eventFields": {"selected": [("value", "string", "The `value` of the pivot.")]},
      "slots": [{"slot": "icon", "kind": "icon"}],
@@ -707,8 +707,8 @@ COMPONENTS = [
                                "does not select itself; the page sets `selected`."}},
     # The pivot group holds its pivots as `items`. It selects the pressed pivot itself (it sets `selected` on its children), so `change`
     # writes the component's `selectedValue` back; the wrapper asks the group to mark its children after the list is built.
-    {"tag": "obc-pivot-item-group", "type": "cadre.ob.pivotitemgroup", "name": "pivotitemgroup", "title": "OB Pivot Item Group",
-     "palette": "OpenBridge pivot item group: a horizontal or vertical set of pivots, one of them selected",
+    {"tag": "obc-pivot-item-group", "type": "cadre.ob.pivotitemgroup", "name": "pivotitemgroup", "title": "Pivot Item Group",
+     "palette": "Pivot item group: a horizontal or vertical set of pivots, one of them selected",
      "size": {"width": 240, "height": 144}, "exclude": [], "events": ["change"],
      "eventFields": {"change": [("selectedValue", "string", "The `value` of the selected pivot (empty if the selection was removed).")]},
      "writeBack": {"change": ("selectedValue", "selectedValue")},
@@ -720,8 +720,8 @@ COMPONENTS = [
     # slot takes arbitrary content, which a Perspective component cannot hold (the module has no container), so `content` is a text
     # property and the window is not used for commands: the command dialogue of the library stays the Confirm row (wiki 12 section 17.27).
     # The window is a plain block of the box it is given and draws no scrim or overlay of its own.
-    {"tag": "obc-modal-window", "type": "cadre.ob.modalwindow", "name": "modalwindow", "title": "OB Modal Window",
-     "palette": "OpenBridge modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
+    {"tag": "obc-modal-window", "type": "cadre.ob.modalwindow", "name": "modalwindow", "title": "Modal Window",
+     "palette": "Modal window: a title, a text content and Close, Cancel, Done and optional action buttons",
      "size": {"width": 540, "height": 240}, "exclude": [], "types": {"size": "ObcModalWindowSize"},
      "properties": ["hasCancelAction", "hasCloseAction"],
      "events": ["close-click", "cancel-click", "done-click", "option-click"],
@@ -741,8 +741,8 @@ COMPONENTS = [
     # option's icon is a template function in the element and is not carried, as is the element's default slot (custom option icons).
     # `multiSelect` and `selectPerGroup` are tri-state in the element (unset: it decides from `type`), so they are empty by default and
     # the element's own rule applies. The element selects an option itself, so `change` writes the component's `selectedValues` back.
-    {"tag": "obc-context-menu-input", "type": "cadre.ob.contextmenuinput", "name": "contextmenuinput", "title": "OB Context Menu Input",
-     "palette": "OpenBridge context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
+    {"tag": "obc-context-menu-input", "type": "cadre.ob.contextmenuinput", "name": "contextmenuinput", "title": "Context Menu Input",
+     "palette": "Context menu input: a list of options, with checkboxes, nested groups or columns, and an optional title bar",
      "size": {"width": 480, "height": 240}, "exclude": [],
      "data": {"options": "menuoptions", "columnGroups": "columngroups", "selectedValues": "strings"},
      "undefinedWhenEmpty": ["multiSelect", "selectPerGroup"], "events": ["close", "item-click", "change"],
@@ -763,8 +763,8 @@ COMPONENTS = [
     # The notification items (batch F5) are display rows of a notification list; no Cadre frame part uses them and no event writes a tag.
     # The menu item opens and closes itself on a press, so `item-click` writes the component's `open` back.
     {"tag": "obc-notification-menu-item", "type": "cadre.ob.notificationmenuitem", "name": "notificationmenuitem",
-     "title": "OB Notification Menu Item",
-     "palette": "OpenBridge notification menu item: one notification row with a title, description, day and time, opened by a press",
+     "title": "Notification Menu Item",
+     "palette": "Notification menu item: one notification row with a title, description, day and time, opened by a press",
      "size": {"width": 360, "height": 112}, "exclude": [], "events": ["item-click", "primary-action-click", "secondary-action-click"],
      "eventKinds": {"item-click": "detail"}, "eventFields": {"item-click": [("open", "boolean", "The state of the row after the press: true opened.")]},
      "writeBack": {"item-click": ("open", "open")},
@@ -777,8 +777,8 @@ COMPONENTS = [
     # `show...` fields have no attribute (they hide the title, the description and the time); the module carries them at the element's
     # own default (shown).
     {"tag": "obc-notification-message-item", "type": "cadre.ob.notificationmessageitem", "name": "notificationmessageitem",
-     "title": "OB Notification Message Item",
-     "palette": "OpenBridge notification message item: one message with a title, description, time and an optional action",
+     "title": "Notification Message Item",
+     "palette": "Notification message item: one message with a title, description, time and an optional action",
      "size": {"width": 640, "height": 64}, "exclude": [], "properties": ["showTitle", "showDescription", "showTimestamp"],
      "events": ["message-click", "action-click"], "slots": [{"slot": "secondary-icon", "kind": "icon"}],
      "describe": {"actionLabel": "The text of the action button, drawn by the `with-button` type.",
@@ -790,8 +790,8 @@ COMPONENTS = [
     # properties (`actionLabel` and `action2Label`, because `action` and `action2` are the flags that draw the buttons); its primary icon
     # (drawn only by the `application` type) is an icon property. The item is dismissed by the page, which hides it on `onDismissClick`.
     {"tag": "obc-notification-floating-item", "type": "cadre.ob.notificationfloatingitem", "name": "notificationfloatingitem",
-     "title": "OB Notification Floating Item",
-     "palette": "OpenBridge notification floating item: a transient notification with a title, description, time and up to two actions",
+     "title": "Notification Floating Item",
+     "palette": "Notification floating item: a transient notification with a title, description, time and up to two actions",
      "size": {"width": 640, "height": 136}, "exclude": [],
      "types": {"type": "ObcFloatingItemType", "direction": "ObcFloatingItemDirection", "lineType": "ObcFloatingItemLineType"},
      "events": ["action-click", "action2-click", "dismiss-click"],
@@ -805,38 +805,38 @@ COMPONENTS = [
      "eventText": {"action-click": "The primary action was pressed. The event carries nothing.",
                    "action2-click": "The secondary action was pressed. The event carries nothing.",
                    "dismiss-click": "The dismiss button was pressed. The event carries nothing; the page's script hides the item."}},
-    {"tag": "obc-horizontal-line", "type": "cadre.ob.pipehorizontal", "name": "pipehorizontal", "title": "OB Pipe, horizontal",
-     "palette": "OpenBridge horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
+    {"tag": "obc-horizontal-line", "type": "cadre.ob.pipehorizontal", "name": "pipehorizontal", "title": "Pipe, horizontal",
+     "palette": "Horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
      "size": {"width": 96, "height": 24}, "exclude": [], "sheet": "linehorizontal"},
-    {"tag": "obc-vertical-line", "type": "cadre.ob.pipevertical", "name": "pipevertical", "title": "OB Pipe, vertical",
-     "palette": "OpenBridge vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
+    {"tag": "obc-vertical-line", "type": "cadre.ob.pipevertical", "name": "pipevertical", "title": "Pipe, vertical",
+     "palette": "Vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
      "size": {"width": 24, "height": 96}, "exclude": [], "sheet": "linevertical"},
-    {"tag": "obc-corner-line", "type": "cadre.ob.pipecorner", "name": "pipecorner", "title": "OB Pipe, corner",
-     "palette": "OpenBridge corner line: a pipe bend joining two sides of its box, display only",
+    {"tag": "obc-corner-line", "type": "cadre.ob.pipecorner", "name": "pipecorner", "title": "Pipe, corner",
+     "palette": "Corner line: a pipe bend joining two sides of its box, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
-    {"tag": "obc-three-way-line", "type": "cadre.ob.pipetee", "name": "pipetee", "title": "OB Pipe, tee",
-     "palette": "OpenBridge three-way line: a pipe tee with a run and one branch, display only",
+    {"tag": "obc-three-way-line", "type": "cadre.ob.pipetee", "name": "pipetee", "title": "Pipe, tee",
+     "palette": "Three-way line: a pipe tee with a run and one branch, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
-    {"tag": "obc-line-cross", "type": "cadre.ob.pipecross", "name": "pipecross", "title": "OB Pipe, four-way junction",
-     "palette": "OpenBridge line cross: four pipe ends joined at the centre of the box, display only",
+    {"tag": "obc-line-cross", "type": "cadre.ob.pipecross", "name": "pipecross", "title": "Pipe, four-way junction",
+     "palette": "Line cross: four pipe ends joined at the centre of the box, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
-    {"tag": "obc-line-overlap", "type": "cadre.ob.pipeoverlap", "name": "pipeoverlap", "title": "OB Pipe, crossover",
-     "palette": "OpenBridge line overlap: one pipe passing over another without joining it, display only",
+    {"tag": "obc-line-overlap", "type": "cadre.ob.pipeoverlap", "name": "pipeoverlap", "title": "Pipe, crossover",
+     "palette": "Line overlap: one pipe passing over another without joining it, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
-    {"tag": "obc-end-point-line", "type": "cadre.ob.pipeend", "name": "pipeend", "title": "OB Pipe, end point",
-     "palette": "OpenBridge end point line: a pipe that ends in a terminal bar on one side of its box, display only",
+    {"tag": "obc-end-point-line", "type": "cadre.ob.pipeend", "name": "pipeend", "title": "Pipe, end point",
+     "palette": "End point line: a pipe that ends in a terminal bar on one side of its box, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
-    {"tag": "obc-direction-line", "type": "cadre.ob.pipedirection", "name": "pipedirection", "title": "OB Pipe, flow direction",
-     "palette": "OpenBridge direction line: a pipe segment with a flow direction chevron, display only",
+    {"tag": "obc-direction-line", "type": "cadre.ob.pipedirection", "name": "pipedirection", "title": "Pipe, flow direction",
+     "palette": "Direction line: a pipe segment with a flow direction chevron, display only",
      "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
-    {"tag": "obc-bus", "type": "cadre.ob.bus", "name": "bus", "title": "OB Bus",
-     "palette": "OpenBridge bus: a labelled busbar or data bus drawn as a bar, display only",
+    {"tag": "obc-bus", "type": "cadre.ob.bus", "name": "bus", "title": "Bus",
+     "palette": "Bus: a labelled busbar or data bus drawn as a bar, display only",
      "size": {"width": 200, "height": 24}, "exclude": []},
 ]
-# The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
+# The canvas zoom component is not a package element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
 CANVAS_ZOOM = {
-    "type": "cadre.ob.canvaszoom", "name": "canvaszoom", "title": "OB Canvas Zoom",
+    "type": "cadre.ob.canvaszoom", "name": "canvaszoom", "title": "Canvas Zoom",
     "palette": "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page",
     "size": {"width": 1, "height": 1},
     "props": {
@@ -864,7 +864,7 @@ DATA_SCHEMA = {"tabs": {"type": "array", "default": [], "items": {"type": "objec
                             "showLeadingBadgeIcon": {"type": "boolean"}, "disabled": {"type": "boolean"}},
                             "required": ["id", "title"]},
                         "description": "The tabs, one object each: `id` (unique; the events report it), `title`, `subtitle`, `showSubtitle`, "
-                                       "`hasLeadingIcon`, `iconName` (an OpenBridge icon the module bundles, in the tab's leading icon slot; "
+                                       "`hasLeadingIcon`, `iconName` (a bundled icon, in the tab's leading icon slot; "
                                        "the element draws a placeholder icon where a tab has none, so a tab without an icon states "
                                        "`hasLeadingIcon` false), `hasBadge`, `badgeCount`, `badgeType`, `badgeSize`, `badgeShowNumber`, "
                                        "`showLeadingBadgeIcon` and `disabled`. The element's `badges` list is not carried."},
@@ -886,7 +886,7 @@ DATA_SCHEMA = {"tabs": {"type": "array", "default": [], "items": {"type": "objec
                           "description": "The crumbs from the first to the current page, one object each: `label` and `href`. A crumb's "
                                          "icon (a template function in the element) is not carried. The last crumb is the current page."},
                "alerts": {"type": "array", "default": [], "items": {"type": "object"},
-                          "description": "Alert records (OpenBridge types.d.ts Alert): id, tagId, source, text, note, "
+                          "description": "Alert records (package types.d.ts Alert): id, tagId, source, text, note, "
                                          "acknowledged, active, type, time (epoch milliseconds), shelved."},
              "numbers": {"type": "array", "default": [], "items": {"type": "number"},
                          "description": "The samples of a trend graph, oldest first, as plain numbers (the element's `data`)."},
@@ -946,7 +946,7 @@ DATA_SCHEMA = {"tabs": {"type": "array", "default": [], "items": {"type": "objec
 EXTRA = {
     "hasSpeed": {"kind": "boolean", "def": True, "schema": {"type": "boolean", "default": True, "description":
                  "Whether the element prints a speed while it runs. False leaves the speed readout out (the "
-                 "state readout stays); the OpenBridge element has no such switch."}},
+                 "state readout stays); the package element has no such switch."}},
     "showStatus": {"kind": "boolean", "def": True, "schema": {"type": "boolean", "default": True, "description":
                    "Whether the symbol draws its status readouts. False hides every status word, including the "
                    "element's own Off, and the speed readout (the element's showStatus); the tag stays."}},
@@ -954,7 +954,7 @@ EXTRA = {
                    "When not empty, the status word drawn in the element's status place (for example On or Off) "
                    "in place of its own readout; empty keeps the element's own."}},
     "badgeDuty": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
-                  "The OpenBridge duty badge on the symbol, in the first free corner (bottom left, bottom right, "
+                  "The duty badge on the symbol, in the first free corner (bottom left, bottom right, "
                   "top left, top right); not drawn while the interlock badge, which is the same icon, is."}},
     "outOfService": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
                      "The symbol greyed and marked with the word OOS, as the stock library view draws an out of "
@@ -962,10 +962,10 @@ EXTRA = {
     "stretch": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
                 "The readout fills its component box (chip and identifier centred in it), so readouts of equal "
                 "boxes show equal widths with their values aligned, instead of sizing to the content."}},
-    # Row selection of the two alarm lists (module 0.4.2, eng02 ASM Level 5): OpenBridge's table has the tick column
+    # Row selection of the two alarm lists (module 0.4.2, eng02 ASM Level 5): The package's table has the tick column
     # (an obc-checkbox) itself; the alert list does not switch it on, so the wrapper does (`applySelection`).
     "selectable": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
-                   "Whether each row starts with a tick box (the OpenBridge checkbox) that selects it. A click on the "
+                   "Whether each row starts with a tick box (the package checkbox) that selects it. A click on the "
                    "tick toggles only the selection; a click elsewhere on the row is the row click as before."}},
     "selectedIds": {"kind": "array", "def": [], "schema": {"type": "array", "default": [], "items": {"type": "string"},
                     "description": "The ids of the selected rows. Written by the component when a tick is toggled "
@@ -973,7 +973,7 @@ EXTRA = {
                                    "longer shows is dropped."}},
     # The indicator generator draws a disc and nothing else (no state, no readout, no alert attributes), so the
     # wrapper adds them (`generator` in the WRAPPER below): the running state selects the element's `value`
-    # scheme, and its identifier, status word and alert frame are drawn from OpenBridge's own readout stack and
+    # scheme, and its identifier, status word and alert frame are drawn from the package's own readout stack and
     # alert frame elements, unchanged, inside the element's shadow root.
     "on": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
            "Whether the generator is running. A generator that runs draws the scheme of `value` (the regular "
@@ -984,16 +984,16 @@ EXTRA = {
                         "top", "bottom", "left", "right", "none"], "default": "bottom", "description":
                         "The side of the symbol on which the identifier and the status word lie; none draws neither."}},
     "alert": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
-              "Whether the symbol is framed by the OpenBridge alert frame."}},
+              "Whether the symbol is framed by the alert frame."}},
     "alertFrameStatus": {"kind": "string", "def": "alarm", "enum": "AlertType", "schema": {
                          "type": "string", "default": "alarm", "description": "Available when alert==true."}},
     "alertFrameMode": {"kind": "string", "def": "acked-active", "enum": "ObcAlertFrameMode", "schema": {
                        "type": "string", "default": "acked-active", "description": "Available when alert==true."}},
     "unit": {"kind": "string", "def": "m³", "schema": {"type": "string", "default": "m³", "description":
-             "The unit printed after the capacity, in place of the cubic metres of the OpenBridge tank."}},
+             "The unit printed after the capacity, in place of the cubic metres of the pinned package's tank."}},
     "hasCapacity": {"kind": "boolean", "def": True, "schema": {"type": "boolean", "default": True, "description":
                     "Whether a static tank prints its capacity. False draws the vessel and its tag with no "
-                    "capacity line, where the OpenBridge tank always prints one."}},
+                    "capacity line, where the pinned package's tank always prints one."}},
 }
 # Element properties the manifest declares as fields with no attribute (`attribute: false` in the element), which the
 # attribute loop of `schema_for` therefore does not see. The wrapper sets them on the element as it sets every field.
@@ -1111,7 +1111,7 @@ def slot_schema(sl: dict, icons: list[str]) -> dict:
     where = f"the `{sl['slot']}` slot" if sl["slot"] else "the default slot"
     if sl["kind"] == "icon":
         return {"type": "string", "enum": [""] + icons, "default": "",
-                "description": f"The icon in {where}, by name (an OpenBridge icon the module bundles); empty puts none. {sl['about']}".strip()}
+                "description": f"The icon in {where}, by name (a bundled icon); empty puts none. {sl['about']}".strip()}
     return {"type": "string", "default": "",
             "description": f"The text in {where}; empty puts none. {sl['about']}".strip()}
 
@@ -1320,7 +1320,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         else:
             print(f"  skipped {spec['tag']}.{name}: type {ttext!r} not mapped")
             continue
-        p["description"] = ALERTS_TEXT if kind == "object" else desc or f"OpenBridge `{spec['tag']}` property `{name}`."
+        p["description"] = ALERTS_TEXT if kind == "object" else desc or f"Property `{name}` of the `{spec['tag']}` element."
         props[name] = p
         fields.append({"name": name, "kind": kind, "def": p["default"]})
     for name in spec.get("properties", []):
@@ -1360,7 +1360,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         props[name] = items_schema(entry, ITEM_TABLE)
     for name in spec.get("extra", []):
         props[name] = dict(EXTRA[name]["schema"])
-        if EXTRA[name].get("enum"):      # the enumeration of OpenBridge's own declaration, as for an attribute
+        if EXTRA[name].get("enum"):      # the enumeration of the package's own declaration, as for an attribute
             vals = enum_map[EXTRA[name]["enum"]]
             props[name] = {"type": "string", "enum": vals, "default": EXTRA[name]["def"],
                            "description": props[name]["description"]}
@@ -1370,7 +1370,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         if name in props and name not in spec.get("extra", []):
             props[name]["description"] = text
     props["componentSize"] = {"type": "string", "enum": SIZES, "default": "regular",
-                              "description": "OpenBridge component size: regular, medium, large or xl."}
+                              "description": "Component size: regular, medium, large or xl."}
     props["style"] = {"$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
                       "default": {"classes": ""}}
     return {"type": "object", "additionalProperties": False, "properties": props}, fields
@@ -1462,7 +1462,7 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
         if decls:
             blocks.append(f"{s} {{\n  " + ";\n  ".join(decls) + ";\n}")
     stats["rules_out"] = len(blocks)
-    head = ("/* Cadre OpenBridge module stylesheet. Generated by module/tools/gen_module_assets.py from\n"
+    head = ("/* Cadre HMI Components module stylesheet. Generated by module/tools/gen_module_assets.py from\n"
             "   @oicl/openbridge-webcomponents 2.0.0-next.155 dist/openbridge.css (Apache-2.0, Copyright 2024 OICL),\n"
             "   scoped to .cadre-ob and the Cadre palette classes, trimmed to the variables the bundled elements use. */\n")
     font = ('@font-face {\n  font-family: "Noto Sans OB";\n  src: url("../fonts/NotoSans-OB.ttf") format("truetype");\n'
@@ -1514,7 +1514,7 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
 
 # ------------------------------------------------------------------------------- wrappers
 WRAPPER = r"""
-/* Cadre OpenBridge module: Perspective wrappers for OpenBridge web components.
+/* Cadre HMI Components module: Perspective wrappers for the pinned web components.
    Generated by module/tools/gen_module_assets.py; do not edit. */
 (function () {
   'use strict';
@@ -1884,7 +1884,7 @@ WRAPPER = r"""
           this.tabIconNodes.push(n);
         });
       }
-      // ---- Row selection of the two alarm lists (module 0.4.2). OpenBridge's table draws the tick column (an
+      // ---- Row selection of the two alarm lists (module 0.4.2). The package's table draws the tick column (an
       // obc-checkbox in each row, and one in the header of the full list) when its `selectable` is true, takes the
       // ticked ids from `selectedRowIds` and reports a toggle as `selection-change`; the alert list sets none of the
       // three, so the wrapper sets them on the table inside the list (the alert panel nests the list in its shadow
@@ -2008,7 +2008,7 @@ WRAPPER = r"""
       // The indicator generator (module 0.4.4, spike T0 wrap W2). The element draws a disc whose scheme is its `value`
       // (`off` hides the rings and greys the disc) and knows nothing of a running state, an identifier, a status word
       // or an alert. The wrapper selects the scheme from `on` (a generator that is not running draws `off`; one that
-      // runs draws `value`, the regular scheme where `value` is off), and draws the rest with OpenBridge's own elements,
+      // runs draws `value`, the regular scheme where `value` is off), and draws the rest with the package's own elements,
       // unchanged, in the shadow root of the indicator: `obc-alert-frame` over the 48 px symbol, which colours its
       // levels as the other device components do, and `obc-automation-button-readout-stack`, the identifier and the
       // status word as the other symbols print them. The plain fields `tag`, `on`, `alert` and `alertFrameMode`

@@ -1,4 +1,4 @@
-"""Tests of the Cadre OpenBridge module's contract (version 0.4.3: eng02 ASM Levels 4 and 5, and the valves' `showStatus`
+"""Tests of the Cadre HMI Components module's contract (version 0.4.3: eng02 ASM Levels 4 and 5, and the valves' `showStatus`
 of 0.3.2).
 
 The module's sources are the generator (`module/tools/gen_module_assets.py`), the canvas zoom component
@@ -142,7 +142,7 @@ class CanvasZoomComponent(unittest.TestCase):
             self.assertEqual(c["props"][name]["type"], typ, name)
             self.assertEqual(c["props"][name]["default"], default, name)
             self.assertEqual(schema_of("cadre.ob.canvaszoom")["properties"][name]["default"], default, name)
-        self.assertIsNone(c["element"])       # a leaf component: it draws no OpenBridge element
+        self.assertIsNone(c["element"])       # a leaf component: it draws no package element
 
     def test_the_component_is_registered_in_java_for_the_gateway_and_the_designer(self):
         java = (MODULE / "common/src/main/java/cadre/hmi/ob/common/CadreOb.java").read_text(encoding="utf-8")
@@ -227,7 +227,7 @@ class AlertRowSelection(unittest.TestCase):
         self.assertIn("onAckAllClick", COMPONENTS["cadre.ob.alertpanel"]["events"])
 
     def test_the_wrapper_drives_the_elements_own_table_selection(self):
-        # OpenBridge's table has the tick column (obc-checkbox) itself: selectable, selectedRowIds, selection-change
+        # The package's table has the tick column (obc-checkbox) itself: selectable, selectedRowIds, selection-change
         for needle in ("applySelection", "selection-change", "selectedRowIds", "t.selectable = ", "obc-alert-list-details",
                        "obc-table", "this.put('selectedIds'"):
             self.assertIn(needle, JS, needle)
@@ -1674,7 +1674,7 @@ class GeneratorComponent(unittest.TestCase):
         self.assertEqual(props["variant"]["enum"], ["button", "bar", "double-bar"])
         self.assertEqual(props["value"]["enum"], ["off", "regular", "filled", "enhanced", "categorical"])
         self.assertEqual((props["variant"]["default"], props["value"]["default"]), ("button", "off"))
-        # the alert props take the values the other device components take (the same OpenBridge enumerations)
+        # the alert props take the values the other device components take (the same package enumerations)
         for name in ("alertFrameStatus", "alertFrameMode"):
             self.assertEqual(props[name]["enum"], COMPONENTS["cadre.ob.filter"]["props"][name]["enum"], name)
             self.assertEqual(props[name]["default"], COMPONENTS["cadre.ob.filter"]["props"][name]["default"], name)
@@ -1694,7 +1694,7 @@ class GeneratorComponent(unittest.TestCase):
         specs = re.search(r"var COMPONENTS = (\[.*?\]);\n  var SHEETS", JS, re.S)
         comps = json.loads(specs.group(1))
         self.assertEqual([c["type"] for c in comps if c["generator"]], [self.ctype])
-        # the running state selects the scheme; the frame and the readout are OpenBridge's own elements, added in the shadow root
+        # the running state selects the scheme; the frame and the readout are the package's own elements, added in the shadow root
         self.assertIn("var value = p.on ? (p.value === 'off' ? 'regular' : p.value) : 'off';", JS)
         self.assertIn("document.createElement('obc-alert-frame')", JS)
         self.assertIn("document.createElement('obc-automation-button-readout-stack')", JS)
@@ -2643,7 +2643,7 @@ class PipeElements(unittest.TestCase):
 class Release(unittest.TestCase):
     def test_the_version_is_plain_and_0_7_0(self):
         text = (MODULE / "build.gradle.kts").read_text(encoding="utf-8")
-        self.assertIn('version = "0.7.0"', text)      # GF-27: plain major.minor.revision (tranche T2)
+        self.assertIn('version = "0.8.0"', text)      # GF-27: plain major.minor.revision (tranche T2)
         self.assertNotRegex(text, r'version = "[^"]*-')
 
     def test_the_description_names_the_canvas_zoom(self):

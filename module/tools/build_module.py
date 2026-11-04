@@ -1,4 +1,4 @@
-"""Build and sign the Cadre OpenBridge module offline.
+"""Build and sign the Cadre HMI Components module offline.
 
 Runs `gradlew build --offline` in `module/` under JDK 17, with the signing properties read from the
 owner's file outside the repository (`~/.cadre/signing/signing.properties`) and handed to Gradle as
@@ -57,7 +57,7 @@ def main() -> int:
     if r.returncode:
         return r.returncode
     # the module plugin names an unsigned build `<fileName>.unsigned.modl`
-    out = HERE / "build" / ("CadreOpenBridge.modl" if SIGNING.exists() else "CadreOpenBridge.unsigned.modl")
+    out = HERE / "build" / ("CadreHMIComponents.modl" if SIGNING.exists() else "CadreHMIComponents.unsigned.modl")
     data = out.read_bytes()
     print(f"built {out} {len(data)} bytes sha256 {hashlib.sha256(data).hexdigest()}")
     return 0

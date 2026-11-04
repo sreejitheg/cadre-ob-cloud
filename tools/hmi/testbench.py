@@ -61,7 +61,7 @@ PULSE_MS = 60000                      # how long a page button holds a test tag 
 RAISE_ALL = f"{FOLDER}/ALM_ALL/raise"  # one tag raises every test alarm
 
 # Enumerations the contracts do not state (a contract holds the default only). Each is a fact of the library's own
-# drawing code, not of a vendor document: the alert colours (`library.ALERT_COLOURS`), the control badges
+# drawing code, not of a reference document: the alert colours (`library.ALERT_COLOURS`), the control badges
 # (`library.CONTROL_BADGES`), the alert modes `library._alert_frame` reads, the interlock badges `library._badges` reads.
 ALERT_STATUS = tuple(library.ALERT_COLOURS)
 ALERT_MODE = ("acked-active", "unacked-active", "unacked-rectified")
@@ -1254,7 +1254,7 @@ def devices_block(specs: dict, contracts: dict) -> tuple[Block, list[str]]:
     block.add("buttons", {**button("TB_press_GEN_start", "Start generator", bx, y2 + 270, 220,
                                    {"type": "pulse", "tag": tag, "ms": PULSE_MS,
                                     "confirm": "Start the test generator?"}, h=56), "render": "module"})
-    block.add("labels", label("TB_press_GEN_start_c", "OB button: Start generator pulses TB_GEN/cmdStart for a minute; the "
+    block.add("labels", label("TB_press_GEN_start_c", "Module button: Start generator pulses TB_GEN/cmdStart for a minute; the "
                                                       "generator then runs.", bx + 230, y2 + 288, 600, 16,
                               style="body", align="left"))
     block.w, block.h = 1500, y2 + 365

@@ -11,7 +11,7 @@
         "air"
       ],
       "default": "normal",
-      "description": "OpenBridge `obc-vertical-line` property `medium`."
+      "description": "Property `medium` of the `obc-vertical-line` element."
     },
     "lineType": {
       "type": "string",
@@ -22,12 +22,12 @@
         "connector"
       ],
       "default": "fluid",
-      "description": "OpenBridge `obc-vertical-line` property `lineType`."
+      "description": "Property `lineType` of the `obc-vertical-line` element."
     },
     "length": {
       "type": "number",
       "default": 1,
-      "description": "OpenBridge `obc-vertical-line` property `length`."
+      "description": "Property `length` of the `obc-vertical-line` element."
     },
     "componentSize": {
       "type": "string",
@@ -38,7 +38,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

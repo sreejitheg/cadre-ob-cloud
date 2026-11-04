@@ -1,4 +1,4 @@
-"""The `provenance` object every OpenBridge pipeline document carries (ARCH-WFB-01 revision B8 section 29.4): which
+"""The `provenance` object every package pipeline document carries (ARCH-WFB-01 revision B8 section 29.4): which
 tool made the document, from which commit, with which inputs, so that a document read outside the manager still says
 what produced it. Shared by the S10-B commands (`asm_model.py`, `preview.py`, `library_gaps.py`,
 `asm_descriptors.py`, `glass_gates.py`, `sidebyside.py`).
@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-REPOSITORY = "Cadre-Sandbox-OpenBridge"
+REPOSITORY = "Cadre HMI Library"
 
 
 def sha256_of(path: Path) -> str:

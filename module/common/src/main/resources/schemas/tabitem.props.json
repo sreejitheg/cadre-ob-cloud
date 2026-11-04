@@ -40,7 +40,7 @@
     "hasBadge": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-tab-item` property `hasBadge`."
+      "description": "Property `hasBadge` of the `obc-tab-item` element."
     },
     "title": {
       "type": "string",
@@ -143,7 +143,7 @@
         "joystick"
       ],
       "default": "",
-      "description": "The icon in the `leading-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Slot for the leading icon (shown when hasLeadingIcon is true)"
+      "description": "The icon in the `leading-icon` slot, by name (a bundled icon); empty puts none. Slot for the leading icon (shown when hasLeadingIcon is true)"
     },
     "badgeIconName": {
       "type": "string",
@@ -185,7 +185,7 @@
         "joystick"
       ],
       "default": "",
-      "description": "The icon in the `badge-icon` slot, by name (an OpenBridge icon the module bundles); empty puts none. Slot for an icon inside the badge (shown when hasBadge and showLeadingBadgeIcon are true)"
+      "description": "The icon in the `badge-icon` slot, by name (a bundled icon); empty puts none. Slot for an icon inside the badge (shown when hasBadge and showLeadingBadgeIcon are true)"
     },
     "componentSize": {
       "type": "string",
@@ -196,7 +196,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

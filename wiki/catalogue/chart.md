@@ -1,12 +1,12 @@
-# Catalogue: Chart - OpenBridge
+# Catalogue: Chart
 
-Interface facts for the 4 components of the vendor family `Chart - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 4 components of the reference family `Chart`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. Donut Chart
 
 <a id="donut-chart"></a>
 
-Source: <https://docs.openstudio.no/donut-chart/>. Disposition: `stock`. Cadre equivalent: `ia.chart.pie`.
+Disposition: `stock`. Cadre equivalent: `ia.chart.pie`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -31,7 +31,7 @@ Source: <https://docs.openstudio.no/donut-chart/>. Disposition: `stock`. Cadre e
 
 <a id="graph-mini"></a>
 
-Source: <https://docs.openstudio.no/graph-mini/>. Disposition: `stock`. Cadre equivalent: `ia.display.sparkline`.
+Disposition: `stock`. Cadre equivalent: `ia.display.sparkline`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -45,7 +45,7 @@ Source: <https://docs.openstudio.no/graph-mini/>. Disposition: `stock`. Cadre eq
 
 <a id="indicator-graph"></a>
 
-Source: <https://docs.openstudio.no/indicator-graph/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -65,7 +65,7 @@ Source: <https://docs.openstudio.no/indicator-graph/>. Disposition: `gap`. Cadre
 
 <a id="radial-bar-chart"></a>
 
-Source: <https://docs.openstudio.no/radial-bar-chart/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|

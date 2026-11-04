@@ -11,12 +11,12 @@
         "capacitor04"
       ],
       "default": "capacitor01",
-      "description": "OpenBridge `obc-capacitor` property `alternativeIcon`."
+      "description": "Property `alternativeIcon` of the `obc-capacitor` element."
     },
     "on": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-capacitor` property `on`."
+      "description": "Property `on` of the `obc-capacitor` element."
     },
     "variant": {
       "type": "string",
@@ -25,7 +25,7 @@
         "flat"
       ],
       "default": "square",
-      "description": "OpenBridge `obc-capacitor` property `variant`."
+      "description": "Property `variant` of the `obc-capacitor` element."
     },
     "orientation": {
       "type": "string",
@@ -35,7 +35,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-capacitor` property `orientation`."
+      "description": "Property `orientation` of the `obc-capacitor` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -71,7 +71,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-capacitor` property `positioning`."
+      "description": "Property `positioning` of the `obc-capacitor` element."
     },
     "activated": {
       "type": "boolean",
@@ -81,7 +81,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-capacitor` property `alert`."
+      "description": "Property `alert` of the `obc-capacitor` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -165,7 +165,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-capacitor` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-capacitor` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -174,7 +174,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-capacitor` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-capacitor` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -184,7 +184,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-capacitor` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-capacitor` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -201,7 +201,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-capacitor` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-capacitor` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -217,7 +217,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

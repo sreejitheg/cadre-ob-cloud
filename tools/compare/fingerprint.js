@@ -3,8 +3,8 @@
 //
 // Returns {n, rows: [[index, centreX, centreY, width, height, text], ...]} for every symbol of
 // the diagram, in diagram child order, with readout text read through shadow roots. It works on
-// both renderings compared in wiki page 09:
-//   * the vendor demo: components `automation.*` inside `openbridge.manual.connector-diagram`,
+// both renderings compared:
+//   * the reference demo: components `automation.*` inside `openbridge.manual.connector-diagram`,
 //     whose child index is in the component path (`C.0:<i>` or `C$0:<i>.`);
 //   * the Cadre build: embedded views inside the `Diagram` coordinate container, whose 48 px
 //     `Symbol` box carries the symbol centre.

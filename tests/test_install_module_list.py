@@ -61,7 +61,7 @@ class Station:
         self.root = root
         self.lib = root / "user-lib" / "modules"
         self.lib.mkdir(parents=True)
-        self.files = {OURS: self.lib / "CadreOpenBridge.modl", ALARMS: self.lib / "Alarm Notification-module.modl"}
+        self.files = {OURS: self.lib / "CadreHMIComponents.modl", ALARMS: self.lib / "Alarm Notification-module.modl"}
         self.bytes = {OURS: modl(self.files[OURS], OURS, ours), ALARMS: modl(self.files[ALARMS], ALARMS, alarms)}
         self.data = root / "data"
         self.data.mkdir()
@@ -113,7 +113,7 @@ class ListTests(Case):
         self.assertEqual(doc["gateway"], "http://gateway.test:8088")
         self.assertEqual(doc["modules_json"], str(station.data / "modules.json"))
         ours = rows[OURS]
-        self.assertEqual((ours["name"], ours["version"], ours["state"]), ("Cadre OpenBridge", "0.4.2 (b0)", "ACTIVE"))
+        self.assertEqual((ours["name"], ours["version"], ours["state"]), ("Cadre HMI Components", "0.4.2 (b0)", "ACTIVE"))
         self.assertEqual(ours["sha256"], hashlib.sha256(station.bytes[OURS]).hexdigest())
         self.assertEqual((ours["bytes"], ours["file"], ours["file_version"], ours["file_matches_version"], ours["note"]),
                          (len(station.bytes[OURS]), str(station.files[OURS]), "0.4.2", True, None))

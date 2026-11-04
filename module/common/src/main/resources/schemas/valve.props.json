@@ -5,12 +5,12 @@
     "open": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-digital-valve` property `open`."
+      "description": "Property `open` of the `obc-digital-valve` element."
     },
     "vertical": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-digital-valve` property `vertical`."
+      "description": "Property `vertical` of the `obc-digital-valve` element."
     },
     "variant": {
       "type": "string",
@@ -19,7 +19,7 @@
         "flat"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-digital-valve` property `variant`."
+      "description": "Property `variant` of the `obc-digital-valve` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -55,7 +55,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-digital-valve` property `positioning`."
+      "description": "Property `positioning` of the `obc-digital-valve` element."
     },
     "activated": {
       "type": "boolean",
@@ -65,7 +65,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-digital-valve` property `alert`."
+      "description": "Property `alert` of the `obc-digital-valve` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -149,7 +149,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-digital-valve` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-digital-valve` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -158,7 +158,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-digital-valve` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-digital-valve` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -168,7 +168,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-digital-valve` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-digital-valve` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -185,7 +185,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-digital-valve` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-digital-valve` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -201,7 +201,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

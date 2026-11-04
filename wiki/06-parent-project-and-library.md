@@ -46,7 +46,7 @@ Table 1. The parent project (239 files).
 | `views/Framework/` | `TopBar`, `NavMenu`, `NavItem`, `SideMenu`, `BrillianceMenu`, `UserMenu`, `AlertMenu`, `AlertsPage`, `TrendsPage` (the route `/trends` of a child with historised members, COB-064) |
 | `views/Trend/` | `Card` (one member of the trend page) |
 | `views/Faceplate/` | `Pump`, `Valve`, `Tank`, `Instrument`, `Controller`, `Input`, `Sequence`, `Empty`; `Alarms` (the device alarm list each faceplate embeds), `InterlockRow`, `LimitRow`, `SetpointRow` and `TankTile` (parts the faceplates embed) |
-| `ignition/script-python/cadre/hmi` | Palette, device selection, page title, scoped alarm summary, acknowledge, a device's alarm patterns and count, the alarm list as OpenBridge `Alert` records and its acknowledge and row events; the interlock rows, summary and start permission (page 13 section 7); the instrument's unit, limit rows, history paths, limit series and the tank tile (page 13 section 8); the device read, the checked writes of the write paths W1 to W18, the force, the object error mask and the pulse command, and the trended members (page 13 section 9) |
+| `ignition/script-python/cadre/hmi` | Palette, device selection, page title, scoped alarm summary, acknowledge, a device's alarm patterns and count, the alarm list as package `Alert` records and its acknowledge and row events; the interlock rows, summary and start permission (page 13 section 7); the instrument's unit, limit rows, history paths, limit series and the tank tile (page 13 section 8); the device read, the checked writes of the write paths W1 to W18, the force, the object error mask and the pulse command, and the trended members (page 13 section 9) |
 | `ignition/script-python/cadre/icons` | Geometry of the 92 converted icons, `elements(name)` |
 | `session-props` | `custom.palette` (day), `custom.nav` (items, footer with Alerts), the dock contract (`custom.selectedDevice`, `selectedKind`, `selectedTitle`, `selectedLabel`), `custom.alarmScope` (`*`), `custom.devices` (the device index, empty here; each child writes its own, page 13 section 6; with a device model each entry also carries `sources`, `write` and `members`, page 13 section 9.3), `custom.trends` (the trend index); `props.theme` light-cool |
 | `page-config` | The shared docks and `/alerts` |
@@ -127,7 +127,7 @@ that keeps `gap` at least the sum of the two wants gets every identifier whole a
 ## 3. Automation Symbol Contract
 
 The nine device views are generated from one factory (`library.automation_symbol`) and share one
-contract, the Cadre form of the vendor's "automation button". The ninth, `Indicator`, is a digital
+contract, the Cadre form of the reference "automation button". The ninth, `Indicator`, is a digital
 input shown as a lamp (page 13 section 9.5): its artwork is drawn in the library, and it passes the
 medium whatever its state.
 
@@ -149,13 +149,13 @@ Table 2. Parameters of `Automation/<Kind>`.
 | `alertFrameStatus` | `alarm`, `warning`, `caution` | `alarm` | Frame colour and flap shape (triangle, circle, square) |
 | `alertFrameMode` | `acked-active`, `unacked-active`, `unacked-rectified` | `acked-active` | Steady, flashing, or dashed and flashing |
 | `badgeControl` | `none`, `auto`, `manual`, `manual-only`, `local`, `local-only` | `none` | Top left badge |
-| `badgeInterlock` | `none`, `interlock`, `interlock-inhibit` | `none` | Bottom left badge: OpenBridge's duty icon for `interlock`, its standby icon for `interlock-inhibit` (page 13 section 7) |
+| `badgeInterlock` | `none`, `interlock`, `interlock-inhibit` | `none` | Bottom left badge: The package's duty icon for `interlock`, its standby icon for `interlock-inhibit` (page 13 section 7) |
 | `badgeCommandLocked` | `none`, `command-locked` | `none` | Bottom right badge |
 | `progress` | boolean | false | Spinning progress ring |
 | `deviceId`, `deviceKind`, `deviceLabel` | string | empty, the kind, empty | Faceplate contract (section 5); `deviceLabel` is the description in the faceplate header |
 
 Geometry: the symbol box is 48 px, the holder ring 36 px with a 1 px border, the icon 24 px and the
-badges 16 px, the regular-size OpenBridge tokens. The readout adds 64 px to the right or left, or
+badges 16 px, the regular-size package tokens. The readout adds 64 px to the right or left, or
 44 px below or above, and the generator places the embed so that the symbol centre falls on the
 point the descriptor gives (page 08 section 3). An identifier longer than the default readout holds
 widens the embed by what it needs, up to 16 characters (section 2, Table 1a), and no further than the
