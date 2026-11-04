@@ -1,0 +1,2139 @@
+{
+  "custom": {
+    "log_alertlist": "No events yet: use the component.",
+    "log_alertpanel": "No events yet: use the component.",
+    "s_alertlist_alerts": "sample",
+    "s_alertlist_selectedIds": "empty",
+    "s_alertpanel_alerts": "sample",
+    "s_alertpanel_selectedIds": "empty",
+    "tick": 0,
+    "v_alertlist_alerts": [
+      {
+        "acknowledged": false,
+        "active": true,
+        "id": "A-1001",
+        "shelved": false,
+        "source": "Pump P-101",
+        "tagId": "P-101",
+        "text": "Bilge level very high",
+        "time": 1767258000000,
+        "type": "level-critical"
+      },
+      {
+        "acknowledged": {
+          "acknowledgedAt": 1767258240000,
+          "acknowledgedBy": "operator"
+        },
+        "active": true,
+        "id": "A-1002",
+        "shelved": false,
+        "source": "Tank T-201",
+        "tagId": "T-201",
+        "text": "High level",
+        "time": 1767258180000,
+        "type": "alarm"
+      },
+      {
+        "acknowledged": false,
+        "active": {
+          "rectifiedTime": 1767258600000
+        },
+        "id": "A-1003",
+        "shelved": false,
+        "source": "Filter F-3",
+        "tagId": "F-3",
+        "text": "Differential pressure rising",
+        "time": 1767258420000,
+        "type": "warning"
+      },
+      {
+        "acknowledged": false,
+        "active": true,
+        "id": "A-1004",
+        "shelved": false,
+        "source": "Fan K-2",
+        "tagId": "K-2",
+        "text": "Vibration above normal",
+        "time": 1767258900000,
+        "type": "caution"
+      }
+    ],
+    "v_alertlist_componentSize": "regular",
+    "v_alertlist_selectable": false,
+    "v_alertlist_selectedIds": [],
+    "v_alertlist_selectedMode": "all",
+    "v_alertlist_showTime": false,
+    "v_alertlist_small": false,
+    "v_alertpanel_alerts": [
+      {
+        "acknowledged": false,
+        "active": true,
+        "id": "A-1001",
+        "shelved": false,
+        "source": "Pump P-101",
+        "tagId": "P-101",
+        "text": "Bilge level very high",
+        "time": 1767258000000,
+        "type": "level-critical"
+      },
+      {
+        "acknowledged": {
+          "acknowledgedAt": 1767258240000,
+          "acknowledgedBy": "operator"
+        },
+        "active": true,
+        "id": "A-1002",
+        "shelved": false,
+        "source": "Tank T-201",
+        "tagId": "T-201",
+        "text": "High level",
+        "time": 1767258180000,
+        "type": "alarm"
+      },
+      {
+        "acknowledged": false,
+        "active": {
+          "rectifiedTime": 1767258600000
+        },
+        "id": "A-1003",
+        "shelved": false,
+        "source": "Filter F-3",
+        "tagId": "F-3",
+        "text": "Differential pressure rising",
+        "time": 1767258420000,
+        "type": "warning"
+      },
+      {
+        "acknowledged": false,
+        "active": true,
+        "id": "A-1004",
+        "shelved": false,
+        "source": "Fan K-2",
+        "tagId": "K-2",
+        "text": "Vibration above normal",
+        "time": 1767258900000,
+        "type": "caution"
+      }
+    ],
+    "v_alertpanel_componentSize": "regular",
+    "v_alertpanel_hasShelved": false,
+    "v_alertpanel_selectable": false,
+    "v_alertpanel_selectedIds": [],
+    "v_alertpanel_selectedMode": "all",
+    "v_alertpanel_showTime": false,
+    "v_canvaszoom_guardBrowserZoom": true,
+    "v_canvaszoom_max": 4,
+    "v_canvaszoom_min": 0.5,
+    "v_canvaszoom_targetDomId": "zoom_target",
+    "v_canvaszoom_viewHeight": 0,
+    "v_canvaszoom_viewWidth": 0,
+    "v_canvaszoom_zoom": 1
+  },
+  "params": {},
+  "propConfig": {
+    "custom.tick": {
+      "binding": {
+        "config": {
+          "expression": "toMillis(now(1000))"
+        },
+        "type": "expr"
+      }
+    },
+    "custom.v_alertlist_alerts": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_alertlist_alerts"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"sample\": [{\"id\": \"A-1001\", \"tagId\": \"P-101\", \"source\": \"Pump P-101\", \"text\": \"Bilge level very high\", \"type\": \"level-critical\", \"time\": 1767258000000, \"acknowledged\": False, \"active\": True, \"shelved\": False}, {\"id\": \"A-1002\", \"tagId\": \"T-201\", \"source\": \"Tank T-201\", \"text\": \"High level\", \"type\": \"alarm\", \"time\": 1767258180000, \"acknowledged\": {\"acknowledgedBy\": \"operator\", \"acknowledgedAt\": 1767258240000}, \"active\": True, \"shelved\": False}, {\"id\": \"A-1003\", \"tagId\": \"F-3\", \"source\": \"Filter F-3\", \"text\": \"Differential pressure rising\", \"type\": \"warning\", \"time\": 1767258420000, \"acknowledged\": False, \"active\": {\"rectifiedTime\": 1767258600000}, \"shelved\": False}, {\"id\": \"A-1004\", \"tagId\": \"K-2\", \"source\": \"Fan K-2\", \"text\": \"Vibration above normal\", \"type\": \"caution\", \"time\": 1767258900000, \"acknowledged\": False, \"active\": True, \"shelved\": False}], \"one alert\": [{\"id\": \"A-1001\", \"tagId\": \"P-101\", \"source\": \"Pump P-101\", \"text\": \"Bilge level very high\", \"type\": \"level-critical\", \"time\": 1767258000000, \"acknowledged\": False, \"active\": True, \"shelved\": False}], \"empty\": []}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.v_alertlist_selectedIds": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_alertlist_selectedIds"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"empty\": [], \"first alert\": [\"A-1001\"], \"two alerts\": [\"A-1001\", \"A-1002\"]}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.v_alertpanel_alerts": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_alertpanel_alerts"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"sample\": [{\"id\": \"A-1001\", \"tagId\": \"P-101\", \"source\": \"Pump P-101\", \"text\": \"Bilge level very high\", \"type\": \"level-critical\", \"time\": 1767258000000, \"acknowledged\": False, \"active\": True, \"shelved\": False}, {\"id\": \"A-1002\", \"tagId\": \"T-201\", \"source\": \"Tank T-201\", \"text\": \"High level\", \"type\": \"alarm\", \"time\": 1767258180000, \"acknowledged\": {\"acknowledgedBy\": \"operator\", \"acknowledgedAt\": 1767258240000}, \"active\": True, \"shelved\": False}, {\"id\": \"A-1003\", \"tagId\": \"F-3\", \"source\": \"Filter F-3\", \"text\": \"Differential pressure rising\", \"type\": \"warning\", \"time\": 1767258420000, \"acknowledged\": False, \"active\": {\"rectifiedTime\": 1767258600000}, \"shelved\": False}, {\"id\": \"A-1004\", \"tagId\": \"K-2\", \"source\": \"Fan K-2\", \"text\": \"Vibration above normal\", \"type\": \"caution\", \"time\": 1767258900000, \"acknowledged\": False, \"active\": True, \"shelved\": False}], \"one alert\": [{\"id\": \"A-1001\", \"tagId\": \"P-101\", \"source\": \"Pump P-101\", \"text\": \"Bilge level very high\", \"type\": \"level-critical\", \"time\": 1767258000000, \"acknowledged\": False, \"active\": True, \"shelved\": False}], \"empty\": []}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    },
+    "custom.v_alertpanel_selectedIds": {
+      "binding": {
+        "config": {
+          "path": "view.custom.s_alertpanel_selectedIds"
+        },
+        "transforms": [
+          {
+            "code": "\tP = {\"empty\": [], \"first alert\": [\"A-1001\"], \"two alerts\": [\"A-1001\", \"A-1002\"]}\n\treturn P.get(value)",
+            "type": "script"
+          }
+        ],
+        "type": "property"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 1628,
+      "width": 1400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "card_alertlist"
+                    },
+                    "position": {
+                      "height": 596,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_alertlist"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 20
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Alert List"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_alertlist"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.alertlist"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_alertlist"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Alert list: Alert records with ACK and row click."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_selectedMode",
+                      "name": "l_alertlist_selectedMode"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 452,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectedMode"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_selectedMode",
+                      "name": "e_alertlist_selectedMode"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 452,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertlist_selectedMode"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "unacked",
+                          "value": "unacked"
+                        },
+                        {
+                          "label": "all",
+                          "value": "all"
+                        },
+                        {
+                          "label": "shelved",
+                          "value": "shelved"
+                        },
+                        {
+                          "label": "blocked",
+                          "value": "blocked"
+                        },
+                        {
+                          "label": "rectified",
+                          "value": "rectified"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_showTime",
+                      "name": "l_alertlist_showTime"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 684,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "showTime"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_showTime",
+                      "name": "e_alertlist_showTime"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 684,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertlist_showTime"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_small",
+                      "name": "l_alertlist_small"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 916,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "small"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_small",
+                      "name": "e_alertlist_small"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 916,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertlist_small"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_alerts",
+                      "name": "l_alertlist_alerts"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 452,
+                      "y": 124
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alerts"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_alerts",
+                      "name": "e_alertlist_alerts"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 452,
+                      "y": 142
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_alertlist_alerts"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "sample",
+                          "value": "sample"
+                        },
+                        {
+                          "label": "one alert",
+                          "value": "one alert"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_selectable",
+                      "name": "l_alertlist_selectable"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 684,
+                      "y": 124
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectable"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_selectable",
+                      "name": "e_alertlist_selectable"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 684,
+                      "y": 142
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertlist_selectable"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_selectedIds",
+                      "name": "l_alertlist_selectedIds"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 916,
+                      "y": 124
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectedIds"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_selectedIds",
+                      "name": "e_alertlist_selectedIds"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 916,
+                      "y": 142
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_alertlist_selectedIds"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "first alert",
+                          "value": "first alert"
+                        },
+                        {
+                          "label": "two alerts",
+                          "value": "two alerts"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertlist_componentSize",
+                      "name": "l_alertlist_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 452,
+                      "y": 180
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertlist_componentSize",
+                      "name": "e_alertlist_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 452,
+                      "y": 198
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertlist_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_alertlist"
+                    },
+                    "position": {
+                      "height": 528,
+                      "width": 416,
+                      "x": 24,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "lh_alertlist"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 228,
+                      "x": 1148,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Event log"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "log_alertlist",
+                      "name": "log_alertlist"
+                    },
+                    "position": {
+                      "height": 176,
+                      "width": 228,
+                      "x": 1148,
+                      "y": 88
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.log_alertlist"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "alignItems": "flex-start",
+                        "border": "1px solid var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "fontSize": "11px",
+                        "justifyContent": "flex-start",
+                        "overflow": "hidden",
+                        "padding": "4px",
+                        "whiteSpace": "pre-wrap"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "events": {
+                      "component": {
+                        "onAckClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onAckClick  ' + body[:150]\n\told = self.view.custom.log_alertlist\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertlist = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        },
+                        "onRowClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onRowClick  ' + body[:150]\n\told = self.view.custom.log_alertlist\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertlist = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "domId": "alertlist",
+                      "name": "alertlist"
+                    },
+                    "position": {
+                      "height": 480,
+                      "width": 368,
+                      "x": 48.0,
+                      "y": 92.0
+                    },
+                    "propConfig": {
+                      "props.alerts": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_alerts"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectable": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_selectable"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectedIds": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_selectedIds"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectedMode": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_selectedMode"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.showTime": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_showTime"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.small": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertlist_small"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.alertlist"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_alertpanel"
+                    },
+                    "position": {
+                      "height": 748,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 620
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_alertpanel"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 628
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Alert Panel"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_alertpanel"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 652
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.alertpanel"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_alertpanel"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 652
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Alert panel: mode tabs, alert list, ACK visible and Silence."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_hasShelved",
+                      "name": "l_alertpanel_hasShelved"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 24,
+                      "y": 1156
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "hasShelved"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_hasShelved",
+                      "name": "e_alertpanel_hasShelved"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 24,
+                      "y": 1174
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertpanel_hasShelved"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_selectedMode",
+                      "name": "l_alertpanel_selectedMode"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 256,
+                      "y": 1156
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectedMode"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_selectedMode",
+                      "name": "e_alertpanel_selectedMode"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 256,
+                      "y": 1174
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertpanel_selectedMode"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "unacked",
+                          "value": "unacked"
+                        },
+                        {
+                          "label": "all",
+                          "value": "all"
+                        },
+                        {
+                          "label": "shelved",
+                          "value": "shelved"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_showTime",
+                      "name": "l_alertpanel_showTime"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 488,
+                      "y": 1156
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "showTime"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_showTime",
+                      "name": "e_alertpanel_showTime"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 488,
+                      "y": 1174
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertpanel_showTime"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_alerts",
+                      "name": "l_alertpanel_alerts"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 720,
+                      "y": 1156
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "alerts"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_alerts",
+                      "name": "e_alertpanel_alerts"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 720,
+                      "y": 1174
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_alertpanel_alerts"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "sample",
+                          "value": "sample"
+                        },
+                        {
+                          "label": "one alert",
+                          "value": "one alert"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_selectable",
+                      "name": "l_alertpanel_selectable"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 24,
+                      "y": 1212
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectable"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_selectable",
+                      "name": "e_alertpanel_selectable"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 24,
+                      "y": 1230
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertpanel_selectable"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_selectedIds",
+                      "name": "l_alertpanel_selectedIds"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 256,
+                      "y": 1212
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "selectedIds"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_selectedIds",
+                      "name": "e_alertpanel_selectedIds"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 256,
+                      "y": 1230
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.s_alertpanel_selectedIds"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "first alert",
+                          "value": "first alert"
+                        },
+                        {
+                          "label": "two alerts",
+                          "value": "two alerts"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_alertpanel_componentSize",
+                      "name": "l_alertpanel_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 488,
+                      "y": 1212
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_alertpanel_componentSize",
+                      "name": "e_alertpanel_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 488,
+                      "y": 1230
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_alertpanel_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_alertpanel"
+                    },
+                    "position": {
+                      "height": 468,
+                      "width": 688,
+                      "x": 24,
+                      "y": 676
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "lh_alertpanel"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 424,
+                      "x": 952,
+                      "y": 1156
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Event log"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "log_alertpanel",
+                      "name": "log_alertpanel"
+                    },
+                    "position": {
+                      "height": 176,
+                      "width": 424,
+                      "x": 952,
+                      "y": 1176
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.log_alertpanel"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "style": {
+                        "alignItems": "flex-start",
+                        "border": "1px solid var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "fontSize": "11px",
+                        "justifyContent": "flex-start",
+                        "overflow": "hidden",
+                        "padding": "4px",
+                        "whiteSpace": "pre-wrap"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "events": {
+                      "component": {
+                        "onAckAllClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onAckAllClick  ' + body[:150]\n\told = self.view.custom.log_alertpanel\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertpanel = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        },
+                        "onAckClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onAckClick  ' + body[:150]\n\told = self.view.custom.log_alertpanel\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertpanel = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        },
+                        "onRowClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onRowClick  ' + body[:150]\n\told = self.view.custom.log_alertpanel\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertpanel = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        },
+                        "onSilenceClick": {
+                          "config": {
+                            "script": "\t# GF-37: a component event runs this script on the gateway; its payload is the object `event`\n\tstamp = system.date.format(system.date.now(), 'HH:mm:ss')\n\ttry:\n\t\tbody = system.util.jsonEncode(event)\n\texcept:\n\t\tbody = unicode(event)\n\tline = stamp + '  onSilenceClick  ' + body[:150]\n\told = self.view.custom.log_alertpanel\n\trows = [line] + ([r for r in old.split(chr(10)) if r] if old and not old.startswith('No event') else [])\n\tself.view.custom.log_alertpanel = chr(10).join(rows[:6])"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "domId": "alertpanel",
+                      "name": "alertpanel"
+                    },
+                    "position": {
+                      "height": 420,
+                      "width": 640,
+                      "x": 48.0,
+                      "y": 700.0
+                    },
+                    "propConfig": {
+                      "props.alerts": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_alerts"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.hasShelved": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_hasShelved"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectable": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_selectable"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectedIds": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_selectedIds"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.selectedMode": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_selectedMode"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.showTime": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_alertpanel_showTime"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.alertpanel"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_canvaszoom"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1380
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_canvaszoom"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1388
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Canvas Zoom"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_canvaszoom"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1412
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.canvaszoom"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_canvaszoom"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1412
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Canvas zoom: Ctrl+wheel, pinch and Ctrl+plus, minus, 0 scale only the canvas, not the browser page."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_zoom",
+                      "name": "l_canvaszoom_zoom"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1436
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "zoom"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_zoom",
+                      "name": "e_canvaszoom_zoom"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1454
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_zoom"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_min",
+                      "name": "l_canvaszoom_min"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1436
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "min"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_min",
+                      "name": "e_canvaszoom_min"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1454
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_min"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_max",
+                      "name": "l_canvaszoom_max"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1436
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "max"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_max",
+                      "name": "e_canvaszoom_max"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1454
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_max"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_targetDomId",
+                      "name": "l_canvaszoom_targetDomId"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1436
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "targetDomId"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_targetDomId",
+                      "name": "e_canvaszoom_targetDomId"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1454
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_targetDomId"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.text-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_guardBrowserZoom",
+                      "name": "l_canvaszoom_guardBrowserZoom"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1492
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "guardBrowserZoom"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_guardBrowserZoom",
+                      "name": "e_canvaszoom_guardBrowserZoom"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1510
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_guardBrowserZoom"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_viewWidth",
+                      "name": "l_canvaszoom_viewWidth"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1492
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "viewWidth"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_viewWidth",
+                      "name": "e_canvaszoom_viewWidth"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1510
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_viewWidth"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_canvaszoom_viewHeight",
+                      "name": "l_canvaszoom_viewHeight"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1492
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "viewHeight"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_canvaszoom_viewHeight",
+                      "name": "e_canvaszoom_viewHeight"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1510
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_viewHeight"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "domId": "zoom_target",
+                          "name": "zoom_target"
+                        },
+                        "position": {
+                          "basis": "80px",
+                          "shrink": 0
+                        },
+                        "propConfig": {
+                          "props.style.transform": {
+                            "binding": {
+                              "config": {
+                                "expression": "'scale(' + toStr(coalesce({view.custom.v_canvaszoom_zoom}, 1)) + ')'"
+                              },
+                              "type": "expr"
+                            }
+                          }
+                        },
+                        "props": {
+                          "style": {
+                            "border": "1px solid var(--border-outline-color)",
+                            "borderRadius": "4px",
+                            "classes": "cadre/font/label cadre/text/neutral",
+                            "textAlign": "center",
+                            "whiteSpace": "normal",
+                            "width": "160px"
+                          },
+                          "text": "Zoom target: wheel, pinch or Ctrl and plus here"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "stage_canvaszoom"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1436
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "alignItems": "center",
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "display": "flex",
+                        "justifyContent": "center",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "canvaszoom",
+                      "name": "canvaszoom"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 120.0,
+                      "y": 1496.0
+                    },
+                    "propConfig": {
+                      "props.guardBrowserZoom": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_guardBrowserZoom"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.max": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_max"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.min": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_min"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.targetDomId": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_targetDomId"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.viewHeight": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_viewHeight"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.viewWidth": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_canvaszoom_viewWidth"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.zoom": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_canvaszoom_zoom"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.canvaszoom"
+                  }
+                ],
+                "meta": {
+                  "name": "Diagram"
+                },
+                "position": {
+                  "basis": "1628px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "height": "1628px",
+                    "minWidth": "1400px",
+                    "overflow": "hidden",
+                    "width": "1400px"
+                  }
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "Sizer"
+            },
+            "position": {
+              "basis": "1628px",
+              "grow": 0,
+              "shrink": 0
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "height": "1628px",
+                "overflow": "hidden",
+                "width": "1400px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Canvas"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

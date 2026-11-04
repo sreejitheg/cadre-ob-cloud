@@ -1,4 +1,4 @@
-// The OpenBridge custom elements this module wraps. Each import defines its element
+// The package custom elements this module wraps. Each import defines its element
 // (customElements.define) as a side effect; only these and their dependencies are bundled.
 import '@oicl/openbridge-webcomponents/dist/automation/pump/pump.js';
 import '@oicl/openbridge-webcomponents/dist/automation/automation-tank/automation-tank.js';
@@ -92,4 +92,13 @@ import '@oicl/openbridge-webcomponents/dist/components/context-menu-input/contex
 import '@oicl/openbridge-webcomponents/dist/components/notification-menu-item/notification-menu-item.js';
 import '@oicl/openbridge-webcomponents/dist/components/notification-message-item/notification-message-item.js';
 import '@oicl/openbridge-webcomponents/dist/components/notification-floating-item/notification-floating-item.js';
+import '@oicl/openbridge-webcomponents/dist/automation/horizontal-line/horizontal-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/vertical-line/vertical-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/corner-line/corner-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/three-way-line/three-way-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/line-cross/line-cross.js';
+import '@oicl/openbridge-webcomponents/dist/automation/line-overlap/line-overlap.js';
+import '@oicl/openbridge-webcomponents/dist/automation/end-point-line/end-point-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/direction-line/direction-line.js';
+import '@oicl/openbridge-webcomponents/dist/automation/bus/bus.js';
 import './icons.js';

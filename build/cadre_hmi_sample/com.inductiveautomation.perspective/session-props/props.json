@@ -1,6 +1,8 @@
 {
   "custom": {
     "alarmScope": "*",
+    "commands": [],
+    "contentNode": "",
     "deviceModel": false,
     "devices": [
       {
@@ -39,6 +41,12 @@
         "unit": ""
       }
     ],
+    "faceplateDocked": false,
+    "faceplateMode": "dock",
+    "faceplateStyle": "openbridge",
+    "floating": {},
+    "frame": "openbridge",
+    "hierarchy": [],
     "nav": {
       "footer": [
         {
@@ -51,14 +59,23 @@
         {
           "icon": "dashboard",
           "label": "Pump Station",
+          "node": "",
           "path": "/pump-station"
         }
       ]
     },
+    "navPanel": "pages",
+    "navQuery": "",
+    "pageInfo": {},
     "palette": "day",
+    "searchIndex": {},
+    "searchOpen": false,
+    "searchQuery": "",
     "selectedDevice": "",
     "selectedKind": "",
     "selectedLabel": "",
+    "selectedStyle": "openbridge",
+    "selectedTab": "",
     "selectedTitle": "",
     "trends": []
   },

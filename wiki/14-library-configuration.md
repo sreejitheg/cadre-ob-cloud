@@ -16,11 +16,11 @@ updated: 2026-11-03
 
 ## 1. Purpose
 
-This page records, as a chapter of the wiki, every configuration that the Cadre OpenBridge library needs to be built, installed, deployed
+This page records, as a chapter of the wiki, every configuration that the Cadre HMI Components library needs to be built, installed, deployed
 and tested: the cloud environment, the Ignition gateway, the module, the build and deploy options, the four frames, the gates, the owner's
 decisions and the known limits. `CONFIGURATION.md` at the repository root is the same material as a reference to keep beside the code, with
 the commands in full; this page gives the reasons and points to the pages that hold each design. The components themselves are not listed here:
-`module/CATALOGUE.md` holds, for each of the 88 components, its OpenBridge element, kind, default size, properties, events and what is not carried,
+`module/CATALOGUE.md` holds, for each of the 97 components, its package element, kind, default size, properties, events and what is not carried,
 and a test (`tests/test_catalogue.py`) holds it equal to its generator.
 
 No secret appears in the repository. This page names the files that hold them (section 3.8) and never their contents.
@@ -64,7 +64,7 @@ Table 2. The variables. Each keeps the source repository's Windows default when 
 
 Playwright for Python is pinned to 1.63.0: the image's Chromium is build 1243, and the newest release (1.64.1) expects build 1248 and cannot
 launch (34 errors in the first offline run, one cause). JDK 17.0.20.1 comes from the Ubuntu packages beside the image's JDK 21. Gradle is 8.2.1
-by the wrapper, with one online build to fill the cache and offline builds after it. Node 22.23.4 installs the pinned OpenBridge release only by
+by the wrapper, with one online build to fill the cache and offline builds after it. Node 22.23.4 installs the pinned component package only by
 `npm ci`; the version in `module/web/package.json` never changes (`CLAUDE.md` rule 2).
 
 ### 2.4 The Docker Daemon
@@ -134,10 +134,10 @@ Table 3. Secrets, all under `/root/.cadre/` (mode 700, outside the repository, n
 
 ### 4.1 Identity and Content
 
-Cadre OpenBridge, id `cadre.hmi.ob`, version 0.7.0, for Ignition 8.3.0 and later, free, depending on Perspective. It registers 88 components on the
-OpenBridge web components 2.0.0-next.155 (Apache-2.0, commit `2c98dda1`, attribution in `NOTICE`).
+Cadre HMI Components, id `cadre.hmi.ob`, version 0.8.0, for Ignition 8.3.0 and later, free, depending on Perspective. It registers 97 components on the
+pinned web components 2.0.0-next.155 (Apache-2.0, commit `2c98dda1`, attribution in `NOTICE`).
 
-Table 4. The 88 components by class (`module/CATALOGUE.md`).
+Table 4. The 97 components by class (`module/CATALOGUE.md`).
 
 | Class | Components |
 |---|---|
@@ -145,19 +145,20 @@ Table 4. The 88 components by class (`module/CATALOGUE.md`).
 | Module-only kinds: electrical symbols (11) and valve, indicator, tank, gauge and hydraulic glyphs (17) | 28 |
 | Charts (6) and building blocks (5) | 11 |
 | Frame components (the 33 of the pinned release) | 33 |
+| Pipe components (nine, display only) | 9 |
 | Alarm lists (2) and the canvas zoom | 3 |
 
 ### 4.2 Generated Files
 
-The generator `module/tools/gen_module_assets.py` writes the script `cadre-ob.js` (2,753,602 bytes at 0.7.0), the stylesheet (237,048), the font
-(625,312), `components.json` and the 88 property schemas and 94 event schemas. `gen_catalogue.py` writes `module/CATALOGUE.md`. `parent.py`
+The generator `module/tools/gen_module_assets.py` writes the script `cadre-ob.js` (2,779,218 bytes at 0.8.0), the stylesheet (238,012), the font
+(625,312), `components.json` and the 97 property schemas and 94 event schemas. `gen_catalogue.py` writes `module/CATALOGUE.md`. `parent.py`
 writes `library/contracts.json` and `library/profile.json`. None is hand edited (`CLAUDE.md` rule 4). The unsigned module file is 988,279 bytes.
 
 ### 4.3 Build, Install and Restart
 
 `npm ci && npm run build` in `module/web`, then `gen_module_assets.py` and `gen_catalogue.py`, then `build_module.py` (JDK 17, offline, unsigned),
-`install_module.py --file module/build/CadreOpenBridge.unsigned.modl`, `restart_gateway.py --confirm --wait 300`, and `setup.sh trust-module` after
-a first install. The log line "Registered N Cadre OpenBridge components" must show 88. The commands in full are in `CONFIGURATION.md` section 3.3.
+`install_module.py --file module/build/CadreHMIComponents.unsigned.modl`, `restart_gateway.py --confirm --wait 300`, and `setup.sh trust-module` after
+a first install. The log line "Registered N Cadre HMI Components components" must show 97. The commands in full are in `CONFIGURATION.md` section 3.3.
 
 ## 5. Building and Deploying
 
@@ -194,14 +195,26 @@ Table 6. The frames (heights measured).
 
 | Frame | Top dock | Drawn by | Described in |
 |---|---|---|---|
-| `openbridge` (default) | 48 px | Stock components; the module's alert panel for the alert menu under `--render module` | 04 sections 2 to 7 |
-| `asm` | 84 px (bar 48, header 36), left dock with two states, bottom banner 76 px | Stock components | 04 section 8 |
-| `ob` | 84 px: `cadre.ob.topbar` (48) and the Cadre strip (36); left dock `cadre.ob.navigationmenu` | The module's top bar, navigation menu, alert menu, user and brilliance menus | 04 section 10 |
-| `obasm` | 132 px: top bar 48, strip 36, header 48 (pivot group and tab row); left dock tree navigation or navigation menu; bottom banner 76 px | The same components, plus the pivot group, tab row and tree navigation | 04 section 11 |
+| `openbridge` (default; the stock frame) | 48 px | Stock components; the module's alert panel for the alert menu under `--render module` | 04 sections 2 to 7 |
+| `asm` (the stock ASM frame) | 84 px (bar 48, header 36), left dock with two states, bottom banner 76 px | Stock components | 04 section 8 |
+| `ob` (the module frame) | 84 px: `cadre.ob.topbar` (48) and the Cadre strip (36); left dock `cadre.ob.navigationmenu` | The module's top bar, navigation menu, alert menu, user and brilliance menus | 04 section 10 |
+| `obasm` (the module ASM frame) | 132 px: top bar 48, strip 36, header 48 (pivot group and tab row); left dock tree navigation or navigation menu; bottom banner 76 px | The same components, plus the pivot group, tab row and tree navigation | 04 section 11 |
 
 What stays a Cadre view in `ob` and `obasm` (owner's answers 2 to 4): the crumb with its node badges, the alert message and its ACK, the ASM search
 field, the alarm banner, the floating faceplate, the crumb popup, the page header's title and step buttons, the alerts page and the faceplate dock.
-The silence control is hidden. The ASM rules are in the data and the scripts, not in OpenBridge's code (`CLAUDE.md` rule 7).
+The silence control is hidden. The ASM rules are in the data and the scripts, not in the package's code (`CLAUDE.md` rule 7).
+
+### 6.1 Frame Names
+
+Table 6a. The names used in prose and the option values they stand for. Prose in the library, the module and the wiki uses the names in the
+first column; the option values are the code literals of `--frame` and of the faceplate style.
+
+| Name in prose | Option value | Meaning |
+|---|---|---|
+| The stock frame | `openbridge` | The default frame, drawn by stock Perspective components (the default `--faceplate` style carries the same value) |
+| The stock ASM frame | `asm` | The ASM frame, drawn by stock Perspective components |
+| The module frame | `ob` | The frame drawn by the module components (`cadre.ob.*`) |
+| The module ASM frame | `obasm` | The ASM frame drawn by the module components |
 
 ## 7. The Gates
 
@@ -248,7 +261,7 @@ three full walks in a row; G11 on the component test page on a fresh run: 21 of 
 
 1. Fixed during delivery: the instrument field identity of G11 (the sweep follows the library's title rule) and the intermittent walk row A-02
    (the glass scrolls an alarm row clear of the panel's toolbar before pressing its ACK).
-2. For an operator, the module alert panel's toolbar covers the second row's ACK until the list is scrolled (OpenBridge's layout).
+2. For an operator, the module alert panel's toolbar covers the second row's ACK until the list is scrolled (the package's layout).
 3. The glass gates that write on the ASM variant need an ASM sample with an ASM model, which the cloud copy does not have; the read-only ASM gates pass.
 4. The gauges' 240 by 280 box is not measured and the gauges overflow it.
 5. Writes of module-only kinds are deferred: the hydraulic valves' selection, the gauges' setpoints and several `click` events are carried or shown, never wired.
@@ -273,4 +286,19 @@ Then the full suite (1318 in the cloud), the signed build and its install with t
 1. `CONFIGURATION.md` (root), `module/CATALOGUE.md`, `cloud/PROGRESS.md`, `cloud/REPORT-T0.md`, `cloud/REPORT-T1.md`, `cloud/WRAP-RECIPE.md`,
    `cloud/FRAME-DESIGN.md`, `cloud/setup.sh`.
 2. This wiki: page 04 (frames), 07 (GF-99 to GF-114), 08 (gates), 12 (the module, sections 17.10 to 17.27), 13 (glass, section 13.11).
-3. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0 (COBD-003).
+3. pinned web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0 (COBD-003).
+
+## 12. Third-party Names That Remain
+
+Table 11a. The categories of third-party name that stay in the tracked text, and why. Each is an identifier, a code literal or a required attribution, not
+a product name used in prose.
+
+| Category | Examples | Why it stays |
+|---|---|---|
+| The pinned package name and path | `@oicl/openbridge-webcomponents`, `node_modules/@oicl/openbridge-webcomponents/...`, `dist/openbridge.css`, `openbridge-webcomponents.bundle.js` | The Apache-2.0 package the module bundles; its attribution is required (`NOTICE`, the module licence page, the third-party section of `README.md` and `CONFIGURATION.md`) |
+| The package element tags | `obc-pump`, `obc-top-bar` and the other `obc-*` tags; `obi-*` icon names | Names defined by the pinned package; the wrappers register them |
+| Option values and project names | `openbridge` (frame and faceplate style), `asm`, `ob`, `obasm`; `cadre_hmi_wtpob`, `cadre_hmi_wtpobf` | Identifiers that existing projects store; renaming them would break those projects |
+| Component, module and resource identifiers | `cadre.ob.*`, `cadre.hmi.ob`, `cadre-ob.js`, `cadre-ob.css`, `Framework/OB/*`, `NotoSans-OB.ttf`, the Java package `cadre.hmi.ob`, the Gradle project name `cadre-openbridge` | Identifiers the gateway, the projects and the tools resolve by name |
+| The token file | `library/tokens/openbridge-tokens.json` | A file name read by the generators; the tokens are from the pinned package |
+| Attribution and licence text | `NOTICE`, `module/gateway/src/main/resources/mounted/NOTICE.txt`, `LICENSES/`, `ob-components.js.LEGAL.txt`, the package line of `module/web/package.json` | Licence obligations of the Apache-2.0 package |
+| Reference DOM selectors | `openbridge.manual.*` in `tools/compare/fingerprint.js` | Selector strings for an external page that the comparison tool can read; no behaviour of the library depends on them |

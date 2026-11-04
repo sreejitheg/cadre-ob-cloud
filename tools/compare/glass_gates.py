@@ -409,7 +409,7 @@ class Session:
         return box or {"x": 200, "y": 150, "width": self.window[0] - 400, "height": self.window[1] - 300}
 
     def frame(self) -> str:
-        """The frame the page shows: `default` (the asm frame, or the openbridge frame), `ob` or `obasm` (`glass.frame_variant`)."""
+        """The frame the page shows: `default` (the asm frame, or the stock frame), `ob` or `obasm` (`glass.frame_variant`)."""
         return glass.frame_variant(self.p, tries=max(2, round(12 * self.settle)))   # the wait for the dock follows `--settle`
 
     def banner_text(self):

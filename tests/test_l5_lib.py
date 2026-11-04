@@ -209,7 +209,7 @@ class NotificationTests(Case):
                          "var(--on-warning-active-color)")
 
     def test_the_status_row_is_the_modules_state_readout(self):
-        # the module draws statusText as OpenBridge's state-on or state-off readout: obi-on or obi-off at 16 px, the
+        # the module draws statusText as the package's state-on or state-off readout: obi-on or obi-off at 16 px, the
         # value text 16 px at weight 400 on a 20 px line, 4 px from the icon
         n = self.frame()
         row = n["Status"]

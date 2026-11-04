@@ -61,7 +61,7 @@ PULSE_MS = 60000                      # how long a page button holds a test tag 
 RAISE_ALL = f"{FOLDER}/ALM_ALL/raise"  # one tag raises every test alarm
 
 # Enumerations the contracts do not state (a contract holds the default only). Each is a fact of the library's own
-# drawing code, not of a vendor document: the alert colours (`library.ALERT_COLOURS`), the control badges
+# drawing code, not of a reference document: the alert colours (`library.ALERT_COLOURS`), the control badges
 # (`library.CONTROL_BADGES`), the alert modes `library._alert_frame` reads, the interlock badges `library._badges` reads.
 ALERT_STATUS = tuple(library.ALERT_COLOURS)
 ALERT_MODE = ("acked-active", "unacked-active", "unacked-rectified")
@@ -620,7 +620,9 @@ GLYPH_NUMBER_VALUES = {"numberOfDigits": (1, 6),
                        # the circular progress (C2): the ring's stroke, its view box and its padding
                        "strokeWidth": (4, 8), "viewBoxSize": (42, 84), "padding": (0, 4),
                        # the radial instrument (C2): the clip of the face
-                       "clipTop": (0, 20), "clipBottom": (0, 20), "clipLeft": (0, 20), "clipRight": (0, 20)}
+                       "clipTop": (0, 20), "clipBottom": (0, 20), "clipLeft": (0, 20), "clipRight": (0, 20),
+                       # the pipes (the line elements): the length of a horizontal or vertical line in units of 24 px
+                       "length": (1, 4)}
 # The samples of a trend graph (the pinned indicators draw `data` as a polyline over the bar's rectangle) and the text a
 # free string property is shown with, where a glyph has one (the readout's unit).
 GLYPH_SERIES = [20, 35, 30, 55, 70, 60, 85]
@@ -688,6 +690,8 @@ GLYPH_DATA["readout-block"] = {"value": 12.5}
 GLYPH_EXTRA["readout-block"] = [("text value", {"valueType": "text", "value": "AUTO"}),
                                 ("text, left", {"valueType": "text", "value": "STBY", "alignment": "left"}),
                                 ("off text", {"off": True, "offText": "N/A"})]
+# the bus (the pipes): a label in every case but the default, which shows the bar without one
+GLYPH_DATA["bus"] = {"label": "MSB"}
 GLYPH_EXTRA["pie-chart"] = [("custom colours", {"colors": ["#7a4aa8", "#2e8b57", "#c07a1a", "#3a6ea5"]}),
                             ("sunburst with children", {"sunburst": True, "data": GLYPH_SUNBURST}),
                             ("labels with unit", {"showOuterLabels": True, "showUnit": True, "outerLabelUnit": "kW",
@@ -733,6 +737,10 @@ def glyph_cases(schema: dict, contract: dict) -> list[Case]:
     if "width" in props and "height" in props:   # a chart draws at the size it is given: its box is that size
         for c in out:
             c.size = (c.params.get("width", default["width"]), c.params.get("height", default["height"]))
+    if "vertical" in props and contract["size"][0] != contract["size"][1]:   # a bar drawn on end needs its box turned (the bus)
+        for c in out:
+            if c.params.get("vertical"):
+                c.size = (contract["size"][1], contract["size"][0])
     return [c for c in out if all(k in contract["params"] for k in c.params)]
 
 
@@ -1246,7 +1254,7 @@ def devices_block(specs: dict, contracts: dict) -> tuple[Block, list[str]]:
     block.add("buttons", {**button("TB_press_GEN_start", "Start generator", bx, y2 + 270, 220,
                                    {"type": "pulse", "tag": tag, "ms": PULSE_MS,
                                     "confirm": "Start the test generator?"}, h=56), "render": "module"})
-    block.add("labels", label("TB_press_GEN_start_c", "OB button: Start generator pulses TB_GEN/cmdStart for a minute; the "
+    block.add("labels", label("TB_press_GEN_start_c", "Module button: Start generator pulses TB_GEN/cmdStart for a minute; the "
                                                       "generator then runs.", bx + 230, y2 + 288, 600, 16,
                               style="body", align="left"))
     block.w, block.h = 1500, y2 + 365

@@ -1,0 +1,3674 @@
+{
+  "custom": {
+    "tick": 0,
+    "v_bus_componentSize": "regular",
+    "v_bus_label": "MSB",
+    "v_bus_size": "small",
+    "v_bus_tint": false,
+    "v_bus_variant": "regular",
+    "v_bus_vertical": false,
+    "v_pipecorner_componentSize": "regular",
+    "v_pipecorner_direction": "top-right",
+    "v_pipecorner_lineType": "fluid",
+    "v_pipecorner_medium": "normal",
+    "v_pipecross_componentSize": "regular",
+    "v_pipecross_lineType": "fluid",
+    "v_pipecross_medium": "normal",
+    "v_pipedirection_componentSize": "regular",
+    "v_pipedirection_lineType": "fluid",
+    "v_pipedirection_medium": "normal",
+    "v_pipeend_componentSize": "regular",
+    "v_pipeend_direction": "top",
+    "v_pipeend_lineType": "fluid",
+    "v_pipeend_medium": "normal",
+    "v_pipehorizontal_componentSize": "regular",
+    "v_pipehorizontal_length": 1,
+    "v_pipehorizontal_lineType": "fluid",
+    "v_pipehorizontal_medium": "normal",
+    "v_pipeoverlap_componentSize": "regular",
+    "v_pipeoverlap_lineType": "fluid",
+    "v_pipeoverlap_medium": "normal",
+    "v_pipetee_componentSize": "regular",
+    "v_pipetee_direction": "top",
+    "v_pipetee_lineType": "fluid",
+    "v_pipetee_medium": "normal",
+    "v_pipevertical_componentSize": "regular",
+    "v_pipevertical_length": 1,
+    "v_pipevertical_lineType": "fluid",
+    "v_pipevertical_medium": "normal"
+  },
+  "params": {},
+  "propConfig": {
+    "custom.tick": {
+      "binding": {
+        "config": {
+          "expression": "toMillis(now(1000))"
+        },
+        "type": "expr"
+      }
+    }
+  },
+  "props": {
+    "defaultSize": {
+      "height": 2244,
+      "width": 1400
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "meta": {
+                      "name": "card_pipehorizontal"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 12
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipehorizontal"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 20
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, horizontal"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipehorizontal"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipehorizontal"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipehorizontal"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 44
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipehorizontal_medium",
+                      "name": "l_pipehorizontal_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipehorizontal_medium",
+                      "name": "e_pipehorizontal_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipehorizontal_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipehorizontal_lineType",
+                      "name": "l_pipehorizontal_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipehorizontal_lineType",
+                      "name": "e_pipehorizontal_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipehorizontal_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        },
+                        {
+                          "label": "connector",
+                          "value": "connector"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipehorizontal_length",
+                      "name": "l_pipehorizontal_length"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "length"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipehorizontal_length",
+                      "name": "e_pipehorizontal_length"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipehorizontal_length"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipehorizontal_componentSize",
+                      "name": "l_pipehorizontal_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipehorizontal_componentSize",
+                      "name": "e_pipehorizontal_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 86
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipehorizontal_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipehorizontal"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 68
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipehorizontal",
+                      "name": "pipehorizontal"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 96,
+                      "x": 96.0,
+                      "y": 140.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipehorizontal_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.length": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipehorizontal_length"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipehorizontal_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipehorizontal_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipehorizontal"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipevertical"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 260
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipevertical"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 268
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, vertical"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipevertical"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 292
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipevertical"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipevertical"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 292
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipevertical_medium",
+                      "name": "l_pipevertical_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipevertical_medium",
+                      "name": "e_pipevertical_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipevertical_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipevertical_lineType",
+                      "name": "l_pipevertical_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipevertical_lineType",
+                      "name": "e_pipevertical_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipevertical_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        },
+                        {
+                          "label": "connector",
+                          "value": "connector"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipevertical_length",
+                      "name": "l_pipevertical_length"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "length"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipevertical_length",
+                      "name": "e_pipevertical_length"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipevertical_length"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.numeric-entry-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipevertical_componentSize",
+                      "name": "l_pipevertical_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipevertical_componentSize",
+                      "name": "e_pipevertical_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 334
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipevertical_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipevertical"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 316
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipevertical",
+                      "name": "pipevertical"
+                    },
+                    "position": {
+                      "height": 96,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 352.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipevertical_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.length": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipevertical_length"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipevertical_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipevertical_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipevertical"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipecorner"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 508
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipecorner"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 516
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, corner"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipecorner"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 540
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipecorner"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipecorner"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 540
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Corner line: a pipe bend joining two sides of its box, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecorner_medium",
+                      "name": "l_pipecorner_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecorner_medium",
+                      "name": "e_pipecorner_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecorner_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecorner_direction",
+                      "name": "l_pipecorner_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecorner_direction",
+                      "name": "e_pipecorner_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecorner_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "top-right",
+                          "value": "top-right"
+                        },
+                        {
+                          "label": "top-left",
+                          "value": "top-left"
+                        },
+                        {
+                          "label": "bottom-right",
+                          "value": "bottom-right"
+                        },
+                        {
+                          "label": "bottom-left",
+                          "value": "bottom-left"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecorner_lineType",
+                      "name": "l_pipecorner_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecorner_lineType",
+                      "name": "e_pipecorner_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecorner_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        },
+                        {
+                          "label": "connector",
+                          "value": "connector"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecorner_componentSize",
+                      "name": "l_pipecorner_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecorner_componentSize",
+                      "name": "e_pipecorner_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 582
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecorner_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipecorner"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 564
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipecorner",
+                      "name": "pipecorner"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 636.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecorner_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecorner_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecorner_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecorner_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipecorner"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipetee"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 756
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipetee"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 764
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, tee"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipetee"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 788
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipetee"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipetee"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 788
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Three-way line: a pipe tee with a run and one branch, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipetee_medium",
+                      "name": "l_pipetee_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipetee_medium",
+                      "name": "e_pipetee_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipetee_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipetee_direction",
+                      "name": "l_pipetee_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipetee_direction",
+                      "name": "e_pipetee_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipetee_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "top",
+                          "value": "top"
+                        },
+                        {
+                          "label": "right",
+                          "value": "right"
+                        },
+                        {
+                          "label": "bottom",
+                          "value": "bottom"
+                        },
+                        {
+                          "label": "left",
+                          "value": "left"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipetee_lineType",
+                      "name": "l_pipetee_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipetee_lineType",
+                      "name": "e_pipetee_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipetee_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        },
+                        {
+                          "label": "connector",
+                          "value": "connector"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipetee_componentSize",
+                      "name": "l_pipetee_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipetee_componentSize",
+                      "name": "e_pipetee_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 830
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipetee_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipetee"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 812
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipetee",
+                      "name": "pipetee"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 884.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipetee_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipetee_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipetee_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipetee_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipetee"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipecross"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1004
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipecross"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1012
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, four-way junction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipecross"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1036
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipecross"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipecross"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1036
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Line cross: four pipe ends joined at the centre of the box, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecross_medium",
+                      "name": "l_pipecross_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecross_medium",
+                      "name": "e_pipecross_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecross_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecross_lineType",
+                      "name": "l_pipecross_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecross_lineType",
+                      "name": "e_pipecross_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecross_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        },
+                        {
+                          "label": "connector",
+                          "value": "connector"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipecross_componentSize",
+                      "name": "l_pipecross_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipecross_componentSize",
+                      "name": "e_pipecross_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1078
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipecross_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipecross"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1060
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipecross",
+                      "name": "pipecross"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 1132.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecross_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecross_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipecross_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipecross"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipeoverlap"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1252
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipeoverlap"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1260
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, crossover"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipeoverlap"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1284
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipeoverlap"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipeoverlap"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1284
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Line overlap: one pipe passing over another without joining it, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeoverlap_medium",
+                      "name": "l_pipeoverlap_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeoverlap_medium",
+                      "name": "e_pipeoverlap_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeoverlap_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeoverlap_lineType",
+                      "name": "l_pipeoverlap_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeoverlap_lineType",
+                      "name": "e_pipeoverlap_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeoverlap_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeoverlap_componentSize",
+                      "name": "l_pipeoverlap_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeoverlap_componentSize",
+                      "name": "e_pipeoverlap_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1326
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeoverlap_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipeoverlap"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1308
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipeoverlap",
+                      "name": "pipeoverlap"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 1380.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeoverlap_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeoverlap_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeoverlap_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipeoverlap"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipeend"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1500
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipeend"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1508
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, end point"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipeend"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1532
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipeend"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipeend"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1532
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "End point line: a pipe that ends in a terminal bar on one side of its box, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeend_medium",
+                      "name": "l_pipeend_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeend_medium",
+                      "name": "e_pipeend_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeend_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeend_direction",
+                      "name": "l_pipeend_direction"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeend_direction",
+                      "name": "e_pipeend_direction"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeend_direction"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "top",
+                          "value": "top"
+                        },
+                        {
+                          "label": "right",
+                          "value": "right"
+                        },
+                        {
+                          "label": "bottom",
+                          "value": "bottom"
+                        },
+                        {
+                          "label": "left",
+                          "value": "left"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeend_lineType",
+                      "name": "l_pipeend_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeend_lineType",
+                      "name": "e_pipeend_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeend_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipeend_componentSize",
+                      "name": "l_pipeend_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipeend_componentSize",
+                      "name": "e_pipeend_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 972,
+                      "y": 1574
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipeend_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipeend"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1556
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipeend",
+                      "name": "pipeend"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 1628.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeend_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.direction": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeend_direction"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeend_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipeend_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipeend"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_pipedirection"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1748
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_pipedirection"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 1756
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Pipe, flow direction"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_pipedirection"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 1780
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.pipedirection"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_pipedirection"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 1780
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Direction line: a pipe segment with a flow direction chevron, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipedirection_medium",
+                      "name": "l_pipedirection_medium"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "medium"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipedirection_medium",
+                      "name": "e_pipedirection_medium"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 276,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipedirection_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "normal",
+                          "value": "normal"
+                        },
+                        {
+                          "label": "empty",
+                          "value": "empty"
+                        },
+                        {
+                          "label": "water",
+                          "value": "water"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipedirection_lineType",
+                      "name": "l_pipedirection_lineType"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "lineType"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipedirection_lineType",
+                      "name": "e_pipedirection_lineType"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 508,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipedirection_lineType"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "fluid",
+                          "value": "fluid"
+                        },
+                        {
+                          "label": "electric",
+                          "value": "electric"
+                        },
+                        {
+                          "label": "air",
+                          "value": "air"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_pipedirection_componentSize",
+                      "name": "l_pipedirection_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_pipedirection_componentSize",
+                      "name": "e_pipedirection_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 740,
+                      "y": 1822
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_pipedirection_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_pipedirection"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 240,
+                      "x": 24,
+                      "y": 1804
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "pipedirection",
+                      "name": "pipedirection"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 24,
+                      "x": 132.0,
+                      "y": 1876.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipedirection_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.lineType": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipedirection_lineType"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.medium": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_pipedirection_medium"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.pipedirection"
+                  },
+                  {
+                    "meta": {
+                      "name": "card_bus"
+                    },
+                    "position": {
+                      "height": 236,
+                      "width": 1376,
+                      "x": 12,
+                      "y": 1996
+                    },
+                    "props": {
+                      "style": {
+                        "borderRadius": "6px",
+                        "classes": "cadre/surface/card",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "name": "t_bus"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 360,
+                      "x": 24,
+                      "y": 2004
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/body-active cadre/text/active",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Bus"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "i_bus"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 300,
+                      "x": 24,
+                      "y": 2028
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "fontFamily": "monospace",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "cadre.ob.bus"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "d_bus"
+                    },
+                    "position": {
+                      "height": 18,
+                      "width": 886,
+                      "x": 342,
+                      "y": 2028
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Bus: a labelled busbar or data bus drawn as a bar, display only."
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_label",
+                      "name": "l_bus_label"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 284,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "label"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_label",
+                      "name": "e_bus_label"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 284,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_label"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.text-field"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_size",
+                      "name": "l_bus_size"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 516,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "size"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_size",
+                      "name": "e_bus_size"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 516,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_size"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "small",
+                          "value": "small"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_variant",
+                      "name": "l_bus_variant"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 748,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "variant"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_variant",
+                      "name": "e_bus_variant"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 748,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_variant"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "enhanced",
+                          "value": "enhanced"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_tint",
+                      "name": "l_bus_tint"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 980,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "tint"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_tint",
+                      "name": "e_bus_tint"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 980,
+                      "y": 2070
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_tint"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_vertical",
+                      "name": "l_bus_vertical"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 284,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "vertical"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_vertical",
+                      "name": "e_bus_vertical"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 284,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.selected": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "ia.input.toggle-switch"
+                  },
+                  {
+                    "meta": {
+                      "domId": "l_bus_componentSize",
+                      "name": "l_bus_componentSize"
+                    },
+                    "position": {
+                      "height": 16,
+                      "width": 220,
+                      "x": 516,
+                      "y": 2108
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "overflow": "hidden",
+                        "textOverflow": "ellipsis",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "componentSize"
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "domId": "e_bus_componentSize",
+                      "name": "e_bus_componentSize"
+                    },
+                    "position": {
+                      "height": 32,
+                      "width": 220,
+                      "x": 516,
+                      "y": 2126
+                    },
+                    "propConfig": {
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "bidirectional": true,
+                            "path": "view.custom.v_bus_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {
+                      "options": [
+                        {
+                          "label": "regular",
+                          "value": "regular"
+                        },
+                        {
+                          "label": "medium",
+                          "value": "medium"
+                        },
+                        {
+                          "label": "large",
+                          "value": "large"
+                        },
+                        {
+                          "label": "xl",
+                          "value": "xl"
+                        }
+                      ]
+                    },
+                    "type": "ia.input.dropdown"
+                  },
+                  {
+                    "meta": {
+                      "name": "stage_bus"
+                    },
+                    "position": {
+                      "height": 168,
+                      "width": 248,
+                      "x": 24,
+                      "y": 2052
+                    },
+                    "props": {
+                      "style": {
+                        "border": "1px dashed var(--border-outline-color)",
+                        "borderRadius": "4px",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "meta": {
+                      "domId": "bus",
+                      "name": "bus"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 200,
+                      "x": 48.0,
+                      "y": 2124.0
+                    },
+                    "propConfig": {
+                      "props.componentSize": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_componentSize"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.label": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_label"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.size": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_size"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.tint": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_tint"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.variant": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_variant"
+                          },
+                          "type": "property"
+                        }
+                      },
+                      "props.vertical": {
+                        "binding": {
+                          "config": {
+                            "path": "view.custom.v_bus_vertical"
+                          },
+                          "type": "property"
+                        }
+                      }
+                    },
+                    "props": {},
+                    "type": "cadre.ob.bus"
+                  }
+                ],
+                "meta": {
+                  "name": "Diagram"
+                },
+                "position": {
+                  "basis": "2244px",
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "height": "2244px",
+                    "minWidth": "1400px",
+                    "overflow": "hidden",
+                    "width": "1400px"
+                  }
+                },
+                "type": "ia.container.coord"
+              }
+            ],
+            "meta": {
+              "name": "Sizer"
+            },
+            "position": {
+              "basis": "2244px",
+              "grow": 0,
+              "shrink": 0
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "height": "2244px",
+                "overflow": "hidden",
+                "width": "1400px"
+              }
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "Canvas"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "overflow": "auto"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "position": {},
+    "propConfig": {
+      "props.style.classes": {
+        "binding": {
+          "config": {
+            "expression": "'cadre/surface/page cadre/palette/' + coalesce({session.custom.palette}, 'day')"
+          },
+          "type": "expr"
+        }
+      }
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "overflow": "hidden"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}

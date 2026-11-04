@@ -35,7 +35,7 @@ from data, with its plan, its rules of evidence, its effects file and its negati
 
 ## 2. Pipeline
 
-1. A descriptor (JSON) is written by ctig, by `tools/import_openstudio.py`, or by hand. A tool
+1. A descriptor (JSON) is written by ctig or by hand. A tool
    that knows the devices' tags may write a device model beside the descriptors (section 3.1).
 2. Gate G0 validates each against its schema.
 3. The generator writes the child project files.
@@ -218,7 +218,7 @@ Table 2a. Heights of the rows of the water treatment overview (`screens/wtp/over
 5. **Drawing.** All pipes of a screen are one `ia.shapes.svg`, two paths each: a 6 px outline in
    `--automation-pipe-tertiary-color` and a 4 px inner stroke, `--automation-pipe-primary-color`
    while the medium flows (or the medium's colour in colour mode) and
-   `--automation-pipe-primary-inverted-color` while empty, the OpenBridge line drawing.
+   `--automation-pipe-primary-inverted-color` while empty, the package line drawing.
 6. **Frame and project.** The screen root carries the palette class and a scrolling canvas; the
    diagram toolbar toggles colour mode, identifier tags and readouts. The child's page
    configuration and session props merge the parent's frame with the screen's route and
@@ -227,7 +227,7 @@ Table 2a. Heights of the rows of the water treatment overview (`screens/wtp/over
    (for a device of a device model, the members the model lists); `--tags-file` imports an external
    tag model instead, before the project.
 7. **Render target.** `--render module` draws pumps and tanks with the components of the Cadre
-   OpenBridge module (page 12) instead of the library views; the descriptor does not change. G1
+   package module (page 12) instead of the library views; the descriptor does not change. G1
    then validates the module components against their generated schemas. A kind without a module
    component, the controller, the indicator and the sequence among them, is drawn with its library
    view under either target. The module's tank has no property that hides the capacity line, so a
@@ -252,7 +252,7 @@ Table 3. The gates. G0 to G7 run offline before any import; G8 to G11 run agains
 | G7 contract | No unknown kind or parameter; every device binds inside its own tag folder; gaps counted. The faceplate contract: each device faceplate the child resolves carries its tab row, one pane per tab, the reset to the first tab, and one kind of alarm list narrowed by the device's source with no text filter. Every tag history binding references an array, and a property it references has a list default. Command security (COB-063): no script of a view (event, change script, transform, custom method, message handler, `runScript` expression) writes a tag or acts on an alarm directly or calls a private function of `cadre.hmi`, no script names `system` without a module or `cadre` other than as `cadre.hmi` or `cadre.icons` (an import, an alias or a lookup would hide the function called), no tag binding is bidirectional, every control whose script names a checked write, however the call is spelt, binds `enabled` to the permission of the write path it calls, alone or joined by `&&`, no checked write is called at view level, and every stock alarm table binds its own actions (`g7_commands`; NOTE-COB-04 section 11.5 item 8). Every `cadre.hmi` and `cadre.icons` name a script takes, however it is spelt, is one the library code the parent and the child ship defines (`ignition/script-python/cadre/<module>/code.py`, its top-level functions and constants; `library_names`), so a call of a function the library lacks fails the build (F050 of the ASMP study, COB-142); a confirmed command's path is read from the Confirm row's `p = self.view.custom.pending` (page 13 section 10.5). The gate reads the text of generated scripts: it is a check on generated views, not a defence against a script written by hand to evade it. With `--tags-file`, the interlock contract of every `ilk` folder (page 13 section 7), every trip latched (COBD-023), and every `cadre` name and `runScript` of a `cadre` function in the tag model's expressions and scripts resolved against the same libraries (`g7_tag_libraries`), since a tag runs in the gateway, where a missing function fails with nothing on the glass. The faceplate and command checks cover `Faceplate/Controller`, `Faceplate/Input`, `Faceplate/Sequence` and `Faceplate/SetpointRow`, and the checked functions `force`, `error_mask` and `pulse`. With `--devices-file`, G7 devices (Table 4) | `tools/hmi/screen.py`, `tools/hmi/gates.py` (`g7_faceplates`, `g7_history`, `g7_commands`, `g7_interlocks`, `g7_tag_libraries`, `g7_devices`) |
 | G8 render | In a new session: no view error badge, no binding quality overlay, no trial page, no "View Not Found", components rendered; structural fingerprint and screenshot recorded | `tools/compare/capture.py` |
 | G9 live flow | For each scenario the gate tags are written, the page opened in a new session, and every pipe's rendered state compared with the reference solver. For memory tag gates only; where the gates are expression tags of a simulation, G6 and G10 cover flow | `tools/compare/live_flow.py` |
-| G10 functional | An operator's walk in a new session: navigation, faceplate, commands, setpoint, acknowledge, fault reset, palette, each checked on the glass (page 11 section 5); under module rendering the faceplate's OpenBridge list display only, with no ACK (F10, COBD-025), ACK in the alarm menu with a row that opens a faceplate (F11), and ACK visible in the alarm menu (F14); a broken permissive that holds a pump, and a latched trip that holds P-502 after its fault clears until reset (F12); an instrument's limit written from its faceplate that raises its alarm, and its trend (F13); with nobody signed in, every command control disabled and a crafted click refused (F15), and no acknowledge path offered (F16); the test login of N-COB-9 signed in and commanding (F17), its name on an acknowledgement (F18, module rendering); the trend page's cards (F19). The commands run signed in; without the login only F1, F2, F6, F9, F15 and F16 run. Written for the water treatment sample; it starts from P-502's initial alarm state and restores the plant | `tools/compare/functional.py` |
+| G10 functional | An operator's walk in a new session: navigation, faceplate, commands, setpoint, acknowledge, fault reset, palette, each checked on the glass (page 11 section 5); under module rendering the faceplate's package list display only, with no ACK (F10, COBD-025), ACK in the alarm menu with a row that opens a faceplate (F11), and ACK visible in the alarm menu (F14); a broken permissive that holds a pump, and a latched trip that holds P-502 after its fault clears until reset (F12); an instrument's limit written from its faceplate that raises its alarm, and its trend (F13); with nobody signed in, every command control disabled and a crafted click refused (F15), and no acknowledge path offered (F16); the test login of N-COB-9 signed in and commanding (F17), its name on an acknowledgement (F18, module rendering); the trend page's cards (F19). The commands run signed in; without the login only F1, F2, F6, F9, F15 and F16 run. Written for the water treatment sample; it starts from P-502's initial alarm state and restores the plant | `tools/compare/functional.py` |
 | G11 faceplates | Every leaf view of every page clicked: each `device` of the descriptors opens the faceplate with its identifier as title, no other view does, and no faceplate shows a quality overlay or the empty body. Every tab of every faceplate is opened: no pane may be empty or show an overlay or an error badge; the Alarms tab lists only the device's alarms, as many as its label counts, and the expected rows of the plant's initial state (`--expect-alarms`). The tabs Maintenance, Tuning and Status are opened like the others, and a line naming a member of bad quality fails the sweep as an overlay does. With `--devices-file`, each faceplate shows the tabs its device's members give it, and each alarm row carries a source path under one of the device's source patterns, in place of the device's identifier | `tools/compare/faceplates.py`; `tools/compare/wtp_suite.py` runs G8, G11 and G10 for the water treatment sample |
 
 `screen.py` runs G0 and G2 to G7 itself and refuses to import on any failure; `parent.py` runs G1
@@ -339,14 +339,12 @@ and tags writes a descriptor and calls the generator; the gates prove the result
    whole project inherits `cadre_hmi_base`. The devices of the source, with the members each one
    has, give the device model (section 3.1); `library/profile.json` states the kinds, members and
    write paths to map onto.
-2. **OpenStudio designs.** `tools/import_openstudio.py` converts a connector diagram view, or with
-   `--layout cards` a card page, into a descriptor (page 09 used both on the vendor's demo).
-3. **New screens.** An engineer or an agent writes the descriptor directly; the schema and the
+2. **New screens.** An engineer or an agent writes the descriptor directly; the schema and the
    contract gate catch mistakes before the gateway does.
 
 ## 8. Extending the Library
 
-1. A two-state device with OpenBridge artwork: add the icon names to `library/icons/ICONS.txt`, run
+1. A two-state device with package artwork: add the icon names to `library/icons/ICONS.txt`, run
    `tools/convert_icons.py`, add one row to `DEVICE_KINDS` in `tools/hmi/library.py` and one to
    `KIND_VIEW` in `tools/hmi/screen.py`, and to `GATED` in `tools/hmi/diagram.py` if it gates flow
    (to `PASS_KINDS` in `library.py` if it does not). A device kind also needs its rows in

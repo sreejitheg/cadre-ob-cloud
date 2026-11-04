@@ -1,4 +1,4 @@
-"""Extract the OpenBridge design tokens from the pinned Apache-2.0 stylesheet.
+"""Extract the package design tokens from the pinned Apache-2.0 stylesheet.
 
 Input is `src/palettes/variables.css` of `@oicl/openbridge-webcomponents` 2.0.0-next.155
 (commit 2c98dda1, Apache-2.0; see NOTICE and decisions COBD-003). Output is a JSON token

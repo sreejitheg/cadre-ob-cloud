@@ -1,4 +1,4 @@
-"""Build a throwaway bundle for the `items` mechanism check (`items.mjs`): the OpenBridge bundle and the generated wrappers for
+"""Build a throwaway bundle for the `items` mechanism check (`items.mjs`): the component bundle and the generated wrappers for
 one synthetic host component, `test.host` (an `obc-notification-badge-button` whose `items` build `obc-app-button` elements,
 which may hold `obc-notification-badge-button` elements), and a harness page for it. Nothing under `module/` is written.
 

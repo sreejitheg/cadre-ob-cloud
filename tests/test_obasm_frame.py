@@ -123,7 +123,7 @@ class ObasmViewTests(unittest.TestCase):
         expr = lambda k: bar["propConfig"][f"props.{k}"]["binding"]["config"]["expression"]   # noqa: E731
         self.assertEqual(expr("nAlerts"), "{view.custom.alarm.count}")
         self.assertEqual(expr("blinking"), "{view.custom.alarm.unacked} > 0")
-        # the OpenBridge variant's bar is the same function with no argument
+        # the module variant's bar is the same function with no argument
         ob_bar = obframe.head()["root"]["children"][0]
         self.assertNotIn("showAppsButton", ob_bar["props"])
         self.assertNotIn("onAppsButtonClick", ob_bar["events"]["component"])

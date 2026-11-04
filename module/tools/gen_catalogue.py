@@ -1,4 +1,4 @@
-"""Generate the component catalogue of the Cadre OpenBridge module: `module/CATALOGUE.md`.
+"""Generate the component catalogue of the Cadre HMI Components module: `module/CATALOGUE.md`.
 
 The catalogue is written from the files the module's own generator already wrote and from the tables of the screen
 generator, so that it states what is built and cannot drift from it:
@@ -109,8 +109,8 @@ def classes(comps: dict) -> list[tuple[str, str, list[str]]]:
          "Events are carried as component events; the frames of `wiki/04` sections 10 and 11 wire the ones their "
          "Tables 7 and 10 list, and no event writes a tag.", frame),
         ("Alarm Lists and the Canvas Zoom",
-         "The two alarm lists wrap OpenBridge elements and the canvas zoom is the module's own component with no "
-         "OpenBridge element.", list(ALARM_AND_ZOOM)),
+         "The two alarm lists wrap package elements and the canvas zoom is the module's own component with no "
+         "package element.", list(ALARM_AND_ZOOM)),
     ]
     seen = [t for _, _, ids in groups for t in ids]
     if sorted(seen) != sorted(comps) or len(seen) != len(set(seen)):
@@ -164,7 +164,7 @@ def component(ctype: str, c: dict, specs: dict) -> list[str]:
     out = [f"### {ctype}", "",
            f"{c['title']}. {esc(c['palette'])}.", "",
            f"* Component id: {code(ctype)}",
-           f"* OpenBridge element: " + (code(c["element"]) if c.get("element") else "none (the module's own component)"),
+           f"* Package element: " + (code(c["element"]) if c.get("element") else "none (the module's own component)"),
            f"* Descriptor kind: " + (f"{code(kind)}, a {kind_class}" if kind else "none (placed by a view, not by a descriptor)"),
            f"* Default size: {size['width']} by {size['height']} px"]
     out += [f"* {line[0].upper() + line[1:]}" for line in (table_lines(ctype, kind) if kind in screen.MODULE_KIND else [])]
@@ -228,9 +228,9 @@ def render() -> str:
     groups = classes(comps)
     total_props = sum(len(c["props"]) for c in comps.values())
     total_events = sum(len(c.get("events", {})) for c in comps.values())
-    out = [FIRST_LINE, "", "# Cadre OpenBridge Module: Component Catalogue", "",
+    out = [FIRST_LINE, "", "# Cadre HMI Components Module: Component Catalogue", "",
            f"The module registers {len(comps)} components ({total_props} properties and {total_events} events in all), each wrapping "
-           "one element of the Apache-2.0 pinned OpenBridge release (`@oicl/openbridge-webcomponents` 2.0.0-next.155, commit "
+           "one element of the pinned Apache-2.0 component package (`@oicl/openbridge-webcomponents` 2.0.0-next.155, commit "
            "`2c98dda1`) or, for the canvas zoom, the module's own code. The operational reference is `CONFIGURATION.md` and the "
            "wiki chapter is `wiki/14-library-configuration.md`.", "",
            "## 1. How to Read This Catalogue", "",
@@ -264,7 +264,7 @@ def render() -> str:
         for t in ids:
             out += component(t, comps[t], specs)
     out += [f"## {len(groups) + 3}. Elements Not Wrapped", "",
-            "1. The nine OpenBridge line elements (`obc-bus`, `obc-corner-line`, `obc-direction-line`, `obc-end-point-line`, "
+            "1. The nine package line elements (`obc-bus`, `obc-corner-line`, `obc-direction-line`, `obc-end-point-line`, "
             "`obc-horizontal-line`, `obc-vertical-line`, `obc-three-way-line`, `obc-line-cross`, `obc-line-overlap`) are skipped by "
             "the owner's decision of tranche T1: they overlap the library's pipes and the flow solver (gate G6).",
             "2. `obc-automation-input-modal` has four bare slots and no attribute; a property cannot fill a slot, so it needs a "

@@ -5,16 +5,16 @@ plugins {
 }
 
 allprojects {
-    version = "0.7.0"
+    version = "0.8.0"
     group = "cadre.hmi.ob"
 }
 
 ignitionModule {
-    fileName.set("CadreOpenBridge")
-    name.set("Cadre OpenBridge")
+    fileName.set("CadreHMIComponents")
+    name.set("Cadre HMI Components")
     id.set("cadre.hmi.ob")
     moduleVersion.set("${project.version}")
-    moduleDescription.set("OpenBridge web components (Apache-2.0, 2.0.0-next.155) as Perspective components: pump, motor, fan, valve, analogue valve, tank, filter, generator, automation button, damper, switch, resistor, capacitor, the electrical symbols, valve glyphs, indicators, gauges and hydraulic valves of tranche T1, the charts and building blocks and the 33 frame components of tranche T2 as module-only components, readout, instrument field, alert list and alert panel, with status, duty and out of service marks on the devices a canvas zoom component and row selection on the alert lists.")
+    moduleDescription.set("Cadre HMI Components: web components (Apache-2.0, 2.0.0-next.155) as Perspective components: pump, motor, fan, valve, analogue valve, tank, filter, generator, automation button, damper, switch, resistor, capacitor, the electrical symbols, valve glyphs, indicators, gauges and hydraulic valves of tranche T1, the charts and building blocks and the 33 frame components of tranche T2 as module-only components, readout, instrument field, alert list and alert panel, with status, duty and out of service marks on the devices a canvas zoom component and row selection on the alert lists.")
     requiredIgnitionVersion.set("8.3.0")
     requiredFrameworkVersion.set("8")
     freeModule.set(true)

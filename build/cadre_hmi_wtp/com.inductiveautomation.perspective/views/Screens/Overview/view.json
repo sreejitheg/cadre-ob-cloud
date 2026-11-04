@@ -118,6 +118,7 @@
                         "deviceLabel": "Raw water flow",
                         "format": "0.0",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Raw water",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -127,6 +128,9 @@
                         "unit": "m³/h"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -160,6 +164,7 @@
                         "deviceLabel": "Filtered water flow",
                         "format": "0.0",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Filtered water",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -169,6 +174,9 @@
                         "unit": "m³/h"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -202,6 +210,7 @@
                         "deviceLabel": "Distribution flow",
                         "format": "0.0",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Distribution",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -211,6 +220,9 @@
                         "unit": "m³/h"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -318,6 +330,7 @@
                         "deviceLabel": "Raw water turbidity",
                         "format": "0.0",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Raw turbidity",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -327,6 +340,9 @@
                         "unit": "NTU"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -360,6 +376,7 @@
                         "deviceLabel": "Filtered water turbidity",
                         "format": "0.00",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Filtered turbidity",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -369,6 +386,9 @@
                         "unit": "NTU"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -402,6 +422,7 @@
                         "deviceLabel": "Free chlorine",
                         "format": "0.00",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "Free chlorine",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -411,6 +432,9 @@
                         "unit": "mg/L"
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -444,6 +468,7 @@
                         "deviceLabel": "Treated water pH",
                         "format": "0.00",
                         "hasSetpoint": false,
+                        "hasTag": true,
                         "label": "pH",
                         "setpoint": 0,
                         "setpointFormat": "#,##0",
@@ -453,6 +478,9 @@
                         "unit": ""
                       },
                       "path": "Instrument/Field",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -575,6 +603,7 @@
                         "deviceId": "[default]cadre_hmi_wtp/TK101",
                         "deviceLabel": "Raw water tank",
                         "hasCapacity": true,
+                        "hasTag": true,
                         "history": [],
                         "max": 500,
                         "medium": "normal",
@@ -585,6 +614,9 @@
                         "valueFractionDigits": 0
                       },
                       "path": "Automation/Tank",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -626,6 +658,7 @@
                         "deviceId": "[default]cadre_hmi_wtp/TK202",
                         "deviceLabel": "Clarified water tank",
                         "hasCapacity": true,
+                        "hasTag": true,
                         "history": [],
                         "max": 300,
                         "medium": "normal",
@@ -636,6 +669,9 @@
                         "valueFractionDigits": 0
                       },
                       "path": "Automation/Tank",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -677,6 +713,7 @@
                         "deviceId": "[default]cadre_hmi_wtp/TK501",
                         "deviceLabel": "Potable water tank",
                         "hasCapacity": true,
+                        "hasTag": true,
                         "history": [],
                         "max": 800,
                         "medium": "normal",
@@ -687,6 +724,9 @@
                         "valueFractionDigits": 0
                       },
                       "path": "Automation/Tank",
+                      "style": {
+                        "overflow": "visible"
+                      },
                       "useDefaultViewHeight": false,
                       "useDefaultViewWidth": false
                     },
@@ -823,11 +863,13 @@
                             "activated": false,
                             "alertFrameStatus": "alarm",
                             "badgeCommandLocked": "none",
+                            "badgeDuty": false,
                             "deviceId": "[default]cadre_hmi_wtp/P101",
                             "deviceKind": "pump",
                             "deviceLabel": "Raw water feed pump",
                             "hasSpeed": true,
                             "hasTag": true,
+                            "outOfService": false,
                             "progress": false,
                             "readoutPosition": "bottom",
                             "showStatus": true,
@@ -935,11 +977,13 @@
                             "activated": false,
                             "alertFrameStatus": "alarm",
                             "badgeCommandLocked": "none",
+                            "badgeDuty": false,
                             "deviceId": "[default]cadre_hmi_wtp/P301",
                             "deviceKind": "pump",
                             "deviceLabel": "Filter feed pump",
                             "hasSpeed": true,
                             "hasTag": true,
+                            "outOfService": false,
                             "progress": false,
                             "readoutPosition": "bottom",
                             "showStatus": true,
@@ -1038,12 +1082,14 @@
                             "activated": false,
                             "alertFrameStatus": "alarm",
                             "badgeCommandLocked": "none",
+                            "badgeDuty": false,
                             "badgeInterlock": "none",
                             "deviceId": "[default]cadre_hmi_wtp/P501",
                             "deviceKind": "pump",
                             "deviceLabel": "Distribution pump 1",
                             "hasSpeed": true,
                             "hasTag": true,
+                            "outOfService": false,
                             "progress": false,
                             "readoutPosition": "bottom",
                             "showStatus": true,
@@ -1151,11 +1197,13 @@
                             "activated": false,
                             "alertFrameStatus": "alarm",
                             "badgeCommandLocked": "none",
+                            "badgeDuty": false,
                             "deviceId": "[default]cadre_hmi_wtp/P502",
                             "deviceKind": "pump",
                             "deviceLabel": "Distribution pump 2",
                             "hasSpeed": true,
                             "hasTag": true,
+                            "outOfService": false,
                             "progress": false,
                             "readoutPosition": "bottom",
                             "showStatus": true,

@@ -67,7 +67,7 @@ def structural(ref: dict, ours: dict, desc: dict) -> dict:
 
 
 def tokens_equal(ref: str, ours: str) -> bool:
-    """The reference text contains every word of ours (vendor components repeat values for
+    """The reference text contains every word of ours (reference components repeat values for
     accessibility and hinting), after normalisation."""
     r = norm_text(ref)
     o = [norm_text(w) for w in ours.split()]

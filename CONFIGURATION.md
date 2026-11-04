@@ -1,10 +1,10 @@
-# Cadre OpenBridge Library: Configuration Reference
+# Cadre HMI Components Library: Configuration Reference
 
 | Field | Value |
 |---|---|
-| Subject | The operational configuration of the Cadre OpenBridge library as built in the cloud sessions of 2026-11-02 and 2026-11-03 (spike T0 and tranches T1 and T2) |
-| Library state | Repository `cadre-ob-cloud`, branch `spike/t0` at `4cdda21`, a copy of `Cadre-Sandbox-OpenBridge` `main` at `d9f8655` |
-| Module | Cadre OpenBridge 0.7.0 (`cadre.hmi.ob`), 88 components |
+| Subject | The operational configuration of the Cadre HMI Components library as built in the cloud sessions of 2026-11-02 and 2026-11-03 (spike T0 and tranches T1 and T2) |
+| Library state | Repository `cadre-ob-cloud`, branch `spike/t0` at `4cdda21`, a copy of `Cadre HMI Library` `main` at `d9f8655` |
+| Module | Cadre HMI Components 0.8.0 (`cadre.hmi.ob`), 97 components |
 | Gateway | Ignition 8.3.6 in Docker, trial mode |
 | Companions | `module/CATALOGUE.md` (every component, generated), `wiki/14-library-configuration.md` (the same configuration as a wiki chapter), `wiki/07-gateway-facts.md` (measured facts GF-99 onward), `cloud/PROGRESS.md` (the dated record) |
 
@@ -65,7 +65,7 @@ The other keys of `CLAUDE.md` section 4 (the table of paths from the source repo
 | Gradle | 8.2.1, by the wrapper | One online build fills the cache; `build_module.py` then builds offline (`--offline`) in under 15 s |
 | Node and npm | 22.23.4 and 10.9.9 | `npm ci` only (`CLAUDE.md` rule 2) |
 | Python | 3.13.18 | |
-| OpenBridge web components | `@oicl/openbridge-webcomponents` 2.0.0-next.155, commit `2c98dda1`, Apache-2.0 | The only permitted source of OpenBridge material (COBD-003). Never change the version in `module/web/package.json` or `package-lock.json`; never run `npm install` |
+| pinned web components | `@oicl/openbridge-webcomponents` 2.0.0-next.155, commit `2c98dda1`, Apache-2.0 | The only permitted source of package material (COBD-003). Never change the version in `module/web/package.json` or `package-lock.json`; never run `npm install` |
 
 ### 1.4 Offline Tests and the Test Login
 
@@ -88,7 +88,7 @@ Long runs are started the same way (`setsid nohup`), because a worker restart al
 ### 1.6 Network Policy
 
 The cloud network policy admits Docker Hub, `nexus.inductiveautomation.com`, `services.gradle.org`, the Gradle plugin portal,
-Maven Central, PyPI, the npm registry and the Ubuntu archive. Nothing else is needed. The OpenBridge 6.1 Figma file is a design
+Maven Central, PyPI, the npm registry and the Ubuntu archive. Nothing else is needed. The maritime design guidance file (Figma, CC BY 4.0) is a design
 reference only and is not fetched.
 
 ## 2. The Gateway
@@ -170,7 +170,9 @@ commissioning page does:
 2. `POST /post-step` with `{"id":"modules","step":"modules","data":{"acceptedLicenses":[],"acceptedCertificates":["cadre.hmi.ob"]}}`.
 3. `docker restart cadre-gw`; wait for `RUNNING`.
 
-The module then starts and logs "Registered N Cadre OpenBridge components". An upgrade of a module already trusted needs no step
+A module whose licence page changed (0.8.0 changed `license.html`) lists a `license` entry at the same step (`GET /get-step`), and `trust-module`, which sends an empty `acceptedLicenses`, leaves the gateway at the step. The same `POST /post-step` with `"acceptedLicenses":["cadre.hmi.ob"]`, followed by `docker restart cadre-gw`, completes it (measured 2026-11-04). `cloud/setup.sh trust-module` now reads the step first and accepts the module's own licence page when the step lists one.
+
+The module then starts and logs "Registered N Cadre HMI Components components". An upgrade of a module already trusted needs no step
 (GF-106). A signed module would need none; the source host signs and the cloud does not.
 
 ### 2.8 Restart Behaviour and Times
@@ -219,15 +221,15 @@ project.
 
 | Item | Value |
 |---|---|
-| Name and id | Cadre OpenBridge, `cadre.hmi.ob` |
-| Version | 0.7.0 (`allprojects.version` in `module/build.gradle.kts`); a plain `major.minor.revision` (GF-27) |
+| Name and id | Cadre HMI Components, `cadre.hmi.ob` |
+| Version | 0.8.0 (`allprojects.version` in `module/build.gradle.kts`); a plain `major.minor.revision` (GF-27) |
 | Required Ignition | 8.3.0; framework version 8; free module; licence `module/license.html` |
 | Dependency | `com.inductiveautomation.perspective` in the gateway and designer scopes (`GD`) |
 | Scopes | `:gateway` G, `:common` DG, `:designer` D |
 | Hooks | `cadre.hmi.ob.gateway.CadreObGatewayHook` (G), `cadre.hmi.ob.designer.CadreObDesignerHook` (D) |
-| Components | 88: 13 device and instrument components mapped to library kinds, 28 module-only symbols and glyphs, 11 charts and building blocks, 33 frame components, 3 alarm lists and canvas zoom. Per component: `module/CATALOGUE.md` |
+| Components | 97: 13 device and instrument components mapped to library kinds, 28 module-only symbols and glyphs, 11 charts and building blocks, 33 frame components, 9 pipe components, 3 alarm lists and canvas zoom. Per component: `module/CATALOGUE.md` |
 | Registration | One `descriptor(...)` line for each component in `module/common/src/main/java/cadre/hmi/ob/common/CadreOb.java`, with one `event(...)` for each event |
-| Upstream | OpenBridge web components 2.0.0-next.155 (Apache-2.0), attribution in `NOTICE` and `module/gateway/src/main/resources/mounted/js/ob-components.js.LEGAL.txt` |
+| Upstream | pinned web components 2.0.0-next.155 (Apache-2.0), attribution in `NOTICE` and `module/gateway/src/main/resources/mounted/js/ob-components.js.LEGAL.txt` |
 
 ### 3.2 Generated Files and How to Regenerate Them
 
@@ -235,8 +237,8 @@ Never hand edit a generated file (`CLAUDE.md` rule 4). Change the generator and 
 
 | Generated file | Generator | Command |
 |---|---|---|
-| `module/gateway/src/main/resources/mounted/js/cadre-ob.js` (the OpenBridge bundle, the React wrappers and `module/web/canvaszoom.js`), `mounted/css/cadre-ob.css`, `mounted/fonts/NotoSans-OB.ttf`, `ob-components.js.LEGAL.txt` | `module/tools/gen_module_assets.py` from `module/web/dist/ob-components.js` | `cd module/web && npm ci && npm run build && cd ../.. && python module/tools/gen_module_assets.py` |
-| `module/components.json` (the contract) and `module/common/src/main/resources/schemas/*.json` (88 property schemas and 94 event schemas) | the same | the same |
+| `module/gateway/src/main/resources/mounted/js/cadre-ob.js` (the component bundle, the React wrappers and `module/web/canvaszoom.js`), `mounted/css/cadre-ob.css`, `mounted/fonts/NotoSans-OB.ttf`, `ob-components.js.LEGAL.txt` | `module/tools/gen_module_assets.py` from `module/web/dist/ob-components.js` | `cd module/web && npm ci && npm run build && cd ../.. && python module/tools/gen_module_assets.py` |
+| `module/components.json` (the contract) and `module/common/src/main/resources/schemas/*.json` (97 property schemas and 94 event schemas) | the same | the same |
 | `module/web/dist/` | `npm run build` (esbuild) in `module/web` from `module/web/entry.js` and `module/web/icons.js` | `cd module/web && npm run build` |
 | `module/web/defaults.json` | `module/tools/measure_defaults.py` (additions only; needs the harness page in Chromium) | `python module/tools/measure_defaults.py` |
 | `module/CATALOGUE.md` | `module/tools/gen_catalogue.py` | `python module/tools/gen_catalogue.py` (`--check` exits 1 when stale); `tests/test_catalogue.py` holds it equal |
@@ -252,8 +254,8 @@ The Gradle outputs (`module/build/`) are not tracked.
 cd module/web && npm ci && npm run build && cd ../..
 python module/tools/gen_module_assets.py            # a second run must change nothing
 python module/tools/gen_catalogue.py
-python module/tools/build_module.py                 # JDK 17 (CADRE_JDK17), offline, unsigned: module/build/CadreOpenBridge.unsigned.modl
-python module/tools/install_module.py --file module/build/CadreOpenBridge.unsigned.modl
+python module/tools/build_module.py                 # JDK 17 (CADRE_JDK17), offline, unsigned: module/build/CadreHMIComponents.unsigned.modl
+python module/tools/install_module.py --file module/build/CadreHMIComponents.unsigned.modl
 python module/tools/restart_gateway.py --gateway-url "$CADRE_IGNITION_GATEWAY_URL" --confirm --wait 300
 cloud/setup.sh trust-module                          # only after a first install; waits for RUNNING
 python module/tools/install_module.py --list         # read only; the installed modules and their digests
@@ -261,10 +263,10 @@ python module/tools/install_module.py --list         # read only; the installed 
 
 `build_module.py` reads signing properties from `~/.cadre/signing/signing.properties` when present (the source host) and passes them as
 `ORG_GRADLE_PROJECT_<name>` variables, so no secret is on a command line. Without them the built file is
-`CadreOpenBridge.unsigned.modl` (the tool once looked for the signed name and failed after a successful unsigned build). `install_module.py`
+`CadreHMIComponents.unsigned.modl` (the tool once looked for the signed name and failed after a successful unsigned build). `install_module.py`
 uploads, accepts the certificate and the EULA, and installs (`POST /modules/upload`, `/modules/certificate`, `/modules/eula`,
 `/modules/install`, GF-28). A restart interrupts every project on the gateway: at the source ask the owner first; in the cloud it is allowed.
-Each registration logs "Registered N Cadre OpenBridge components"; N must equal the component count (88 at 0.7.0).
+Each registration logs "Registered N Cadre HMI Components components"; N must equal the component count (97 at 0.8.0).
 
 ### 3.3.0 Signing
 
@@ -276,7 +278,7 @@ Measured on 2026-11-04 from the module plugin `io.ia.sdk.modl` 0.1.1 (`gradle-mo
    `ignition.signing.certAlias`, `ignition.signing.certFile` and `ignition.signing.certPassword`.
 2. `module/tools/build_module.py` reads them from `~/.cadre/signing/signing.properties` (one `name=value` per line, outside the repository)
    and passes each as an environment variable `ORG_GRADLE_PROJECT_<name>`, so no secret reaches the command line or a file of the
-   repository. With the file present the build writes `CadreOpenBridge.modl`, without it `CadreOpenBridge.unsigned.modl`.
+   repository. With the file present the build writes `CadreHMIComponents.modl`, without it `CadreHMIComponents.unsigned.modl`.
 3. The keystore is read as JKS, or as PKCS#12 when its file name ends in `.pfx`. The key under the alias must be an RSA private key: the
    signer signs with SHA256withRSA. The file named by `certFile` is the certificate chain; the signer stores it in the module as
    `certificates.p7b`, so it is a PKCS#7 chain file.
@@ -288,19 +290,19 @@ Measured on 2026-11-04 from the module plugin `io.ia.sdk.modl` 0.1.1 (`gradle-mo
 
 ### 3.3.1 The Built File in the Repository
 
-A copy of the unsigned 0.7.0 build, the exact file tested at the end of T2, is kept with its SHA-256 in `cloud/release/`
+A copy of the unsigned 0.8.0 build, the exact file installed and tested on the cloud gateway, is kept with its SHA-256 in `cloud/release/`
 (cloud only, outside the merge back); its `README.md` says how a gateway accepts an unsigned module.
 
 ### 3.4 Sizes
 
-Measured on the build of 2026-11-03 12:45 UTC (0.7.0).
+Measured on the build of 2026-11-04 (0.8.0).
 
 | File | Bytes |
 |---|---|
-| `mounted/js/cadre-ob.js` | 2,753,602 (1,954,229 at 0.6.0; 1,056,955 at 0.4.4; 997,469 at 0.4.3) |
-| `mounted/css/cadre-ob.css` | 237,048 |
+| `mounted/js/cadre-ob.js` | 2,779,218 (2,753,602 at 0.7.0; 1,954,229 at 0.6.0; 1,056,955 at 0.4.4; 997,469 at 0.4.3) |
+| `mounted/css/cadre-ob.css` | 238,012 (237,048 at 0.7.0) |
 | `mounted/fonts/NotoSans-OB.ttf` | 625,312 |
-| `CadreOpenBridge.unsigned.modl` | 988,279 (775,929 at 0.6.0; 617,070 at 0.4.4; 607,393 at 0.4.3) |
+| `CadreHMIComponents.unsigned.modl` | 996,287 (988,279 at 0.7.0; 775,929 at 0.6.0; 617,070 at 0.4.4; 607,393 at 0.4.3) |
 
 A module's browser resources load on every Perspective page of a project that uses one of its components (GF-29), and the bundle has
 grown to 2.75 MB: see 9.
@@ -315,6 +317,7 @@ grown to 2.75 MB: see 9.
 | 0.6.0 | T1 complete: 30 elements wrapped (44) |
 | 0.6.1 to 0.6.6 | Gateway test builds of T2 batches C1 to F5 (55, 62, 66, 73, 79, 88 components), not released |
 | 0.7.0 | T2: the charts and building blocks, all 33 frame components, the two new frames' support (88) |
+| 0.8.0 | The nine pipe components (97). The module is renamed Cadre HMI Components and the palette titles lose their prefix; the module id `cadre.hmi.ob` and every component type id are unchanged, so 0.8.0 upgrades 0.7.0 or older in place. The built file is `CadreHMIComponents.unsigned.modl` (signed: `CadreHMIComponents.modl`) |
 
 ## 4. Building and Deploying
 
@@ -409,6 +412,25 @@ Deploy the parent first, then the children (GF-10); verify in a new browser sess
 `deploy.py` sets the identity provider after each import (GF-44). A child of a frame or a module component the installed module does not
 yet have still imports (GF-72), but its component draws nothing until the module is installed.
 
+### 4.7 The Showcase Project
+
+`cadre_hmi_showcase` shows every component of the module on a page of its own group, with an editor for each property, a live simulation and
+an event log (`wiki/15-showcase.md`). It is generated from `module/components.json`, `module/CATALOGUE.md` and the samples of the component test
+page, so it follows the library; it uses the module frame (`--frame ob`) and the parent `cadre_hmi_base`.
+
+```bash
+python tools/hmi/parent.py --out build                                   # the parent first
+python tools/hmi/showcase.py --out build --deploy                        # G0 to G7 offline, then the tags and the project
+python tools/hmi/showcase.py --out build --write-descriptor workspace/showcase --write-devices workspace/showcase/devices.json
+python tools/hmi/showcase.py --out build --export cloud/release          # the importable zips and the device tags
+python tools/compare/capture.py --base http://localhost:8088/data/perspective/client/cadre_hmi_showcase --route /charts --out workspace/showcase/g8/charts
+python tools/compare/faceplates.py --base <the same> --descriptor workspace/showcase/showcase-devices.json --devices-file workspace/showcase/devices.json --faceplate asm --out workspace/showcase/g11
+python tools/compare/showcase_check.py --base <the same> --model workspace/showcase/showcase-model.json --out workspace/showcase/check
+```
+
+The page groups follow the catalogue's sections (a group of more than 13 components is split), and two further pages show the parent's
+embedded symbol views. The device page needs the memory tags the build imports under `[default]cadre_hmi_showcase/_componentTest`.
+
 ## 5. The Four Frames
 
 All four frames share one parent; the option chooses the child's docks and session data. Heights are measured.
@@ -436,7 +458,7 @@ Areas, because `obc-context-menu-input` draws no priority badge); the page heade
 the faceplate dock and popups, the page canvas and toolbar, and the node alarm and trend pages. The silence control is hidden in both:
 no Cadre function silences an alarm (owner's answer 4).
 
-Rules held in the data and scripts, never in OpenBridge's code (`CLAUDE.md` rule 7): the hierarchy and counts per node
+Rules held in the data and scripts, never in the package's code (`CLAUDE.md` rule 7): the hierarchy and counts per node
 (`node_counts`), the priority colours by rank (`wiki/13` section 11.1, `cadre.hmi.PRIORITY_STATUS` and `ALERT_TYPE`), ownership by
 mode, the faceplate style and pin, and the Confirm row for every command. Wired events are listed in `wiki/04` Tables 7 and 10; every
 event calls an existing function (GF-37), so no write path is new.
@@ -547,9 +569,9 @@ selectors exactly (`FrameGlassTests` holds their literal text). The variants (`w
 3. The bars and graphs and the building blocks are module-only kinds, display only.
 4. The new frame comes in both variants (`ob` and `obasm`).
 5. The frame keeps the Cadre crumb with its node badges (`obc-breadcrumb` wrapped, not used).
-6. The frame keeps a Cadre alert strip (the latest alarm and its ACK) beside the OpenBridge bar; G10 F16 keeps its check.
+6. The frame keeps a Cadre alert strip (the latest alarm and its ACK) beside the package bar; G10 F16 keeps its check.
 7. The silence control is hidden until a silence function exists.
-8. Settled by existing rules, not asked: the five Cadre priorities map onto OpenBridge's levels as `wiki/13` section 11.1 says; G8 on the
+8. Settled by existing rules, not asked: the five Cadre priorities map onto the package's levels as `wiki/13` section 11.1 says; G8 on the
    new frames is judged by its own rules and its pictures go to the owner; the frames are built into the existing parent.
 
 ## 8. Cost Record
@@ -567,7 +589,7 @@ Numbers refer to the record they come from.
    faceplate by its tag else its label, as the library does; `faceplates.faceplate_title`) and the intermittent walk row A-02 (the module
    alert panel's toolbar covered the second row's ACK; the glass scrolls the row clear before pressing). Both are in `cloud/REPORT-T2.md`
    section 5.1.
-2. **For an operator.** The module alert panel's own toolbar covers the second row's ACK until the list is scrolled (OpenBridge's layout,
+2. **For an operator.** The module alert panel's own toolbar covers the second row's ACK until the list is scrolled (the package's layout,
    unchanged).
 3. **The glass gates that write on the ASM variant** (alarm, ack, banner, and search and zoom with a raised alarm) need an ASM sample with an
    ASM model, which the cloud copy does not have; the read-only ASM gates (menus, panels, search, zoom) pass on `obasm`.
@@ -631,3 +653,8 @@ Steps:
 
 The per-component properties, events and exclusions (see `module/CATALOGUE.md`); the 0.7.0 gateway results (in `cloud/REPORT-T2.md` section 4.3); the Figma file (a design
 reference only); the signing certificate and the owner's local gateway, which no cloud session reaches.
+
+## 12. Third-party Components
+
+The module includes web components from the Apache-2.0 package `@oicl/openbridge-webcomponents` 2.0.0-next.155 (commit `2c98dda1`); the attribution is in
+`NOTICE`. All components are original implementations; no third-party module or project code is included apart from the pinned Apache-2.0 package.

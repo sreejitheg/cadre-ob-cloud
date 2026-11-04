@@ -1,4 +1,4 @@
-/* Cadre OpenBridge module: the canvas zoom component (cadre.ob.canvaszoom).
+/* Cadre HMI Components module: the canvas zoom component (cadre.ob.canvaszoom).
    Read by module/tools/gen_module_assets.py and appended to cadre-ob.js after the generated wrappers;
    it is plain script (no bundler) and runs in the Perspective client, where PerspectiveClient and React
    are globals (GF-31).

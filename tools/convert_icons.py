@@ -1,4 +1,4 @@
-"""Convert OpenBridge icons into `ia.shapes.svg` element lists.
+"""Convert package icons into `ia.shapes.svg` element lists.
 
 Source: `@oicl/openbridge-webcomponents` 2.0.0-next.155, commit 2c98dda1, Apache-2.0
 (NOTICE; decision COBD-003). Each `src/icons/icon-<name>.ts` carries two SVG bodies:

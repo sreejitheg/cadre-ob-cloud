@@ -3,7 +3,7 @@ title: Perspective module spike
 type: wiki
 updated: 2026-10-26
 ---
-# 12 Assessment Report: Cadre OpenBridge Module Spike
+# 12 Assessment Report: Cadre HMI Components Module Spike
 
 | Field | Value |
 |---|---|
@@ -11,7 +11,7 @@ updated: 2026-10-26
 | Revision | F |
 | Status | In review |
 | Issued | 2026-10-07 |
-| Prepared by | Cadre-Sandbox-OpenBridge, at the owner's request |
+| Prepared by | Cadre HMI Library, at the owner's request |
 | Gateway | `Ignition-PCS_DEV_Station`, Ignition 8.3.6, Perspective 3.3.6, trial licence |
 | Register | COB-070 (the spike); COB-071 to COB-075 (follow-up) |
 | Decisions | COBD-011 |
@@ -19,26 +19,26 @@ updated: 2026-10-26
 
 ## 1. Purpose and Scope
 
-This report records a spike: a Perspective module of Cadre's own that wraps two OpenBridge web
+This report records a spike: a Perspective module of Cadre's own that wraps two package web
 components, the pump and the tank, and the comparison of that module with the stock component
 library of `cadre_hmi_base` on the same screens. It establishes whether such a module works on the
 8.3.6 gateway, and what it changes in rendering, integration, page cost, deployment and effort.
 
-Out of scope: components other than the pump and the tank; the vendor's "OpenBridge for Ignition"
+Out of scope: components other than the pump and the tank; the reference "package for Ignition"
 module, which is neither used nor installed; Designer editing tools; production signing and
 release management.
 
 ## 2. Summary of Findings
 
-1. **The module works on Ignition 8.3.6.** The OpenBridge elements `obc-pump` and
+1. **The module works on Ignition 8.3.6.** The package elements `obc-pump` and
    `obc-automation-tank` render inside Perspective, bind to tags, open the faceplate dock and
    follow the Cadre palettes. The water treatment sample rendered through the module passes every
    gate the stock rendering passes: G0 to G8, the functional walk G10 (9 of 9) and the faceplate
    sweep G11 (26 of 26 devices).
-2. **The module draws the OpenBridge detail that the stock library approximates.** The speed
+2. **The module draws the package detail that the stock library approximates.** The speed
    readout with its double chevron and hinted zeros, the alert frame around symbol and readout
-   with its flap outside the corner, the tank vessel and value row, and the OpenBridge type weights
-   all come from OpenBridge's own code. Registered gaps COB-032, COB-033, COB-034 and COB-068 close
+   with its flap outside the corner, the tank vessel and value row, and the maritime type weights
+   all come from the package's own code. Registered gaps COB-032, COB-033, COB-034 and COB-068 close
    for the wrapped components; COB-030 (medium size) becomes one property.
 3. **The descriptors and the interface of the Cadre tools do not change.** One generator option,
    `--render module`, draws pumps and tanks with the module and every other kind as before.
@@ -49,15 +49,14 @@ release management.
    restart; the restart took about 90 s and interrupted every project on the gateway. The module
    is signed, and each gateway trusts its certificate once.
 6. **The effort is small.** Three Java classes (142 lines) and a 301-line generator, which derives
-   the property schemas, the browser wrappers and a scoped stylesheet from the OpenBridge
+   the property schemas, the browser wrappers and a scoped stylesheet from the package
    manifest. The first build took 5 min 41 s including the download of the software development
    kit; a full rebuild takes 13 s.
 
 ## 3. Background
 
-The stock library redraws each OpenBridge component from stock Perspective parts, using the
-OpenBridge tokens and icons only; page 09 measured the remaining differences against the vendor's
-demo. A Perspective module can instead host the OpenBridge web components themselves, which are
+The stock library redraws each package component from stock Perspective parts, using the
+Package tokens and icons only; the remaining differences are registered. A Perspective module can instead host the pinned web components themselves, which are
 Apache-2.0 at the release pinned by COBD-003. The owner asked for a spike on the pump and the tank,
 compared with the current library, before any decision. The owner's field practice, adding a pump
 or a button after handover, is the main operational concern (section 9).
@@ -78,7 +77,7 @@ Table 1. Terms and abbreviations.
 | HTTP | Hypertext Transfer Protocol |
 | KB | Kilobyte, 1,024 bytes |
 | MB | Megabyte, 1,048,576 bytes |
-| Manifest | `custom-elements.json`, the machine-readable description of every OpenBridge element |
+| Manifest | `custom-elements.json`, the machine-readable description of every package element |
 | Module | An Ignition module (`.modl` file) installed on the gateway |
 | REST | Representational state transfer; the gateway's HTTP API |
 | SDK | Software development kit; here the Ignition 8.3.6 SDK |
@@ -102,31 +101,31 @@ Table 2. Module parts.
 |---|---|---|
 | `module/common` | `CadreOb`: the two component descriptors and the browser resources | 50 lines |
 | `module/gateway` | `CadreObGatewayHook`: registration, files served under `/res/cadreob/` | 61 lines |
-| `module/designer` | `CadreObDesignerHook`: the "Cadre OpenBridge" palette category | 31 lines |
-| `mounted/js/cadre-ob.js` | The OpenBridge pump and tank with their dependencies, then the generated wrappers | 544 KB, 138 KB compressed |
-| `mounted/css/cadre-ob.css` | OpenBridge's stylesheet, scoped and trimmed | 47 KB, 5 KB compressed |
-| `mounted/fonts/NotoSans-OB.ttf` | OpenBridge's variable Noto Sans | 611 KB |
-| `CadreOpenBridge.modl` | The signed module | 492 KB |
+| `module/designer` | `CadreObDesignerHook`: the "Cadre HMI Components" palette category | 31 lines |
+| `mounted/js/cadre-ob.js` | The package pump and tank with their dependencies, then the generated wrappers | 544 KB, 138 KB compressed |
+| `mounted/css/cadre-ob.css` | the package stylesheet, scoped and trimmed | 47 KB, 5 KB compressed |
+| `mounted/fonts/NotoSans-OB.ttf` | the package's variable Noto Sans | 611 KB |
+| `CadreHMIComponents.modl` | The signed module | 492 KB |
 
-### 5.2 Generation from the OpenBridge Manifest
+### 5.2 Generation from the package Manifest
 
-`module/tools/gen_module_assets.py` reads the manifest of OpenBridge 2.0.0-next.155 (285 custom
+`module/tools/gen_module_assets.py` reads the manifest of package 2.0.0-next.155 (285 custom
 elements) and writes everything per element; adding an element is one entry in its list.
 
 1. **Property schemas.** Each element attribute becomes a Perspective property with its type, its
-   enumerated domain (read from OpenBridge's enum declarations) and its default (measured by
+   enumerated domain (read from the package's enum declarations) and its default (measured by
    creating each element in a browser, `measure_defaults.py`): 27 properties for the pump, 30 for
    the tank, plus `componentSize` and `style`. The schemas drive the Designer property editor, the
    gateway's validation, and gate G1.
 2. **Wrappers.** One React wrapper per element renders the element inside the Perspective component
    box and copies the properties onto it; DOM events reach the component's event scripts.
-3. **Stylesheet.** OpenBridge declares its palettes and sizes on `:root` and some variables on
+3. **Stylesheet.** the package declares its palettes and sizes on `:root` and some variables on
    every element. Loaded as shipped, these rules would reach every page of a project. The generator
    keeps only the 216 of 2,828 variables the bundled elements use, declares them on the module's
    wrapper, and keys the palettes to the Cadre palette classes, so palette switching needs no
    script. The stylesheet falls from 777 KB to 47 KB.
-4. **Font.** The variable Noto Sans shipped with OpenBridge is served under its own family name,
-   so the OpenBridge weights 370 and 570 render exactly (GF-26) without changing any other text.
+4. **Font.** The variable Noto Sans shipped with package is served under its own family name,
+   so the package weights 370 and 570 render exactly (GF-26) without changing any other text.
 
 ### 5.3 Signing and Installation
 
@@ -143,7 +142,7 @@ the gateway's REST API, in the order the gateway's own code defines (GF-28):
 
 The generator option `--render module` draws pumps and tanks with the module and translates the
 library parameters (for example `speed` to `speedInPercent`). A pump's box is its 48 px symbol box
-with OpenBridge `symbol` positioning, so pipes meet it exactly; the default `point` positioning
+with the reference `symbol` positioning, so pipes meet it exactly; the default `point` positioning
 draws the symbol 24 px off its anchor (GF-30). The faceplate dock contract moves to the
 component's custom properties and a DOM click script. The gates follow:
 
@@ -181,7 +180,7 @@ Table 3. Gate results, both renderings pass every gate.
 Figure 1 shows the intake page in both renderings; Figures 2 and 3 enlarge the symbols, stock on
 the left and module on the right. The module draws the following differently:
 
-1. **Pump readout.** A double chevron and hinted leading zeros (`080 %`), in the OpenBridge weights.
+1. **Pump readout.** A double chevron and hinted leading zeros (`080 %`), in the package weights.
 2. **Alert frame.** The frame encloses the symbol and its readout, and the flap sits outside the top
    right corner; the stock frame encloses the symbol only.
 3. **Tank.** Straight sides with small corner radii, a chevron trend mark, and the value and maximum
@@ -189,16 +188,16 @@ the left and module on the right. The module draws the following differently:
 4. **Compact tank.** The readout sits below the vessel; the stock compact tile carries it inside.
 
 Pipes meet the module pumps at the same points as the stock symbols. Figure 4 shows the module
-rendering in the night palette: the OpenBridge elements follow the Cadre palette switch.
+rendering in the night palette: the package elements follow the Cadre palette switch.
 
 ![Figure 1](figures/12/fig1-intake-stock-vs-module.png)
 
 Figure 1. The intake page, stock rendering (left) and module rendering (right): same layout, same
-tags, OpenBridge detail on pumps and tanks.
+tags, package detail on pumps and tanks.
 
 ![Figure 2](figures/12/fig2-pump-and-tank-crops.png)
 
-Figure 2. Pump P-101, tank TK-101 and compact tank TK-201: the module brings the OpenBridge speed
+Figure 2. Pump P-101, tank TK-101 and compact tank TK-201: the module brings the package speed
 readout, tank vessel and compact layout.
 
 ![Figure 3](figures/12/fig3-alert-frame-and-tank-crops.png)
@@ -208,7 +207,7 @@ with the flap outside the corner.
 
 ![Figure 4](figures/12/fig4-module-night-palette.png)
 
-Figure 4. The module rendering in the night palette with the faceplate open: the OpenBridge
+Figure 4. The module rendering in the night palette with the faceplate open: the package
 elements follow the Cadre palette.
 
 ### 7.3 Page Cost
@@ -267,8 +266,8 @@ Table 6. Stock library and module compared.
 
 | Criterion | Stock library | Module | Evidence |
 |---|---|---|---|
-| Fidelity to OpenBridge | Approximation; gaps COB-030 to COB-034 and COB-068 | OpenBridge's own drawing for the wrapped elements | Section 7.2 |
-| Behaviour of the element | What the library view implements | OpenBridge's states, animations and readouts | Section 7.2 |
+| Fidelity to the stock elements | Approximation; gaps COB-030 to COB-034 and COB-068 | the package's own drawing for the wrapped elements | Section 7.2 |
+| Behaviour of the element | What the library view implements | The package's states, animations and readouts | Section 7.2 |
 | Palettes | Cadre palette classes | The same classes, through the scoped stylesheet | Figure 4 |
 | Tags, faceplates, alarms | Working | Working, unchanged faceplates and alarm logic | Table 3 |
 | Gates | G0 to G11 | G0 to G11, with G1 extended by the module schemas | Table 3 |
@@ -279,12 +278,12 @@ Table 6. Stock library and module compared.
 | Change to a component | Project import, no restart | Module rebuild and a gateway restart | Section 7.5 |
 | Field placement of a pump | Embedded view with parameters | Palette component with a property editor (not yet verified in the Designer) | Section 11 |
 | Field change of a symbol's drawing | Possible in the Designer | Only by a new module release | Section 9 |
-| Maintenance | Perspective views | Java, the Perspective client API, and the OpenBridge release | Section 10 |
-| Licence | OpenBridge tokens and icons, Apache-2.0 | OpenBridge code as well, Apache-2.0 at the pin | COBD-003 |
+| Maintenance | Perspective views | Java, the Perspective client API, and the package release | Section 10 |
+| Licence | Package tokens and icons, Apache-2.0 | Package code as well, Apache-2.0 at the pin | COBD-003 |
 
 ## 9. Consequences and Recommendation
 
-1. **Screens.** The module is the route to OpenBridge fidelity for symbols; the stock library stays
+1. **Screens.** The module is the route to package fidelity for symbols; the stock library stays
    the route for gateways that cannot take a custom module. The descriptors serve both, so the
    choice can be made per project at build time.
 2. **Field customisation.** Placing a pump or a button in the field stays possible: the module's
@@ -311,7 +310,7 @@ Table 7. Risks of the module route.
 | Each install or upgrade restarts the gateway | Downtime for every project on the gateway | Planned windows; bundle components; stock fallback |
 | The Perspective client API (`PerspectiveClient`, React 18.2) changes in a later Ignition release | Wrappers fail to load | Build and test the module against each Ignition release before upgrade |
 | A self-signed certificate is not accepted by a client's IT policy | Module not installable | A code-signing certificate issued to Cadre (COB-073) |
-| Newer OpenBridge releases are AGPL-3.0 for 180 days | Upgrades lag upstream or need a fork | Stay on Apache-2.0 releases (COBD-008); fork when a fix is needed |
+| Newer package releases are AGPL-3.0 for 180 days | Upgrades lag upstream or need a fork | Stay on Apache-2.0 releases (COBD-008); fork when a fix is needed |
 | Element text lies in shadow DOM | Tests and styling reach it only through properties and exposed variables | Test through element properties (as G10 now does) |
 | One module defect affects every project that uses it | Wider failure scope than a view defect | Gate every release with G1 to G11 on a test gateway |
 
@@ -324,7 +323,7 @@ Table 8. Outstanding items.
 | Item | Owner | Register |
 |---|---|---|
 | Decided 2026-10-09: the hybrid (COBD-022) | Owner | N-COB-5 |
-| Check the Designer: the "Cadre OpenBridge" palette entries and the generated property editors (needs a Designer login) | Owner | N-COB-6, COB-072 |
+| Check the Designer: the "Cadre HMI Components" palette entries and the generated property editors (needs a Designer login) | Owner | N-COB-6, COB-072 |
 | Map the remaining library parameters: readout toggle, `hasSpeed`, tank unit and medium | Cadre | COB-075 |
 | Signing and release procedure: certificate, versioning, upgrade windows | Cadre | COB-073 |
 | Further components: valves, motors, fans, the frame's top bar and alert menu | Cadre | COB-074 |
@@ -343,7 +342,7 @@ Table 9. The 0.2.0 change cycle.
 | Assets (`gen_module_assets.py`) | Two components, one data property each, two and four events; scoped stylesheet 47 KB to 95 KB (400 variables kept) |
 | Build (`module/tools/build_module.py`, Gradle offline, JDK 17) | The first, incremental build after the version change packaged the 0.1.0 jars under a 0.2.0 `module.xml`; found by inspecting the file before installing. A clean build gave 544,954 bytes, signed; the helper now always cleans |
 | Offline check of the wrappers | A page with a stubbed Perspective client and a real element: four components registered, `alerts` read with `readArray`, times converted to `Date`, an ACK click fired `onAckClick` with the alert id |
-| Install and restart | Upload, certificate, EULA and install through REST (GF-28); restart by REST at 22:00; module 0.1.0 stopped 22:00:17, 0.2.0 active 22:01:09, about 52 s, "Registered 4 Cadre OpenBridge components" in the log (GF-32) |
+| Install and restart | Upload, certificate, EULA and install through REST (GF-28); restart by REST at 22:00; module 0.1.0 stopped 22:00:17, 0.2.0 active 22:01:09, about 52 s, "Registered 4 Cadre HMI Components components" in the log (GF-32) |
 
 Two findings from the first look on the glass:
 
@@ -351,7 +350,7 @@ Two findings from the first look on the glass:
    and sized to its content. The parent project's stylesheet now stretches the alarm elements,
    which needed no restart; the rule belongs in the module's stylesheet at its next release
    (COB-082), and version 0.2.1 carries it (section 13).
-2. **OpenBridge's alarm semantics.** The list's mode `all` draws active alerts, and only mode
+2. **the package's alarm semantics.** The list's mode `all` draws active alerts, and only mode
    `rectified` draws cleared ones; the small alert page has no rectified mode; a row offers ACK only
    for an active alert that is not acknowledged. The faceplate and the menu therefore add a list
    of the cleared alarms not yet acknowledged, so no alarm is hidden; such an alarm is acknowledged
@@ -381,18 +380,18 @@ Table 10. The 0.2.1 change cycle.
 
 | Step | Result |
 |---|---|
-| Rollback copy | The installed 0.2.0 file kept outside the repository, `C:\Users\pcs_d\.cadre\modules\CadreOpenBridge-0.2.0-installed-2026-10-08.modl` (544,954 bytes, SHA-256 beginning `776929DC`) |
+| Rollback copy | The installed 0.2.0 file kept outside the repository, `C:\Users\pcs_d\.cadre\modules\<module name>-0.2.0-installed-2026-10-08.modl` (544,954 bytes, SHA-256 beginning `776929DC`) |
 | Browser bundle (`npm run build`, local) | Unchanged in content, 742.7 KB |
 | Assets (`gen_module_assets.py`) | The four components as before; the scoped stylesheet gains the eight line rule (95,179 to 95,397 bytes as served) |
 | Build (`module/tools/build_module.py`, clean, offline, JDK 17, signed) | 545,614 bytes, SHA-256 beginning `4EB5B5CA`; `module.xml` 0.2.1 with `common-0.2.1.jar`, `designer-0.2.1.jar` and `gateway-0.2.1.jar`, inspected before installing; a copy kept beside the 0.2.0 file |
 | Install (REST, GF-28) | Upload 200; the certificate and the EULA answered 409, already accepted; install 200; enable 200; `/restart-tasks/pending` listed "Module Upgraded: cadre.hmi.ob" |
-| Restart (REST, 2026-10-09) | Requested 23:48:46; 0.2.0 shut down 23:48:48; Ignition started 23:49:01; 0.2.1 started and "Registered 4 Cadre OpenBridge components" 23:49:38; `/modules/healthy` reported 0.2.1 ACTIVE at 23:49:39, about 51 s after the request |
+| Restart (REST, 2026-10-09) | Requested 23:48:46; 0.2.0 shut down 23:48:48; Ignition started 23:49:01; 0.2.1 started and "Registered 4 Cadre HMI Components components" 23:49:38; `/modules/healthy` reported 0.2.1 ACTIVE at 23:49:39, about 51 s after the request |
 | Proof | In new sessions from 00:09 to 00:38 on 2026-10-10: both renderings G8 6 of 6 routes (0 overlays), G11 44 of 44, G10 15 of 15 (stock) and 19 of 19 (module), signed in; the sample and the demo G8 and G11. The module's lists fill their box from its own stylesheet: 368 by 712 px in the faceplate's dock and 624 by 356 px in the alarm menu, `align-self` stretch, with the parent's stylesheet no longer carrying the rule |
 
 ## 14. Version 0.3.0: Device Components
 
 Version 0.3.0 (COB-074, COB-075, COB-110) lets a migrated project draw its devices with the module
-wherever a pinned OpenBridge component fits. The owner's direction of 2026-10-21 asked for it after the
+wherever a pinned package component fits. The owner's direction of 2026-10-21 asked for it after the
 pilot's first render drew none of its 74 devices with the module. It adds four components and three
 properties of the module's own, in one release and one restart.
 
@@ -441,7 +440,7 @@ Table 12. The 0.3.0 change cycle.
 ## 15. Version 0.3.1: Instrument Components
 
 Version 0.3.1 (COB-127) lets a migrated project draw the library kinds `readout` and `instrument-field` with
-the module wherever the pinned OpenBridge element (2.0.0-next.155) shows the symbol truthfully. It adds two
+the module wherever the pinned package element (2.0.0-next.155) shows the symbol truthfully. It adds two
 components, both wrapped through the generated wrapper of the earlier components (the property schema comes
 from the custom elements manifest), and no property of the module's own.
 
@@ -534,9 +533,9 @@ Table 15. The 0.3.1 change cycle, to the point reached.
 | Review | One independent review of the whole diff before the build (COBD-041): two major findings (gate G10's check F3 looked a readout up by its library view; a field in a box shorter than its element overlapped its neighbours, unseen by G5) and a stylesheet defect (`--obc-can-hover` undefined, so a hovered chip lost its fill), each fixed with a unit test that failed first |
 | Build (`build_module.py`, clean, offline, JDK 17, signed) | 601,307 bytes, SHA-256 beginning `9762E514`; `module.xml` 0.3.1 |
 | Install (REST, GF-28) | Upload, certificate and EULA (already accepted, 409), install 200, enable 200; pending "Module Upgraded: cadre.hmi.ob" |
-| Restart (REST, 2026-10-22) | Requested 08:16:32; the module ACTIVE and serving the new 983,924 byte script at 08:18:17, about 1 min 45 s; the 0.3.0 rollback copy is `C:\Users\pcs_d\.cadre\modules\CadreOpenBridge-0.3.0-installed-2026-10-21.modl` |
+| Restart (REST, 2026-10-22) | Requested 08:16:32; the module ACTIVE and serving the new 983,924 byte script at 08:18:17, about 1 min 45 s; the 0.3.0 rollback copy is `C:\Users\pcs_d\.cadre\modules\<module name>-0.3.0-installed-2026-10-21.modl` |
 | Deploy | `cadre_hmi_wtpob` imported, the tag model 261 of 261, from a build byte-identical to the committed one |
-| Proof | One combined run of `wtp_suite.py` on `cadre_hmi_wtpob`, after the restart: G8 on 6 of 6 routes with 81, 84, 162, 81, 161 and 58 components and no overlay or error badge (fewer than under 0.3.0, since a readout or field is now one component); G11 44 of 44; G10 19 of 19 signed in, its check F3 reading the module readout FIT-101; the walk N 8, D 5, T 3, C 15, R 15, A 2 with 15 refusals by the gateway; the plant restored on 219 tags, none different. The readouts draw as OpenBridge chips with the identifier beneath (`workspace/wtp/suite-0.3.1/`, local) |
+| Proof | One combined run of `wtp_suite.py` on `cadre_hmi_wtpob`, after the restart: G8 on 6 of 6 routes with 81, 84, 162, 81, 161 and 58 components and no overlay or error badge (fewer than under 0.3.0, since a readout or field is now one component); G11 44 of 44; G10 19 of 19 signed in, its check F3 reading the module readout FIT-101; the walk N 8, D 5, T 3, C 15, R 15, A 2 with 15 refusals by the gateway; the plant restored on 219 tags, none different. The readouts draw as package chips with the identifier beneath (`workspace/wtp/suite-0.3.1/`, local) |
 
 ## 16. Version 0.3.2: The State Readout Switch
 
@@ -559,7 +558,7 @@ Table 16. The 0.3.2 change cycle.
 | Measured before the release | Gate G10's new check F20 on module 0.3.1 failed as the owner reported: Readout off hid the state of the library's filters F-301 to F-303 and left the module's P-301 and XV-301 to XV-303 as they were; the property bound on 0.3.1 drew no error badge (GF-72) |
 | Review | One independent review of the whole diff after the build: no defect in the fix; the hardening it asked of G10's checks F20 and F21 and of the generator's library embeddings (GF-61) touches no file of the module |
 | Build (`build_module.py`, clean, offline, JDK 17, signed) | 601,826 bytes, SHA-256 beginning `3E32290D`; `module.xml` 0.3.2; `showStatus` in the five schemas and in the wrapper |
-| Install (REST, GF-28) | Upload 200, EULA already accepted (409), install 200, enable 200; pending "Module Upgraded: cadre.hmi.ob"; the 0.3.1 rollback copy is `C:\Users\pcs_d\.cadre\modules\CadreOpenBridge-0.3.1-installed-2026-10-22.modl` |
+| Install (REST, GF-28) | Upload 200, EULA already accepted (409), install 200, enable 200; pending "Module Upgraded: cadre.hmi.ob"; the 0.3.1 rollback copy is `C:\Users\pcs_d\.cadre\modules\<module name>-0.3.1-installed-2026-10-22.modl` |
 | Restart (REST, 2026-10-22) | Requested 14:42:48; the module ACTIVE and serving the new 984,074 byte script with `showStatus` at 14:45:30, about 2 min 42 s; nothing left pending |
 | Proof | One combined run of `wtp_suite.py` after the restart: the suite on `cadre_hmi_wtpob` passed, 14:45:39 to 15:09:53 (G8 on 6 of 6 routes with 85, 88, 166, 85, 165 and 62 components and no overlay or error badge; G11 44 of 44; G10 21 of 21 signed in, F20 with all seven symbols of `/filtration` hiding and showing their state and nine flowing pipes coloured and back, F21 with both menus closed both ways; the walk N 8, D 5, T 3, C 15, R 15, A 2 with 15 refusals by the gateway; the plant restored on 219 tags, none different) |
 
@@ -579,7 +578,7 @@ Table 17. Findings and their cure.
 | Finding (2026-10-24) | Cause measured in the pinned element | Cure |
 |---|---|---|
 | The pump readout does not show the ON status and does not mute when the readout is deselected in the panel | `obc-pump`, `obc-motor` and `obc-fan` draw their status from `extraReadouts`: the speed while they run, the word Off while they stand, nothing for a running symbol with no speed. The element has a `showStatus` property that returns no readouts at all, but it is declared without an attribute, so the generated schema never offered it. `readoutPosition` and `labelDirection` only move the readout | `showStatus` and `statusText` on the three components (17.2) |
-| Use OpenBridge modules wherever possible: the duty badge and the out of service look must move from the library view to the module pump | The element draws four corner badges from its own properties and has no duty property; its `interlock` badge is drawn with the duty icon | `badgeDuty` and `outOfService` (17.2) |
+| Use package modules wherever possible: the duty badge and the out of service look must move from the library view to the module pump | The element draws four corner badges from its own properties and has no duty property; its `interlock` badge is drawn with the duty icon | `badgeDuty` and `outOfService` (17.2) |
 | Text boxes grouped in a column or a row keep one length and size | `obc-transmitter` is `width: fit-content`, and its chip is as wide as its text, centred in the box | `stretch` on the readout (17.3) |
 | Pinch or any zoom scales only the canvas | A browser zoom scales the whole frame | `cadre.ob.canvaszoom` (17.4) |
 
@@ -594,7 +593,7 @@ Table 18. Device properties of version 0.4.0.
 |---|---|---|
 | `showStatus` | boolean, true | Passed to the element's own `showStatus`. False hides every status readout the symbol draws: the word Off while it stands, and the speed readout while it runs. The tag stays. Deselecting the readout in the panel therefore mutes the symbol with this one property |
 | `statusText` | string, "" | When not empty, the one word drawn in the element's status place, with the element's state icon (the On icon for a running symbol, the Off icon for a standing one), in place of the element's own readouts. It does not draw while `showStatus` is false. Empty keeps the element's own readouts |
-| `badgeDuty` | boolean, false | An `obc-automation-badge` of type `interlock`, which OpenBridge draws with the duty icon, in the first free corner slot: bottom left, bottom right, top left, top right, in that order, a slot being taken when its own badge property is not `none`. Not drawn while `badgeInterlock` is `interlock`, which is the same icon |
+| `badgeDuty` | boolean, false | An `obc-automation-badge` of type `interlock`, which package draws with the duty icon, in the first free corner slot: bottom left, bottom right, top left, top right, in that order, a slot being taken when its own badge property is not `none`. Not drawn while `badgeInterlock` is `interlock`, which is the same icon |
 | `outOfService` | boolean, false | A veil of the container background colour at 72 per cent opacity and the word OOS, 48 px square, centred on the component box (the 48 px symbol in `symbol` positioning), taking no pointer. It is the library view's veil and word (`tools/hmi/library.py`, `_out_of_service`) |
 
 Decisions and differences from the library view, for the reviewer:
@@ -624,7 +623,7 @@ The generator keeps its height rules (section 15.1, rule 4): the readout's box h
 
 ### 17.4 The Canvas Zoom Component
 
-`cadre.ob.canvaszoom` is a leaf component with no OpenBridge element. Its browser side is `module/web/canvaszoom.js`, which
+`cadre.ob.canvaszoom` is a leaf component with no package element. Its browser side is `module/web/canvaszoom.js`, which
 `gen_module_assets.py` appends to `cadre-ob.js` after the wrappers; its schema and contract entry are generated beside the
 others (`element` is null in `components.json`). It draws a zero sized, hidden box. The stock screens place it as the last child
 of the canvas, with `zoom` bound two ways to the view's `zoom` custom property.
@@ -665,7 +664,7 @@ Table 20. What was verified offline and what only the gateway can show.
 | Check | Where | Result |
 |---|---|---|
 | Contract, schemas and written files agree; every new property has its default; the script carries the listeners and their removal; the version | `tests/test_module.py` (21 tests) | Pass |
-| The three devices: Off drawn and muted; `statusText` drawn, replaced and muted; speed muted; duty badge in the free corner and not beside the interlock badge; veil 48 by 48 with OOS | `module/tools/harness/devices.mjs`, real OpenBridge elements in Chromium with a stub Perspective client | 45 of 45 checks pass |
+| The three devices: Off drawn and muted; `statusText` drawn, replaced and muted; speed muted; duty badge in the free corner and not beside the interlock badge; veil 48 by 48 with OOS | `module/tools/harness/devices.mjs`, real package elements in Chromium with a stub Perspective client | 45 of 45 checks pass |
 | Readout stretch: widths differ without it, and a 49 px and a 97 px chip both measure 160 px in a 160 px box with it | same | Pass |
 | Zoom: Ctrl and wheel, a burst of five notches (1.25 to the power 6), the clamps at 0.5 and 4, the keys, the guard on and off, the pen and touch pinch, the point under the pointer within 2 to 3 px with a simulated 90 ms round trip, the viewport meta, unmount | `module/tools/harness/zoom.mjs` | 38 of 38 checks pass |
 | Compile | `gradlew clean build --offline` under JDK 17, unsigned, not installed | Build successful; `module.xml` 0.4.0 with `common-0.4.0.jar` carrying `schemas/canvaszoom.props.json` |
@@ -693,7 +692,7 @@ owner first.
    of 0.4.0, as section 12 recorded.
 7. `python module\tools\install_module.py` (upload, certificate, EULA, install; then the enable call of section 15 if the module is not enabled), then the gateway restart through
    `POST /restart-tasks/restart?confirm=true`, with the owner's approval.
-8. Check the gateway log for "Registered 11 Cadre OpenBridge components" and `/modules/healthy` for 0.4.0 ACTIVE.
+8. Check the gateway log for "Registered 11 Cadre HMI Components components" and `/modules/healthy` for 0.4.0 ACTIVE.
 9. Rebuild and import the screens that use the new properties, and run G8, G10 and G11, then look at the component test page
    and the pages with zoom in a new session (GF-10).
 
@@ -725,7 +724,7 @@ of section 12. Selection has no event of its own: a view reads `selectedIds`.
 
 Behaviour:
 
-1. **The tick is OpenBridge's own.** The package's table (`obc-table`, which both lists draw) has a selection column built
+1. **The tick is the package's own.** The package's table (`obc-table`, which both lists draw) has a selection column built
    from `obc-checkbox`, switched on by its `selectable` property, fed by `selectedRowIds` and reporting a toggle as
    `selection-change`. The alert list sets none of the three. The wrapper sets them on the table inside the list (the panel
    nests the list in its shadow root), so no new element is bundled, the bundle is unchanged and the tick has the theme's
@@ -753,7 +752,7 @@ Table 22. What was verified offline and what only the gateway can show.
 | Check | Where | Result |
 |---|---|---|
 | Contract, schemas, written script and version agree; the props exist on the two lists only, with their defaults | `tests/test_module.py` (class `AlertRowSelection`) | Pass |
-| List and panel in Chromium with real OpenBridge elements and real mouse clicks: no tick when `selectable` is false (same markup, no write, row click fires); a tick per row, checked for the ids held; toggle writes the ids and fires no row click; a click on the middle of the tick cell likewise; a click elsewhere fires `onRowClick` and keeps the selection; ACK button; two quick toggles with a 150 ms echo; an outside change; stale ids (an alert gone, an empty list, a mode that hides the row); `selectable` off and on; select all on the list | `module/tools/harness/alertselect.mjs` | 69 of 69 checks pass |
+| List and panel in Chromium with real package elements and real mouse clicks: no tick when `selectable` is false (same markup, no write, row click fires); a tick per row, checked for the ids held; toggle writes the ids and fires no row click; a click on the middle of the tick cell likewise; a click elsewhere fires `onRowClick` and keeps the selection; ACK button; two quick toggles with a 150 ms echo; an outside change; stale ids (an alert gone, an empty list, a mode that hides the row); `selectable` off and on; select all on the list | `module/tools/harness/alertselect.mjs` | 69 of 69 checks pass |
 | Earlier harness pages | `devices.mjs`, `zoom.mjs` | 45 of 45 and 38 of 38 (the zoom stub no longer takes the 0.4.1 `viewWidth` write for a scale) |
 | Compile | `gradlew compileJava processResources --offline` under JDK 17 | Successful; no module file built |
 
@@ -823,18 +822,18 @@ proceeds, with the module adding the rest in its wrapper.
 Properties. The four attributes of the manifest (`variant`, `value`, `level`, `secondaryLevel`; enumerations from the element's
 declarations, defaults measured in `module/web/defaults.json`) and the module's own eight, which the wrapper applies
 (`gen_module_assets.EXTRA`, `generator`): `on`, `tag`, `readoutPosition` (`top`, `bottom`, `left`, `right`, `none`),
-`showStatus`, `statusText`, `alert`, `alertFrameStatus` and `alertFrameMode`. The last two take the values of OpenBridge's own
+`showStatus`, `statusText`, `alert`, `alertFrameStatus` and `alertFrameMode`. The last two take the values of the package's own
 `AlertType` and `ObcAlertFrameMode`, as the other device components do. `level` and `secondaryLevel` are not bound: the only
 percentage in Table 13 of wiki page 13 is the fuel level, which is not the load the rings mean.
 
-How the wrapper draws it. No file of OpenBridge changes (CLAUDE.md non-negotiable 7). `on` selects the scheme: a generator that is
+How the wrapper draws it. No file of package changes (CLAUDE.md non-negotiable 7). `on` selects the scheme: a generator that is
 not running draws `off`, one that runs draws `value`, the regular scheme where `value` is `off` (a plain button in the other
-schemes has an icon in the disc's own colour, so `regular` is the running look). The alarm frame is OpenBridge's `obc-alert-frame`
+schemes has an icon in the disc's own colour, so `regular` is the running look). The alarm frame is the package's `obc-alert-frame`
 element, unchanged, added to the indicator's shadow root with the type `small-side-flip` and the small thickness, so that its levels
 colour as those of the other device components: `level-critical` on the Cadre critical colour (a palette variable of the Cadre
 palette classes, rgb(196, 36, 183) by day), `level-high` and `alarm` on the alarm colour, `level-medium` and `warning` on the
 warning colour, `level-low` and `caution` on the caution colour (wiki page 13 section 11.1). The identifier and the status word are
-OpenBridge's `obc-automation-button-readout-stack`, unchanged, on the side `readoutPosition` names. The wrapper also sets `tag`,
+The package's `obc-automation-button-readout-stack`, unchanged, on the side `readoutPosition` names. The wrapper also sets `tag`,
 `on`, `alert` and `alertFrameMode` as plain fields on the indicator, which is where the glass gates read a device component.
 
 Members. The library symbol binds `on` to the member `state` (Table 13 of wiki page 13) and no other. The members `fault` and
@@ -910,7 +909,7 @@ Gates G0 to G7 pass on the component test page with 19 devices and 21 device sym
 
 ### 17.13 Batch B0: Module-Only Kinds, Piloted with the Resistor (`cadre.ob.resistor`)
 
-Tranche T1 wraps OpenBridge elements that the library has no view for (the eleven electrical symbols, the specialty elements and
+Tranche T1 wraps package elements that the library has no view for (the eleven electrical symbols, the specialty elements and
 others). The owner chose Option B of `cloud/WRAP-RECIPE.md` section 7.2: such an element is a module-only kind. The batch changes the
 sources only; the module is not built or installed by it.
 
@@ -1484,7 +1483,7 @@ Batch F2 of tranche T2 (`cloud/FRAME-DESIGN.md` sections 2 and 3). Each child wa
 Java descriptors and table rows (`cloud/WRAP-RECIPE.md` section 9). The four are module-only kinds of `FRAME_ONLY`. The alert menu is
 the first real parent of the `items` mechanism of 17.23.2.
 
-17.24.1 The alert type and the Cadre priorities. The elements take OpenBridge's `AlertType` (`alarm`, `warning`, `caution` and the five
+17.24.1 The alert type and the Cadre priorities. The elements take The package's `AlertType` (`alarm`, `warning`, `caution` and the five
 levels `level-critical`, `level-high`, `level-medium`, `level-low`, `level-diagnostic`). The property `alertType` of the alert button and
 its item (and the `type` of the alert icon in a row) takes those values and also the empty string, which is the idle state: the element
 tests `alertType` for undefined, so the module sends undefined for an empty value (the field kind `ustring`, now also used for an
@@ -1833,16 +1832,79 @@ menu, the `battery-status` slot of the system menu, the credential fields and re
 options (template functions), the `badges` list of a tab, and the free `content` of the modal window and the toggletip. The next step is
 F6, the frame option, which wires the events to the existing navigation, login, logout and acknowledge paths.
 
+### 17.28 The Pipe Components: the Nine Line Elements as Module-Only Glyphs (`cadre.ob.pipehorizontal`, `pipevertical`, `pipecorner`, `pipetee`, `pipecross`, `pipeoverlap`, `pipeend`, `pipedirection`, `bus`)
+
+On 2026-11-04 the owner asked for a pipe component in the module, which reverses the skip of the nine line elements recorded in
+tranche T1 (recipe section 6 item 1; `cloud/WRAP-RECIPE.md` section 6.1 item 9). The decision for this batch is narrow: the nine
+elements are wrapped as module-only glyphs (section 17.17), so that a pipe component exists in the module, on the palette and on the
+component test page. The generator still draws its own pipes as SVG paths in the page view, and the flow solver (gate G6) still
+colours them; neither changes. All nine are display only, carry no event and take no `tag`, readout or alert frame. A descriptor
+binds a state to a property through `bind` as for any glyph. The palette titles begin with "Pipe," so that an engineer
+looking for a pipe finds them together. The page gains 93 symbols in its "Module only" section (the counts are in 17.28.4).
+
+17.28.1 What the elements share, from the pinned `dist/` sources (read, not recalled) and measured in Chromium. Eight of the nine
+take `medium` (`normal`, `empty`, `water`, `air`) and `lineType` (`fluid` 4 px, `electric` 2 px, `air` 10 px, `connector` a dashed
+neutral line). `medium` is the state: it chooses the inner colour (the primary pipe colour, its inverted colour for `empty`, fresh
+water for `water` and `air`), so a screen binds it to show a pipe full, empty or carrying water. `lineType`, `length` and
+`direction` are presentation. The overlap, end point and direction elements throw on `connector` when they render, so the
+component leaves that value out of their `lineType` enumeration (`without` in the entry of `gen_module_assets.py`, tested). Each
+element lays its 24 px drawing 12 px up and left of its host box (or up, or left, or by a direction dependent amount for the end
+point), because package places a line on a grid point. Centred in a component box the drawing therefore lay half outside the
+box. The module adds one stylesheet to the shadow root of each (`SHEETS`, keys `linehorizontal`, `linevertical`, `linejunction`)
+that cancels the offset, and the measured ink then equals the host box for every element and every direction. No element draws
+at zero size, so none needed the fill rule of the radial instrument. Second finding: the elements read the variable
+`--automation-fresh-water`, but the pinned stylesheet defines `--automation-medium-fresh-water`, so the media `water` and `air`
+drew no inner stroke at all (computed stroke `none`). The module stylesheet now names the variable the elements read as the
+defined one, and keeps its value in every palette; the change is the generator's, not the package's code.
+
+17.28.2 Elements, one paragraph each.
+
+1. Horizontal line (`cadre.ob.pipehorizontal`, `obc-horizontal-line`). Attributes `medium`, `lineType`, `length`. It does not stretch
+   to its box: its host is `length` units of 24 px wide and 24 px high (the ink is one pixel wider), so the default size is 96 by 24.
+   `medium` is the state; `length` and `lineType` are presentation.
+2. Vertical line (`cadre.ob.pipevertical`, `obc-vertical-line`). The same attributes, drawn top to bottom; the host is 24 px wide and
+   `length` units high, default size 24 by 96. `medium` is the state.
+3. Corner line (`cadre.ob.pipecorner`, `obc-corner-line`). `medium`, `lineType` and `direction` (`top-right`, `top-left`,
+   `bottom-right`, `bottom-left`, the two sides the bend joins). Fixed 24 by 24 drawing, default size 24 by 24. `medium` is the state.
+4. Three-way line (`cadre.ob.pipetee`, `obc-three-way-line`). `medium`, `lineType` and `direction` (`top`, `right`, `bottom`, `left`,
+   the side of the branch). Fixed 24 by 24, default size 24 by 24. `medium` is the state.
+5. Line cross (`cadre.ob.pipecross`, `obc-line-cross`). `medium` and `lineType`; four ends joined at the centre, with rounded inner
+   corners. Fixed 24 by 24. `medium` is the state.
+6. Line overlap (`cadre.ob.pipeoverlap`, `obc-line-overlap`). `medium` and `lineType` without `connector`; one pipe passes over
+   another without joining it. Fixed 24 by 24. `medium` is the state.
+7. End point line (`cadre.ob.pipeend`, `obc-end-point-line`). `medium`, `direction` (`top`, `right`, `bottom`, `left`, the side the
+   pipe comes from) and `lineType` without `connector`; a stem ending in a terminal bar. Fixed 24 by 24. `medium` is the state.
+8. Direction line (`cadre.ob.pipedirection`, `obc-direction-line`). `medium` and `lineType` without `connector`; a pipe segment with
+   a chevron that points to the right. There is no `direction` attribute, so a flow in the other sense is not available from the
+   element. Fixed 24 by 24. `medium` is the state.
+9. Bus (`cadre.ob.bus`, `obc-bus`, manifest group `automation`). Attributes `label` (text in the bar), `size` (`small` 16 px,
+   `medium` 24 px), `variant` (`regular`, `enhanced`, `medium`: grey, blue and teal), `tint` (the pale form of the variant) and
+   `vertical`. It takes no `medium` or `lineType`. The host is 200 px long by default and shrinks to a smaller box (flex), and a
+   vertical bus is 200 px high; the default size is 200 by 24. `variant` and `tint` are the attributes a screen would bind (for
+   example a bus tinted while it is de-energised); `label`, `size` and `vertical` are presentation. The test page turns the box of a
+   vertical case (`testbench.glyph_cases`).
+
+17.28.3 Tests: `GlyphComponents` (nine more rows of `GLYPHS`, the attributes agreeing with the manifest), `ModuleOnlyKinds` (the
+glyph contract, the drawing, the live attributes and the page counts) and `PipeElements` (the three shadow root sheets and their use,
+the colour of the water media, the line types each pipe leaves out), all in `tests/test_module.py`; `tests/test_catalogue.py` now
+expects 37 components in its second class. The registered components move from 88 to 97 (the gateway hook logs the count).
+
+17.28.4 What the gateway step finds on `/component-test`: `obc-horizontal-line` 11, `obc-vertical-line` 11, `obc-corner-line` 13,
+`obc-three-way-line` 13, `obc-line-cross` 9, `obc-line-overlap` 8, `obc-end-point-line` 12, `obc-direction-line` 8 and `obc-bus` 8,
+93 in all, each with a non-zero size inside its box and no console error; a `water` or `air` case draws a light blue inner stroke.
+Open: the pipes do not take part in the flow solver (the generator's own pipes still do), so a screen that wants a coloured flow
+binds `medium` itself; the direction line points only to the right; the bus is not resizable beyond its 200 px length; the
+colours of the `water` and `air` media follow the package's fresh water colour.
+
 ## 18. References
 
-1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,
+1. pinned web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,
    Copyright 2024 OICL: `custom-elements.json`, `dist/openbridge.css`, `dist/NotoSans.ttf`.
 2. Inductive Automation, `ignition-sdk-examples`, `perspective-component-minimal`, commit
    `f96805a9` (2026-07-06); Ignition SDK 8.3.6; Gradle module plugin `io.ia.sdk.modl` 0.1.1.
 3. `gateway-8.3.6.jar`: `ModuleInstallRoutes`, `ModuleManagerImpl`, `RestartTasksRoutes`, read with
    `javap` from JDK 17.0.20.
-4. This wiki: page 06 (faceplate contract), page 07 (GF-26 to GF-32), page 08 (gates), page 09
-   (one-to-one comparison), page 11 (water treatment sample).
+4. This wiki: page 06 (faceplate contract), page 07 (GF-26 to GF-32), page 08 (gates), page 11 (water treatment sample).
 5. Decisions COBD-003, COBD-008, COBD-009, COBD-011; register items COB-030 to COB-034, COB-068,
    COB-070 to COB-075, COB-110, COB-127, COB-151.
 6. Evidence: `workspace/spike/compare/module_compare.json`, `workspace/spike/faceplates/`,

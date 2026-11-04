@@ -1,16 +1,43 @@
 {
   "custom": {
+    "alerts": {
+      "a_XV101": {
+        "alert": false,
+        "alertAny": false,
+        "level": "level-high",
+        "mode": "acked-active",
+        "status": "alarm"
+      }
+    },
+    "canvasH": 0,
+    "canvasW": 0,
     "colorMode": false,
     "g_DP201": false,
     "g_M201": false,
     "g_P101": false,
     "g_P202": false,
     "g_XV101": false,
+    "scale": 1,
     "showReadout": true,
-    "showTag": true
+    "showTag": true,
+    "zoom": 1
   },
   "params": {},
   "propConfig": {
+    "custom.alerts": {
+      "binding": {
+        "config": {
+          "expression": "if(toMillis(now(2000)) > 0, '', '')"
+        },
+        "transforms": [
+          {
+            "code": "\treturn cadre.hmi.alert_states(self.session, {'a_XV101': '[default]cadre_hmi_wtp/XV101'})",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    },
     "custom.g_DP201": {
       "binding": {
         "config": {
@@ -55,6 +82,14 @@
         },
         "type": "tag"
       }
+    },
+    "custom.scale": {
+      "binding": {
+        "config": {
+          "expression": "(1.0) * min(4, max(0.5, coalesce({view.custom.zoom}, 1.0)))"
+        },
+        "type": "expr"
+      }
     }
   },
   "props": {
@@ -72,1565 +107,1726 @@
               {
                 "children": [
                   {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "shrink": 0
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "cadre/font/label cadre/text/neutral",
+                            "padding": "4px 8px"
+                          },
+                          "text": "Raw water intake"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
                     "meta": {
-                      "name": "Label"
+                      "name": "Section_Raw"
                     },
                     "position": {
-                      "shrink": 0
+                      "height": 540,
+                      "width": 620,
+                      "x": 20,
+                      "y": 20
                     },
                     "props": {
+                      "alignItems": "flex-end",
+                      "direction": "column",
                       "style": {
-                        "classes": "cadre/font/label cadre/text/neutral",
-                        "padding": "4px 8px"
-                      },
-                      "text": "Raw water intake"
+                        "classes": "cadre/surface/section",
+                        "overflow": "hidden"
+                      }
                     },
-                    "type": "ia.display.label"
-                  }
-                ],
-                "meta": {
-                  "name": "Section_Raw"
-                },
-                "position": {
-                  "height": 540,
-                  "width": 620,
-                  "x": 20,
-                  "y": 20
-                },
-                "props": {
-                  "alignItems": "flex-end",
-                  "direction": "column",
-                  "style": {
-                    "classes": "cadre/surface/section",
-                    "overflow": "hidden"
-                  }
-                },
-                "type": "ia.container.flex"
-              },
-              {
-                "children": [
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "shrink": 0
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "cadre/font/label cadre/text/neutral",
+                            "padding": "4px 8px"
+                          },
+                          "text": "Coagulation"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "Section_Coag"
+                    },
+                    "position": {
+                      "height": 540,
+                      "width": 300,
+                      "x": 660,
+                      "y": 20
+                    },
+                    "props": {
+                      "alignItems": "flex-end",
+                      "direction": "column",
+                      "style": {
+                        "classes": "cadre/surface/section",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
+                  {
+                    "children": [
+                      {
+                        "meta": {
+                          "name": "Label"
+                        },
+                        "position": {
+                          "shrink": 0
+                        },
+                        "props": {
+                          "style": {
+                            "classes": "cadre/font/label cadre/text/neutral",
+                            "padding": "4px 8px"
+                          },
+                          "text": "Clarification"
+                        },
+                        "type": "ia.display.label"
+                      }
+                    ],
+                    "meta": {
+                      "name": "Section_Clar"
+                    },
+                    "position": {
+                      "height": 540,
+                      "width": 580,
+                      "x": 980,
+                      "y": 20
+                    },
+                    "props": {
+                      "alignItems": "flex-end",
+                      "direction": "column",
+                      "style": {
+                        "classes": "cadre/surface/section",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "type": "ia.container.flex"
+                  },
                   {
                     "meta": {
-                      "name": "Label"
+                      "name": "Text_Supply"
                     },
                     "position": {
-                      "shrink": 0
+                      "height": 24,
+                      "width": 170,
+                      "x": 36,
+                      "y": 120
                     },
                     "props": {
                       "style": {
                         "classes": "cadre/font/label cadre/text/neutral",
-                        "padding": "4px 8px"
+                        "justifyContent": "flex-start",
+                        "whiteSpace": "nowrap"
                       },
-                      "text": "Coagulation"
+                      "text": "Raw water supply",
+                      "textStyle": {
+                        "textAlign": "left"
+                      }
                     },
                     "type": "ia.display.label"
-                  }
-                ],
-                "meta": {
-                  "name": "Section_Coag"
-                },
-                "position": {
-                  "height": 540,
-                  "width": 300,
-                  "x": 660,
-                  "y": 20
-                },
-                "props": {
-                  "alignItems": "flex-end",
-                  "direction": "column",
-                  "style": {
-                    "classes": "cadre/surface/section",
-                    "overflow": "hidden"
-                  }
-                },
-                "type": "ia.container.flex"
-              },
-              {
-                "children": [
+                  },
                   {
                     "meta": {
-                      "name": "Label"
+                      "name": "Text_TK101"
                     },
                     "position": {
-                      "shrink": 0
+                      "height": 24,
+                      "width": 150,
+                      "x": 260,
+                      "y": 288
                     },
                     "props": {
                       "style": {
                         "classes": "cadre/font/label cadre/text/neutral",
-                        "padding": "4px 8px"
+                        "justifyContent": "center",
+                        "whiteSpace": "nowrap"
                       },
-                      "text": "Clarification"
+                      "text": "Raw water tank",
+                      "textStyle": {
+                        "textAlign": "center"
+                      }
                     },
                     "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Text_TK201"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 160,
+                      "x": 640,
+                      "y": 534
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "justifyContent": "center",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Coagulant tank",
+                      "textStyle": {
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Text_CL201"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 200,
+                      "x": 1040,
+                      "y": 50
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "justifyContent": "center",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Lamella clarifier",
+                      "textStyle": {
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Text_TK202"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 150,
+                      "x": 1300,
+                      "y": 288
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "justifyContent": "center",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Clarified water tank",
+                      "textStyle": {
+                        "textAlign": "center"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Text_ToFilt"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 96,
+                      "x": 1460,
+                      "y": 144
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "justifyContent": "flex-end",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "To filtration",
+                      "textStyle": {
+                        "textAlign": "right"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Text_Sludge"
+                    },
+                    "position": {
+                      "height": 24,
+                      "width": 140,
+                      "x": 1156,
+                      "y": 508
+                    },
+                    "props": {
+                      "style": {
+                        "classes": "cadre/font/label cadre/text/neutral",
+                        "justifyContent": "flex-start",
+                        "whiteSpace": "nowrap"
+                      },
+                      "text": "Sludge to waste",
+                      "textStyle": {
+                        "textAlign": "left"
+                      }
+                    },
+                    "type": "ia.display.label"
+                  },
+                  {
+                    "meta": {
+                      "name": "Pipes"
+                    },
+                    "position": {
+                      "height": 600,
+                      "width": 1580,
+                      "x": 0,
+                      "y": 0
+                    },
+                    "propConfig": {
+                      "props.elements[12].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_XV101}, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[13].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_XV101}, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[14].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[15].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[16].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[17].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[18].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[19].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[20].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(true, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[21].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if(true, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[22].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_P202}, if({view.custom.colorMode}, 'var(--automation-medium-waste)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.elements[23].stroke.paint": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_P202}, if({view.custom.colorMode}, 'var(--automation-medium-waste)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "elements": [
+                        {
+                          "d": "M40 180 L156 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p1_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M192 180 L260 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p2_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M410 180 L476 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p3_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M512 180 L720 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p4_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 180 L846 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p5_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 380 L720 318",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p6_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 282 L720 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p7_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M882 180 L1040 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p8_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1240 180 L1300 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p9_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1450 180 L1550 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p10_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1140 280 L1140 382",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p11_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1140 418 L1140 520",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p12_outline",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-tertiary-color)",
+                            "width": 6
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M40 180 L156 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p1",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M192 180 L260 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p2",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M410 180 L476 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p3",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M512 180 L720 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p4",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 180 L846 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p5",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 380 L720 318",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p6",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M720 282 L720 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p7",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M882 180 L1040 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p8",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1240 180 L1300 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p9",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1450 180 L1550 180",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p10",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1140 280 L1140 382",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p11",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1140 418 L1140 520",
+                          "fill": {
+                            "paint": "none"
+                          },
+                          "name": "p12",
+                          "stroke": {
+                            "linecap": "square",
+                            "linejoin": "miter",
+                            "paint": "var(--automation-pipe-primary-color)",
+                            "width": 4
+                          },
+                          "type": "path"
+                        },
+                        {
+                          "d": "M50 180L40 170L40 190Z",
+                          "fill": {
+                            "paint": "var(--automation-pipe-tertiary-color)"
+                          },
+                          "name": "arrow-in",
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1560 180L1550 170L1550 190Z",
+                          "fill": {
+                            "paint": "var(--automation-pipe-tertiary-color)"
+                          },
+                          "name": "arrow-out",
+                          "type": "path"
+                        },
+                        {
+                          "d": "M1140 530L1130 520L1150 520Z",
+                          "fill": {
+                            "paint": "var(--automation-pipe-tertiary-color)"
+                          },
+                          "name": "arrow-out",
+                          "type": "path"
+                        }
+                      ],
+                      "preserveAspectRatio": "none",
+                      "viewBox": "0 0 1580 600"
+                    },
+                    "type": "ia.shapes.svg"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/XV101",
+                      "deviceKind": "valve",
+                      "idText": "XV-101",
+                      "label": "Raw water inlet valve",
+                      "title": "XV-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "XV101"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 150,
+                      "y": 156
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.alerts.a_XV101.alertAny}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.alerts.a_XV101.mode}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.alertFrameStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.alerts.a_XV101.level}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/XV101/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.open": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_XV101}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.showStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.showReadout} && true"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom",
+                      "vertical": false
+                    },
+                    "type": "cadre.ob.valve"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK101",
+                      "deviceKind": "tank",
+                      "idText": "TK-101",
+                      "label": "Raw water tank",
+                      "title": "TK-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "TK101"
+                    },
+                    "position": {
+                      "height": 200,
+                      "width": 150,
+                      "x": 260,
+                      "y": 80
+                    },
+                    "propConfig": {
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK101/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK101/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": false,
+                      "hasCapacity": true,
+                      "max": 500,
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P101",
+                      "deviceKind": "pump",
+                      "idText": "P-101",
+                      "label": "Raw water feed pump",
+                      "title": "P-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "P101"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 470,
+                      "y": 156
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeInterlock": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/ilk/badge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_P101}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.showStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.showReadout} && true"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P101/speed"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_P101}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom"
+                    },
+                    "type": "cadre.ob.pump"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/FIT101",
+                      "deviceKind": "instrument",
+                      "idText": "FIT-101",
+                      "label": "Raw water flow",
+                      "title": "FIT-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "FIT101"
+                    },
+                    "position": {
+                      "height": 40,
+                      "width": 96,
+                      "x": 536,
+                      "y": 112
+                    },
+                    "propConfig": {
+                      "props.idTag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/FIT101/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "fractionDigits": 1,
+                      "unit": "m³/h"
+                    },
+                    "type": "cadre.ob.readout"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/AIT101",
+                      "deviceKind": "instrument",
+                      "idText": "AIT-101",
+                      "label": "Raw water turbidity",
+                      "title": "AIT-101"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "AIT101"
+                    },
+                    "position": {
+                      "height": 40,
+                      "width": 96,
+                      "x": 546,
+                      "y": 228
+                    },
+                    "propConfig": {
+                      "props.idTag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/AIT101/value"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "fractionDigits": 1,
+                      "unit": "NTU"
+                    },
+                    "type": "cadre.ob.readout"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/DP201",
+                      "deviceKind": "pump",
+                      "idText": "DP-201",
+                      "label": "Coagulant dosing pump",
+                      "title": "DP-201"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "DP201"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 696,
+                      "y": 276
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/DP201/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/DP201/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/DP201/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_DP201}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.showStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.showReadout} && true"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/DP201/speed"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_DP201}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "right"
+                    },
+                    "type": "cadre.ob.pump"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK201",
+                      "deviceKind": "tank",
+                      "idText": "TK-201",
+                      "label": "Coagulant tank",
+                      "title": "TK-201"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "TK201"
+                    },
+                    "position": {
+                      "height": 150,
+                      "width": 110,
+                      "x": 665,
+                      "y": 380
+                    },
+                    "propConfig": {
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK201/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK201/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": true,
+                      "hasCapacity": true,
+                      "max": 10,
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/M201",
+                      "deviceKind": "motor",
+                      "idText": "M-201",
+                      "label": "Flash mixer",
+                      "title": "M-201"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "M201"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 840,
+                      "y": 156
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/M201/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/M201/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/M201/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_M201}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.showStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.showReadout} && true"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_M201}, 'On', 'Off')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": false,
+                      "positioning": "symbol",
+                      "readoutPosition": "bottom"
+                    },
+                    "type": "cadre.ob.motor"
+                  },
+                  {
+                    "custom": {
+                      "idText": "CL-201"
+                    },
+                    "meta": {
+                      "name": "CL201"
+                    },
+                    "position": {
+                      "height": 200,
+                      "width": 200,
+                      "x": 1040,
+                      "y": 80
+                    },
+                    "propConfig": {
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "hasCapacity": true,
+                      "max": 450,
+                      "static": true,
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/TK202",
+                      "deviceKind": "tank",
+                      "idText": "TK-202",
+                      "label": "Clarified water tank",
+                      "title": "TK-202"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "TK202"
+                    },
+                    "position": {
+                      "height": 200,
+                      "width": 150,
+                      "x": 1300,
+                      "y": 80
+                    },
+                    "propConfig": {
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.trend": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK202/trend"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/TK202/volume"
+                          },
+                          "type": "tag"
+                        }
+                      }
+                    },
+                    "props": {
+                      "compact": false,
+                      "hasCapacity": true,
+                      "max": 300,
+                      "unit": "m³"
+                    },
+                    "type": "cadre.ob.tank"
+                  },
+                  {
+                    "custom": {
+                      "deviceId": "[default]cadre_hmi_wtp/P202",
+                      "deviceKind": "pump",
+                      "idText": "P-202",
+                      "label": "Sludge pump",
+                      "title": "P-202"
+                    },
+                    "events": {
+                      "dom": {
+                        "onClick": {
+                          "config": {
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "name": "P202"
+                    },
+                    "position": {
+                      "height": 48,
+                      "width": 48,
+                      "x": 1116,
+                      "y": 376
+                    },
+                    "propConfig": {
+                      "props.alert": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P202/alert"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.alertFrameMode": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P202/alertMode"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.badgeControl": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P202/modeBadge"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.on": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.g_P202}"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.showStatus": {
+                        "binding": {
+                          "config": {
+                            "expression": "{view.custom.showReadout} && true"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.speedInPercent": {
+                        "binding": {
+                          "config": {
+                            "mode": "direct",
+                            "tagPath": "[default]cadre_hmi_wtp/P202/speed"
+                          },
+                          "type": "tag"
+                        }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_P202}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
+                      },
+                      "props.tag": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
+                          },
+                          "type": "expr"
+                        }
+                      }
+                    },
+                    "props": {
+                      "alertFrameStatus": "alarm",
+                      "hasSpeed": true,
+                      "positioning": "symbol",
+                      "readoutPosition": "right"
+                    },
+                    "type": "cadre.ob.pump"
                   }
                 ],
                 "meta": {
-                  "name": "Section_Clar"
+                  "name": "Diagram"
                 },
                 "position": {
-                  "height": 540,
-                  "width": 580,
-                  "x": 980,
-                  "y": 20
+                  "basis": "600px",
+                  "shrink": 0
                 },
-                "props": {
-                  "alignItems": "flex-end",
-                  "direction": "column",
-                  "style": {
-                    "classes": "cadre/surface/section",
-                    "overflow": "hidden"
+                "propConfig": {
+                  "props.style.transform": {
+                    "binding": {
+                      "config": {
+                        "expression": "'scale(' + toStr(round({view.custom.scale}, 4)) + ')'"
+                      },
+                      "type": "expr"
+                    }
                   }
-                },
-                "type": "ia.container.flex"
-              },
-              {
-                "meta": {
-                  "name": "Text_Supply"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 170,
-                  "x": 36,
-                  "y": 120
                 },
                 "props": {
                   "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "flex-start",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Raw water supply",
-                  "textStyle": {
-                    "textAlign": "left"
+                    "height": "600px",
+                    "minWidth": "1580px",
+                    "overflow": "hidden",
+                    "transformOrigin": "top left",
+                    "width": "1580px"
                   }
                 },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_TK101"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 150,
-                  "x": 260,
-                  "y": 288
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "center",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Raw water tank",
-                  "textStyle": {
-                    "textAlign": "center"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_TK201"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 160,
-                  "x": 640,
-                  "y": 534
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "center",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Coagulant tank",
-                  "textStyle": {
-                    "textAlign": "center"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_CL201"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 200,
-                  "x": 1040,
-                  "y": 50
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "center",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Lamella clarifier",
-                  "textStyle": {
-                    "textAlign": "center"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_TK202"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 150,
-                  "x": 1300,
-                  "y": 288
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "center",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Clarified water tank",
-                  "textStyle": {
-                    "textAlign": "center"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_ToFilt"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 96,
-                  "x": 1460,
-                  "y": 144
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "flex-end",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "To filtration",
-                  "textStyle": {
-                    "textAlign": "right"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Text_Sludge"
-                },
-                "position": {
-                  "height": 24,
-                  "width": 140,
-                  "x": 1156,
-                  "y": 508
-                },
-                "props": {
-                  "style": {
-                    "classes": "cadre/font/label cadre/text/neutral",
-                    "justifyContent": "flex-start",
-                    "whiteSpace": "nowrap"
-                  },
-                  "text": "Sludge to waste",
-                  "textStyle": {
-                    "textAlign": "left"
-                  }
-                },
-                "type": "ia.display.label"
-              },
-              {
-                "meta": {
-                  "name": "Pipes"
-                },
-                "position": {
-                  "height": 600,
-                  "width": 1580,
-                  "x": 0,
-                  "y": 0
-                },
-                "propConfig": {
-                  "props.elements[12].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.g_XV101}, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[13].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.g_XV101}, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[14].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[15].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_P101}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[16].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[17].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[18].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_DP201} && {view.custom.g_P101}), 'var(--automation-pipe-primary-color)', 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[19].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(({view.custom.g_DP201} && {view.custom.g_M201}) || ({view.custom.g_M201} && {view.custom.g_P101}), if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[20].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(true, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[21].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if(true, if({view.custom.colorMode}, 'var(--automation-medium-fresh-water)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[22].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.g_P202}, if({view.custom.colorMode}, 'var(--automation-medium-waste)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.elements[23].stroke.paint": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.g_P202}, if({view.custom.colorMode}, 'var(--automation-medium-waste)', 'var(--automation-pipe-primary-color)'), 'var(--automation-pipe-primary-inverted-color)')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "elements": [
-                    {
-                      "d": "M40 180 L156 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p1_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M192 180 L260 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p2_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M410 180 L476 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p3_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M512 180 L720 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p4_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 180 L846 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p5_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 380 L720 318",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p6_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 282 L720 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p7_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M882 180 L1040 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p8_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1240 180 L1300 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p9_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1450 180 L1550 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p10_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1140 280 L1140 382",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p11_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1140 418 L1140 520",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p12_outline",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-tertiary-color)",
-                        "width": 6
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M40 180 L156 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p1",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M192 180 L260 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p2",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M410 180 L476 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p3",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M512 180 L720 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p4",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 180 L846 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p5",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 380 L720 318",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p6",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M720 282 L720 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p7",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M882 180 L1040 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p8",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1240 180 L1300 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p9",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1450 180 L1550 180",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p10",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1140 280 L1140 382",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p11",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1140 418 L1140 520",
-                      "fill": {
-                        "paint": "none"
-                      },
-                      "name": "p12",
-                      "stroke": {
-                        "linecap": "square",
-                        "linejoin": "miter",
-                        "paint": "var(--automation-pipe-primary-color)",
-                        "width": 4
-                      },
-                      "type": "path"
-                    },
-                    {
-                      "d": "M50 180L40 170L40 190Z",
-                      "fill": {
-                        "paint": "var(--automation-pipe-tertiary-color)"
-                      },
-                      "name": "arrow-in",
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1560 180L1550 170L1550 190Z",
-                      "fill": {
-                        "paint": "var(--automation-pipe-tertiary-color)"
-                      },
-                      "name": "arrow-out",
-                      "type": "path"
-                    },
-                    {
-                      "d": "M1140 530L1130 520L1150 520Z",
-                      "fill": {
-                        "paint": "var(--automation-pipe-tertiary-color)"
-                      },
-                      "name": "arrow-out",
-                      "type": "path"
-                    }
-                  ],
-                  "preserveAspectRatio": "none",
-                  "viewBox": "0 0 1580 600"
-                },
-                "type": "ia.shapes.svg"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/XV101",
-                  "deviceKind": "valve",
-                  "idText": "XV-101",
-                  "label": "Raw water inlet valve",
-                  "title": "XV-101"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "XV101"
-                },
-                "position": {
-                  "height": 48,
-                  "width": 48,
-                  "x": 150,
-                  "y": 156
-                },
-                "propConfig": {
-                  "props.badgeControl": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/XV101/modeBadge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.open": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.g_XV101}"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.showStatus": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.showReadout} && true"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "positioning": "symbol",
-                  "readoutPosition": "bottom",
-                  "vertical": false
-                },
-                "type": "cadre.ob.valve"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/TK101",
-                  "deviceKind": "tank",
-                  "idText": "TK-101",
-                  "label": "Raw water tank",
-                  "title": "TK-101"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "TK101"
-                },
-                "position": {
-                  "height": 200,
-                  "width": 150,
-                  "x": 260,
-                  "y": 80
-                },
-                "propConfig": {
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.trend": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK101/trend"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.value": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK101/volume"
-                      },
-                      "type": "tag"
-                    }
-                  }
-                },
-                "props": {
-                  "compact": false,
-                  "hasCapacity": true,
-                  "max": 500,
-                  "unit": "m³"
-                },
-                "type": "cadre.ob.tank"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/P101",
-                  "deviceKind": "pump",
-                  "idText": "P-101",
-                  "label": "Raw water feed pump",
-                  "title": "P-101"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "P101"
-                },
-                "position": {
-                  "height": 48,
-                  "width": 48,
-                  "x": 470,
-                  "y": 156
-                },
-                "propConfig": {
-                  "props.alert": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P101/alert"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.alertFrameMode": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P101/alertMode"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.badgeControl": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P101/modeBadge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.badgeInterlock": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P101/ilk/badge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.on": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.g_P101}"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.showStatus": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.showReadout} && true"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.speedInPercent": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P101/speed"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "alertFrameStatus": "alarm",
-                  "hasSpeed": true,
-                  "positioning": "symbol",
-                  "readoutPosition": "bottom"
-                },
-                "type": "cadre.ob.pump"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/FIT101",
-                  "deviceKind": "instrument",
-                  "idText": "FIT-101",
-                  "label": "Raw water flow",
-                  "title": "FIT-101"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "FIT101"
-                },
-                "position": {
-                  "height": 40,
-                  "width": 96,
-                  "x": 536,
-                  "y": 112
-                },
-                "propConfig": {
-                  "props.idTag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.value": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/FIT101/value"
-                      },
-                      "type": "tag"
-                    }
-                  }
-                },
-                "props": {
-                  "fractionDigits": 1,
-                  "unit": "m³/h"
-                },
-                "type": "cadre.ob.readout"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/AIT101",
-                  "deviceKind": "instrument",
-                  "idText": "AIT-101",
-                  "label": "Raw water turbidity",
-                  "title": "AIT-101"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "AIT101"
-                },
-                "position": {
-                  "height": 40,
-                  "width": 96,
-                  "x": 546,
-                  "y": 228
-                },
-                "propConfig": {
-                  "props.idTag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.value": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/AIT101/value"
-                      },
-                      "type": "tag"
-                    }
-                  }
-                },
-                "props": {
-                  "fractionDigits": 1,
-                  "unit": "NTU"
-                },
-                "type": "cadre.ob.readout"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/DP201",
-                  "deviceKind": "pump",
-                  "idText": "DP-201",
-                  "label": "Coagulant dosing pump",
-                  "title": "DP-201"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "DP201"
-                },
-                "position": {
-                  "height": 48,
-                  "width": 48,
-                  "x": 696,
-                  "y": 276
-                },
-                "propConfig": {
-                  "props.alert": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/DP201/alert"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.alertFrameMode": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/DP201/alertMode"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.badgeControl": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/DP201/modeBadge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.on": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.g_DP201}"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.showStatus": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.showReadout} && true"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.speedInPercent": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/DP201/speed"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "alertFrameStatus": "alarm",
-                  "hasSpeed": true,
-                  "positioning": "symbol",
-                  "readoutPosition": "right"
-                },
-                "type": "cadre.ob.pump"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/TK201",
-                  "deviceKind": "tank",
-                  "idText": "TK-201",
-                  "label": "Coagulant tank",
-                  "title": "TK-201"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "TK201"
-                },
-                "position": {
-                  "height": 150,
-                  "width": 110,
-                  "x": 665,
-                  "y": 380
-                },
-                "propConfig": {
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.trend": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK201/trend"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.value": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK201/volume"
-                      },
-                      "type": "tag"
-                    }
-                  }
-                },
-                "props": {
-                  "compact": true,
-                  "hasCapacity": true,
-                  "max": 10,
-                  "unit": "m³"
-                },
-                "type": "cadre.ob.tank"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/M201",
-                  "deviceKind": "motor",
-                  "idText": "M-201",
-                  "label": "Flash mixer",
-                  "title": "M-201"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "M201"
-                },
-                "position": {
-                  "height": 48,
-                  "width": 48,
-                  "x": 840,
-                  "y": 156
-                },
-                "propConfig": {
-                  "props.alert": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/M201/alert"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.alertFrameMode": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/M201/alertMode"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.badgeControl": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/M201/modeBadge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.on": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.g_M201}"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.showStatus": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.showReadout} && true"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "alertFrameStatus": "alarm",
-                  "hasSpeed": false,
-                  "positioning": "symbol",
-                  "readoutPosition": "bottom"
-                },
-                "type": "cadre.ob.motor"
-              },
-              {
-                "custom": {
-                  "idText": "CL-201"
-                },
-                "meta": {
-                  "name": "CL201"
-                },
-                "position": {
-                  "height": 200,
-                  "width": 200,
-                  "x": 1040,
-                  "y": 80
-                },
-                "propConfig": {
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "hasCapacity": true,
-                  "max": 450,
-                  "static": true,
-                  "unit": "m³"
-                },
-                "type": "cadre.ob.tank"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/TK202",
-                  "deviceKind": "tank",
-                  "idText": "TK-202",
-                  "label": "Clarified water tank",
-                  "title": "TK-202"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "TK202"
-                },
-                "position": {
-                  "height": 200,
-                  "width": 150,
-                  "x": 1300,
-                  "y": 80
-                },
-                "propConfig": {
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.trend": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK202/trend"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.value": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/TK202/volume"
-                      },
-                      "type": "tag"
-                    }
-                  }
-                },
-                "props": {
-                  "compact": false,
-                  "hasCapacity": true,
-                  "max": 300,
-                  "unit": "m³"
-                },
-                "type": "cadre.ob.tank"
-              },
-              {
-                "custom": {
-                  "deviceId": "[default]cadre_hmi_wtp/P202",
-                  "deviceKind": "pump",
-                  "idText": "P-202",
-                  "label": "Sludge pump",
-                  "title": "P-202"
-                },
-                "events": {
-                  "dom": {
-                    "onClick": {
-                      "config": {
-                        "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
-                      },
-                      "scope": "G",
-                      "type": "script"
-                    }
-                  }
-                },
-                "meta": {
-                  "name": "P202"
-                },
-                "position": {
-                  "height": 48,
-                  "width": 48,
-                  "x": 1116,
-                  "y": 376
-                },
-                "propConfig": {
-                  "props.alert": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P202/alert"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.alertFrameMode": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P202/alertMode"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.badgeControl": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P202/modeBadge"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.on": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.g_P202}"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.showStatus": {
-                    "binding": {
-                      "config": {
-                        "expression": "{view.custom.showReadout} && true"
-                      },
-                      "type": "expr"
-                    }
-                  },
-                  "props.speedInPercent": {
-                    "binding": {
-                      "config": {
-                        "mode": "direct",
-                        "tagPath": "[default]cadre_hmi_wtp/P202/speed"
-                      },
-                      "type": "tag"
-                    }
-                  },
-                  "props.tag": {
-                    "binding": {
-                      "config": {
-                        "expression": "if({view.custom.showTag} && true, {this.custom.idText}, '')"
-                      },
-                      "type": "expr"
-                    }
-                  }
-                },
-                "props": {
-                  "alertFrameStatus": "alarm",
-                  "hasSpeed": true,
-                  "positioning": "symbol",
-                  "readoutPosition": "right"
-                },
-                "type": "cadre.ob.pump"
+                "type": "ia.container.coord"
               }
             ],
             "meta": {
-              "name": "Diagram"
+              "name": "Sizer"
             },
             "position": {
               "basis": "600px",
+              "grow": 0,
               "shrink": 0
             },
+            "propConfig": {
+              "position.basis": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr(round(600 * {view.custom.scale}, 1)) + 'px'"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.height": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr(round(600 * {view.custom.scale}, 1)) + 'px'"
+                  },
+                  "type": "expr"
+                }
+              },
+              "props.style.width": {
+                "binding": {
+                  "config": {
+                    "expression": "toStr(round(1580 * {view.custom.scale}, 1)) + 'px'"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
             "props": {
+              "direction": "column",
               "style": {
                 "height": "600px",
-                "minWidth": "1580px",
                 "overflow": "hidden",
                 "width": "1580px"
               }
             },
-            "type": "ia.container.coord"
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "CanvasZoom"
+            },
+            "position": {
+              "basis": "0px",
+              "grow": 0,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.viewHeight": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.custom.canvasH"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.viewWidth": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.custom.canvasW"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.zoom": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.custom.zoom"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "guardBrowserZoom": true,
+              "max": 4.0,
+              "min": 0.5,
+              "targetDomId": "cadre-canvas"
+            },
+            "type": "cadre.ob.canvaszoom"
           }
         ],
         "meta": {
+          "domId": "cadre-canvas",
           "name": "Canvas"
         },
         "position": {
@@ -1763,6 +1959,144 @@
               "text": "Readout"
             },
             "type": "ia.input.button"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tz = self.view.custom.zoom or 1\n\tself.view.custom.zoom = max(0.5, round(z / 1.25, 4))"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ZoomOut"
+                },
+                "position": {
+                  "basis": "36px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.zoom} > 0.5"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/flat cadre/font/button",
+                    "height": "32px",
+                    "padding": "0 4px"
+                  },
+                  "text": "−"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.zoom = 1"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ZoomReset"
+                },
+                "position": {
+                  "basis": "72px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "config": {
+                        "expression": "numberFormat({view.custom.zoom} * 100, '0') + '%'"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/flat cadre/font/button",
+                    "height": "32px",
+                    "padding": "0 4px"
+                  },
+                  "text": "100%"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tz = self.view.custom.zoom or 1\n\tself.view.custom.zoom = min(4, round(z * 1.25, 4))"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "ZoomIn"
+                },
+                "position": {
+                  "basis": "36px",
+                  "shrink": 0
+                },
+                "propConfig": {
+                  "props.enabled": {
+                    "binding": {
+                      "config": {
+                        "expression": "{view.custom.zoom} < 4"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "classes": "cadre/button/flat cadre/font/button",
+                    "height": "32px",
+                    "padding": "0 4px"
+                  },
+                  "text": "+"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "Zoom"
+            },
+            "position": {
+              "basis": "auto",
+              "shrink": 0
+            },
+            "props": {
+              "alignItems": "center",
+              "direction": "row",
+              "style": {
+                "gap": "2px",
+                "marginLeft": "8px",
+                "overflow": "hidden"
+              }
+            },
+            "type": "ia.container.flex"
           }
         ],
         "meta": {

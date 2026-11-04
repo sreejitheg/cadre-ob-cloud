@@ -97,7 +97,7 @@ def _spec_expression() -> str:
 
 
 def range_bar() -> tuple[dict, dict]:
-    """`Parts/RangeBar` (shared contract 2.3): a value against its range, in the OpenBridge tokens: the track,
+    """`Parts/RangeBar` (shared contract 2.3): a value against its range, in the package tokens: the track,
     the normal band, a mark at each limit, the value marker (in the warning colour beyond a limit). Drawn as
     one `ia.shapes.svg` whose elements a script transform lays out from the parameters, so that the bar
     scales to any box: 100 by 10 along its length, high end at the top when `vertical`. A parameter that is

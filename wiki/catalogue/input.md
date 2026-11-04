@@ -1,19 +1,19 @@
-# Catalogue: Input - OpenBridge
+# Catalogue: Input
 
-Interface facts for the 33 components of the vendor family `Input - OpenBridge`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 33 components of the reference family `Input`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. App Button
 
 <a id="app-button"></a>
 
-Source: <https://docs.openstudio.no/app-button/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
 | Icon and Label / Properties | `icon` | object |  |  |
-| Icon and Label / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon and Label / Properties | `icon.path` | value | placeholder |  |
 | Icon and Label / Properties | `label` | value | Button |  |
 | Icon and Label / Properties | `showLabel` | value | true |  |
 | Size / Properties | `size` | value | normal | normal, small |
@@ -26,7 +26,7 @@ Events: `onActionPerformed`.
 
 <a id="breadcrumb"></a>
 
-Source: <https://docs.openstudio.no/breadcrumb/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -45,15 +45,15 @@ Events: `onBreadcrumbClick`.
 
 <a id="button"></a>
 
-Source: <https://docs.openstudio.no/button/>. Disposition: `stock`. Cadre equivalent: `ia.input.button` with `cadre/button/normal`, `raised`, `flat` or `selected`.
+Disposition: `stock`. Cadre equivalent: `ia.input.button` with `cadre/button/normal`, `raised`, `flat` or `selected`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
 | Label and Icons / Properties | `label` | value |  |  |
 | Label and Icons / Properties | `hasLeadingIcon` | value | false |  |
-| Label and Icons / Properties | `leadingIcon` | value | openbridge/placeholder |  |
+| Label and Icons / Properties | `leadingIcon` | value | placeholder |  |
 | Label and Icons / Properties | `hasTrailingIcon` | value | false |  |
-| Label and Icons / Properties | `trailingIcon` | value | openbridge/placeholder |  |
+| Label and Icons / Properties | `trailingIcon` | value | placeholder |  |
 | Variant / Properties | `variant` | value | normal | normal, raised, flat |
 | Width / Properties | `fullWidth` | value | false |  |
 
@@ -63,7 +63,7 @@ Events: `onActionPerformed`.
 
 <a id="chat-message"></a>
 
-Source: <https://docs.openstudio.no/chat-message/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -83,7 +83,7 @@ No requirement in process screens so far; each is a small view when needed.
 
 <a id="checkbox"></a>
 
-Source: <https://docs.openstudio.no/checkbox/>. Disposition: `stock`. Cadre equivalent: `ia.input.checkbox`.
+Disposition: `stock`. Cadre equivalent: `ia.input.checkbox`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -98,7 +98,7 @@ Events: `onActionPerformed`.
 
 <a id="checkbox-list"></a>
 
-Source: <https://docs.openstudio.no/checkbox-list/>. Disposition: `stock`. Cadre equivalent: `ia.input.checkbox` instances in an `ia.container.flex`.
+Disposition: `stock`. Cadre equivalent: `ia.input.checkbox` instances in an `ia.container.flex`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -121,7 +121,7 @@ Events: `onActionPerformed`.
 
 <a id="input"></a>
 
-Source: <https://docs.openstudio.no/input/>. Disposition: `stock`. Cadre equivalent: Stock `ia.input.*` components with `cadre/button/*` and `cadre/font/*` classes.
+Disposition: `stock`. Cadre equivalent: Stock `ia.input.*` components with `cadre/button/*` and `cadre/font/*` classes.
 
 Common features page of the input family.
 
@@ -136,7 +136,7 @@ Events: `onActionPerformed`.
 
 <a id="double-slider"></a>
 
-Source: <https://docs.openstudio.no/double-slider/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 The stock `ia.input.slider` has one handle.
 
@@ -161,7 +161,7 @@ Events: `onActionPerformed`.
 
 <a id="dropdown-button"></a>
 
-Source: <https://docs.openstudio.no/dropdown-button/>. Disposition: `stock`. Cadre equivalent: `ia.input.dropdown`.
+Disposition: `stock`. Cadre equivalent: `ia.input.dropdown`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -179,7 +179,7 @@ Events: `onActionPerformed`.
 
 <a id="filter-chip"></a>
 
-Source: <https://docs.openstudio.no/filter-chip/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -189,7 +189,7 @@ No requirement in process screens so far; each is a small view when needed.
 | Label / Properties | `label` | value | Filter |  |
 | Icon / Properties | `showIcon` | value | false |  |
 | Icon / Properties | `icon` | object |  |  |
-| Icon / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon / Properties | `icon.path` | value | placeholder |  |
 | Component Events | `label` | value |  |  |
 | Component Events | `checked` | value |  |  |
 
@@ -199,7 +199,7 @@ Events: `onChipToggle`.
 
 <a id="floating-item"></a>
 
-Source: <https://docs.openstudio.no/floating-item/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -209,8 +209,8 @@ No requirement in process screens so far; each is a small view when needed.
 | Text / Properties | `description` | value |  |  |
 | Text / Properties | `lineType` | value | single-line | single-line, multi-line |
 | Type and Icons / Properties | `type` | value | regular | regular, application |
-| Type and Icons / Properties | `primaryIcon` | object | openbridge/placeholder |  |
-| Type and Icons / Properties | `secondaryIcon` | object | openbridge/placeholder |  |
+| Type and Icons / Properties | `primaryIcon` | object | placeholder |  |
+| Type and Icons / Properties | `secondaryIcon` | object | placeholder |  |
 | Time / Properties | `hasTimestamp` | value | false |  |
 | Time / Properties | `time` | value |  |  |
 | Time / Properties | `hasDay` | value | false |  |
@@ -225,12 +225,12 @@ Events: `onActionClick`, `onAction2Click`, `onDismissClick`, `onActionPerformed`
 
 <a id="icon"></a>
 
-Source: <https://docs.openstudio.no/icon/>. Disposition: `implemented`. Cadre equivalent: `ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted OpenBridge icons).
+Disposition: `implemented`. Cadre equivalent: `ia.shapes.svg` fed by `cadre.icons.elements(name)` (92 converted icons).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
 | Choosing an Icon / Properties | `icon` | object |  |  |
-| Choosing an Icon / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Choosing an Icon / Properties | `icon.path` | value | placeholder |  |
 | Color / Properties | `useColor` | value | false |  |
 | Properties | `style` | object |  |  |
 
@@ -238,12 +238,12 @@ Source: <https://docs.openstudio.no/icon/>. Disposition: `implemented`. Cadre eq
 
 <a id="icon-button"></a>
 
-Source: <https://docs.openstudio.no/icon-button/>. Disposition: `implemented`. Cadre equivalent: Icon button pattern: an `ia.shapes.svg` icon in a flat button container (`tools/hmi/framework.py`).
+Disposition: `implemented`. Cadre equivalent: Icon button pattern: an `ia.shapes.svg` icon in a flat button container (`tools/hmi/framework.py`).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
 | Icon and Label / Properties | `icon` | object |  |  |
-| Icon and Label / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon and Label / Properties | `icon.path` | value | placeholder |  |
 | Icon and Label / Properties | `hasLabel` | value | false |  |
 | Icon and Label / Properties | `label` | value |  |  |
 | Variant / Properties | `variant` | value | normal | normal, raised, flat, integration |
@@ -259,7 +259,7 @@ Events: `onActionPerformed`.
 
 <a id="icon-check-button"></a>
 
-Source: <https://docs.openstudio.no/icon-check-button/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -267,7 +267,7 @@ No requirement in process screens so far; each is a small view when needed.
 |---|---|---|---|---|
 | Checked / Properties | `checked` | value | false |  |
 | Icon and Label / Properties | `icon` | object |  |  |
-| Icon and Label / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon and Label / Properties | `icon.path` | value | placeholder |  |
 | Icon and Label / Properties | `hasLabel` | value | false |  |
 | Icon and Label / Properties | `label` | value |  |  |
 | Alert / Properties | `hasAlert` | value | false |  |
@@ -278,7 +278,7 @@ Events: `onActionPerformed`.
 
 <a id="message-menu-item"></a>
 
-Source: <https://docs.openstudio.no/message-menu-item/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -295,11 +295,11 @@ No requirement in process screens so far; each is a small view when needed.
 | Time / Properties | `hasDay` | value | true |  |
 | Time / Properties | `day` | value |  |  |
 | Icons / Properties | `hasPrimaryIcon` | value | false |  |
-| Icons / Properties | `primaryIcon` | object | openbridge/placeholder |  |
+| Icons / Properties | `primaryIcon` | object | placeholder |  |
 | Icons / Properties | `hasSecondaryIcon` | value | false |  |
-| Icons / Properties | `secondaryIcon` | object | openbridge/placeholder |  |
+| Icons / Properties | `secondaryIcon` | object | placeholder |  |
 | Icons / Properties | `hasTrailingIcon` | value | false |  |
-| Icons / Properties | `trailingIcon` | object | openbridge/placeholder |  |
+| Icons / Properties | `trailingIcon` | object | placeholder |  |
 | Icons / Properties | `enhancedIcon` | value | false |  |
 | Icons / Properties | `isShelved` | value | false |  |
 | Actions / Properties | `hasActionLabel` | value | false |  |
@@ -313,7 +313,7 @@ Events: `onMessageClick`, `onPrimaryActionClick`, `onSecondaryActionClick`, `onA
 
 <a id="number-input-field"></a>
 
-Source: <https://docs.openstudio.no/number-input-field/>. Disposition: `stock`. Cadre equivalent: `ia.input.numeric-entry-field`.
+Disposition: `stock`. Cadre equivalent: `ia.input.numeric-entry-field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -350,7 +350,7 @@ Events: `onActionPerformed`.
 
 <a id="pivot-item-group"></a>
 
-Source: <https://docs.openstudio.no/pivot-item-group/>. Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
+Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -370,7 +370,7 @@ Events: `onChange`.
 
 <a id="progress-bar"></a>
 
-Source: <https://docs.openstudio.no/progress-bar/>. Disposition: `stock`. Cadre equivalent: `ia.display.progress`.
+Disposition: `stock`. Cadre equivalent: `ia.display.progress`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -389,7 +389,7 @@ Source: <https://docs.openstudio.no/progress-bar/>. Disposition: `stock`. Cadre 
 
 <a id="radio-button-group"></a>
 
-Source: <https://docs.openstudio.no/radio-button-group/>. Disposition: `stock`. Cadre equivalent: `ia.input.radio-group`.
+Disposition: `stock`. Cadre equivalent: `ia.input.radio-group`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -406,7 +406,7 @@ Events: `onActionPerformed`.
 
 <a id="sequence-loading-spinner"></a>
 
-Source: <https://docs.openstudio.no/sequence-loading-spinner/>. Disposition: `partial`. Cadre equivalent: `cadre/anim/spin` animation class (the progress ring of the symbols).
+Disposition: `partial`. Cadre equivalent: `cadre/anim/spin` animation class (the progress ring of the symbols).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -420,7 +420,7 @@ Source: <https://docs.openstudio.no/sequence-loading-spinner/>. Disposition: `pa
 
 <a id="slide-button"></a>
 
-Source: <https://docs.openstudio.no/slide-button/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -430,7 +430,7 @@ No requirement in process screens so far; each is a small view when needed.
 | Label and Icon / Properties | `label` | value | Slide to confirm |  |
 | Label and Icon / Properties | `hasLeadingIcon` | value | true |  |
 | Label and Icon / Properties | `icon` | object |  |  |
-| Label and Icon / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Label and Icon / Properties | `icon.path` | value | placeholder |  |
 | Width / Properties | `hugContent` | value | false |  |
 
 Events: `onActionPerformed`.
@@ -439,7 +439,7 @@ Events: `onActionPerformed`.
 
 <a id="slider"></a>
 
-Source: <https://docs.openstudio.no/slider/>. Disposition: `stock`. Cadre equivalent: `ia.input.slider`.
+Disposition: `stock`. Cadre equivalent: `ia.input.slider`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -462,7 +462,7 @@ Events: `onActionPerformed`.
 
 <a id="status-indicator"></a>
 
-Source: <https://docs.openstudio.no/status-indicator/>. Disposition: `partial`. Cadre equivalent: Status row of the automation symbols.
+Disposition: `partial`. Cadre equivalent: Status row of the automation symbols.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -473,7 +473,7 @@ Source: <https://docs.openstudio.no/status-indicator/>. Disposition: `partial`. 
 
 <a id="stepper-box"></a>
 
-Source: <https://docs.openstudio.no/stepper-box/>. Disposition: `stock`. Cadre equivalent: `ia.input.numeric-entry-field` (spinner mode).
+Disposition: `stock`. Cadre equivalent: `ia.input.numeric-entry-field` (spinner mode).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -494,7 +494,7 @@ Events: `onActionPerformed`, `onUp`, `onDown`.
 
 <a id="tab-row"></a>
 
-Source: <https://docs.openstudio.no/tab-row/>. Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
+Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -525,7 +525,7 @@ Events: `onTabSelected`, `onTabClosed`, `onAddNewTab`.
 
 <a id="tag"></a>
 
-Source: <https://docs.openstudio.no/tag/>. Disposition: `gap`. Cadre equivalent: None.
+Disposition: `gap`. Cadre equivalent: None.
 
 No requirement in process screens so far; each is a small view when needed.
 
@@ -536,14 +536,14 @@ No requirement in process screens so far; each is a small view when needed.
 | Size / Properties | `size` | value | regular | regular, large |
 | Icon / Properties | `hasIcon` | value | false |  |
 | Icon / Properties | `icon` | object |  |  |
-| Icon / Properties | `icon.path` | value | openbridge/placeholder |  |
+| Icon / Properties | `icon.path` | value | placeholder |  |
 | Properties | `style` | object |  |  |
 
 ## 27. Text Input Field
 
 <a id="text-input-field"></a>
 
-Source: <https://docs.openstudio.no/text-input-field/>. Disposition: `stock`. Cadre equivalent: `ia.input.text-field`.
+Disposition: `stock`. Cadre equivalent: `ia.input.text-field`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -576,7 +576,7 @@ Events: `onActionPerformed`.
 
 <a id="textarea-field"></a>
 
-Source: <https://docs.openstudio.no/textarea-field/>. Disposition: `stock`. Cadre equivalent: `ia.input.text-area`.
+Disposition: `stock`. Cadre equivalent: `ia.input.text-area`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -600,7 +600,7 @@ Events: `onActionPerformed`, `onScreenshotClick`, `onImageClick`, `onAttachmentC
 
 <a id="toggle-button-horizontal"></a>
 
-Source: <https://docs.openstudio.no/toggle-button-horizontal/>. Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
+Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -622,7 +622,7 @@ Events: `onActionPerformed`.
 
 <a id="toggle-button-vertical"></a>
 
-Source: <https://docs.openstudio.no/toggle-button-vertical/>. Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
+Disposition: `implemented`. Cadre equivalent: Selected-state button row pattern (faceplate commands, alerts page tabs, diagram toolbar).
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -644,7 +644,7 @@ Events: `onActionPerformed`.
 
 <a id="toggle-switch"></a>
 
-Source: <https://docs.openstudio.no/toggle-switch/>. Disposition: `stock`. Cadre equivalent: `ia.input.toggle-switch`.
+Disposition: `stock`. Cadre equivalent: `ia.input.toggle-switch`.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
@@ -657,14 +657,14 @@ Events: `onActionPerformed`.
 
 <a id="user-button"></a>
 
-Source: <https://docs.openstudio.no/user-button/>. Disposition: `framework`. Cadre equivalent: `Framework/TopBar` user button and the `Framework/UserMenu` popup.
+Disposition: `framework`. Cadre equivalent: `Framework/TopBar` user button and the `Framework/UserMenu` popup.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|
 | Icon or Initials / Properties | `variant` | value | icon | icon, initials |
 | Icon or Initials / Properties | `initials` | value |  |  |
 | Icon or Initials / Properties | `icon` | object |  |  |
-| Icon or Initials / Properties | `icon.path` | value | openbridge/user |  |
+| Icon or Initials / Properties | `icon.path` | value | user |  |
 | Label / Properties | `label` | value | User |  |
 | Style / Properties | `styleType` | value | flat | flat, normal, selected |
 | Static / Properties | `static` | value | false |  |
@@ -675,7 +675,7 @@ Events: `onActionPerformed`.
 
 <a id="user-menu"></a>
 
-Source: <https://docs.openstudio.no/user-menu/>. Disposition: `framework`. Cadre equivalent: `Framework/TopBar` user button and the `Framework/UserMenu` popup.
+Disposition: `framework`. Cadre equivalent: `Framework/TopBar` user button and the `Framework/UserMenu` popup.
 
 | Section | Property | Type | Default (parsed) | Values (parsed) |
 |---|---|---|---|---|

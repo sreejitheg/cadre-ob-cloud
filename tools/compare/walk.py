@@ -115,7 +115,7 @@ def main() -> int:
                     help="the rendering the project was built with (screen.py --render); default stock")
     pl.add_argument("--profile", default=None, metavar="FILE", help="the library profile (default library/profile.json)")
     pl.add_argument("--faceplate", choices=["openbridge", "asm"], default="openbridge",
-                    help="the project's default faceplate style (screen.py --faceplate); default openbridge")
+                    help="the project's default faceplate style (screen.py --faceplate); default `openbridge`, the stock style")
     pl.add_argument("--trip", action="store_true",
                     help="plan a trip (write path W11) for each device kind with interlocks: a latched trip raised "
                          "from its memory source tag, read on the Interlocks tab, put back and reset (COB-204)")

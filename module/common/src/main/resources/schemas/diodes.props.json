@@ -13,12 +13,12 @@
         "diodes06"
       ],
       "default": "diodes01",
-      "description": "OpenBridge `obc-diodes` property `alternativeIcon`."
+      "description": "Property `alternativeIcon` of the `obc-diodes` element."
     },
     "on": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-diodes` property `on`."
+      "description": "Property `on` of the `obc-diodes` element."
     },
     "variant": {
       "type": "string",
@@ -27,7 +27,7 @@
         "flat"
       ],
       "default": "square",
-      "description": "OpenBridge `obc-diodes` property `variant`."
+      "description": "Property `variant` of the `obc-diodes` element."
     },
     "orientation": {
       "type": "string",
@@ -37,7 +37,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-diodes` property `orientation`."
+      "description": "Property `orientation` of the `obc-diodes` element."
     },
     "readoutPosition": {
       "type": "string",
@@ -73,7 +73,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-diodes` property `positioning`."
+      "description": "Property `positioning` of the `obc-diodes` element."
     },
     "activated": {
       "type": "boolean",
@@ -83,7 +83,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-diodes` property `alert`."
+      "description": "Property `alert` of the `obc-diodes` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -167,7 +167,7 @@
         "auto"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-diodes` property `badgeControl`."
+      "description": "Property `badgeControl` of the `obc-diodes` element."
     },
     "badgeCommandLocked": {
       "type": "string",
@@ -176,7 +176,7 @@
         "command-locked"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-diodes` property `badgeCommandLocked`."
+      "description": "Property `badgeCommandLocked` of the `obc-diodes` element."
     },
     "badgeInterlock": {
       "type": "string",
@@ -186,7 +186,7 @@
         "interlock-inhibit"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-diodes` property `badgeInterlock`."
+      "description": "Property `badgeInterlock` of the `obc-diodes` element."
     },
     "badgeAlert": {
       "type": "string",
@@ -203,7 +203,7 @@
         "level-diagnostic"
       ],
       "default": "none",
-      "description": "OpenBridge `obc-diodes` property `badgeAlert`."
+      "description": "Property `badgeAlert` of the `obc-diodes` element."
     },
     "showStatus": {
       "type": "boolean",
@@ -219,7 +219,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

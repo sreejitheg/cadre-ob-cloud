@@ -13,7 +13,7 @@
         "flat-forward"
       ],
       "default": "regular",
-      "description": "OpenBridge `obc-automation-button` property `variant`."
+      "description": "Property `variant` of the `obc-automation-button` element."
     },
     "state": {
       "type": "string",
@@ -22,12 +22,12 @@
         "open"
       ],
       "default": "open",
-      "description": "OpenBridge `obc-automation-button` property `state`."
+      "description": "Property `state` of the `obc-automation-button` element."
     },
     "static": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-automation-button` property `static`."
+      "description": "Property `static` of the `obc-automation-button` element."
     },
     "activated": {
       "type": "boolean",
@@ -63,7 +63,7 @@
     "alert": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-automation-button` property `alert`."
+      "description": "Property `alert` of the `obc-automation-button` element."
     },
     "alertFrameType": {
       "type": "string",
@@ -119,7 +119,7 @@
     "progress": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-automation-button` property `progress`."
+      "description": "Property `progress` of the `obc-automation-button` element."
     },
     "progressMode": {
       "type": "string",
@@ -158,7 +158,7 @@
         "button"
       ],
       "default": "point",
-      "description": "OpenBridge `obc-automation-button` property `positioning`."
+      "description": "Property `positioning` of the `obc-automation-button` element."
     },
     "orientation": {
       "type": "string",
@@ -168,7 +168,7 @@
         "verticalLeft"
       ],
       "default": "horizontal",
-      "description": "OpenBridge `obc-automation-button` property `orientation`."
+      "description": "Property `orientation` of the `obc-automation-button` element."
     },
     "hasBadgeSpacer": {
       "type": "boolean",
@@ -184,7 +184,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

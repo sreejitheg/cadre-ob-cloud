@@ -1,4 +1,4 @@
-/* The one preview renderer of the OpenBridge pipeline (WFBD-092): it draws the pages, faceplates, navigation and
+/* The one preview renderer of the package pipeline (WFBD-092): it draws the pages, faceplates, navigation and
    search of both previews (mode "recon", the one to one view, and mode "asm", the ASM view) from the data block
    `preview-data` (application/json). It reads data only through textContent, builds every node with the DOM API,
    sets no inline handler and names no external address. Fixed script: its SHA-256 is recorded in checks.json. */

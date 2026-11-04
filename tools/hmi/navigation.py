@@ -23,7 +23,7 @@ from .framework import (SEARCH_VIEW, search_panel, _badges_embed, _icon_button, 
                         root_classes)
 from .library import icon_svg, open_device, svg
 
-FRAMES = ("openbridge", "asm", "ob", "obasm")   # ob, obasm: the OpenBridge frame components (obframe.py, obasm.py); need --render module
+FRAMES = ("openbridge", "asm", "ob", "obasm")   # ob, obasm: the module frame components (obframe.py, obasm.py); need --render module
 ASM_FRAMES = ("asm", "obasm")   # the frames that carry the ASM rules: the hierarchy, the pivot pages, search, banner, floating faceplates
 MODULE_FRAMES = ("ob", "obasm")   # the frames drawn with the module's components
 FLOAT_VIEW = "Framework/ASM/FloatFaceplate"
@@ -285,7 +285,7 @@ CRUMBS_ASM_CFG = pv.bind(pv.expr(
     pv.script_transform(["return cadre.hmi.frame_crumbs(self.session, (value or '').split('|')[0])"])])
 
 
-SUPPORT_ICON = "dashboard"   # the nearest of the library's icons to OpenBridge's `apps`
+SUPPORT_ICON = "dashboard"   # the nearest of the library's icons to the package's `apps`
 
 
 def _open_nav(panel: str) -> list[str]:
@@ -420,7 +420,7 @@ BANNER_ROW_PARAMS = {"id": "", "priority": "", "status": "neutral", "unacked": F
 
 
 def banner_row() -> dict:
-    """`Framework/ASM/BannerRow`: priority icon (the OpenBridge shapes by rank, flashing while unacknowledged),
+    """`Framework/ASM/BannerRow`: priority icon (the package shapes by rank, flashing while unacknowledged),
     time, node, device tag, description and state. A click opens the device's faceplate on Alarms."""
     st = "{view.params.status}"
     icons = []

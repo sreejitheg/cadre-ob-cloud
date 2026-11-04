@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "medium": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "empty",
+        "water",
+        "air"
+      ],
+      "default": "normal",
+      "description": "Property `medium` of the `obc-three-way-line` element."
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "top",
+        "right",
+        "bottom",
+        "left"
+      ],
+      "default": "top",
+      "description": "Property `direction` of the `obc-three-way-line` element."
+    },
+    "lineType": {
+      "type": "string",
+      "enum": [
+        "fluid",
+        "electric",
+        "air",
+        "connector"
+      ],
+      "default": "fluid",
+      "description": "Property `lineType` of the `obc-three-way-line` element."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "Component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

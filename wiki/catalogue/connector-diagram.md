@@ -1,12 +1,12 @@
 # Catalogue: Connector Diagram
 
-Interface facts for the 1 components of the vendor family `Connector Diagram`, parsed from the vendor documentation (source link per component). Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
+Interface facts for the 1 components of the reference family `Connector Diagram`, parsed from the reference documentation. Defaults and enumerations are parsed from prose by heuristic and are marked so; an empty cell means the page states none. Back to [05 Component Catalogue](../05-component-catalogue.md).
 
 ## 1. Connector Diagram
 
 <a id="connector-diagram"></a>
 
-Source: <https://docs.openstudio.no/connector-diagram/>. Disposition: `generator`. Cadre equivalent: `tools/hmi/screen.py` diagram layout: sections, symbols, routed pipes, compiled flow (`tools/hmi/diagram.py`).
+Disposition: `generator`. Cadre equivalent: `tools/hmi/screen.py` diagram layout: sections, symbols, routed pipes, compiled flow (`tools/hmi/diagram.py`).
 
 Pipes are drawn by the generator, not in the Designer; flow is compiled into one expression per pipe and verified against a reference solver (gate G6).
 

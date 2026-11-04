@@ -10,7 +10,7 @@
     "showSeconds": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-clock` property `showSeconds`."
+      "description": "Property `showSeconds` of the `obc-clock` element."
     },
     "showDate": {
       "type": "boolean",
@@ -45,17 +45,17 @@
     "hour12": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-clock` property `hour12`."
+      "description": "Property `hour12` of the `obc-clock` element."
     },
     "selected": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-clock` property `selected`."
+      "description": "Property `selected` of the `obc-clock` element."
     },
     "double": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-clock` property `double`."
+      "description": "Property `double` of the `obc-clock` element."
     },
     "activated": {
       "type": "boolean",
@@ -65,7 +65,7 @@
     "integrationBarMode": {
       "type": "boolean",
       "default": false,
-      "description": "OpenBridge `obc-clock` property `integrationBarMode`."
+      "description": "Property `integrationBarMode` of the `obc-clock` element."
     },
     "blinkOnlyBreakpointPx": {
       "type": "number",
@@ -86,7 +86,7 @@
         "xl"
       ],
       "default": "regular",
-      "description": "OpenBridge component size: regular, medium, large or xl."
+      "description": "Component size: regular, medium, large or xl."
     },
     "style": {
       "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",

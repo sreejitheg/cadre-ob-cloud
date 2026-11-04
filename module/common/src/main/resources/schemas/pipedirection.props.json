@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "medium": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "empty",
+        "water",
+        "air"
+      ],
+      "default": "normal",
+      "description": "Property `medium` of the `obc-direction-line` element."
+    },
+    "lineType": {
+      "type": "string",
+      "enum": [
+        "fluid",
+        "electric",
+        "air"
+      ],
+      "default": "fluid",
+      "description": "Property `lineType` of the `obc-direction-line` element."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "Component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

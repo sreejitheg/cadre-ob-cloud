@@ -1,4 +1,4 @@
-"""Compare the stock library rendering of a project with its Cadre OpenBridge module rendering.
+"""Compare the stock library rendering of a project with its Cadre HMI Components module rendering.
 
 The same descriptors are built twice (`screen.py --render stock` and `--render module`) into two
 projects bound to the same tags. For every route this measures, in fresh browser contexts:

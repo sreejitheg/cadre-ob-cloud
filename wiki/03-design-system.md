@@ -3,7 +3,7 @@ title: Design system
 type: wiki
 updated: 2026-10-07
 ---
-# 03 Design System: The OpenBridge Tokens in a Stock Perspective Project
+# 03 Design System: The Design Tokens in a Stock Perspective Project
 
 | Field | Value |
 |---|---|
@@ -14,7 +14,7 @@ updated: 2026-10-07
 
 ## 1. Purpose
 
-This page records which parts of the OpenBridge design system the Cadre parent project carries,
+This page records which parts of the maritime design guidance the Cadre parent project carries,
 how they are carried without a module, and how a palette is switched at runtime.
 
 ## 2. Token Sets
@@ -54,7 +54,7 @@ Decision COBD-005: every page, dock and popup root carries the style class
 through the document tree, so the whole subtree, embedded views included, takes the palette. The
 brilliance menu writes `session.custom.palette` and, through `cadre.hmi.set_palette`, keeps
 `session.props.theme` in step (day and bright to `light-cool`, dusk and night to `dark-cool`), so
-stock components follow the same light or dark scheme. The vendor demo uses the shipped
+stock components follow the same light or dark scheme. The reference demo uses the shipped
 `light-cool` theme for its stock components in the same way.
 
 Experiment E1 measured the mechanism on the gateway (page 07, GF-01 to GF-05): with `day`, the
@@ -64,7 +64,7 @@ text to `rgb(234, 167, 94)`, and the same icon fills changed without a reload.
 
 ## 5. Icons
 
-`tools/convert_icons.py` turns an OpenBridge icon source (`src/icons/icon-<name>.ts`) into an
+`tools/convert_icons.py` turns a package icon source (`src/icons/icon-<name>.ts`) into an
 `ia.shapes.svg` element list. Each source carries two bodies: `icon`, every fill `currentColor`,
 and `iconCss`, each fill a palette variable such as `var(--automation-device-primary-color)`. The
 palette-aware body is converted, so an icon re-colours with the palette. Circles, rectangles,
@@ -84,7 +84,7 @@ The parent carries 77 style classes:
 
 | Group | Classes | Content |
 |---|---|---|
-| `cadre/font/*` | 48 | One per OpenBridge type style, values as token references |
+| `cadre/font/*` | 48 | One per package type style, values as token references |
 | `cadre/text/*` | 4 | `active`, `neutral`, `inactive`, `disabled` element colours |
 | `cadre/surface/*` | 5 | `page`, `card`, `section`, `bar`, `menu` |
 | `cadre/button/*` | 4 | `flat`, `normal`, `raised` (each with a hover variant) and `selected` |
@@ -93,7 +93,7 @@ The parent carries 77 style classes:
 | `cadre/palette/*` | 4 | The palette selectors (empty bodies; the stylesheet supplies the variables) |
 | `cadre/text/ellipsis`, `cadre/box/within` | 2 | The layout classes (empty bodies; the stylesheet supplies the rules): a label that ends in an ellipsis, and a container no wider than its own (page 06 section 4.1) |
 
-The idiom follows the vendor's: a component takes one `cadre/font/*` class for typography and one
+The idiom follows the reference: a component takes one `cadre/font/*` class for typography and one
 `cadre/text/*` class for colour, space-separated in `style.classes`.
 
 ## 7. Attribution

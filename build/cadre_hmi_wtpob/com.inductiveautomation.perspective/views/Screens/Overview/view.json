@@ -101,7 +101,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -147,7 +147,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -193,7 +193,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -313,7 +313,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -359,7 +359,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -405,7 +405,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -451,7 +451,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -578,7 +578,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -633,7 +633,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -688,7 +688,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -805,7 +805,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -871,6 +871,14 @@
                           },
                           "type": "tag"
                         }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_C_P101}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
                       }
                     },
                     "props": {
@@ -893,7 +901,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -959,6 +967,14 @@
                           },
                           "type": "tag"
                         }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_C_P301}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
                       }
                     },
                     "props": {
@@ -981,7 +997,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -1038,6 +1054,14 @@
                           },
                           "type": "tag"
                         }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_C_P501}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
+                        }
                       }
                     },
                     "props": {
@@ -1060,7 +1084,7 @@
                       "dom": {
                         "onClick": {
                           "config": {
-                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tsystem.perspective.openDock(id='faceplate')"
+                            "script": "\tcadre.hmi.select_device(self.session, self.custom.deviceId, self.custom.deviceKind, self.custom.title, self.custom.label)\n\tif self.session.custom.faceplateMode == 'popup':\n\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\tsystem.perspective.closePopup(fid)\n\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\telse:\n\t\tsystem.perspective.openDock(id='faceplate')\n\t\tself.session.custom.faceplateDocked = True"
                           },
                           "scope": "G",
                           "type": "script"
@@ -1125,6 +1149,14 @@
                             "tagPath": "[default]cadre_hmi_wtp/P502/speed"
                           },
                           "type": "tag"
+                        }
+                      },
+                      "props.statusText": {
+                        "binding": {
+                          "config": {
+                            "expression": "if({view.custom.g_C_P502}, numberFormat({this.props.speedInPercent}, '0') + ' %', 'Off')"
+                          },
+                          "type": "expr"
                         }
                       }
                     },

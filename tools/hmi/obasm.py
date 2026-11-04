@@ -17,7 +17,7 @@ the priority table of wiki 13 section 11.1; none is in a component):
                               search box over the module tree navigation (the hierarchy, a node's counts as its `alerts`)
                               or over the module navigation menu (the support pages)
     Framework/OBASM/Crumb     the ASM crumb, its popup opened beneath the strip (the popup is the ASM one, with its badges)
-    Framework/OB/AlertMenu, UserMenu, Brilliance   the OpenBridge variant's popups, shared (`obframe`)
+    Framework/OB/AlertMenu, UserMenu, Brilliance   the module variant's popups, shared (`obframe`)
     Framework/ASM/...         the alarm banner, the floating faceplates, the pivot pages and the search results, as they are
 
 Every component event is a script action that cites the event's measured shape (GF-37, wiki page 07) in its first comment

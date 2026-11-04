@@ -12,7 +12,7 @@ then checks a visible result. Checks:
   F7  ACK in the top bar acknowledges the faulted pump: its frame stops flashing.
   F8  Reset fault in the faceplate clears the fault: the frame disappears.
   F9  The brilliance menu switches the session to the night palette.
-  F10 Module rendering: P-502's OpenBridge alarm list in the faceplate is display only (COBD-025):
+  F10 Module rendering: P-502's package alarm list in the faceplate is display only (COBD-025):
       it lists the fault, its row draws the no-acknowledgement icon and no ACK, and a click on that
       cell acknowledges nothing.
   F11 Module rendering: the alarm menu acknowledges an alarm, and a row opens its faceplate.
@@ -73,7 +73,7 @@ from glass import (BADGE_AT, BELL, CHART_AXIS, CHART_LINE, CRAFTED_CLICK, DISABL
                    status_shown, symbol, value_of, visible_text_count)
 # The new frames (`--frame ob`, `--frame obasm`) draw the head with the module's top bar: the helpers below locate the same
 # parts there (the bell, the menu and brilliance buttons, the alarm menu's rows and ACK, the palette) and fall back to the
-# older selectors on the openbridge and asm frames, selected by the structure of the top dock (`glass.frame_variant`).
+# older selectors on the stock and stock ASM frames, selected by the structure of the top dock (`glass.frame_variant`).
 from glass import (alert_list, alert_row, bell, click_alert_row, click_nav_entry, close_alarm_menu, dimming_button,  # noqa: E402
                    enabled_acks, frame_variant, menu_button, panel, pick_palette, press_ack)
 
@@ -105,7 +105,7 @@ def ensure_initial(page, base: str, restore) -> str:
 
 
 def module_steps(page, base: str, restore, check, user: str | None = None) -> None:
-    """F10, F11 and F14, for the module rendering. The faceplate's OpenBridge alarm list is display
+    """F10, F11 and F14, for the module rendering. The faceplate's package alarm list is display
     only (COB-082, COBD-025); the top bar's alarm menu acknowledges an alarm from its row, opens a
     device's faceplate from a row, and acknowledges every unacknowledged alarm it shows with ACK
     visible. The plant is restored first, so P-502 is faulted and unacknowledged."""
@@ -134,7 +134,7 @@ def module_steps(page, base: str, restore, check, user: str | None = None) -> No
     page.wait_for_timeout(3000)
     after = page.evaluate(LIST_INFO, host)
     frame = module_pump(page, "P-502")
-    check("F10", "P-502's OpenBridge alarm list in the faceplate is display only: the fault listed, "
+    check("F10", "P-502's package alarm list in the faceplate is display only: the fault listed, "
           "the no-acknowledgement icon and no ACK, a click acknowledges nothing",
           shown and cell.get("noAck") and cell.get("noAckIcon") and not cell.get("button") and acks == 0
           and after and not after[0].get("acked") and frame and frame.get("mode") == "unacked-active",

@@ -40,7 +40,7 @@ class Catalogue(unittest.TestCase):
     def test_the_five_classes_partition_the_components(self):
         comps = gen_catalogue.load()
         groups = gen_catalogue.classes(comps)
-        self.assertEqual([len(ids) for _, _, ids in groups], [13, 28, 11, 33, 3])
+        self.assertEqual([len(ids) for _, _, ids in groups], [13, 37, 11, 33, 3])
         self.assertEqual(sum(len(ids) for _, _, ids in groups), len(comps))
 
     def test_the_catalogue_has_no_dash_or_arrow_characters(self):

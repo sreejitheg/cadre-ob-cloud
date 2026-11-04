@@ -1,0 +1,399 @@
+{
+  "custom": {
+    "alarmScope": "*cadre_hmi_showcase*",
+    "commands": [],
+    "contentNode": "",
+    "deviceModel": true,
+    "devices": [
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/ALM_HIGH",
+        "kind": "indicator",
+        "label": "Test alarm: one High alarm; the button raises it for a minute",
+        "members": [
+          "alarmAck",
+          "state"
+        ],
+        "title": "ALM-HIGH",
+        "unit": "",
+        "write": [
+          "alarmAck"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_AVALVE",
+        "kind": "analogvalve",
+        "label": "Test analogue valve",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "state"
+        ],
+        "title": "TB-AVALVE",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_DAMPER",
+        "kind": "damper",
+        "label": "Test damper",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "state"
+        ],
+        "title": "TB-DAMPER",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_FAN",
+        "kind": "fan",
+        "label": "Test fan",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "speed",
+          "speedSp",
+          "state"
+        ],
+        "title": "TB-FAN",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "speedSp"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_FIELD",
+        "kind": "instrument",
+        "label": "Test instrument field",
+        "members": [
+          "value"
+        ],
+        "title": "TB-FIELD",
+        "unit": "degC",
+        "write": []
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_GEN",
+        "kind": "generator",
+        "label": "Test generator: Start and Stop on the faceplate",
+        "members": [
+          "cmdReset",
+          "cmdStart",
+          "cmdStop",
+          "engineSpeed",
+          "fault",
+          "faultCode",
+          "fuelLevel",
+          "runText",
+          "state"
+        ],
+        "pulses": [
+          {
+            "caption": "Reset generator",
+            "member": "cmdReset"
+          },
+          {
+            "caption": "Start generator",
+            "member": "cmdStart"
+          },
+          {
+            "caption": "Stop generator",
+            "member": "cmdStop"
+          }
+        ],
+        "title": "TB-GEN",
+        "unit": "",
+        "write": [
+          "cmdReset",
+          "cmdStart",
+          "cmdStop"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_MOTOR",
+        "kind": "motor",
+        "label": "Test motor",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode",
+          "speed",
+          "speedSp",
+          "state"
+        ],
+        "modes": [
+          {
+            "name": "Program",
+            "owner": "program",
+            "value": 0
+          },
+          {
+            "name": "Operator",
+            "owner": "operator",
+            "value": 1
+          },
+          {
+            "name": "Maintenance",
+            "owner": "maintenance",
+            "value": 2
+          },
+          {
+            "name": "Local",
+            "owner": "local",
+            "value": 3
+          }
+        ],
+        "title": "TB-MOTOR",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode",
+          "speedSp"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_PUMP",
+        "kind": "pump",
+        "label": "Test pump: Start and Stop on the faceplate",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode",
+          "speed",
+          "speedSp",
+          "state"
+        ],
+        "modes": [
+          {
+            "name": "Program",
+            "owner": "program",
+            "value": 0
+          },
+          {
+            "name": "Operator",
+            "owner": "operator",
+            "value": 1
+          },
+          {
+            "name": "Maintenance",
+            "owner": "maintenance",
+            "value": 2
+          },
+          {
+            "name": "Local",
+            "owner": "local",
+            "value": 3
+          }
+        ],
+        "title": "TB-PUMP",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode",
+          "speedSp"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_READOUT",
+        "kind": "instrument",
+        "label": "Test instrument: write the limits",
+        "members": [
+          "hiLimit",
+          "loLimit",
+          "value"
+        ],
+        "title": "TB-READOUT",
+        "unit": "bar",
+        "write": [
+          "hiLimit",
+          "loLimit"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_TANK",
+        "kind": "tank",
+        "label": "Test tank: write the limits on the faceplate",
+        "members": [
+          "hiLimit",
+          "level",
+          "loLimit"
+        ],
+        "title": "TB-TANK",
+        "unit": "",
+        "write": [
+          "hiLimit",
+          "loLimit"
+        ]
+      },
+      {
+        "folder": "[default]cadre_hmi_showcase/_componentTest/TB_VALVE",
+        "kind": "valve",
+        "label": "Test valve: Open and Close on the faceplate",
+        "members": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode",
+          "state"
+        ],
+        "modes": [
+          {
+            "name": "Program",
+            "owner": "program",
+            "value": 0
+          },
+          {
+            "name": "Operator",
+            "owner": "operator",
+            "value": 1
+          },
+          {
+            "name": "Maintenance",
+            "owner": "maintenance",
+            "value": 2
+          },
+          {
+            "name": "Local",
+            "owner": "local",
+            "value": 3
+          }
+        ],
+        "title": "TB-VALVE",
+        "unit": "",
+        "write": [
+          "alarmAck",
+          "cmd",
+          "fault",
+          "mode"
+        ]
+      }
+    ],
+    "faceplateDocked": false,
+    "faceplateMode": "dock",
+    "faceplateStyle": "asm",
+    "floating": {},
+    "frame": "ob",
+    "hierarchy": [],
+    "nav": {
+      "footer": [
+        {
+          "icon": "alert-list",
+          "label": "Alerts",
+          "path": "/alerts"
+        }
+      ],
+      "items": [
+        {
+          "icon": "placeholder",
+          "label": "Devices",
+          "node": "",
+          "path": "/"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Electrical symbols",
+          "node": "",
+          "path": "/symbols"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Glyphs 1 of 2",
+          "node": "",
+          "path": "/glyphs-1"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Glyphs 2 of 2",
+          "node": "",
+          "path": "/glyphs-2"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Pipes and bus",
+          "node": "",
+          "path": "/pipes"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Charts and bars",
+          "node": "",
+          "path": "/charts"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Frame components 1 of 3",
+          "node": "",
+          "path": "/frame-1"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Frame components 2 of 3",
+          "node": "",
+          "path": "/frame-2"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Frame components 3 of 3",
+          "node": "",
+          "path": "/frame-3"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Alarm lists and zoom",
+          "node": "",
+          "path": "/alarms"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Library views 1 of 2",
+          "node": "",
+          "path": "/views-1"
+        },
+        {
+          "icon": "placeholder",
+          "label": "Library views 2 of 2",
+          "node": "",
+          "path": "/views-2"
+        }
+      ]
+    },
+    "navPanel": "pages",
+    "navQuery": "",
+    "pageInfo": {},
+    "palette": "day",
+    "searchIndex": {},
+    "searchOpen": false,
+    "searchQuery": "",
+    "selectedDevice": "",
+    "selectedKind": "",
+    "selectedLabel": "",
+    "selectedStyle": "openbridge",
+    "selectedTab": "",
+    "selectedTitle": "",
+    "trends": []
+  },
+  "props": {
+    "theme": "light-cool"
+  }
+}

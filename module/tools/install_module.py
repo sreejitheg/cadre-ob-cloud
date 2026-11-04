@@ -1,4 +1,4 @@
-"""Install the Cadre OpenBridge module on the gateway through its REST API.
+"""Install the Cadre HMI Components module on the gateway through its REST API.
 
 The flow is the gateway's own (ModuleInstallRoutes of gateway-8.3.6.jar, read with javap):
 upload the file (`POST /data/api/v1/modules/upload?fileName=`), accept the module's certificate
@@ -6,7 +6,7 @@ and EULA (`POST /modules/certificate?moduleId=`, `POST /modules/eula?moduleId=`)
 (`POST /modules/install?moduleId=`). Uninstalling (`POST /modules/uninstall`) takes effect at the
 next gateway restart.
 
-Usage:  python module/tools/install_module.py [--file module/build/CadreOpenBridge.modl]
+Usage:  python module/tools/install_module.py [--file module/build/CadreHMIComponents.modl]
         python module/tools/install_module.py --list [--id MODULE_ID] [--data-dir DIR]
 
 `--list` is read only (GET requests and file reads; nothing is uploaded, installed, enabled or written, and no
@@ -142,7 +142,7 @@ def list_modules(gw, data_dir: Path | None = None, only: str | None = None) -> d
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--file", default=str(HERE / "build" / "CadreOpenBridge.modl"))
+    ap.add_argument("--file", default=str(HERE / "build" / "CadreHMIComponents.modl"))
     ap.add_argument("--list", action="store_true", help="read only: list the installed modules with version and file digest")
     ap.add_argument("--id", default=None, help="with --list: only this module id")
     ap.add_argument("--data-dir", default=None, help="with --list: the gateway's data folder (holds modules.json)")

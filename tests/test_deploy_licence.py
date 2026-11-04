@@ -12,7 +12,7 @@ import deploy  # noqa: E402
 # the shape the real 8.3.6 gateway answered on 2026-10-30, keys cut to those read
 LICENSED = {"items": [
     {"id": "com.inductiveautomation.perspective", "name": "Perspective", "state": "ACTIVE", "licenseState": "Activated"},
-    {"id": "cadre.hmi.ob", "name": "Cadre OpenBridge", "state": "ACTIVE", "licenseState": "Free"},
+    {"id": "cadre.hmi.ob", "name": "Cadre HMI Components", "state": "ACTIVE", "licenseState": "Free"},
     {"id": "com.inductiveautomation.sfc", "name": "SFC", "state": "ACTIVE", "licenseState": "Trial"},
     {"id": "com.inductiveautomation.vision", "name": "Vision", "state": "INACTIVE", "licenseState": "n/a"},
 ], "metadata": {"total": 4, "matching": 4, "limit": -1, "offset": 0}}

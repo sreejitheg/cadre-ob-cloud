@@ -72,7 +72,7 @@
         "show": "visible",
         "size": 48,
         "viewParams": {
-          "appName": "Village WTP (OpenBridge module)",
+          "appName": "Village WTP",
           "clockLabel": "UTC",
           "showUser": true
         },

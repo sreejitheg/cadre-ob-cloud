@@ -329,7 +329,7 @@ class ModelTests(unittest.TestCase):
     def test_provenance_names_the_tool_the_inputs_and_no_secret(self):
         p = self.model["provenance"]
         self.assertEqual(p["tool"], "tools/hmi/asm_model.py")
-        self.assertEqual(p["repository"], "Cadre-Sandbox-OpenBridge")
+        self.assertEqual(p["repository"], "Cadre HMI Library")
         self.assertTrue(all(len(i["sha256"]) == 64 for i in p["inputs"]))
         self.assertTrue(any(i["path"].endswith("tables.json") for i in p["inputs"]))
         self.assertIn("python", p["interpreter"]["path"].lower())

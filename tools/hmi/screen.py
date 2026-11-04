@@ -228,14 +228,23 @@ MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor
                "bar-vertical": "cadre.ob.barvertical",
                "circular-progress": "cadre.ob.circularprogress",
                "instrument-radial": "cadre.ob.instrumentradial",
-               "readout-block": "cadre.ob.readoutblock", **FRAME_ONLY}
+               "readout-block": "cadre.ob.readoutblock",
+               "horizontal-line": "cadre.ob.pipehorizontal",
+               "vertical-line": "cadre.ob.pipevertical",
+               "corner-line": "cadre.ob.pipecorner",
+               "three-way-line": "cadre.ob.pipetee",
+               "line-cross": "cadre.ob.pipecross",
+               "line-overlap": "cadre.ob.pipeoverlap",
+               "end-point-line": "cadre.ob.pipeend",
+               "direction-line": "cadre.ob.pipedirection",
+               "bus": "cadre.ob.bus", **FRAME_ONLY}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
 _MODULE_ONLY_MARKS = {"hasTag": False, "deviceId": "", "deviceKind": "", "deviceLabel": "", "statusText": "",
                        "badgeDuty": False, "outOfService": False}
 # The render target. `stock` draws every kind with the library views of the parent; `module`
-# draws the kinds in MODULE_KIND with the Cadre OpenBridge module's components (module/, wiki
+# draws the kinds in MODULE_KIND with the Cadre HMI Components module's components (module/, wiki
 # page 12) and every other kind as before. The descriptor does not change.
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
@@ -490,7 +499,7 @@ def module_drop(kind: str) -> set[str]:
 # and states none of its alert parameters follows the device's own alarms. Each such symbol takes a key in
 # the page's `custom.alerts`, which one binding polls for the whole page (`cadre.hmi.alert_states`, one
 # alarm query), so a page of many symbols costs one query a poll. A library symbol shows a frame for an
-# alarm of a priority with an alert colour; a module component shows OpenBridge's level, Diagnostic too.
+# alarm of a priority with an alert colour; a module component shows the package's level, Diagnostic too.
 ALERT_PARAMS = ("alert", "alertFrameStatus", "alertFrameMode")
 ALERT_FIELDS = {"library": {"alert": "alert", "alertFrameStatus": "status", "alertFrameMode": "mode"},
                 "module": {"alert": "alertAny", "alertFrameStatus": "level", "alertFrameMode": "mode"}}
@@ -686,8 +695,8 @@ def tag_path(root: str, member: str) -> str:
 # ---------------------------------------------------------------------------------------
 def symbol_box(sym: dict, contract: dict, limit: float | None = None) -> tuple[float, float, float, float]:
     """The embed box. For an automation symbol the descriptor gives the 48 px symbol box and
-    the readout extends it on its side (the symbol stays on the line, OpenStudio's
-    `positioning: symbol`); a readout's box is grown where it is too small for the readout
+    the readout extends it on its side (the symbol stays on the line, as the reference
+    `positioning: symbol` does); a readout's box is grown where it is too small for the readout
     (`grown_box`); every other component uses its box as given. `limit` is the most the identifier may
     widen the embed (`embed_limits`), none where nothing stands in its way."""
     if contract.get("grows"):
@@ -953,8 +962,8 @@ def module_status(sym: dict, kind: str, props: dict, prop_cfg: dict, *, toolbar:
 
 def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, toolbar: bool,
                  pos=None, limit: float | None = None) -> tuple[dict, dict, dict]:
-    """A Cadre OpenBridge module component for a library kind. An automation symbol (pump, motor, fan,
-    valves) uses OpenBridge's `symbol` positioning: its box is the 48 px symbol box and the readout lies
+    """A Cadre HMI Components module component for a library kind. An automation symbol (pump, motor, fan,
+    valves) uses the package's `symbol` positioning: its box is the 48 px symbol box and the readout lies
     outside it, so the symbol centre is where the descriptor puts it. A tank fills the descriptor's box. A readout
     and an instrument field fill the box the library gives the block (`symbol_box`, `limit` as for the library's
     view). Selection (faceplate dock contract) is a DOM click script reading the component's custom properties."""
@@ -1015,7 +1024,7 @@ def embed_module(sym: dict, kind: str, params: dict, c: dict, tag_root: str, *, 
     else:
         box = pv.cpos(sym["x"], sym["y"], sym["w"], sym["h"])
     key = derived_alert(sym, params, c["params"]) if "alert" not in drop else None
-    if key:   # F016: the component's alert follows the device's alarms, at OpenBridge's own level
+    if key:   # F016: the component's alert follows the device's alarms, at the package's own level
         prop_cfg.update(alert_bindings(key, "props.", "module"))
         for k in ALERT_PARAMS:
             props.pop(k, None)
@@ -1073,7 +1082,7 @@ def pipes_svg(desc: dict, contracts: dict, rep: Report) -> tuple[dict | None, di
     exprs = {e: diagram.dnf_expression(t, lambda n: f"{{view.custom.g_{n}}}") for e, t in dnf.items()}
     W, H = desc["screen"]["width"], desc["screen"]["height"]
     # Every outline first, then every inner stroke, then the end marks: an outline drawn after
-    # another pipe's inner stroke would cross it at a T-joint (seen in the one-to-one comparison).
+    # another pipe's inner stroke would cross it at a T-joint (seen in a comparison with a reference rebuild).
     outlines, inners, marks, cfg = [], [], [], {}
     pipes = desc.get("pipes", [])
     n_out = len(pipes)
@@ -1716,7 +1725,7 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     if frame not in navigation.FRAMES:
         raise ValueError(f"frame {frame!r}: one of {navigation.FRAMES}")
     if frame in navigation.MODULE_FRAMES and render != "module":   # the frame is drawn with the module's components: a stock build has none
-        raise ValueError(f"--frame {frame} draws the OpenBridge frame components of the module: it needs --render module")
+        raise ValueError(f"--frame {frame} draws the module frame components of the module: it needs --render module")
     if frame in navigation.ASM_FRAMES and (bad := navigation.frame_errors(descs)):
         raise ValueError("; ".join(bad))
     RENDER["target"] = render
@@ -1724,7 +1733,7 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     FRAME["name"] = frame
     contracts = load_contracts()
     child = pv.Project(name, f"Cadre HMI {app_name}", parent=parent,
-                       description="Generated by Cadre-Sandbox-OpenBridge tools/hmi/screen.py")
+                       description="Generated by Cadre HMI Library tools/hmi/screen.py")
     pages, nav, reports = {}, [], {}
     for desc in descs:
         scr = desc["screen"]
@@ -1756,9 +1765,9 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
     sp["custom"]["commands"] = parts.commands_index(descs)   # the pulse tags the page buttons may write (COB-159)
     if frame == "asm":   # the ASM frame (COB-160): its docks, pivot pages and the data its views read
         sp["custom"].update(navigation.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
-    if frame == "obasm":   # the ASM frame on the OpenBridge frame components (T2 F6b): the ASM data, this frame's name
+    if frame == "obasm":   # the ASM frame on the module frame components (T2 F6b): the ASM data, this frame's name
         sp["custom"].update(obasm.session_custom(descs, tag_model, sp["custom"]["devices"], bool(trends), devices))
-    if frame == "ob":   # the OpenBridge frame (T2 F6a): the frame's name; its docks are in the page configuration
+    if frame == "ob":   # the module frame (T2 F6a): the frame's name; its docks are in the page configuration
         sp["custom"].update(obframe.session_custom())
     child.set_session_props(sp)
     child.set_page_config({"asm": navigation.page_config, "ob": obframe.page_config, "obasm": obasm.page_config}.get(frame, par.page_config)(app_name, pages))
@@ -1816,7 +1825,7 @@ def main() -> int:
                     help="a device model (schemas/devices.schema.json): each device's members, the members "
                          "a session may write, its alarm sources and its historised members")
     ap.add_argument("--render", choices=["stock", "module"], default="stock",
-                    help="module: draw pumps and tanks with the Cadre OpenBridge module (wiki page 12)")
+                    help="module: draw pumps and tanks with the Cadre HMI Components module (wiki page 12)")
     ap.add_argument("--faceplate", choices=list(framework.FACEPLATE_STYLES), default="openbridge",
                     help="the project's default faceplate style (COBD-045); a device model may set a device's own")
     ap.add_argument("--faceplate-mode", choices=list(library.FACEPLATE_MODES), default="dock",
@@ -1824,7 +1833,7 @@ def main() -> int:
     ap.add_argument("--frame", choices=list(navigation.FRAMES), default="openbridge",
                     help="asm: the ASM application frame (COB-160): navigation dock, crumb popups, global search, "
                          "page header, alarm banner and a floating faceplate for each device; "
-                         "ob: the OpenBridge frame, drawn with the module's frame components (needs --render module); "
+                         "ob: the module frame, drawn with the module's frame components (needs --render module); "
                          "obasm: the ASM frame drawn with the same components (needs --render module); "
                          "the default is unchanged")
     ap.add_argument("--component-test", action="store_true",
@@ -1851,7 +1860,7 @@ def main() -> int:
         print("--tag-root, --write-descriptor and --write-devices go with --component-test")
         return 1
     if a.frame in navigation.MODULE_FRAMES and a.render != "module":
-        print(f"--frame {a.frame} draws the OpenBridge frame components of the module: it needs --render module")
+        print(f"--frame {a.frame} draws the module frame components of the module: it needs --render module")
         return 1
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     names = list(a.descriptor)

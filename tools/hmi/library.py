@@ -2,12 +2,12 @@
 
 Each library view is built from stock components that the Ignition-Wiki registry declares
 (`F:/repos/Ignition-Wiki/schemas/components`), checked by `validate_view.py` before it is
-written. Visual design follows the OpenBridge design system (tokens, icons, geometry) taken
+written. Visual design follows the maritime design guidance (tokens, icons, geometry) taken
 from the Apache-2.0 release pinned in decisions COBD-003; interface names (`on`, `open`,
-`readoutPosition`, `alertFrameStatus` ...) follow the OpenStudio component catalogue so a
+`readoutPosition`, `alertFrameStatus` ...) follow the reference component catalogue so a
 design written against that catalogue maps one to one (wiki page 05).
 
-Geometry of an automation symbol (OpenBridge `automation-button.css`, regular size tokens):
+Geometry of an automation symbol (the package `automation-button.css`, regular size tokens):
 touch target 48 px, round holder 36 px with a 1 px border, icon 24 px, corner badges 16 px.
 """
 from __future__ import annotations
@@ -95,7 +95,7 @@ def circle_d(cx: float, cy: float, r: float) -> str:
     return f"M{cx - r} {cy}a{r} {r} 0 1 0 {2 * r} 0a{r} {r} 0 1 0 {-2 * r} 0Z"
 
 
-# Artwork drawn here from primitives, in the two tone style of the OpenBridge automation icons (a
+# Artwork drawn here from primitives, in the two tone style of the package automation icons (a
 # body in the device's primary colour inside an outline in its tertiary colour, the inverted pair
 # while off): the pin has no lamp. A lit lamp carries a filled centre; an unlit one is a ring.
 DRAWN_ICONS = {
@@ -111,7 +111,7 @@ DRAWN_ICONS = {
 }
 
 
-# The generator: a circle with a G (COB-158, gap GG-01), in the same two tone as the lamp. The OpenBridge pin has
+# The generator: a circle with a G (COB-158, gap GG-01), in the same two tone as the lamp. The package pin has
 # an icon `generator` (a G beside a lightning bolt, converted to library/icons) but no automation symbol with a
 # running and a stopped form, so the symbol is drawn here: the G is a stroked arc (an open circle with a bar) in
 # the outline colour, the body filled in the device's primary colour while running and in the inverted pair
@@ -192,7 +192,7 @@ def rrect_d(x: float, y: float, w: float, h: float, r: float) -> str:
 # Style classes
 # ---------------------------------------------------------------------------------------
 # The four Cadre alert colours (F053, COBD-044): the priorities map onto them by rank, Critical the
-# critical colour (`cadre.hmi.PRIORITY_STATUS`), as OpenBridge colours its own alert levels.
+# critical colour (`cadre.hmi.PRIORITY_STATUS`), as package colours its own alert levels.
 ALERT_COLOURS = {"alarm": "--alert-alarm-color", "warning": "--alert-warning-color",
                  "caution": "--alert-caution-color", "critical": "--alert-critical-color"}
 
@@ -511,7 +511,7 @@ def _badges() -> list:
     for b in CONTROL_BADGES:
         out.append(icon_svg(f"Badge_{b.replace('-', '_')}", b, pv.cpos(0, 0, 16, 16),
                             visible=f"{{view.params.badgeControl}} = '{b}'"))
-    # OpenBridge draws `interlock` with its duty icon and `interlock-inhibit` with its standby icon
+    # Package draws `interlock` with its duty icon and `interlock-inhibit` with its standby icon
     # (automation-badge.js of the pin); the library follows it (COB-079)
     out.append(icon_svg("Badge_interlock", "duty", pv.cpos(0, 32, 16, 16),
                         visible="{view.params.badgeInterlock} = 'interlock'"))
@@ -519,7 +519,7 @@ def _badges() -> list:
                         visible="{view.params.badgeInterlock} = 'interlock-inhibit'"))
     out.append(icon_svg("Badge_commandLocked", "command-locked-f", pv.cpos(32, 32, 16, 16),
                         visible="{view.params.badgeCommandLocked} != 'none'"))
-    # the duty mark (COB-159): OpenBridge's `duty` icon between the interlock and command locked badges
+    # the duty mark (COB-159): The package's `duty` icon between the interlock and command locked badges
     out.append(icon_svg("Badge_duty", "duty", pv.cpos(16, 32, 16, 16), visible="{view.params.badgeDuty}"))
     return out
 
@@ -549,7 +549,7 @@ def _status_row(mode: str, state: str) -> dict:
     else:
         text = (f"if(len({{view.params.statusText}}) > 0, {{view.params.statusText}}, "
                 f"if({s}, 'On', 'Off'))")
-    # the module's state readout (OpenBridge state-on and state-off): obi-on or obi-off, the value 16 px at weight 400
+    # the module's state readout (package state-on and state-off): obi-on or obi-off, the value 16 px at weight 400
     # on a 20 px line, 4 px from the icon (glass, 2026-10-26); a symbol with a speed keeps the run and stopped icons
     on_icon = "forward" if mode == "opening" else "on"
     off_icon = "forward-stopped" if mode == "opening" else "off"
@@ -613,7 +613,7 @@ def automation_symbol(kind: str) -> tuple[dict, dict]:
     icons.append(icon_svg("IconOn", ion, pv.cpos(12, 12, 24, 24), visible=f"{s} && {hv}"))
     icons.append(icon_svg("IconOff", ioff, pv.cpos(12, 12, 24, 24), visible=f"!{s} && {hv}"))
     if mode == "speed":
-        # OpenBridge `variant-double` (automation-button.css): a direction icon over a smaller
+        # Package `variant-double` (automation-button.css): a direction icon over a smaller
         # device icon inside the holder, sized by the `new-icon-double-*` tokens (16 and 12 px).
         dbl = "{view.params.variant} = 'double'"
         icons.append(icon_svg("DirOn", "forward", pv.cpos(16, 9, 16, 16), visible=f"{dbl} && {s}"))
@@ -818,7 +818,7 @@ TREND_ICONS = {"fast-rising": "chevron-double-up-google", "rising": "arrow-up-go
 
 def tank() -> tuple[dict, dict]:
     """An atmospheric tank tile in percent coordinates, so one view serves every size the
-    vendor demo uses (72x138 to 248x220): vessel outline, ID tag, trend and percentage,
+    reference demo uses (72x138 to 248x220): vessel outline, ID tag, trend and percentage,
     value over maximum, and a level box filled to value/max."""
     pct = "if({view.params.max} > 0, 100.0 * {view.params.value} / {view.params.max}, 0)"
     vessel = svg("Vessel", pv.cpos(0, 0, 1, 1), [
@@ -828,7 +828,7 @@ def tank() -> tuple[dict, dict]:
          "vectorEffect": "non-scaling-stroke"}],
         view_box="0 0 100 100", props={"preserveAspectRatio": "none"},
         visible="!{view.params.static}")
-    # A static tank (OpenBridge `.tank-frame.static`): a plain tile in the section colour with
+    # A static tank (the package `.tank-frame.static`): a plain tile in the section colour with
     # the capacity centred and the ID tag below it. `hasCapacity` false draws no capacity: a vessel
     # whose capacity nobody states shows none (the parameter's default would be an invented number).
     static_tile = svg("StaticTile", pv.cpos(*STATIC_TILE), [
@@ -859,7 +859,7 @@ def tank() -> tuple[dict, dict]:
         view_box="0 0 100 100", props={"preserveAspectRatio": "none"},
         extra_config={"props.elements[1].d": pv.bind(pv.expr(
             f"'M0 ' + toStr(100 - if({pct} > 100, 100, if({pct} < 0, 0, {pct}))) + 'H100V100H0Z'"))})
-    # Typography follows OpenBridge `automation-tank.css`: tag in instrument-label neutral; the
+    # Typography follows the package `automation-tank.css`: tag in instrument-label neutral; the
     # header's percentage in instrument-value-enhanced-neutral with a smaller unit-styled `%`;
     # the value row as the current value (regular-active) then `/ max unit` (unit style).
     full = "!{view.params.compact} && !{view.params.static}"
@@ -1045,7 +1045,7 @@ CONTROLLER_PARAMS = {"value": 0, "setpoint": 0, "output": 0, "manual": False, "h
 
 def instrument_controller() -> tuple[dict, dict]:
     """A control loop as one block, the instrument field idiom with the loop's own facts: the
-    OpenBridge control badge (auto, or manual) beside the identifier, the setpoint marked as the
+    package control badge (auto, or manual) beside the identifier, the setpoint marked as the
     instrument field marks it, the process value large with its unit, and the output in per cent.
     A click opens the controller faceplate (wiki page 13 section 9)."""
     badges = [icon_svg(f"Badge_{b}", b, pv.fpos(basis="16px", shrink=0), visible=shown)

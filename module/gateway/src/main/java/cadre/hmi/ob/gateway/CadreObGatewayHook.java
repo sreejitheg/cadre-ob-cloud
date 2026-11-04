@@ -26,13 +26,13 @@ public class CadreObGatewayHook extends AbstractGatewayModuleHook {
     public void startup(LicenseState activationState) {
         componentRegistry = PerspectiveContext.get(gatewayContext).getComponentRegistry();
         if (componentRegistry == null) {
-            log.error("Perspective component registry not found; Cadre OpenBridge components are unavailable.");
+            log.error("Perspective component registry not found; Cadre HMI Components components are unavailable.");
             return;
         }
         for (ComponentDescriptor d : CadreOb.DESCRIPTORS) {
             componentRegistry.registerComponent(d);
         }
-        log.info("Registered " + CadreOb.DESCRIPTORS.size() + " Cadre OpenBridge components.");
+        log.info("Registered " + CadreOb.DESCRIPTORS.size() + " Cadre HMI Components components.");
     }
 
     @Override

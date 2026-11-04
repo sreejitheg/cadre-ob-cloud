@@ -8,7 +8,7 @@ import com.inductiveautomation.perspective.common.api.ComponentDescriptor;
 import com.inductiveautomation.perspective.designer.DesignerComponentRegistry;
 import com.inductiveautomation.perspective.designer.api.PerspectiveDesignerInterface;
 
-/** Adds the components to the Designer's Perspective component palette ("Cadre OpenBridge"). */
+/** Adds the components to the Designer's Perspective component palette ("Cadre HMI Components"). */
 public class CadreObDesignerHook extends AbstractDesignerModuleHook {
     private DesignerComponentRegistry registry;
 

@@ -1456,7 +1456,7 @@ class Walk:
         still reads Interlocked, since a trip latches (COBD-023). Then the Interlocks tab's Reset, as an
         operator presses it: the row reads Met and the head no longer Interlocked, and `ilk/resetAt`,
         which the Reset writes, holds a new value (the tag evidence of the write path). The head is read
-        where the plan names one (the asm style's header); the openbridge style draws none on that tab.
+        where the plan names one (the asm style's header); the stock style draws none on that tab.
 
         Nothing is left behind whatever happens: the source's definition of before is imported back;
         a latch the Reset did not clear is cleared by an import of `ilk/resetAt` with the time now (the
