@@ -805,6 +805,33 @@ COMPONENTS = [
      "eventText": {"action-click": "The primary action was pressed. The event carries nothing.",
                    "action2-click": "The secondary action was pressed. The event carries nothing.",
                    "dismiss-click": "The dismiss button was pressed. The event carries nothing; the page's script hides the item."}},
+    {"tag": "obc-horizontal-line", "type": "cadre.ob.pipehorizontal", "name": "pipehorizontal", "title": "OB Pipe, horizontal",
+     "palette": "OpenBridge horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
+     "size": {"width": 96, "height": 24}, "exclude": [], "sheet": "linehorizontal"},
+    {"tag": "obc-vertical-line", "type": "cadre.ob.pipevertical", "name": "pipevertical", "title": "OB Pipe, vertical",
+     "palette": "OpenBridge vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
+     "size": {"width": 24, "height": 96}, "exclude": [], "sheet": "linevertical"},
+    {"tag": "obc-corner-line", "type": "cadre.ob.pipecorner", "name": "pipecorner", "title": "OB Pipe, corner",
+     "palette": "OpenBridge corner line: a pipe bend joining two sides of its box, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
+    {"tag": "obc-three-way-line", "type": "cadre.ob.pipetee", "name": "pipetee", "title": "OB Pipe, tee",
+     "palette": "OpenBridge three-way line: a pipe tee with a run and one branch, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
+    {"tag": "obc-line-cross", "type": "cadre.ob.pipecross", "name": "pipecross", "title": "OB Pipe, four-way junction",
+     "palette": "OpenBridge line cross: four pipe ends joined at the centre of the box, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction"},
+    {"tag": "obc-line-overlap", "type": "cadre.ob.pipeoverlap", "name": "pipeoverlap", "title": "OB Pipe, crossover",
+     "palette": "OpenBridge line overlap: one pipe passing over another without joining it, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
+    {"tag": "obc-end-point-line", "type": "cadre.ob.pipeend", "name": "pipeend", "title": "OB Pipe, end point",
+     "palette": "OpenBridge end point line: a pipe that ends in a terminal bar on one side of its box, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
+    {"tag": "obc-direction-line", "type": "cadre.ob.pipedirection", "name": "pipedirection", "title": "OB Pipe, flow direction",
+     "palette": "OpenBridge direction line: a pipe segment with a flow direction chevron, display only",
+     "size": {"width": 24, "height": 24}, "exclude": [], "sheet": "linejunction", "without": {"lineType": ["connector"]}},
+    {"tag": "obc-bus", "type": "cadre.ob.bus", "name": "bus", "title": "OB Bus",
+     "palette": "OpenBridge bus: a labelled busbar or data bus drawn as a bar, display only",
+     "size": {"width": 200, "height": 24}, "exclude": []},
 ]
 # The canvas zoom component is not an OpenBridge element: a leaf component whose browser side is
 # `web/canvaszoom.js`. Its properties are fixed by the Level 4 contract (the stock screens bind `zoom` two ways).
@@ -1145,6 +1172,13 @@ SHEETS = {
                    ":host([data-stretch]) .visible-wrapper { width: 100%; justify-content: center; }",
     "instrumentfield": ":host([data-center]) .setpoint, :host([data-center]) .value { justify-content: center "
                        "!important; }",
+    # The line elements draw their 24 px drawing offset by half its size toward the top left, so that the element's own
+    # box is a grid point and the ink hangs off it (measured in Chromium, 2026-11-04: the drawing lay 12 px above or
+    # left of the host box). A component box holds the drawing instead: the offsets are cancelled so that the ink
+    # lies in the host, which is `length` units of 24 px along the line and 24 px across it.
+    "linehorizontal": "svg { top: 0 !important; }",
+    "linevertical": "svg { left: 0 !important; }",
+    "linejunction": "svg { left: 0 !important; top: 0 !important; }",
 }
 
 SIZES = ["regular", "medium", "large", "xl"]
@@ -1278,7 +1312,7 @@ def schema_for(spec: dict, decl: dict, enum_map: dict, defaults: dict) -> tuple[
         elif base == "TreeNavigationItemAlerts":      # an object of counts; undefined while there is none (T2, batch F3)
             p, kind = json.loads(json.dumps(ALERTS_SCHEMA)), "object"
         elif base in enum_map:
-            vals = enum_map[base]
+            vals = [v for v in enum_map[base] if v not in spec.get("without", {}).get(name, [])]
             d = default if default in vals else vals[0]
             p, kind = {"type": "string", "enum": vals, "default": d}, "string"
             if nullable and name in spec.get("undefinedWhenEmpty", []):      # an optional enumeration: empty is undefined (the idle state)
@@ -1369,12 +1403,20 @@ def declarations(body: str) -> list[tuple[str, str]]:
     return out
 
 
+FRESH_WATER = ("--automation-fresh-water", "--automation-medium-fresh-water")   # the name the lines read, the name the package defines
+
+
 def scoped_css(bundle_js: str) -> tuple[str, dict]:
     css = (PKG / "dist/openbridge.css").read_text(encoding="utf-8")
     rules = parse_rules(css)
     # A variable is used where the bundle writes `var(--name)`, and also where it names the variable in a string and reads
     # it from the computed style (the charts' palette and fonts, `charthelpers/constants.js`, from C1).
     used = set(re.findall(r"var\(\s*(--[\w-]+)", bundle_js)) | set(re.findall(r"[\"'](--[a-z][\w-]*)[\"']", bundle_js))
+    # The line elements read `--automation-fresh-water` for the medium water and air, but the pinned stylesheet defines the
+    # colour as `--automation-medium-fresh-water`: the variable is undefined and the inner stroke of such a line draws as
+    # none (measured in Chromium, 2026-11-04). The module keeps the defined colour and names it under the read name.
+    if FRESH_WATER[0] in used:
+        used.add(FRESH_WATER[1])
     defs: dict[str, set[str]] = {}
     for _, body in rules:
         for k, v in declarations(body):
@@ -1431,6 +1473,8 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
             '  justify-content: center;\n  box-sizing: border-box;\n}\n')
     # The wrapper centres its element, which suits a symbol; an alarm list fills its component box, top
     # aligned (COB-078). The parent project's stylesheet carried this rule until version 0.2.1 (COB-082).
+    fresh = (f"/* The line elements read {FRESH_WATER[0]}; the package defines {FRESH_WATER[1]}. */\n"
+             f".cadre-ob.cadre-ob {{\n  {FRESH_WATER[0]}: var({FRESH_WATER[1]});\n}}\n")
     lists = ('/* The alarm lists fill the component box, top aligned. */\n'
              '.cadre-ob > obc-alert-list-details,\n.cadre-ob > obc-alert-list-page-small {\n'
              '  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n  min-height: 0;\n}\n')
@@ -1465,7 +1509,7 @@ def scoped_css(bundle_js: str) -> tuple[str, dict]:
                # A notification row has no width of its own and collapses to its icon when centred (F5, measured in Chromium).
                "/* A notification menu row fills the width of its component box. */\n"
                ".cadre-ob > obc-notification-menu-item {\n  align-self: stretch;\n  flex: 1 1 auto;\n  width: 100%;\n}\n")
-    return head + "\n".join(blocks) + "\n" + font + lists + devices, stats
+    return head + "\n".join(blocks) + "\n" + font + fresh + lists + devices, stats
 
 
 # ------------------------------------------------------------------------------- wrappers

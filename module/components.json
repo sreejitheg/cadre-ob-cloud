@@ -12698,6 +12698,428 @@
    }
   }
  },
+ "cadre.ob.pipehorizontal": {
+  "element": "obc-horizontal-line",
+  "title": "OB Pipe, horizontal",
+  "palette": "OpenBridge horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only",
+  "schema": "schemas/pipehorizontal.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air",
+     "connector"
+    ],
+    "default": "fluid"
+   },
+   "length": {
+    "type": "number",
+    "default": 1
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipevertical": {
+  "element": "obc-vertical-line",
+  "title": "OB Pipe, vertical",
+  "palette": "OpenBridge vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only",
+  "schema": "schemas/pipevertical.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 96
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air",
+     "connector"
+    ],
+    "default": "fluid"
+   },
+   "length": {
+    "type": "number",
+    "default": 1
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipecorner": {
+  "element": "obc-corner-line",
+  "title": "OB Pipe, corner",
+  "palette": "OpenBridge corner line: a pipe bend joining two sides of its box, display only",
+  "schema": "schemas/pipecorner.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "top-right",
+     "top-left",
+     "bottom-right",
+     "bottom-left"
+    ],
+    "default": "top-right"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air",
+     "connector"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipetee": {
+  "element": "obc-three-way-line",
+  "title": "OB Pipe, tee",
+  "palette": "OpenBridge three-way line: a pipe tee with a run and one branch, display only",
+  "schema": "schemas/pipetee.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "top",
+     "right",
+     "bottom",
+     "left"
+    ],
+    "default": "top"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air",
+     "connector"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipecross": {
+  "element": "obc-line-cross",
+  "title": "OB Pipe, four-way junction",
+  "palette": "OpenBridge line cross: four pipe ends joined at the centre of the box, display only",
+  "schema": "schemas/pipecross.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air",
+     "connector"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipeoverlap": {
+  "element": "obc-line-overlap",
+  "title": "OB Pipe, crossover",
+  "palette": "OpenBridge line overlap: one pipe passing over another without joining it, display only",
+  "schema": "schemas/pipeoverlap.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipeend": {
+  "element": "obc-end-point-line",
+  "title": "OB Pipe, end point",
+  "palette": "OpenBridge end point line: a pipe that ends in a terminal bar on one side of its box, display only",
+  "schema": "schemas/pipeend.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "top",
+     "right",
+     "bottom",
+     "left"
+    ],
+    "default": "top"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.pipedirection": {
+  "element": "obc-direction-line",
+  "title": "OB Pipe, flow direction",
+  "palette": "OpenBridge direction line: a pipe segment with a flow direction chevron, display only",
+  "schema": "schemas/pipedirection.props.json",
+  "defaultSize": {
+   "width": 24,
+   "height": 24
+  },
+  "props": {
+   "medium": {
+    "type": "string",
+    "enum": [
+     "normal",
+     "empty",
+     "water",
+     "air"
+    ],
+    "default": "normal"
+   },
+   "lineType": {
+    "type": "string",
+    "enum": [
+     "fluid",
+     "electric",
+     "air"
+    ],
+    "default": "fluid"
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
+ "cadre.ob.bus": {
+  "element": "obc-bus",
+  "title": "OB Bus",
+  "palette": "OpenBridge bus: a labelled busbar or data bus drawn as a bar, display only",
+  "schema": "schemas/bus.props.json",
+  "defaultSize": {
+   "width": 200,
+   "height": 24
+  },
+  "props": {
+   "label": {
+    "type": "string",
+    "default": ""
+   },
+   "size": {
+    "type": "string",
+    "enum": [
+     "small",
+     "medium"
+    ],
+    "default": "small"
+   },
+   "variant": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "enhanced",
+     "medium"
+    ],
+    "default": "regular"
+   },
+   "tint": {
+    "type": "boolean",
+    "default": false
+   },
+   "vertical": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.canvaszoom": {
   "element": null,
   "title": "OB Canvas Zoom",

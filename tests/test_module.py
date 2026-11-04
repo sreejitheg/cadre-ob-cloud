@@ -1115,6 +1115,24 @@ class GlyphComponents(unittest.TestCase):
                                   READOUT_BLOCK, {"width": 144, "height": 64}),
         "cadre.ob.circularprogress": ("obc-circular-progress", "src/building-blocks/circular-progress/circular-progress.ts",
                                       {"mode", "value", "strokeWidth", "viewBoxSize", "padding"}, {"width": 48, "height": 48}),
+        "cadre.ob.pipehorizontal": ("obc-horizontal-line", "src/automation/horizontal-line/horizontal-line.ts",
+                    {"length", "lineType", "medium"}, {"width": 96, "height": 24}),
+        "cadre.ob.pipevertical": ("obc-vertical-line", "src/automation/vertical-line/vertical-line.ts",
+                    {"length", "lineType", "medium"}, {"width": 24, "height": 96}),
+        "cadre.ob.pipecorner": ("obc-corner-line", "src/automation/corner-line/corner-line.ts",
+                    {"direction", "lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.pipetee": ("obc-three-way-line", "src/automation/three-way-line/three-way-line.ts",
+                    {"direction", "lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.pipecross": ("obc-line-cross", "src/automation/line-cross/line-cross.ts",
+                    {"lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.pipeoverlap": ("obc-line-overlap", "src/automation/line-overlap/line-overlap.ts",
+                    {"lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.pipeend": ("obc-end-point-line", "src/automation/end-point-line/end-point-line.ts",
+                    {"direction", "lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.pipedirection": ("obc-direction-line", "src/automation/direction-line/direction-line.ts",
+                    {"lineType", "medium"}, {"width": 24, "height": 24}),
+        "cadre.ob.bus": ("obc-bus", "src/automation/bus/bus.ts",
+                    {"label", "size", "tint", "variant", "vertical"}, {"width": 200, "height": 24}),
     }
     NAMES = {"cadre.ob.automationbadge": "automationbadge", "cadre.ob.checkvalve": "checkvalve",
              "cadre.ob.valvetwoway": "valvetwoway", "cadre.ob.valvethreeway": "valvethreeway",
@@ -1136,7 +1154,16 @@ class GlyphComponents(unittest.TestCase):
              "cadre.ob.barvertical": "barvertical",
              "cadre.ob.circularprogress": "circularprogress",
              "cadre.ob.instrumentradial": "instrumentradial",
-             "cadre.ob.readoutblock": "readoutblock"}
+             "cadre.ob.readoutblock": "readoutblock",
+             "cadre.ob.pipehorizontal": "pipehorizontal",
+             "cadre.ob.pipevertical": "pipevertical",
+             "cadre.ob.pipecorner": "pipecorner",
+             "cadre.ob.pipetee": "pipetee",
+             "cadre.ob.pipecross": "pipecross",
+             "cadre.ob.pipeoverlap": "pipeoverlap",
+             "cadre.ob.pipeend": "pipeend",
+             "cadre.ob.pipedirection": "pipedirection",
+             "cadre.ob.bus": "bus"}
 
     def test_the_contract_names_the_element_and_exactly_the_attributes_of_the_manifest(self):
         for ctype, (tag, _path, attrs, size) in self.GLYPHS.items():
@@ -1351,9 +1378,13 @@ class ModuleOnlyKinds(unittest.TestCase):
 
     def test_a_glyph_contract_holds_exactly_the_properties_its_component_declares(self):
         self.assertEqual(sorted(self.glyph_kinds()), [
-            "area-graph", "automation-badge", "automation-readout", "bar-horizontal", "bar-vertical", "circular-progress", "donut-chart", "gauge-generator", "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "hydraulic-check-valve",
+            "area-graph", "automation-badge", "automation-readout", "bar-horizontal", "bar-vertical", "bus",
+            "circular-progress", "corner-line", "direction-line", "donut-chart", "end-point-line", "gauge-generator",
+            "gauge-motors-and-pumps", "gauge-valve", "heat-exchanger", "heat-pump", "horizontal-line", "hydraulic-check-valve",
             "hydraulic-separator", "hydraulic-valve-4-3", "hydraulic-valve-x-2", "indicator-battery", "indicator-engine", "indicator-tank-atmospheric",
-            "instrument-radial", "line-graph", "pie-chart", "polar-chart", "radial-bar-chart", "readout-block", "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon"])
+            "instrument-radial", "line-cross", "line-graph", "line-overlap", "pie-chart", "polar-chart",
+            "radial-bar-chart", "readout-block", "three-way-line", "transmitter-button", "valve-analog-three-way-icon", "valve-analog-two-way-icon",
+            "vertical-line"])
         for kind in self.glyph_kinds():
             spec = COMPONENTS[self.screen.MODULE_ONLY[kind]]
             c = self.contracts[self.screen.view_of({"kind": kind})]
@@ -1423,6 +1454,15 @@ class ModuleOnlyKinds(unittest.TestCase):
                       "circular-progress": {"mode": "determinate", "value": 65, "strokeWidth": 6},
                       "instrument-radial": {"type": "needle", "value": 42, "showLabels": True, "setpoint": 70, "needleColor": "#7a4aa8",
                                             "advices": [{"minValue": 60, "maxValue": 80, "type": "caution", "hinted": True}]},
+                      "horizontal-line": {"medium": "water", "lineType": "electric", "length": 3},
+                      "vertical-line": {"medium": "air", "lineType": "air", "length": 3},
+                      "corner-line": {"medium": "water", "direction": "bottom-left", "lineType": "electric"},
+                      "three-way-line": {"medium": "water", "direction": "left", "lineType": "air"},
+                      "line-cross": {"medium": "empty", "lineType": "electric"},
+                      "line-overlap": {"medium": "air", "lineType": "air"},
+                      "end-point-line": {"medium": "water", "direction": "right", "lineType": "electric"},
+                      "direction-line": {"medium": "water", "lineType": "air"},
+                      "bus": {"label": "MSB", "size": "medium", "variant": "enhanced", "tint": True, "vertical": True},
                       "readout-block": {"variant": "advice", "category": "caution", "active": True, "value": "AUTO", "valueType": "text"}}[kind]
             node, rep = self.embed(self.symbol(kind, params=dict(stated)), "module")
             self.assertEqual((node["type"], rep.errors, rep.gaps), (ctype, [], []), kind)
@@ -1467,7 +1507,16 @@ class ModuleOnlyKinds(unittest.TestCase):
             # the needle or arc at `value`, the setpoint marker, the scheme and the advice zones of the dial
             "instrument-radial": ("value", "setpoint", "newSetpoint", "state", "priority", "advices"),
             # the block's number or text, whether it reads as off, its advice category and whether the advice is triggered
-            "readout-block": ("value", "off", "category", "active")}
+            "readout-block": ("value", "off", "category", "active"),
+            "horizontal-line": ("medium",),
+            "vertical-line": ("medium",),
+            "corner-line": ("medium",),
+            "three-way-line": ("medium",),
+            "line-cross": ("medium",),
+            "line-overlap": ("medium",),
+            "end-point-line": ("medium",),
+            "direction-line": ("medium",),
+            "bus": ("label", "variant", "tint")}
 
     def test_a_descriptor_symbol_of_a_live_kind_binds_each_live_attribute_to_its_tag(self):
         # `embed_module` turns `bind` into the tag binding of the component's property (`props.<name>`) for any component, a
@@ -1574,7 +1623,8 @@ class ModuleOnlyKinds(unittest.TestCase):
                 self.assertTrue(all(s["params"].get("variant") == "trend" for s in mine if "data" in s["params"]), kind)
             self.assertEqual(len(mine), {"automation-badge": 21, "hydraulic-check-valve": 2, "valve-analog-two-way-icon": 5,
                                          "valve-analog-three-way-icon": 7, "indicator-battery": 11, "indicator-engine": 6,
-                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22, "area-graph": 39, "line-graph": 35, "donut-chart": 22, "pie-chart": 17, "polar-chart": 20, "radial-bar-chart": 15, "bar-horizontal": 58, "bar-vertical": 58, "circular-progress": 12, "instrument-radial": 42, "readout-block": 40}[kind], kind)
+                                         "indicator-tank-atmospheric": 11, "automation-readout": 10, "heat-exchanger": 44, "heat-pump": 44, "hydraulic-separator": 44, "gauge-generator": 37, "gauge-motors-and-pumps": 38, "gauge-valve": 26, "hydraulic-valve-4-3": 10, "hydraulic-valve-x-2": 8, "transmitter-button": 22, "area-graph": 39, "line-graph": 35, "donut-chart": 22, "pie-chart": 17, "polar-chart": 20, "radial-bar-chart": 15, "bar-horizontal": 58, "bar-vertical": 58, "circular-progress": 12, "instrument-radial": 42, "readout-block": 40,
+                                         "horizontal-line": 11, "vertical-line": 11, "corner-line": 13, "three-way-line": 13, "line-cross": 9, "line-overlap": 8, "end-point-line": 12, "direction-line": 8, "bus": 8}[kind], kind)
         for kind in self.symbol_kinds():
             mine = [s for s in mod.descriptor["symbols"] if s["kind"] == kind]
             self.assertGreaterEqual(len(mine), 10, kind)
@@ -2551,6 +2601,43 @@ class RadialInstrumentFillsItsBox(unittest.TestCase):
     def test_the_stylesheet_stretches_the_radial_instrument(self):
         css = (MODULE / "gateway/src/main/resources/mounted/css/cadre-ob.css").read_text(encoding="utf-8")
         self.assertRegex(css, r"\.cadre-ob > obc-instrument-radial \{[^}]*flex: 1 1 auto;[^}]*height: 100%;")
+
+
+class PipeElements(unittest.TestCase):
+    """The nine line elements of the pinned release as module-only pipe components (2026-11-04, wiki 12 section 17.23): the
+    shadow root sheet that moves each drawing into its host box, the colour of the water media, and the line types the
+    element draws."""
+    # component type: (sheet, the line types the component leaves out)
+    PIPES = {"cadre.ob.pipedirection": ("linejunction", ["connector"]),
+             "cadre.ob.pipeend": ("linejunction", ["connector"]),
+             "cadre.ob.pipeoverlap": ("linejunction", ["connector"]),
+             "cadre.ob.pipecross": ("linejunction", []),
+             "cadre.ob.pipetee": ("linejunction", []),
+             "cadre.ob.pipecorner": ("linejunction", []),
+             "cadre.ob.pipevertical": ("linevertical", []),
+             "cadre.ob.pipehorizontal": ("linehorizontal", [])}
+
+    def test_each_pipe_names_its_sheet_and_the_sheet_cancels_the_offset_of_the_drawing(self):
+        sheets = json.loads(re.search(r"var SHEETS = (\{.*?\});\n", JS, re.S).group(1))
+        self.assertEqual(sheets["linehorizontal"], "svg { top: 0 !important; }")
+        self.assertEqual(sheets["linevertical"], "svg { left: 0 !important; }")
+        self.assertEqual(sheets["linejunction"], "svg { left: 0 !important; top: 0 !important; }")
+        for ctype, (sheet, _without) in self.PIPES.items():
+            start = JS.index('{"type":"%s"' % ctype)
+            self.assertIn('"sheet":"%s"' % sheet, JS[start:JS.index('"events":', start)], ctype)
+
+    def test_the_water_and_air_media_have_a_colour(self):
+        # the elements read `--automation-fresh-water`, which the pinned stylesheet does not define; the module names it
+        css = (MODULE / "gateway/src/main/resources/mounted/css/cadre-ob.css").read_text(encoding="utf-8")
+        self.assertRegex(css, r"\.cadre-ob\.cadre-ob \{\s*--automation-fresh-water: var\(--automation-medium-fresh-water\);")
+        self.assertRegex(css, r"--automation-medium-fresh-water: rgb\(")
+
+    def test_a_pipe_leaves_out_the_line_types_its_element_cannot_draw(self):
+        for ctype, (_sheet, without) in self.PIPES.items():
+            line_type = COMPONENTS[ctype]["props"]["lineType"]
+            self.assertEqual(line_type["default"], "fluid", ctype)
+            self.assertEqual(set(line_type["enum"]), {"fluid", "electric", "air", "connector"} - set(without), ctype)
+            self.assertEqual(COMPONENTS[ctype]["props"]["medium"]["enum"], ["normal", "empty", "water", "air"], ctype)
 
 
 class Release(unittest.TestCase):

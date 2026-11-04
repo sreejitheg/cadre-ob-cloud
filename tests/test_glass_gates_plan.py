@@ -323,6 +323,8 @@ class FakeGatewayTests(unittest.TestCase):
                     "--window", "1280x800", "--settle", "0.04", "--out", str(out), *extra]
             with mock.patch.dict(os.environ, {"CADRE_TEST_LOGIN": self.login} if env else {}), \
                     mock.patch("builtins.print"):
+                if not env:                                     # absent even where the shell sets it
+                    os.environ.pop("CADRE_TEST_LOGIN", None)
                 code = glass_gates.main(argv, deploy=fd)
             return code, out, gw, fd
 

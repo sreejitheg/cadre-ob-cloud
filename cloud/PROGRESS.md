@@ -351,3 +351,11 @@
 - 2026-11-04: Module signing documented in `CONFIGURATION.md` section 3.3.0 from the plugin and signer jars in the Gradle cache: the
   five `ignition.signing.*` properties, JKS or PKCS#12 (`.pfx`) keystores, an RSA key (SHA256withRSA), the chain stored as
   `certificates.p7b`, and the signer's command line for signing a built file.
+- 2026-11-04: Pipe components: the nine OpenBridge line elements wrapped as module-only glyphs (`cadre.ob.pipehorizontal`,
+  `pipevertical`, `pipecorner`, `pipetee`, `pipecross`, `pipeoverlap`, `pipeend`, `pipedirection`, `bus`), owner's decision
+  recorded as recipe 6.1 item 9; wiki 12 section 17.28. Measured: no element draws at zero size, but each hangs its drawing 12 px
+  off its host, cancelled by a shadow root sheet (`linehorizontal`, `linevertical`, `linejunction`); `water` and `air` drew no
+  inner stroke (the package reads `--automation-fresh-water` and defines `--automation-medium-fresh-water`), aliased in the module
+  stylesheet; `connector` left out of three elements that throw on it. Page gains 93 symbols (11, 11, 13, 13, 9, 8, 12, 8, 8);
+  G0 to G7 pass (19 devices, 21 device symbols); stock build refuses all 93. Components 88 to 97, catalogue regenerated.
+  Full suite 1318 to 1321, all passing. Not built, installed or committed.

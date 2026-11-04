@@ -1833,6 +1833,70 @@ menu, the `battery-status` slot of the system menu, the credential fields and re
 options (template functions), the `badges` list of a tab, and the free `content` of the modal window and the toggletip. The next step is
 F6, the frame option, which wires the events to the existing navigation, login, logout and acknowledge paths.
 
+### 17.28 The Pipe Components: the Nine Line Elements as Module-Only Glyphs (`cadre.ob.pipehorizontal`, `pipevertical`, `pipecorner`, `pipetee`, `pipecross`, `pipeoverlap`, `pipeend`, `pipedirection`, `bus`)
+
+On 2026-11-04 the owner asked for a pipe component in the module, which reverses the skip of the nine line elements recorded in
+tranche T1 (recipe section 6 item 1; `cloud/WRAP-RECIPE.md` section 6.1 item 9). The decision for this batch is narrow: the nine
+elements are wrapped as module-only glyphs (section 17.17), so that a pipe component exists in the module, on the palette and on the
+component test page. The generator still draws its own pipes as SVG paths in the page view, and the flow solver (gate G6) still
+colours them; neither changes. All nine are display only, carry no event and take no `tag`, readout or alert frame. A descriptor
+binds a state to a property through `bind` as for any glyph. The palette titles begin with "OB Pipe," so that an engineer
+looking for a pipe finds them together. The page gains 93 symbols in its "Module only" section (the counts are in 17.28.4).
+
+17.28.1 What the elements share, from the pinned `dist/` sources (read, not recalled) and measured in Chromium. Eight of the nine
+take `medium` (`normal`, `empty`, `water`, `air`) and `lineType` (`fluid` 4 px, `electric` 2 px, `air` 10 px, `connector` a dashed
+neutral line). `medium` is the state: it chooses the inner colour (the primary pipe colour, its inverted colour for `empty`, fresh
+water for `water` and `air`), so a screen binds it to show a pipe full, empty or carrying water. `lineType`, `length` and
+`direction` are presentation. The overlap, end point and direction elements throw on `connector` when they render, so the
+component leaves that value out of their `lineType` enumeration (`without` in the entry of `gen_module_assets.py`, tested). Each
+element lays its 24 px drawing 12 px up and left of its host box (or up, or left, or by a direction dependent amount for the end
+point), because OpenBridge places a line on a grid point. Centred in a component box the drawing therefore lay half outside the
+box. The module adds one stylesheet to the shadow root of each (`SHEETS`, keys `linehorizontal`, `linevertical`, `linejunction`)
+that cancels the offset, and the measured ink then equals the host box for every element and every direction. No element draws
+at zero size, so none needed the fill rule of the radial instrument. Second finding: the elements read the variable
+`--automation-fresh-water`, but the pinned stylesheet defines `--automation-medium-fresh-water`, so the media `water` and `air`
+drew no inner stroke at all (computed stroke `none`). The module stylesheet now names the variable the elements read as the
+defined one, and keeps its value in every palette; the change is the generator's, not OpenBridge's code.
+
+17.28.2 Elements, one paragraph each.
+
+1. Horizontal line (`cadre.ob.pipehorizontal`, `obc-horizontal-line`). Attributes `medium`, `lineType`, `length`. It does not stretch
+   to its box: its host is `length` units of 24 px wide and 24 px high (the ink is one pixel wider), so the default size is 96 by 24.
+   `medium` is the state; `length` and `lineType` are presentation.
+2. Vertical line (`cadre.ob.pipevertical`, `obc-vertical-line`). The same attributes, drawn top to bottom; the host is 24 px wide and
+   `length` units high, default size 24 by 96. `medium` is the state.
+3. Corner line (`cadre.ob.pipecorner`, `obc-corner-line`). `medium`, `lineType` and `direction` (`top-right`, `top-left`,
+   `bottom-right`, `bottom-left`, the two sides the bend joins). Fixed 24 by 24 drawing, default size 24 by 24. `medium` is the state.
+4. Three-way line (`cadre.ob.pipetee`, `obc-three-way-line`). `medium`, `lineType` and `direction` (`top`, `right`, `bottom`, `left`,
+   the side of the branch). Fixed 24 by 24, default size 24 by 24. `medium` is the state.
+5. Line cross (`cadre.ob.pipecross`, `obc-line-cross`). `medium` and `lineType`; four ends joined at the centre, with rounded inner
+   corners. Fixed 24 by 24. `medium` is the state.
+6. Line overlap (`cadre.ob.pipeoverlap`, `obc-line-overlap`). `medium` and `lineType` without `connector`; one pipe passes over
+   another without joining it. Fixed 24 by 24. `medium` is the state.
+7. End point line (`cadre.ob.pipeend`, `obc-end-point-line`). `medium`, `direction` (`top`, `right`, `bottom`, `left`, the side the
+   pipe comes from) and `lineType` without `connector`; a stem ending in a terminal bar. Fixed 24 by 24. `medium` is the state.
+8. Direction line (`cadre.ob.pipedirection`, `obc-direction-line`). `medium` and `lineType` without `connector`; a pipe segment with
+   a chevron that points to the right. There is no `direction` attribute, so a flow in the other sense is not available from the
+   element. Fixed 24 by 24. `medium` is the state.
+9. Bus (`cadre.ob.bus`, `obc-bus`, manifest group `automation`). Attributes `label` (text in the bar), `size` (`small` 16 px,
+   `medium` 24 px), `variant` (`regular`, `enhanced`, `medium`: grey, blue and teal), `tint` (the pale form of the variant) and
+   `vertical`. It takes no `medium` or `lineType`. The host is 200 px long by default and shrinks to a smaller box (flex), and a
+   vertical bus is 200 px high; the default size is 200 by 24. `variant` and `tint` are the attributes a screen would bind (for
+   example a bus tinted while it is de-energised); `label`, `size` and `vertical` are presentation. The test page turns the box of a
+   vertical case (`testbench.glyph_cases`).
+
+17.28.3 Tests: `GlyphComponents` (nine more rows of `GLYPHS`, the attributes agreeing with the manifest), `ModuleOnlyKinds` (the
+glyph contract, the drawing, the live attributes and the page counts) and `PipeElements` (the three shadow root sheets and their use,
+the colour of the water media, the line types each pipe leaves out), all in `tests/test_module.py`; `tests/test_catalogue.py` now
+expects 37 components in its second class. The registered components move from 88 to 97 (the gateway hook logs the count).
+
+17.28.4 What the gateway step finds on `/component-test`: `obc-horizontal-line` 11, `obc-vertical-line` 11, `obc-corner-line` 13,
+`obc-three-way-line` 13, `obc-line-cross` 9, `obc-line-overlap` 8, `obc-end-point-line` 12, `obc-direction-line` 8 and `obc-bus` 8,
+93 in all, each with a non-zero size inside its box and no console error; a `water` or `air` case draws a light blue inner stroke.
+Open: the pipes do not take part in the flow solver (the generator's own pipes still do), so a screen that wants a coloured flow
+binds `medium` itself; the direction line points only to the right; the bus is not resizable beyond its 200 px length; the
+colours of the `water` and `air` media follow the package's fresh water colour.
+
 ## 18. References
 
 1. OpenBridge web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0,

@@ -297,7 +297,25 @@ public final class CadreOb {
             "OpenBridge notification floating item: a transient notification with a title, description, time and up to two actions.", "obNotificationFloatingItem",
             List.of(event("notificationfloatingitem", "onActionClick", "The primary action was pressed. The event carries nothing."),
                     event("notificationfloatingitem", "onAction2Click", "The secondary action was pressed. The event carries nothing."),
-                    event("notificationfloatingitem", "onDismissClick", "The dismiss button was pressed. The event carries nothing; the page's script hides the item.")))
+                    event("notificationfloatingitem", "onDismissClick", "The dismiss button was pressed. The event carries nothing; the page's script hides the item."))),
+        descriptor("cadre.ob.pipehorizontal", "pipehorizontal", "OB Pipe, horizontal",
+            "OpenBridge horizontal line: a pipe, cable or air line drawn left to right over a number of 24 px units, display only.", "obHorizontalLine", List.of()),
+        descriptor("cadre.ob.pipevertical", "pipevertical", "OB Pipe, vertical",
+            "OpenBridge vertical line: a pipe, cable or air line drawn top to bottom over a number of 24 px units, display only.", "obVerticalLine", List.of()),
+        descriptor("cadre.ob.pipecorner", "pipecorner", "OB Pipe, corner",
+            "OpenBridge corner line: a pipe bend joining two sides of its box, display only.", "obCornerLine", List.of()),
+        descriptor("cadre.ob.pipetee", "pipetee", "OB Pipe, tee",
+            "OpenBridge three-way line: a pipe tee with a run and one branch, display only.", "obThreeWayLine", List.of()),
+        descriptor("cadre.ob.pipecross", "pipecross", "OB Pipe, four-way junction",
+            "OpenBridge line cross: four pipe ends joined at the centre of the box, display only.", "obLineCross", List.of()),
+        descriptor("cadre.ob.pipeoverlap", "pipeoverlap", "OB Pipe, crossover",
+            "OpenBridge line overlap: one pipe passing over another without joining it, display only.", "obLineOverlap", List.of()),
+        descriptor("cadre.ob.pipeend", "pipeend", "OB Pipe, end point",
+            "OpenBridge end point line: a pipe that ends in a terminal bar on one side of its box, display only.", "obEndPointLine", List.of()),
+        descriptor("cadre.ob.pipedirection", "pipedirection", "OB Pipe, flow direction",
+            "OpenBridge direction line: a pipe segment with a flow direction chevron, display only.", "obDirectionLine", List.of()),
+        descriptor("cadre.ob.bus", "bus", "OB Bus",
+            "OpenBridge bus: a labelled busbar or data bus drawn as a bar, display only.", "obBus", List.of())
     );
 
     private CadreOb() {

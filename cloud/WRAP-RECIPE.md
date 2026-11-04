@@ -289,7 +289,7 @@ the element's enumerations (section 5.1) and map or except each mismatch. No `AL
 
 1. The nine OpenBridge line elements (`bus`, `corner-line`, `direction-line`, `end-point-line`, `horizontal-line`,
    `vertical-line`, `three-way-line`, `line-cross`, `line-overlap`) are skipped for now: they overlap the library's
-   pipes and the flow solver (G6). Do not wrap them and do not add them to `MODULE_KIND`.
+   pipes and the flow solver (G6). Do not wrap them and do not add them to `MODULE_KIND`. Superseded on 2026-11-04 by item 9 of section 6.1.
 2. Command controls use Press then Confirm. No component event writes a tag.
 3. An element without a library kind becomes a module-only kind (section 7.2, Option B, decided 2026-11-03): its
    contract comes from `module/components.json`, the component test page shows it in one "Module only" section,
@@ -310,6 +310,10 @@ the element's enumerations (section 5.1) and map or except each mismatch. No `AL
 7. The bars and graphs and the building blocks are module-only kinds, display only, as in T1.
 8. The new frame comes in both variants (OpenBridge and ASM), keeps the Cadre crumb and the Cadre alert strip, and hides
    the silence control (`cloud/FRAME-DESIGN.md`, Owner's Answers).
+9. (2026-11-04) The nine OpenBridge line elements are wrapped as **module-only components** (glyph or symbol form by their
+   attributes, section 8.10), so that a pipe component exists in the module and on the component test page. The generator keeps
+   drawing its own pipes as SVG paths and the flow solver (gate G6) is unchanged; the line elements are display only and
+   are not added to `MODULE_KIND`. Wiki 12 section 17.28 records them.
 
 ## 7. The T1 Survey
 
@@ -552,6 +556,17 @@ size (give the entry in `gen_module_assets.py` the size the symbol should have o
    the entry's `size` is the size on a diagram; the bars draw at their own `width` or `height` and the entry's size must cover the largest
    drawing the page states (measure with a stand-in page; the bars needed 128 for the scale with thick bar, ticks and labels).
 4. An element with no attribute and no data property whose rows are slotted children (`obc-alert-list`) is not wrapped: see wiki 17.22.6.
+
+### 8.14 A Note from the Pipes (2026-11-04): Leaving an Enumeration Value Out, and a Colour the Package Does Not Define
+
+1. An element that throws on one value of an enumeration (the overlap, end point and direction lines on `connector`) leaves it out
+   with `"without": {"lineType": ["connector"]}` in its entry; `schema_for` filters the values and keeps the element's own default.
+2. A shadow root rule for an element goes in `SHEETS` and is named by `"sheet"` in the entry (as the readout's); the line elements
+   use it to cancel the offset with which OpenBridge hangs a drawing off a grid point. Measure the host and the drawing in
+   Chromium (`getBoundingClientRect` of the host and of the shadow root's `svg`) before and after.
+3. Read the computed colour of a new element in a stand-in page that carries the module stylesheet and `class="psc-cadre/palette/day"`:
+   the lines read `--automation-fresh-water`, which the pinned stylesheet does not define, and drew nothing for `water` and `air`.
+   `FRESH_WATER` in `gen_module_assets.py` is the model for naming a variable under the name the element reads.
 
 ## 9. Frame Components (T2, batches F1 to F5)
 

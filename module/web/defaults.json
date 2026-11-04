@@ -1370,5 +1370,49 @@
   "action": false,
   "action2": false,
   "lineType": "single-line"
+ },
+ "obc-horizontal-line": {
+  "medium": "normal",
+  "lineType": "fluid",
+  "length": 1
+ },
+ "obc-vertical-line": {
+  "medium": "normal",
+  "lineType": "fluid",
+  "length": 1
+ },
+ "obc-corner-line": {
+  "medium": "normal",
+  "direction": "top-right",
+  "lineType": "fluid"
+ },
+ "obc-three-way-line": {
+  "medium": "normal",
+  "direction": "top",
+  "lineType": "fluid"
+ },
+ "obc-line-cross": {
+  "medium": "normal",
+  "lineType": "fluid"
+ },
+ "obc-line-overlap": {
+  "medium": "normal",
+  "lineType": "fluid"
+ },
+ "obc-end-point-line": {
+  "medium": "normal",
+  "direction": "top",
+  "lineType": "fluid"
+ },
+ "obc-direction-line": {
+  "medium": "normal",
+  "lineType": "fluid"
+ },
+ "obc-bus": {
+  "label": "",
+  "size": "small",
+  "variant": "regular",
+  "tint": false,
+  "vertical": false
  }
 }

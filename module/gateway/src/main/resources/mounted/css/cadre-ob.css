@@ -3585,6 +3585,7 @@
   --base-blue-200: rgb(156, 193, 245);
   --base-blue-400: rgb(66, 113, 179);
   --base-blue-500: rgb(45, 84, 139);
+  --automation-medium-fresh-water: rgb(130, 199, 230);
   --base-cyan-050: rgb(223, 240, 249);
   --base-cyan-100: rgb(191, 226, 243);
   --base-cyan-500: rgb(0, 90, 123);
@@ -3608,6 +3609,7 @@
   --border-focus-color: rgb(66, 113, 179);
   --automation-pipe-primary-color: rgb(255, 255, 255);
   --automation-pipe-tertiary-color: rgb(83, 83, 83);
+  --automation-pipe-primary-inverted-color: rgb(205, 205, 205);
   --thumb-enabled-background-color: rgb(255, 255, 255);
   --thumb-enabled-border-color: rgb(190, 190, 190);
   --thumb-hover-background-color: rgb(240, 240, 240);
@@ -3683,11 +3685,13 @@
   --integration-normal-enabled-border-color: rgb(53, 53, 53);
   --overlay-border-silhouette-color: rgb(0, 0, 0, 0.5400000214576721);
   --instrument-tick-mark-label-secondary-color: rgb(112, 112, 112);
+  --base-gray-050: rgb(240, 240, 240);
   --base-gray-100: rgb(221, 221, 221);
   --base-gray-200: rgb(190, 190, 190);
   --base-gray-300: rgb(142, 142, 142);
   --base-gray-400: rgb(112, 112, 112);
   --base-gray-500: rgb(83, 83, 83);
+  --base-gray-600: rgb(61, 61, 61);
   --integration-border-outline: rgb(53, 53, 53);
   --integration-element-active-color: rgb(247, 247, 247);
   --element-neutral-enhanced-color: rgb(45, 84, 139);
@@ -3896,6 +3900,7 @@
   --base-blue-200: rgb(59, 79, 105);
   --base-blue-400: rgb(99, 139, 188);
   --base-blue-500: rgb(128, 174, 234);
+  --automation-medium-fresh-water: rgb(42, 82, 98);
   --base-cyan-050: rgb(24, 43, 50);
   --base-cyan-100: rgb(30, 55, 65);
   --base-cyan-500: rgb(90, 183, 217);
@@ -3919,6 +3924,7 @@
   --border-focus-color: rgb(128, 174, 234);
   --automation-pipe-primary-color: rgb(171, 171, 171);
   --automation-pipe-tertiary-color: rgb(171, 171, 171);
+  --automation-pipe-primary-inverted-color: rgb(52, 52, 52);
   --thumb-enabled-background-color: rgb(77, 77, 77);
   --thumb-enabled-border-color: rgb(91, 91, 91);
   --thumb-hover-background-color: rgb(91, 91, 91);
@@ -4004,11 +4010,13 @@
   );
   --overlay-border-silhouette-color: rgb(0, 0, 0, 0.5400000214576721);
   --instrument-tick-mark-label-secondary-color: rgb(137, 137, 137);
+  --base-gray-050: rgb(41, 41, 41);
   --base-gray-100: rgb(52, 52, 52);
   --base-gray-200: rgb(77, 77, 77);
   --base-gray-300: rgb(108, 108, 108);
   --base-gray-400: rgb(137, 137, 137);
   --base-gray-500: rgb(171, 171, 171);
+  --base-gray-600: rgb(205, 205, 205);
   --integration-border-outline: rgb(52, 52, 52);
   --integration-element-active-color: rgb(247, 247, 247);
   --element-neutral-enhanced-color: rgb(128, 174, 234);
@@ -4217,6 +4225,7 @@
   --base-blue-200: rgb(43, 56, 77);
   --base-blue-400: rgb(83, 118, 170);
   --base-blue-500: rgb(105, 151, 217);
+  --automation-medium-fresh-water: rgb(42, 82, 98);
   --base-cyan-050: rgb(9, 21, 26);
   --base-cyan-100: rgb(15, 32, 39);
   --base-cyan-500: rgb(47, 161, 201);
@@ -4240,6 +4249,7 @@
   --border-focus-color: rgb(44, 131, 102);
   --automation-pipe-primary-color: rgb(199, 136, 66);
   --automation-pipe-tertiary-color: rgb(199, 136, 66);
+  --automation-pipe-primary-inverted-color: rgb(39, 27, 16);
   --thumb-enabled-background-color: rgb(39, 27, 16);
   --thumb-enabled-border-color: rgb(120, 83, 44);
   --thumb-hover-background-color: rgb(39, 27, 16);
@@ -4315,11 +4325,13 @@
   --integration-normal-enabled-border-color: rgb(72, 52, 31);
   --overlay-border-silhouette-color: rgb(0, 0, 0);
   --instrument-tick-mark-label-secondary-color: rgb(156, 106, 52);
+  --base-gray-050: rgb(18, 18, 18);
   --base-gray-100: rgb(30, 30, 30);
   --base-gray-200: rgb(56, 56, 56);
   --base-gray-300: rgb(90, 90, 90);
   --base-gray-400: rgb(116, 116, 116);
   --base-gray-500: rgb(149, 149, 149);
+  --base-gray-600: rgb(180, 180, 180);
   --integration-border-outline: rgb(0, 0, 0, 0.18000000715255737);
   --integration-element-active-color: rgb(234, 167, 94);
   --element-neutral-enhanced-color: rgb(56, 167, 132);
@@ -4518,6 +4530,7 @@
   --base-blue-200: rgb(89, 138, 203);
   --base-blue-400: rgb(32, 80, 139);
   --base-blue-500: rgb(15, 52, 97);
+  --automation-medium-fresh-water: rgb(61, 146, 176);
   --base-cyan-050: rgb(186, 217, 229);
   --base-cyan-100: rgb(144, 194, 213);
   --base-cyan-500: rgb(0, 57, 78);
@@ -4541,6 +4554,7 @@
   --border-focus-color: rgb(7, 35, 70);
   --automation-pipe-primary-color: rgb(255, 255, 255);
   --automation-pipe-tertiary-color: rgb(52, 52, 52);
+  --automation-pipe-primary-inverted-color: rgb(159, 160, 160);
   --thumb-enabled-background-color: rgb(255, 255, 255);
   --thumb-enabled-border-color: rgb(108, 108, 108);
   --thumb-hover-background-color: rgb(211, 211, 211);
@@ -4616,11 +4630,13 @@
   --integration-normal-enabled-border-color: rgb(174, 174, 174);
   --overlay-border-silhouette-color: rgb(0, 0, 0, 0.6000000238418579);
   --instrument-tick-mark-label-secondary-color: rgb(108, 108, 108);
+  --base-gray-050: rgb(211, 211, 211);
   --base-gray-100: rgb(186, 186, 186);
   --base-gray-200: rgb(136, 136, 136);
   --base-gray-300: rgb(108, 108, 108);
   --base-gray-400: rgb(79, 79, 80);
   --base-gray-500: rgb(52, 52, 52);
+  --base-gray-600: rgb(35, 35, 35);
   --integration-border-outline: rgb(138, 138, 138);
   --integration-element-active-color: rgb(255, 255, 255);
   --element-neutral-enhanced-color: rgb(15, 52, 97);
@@ -4759,6 +4775,10 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+}
+/* The line elements read --automation-fresh-water; the package defines --automation-medium-fresh-water. */
+.cadre-ob.cadre-ob {
+  --automation-fresh-water: var(--automation-medium-fresh-water);
 }
 /* The alarm lists fill the component box, top aligned. */
 .cadre-ob > obc-alert-list-details,

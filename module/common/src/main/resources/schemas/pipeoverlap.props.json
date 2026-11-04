@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "medium": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "empty",
+        "water",
+        "air"
+      ],
+      "default": "normal",
+      "description": "OpenBridge `obc-line-overlap` property `medium`."
+    },
+    "lineType": {
+      "type": "string",
+      "enum": [
+        "fluid",
+        "electric",
+        "air"
+      ],
+      "default": "fluid",
+      "description": "OpenBridge `obc-line-overlap` property `lineType`."
+    },
+    "componentSize": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "medium",
+        "large",
+        "xl"
+      ],
+      "default": "regular",
+      "description": "OpenBridge component size: regular, medium, large or xl."
+    },
+    "style": {
+      "$ref": "urn:ignition-schema:schemas/style-properties.schema.json",
+      "default": {
+        "classes": ""
+      }
+    }
+  }
+}

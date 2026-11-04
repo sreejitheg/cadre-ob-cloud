@@ -228,7 +228,16 @@ MODULE_ONLY = {"resistor": "cadre.ob.resistor", "capacitor": "cadre.ob.capacitor
                "bar-vertical": "cadre.ob.barvertical",
                "circular-progress": "cadre.ob.circularprogress",
                "instrument-radial": "cadre.ob.instrumentradial",
-               "readout-block": "cadre.ob.readoutblock", **FRAME_ONLY}
+               "readout-block": "cadre.ob.readoutblock",
+               "horizontal-line": "cadre.ob.pipehorizontal",
+               "vertical-line": "cadre.ob.pipevertical",
+               "corner-line": "cadre.ob.pipecorner",
+               "three-way-line": "cadre.ob.pipetee",
+               "line-cross": "cadre.ob.pipecross",
+               "line-overlap": "cadre.ob.pipeoverlap",
+               "end-point-line": "cadre.ob.pipeend",
+               "direction-line": "cadre.ob.pipedirection",
+               "bus": "cadre.ob.bus", **FRAME_ONLY}
 MODULE_VIEW = "Module/"
 # The parameters the library's symbols carry beside the component's own, which a module-only symbol may state too: the
 # device and status marks, all in `_STATUS_DROP` (they reach no property of the component).
