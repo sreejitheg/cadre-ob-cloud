@@ -1,0 +1,509 @@
+{
+ "name": "_componentTest",
+ "tagType": "Folder",
+ "tags": [
+  {
+   "name": "TB_PUMP",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "alarms": [
+      {
+       "displayPath": "Showcase/TB-PUMP",
+       "label": "TB-PUMP Fault",
+       "name": "Fault",
+       "priority": "High",
+       "setpointA": 1.0,
+       "shelvingAllowed": true
+      }
+     ],
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Int4",
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "value": 1,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "value": 60.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    }
+   ]
+  },
+  {
+   "name": "TB_TANK",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "alarms": [
+      {
+       "displayPath": "Showcase/TB-TANK",
+       "label": "TB-TANK High level",
+       "mode": "AboveValue",
+       "name": "High level",
+       "priority": "Medium",
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "shelvingAllowed": true
+      }
+     ],
+     "dataType": "Float8",
+     "name": "level",
+     "tagType": "AtomicTag",
+     "value": 62.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "value": 90.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "value": 10.0,
+     "valueSource": "memory"
+    }
+   ]
+  },
+  {
+   "name": "TB_MOTOR",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Int4",
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "value": 1,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "value": 60.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    }
+   ]
+  },
+  {
+   "name": "TB_FAN",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "speedSp",
+     "tagType": "AtomicTag",
+     "value": 60.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]state}, false), coalesce({[.]speedSp}, 0), 0)",
+     "name": "speed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    }
+   ]
+  },
+  {
+   "name": "TB_VALVE",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Int4",
+     "name": "mode",
+     "tagType": "AtomicTag",
+     "value": 1,
+     "valueSource": "memory"
+    }
+   ]
+  },
+  {
+   "name": "TB_AVALVE",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    }
+   ]
+  },
+  {
+   "name": "TB_DAMPER",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]cmd}, false) && !coalesce({[.]fault}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmd",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    }
+   ]
+  },
+  {
+   "name": "ALM_HIGH",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "name": "raise",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "alarmAck",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "alarms": [
+      {
+       "displayPath": "Showcase/ALM-HIGH",
+       "label": "ALM-HIGH High test",
+       "name": "High test",
+       "priority": "High",
+       "setpointA": 1.0,
+       "shelvingAllowed": true
+      }
+     ],
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "coalesce({[.]raise}, false) || coalesce({[default]cadre_hmi_showcase/_componentTest/ALM_ALL/raise}, false)",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    }
+   ]
+  },
+  {
+   "name": "TB_GEN",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Boolean",
+     "name": "cmdStart",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmdStop",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "cmdReset",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "value": false,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Int4",
+     "name": "faultCode",
+     "tagType": "AtomicTag",
+     "value": 0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "fuelLevel",
+     "tagType": "AtomicTag",
+     "value": 75.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Boolean",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]cmdStop}, false), false, if(coalesce({[.]cmdStart}, false), true, coalesce({[.]state}, false)))",
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "String",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]state}, false), 'Running', 'Stopped')",
+     "name": "runText",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    },
+    {
+     "dataType": "Float8",
+     "executionMode": "FixedRate",
+     "expression": "if(coalesce({[.]state}, false), 1500, 0)",
+     "name": "engineSpeed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr"
+    }
+   ]
+  },
+  {
+   "name": "TB_READOUT",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "alarms": [
+      {
+       "displayPath": "Showcase/TB-READOUT",
+       "label": "TB-READOUT High",
+       "mode": "AboveValue",
+       "name": "High",
+       "priority": "Medium",
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]hiLimit}"
+       },
+       "shelvingAllowed": true
+      },
+      {
+       "displayPath": "Showcase/TB-READOUT",
+       "label": "TB-READOUT Low",
+       "mode": "BelowValue",
+       "name": "Low",
+       "priority": "Low",
+       "setpointA": {
+        "bindType": "Expression",
+        "value": "{[.]loLimit}"
+       },
+       "shelvingAllowed": true
+      }
+     ],
+     "dataType": "Float8",
+     "name": "value",
+     "tagType": "AtomicTag",
+     "value": 42.5,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "hiLimit",
+     "tagType": "AtomicTag",
+     "value": 80.0,
+     "valueSource": "memory"
+    },
+    {
+     "dataType": "Float8",
+     "name": "loLimit",
+     "tagType": "AtomicTag",
+     "value": 20.0,
+     "valueSource": "memory"
+    }
+   ]
+  },
+  {
+   "name": "TB_FIELD",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "dataType": "Float8",
+     "name": "value",
+     "tagType": "AtomicTag",
+     "value": 36.0,
+     "valueSource": "memory"
+    }
+   ]
+  }
+ ]
+}

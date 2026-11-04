@@ -23,6 +23,7 @@ Scope: process automation (COBD-010).
 | Build a screen | [`wiki/08-generation-and-validation.md`](wiki/08-generation-and-validation.md) |
 | See a process plant built on the library | [`wiki/11-water-treatment-sample.md`](wiki/11-water-treatment-sample.md) |
 | See the module spike and its comparison | [`wiki/12-module-spike.md`](wiki/12-module-spike.md) |
+| Learn each component with live editors, simulation and an event log | [`wiki/15-showcase.md`](wiki/15-showcase.md) (the project `cadre_hmi_showcase`, `tools/hmi/showcase.py`) |
 | Everything | [`wiki/index.md`](wiki/index.md) |
 
 ## 2. Quick Start

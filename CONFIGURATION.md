@@ -412,6 +412,25 @@ Deploy the parent first, then the children (GF-10); verify in a new browser sess
 `deploy.py` sets the identity provider after each import (GF-44). A child of a frame or a module component the installed module does not
 yet have still imports (GF-72), but its component draws nothing until the module is installed.
 
+### 4.7 The Showcase Project
+
+`cadre_hmi_showcase` shows every component of the module on a page of its own group, with an editor for each property, a live simulation and
+an event log (`wiki/15-showcase.md`). It is generated from `module/components.json`, `module/CATALOGUE.md` and the samples of the component test
+page, so it follows the library; it uses the module frame (`--frame ob`) and the parent `cadre_hmi_base`.
+
+```bash
+python tools/hmi/parent.py --out build                                   # the parent first
+python tools/hmi/showcase.py --out build --deploy                        # G0 to G7 offline, then the tags and the project
+python tools/hmi/showcase.py --out build --write-descriptor workspace/showcase --write-devices workspace/showcase/devices.json
+python tools/hmi/showcase.py --out build --export cloud/release          # the importable zips and the device tags
+python tools/compare/capture.py --base http://localhost:8088/data/perspective/client/cadre_hmi_showcase --route /charts --out workspace/showcase/g8/charts
+python tools/compare/faceplates.py --base <the same> --descriptor workspace/showcase/showcase-devices.json --devices-file workspace/showcase/devices.json --faceplate asm --out workspace/showcase/g11
+python tools/compare/showcase_check.py --base <the same> --model workspace/showcase/showcase-model.json --out workspace/showcase/check
+```
+
+The page groups follow the catalogue's sections (a group of more than 13 components is split), and two further pages show the parent's
+embedded symbol views. The device page needs the memory tags the build imports under `[default]cadre_hmi_showcase/_componentTest`.
+
 ## 5. The Four Frames
 
 All four frames share one parent; the option chooses the child's docks and session data. Heights are measured.

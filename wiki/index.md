@@ -23,6 +23,7 @@ and screen generator, built on stock Perspective components and tested on a live
 | [12 Module spike](12-module-spike.md) | Assessment report: a Perspective module of our own wrapping the module pump and tank, compared with the stock library; version 0.2.0 adds the alarm lists |
 | [13 Faceplates, alarm lists and interlocks](13-faceplates-alarm-lists-interlocks.md) | How a faceplate is tabbed, how it finds and lists the device's alarms, the module's alarm components, the provisional interlock contract, and the instrument faceplate with its limits and trend |
 | [14 Library configuration](14-library-configuration.md) | Every configuration of the library as delivered: the cloud environment, the gateway, the module (97 components), building and deploying, the four frames, the gates, the owner's decisions, the open items and the merge back; the generated component list is `module/CATALOGUE.md` and the operational reference `CONFIGURATION.md` |
+| [15 Showcase project](15-showcase.md) | The project `cadre_hmi_showcase`: every one of the 97 components, and the parent's embedded symbol views, on grouped pages with an editor for each property, a live simulation and an event log, and the gates that prove it works |
 
 ## 2. Summary
 
