@@ -145,7 +145,23 @@ python tools/hmi/showcase.py --out build --export cloud/release          # the z
 `showcase.py` takes `--faceplate` (default `asm`; see section 6), `--name`, `--parent`, `--write-descriptor DIR` (the device page's descriptor,
 which gate G11 reads, and the model of the project, which the functional check reads) and `--write-devices FILE`. The importable files are in
 `cloud/release/` with their steps (`cloud/release/README.md`): the parent first, then the device tags, then the showcase, with module 0.8.0
-installed; a gateway import drops the identity provider (GF-44), which `--deploy` sets and an import by hand sets in the Designer.
+installed; a gateway import drops the identity provider (GF-44), which `--deploy` sets and an import by hand may set in the Designer (the page draws
+the same without it, GF-115).
+
+### 4.1 The Device Tags Document
+
+The tags file `cadre_hmi_showcase-tags.json` is rooted at the folder `cadre_hmi_showcase` (`showcase.tag_document`) and holds `_componentTest`
+beneath it. It is imported at the root of the `default` tag provider, never into a folder made by hand, so the tags land at
+`[default]cadre_hmi_showcase/_componentTest/...` whatever the importer's idea of the target. An earlier file rooted at `_componentTest` landed
+wherever it was imported (GF-116): at the provider root it created `[default]_componentTest`, each of the 11 device cards drew a quality overlay and
+the tank faceplate lost its Trend tab, with no script error in the browser or the gateway log. `--deploy` imports the same document at the provider
+root, and `tests/test_showcase.py` resolves every tag path the device page binds inside it.
+
+### 4.2 The Owner's Route, Measured
+
+On 2026-11-05 the release files were imported on a fresh 8.3.6 gateway as an owner would: the module installed and trusted, the two project zips
+through the web page's Import Project dialog (`POST /data/api/v1/projects/import/<name>?overwrite=false`, GF-115), the tags by the tag import,
+the identity provider left unset, and the Devices page opened in a new session. The results of the variants are in `cloud/PROGRESS.md`.
 
 ## 5. Gate Results
 
