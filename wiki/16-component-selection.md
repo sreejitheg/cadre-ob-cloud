@@ -178,7 +178,7 @@ Table 7. The two layouts (page 08 section 3).
 | Criterion | `diagram` | `cards` |
 |---|---|---|
 | Content | A process drawing: symbols at pixel positions, pipes with compiled flow, sections that drill down, page parts | Groups of content in cards: rows of cards, each with flex groups of items |
-| Placement | The builder gives `x`, `y` (the symbol centre for an automation symbol) and, for blocks, `w`, `h`; gate G5 checks overlaps with a 4 px tolerance | The generator lays the items out; row heights follow from the content (`screen.row_height`) |
+| Placement | The builder gives `x`, `y` (for an automation symbol the top left corner of its 48 px symbol box, whose centre is 24 px in; page 18 section 5.2) and, for blocks, `w`, `h`; gate G5 checks overlaps with a 4 px tolerance | The generator lays the items out; row heights follow from the content (`screen.row_height`) |
 | Pipes, junctions, page parts | Yes | No |
 | Toolbar (colour mode, ID tags, readouts) and `showTags` | Yes | No |
 | `fit` to the window | Yes | No; a page taller than the viewport scrolls |
