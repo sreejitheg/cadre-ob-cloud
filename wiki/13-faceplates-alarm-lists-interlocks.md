@@ -641,8 +641,9 @@ Table 12. Members of a sequence.
    to 14). It refuses a session without the role, a member that is not a pulse member, a device that
    is not in the session's device index or does not carry the member, and a member the device model
    does not mark writable; a write the gateway does not make is answered in the same way, and the
-   refusal shows on the tab. The library knows one pulse member, `trigger` of a sequence
-   (`FUNCTION_MEMBERS` under `PULSE_PATH`). `cadre.hmi.command` writes no pulse member, and the
+   refusal shows on the tab. The library knew one pulse member when this section was written, `trigger` of a
+   sequence; since section 12.5 it knows nine (`FUNCTION_MEMBERS` under `PULSE_PATH`, the `pulses` of the profile,
+   page 17 Table 17). `cadre.hmi.command` writes no pulse member, and the
    private helper that makes the write refuses, on the pulse path, any value but the Boolean true, so
    no call of `cadre.hmi` writes one false. The function does not ask the kind of the device: in a
    project built without a device model a session with the role may pulse any device of the index
@@ -777,9 +778,11 @@ Not yet proven on the gateway:
 1. A device model may give a device its `modes`: each value of the member `mode`, its name and its
    owner, one of `program`, `operator`, `maintenance` and `local` (COBD-044, finding F005 option B of
    the ASMP study).
-2. The checked writes refuse a command on a gated path (W1, W3, W5, W16, W17 and W18) that the owner
-   does not allow, and say why. The operator may start and stop, set the speed, reset a fault and
-   pulse; maintenance may also force and mask; the program and the local station allow none of them.
+2. The checked writes refuse a command on a gated path (W1, W3, W5, W16, W17, W18 and, since the
+   configuration rows of section 10.4, W19) that the owner does not allow, and say why. The operator may
+   start and stop, set the speed, reset a fault and pulse; maintenance may also force, mask and set a
+   configuration row; the program and the local station allow none of them (`ownership` of the profile,
+   page 17 Table 14).
 3. `cadre.hmi.device_read` answers who holds the device (`owned`, `owner`, `allowed`, `reason`) and
    the moves it offers: Take control, to the first mode of the operator, from the program or
    maintenance; Release, to the first mode of the program; and Maintenance, from the operator.

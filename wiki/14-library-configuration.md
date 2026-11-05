@@ -1,18 +1,18 @@
 ---
 title: Library configuration
 type: wiki
-updated: 2026-11-03
+updated: 2026-11-05
 ---
 # 14 Library Configuration
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-14 |
-| Revision | A |
+| Revision | B |
 | Status | Issued for use |
-| Built | Cloud sessions of 2026-11-02 and 2026-11-03 (spike T0, tranches T1 and T2), branch `spike/t0` at `4cdda21` |
+| Built | Cloud sessions of 2026-11-02 and 2026-11-03 (spike T0, tranches T1 and T2), branch `spike/t0` at `4cdda21`; revision B of 2026-11-05 brings it to module 0.8.0 (`c595afa`) |
 | Code | `cloud/setup.sh`, `module/tools/` (`gen_module_assets.py`, `gen_catalogue.py`, `build_module.py`, `install_module.py`, `restart_gateway.py`), `tools/hmi/` (`screen.py`, `parent.py`, `navigation.py`, `obframe.py`, `obasm.py`), `tools/compare/` (the gates) |
-| Companions | `CONFIGURATION.md` (the operational reference, with every command), `module/CATALOGUE.md` (every component, generated), page 07 (GF-99 to GF-114) |
+| Companions | `CONFIGURATION.md` (the operational reference, with every command), `module/CATALOGUE.md` (every component, generated), page 07 (GF-99 to GF-114), page 15 (the showcase project), page 16 (the selection criteria), page 17 (the tag model and the UDT of each device kind), page 18 (the view builder reference) |
 
 ## 1. Purpose
 
@@ -22,6 +22,10 @@ decisions and the known limits. `CONFIGURATION.md` at the repository root is the
 the commands in full; this page gives the reasons and points to the pages that hold each design. The components themselves are not listed here:
 `module/CATALOGUE.md` holds, for each of the 97 components, its package element, kind, default size, properties, events and what is not carried,
 and a test (`tests/test_catalogue.py`) holds it equal to its generator.
+
+The design-time references are pages 16 to 18: the selection criteria (which rendering, frame, faceplate style, layout and kind to choose for a
+plant object), the tag model with one UDT for each device kind, and the complete JSON reference of the screen descriptor and device model for an
+automatic view builder.
 
 No secret appears in the repository. This page names the files that hold them (section 3.8) and never their contents.
 
@@ -76,7 +80,8 @@ volume and module intact. Whether the image and volume survive into a later sess
 ### 2.5 Offline Tests
 
 `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests` is the full offline suite: one test assumes the variable is absent. Recorded:
-1081 (T0 baseline), 1102 (end of T0), 1191 (end of T1), 1299 (end of T2), 1304 with the catalogue tests, 1318 at delivery.
+1081 (T0 baseline), 1102 (end of T0), 1191 (end of T1), 1299 (end of T2), 1304 with the catalogue tests, 1318 at delivery, 1321 with the pipe
+components and 1333 with the showcase (2026-11-04).
 
 ## 3. The Gateway
 
@@ -112,7 +117,8 @@ through the REST resource routes, without a restart (GF-104). Without it no tren
 ### 3.6 The Trust Step and Restarts
 
 A first install of an unsigned module stops the gateway at a commissioning step after its restart; `trust-module` posts the commissioning
-page's own call and restarts the container (GF-105). An upgrade of a module already trusted needs no step (GF-106). Restarts take 15 to 28 s
+page's own call and restarts the container (GF-105). A module whose licence page changed (0.8.0 changed `license.html`) also lists its licence at
+that step, and `trust-module` accepts the module's own licence page when the step lists one (`CONFIGURATION.md` section 2.7). An upgrade of a module already trusted needs no step (GF-106). Restarts take 15 to 28 s
 after a module upgrade, 24 s for a container from cold and 1 min 41 s for `setup.sh gateway` after a daemon restart (GF-107).
 
 ### 3.7 The Trial
@@ -152,7 +158,8 @@ Table 4. The 97 components by class (`module/CATALOGUE.md`).
 
 The generator `module/tools/gen_module_assets.py` writes the script `cadre-ob.js` (2,779,218 bytes at 0.8.0), the stylesheet (238,012), the font
 (625,312), `components.json` and the 97 property schemas and 94 event schemas. `gen_catalogue.py` writes `module/CATALOGUE.md`. `parent.py`
-writes `library/contracts.json` and `library/profile.json`. None is hand edited (`CLAUDE.md` rule 4). The unsigned module file is 988,279 bytes.
+writes `library/contracts.json` and `library/profile.json`. None is hand edited (`CLAUDE.md` rule 4). The unsigned module file is 996,287 bytes
+at 0.8.0 (988,279 at 0.7.0), built as `CadreHMIComponents.unsigned.modl` and kept with its checksum in `cloud/release/`.
 
 ### 4.3 Build, Install and Restart
 
@@ -249,6 +256,10 @@ group, plant restored). G11 on the component test page at 0.6.0: 21 of 21 device
 four samples: three PASS in every gate and the fourth in every gate but walk row A-02, an intermittent defect of the glass then fixed and proved by
 three full walks in a row; G11 on the component test page on a fresh run: 21 of 21 devices, no fault (`cloud/REPORT-T2.md` section 4.3).
 
+Module 0.8.0 (2026-11-04): the full offline suite 1321 passing; G0 to G7 pass on five samples; the module installed on the cloud gateway (active,
+97 registered); G8 6 of 6 routes on `cadre_hmi_wtpobf`. The showcase project (page 15): G0 to G7 pass, G8 12 of 12 pages, G11 11 of 11 devices
+with `--faceplate asm`, and its functional check 12 of 12 pages, 54 of 54 editor kinds and 33 of 33 events.
+
 ## 8. The Owner's Decisions
 
 1. **T0.** Three classes wrapped in subagents; the automation button asks (Press) and writes on Confirm through the existing path (W3).
@@ -265,7 +276,8 @@ three full walks in a row; G11 on the component test page on a fresh run: 21 of 
 3. The glass gates that write on the ASM variant need an ASM sample with an ASM model, which the cloud copy does not have; the read-only ASM gates pass.
 4. The gauges' 240 by 280 box is not measured and the gauges overflow it.
 5. Writes of module-only kinds are deferred: the hydraulic valves' selection, the gauges' setpoints and several `click` events are carried or shown, never wired.
-6. Not wrapped: the nine line elements, `obc-automation-input-modal`, `obc-alert-list`. Not carried: the user menu's credentials and others listed per component in the catalogue.
+6. Not wrapped: `obc-automation-input-modal`, `obc-alert-list`. The nine line elements, skipped in T1, were wrapped on 2026-11-04 as display only
+   pipe components (page 12 section 17.28). Not carried: the user menu's credentials and others listed per component in the catalogue.
 7. The script is 2.75 MB and loads on every page of a project that uses a module component (GF-29).
 8. The component test page is large; a G11 sweep of its 21 devices takes about 62 min.
 9. Settled at the gateway run: a tree group press only toggles (GF-113; page 04 section 11.3 holds); the bell counts active alarms while the menu also lists
@@ -285,7 +297,8 @@ Then the full suite (1318 in the cloud), the signed build and its install with t
 
 1. `CONFIGURATION.md` (root), `module/CATALOGUE.md`, `cloud/PROGRESS.md`, `cloud/REPORT-T0.md`, `cloud/REPORT-T1.md`, `cloud/WRAP-RECIPE.md`,
    `cloud/FRAME-DESIGN.md`, `cloud/setup.sh`.
-2. This wiki: page 04 (frames), 07 (GF-99 to GF-114), 08 (gates), 12 (the module, sections 17.10 to 17.27), 13 (glass, section 13.11).
+2. This wiki: page 04 (frames), 07 (GF-99 to GF-114), 08 (gates), 12 (the module, sections 17.10 to 17.28), 13 (glass, section 13.11),
+   15 (the showcase), 16 (the selection criteria), 17 (the tag model and UDTs), 18 (the view builder reference).
 3. pinned web components, `@oicl/openbridge-webcomponents` 2.0.0-next.155, Apache-2.0 (COBD-003).
 
 ## 12. Third-party Names That Remain

@@ -54,6 +54,10 @@ The descriptor (`cadre-hmi-screen/1`) names one screen; `screens/sample-pump-sta
 complete example, and `screens/wtp/` holds the four generated pages of the water treatment sample
 (page 11).
 
+This section explains the descriptor; page 18 gives every key of the descriptor and the device model, the
+parameters of each kind and the placement arithmetic as a reference for a tool that writes them, page 17 the
+tag structure (one UDT per device kind) and page 16 the criteria for choosing a kind.
+
 Table 1. Descriptor sections.
 
 | Key | Content |

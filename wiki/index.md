@@ -1,7 +1,7 @@
 ---
 title: Cadre HMI Library wiki index
 type: wiki-index
-updated: 2026-11-03
+updated: 2026-11-05
 ---
 # Cadre HMI Library: Wiki Index
 
@@ -24,6 +24,9 @@ and screen generator, built on stock Perspective components and tested on a live
 | [13 Faceplates, alarm lists and interlocks](13-faceplates-alarm-lists-interlocks.md) | How a faceplate is tabbed, how it finds and lists the device's alarms, the module's alarm components, the provisional interlock contract, and the instrument faceplate with its limits and trend |
 | [14 Library configuration](14-library-configuration.md) | Every configuration of the library as delivered: the cloud environment, the gateway, the module (97 components), building and deploying, the four frames, the gates, the owner's decisions, the open items and the merge back; the generated component list is `module/CATALOGUE.md` and the operational reference `CONFIGURATION.md` |
 | [15 Showcase project](15-showcase.md) | The project `cadre_hmi_showcase`: every one of the 97 components, and the parent's embedded symbol views, on grouped pages with an editor for each property, a live simulation and an event log, and the gates that prove it works |
+| [16 Component selection guide](16-component-selection.md) | Which rendering, frame, faceplate style and place, page layout and kind to choose for each plant object; when a module-only kind, a module chart or a module line is the right choice; where the module keeps the library's view |
+| [17 Tag model and UDTs](17-tag-model-and-udts.md) | The tag structure each device kind needs, stated as one UDT per kind: every member with its type, access, write path, faceplate tab and default; the maintenance, configuration and interlock folders; alarms and history; a worked UDT, instance and device model entry |
+| [18 View builder reference](18-view-builder-reference.md) | Every key of the screen descriptor and the device model, the symbol parameters of each kind, the placement arithmetic, the module rendering rules and the gate checks, for a tool that writes descriptors automatically |
 
 ## 2. Summary
 
@@ -46,6 +49,12 @@ faceplate alarm tab display only, made trips latch until reset, put every write 
 gateway's admin role with a signed in operator walk and an anonymous refusal, fixed the faceplate
 trend's labels, added a trend page, and released module 0.2.1 with one restart; the walk now has up
 to 19 checks (pages 11 and 13, NOTE-COB-04 revision E).
+
+Since 2026-11-03 the cloud sessions have built the module Cadre HMI Components to version 0.8.0 (97 components: the device symbols,
+the module-only symbols and glyphs, charts and building blocks, the 33 frame components, nine pipe components, the alarm lists and the
+canvas zoom), two frames drawn with its components (`ob` and `obasm`) beside the two stock frames, and the showcase project (pages 12,
+14 and 15). Pages 16 to 18 (2026-11-05) are the design-time references: the selection criteria, the tag model with one UDT per device
+kind, and the complete JSON reference for an automatic view builder.
 
 ## 3. Six Findings Worth Carrying Forward
 
