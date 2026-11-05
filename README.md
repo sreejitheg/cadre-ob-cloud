@@ -21,6 +21,9 @@ Scope: process automation (COBD-010).
 |---|---|
 | See the component catalogue with every property | [`wiki/05-component-catalogue.md`](wiki/05-component-catalogue.md) |
 | Build a screen | [`wiki/08-generation-and-validation.md`](wiki/08-generation-and-validation.md) |
+| Choose the rendering, frame, faceplate and kind for a plant | [`wiki/16-component-selection.md`](wiki/16-component-selection.md) |
+| Define the tags (one UDT per device kind) | [`wiki/17-tag-model-and-udts.md`](wiki/17-tag-model-and-udts.md) |
+| Write descriptors and device models from a tool | [`wiki/18-view-builder-reference.md`](wiki/18-view-builder-reference.md) |
 | See a process plant built on the library | [`wiki/11-water-treatment-sample.md`](wiki/11-water-treatment-sample.md) |
 | See the module spike and its comparison | [`wiki/12-module-spike.md`](wiki/12-module-spike.md) |
 | Learn each component with live editors, simulation and an event log | [`wiki/15-showcase.md`](wiki/15-showcase.md) (the project `cadre_hmi_showcase`, `tools/hmi/showcase.py`) |

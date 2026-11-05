@@ -71,7 +71,7 @@ palette-aware body is converted, so an icon re-colours with the palette. Circles
 lines and polygons are rewritten as path data, so only attested element keys are emitted (`type`,
 `d`, `fill.paint`, `fill.rule`, `stroke.*`, `transform`).
 
-92 icons are converted today (`library/icons/ICONS.txt`): every on and off state of the eight
+93 icons are converted today (`library/icons/ICONS.txt`; page 18 Table 4a lists them): every on and off state of the eight
 device kinds in the library, the control and lock badges, the trend arrows, the frame icons
 (menu, alerts, palettes, user, close), and two water sensor icons the water treatment sample uses
 for navigation (page 11). They use seven palette variables between them. A further 2,009 icons are

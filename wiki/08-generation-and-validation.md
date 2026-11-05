@@ -54,6 +54,10 @@ The descriptor (`cadre-hmi-screen/1`) names one screen; `screens/sample-pump-sta
 complete example, and `screens/wtp/` holds the four generated pages of the water treatment sample
 (page 11).
 
+This section explains the descriptor; page 18 gives every key of the descriptor and the device model, the
+parameters of each kind and the placement arithmetic as a reference for a tool that writes them, page 17 the
+tag structure (one UDT per device kind) and page 16 the criteria for choosing a kind.
+
 Table 1. Descriptor sections.
 
 | Key | Content |
@@ -230,11 +234,9 @@ Table 2a. Heights of the rows of the water treatment overview (`screens/wtp/over
    package module (page 12) instead of the library views; the descriptor does not change. G1
    then validates the module components against their generated schemas. A kind without a module
    component, the controller, the indicator and the sequence among them, is drawn with its library
-   view under either target. The module's tank has no property that hides the capacity line, so a
-   static tank without a capacity is drawn with the library's own tile under this target too
-   (`kinds.tank.moduleExcept` in the library profile). The module's pump always prints a speed and
-   its tank always prints `m³`: a pump with no speed and a tank in another unit are drawn with
-   their library views as well (`moduleNeeds`).
+   view under either target. Since module 0.3.0 the module's tank takes `hasCapacity` and `unit` and its pump
+   `hasSpeed` (`screen.MODULE_STATE`), so a static tank without a capacity, a level in any unit and a
+   pump with no speed are drawn by the module; what still keeps the library's view is page 16 Table 3.
 
 ## 5. Gates
 
@@ -271,8 +273,9 @@ report = json.load(open("workspace/reports/pilot.json"))
 clean = not any(g["warnings"] for g in report["gates"].values() if isinstance(g, dict))
 ```
 
-A note is what a page shows that its descriptor does not state and that no layout can cure; today
-there is one, the capacity line of a static tank under the module rendering (section 4 item 7).
+A note is what a page shows that its descriptor does not state and that no layout can cure. The
+one such case, the capacity line of a static tank under the module rendering, closed with module
+0.3.0 (section 4 item 7), and the generator emits no note today.
 `screen.py` prints each as `  note: <route>: <text>` and the route's entry of the report lists them
 under `notes`. A note fails nothing and is no warning.
 

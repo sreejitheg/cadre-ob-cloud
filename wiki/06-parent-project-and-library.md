@@ -232,16 +232,13 @@ and the top, and 66 per cent of the height), where the vessel of a live tank fil
 the left, the right or the top of a static tank therefore ends at the tile's edge
 (`diagram.connection_point`), on the centre lines of the box; before, it ended at the box and stopped
 short of the tile. A pipe at the bottom still ends at the box: the identifier lies between the tile
-and it. Under the module rendering a tank is the module's own component, which fills its box and
-draws its own capacity; `hasCapacity` does not reach it. A static tank without a capacity is
-therefore drawn by the library's own tile under the module rendering as well
-(`screen.MODULE_EXCEPT`, published in the library profile as `kinds.tank.moduleExcept`), so that
-neither rendering shows a number the descriptor does not state. For the same reason the module
-draws a pump only when the pump has a speed, and a tank only when its unit is cubic metres
-(`screen.MODULE_NEEDS`, `moduleNeeds` in the profile): the module's pump always prints a speed and
-its tank always prints `m³`, so a pump with no speed and a level in litres or per cent are drawn by
-the library's views. A property on the module's components would lift both; that needs a module
-build and a gateway restart.
+and it. Under the module rendering a tank is the module's own component, which fills its box. Until module
+0.3.0 the component drew its own capacity and printed `m³`, so a static tank without a capacity, a
+level in another unit and a pump with no speed kept the library's views. Module 0.3.0 gave the
+components `hasCapacity`, `unit` and `hasSpeed` (COB-110), which the generator states where the
+symbol gives none (`screen.MODULE_STATE`): a static tank without a capacity is now drawn by the
+module's tank with `hasCapacity` false, in any unit, and `kinds.tank.moduleExcept` is empty (page 16
+Table 3 lists what still keeps the library's view).
 
 ## 5. Device and Faceplate Contract
 
