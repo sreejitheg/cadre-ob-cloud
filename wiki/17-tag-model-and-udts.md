@@ -81,7 +81,7 @@ Table 1. The keys of a device model entry and where each comes from.
 | `members[].pulse`, `caption` | `pulse` true on every member of the kind's `pulses` that is marked `write`; `caption` only on such a member (section 5.7) |
 | `members[].config` | The Config row of a member under `cfg/` (section 5.4) |
 | `alarmSources` | The source patterns of the device's alarms where they stay on source tags (section 7.4) |
-| `trend` | The members the tag model historises, drawn from the kind's trend members (section 8) |
+| `trend` | The members the tag model historises, each one the device lists (gate G7 devices); each gets a card on the trend page, and the faceplate's trend draws those among the kind's trend members (section 8) |
 | `faceplate` | `openbridge` or `asm`; left out, the project's default (`screen.py --faceplate`) |
 | `modes` | The values of the member `mode`, each with a name and an owner (section 5.5) |
 | `node` | The device's node of the plant hierarchy, for a device no page draws |
@@ -141,7 +141,8 @@ needed (GF-54). The instance sets the parameter, `"parameters": {"Stem": {"dataT
 (`{"name": "state", "tagType": "AtomicTag"}`), as the export of the probe returned it.
 
 A site whose members read an OPC item would bind `valueSource` `opc` and `opcItemPath`. GF-51 records that the Ignition-Wiki (IGW:26) documents the
-parameter form for `opcItemPath` and for `value`, and that it was not measured here. This page therefore gives no other OPC key; they are taken from
+parameter form for `opcItemPath` and for `value`; experiment E6 measured the form on `sourceTagPath` and `expression` only (GF-54), so the OPC form
+has not been measured here. This page therefore gives no other OPC key; they are taken from
 the schemas vendored in `cloud/vendor/ignition-wiki/` and measured before use (section 11).
 
 ### 3.4 Value Source by Access
@@ -163,12 +164,14 @@ Every table of this section lists the members of the kind in the library profile
 * **Type**: the type the library reads (section 2.3).
 * **Access**: `read`, or `write` with the write path of Table 16; every path needs the role `Administrator` (COBD-024), so the role is not repeated.
 * **Test model**: whether the generated test model creates the member for a device of a build without a device model, with its default
-  (`FACEPLATE_MEMBERS` of `tools/hmi/screen.py`). It writes a memory tag of the library's type for each, in folders by path segment, and nothing else
-  (`tags_document`). For a device that a device model names it creates exactly the members the model lists, in the model's types, with the value
-  false, 0 or empty text.
+  (`FACEPLATE_MEMBERS` of `tools/hmi/screen.py`). It writes a memory tag of the library's type for each, in folders by path segment, and beyond them
+  only the members the descriptor's symbols bind and the tags the page parts read (`tags_document`, page 06 section 5 rule 3). For a device that a
+  device model names it creates the members the model lists, in the model's types, with the value false, 0 or empty text unless the descriptor's
+  `tagValues` or a bound value gives another, beside the members the symbols bind.
 * **Tab**: the tab that shows the member, in the stock faceplate and then in the `asm` one, separated by a slash; one word where the two agree and
-  `None` where a style shows nothing. The `asm` Diagnostics tab also shows the raw value of every member its faceplate reads (page 13 section 10.2
-  Table 1); `None (relay)` marks a member that no tab shows.
+  `None` where a style shows nothing. The `asm` Diagnostics tab also shows the raw value of a fixed set of members (page 13 section 10.2 Table 1):
+  for the pump and the valve every member the faceplate reads (`framework.DIAGNOSTIC_GROUPS`), and for the generator, the sequence and the
+  instrument the groups of `tools/hmi/devices_asm.py`, which leave out the `mnt/` members and the instrument's limits; `None (relay)` marks a member that no tab shows.
 
 ### 4.1 The Pump, Motor and Fan Members
 
@@ -223,7 +226,7 @@ Table 6. The members of the tank.
 | Member | Type | Access | Test model | Tab | Meaning |
 |---|---|---|---|---|---|
 | `alarmAck` | Boolean | write (W6, W8, W9) | No | None (relay) | The controller acknowledgement bit: the library writes true when an alarm of the device is acknowledged through it, and the controller returns it to false (section 5.3) |
-| `capacity` | Float8 | read | No | Values (tile) | Capacity, shown with the volume in the tile |
+| `capacity` | Float8 | read | No | Values (tile, `--render module` only) | Capacity, shown with the volume in the module's tile |
 | `hiHiLimit` | Float8 | write (W4) | No | Values | High high limit of the value; the setpoint of the alarm that follows it |
 | `hiHiLimitDelay` | Float8 | write (W4) | No | Values | On-delay in seconds, 0 to 3600, of the high high alarm |
 | `hiLimit` | Float8 | write (W4) | Yes, 90.0 | Values | High limit of the value; the setpoint of the alarm that follows it |
@@ -233,14 +236,15 @@ Table 6. The members of the tank.
 | `loLimitDelay` | Float8 | write (W4) | No | Values | On-delay in seconds, 0 to 3600, of the low alarm |
 | `loLoLimit` | Float8 | write (W4) | No | Values | Low low limit of the value; the setpoint of the alarm that follows it |
 | `loLoLimitDelay` | Float8 | write (W4) | No | Values | On-delay in seconds, 0 to 3600, of the low low alarm |
-| `trend` | String | read | No | Values (tile) | Text for the tile's trend arrow (the sample writes rising, falling or stable) |
-| `volume` | Float8 | read | No | Values (tile) | Volume, shown against the capacity in the tile |
+| `trend` | String | read | No | Values (tile, `--render module` only) | Text for the tile's trend arrow: fast-rising, rising, stable, falling or fast-falling (the sample writes rising, falling or stable) |
+| `volume` | Float8 | read | No | Values (tile, `--render module` only) | Volume, shown against the capacity in the module's tile |
 
 * **Pulses**: none. **Trend**: `level`, in per cent. **Maintenance**: no. **Configuration**: no (the kind has no Config rows, so gate G7 devices
   refuses a `cfg/` member). **Interlocks**: no.
 * **Limits.** The faceplate lists the limits the folder carries, and none when `level` is absent (section 5.2).
 * **Alarms.** The sample puts a High level alarm on `level` following `hiLimit` and a Low level alarm following `loLimit` (section 7.1).
-* The tile shows the volume against the capacity and the trend text where the folder carries them (page 13 section 8 rule 7).
+* Under the stock rendering the tile draws the level alone. Under the module rendering it shows the volume against the capacity where the folder
+  carries both, and the trend where it carries one (`cadre.hmi.tank_tile`; page 13 section 8 rule 7).
 
 ### 4.4 The Instrument, Readout and Instrument Field Members
 
@@ -303,7 +307,8 @@ Table 8. The members of the controller.
 | `ti` | Float8 | write (W15) | Yes, 0.0 | Tuning | Integral time in milliseconds, not below 0; written by the Tuning tab |
 | `value` | Float8 | read | Yes, 0.0 | Control, Trend | The process value |
 
-* **Symbol parameters.** `value` binds `value`, `setpoint` binds `sp`, `output` binds `out` and `manual` binds `manual` (`KIND_BIND`). A block that
+* **Symbol parameters.** `value` binds `value` (`FACEPLATE_BIND`), and `setpoint` binds `sp`, `output` binds `out` and `manual` binds `manual`
+  (`KIND_BIND`); `bind_rule` joins the two, and the profile states all four under the kind's `bind`. A block that
   draws a setpoint or an output (`hasSetpoint`, `hasOutput`) belongs to a device that lists `sp` or `out`.
 * **Pulses**: none. **Trend**: `value`, `sp` and `out`; the output is drawn on a second axis from 0 to 100 (page 13 section 9.4).
 * **Maintenance**: no. **Configuration**: no. **Interlocks**: no.
@@ -321,8 +326,9 @@ Table 9. The members of the indicator.
 | `alarmAck` | Boolean | write (W6, W8, W9) | No | None (relay) | The controller acknowledgement bit: the library writes true when an alarm of the device is acknowledged through it, and the controller returns it to false (section 5.3) |
 | `state` | Boolean | read | Yes, False | Status | On or off |
 
-* **Symbol parameters.** `on` and `open` bind `state`. A generated tag model types a lamp's state by the values of the descriptor's `states`
-  (Boolean, Float8 or String; page 13 section 9.5); gate G7 devices, however, requires the `state` of a device model to be Boolean.
+* **Symbol parameters.** `on` and `open` bind `state`. A generated tag model types the state of a lamp that is not a device by the values of the
+  descriptor's `states` (Boolean, Float8 or String; page 13 section 9.5). For a lamp marked as a device it writes `state` as Boolean, the type of
+  `FACEPLATE_MEMBERS`, whatever its `states`; gate G7 devices likewise requires the `state` of a device model to be Boolean.
 * **Pulses**: none. **Trend**: none. **Maintenance**: yes (Table 12). **Configuration**: yes. **Interlocks**: no.
 
 ### 4.7 The Sequence Members
@@ -381,7 +387,7 @@ Table 11. The members of the generator.
 | `startDelay` | Float8 | read | No | Home | Start delay in seconds |
 | `startsToday` | Int4 | read | No | Home | Starts of the day |
 | `startsYesterday` | Int4 | read | No | Home | Starts of the day before |
-| `state` | Boolean | read | Yes, False | Home | Running |
+| `state` | Boolean | read | Yes, False | Header, Diagnostics | Running; shown as Running or Stopped in the header strip and as the selected look of Start or Stop on the Home tab |
 | `stopDelay` | Float8 | read | No | Home | Stop delay in seconds |
 | `switchText` | String | read | Yes, '' | Home | Control switch word (Auto, Manual, Off), computed in the tag model |
 | `timeLeft` | Float8 | read | No | Home | Time left in minutes |
@@ -399,7 +405,8 @@ Table 11. The members of the generator.
 ### 5.1 Maintenance Members
 
 A kind with maintenance true (pump, motor, fan, valve, analogvalve, damper, indicator, generator) may carry the members of `mnt/`. The Maintenance
-tab (stock) or Config tab (`asm`) shows only for a device with a row to show: a whole force, the error mask or a flag.
+tab (stock) or Config tab (`asm`) shows only for a device with a row to show: a whole force, the error mask, a flag or a configuration row
+(section 5.4), and on the generator its service data (section 4.8).
 
 Table 12. The maintenance members.
 
@@ -441,7 +448,8 @@ Table 13. The limit and delay members.
 | `loLoLimit` | `loLoLimitDelay` | Float8 | write (W4) | delay 0 to 3600 s | Low low |
 
 1. The faceplates list only the limits the device carries, one setpoint row each, and the delays beneath them (`cadre.hmi.limit_rows`,
-   `delay_rows`; page 13 section 11.4). A device without the value member lists none, since each row also reads that member.
+   `delay_rows`; page 13 sections 8 and 11.4). A device without the value member lists no limit, since each limit row also reads that member; its
+   delays are still listed.
 2. The delay is the limit's name followed by the suffix `Delay` (`DELAY_SUFFIX`), in seconds, 0 to 3600 (`MEMBER_BOUNDS`), written by W4 as the limit is.
 3. A limit is a setpoint: it must be writable (memory, or a reference to a writable source), and the alarm follows it (section 7.2).
 4. The test model creates only a tank's `hiLimit` (90.0) and `loLimit` (10.0); every other limit and every delay is optional and never generated.
@@ -455,8 +463,9 @@ relayed. A device without the member is told nothing. No tab shows it.
 
 ### 5.4 Configuration Members
 
-A configuration member is a number under the device's subfolder `cfg/`, shown as a row of the Config tab (the Maintenance tab of a stock faceplate)
-and written by W19 within its bounds (page 13 section 10.4). The profile's `config` gives the prefix `cfg/`, the types Int1, Int2, Int4, Int8, Float4
+A configuration member is a number under the device's subfolder `cfg/`, shown as a row of the Config tab of an `asm` faceplate or of the
+Maintenance tab of the stock Pump, Valve and Input faceplates (the stock Instrument and Sequence faceplates have no such tab, so the rows of an
+instrument, readout, instrument field or sequence show only in the `asm` style, `framework.has_config`), and written by W19 within its bounds (page 13 section 10.4). The profile's `config` gives the prefix `cfg/`, the types Int1, Int2, Int4, Int8, Float4
 and Float8, the write path W19 and a caption of at most 24 characters. A Boolean or String member has no row.
 
 The kinds that may carry `cfg/` rows are those with config true: pump, motor, fan, valve, analogvalve, damper, instrument, readout,
@@ -466,7 +475,8 @@ underscore; the schema's pattern for a member name), for example `cfg/startDelay
 The device model marks the member `config`, with a `caption` (1 to 24 characters, one line, not the label of a tab), and optionally `unit` (at most 12
 characters), `minimum`, `maximum` and `format` (`0`, `0.0`, `0.00`, `0.000` or `0.0000`; `0.0` when left out). The member carries no `pulse` and no
 button `caption`. Gate G7 devices requires a `cfg/` member to be marked `config`, numeric, on such a kind and with its minimum not above its maximum; it
-warns of a member with no bounds. The test model never creates one.
+warns of a member with no bounds. The test model of a build without a device model never creates one; with a device model it creates those the
+model lists, as memory tags.
 
 ### 5.5 Ownership by Mode
 
@@ -514,7 +524,7 @@ Table 16. The write paths.
 | W4 | `command` | `hiHiLimit`, `hiLimit`, `loLimit`, `loLoLimit`, `hiHiLimitDelay`, `hiLimitDelay`, `loLimitDelay`, `loLoLimitDelay` | Administrator | alarm limit | No |
 | W5 | `command` | `fault` | Administrator | fault reset | Yes |
 | W6 | `ack_top` | `alarmAck` | Administrator | acknowledge from the top bar | No |
-| W7 | `none` | none (stock alarm table, GF-40) | Administrator | stock alarm table actions | No |
+| W7 | empty (`""`): no checked function; the stock table acts itself | none (stock alarm table, GF-40) | Administrator | stock alarm table actions | No |
 | W8 | `ack_event` | `alarmAck` | Administrator | acknowledge a row of the alarm menu | No |
 | W9 | `ack_event` | `alarmAck` | Administrator | acknowledge the visible alarms | No |
 | W10 | `bypass` | `ilk/Cnn/bypassed` (gate G7 devices, `ILK_WRITABLE`) | Administrator | interlock bypass | No |
@@ -532,7 +542,9 @@ Table 16. The write paths.
 
 A pulse member is a Boolean that a session sets (W18) and the plant returns to false. The library never writes false to one. In the device model it is
 marked `"pulse": true` and `"access": "write"`, and may carry a `caption` of 1 to 32 characters, one line, with no space at either end and not the label
-of a faceplate tab. Without a caption the button shows the default of Table 17, and in a project without a device model, the member's name.
+of a faceplate tab. Without a caption, a button of an `asm` faceplate (`Faceplate/ASM/Generator`,
+`Faceplate/ASM/Sequence`) shows the default of Table 17, with or without a device model; the stock `Faceplate/Sequence` draws a button for
+`trigger` alone and names it by the member (page 13 section 12.5).
 
 Table 17. The pulse members of the profile and their default captions.
 
@@ -720,8 +732,9 @@ The condition is written below on the keys of experiment E6. Its memory members 
 ```
 
 The sample builds its conditions as plain folders with expression tags that read their own value through `{[.]name}` (`ilk_condition` and `ilk_folder` of
-`tools/plants/wtp.py`), which is the measured form. Two things are not measured for a UDT (section 11): an instance of the condition nested in the
-device UDT's `ilk` folder, and an override of a member's value in an instance. Until they are, a builder follows the sample and writes each `ilk/Cnn`
+`tools/plants/wtp.py`), which is the measured form. Three things are not measured for a UDT (section 11): a memory member with a `value` inside a
+type, which seven members of the condition are; an instance of the condition nested in the device UDT's `ilk` folder; and an override of a member's
+value in an instance. Until they are, a builder follows the sample and writes each `ilk/Cnn`
 as a plain folder.
 
 ### 6.5 The Gate Checks
@@ -740,8 +753,8 @@ The alarms of the water treatment sample (`tools/plants/wtp.py`) sit on the memb
 * A motor's `fault` (memory, Boolean): one alarm `Fault`, priority High.
 * A tank's `level` (expression, historised): `High level` (mode `AboveValue`, following `hiLimit`, priority Medium by default) and `Low level`
   (`BelowValue`, following `loLimit`, priority High by default).
-* An analyser's `value`: `High turbidity` (High, `AboveValue`, `hiLimit`), `Low free chlorine` (High, `BelowValue`, `loLimit`), `Low pH` (Medium,
-  `BelowValue`, `loLimit`).
+* An analyser's `value`: `High turbidity` (High, `AboveValue`, `hiLimit`, its on-delay following `hiLimitDelay`), `Low chlorine` (label text
+  `Low free chlorine`; High, `BelowValue`, `loLimit`) and `Low pH` (Medium, `BelowValue`, `loLimit`).
 
 ### 7.2 The One Form
 
@@ -801,11 +814,11 @@ Table 22. The members each kind trends.
 | instrument, readout, instrument-field | `value` | none | the device's unit |
 | tank | `level` | none | % |
 | controller | `value` | `sp` (setpoint), `out` (output) | the device's unit; % for `out` |
-| sequence | `step` | none | none; drawn as steps |
+| sequence | `step` | none | the device's unit; drawn as steps |
 | generator | `engineSpeed` | `fuelLevel` (fuel level) | the device's unit; % for `fuelLevel` |
 
-(`TREND_KINDS` and `TREND_ALSO` of `tools/hmi/screen.py`; the profile's `trend` list for each kind is the main member followed by the others.) The other
-kinds trend nothing.
+(`TREND_KINDS` and `TREND_ALSO` of `tools/hmi/screen.py`; the profile's `trend` list for each kind is the main member followed by the others.) Without `trend` in the
+device model the other kinds trend nothing; with it, a device of any kind gets the cards its list names (rule 2).
 
 1. **Without `trend` in the device model**, the trend index keeps the kind's members whose tag the tag model historises (`historised`).
 2. **With `trend`**, the device's cards are exactly those members. The schema describes them as the members the tag model historises. Gate G7 devices
@@ -997,7 +1010,8 @@ use the key `Folder` and the memory form of the probe but were not themselves in
 
 ### 9.3 The Instance
 
-The instance sits in the project's tag folder. The parameter sets the stem, and each member is a stub, as the export of E6 returned it.
+The instance sits in the project's tag folder. The parameter sets the stem, and each atomic member is a stub, as the export of E6 returned it. The folder stubs
+`mnt` and `cfg`, with their member stubs, are of the unmeasured shapes of section 11 item 2.
 
 ```json
 {
@@ -1188,11 +1202,13 @@ A builder that writes tags or UDTs checks the following before it runs the gener
 (`g7_devices` of `tools/hmi/gates.py`; page 08 Table 4), stated in other words.
 
 1. **Kind and identity.** Every `kind` is a kind of the profile (Table 2); no `id` appears twice; every device folder exists in the tag model.
-2. **Names.** Every member is a name the profile knows for the kind, or a `cfg/` member (marked `config`), or, for a kind with interlocks, an `ilk/` member
-   of Tables 18 and 19. An unknown name is an error, never accepted in silence.
+2. **Names.** Every member is a name the profile knows for the kind, or a `cfg/` member (marked `config`), or, for a kind with interlocks, one of the six summary
+   members of `gates.ILK_SUMMARY` (`ilk/<member>`) or the ten condition members of `gates.ILK_CONDITION` (`ilk/Cnn/<member>`); the sample's `badge`,
+   `resetSeen` and `notMetAt` of Tables 18 and 19 are unknown names to it. An unknown name is an error, never accepted in silence.
 3. **Types.** Each declared type suits the type the library reads (section 2.3), and equals the `dataType` of the tag.
 4. **Writes.** A member marked `write` is on a write path (Table 16), and its tag is not an expression tag. An `ilk/` member written is `ilk/resetAt` or a
-   condition's `bypassed`.
+   condition's `bypassed`. The gate takes the path from the member's last segment (`ILK_WRITABLE`), so without a tag file it also accepts the
+   summary's `ilk/bypassed` marked `write`; a builder marks that member `read`.
 5. **Pulses.** A member marked `pulse` is a pulse member of the kind, Boolean and `write`. A pulse member of the kind that is `write` is marked `pulse`. A
    caption stands only on a pulse member, is 1 to 32 characters on one line, has no space at either end, and is not the label of a faceplate tab.
 6. **The force.** One whole encoding of Table 12, both members in the same access.
@@ -1212,7 +1228,8 @@ A builder that writes tags or UDTs checks the following before it runs the gener
     member, has no member leaves, and the gate reports that the tag model has no folder for the device; the same device written as an expanded folder passes.
     Until a builder expands the instances (no tool of this repository does), a UDT based model is checked without `--tags-file`, and the checks
     of item 11 and of section 6.5 are done by the builder on its own tag source.
-13. **Sources.** Every member has a source (section 2.2). A device whose members are references to missing sources reads null with a bad quality.
+13. **Sources.** Every member has a source (section 2.2). No check of gate G7 devices reads a reference's source. A device whose members are
+    references to missing sources reads null with a bad quality (GF-50), and gate G11 fails on the faceplate's quality line.
 
 ## 11. Limits and Open Items
 
@@ -1230,10 +1247,8 @@ A builder that writes tags or UDTs checks the following before it runs the gener
 4. **The tag file check.** Gate G7 devices with a tag file does not read UDT instances (section 10 item 12).
 5. **The trend and the history keys.** No gate reads `historyEnabled` against a `trend` list (section 8 item 2).
 6. **Differences found in the sources.** (a) Page 13 Table 13 (the members of a generator) says the generator's `fault` is not written, and the profile maps
-   `fault` to W5 for every kind. (b) Page 13 section 10.1 lists the gated paths without W19, and the profile gates W19 for maintenance only. (c) Page 13 section 9.7 says the
-   library knows one pulse member, `trigger`, and section 12.5 and the profile give nine. (d) The `asm` faceplates of the instrument and the sequence
-   read `mnt/` members (page 13 section 12), and the profile gives those kinds none. (e) The gate's summary list omits `badge`, which page 13 Table 5
-   lists. (f) The component test page's modes (Table 15) are not the Auto, Manual and Local reading of page 06 Table 5.
+   `fault` to W5 for every kind. (b) The `asm` faceplates of the instrument and the sequence read `mnt/` members (page 13 section 12), and the profile
+   gives those kinds none. (c) The gate's summary list omits `badge`, which page 13 Table 5 lists. (d) The component test page's modes (Table 15) are not the Auto, Manual and Local reading of page 06 Table 5.
 7. **No position member.** The analogue valve and the damper have no position member; the library reads a state and a command only.
 
 ## 12. References

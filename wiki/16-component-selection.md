@@ -69,8 +69,9 @@ Table 2. The renderings compared (page 12 section 8 Table 6, page 14, `CONFIGURA
 ### 2.3 Where the Module Keeps the Library's View
 
 Under `--render module` a symbol stays on the library's view wherever the component cannot show its parameters truthfully. A builder that
-wants every symbol drawn by the module avoids the parameter sets of Table 3. The profile publishes the same facts as `kinds.<kind>.moduleExcept`
-and `moduleNeeds`.
+wants every symbol drawn by the module avoids the parameter sets of Table 3, and on a diagram gives a readout or an instrument field a box no
+more than 4 px shorter than the element's measured height (`MODULE_SHORT`, `module_height`). The profile publishes the parameter sets as
+`kinds.<kind>.moduleExcept` and `moduleNeeds`.
 
 Table 3. The parameter sets that keep a symbol on the library's view (`screen.py` `MODULE_EXCEPT`, `MODULE_NEEDS`, `module_digits`).
 
@@ -78,11 +79,11 @@ Table 3. The parameter sets that keep a symbol on the library's view (`screen.py
 |---|---|---|
 | `fan`, `filter`, `damper`, `switch` | `vertical` is true | The component has no vertical artwork for the fan; the others have three orientations where the library's flag names no side |
 | `valve`, `analogvalve`, `filter`, `damper`, `switch` | `variant` is other than `regular` or `flat` | The component draws only those two (the library's `regular` is the component's `square` for the filter, damper and switch, `MODULE_VALUE`) |
-| `generator` | `picture` is `genset`; or `variant` other than `regular`, `activated`, `progress`, or a control, interlock or command locked badge | The component is the indicator disc and draws none of these marks; the generator set is a library drawing |
+| `generator` | `picture` is `genset`; `variant` other than `regular`; `activated` or `progress` true; `badgeControl`, `badgeInterlock` or `badgeCommandLocked` other than `none` | The component is the indicator disc and draws none of these marks; the generator set is a library drawing |
 | `tank` | `valueFractionDigits` other than 0 | The component prints whole numbers |
 | `instrument-field` | `size` `enhanced` with `hasSetpoint` true; `align` `start` | The enhanced field with a setpoint is 6 px higher than the library's box; the element cannot align its rows at the start |
 | `readout`, `instrument-field` | A number format that is not `0`, `0.0`, `0.00` and so on (with or without `#,##`), or a setpoint with other digits than the value | The element takes a digit count, not a format (`fraction_digits`) |
-| Any library kind | `badgeDuty` or `outOfService` given | The page parts' duty mark and out of service greying are library drawing |
+| `valve`, `analogvalve`, `filter`, `damper`, `switch`, `generator`, `tank`, `readout`, `instrument-field` | `badgeDuty` or `outOfService` given | The page parts' duty mark and out of service greying are library drawing where the component has no such property; the pump, motor and fan components have both since 0.4.0 and draw them (`module_draws`, `parts.SYMBOL_PARAMS`) |
 | `indicator`, `controller`, `sequence` | Always | The module has no component for these kinds; they are library views in both renderings |
 
 ## 3. The Frame
@@ -101,7 +102,6 @@ Table 4. The frames and what separates them (page 04 sections 2 to 11, page 14 s
 | Global search | No | Yes | No | Yes |
 | Page header with title, level word, previous and next, and the pivot pages Alarms and Trend of a node | No | Yes | No | Yes |
 | Several floating faceplates | No (one popup) | Yes, six slots | No | Yes |
-| Canvas zoom and its toolbar | No | Yes | No | Yes |
 | ASM glass gates (`search`, `zoom`, `panels`) | Not applicable | Run | Skipped with the reason recorded | Run (read only gates; the writing gates need an ASM model, page 14 section 9 item 3) |
 
 ### 3.2 The Rule
@@ -119,8 +119,9 @@ Table 4. The frames and what separates them (page 04 sections 2 to 11, page 14 s
 
 ### 3.3 The Room a Frame Leaves
 
-The render gate's viewport is 1600 by 900 px (`frame.viewport`); the diagram canvas is 1580 by 600 px and the cards canvas 1600 by 852 px
-(`frame.diagramCanvas`, `frame.cardsCanvas`). A diagram page that should scale to its window states `fit`. `fit: true` reserves the default
+The render gate's viewport is 1600 by 900 px (`frame.viewport`); the profile states 1580 by 600 px and 1600 by 852 px as the canvases of the
+sample's diagram and cards pages (`frame.diagramCanvas`, `frame.cardsCanvas`), while a diagram's own canvas is the `screen.width` and
+`screen.height` its descriptor states. A diagram page that should scale to its window states `fit`. `fit: true` reserves the default
 frame's 48 px top dock and, where the page has the toolbar, 56 px more (`parts.FIT_TOP_DOCK`, `FIT_TOOLBAR`); under another frame the page
 states its reservation as an object.
 
@@ -135,7 +136,9 @@ included).
 | `obasm` | 132 + 76 px | 264 px |
 
 An open faceplate dock takes 400 px of the width while it is docked (`parts.FIT_FACEPLATE_DOCK`, GP-10); `reserveX` reserves a dock that stays
-open.
+open. Under the module rendering, which `ob` and `obasm` require, the fit uses the canvas the canvas zoom component measures once it reports a
+width and a height; that measured fit applies `reserveX` and not `reserveY` (`parts.fit_expression`), so the values of Table 5 hold until the
+canvas is measured.
 
 ## 4. The Faceplate Style and Place
 
@@ -154,9 +157,13 @@ Table 6. The faceplate each device kind opens in each style (`library/profile.js
 | `instrument`, `readout`, `instrument-field` | `Faceplate/Instrument` | `Faceplate/ASM/Instrument` |
 | `sequence` | `Faceplate/Sequence` | `Faceplate/ASM/Sequence` |
 | `generator` | `Faceplate/ASM/Generator` | `Faceplate/ASM/Generator` |
-| `tank` | `Faceplate/Tank` | `Faceplate/Tank` (gate G7 devices warns) |
-| `controller` | `Faceplate/Controller` | `Faceplate/Controller` (gate G7 devices warns) |
-| `indicator` | `Faceplate/Input` | `Faceplate/Input` (gate G7 devices warns) |
+| `tank` | `Faceplate/Tank` | `Faceplate/Tank` |
+| `controller` | `Faceplate/Controller` | `Faceplate/Controller` |
+| `indicator` | `Faceplate/Input` | `Faceplate/Input` |
+
+Gate G7 devices warns of a device model entry that itself states `faceplate` `asm` for a kind whose `asm` faceplate is its stock one: the tank,
+the controller, the indicator and also the generator, whose one faceplate serves both styles. A device that takes `asm` from the project default
+(`--faceplate asm`) draws no warning.
 
 Rule: choose `asm` for a project built for an ASM operation (usually with the frame `asm` or `obasm`), and `openbridge` otherwise. Run G11 with
 the same `--faceplate` the project was built with. A `filter` or a `switch` is a symbol kind without a device kind: it opens no faceplate of its
@@ -246,8 +253,9 @@ Table 9. The kind of a source object by its signals (the first row that matches)
 A module-only kind has a module component and no library view (`MODULE_ONLY` less `FRAME_ONLY`, 48 kinds). It draws only under
 `--render module`; the stock rendering refuses each such symbol with one error (gate G7 contract). Its parameters are the component's properties
 (`module/CATALOGUE.md` sections 4 and 5). Every one of them is display only: no module-only kind writes to the plant, has a device kind of its own, or
-takes part in the compiled flow (owner's decision of tranche T1, page 14 section 8). A module-only symbol that should open a device's faceplate
-states `faceplate`, or is made the drawing of a device of another kind (section 8).
+gates the compiled flow; a pipe may end at one, which then passes the flow (`diagram.node_role`). The symbols and glyphs were made display only by
+the owner's decision of tranche T1, the charts and building blocks by that of T2 (page 14 section 8). A module-only symbol that should open a device's faceplate
+states `faceplate`; an electrical symbol may also be made the drawing of a device of another kind (section 8).
 
 Choose a module-only kind only where Table 8 has no kind for the object, the project renders with the module, and the object is shown rather than
 operated.
@@ -258,9 +266,9 @@ Table 10. The module-only kinds (the descriptor kind, the component and its defa
 
 | Purpose | Descriptor kinds | Components | Default size | Notes |
 |---|---|---|---|---|
-| Electrical single line symbols | `resistor`, `capacitor`, `diodes`, `ground`, `source`, `converter`, `transformer`, `bipolar-transistor`, `mosfet`, `logic`, `router` | `cadre.ob.resistor` and the same names | 96 by 96 (48 px symbol box) | Static symbols on the filter's attribute set: `on`, `tag`, `readoutPosition`, badges and alert frame; placed like an automation symbol |
+| Electrical single line symbols | `resistor`, `capacitor`, `diodes`, `ground`, `source`, `converter`, `transformer`, `bipolar-transistor`, `mosfet`, `logic`, `router` | `cadre.ob.resistor` and the same names | 48 by 48 symbol box (the component's own default is 96 by 96) | Static symbols on the filter's attribute set: `on`, `tag`, `readoutPosition`, badges and alert frame; placed like an automation symbol, with the filter's 48 px box and readout geometry (`screen.module_contract`) |
 | Busbar or data bus | `bus` | `cadre.ob.bus` | 200 by 24 | A labelled bar |
-| Pipe, cable and air lines | `horizontal-line`, `vertical-line`, `corner-line`, `three-way-line`, `line-cross`, `line-overlap`, `end-point-line`, `direction-line` | `cadre.ob.pipehorizontal`, `pipevertical`, `pipecorner`, `pipetee`, `pipecross`, `pipeoverlap`, `pipeend`, `pipedirection` | 24 px units | Display only lines; no compiled flow (section 10.1) |
+| Pipe, cable and air lines | `horizontal-line`, `vertical-line`, `corner-line`, `three-way-line`, `line-cross`, `line-overlap`, `end-point-line`, `direction-line` | `cadre.ob.pipehorizontal`, `pipevertical`, `pipecorner`, `pipetee`, `pipecross`, `pipeoverlap`, `pipeend`, `pipedirection` | 96 by 24 (horizontal), 24 by 96 (vertical), 24 by 24 (the other six) | Display only lines; no compiled flow (section 10.1) |
 | Valve glyphs without readout | `valve-analog-two-way-icon`, `valve-analog-three-way-icon` | `cadre.ob.valvetwoway`, `valvethreeway` | 48 by 48 | The valve and its opening as a small glyph |
 | Hydraulic circuit | `hydraulic-check-valve`, `hydraulic-valve-4-3`, `hydraulic-valve-x-2` | `cadre.ob.checkvalve`, `hydraulicvalve43`, `hydraulicvalvex2` | 48 by 48, 144 by 48, 96 by 48 | The selected position is shown; its selection is not wired (page 14 section 9 item 5) |
 | Specialty vessels | `heat-exchanger`, `heat-pump`, `hydraulic-separator` | `cadre.ob.heatexchanger`, `heatpump`, `hydraulicseparator` | 152 by 96 | A hot and a cold side for the first two |
@@ -273,11 +281,14 @@ Table 10. The module-only kinds (the descriptor kind, the component and its defa
 
 ### 7.3 The Frame Components
 
-The 33 frame components (`FRAME_ONLY`: the top bar, menus, navigation, tree navigation, breadcrumb, alert button and menu, notifications,
-tabs, pivots, modal window, context menu input, tooltip, toggletip, clock and the user and app buttons) are drawn by the frames `ob` and `obasm`
-in their own views. They are not symbols of a process page; a builder does not place them. The alarm lists (`cadre.ob.alertlist`,
-`cadre.ob.alertpanel`) are drawn by the frame and by the module's alarm views under the module rendering, and the canvas zoom
-(`cadre.ob.canvaszoom`) by the ASM frames.
+The 33 frame components (`FRAME_ONLY`) are not symbols of a process page, and a builder does not place them. The frames `ob` and `obasm`
+place eight of them in their own views: the top bar, the navigation menu, the alert menu, the brilliance menu and the user menu (`obframe.py`),
+and the tree navigation, the pivot item group and the tab row (`obasm.py`). The other 25 (the breadcrumb, the modal window, the context menu
+input, the notification items, the tooltip, the toggletip, the clock and the rest) are wrapped and shown on the component test page and the
+showcase, and are not placed by a frame. The alarm lists (`cadre.ob.alertlist`, `cadre.ob.alertpanel`) are drawn by the module's alarm views
+under the module rendering. The canvas zoom (`cadre.ob.canvaszoom`) is put on the canvas of every diagram page built with `--render module`,
+in any frame (`screen.canvas_zoom_node`), and the toolbar's zoom controls are on every diagram page that has the toolbar
+(`screen.zoom_controls`).
 
 ## 8. The Device and the Drawing
 
@@ -295,9 +306,11 @@ Table 11. What a symbol is to its device (page 06 section 5, the descriptor sche
 Rules:
 
 1. Give `device` to every object the operator commands or whose alarms the operator acknowledges. A `filter`, a `switch` or a module-only
-   symbol has no device kind: use `faceplate` to open a related device, or give `device` with `params.deviceKind` naming the device's kind
-   (Table 6), which makes the symbol that device's drawing and opens its faceplate (the component test page draws its alarm lamps as `switch`
-   symbols of `indicator` devices, `screen.embed_module`).
+   kind has no device kind of its own. A `filter`, a `switch` or one of the 11 electrical module-only symbols may be given `device` with
+   `params.deviceKind` naming the device's kind (Table 6), which makes it that device's drawing and opens its faceplate (the component test
+   page draws its alarm lamps as `switch` symbols of `indicator` devices, `screen.embed_module`). The other 37 module-only kinds are glyphs whose
+   contract holds only their component's properties, so `deviceKind` on one fails gate G7 contract: a glyph opens a device only through
+   `faceplate`.
 2. A device symbol binds its state, speed, value, a controller's setpoint, output and loop mode, and a sequence's step and text inside its own
    folder by the kind's member names, or gate G7 refuses it (page 06 section 5 rule 2).
 3. A device that no page draws can still be listed in the device model with a `node`, so that its alarms count and search finds it.
@@ -319,8 +332,9 @@ Rules:
 
 1. A readout or field that shows a loop's process value opens the controller: give it `deviceKind` `controller` and bind its value to the
    controller's `value` (page 06 section 5 rule 2).
-2. Alarm limits belong in the device's members (`hiHiLimit` to `loLoLimit` and their delays, page 17): the faceplate shows and writes them, and the
-   bar's limit marks can follow them.
+2. Alarm limits belong in the device's members (`hiHiLimit` to `loLoLimit` and their delays, page 17): the faceplate shows and writes them. The
+   symbol's `bar` and the `bars` part take `loLimit` and `hiLimit` as numbers of the descriptor and do not follow the members; only the range bar
+   of the `asm` instrument faceplate reads the device's limits.
 3. Under the module rendering keep number formats of the form `0.0` (Table 3), or the symbol stays on the library's view.
 
 ## 10. The Page Parts
