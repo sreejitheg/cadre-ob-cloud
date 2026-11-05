@@ -19,7 +19,7 @@ from hmi import screen  # noqa: E402
 WIKI = ROOT / "wiki"
 PROFILE = json.loads((ROOT / "library" / "profile.json").read_text(encoding="utf-8"))
 FORBIDDEN = ("—", "–", "→", "←", "⇒", "->", "=>")   # em and en dashes, arrows (CLAUDE.md section 7)
-PAGES = ("16-component-selection.md", "17-tag-model-and-udts.md")
+PAGES = ("16-component-selection.md", "17-tag-model-and-udts.md", "18-view-builder-reference.md")
 
 
 def page(name: str) -> str:
