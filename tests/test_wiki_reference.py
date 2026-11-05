@@ -206,5 +206,110 @@ class TagModel(unittest.TestCase):
                 self.assertEqual(listed[m][1], t, f"Table {number}, {m}")
 
 
+DESCRIPTOR = json.loads((ROOT / "schemas" / "screen-descriptor.schema.json").read_text(encoding="utf-8"))
+DEVICES = json.loads((ROOT / "schemas" / "devices.schema.json").read_text(encoding="utf-8"))
+CONTRACTS = json.loads((ROOT / "library" / "contracts.json").read_text(encoding="utf-8"))
+COMPONENTS = json.loads((ROOT / "module" / "components.json").read_text(encoding="utf-8"))
+
+
+class ViewBuilderReference(unittest.TestCase):
+    """Page 18, the view builder reference."""
+
+    # each key table of the page and the object schema it states (schema, path to the object)
+    KEY_TABLES = {
+        "4": (DEVICES, ()), "5": (DEVICES, ("$defs", "device")), "6": (DEVICES, ("$defs", "member")),
+        "7": (DESCRIPTOR, ()), "9": (DESCRIPTOR, ("properties", "screen")), "10": (DESCRIPTOR, ("$defs", "symbol")),
+        "12": (DESCRIPTOR, ("$defs", "symbol", "properties", "states", "items")),
+        "33": (DESCRIPTOR, ("$defs", "card")), "34": (DESCRIPTOR, ("$defs", "group")),
+        "35": (DESCRIPTOR, ("$defs", "flexSymbol")), "36": (DESCRIPTOR, ("$defs", "label")),
+        "37": (DESCRIPTOR, ("properties", "sections", "items")), "38": (DESCRIPTOR, ("properties", "junctions", "items")),
+        "39": (DESCRIPTOR, ("properties", "pipes", "items")),
+        "40": (DESCRIPTOR, ("$defs", "end", "oneOf", 0)), "41": (DESCRIPTOR, ("$defs", "end", "oneOf", 1)),
+        "43": (DESCRIPTOR, ("properties", "labels", "items")),
+        "44": (DESCRIPTOR, ("properties", "labels", "items", "properties", "emphasis")),
+        "45": (DESCRIPTOR, ("properties", "buttons", "items")), "47": (DESCRIPTOR, ("properties", "bars", "items")),
+        "48": (DESCRIPTOR, ("$defs", "symbol", "properties", "bar")),
+        "49": (DESCRIPTOR, ("properties", "trends", "items")),
+        "50": (DESCRIPTOR, ("properties", "trends", "items", "properties", "pens", "items")),
+        "51": (DESCRIPTOR, ("properties", "lines", "items")), "52": (DESCRIPTOR, ("properties", "links", "items")),
+        "53": (DESCRIPTOR, ("properties", "brackets", "items")), "54": (DESCRIPTOR, ("properties", "wells", "items")),
+        "55": (DESCRIPTOR, ("properties", "wells", "items", "properties", "marks", "items")),
+        "56": (DESCRIPTOR, ("properties", "alarmPanels", "items")),
+    }
+    # the parameter tables of section 6 and the view each states
+    PARAM_TABLES = {"14": "Automation/Pump", "15": "Automation/Motor", "16": "Automation/Fan", "17": "Automation/Valve",
+                    "18": "Automation/AnalogValve", "19": "Automation/Damper", "20": "Automation/Filter",
+                    "21": "Automation/Switch", "22": "Automation/Indicator", "23": "Automation/Generator",
+                    "24": "Automation/GeneratorSet", "25": "Automation/Tank", "26": "Automation/Readout",
+                    "27": "Instrument/Field", "28": "Instrument/Controller", "29": "Instrument/Sequence"}
+
+    @classmethod
+    def setUpClass(cls):
+        cls.text = page("18-view-builder-reference.md")
+
+    @staticmethod
+    def resolve(schema: dict, path: tuple) -> dict:
+        at = schema
+        for key in path:
+            at = at[key]
+            if isinstance(at, dict) and "$ref" in at:
+                target = schema
+                for part in at["$ref"].lstrip("#/").split("/"):
+                    target = target[part]
+                at = target
+        return at
+
+    def test_every_key_table_lists_exactly_the_keys_of_its_schema_object_and_which_are_required(self):
+        for number, (schema, path) in self.KEY_TABLES.items():
+            obj = self.resolve(schema, path)
+            rows = {r[0].strip("`"): r for r in table(self.text, number)}
+            self.assertEqual(set(rows), set(obj["properties"]), f"Table {number}")
+            for key, r in rows.items():
+                self.assertEqual(r[2].lower().startswith("yes"), key in obj.get("required", []), f"Table {number}, {key}")
+
+    def test_every_parameter_table_gives_the_parameters_and_defaults_of_its_view(self):
+        for number, view in self.PARAM_TABLES.items():
+            self.assertIn(f"`{view}`", re.search(rf"^Table {number}\. .*$", self.text, re.M).group(0))
+            rows = {r[0].strip("`"): r for r in table(self.text, number)}
+            params = CONTRACTS[view]["params"]
+            self.assertEqual(set(rows), set(params), f"Table {number}, {view}")
+            for name, default in params.items():
+                self.assertEqual(json.loads(rows[name][2].strip("`")), default, f"Table {number}, {view}, {name}")
+        self.assertEqual({v for v in self.PARAM_TABLES.values()}, set(screen.KIND_VIEW.values()) | {screen.GENSET_VIEW})
+
+    def test_table_2_gives_every_option_of_the_command_line(self):
+        source = (ROOT / "tools" / "hmi" / "screen.py").read_text(encoding="utf-8")
+        options = set(re.findall(r"add_argument\(\"(--[a-z-]+)\"", source))
+        listed = {r[0].strip("`") for r in table(self.text, "2")}
+        self.assertEqual(listed, options)
+
+    def test_table_11_gives_every_library_kind_with_its_view(self):
+        rows = table(self.text, "11")
+        views = {r[0].split()[0].strip("`"): r[1].strip("`") for r in rows if "genset" not in r[0]}
+        self.assertEqual(views, screen.KIND_VIEW)
+
+    def test_the_worked_examples_validate_and_the_device_model_passes_the_gate(self):
+        """Section 13 holds files a builder may copy: the two descriptors pass the schema (gate G0), and the device model
+        passes the schema and gate G7 devices against the diagram's device symbols."""
+        from hmi import gates, library_profile
+        section = self.text[self.text.index("## 13. "):self.text.index("## 14. ")]
+        blocks = [json.loads(b) for b in re.findall(r"```json\n(.*?)\n```", section, re.S)]
+        descs = [b for b in blocks if b.get("schema") == "cadre-hmi-screen/1"]
+        models = [b for b in blocks if b.get("schema") == "cadre-hmi-devices/1"]
+        self.assertEqual(([d["screen"]["layout"] for d in descs], len(models)), (["diagram", "cards"], 1))
+        self.assertEqual(screen.schema_errors(descs, ["intake.json", "overview.json"]), [])
+        self.assertEqual(screen.devices_schema_errors(models[0], "devices.json"), [])
+        res = gates.g7_devices(models[0], library_profile.build(screen.load_contracts()),
+                               screen.device_symbols(descs[:1], models[0]))
+        self.assertEqual((res["ok"], res["problems"], res["warnings"]), (True, [], []))
+
+    def test_table_58_gives_every_module_only_kind_with_its_component(self):
+        rows = {r[0].strip("`"): r[1].strip("`") for r in table(self.text, "58")}
+        want = {k: v for k, v in screen.MODULE_ONLY.items() if k not in screen.FRAME_ONLY}
+        self.assertEqual(rows, want)
+        for kind, ctype in want.items():
+            self.assertIn(ctype, COMPONENTS, kind)
+
+
 if __name__ == "__main__":
     unittest.main()
