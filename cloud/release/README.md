@@ -28,14 +28,28 @@ The showcase (`wiki/15-showcase.md`) needs the module above installed and its pa
 tags, the showcase, and a new browser session to look at it.
 
 1. Install the module 0.8.0 (steps 1 to 4 above) and check in the gateway's module list that Cadre HMI Components 0.8.0 is running.
-2. Import `cadre_hmi_base-0.8.0.zip` in the gateway web page under Config, Projects, Import. The project keeps the name `cadre_hmi_base`; it is
-   an inheritable parent and has no page of its own.
-3. Import the device tags: in the Designer's tag browser, create the folder `cadre_hmi_showcase` under the `default` tag provider, then import
-   `cadre_hmi_showcase-tags.json` into it (a JSON import with the overwrite policy). It holds one folder, `_componentTest`, of memory and
-   expression tags for the eleven test devices; no other tag is written.
-4. Import `cadre_hmi_showcase-0.8.0.zip` the same way as the parent. Its `project.json` names the parent `cadre_hmi_base`.
-5. A gateway import drops the project's identity provider (GF-44). Open the project's properties in the Designer and choose the provider
-   `default` under security, so that the faceplates' commands can ask for a sign in; a viewer sees every page without it.
+2. Import `cadre_hmi_base-0.8.0.zip` in the gateway web page under Config, Projects, Import Project: choose the file, type the project name
+   `cadre_hmi_base` (the name field stays empty after the file is chosen, and Import stays disabled until it is filled), and press Import. The
+   page sends `POST /data/api/v1/projects/import/cadre_hmi_base?overwrite=false` with the zip as the body (measured 2026-11-05). The project is an
+   inheritable parent and has no page of its own.
+3. Import the device tags at the root of the `default` tag provider. In the Designer's tag browser right-click the provider `default` itself, not a
+   folder, choose Import Tags, pick `cadre_hmi_showcase-tags.json` as a JSON file with the collision policy Overwrite. Do not create a folder first.
+   The file is rooted at the folder `cadre_hmi_showcase`, so it creates `cadre_hmi_showcase/_componentTest` with the memory and expression tags of
+   the eleven test devices and no other tag. Check the browser now shows `default > cadre_hmi_showcase > _componentTest` (11 folders); a tag
+   folder `_componentTest` directly under `default`, or a second `cadre_hmi_showcase` inside the first, means the import was started from the wrong
+   node: delete it and import again. The same call over REST is `POST /data/api/v1/tags/import?provider=default&path=&type=json&collisionPolicy=Overwrite`.
+4. Import `cadre_hmi_showcase-0.8.0.zip` the same way as the parent, with the project name `cadre_hmi_showcase`. Its `project.json` names the parent
+   `cadre_hmi_base`.
+5. Optional: a gateway import drops the project's identity provider (GF-44). To let the faceplates' commands ask for a sign in, open the project's
+   properties in the Designer and choose the provider `default` under security; a viewer sees every page without it, and the page draws the same
+   without it (measured 2026-11-05, GF-115).
 6. Open `http://<gateway>:8088/data/perspective/client/cadre_hmi_showcase` in a new browser session. `python tools/hmi/showcase.py --deploy` does
    steps 3 to 5 in one call where the repository and an API token are at hand.
 
+
+### If Every Device Card Shows an Error
+
+A red error badge on each of the eleven device cards is a quality overlay (`ia_qualityOverlay--error`): the card's tags are not at
+`[default]cadre_hmi_showcase/_componentTest/...`. The cause reproduced on 2026-11-05 is an import of the tags file made at the wrong node, or an
+older tags file (before 0.8.0 rooted at `_componentTest`) imported at the provider root. Open the tag browser, delete the stray folders
+(`_componentTest` under `default`, or `cadre_hmi_showcase` inside `cadre_hmi_showcase`), and import this release's file at the provider as in step 3.

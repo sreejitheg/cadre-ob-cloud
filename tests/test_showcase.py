@@ -4,6 +4,7 @@ has an editor bound to its value, every event has a log handler, the page groupi
 Run from the repository root:  python -m unittest discover -s tests
 """
 import json
+import re
 import sys
 import tempfile
 import unittest
@@ -187,6 +188,35 @@ class ShowcaseTests(unittest.TestCase):
         ids = {d["id"] for d in self.devices["model"]["devices"]}
         for s in symbols:
             self.assertIn(s["device"], ids)
+
+    def test_the_tag_document_lands_every_bound_tag_when_imported_at_the_provider_root(self):
+        """The release's tags file is imported at the root of the `default` provider (wiki 15 section 4, GF-116): a document
+        rooted at `_componentTest` landed at `[default]_componentTest` on the owner's gateway and gave all 11 device cards a
+        bad-quality overlay. Every tag path the device page binds must resolve inside the document, from its root."""
+        doc = showcase.tag_document(self.devices)
+        self.assertEqual((doc["name"], doc["tagType"]), (showcase.PROJECT, "Folder"))
+        self.assertEqual([t["name"] for t in doc["tags"]], ["_componentTest"])
+
+        def resolves(path):   # a tag path below the provider, from a document that is imported at the provider root
+            node, names = {"name": "", "tags": [doc]}, path.split("/")
+            for n in names:
+                node = next((t for t in node.get("tags", []) if t["name"] == n), None)
+                if node is None:
+                    return False
+            return True
+
+        page = next(p for p in self.pages if p["id"] == "devices")
+        text = json.dumps(self.views[page["view"]])
+        paths = set(re.findall(r"\[default\]([A-Za-z0-9_]+/_componentTest/[A-Za-z0-9_]+(?:/[A-Za-z0-9_]+)?)", text))
+        self.assertGreaterEqual(len(paths), 20)
+        self.assertEqual([q for q in sorted(paths) if not resolves(q)], [])
+        self.assertTrue(all(q.startswith(showcase.PROJECT + "/") for q in paths))
+
+    def test_the_released_tags_file_is_the_tag_document(self):
+        released = ROOT / "cloud" / "release" / "cadre_hmi_showcase-tags.json"
+        if not released.exists():
+            self.skipTest("cloud/release is not part of the source repository")
+        self.assertEqual(json.loads(released.read_text(encoding="utf-8")), showcase.tag_document(self.devices))
 
     def test_live_properties_follow_the_switch(self):
         for page in self.pages:

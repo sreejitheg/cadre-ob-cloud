@@ -716,6 +716,14 @@ def view_doc(page: Page) -> dict:
 # ---------------------------------------------------------------------------------------
 # The device page's devices, the project
 # ---------------------------------------------------------------------------------------
+def tag_document(devices: dict) -> dict:
+    """The device tags as a document that is imported at the root of the `default` tag provider (wiki 15 section 4): its root
+    folder is the project's own, `cadre_hmi_showcase`, so that the tags land at `[default]cadre_hmi_showcase/_componentTest/...`,
+    the paths the bindings name (TAG_ROOT), whatever folder the import was started from. A document rooted at `_componentTest`
+    lands wherever it is imported, and an import at the provider root left every card of the page with a bad-quality overlay."""
+    return {"name": PROJECT, "tagType": "Folder", "tags": [copy.deepcopy(devices["folder"])]}
+
+
 def device_set(con: dict) -> dict:
     """The test devices of the device page: their specs, tag folder, device model and symbols (testbench)."""
     specs_all = testbench.device_specs(TAG_ROOT, "Showcase")
@@ -819,7 +827,8 @@ def main() -> int:
     ap.add_argument("--export", default=None, metavar="DIR",
                     help="write the importable files to DIR: the showcase project and the parent as project zips "
                          "(`<name>-<module version>.zip`, the form the gateway's project import takes) and the device "
-                         "tags (`cadre_hmi_showcase-tags.json`, imported into the folder cadre_hmi_showcase)")
+                         "tags (`cadre_hmi_showcase-tags.json`, a document rooted at the folder cadre_hmi_showcase, imported at the "
+                         "root of the default tag provider)")
     ap.add_argument("--write-descriptor", default=None, metavar="DIR",
                     help="write the device page's descriptor to DIR/showcase-devices.json (gate G11), and the model "
                          "(pages, cards, editors) to DIR/showcase-model.json (the functional check)")
@@ -863,14 +872,14 @@ def main() -> int:
         parent_prj, _contracts = par.build_parent(a.parent)
         for prj in (child, parent_prj):
             (d / f"{prj.name}-{version}.zip").write_bytes(prj.zip_bytes())
-        (d / f"{a.name}-tags.json").write_text(json.dumps(model["devices"]["folder"], indent=1, sort_keys=True) + "\n",
+        (d / f"{a.name}-tags.json").write_text(json.dumps(tag_document(model["devices"]), indent=1, sort_keys=True) + "\n",
                                                encoding="utf-8")
         print("exported to", d)
     if a.deploy:
         from hmi import deploy
         print(deploy.ensure_trial())
-        provider, _, path = TAG_ROOT.strip("[").partition("]")
-        print("tags", deploy.import_tags(provider, path.strip("/"), model["devices"]["folder"]))
+        provider = TAG_ROOT.strip("[").partition("]")[0]
+        print("tags", deploy.import_tags(provider, "", tag_document(model["devices"])))
         print(deploy.import_project(child))
     return 0
 
