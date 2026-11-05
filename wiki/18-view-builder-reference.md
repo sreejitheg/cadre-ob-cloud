@@ -159,6 +159,26 @@ Table 6. The keys of a member of a device (page 17 gives the members each kind k
 A `modes` entry is `{value: integer, name: 1 to 24 characters, owner: program, operator, maintenance or local}`. The device
 model's `tagRoot` must equal the `tagRoot` of the descriptors that draw its devices.
 
+### 2.6 What `--deploy` Imports
+
+With `--deploy`, and only after every gate and the contract have passed, `screen.py` imports in this order (`screen.main`):
+
+1. `deploy.ensure_trial()`, which resets an expired trial (GF-03, GF-33).
+2. The tag model of `--tags-file`, where one is given, at the root of the provider `default`: `deploy.import_tags("default", "", document)`. The
+   document is one folder object, whose top folder therefore sits at the root of `[default]`.
+3. The generated tags of `tags_document` (section 5.4 and page 17 section 4), for every descriptor whose `tagModel` is not `external`, again at the
+   root of `default`. Only the component test page's tags go to the provider and path of its own tag root.
+4. The child project (`deploy.import_project`), and the identity provider `default` set on it (GF-44).
+
+Every tag import posts with the collision policy `Overwrite` (`cloud/vendor/ctig/gateway/rest.py`, `tags_import`), which merges at folder level and
+replaces at tag level (GF-55). Three consequences for a builder:
+
+1. The provider named in `tagRoot` is not the provider the tags are imported to: a build whose `tagRoot` names another provider binds that provider
+   while its tag model and generated tags land in `default`.
+2. A build whose tags are generated (no `tagModel` `external`) deployed over a folder that already holds real tags replaces each tag of the same
+   name with a memory tag.
+3. A UDT set needs its `_types_` document imported on its own (page 17 section 3.1), since `--tags-file` carries one folder.
+
 ## 3. The Descriptor Top Level
 
 ### 3.1 The Keys
@@ -260,6 +280,30 @@ no item. A section's `route`, a card's `route`, a link's `route` and a button's 
 of routes. `previous` and `next` are checked only under `--frame asm` and `--frame obasm`: each must be the route of another
 descriptor in the same build (`navigation.frame_errors`); a build under any other frame ignores them. `level` is shown by the
 same two frames only (page 04 section 8.8).
+
+The library writes routes of its own beside those of the descriptors: `/alerts` (`Framework/AlertsPage`, every frame), `/trends`
+(`Framework/TrendsPage`, when a device is historised), `/node/alarms` and `/node/trend` (`Framework/ASM/NodeAlarms`, `NodeTrend`, under `asm`
+and `obasm`) and `/component-test` (with `--component-test`). A descriptor routed `/alerts` replaces the library's alerts page, and the footer's
+Alerts item then opens it; under the ASM frames the library's node routes, written after the pages, replace a descriptor of the same route. Two
+descriptors with the same `screen.view` leave one view, the later, under both routes. No gate refuses either case, so a builder keeps every route
+and every view path of a set distinct and clear of the library's routes.
+
+### 4.4 Icon Names
+
+`screen.icon` and `links[].icon` name an icon of `library/icons` (93 icons, `library/icons/ICONS.txt`; page 03 section 5). A link whose icon has no
+file there is a build error (`link <id>: no library icon`); `screen.icon` is not checked, and an unknown name draws an empty icon. Under the frames
+`openbridge` and `asm` a navigation icon is drawn by `cadre.icons.elements(name)` from the 93. Under `ob` and `obasm` the item is
+`cadre.ob.navigationitem`, whose `iconName` takes only the 34 icons the module bundles; an icon outside them is left out (`cadre.hmi.ob_items`).
+
+Table 4a. The icon names.
+
+| Set | Names |
+|---|---|
+| The library's 93 (`screen.icon`, `links[].icon`, navigation under `openbridge` and `asm`) | `alarm-acknowledged-outlined`, `alarm-badge`, `alert-list`, `alert-off-filled`, `alerts`, `arrow-down-google`, `arrow-left-google`, `arrow-right-google`, `arrow-up-google`, `auto`, `backward`, `backward-fast`, `backward-stopped`, `caution-badge`, `check-google`, `chevron-double-down-google`, `chevron-double-up-google`, `chevron-down-google`, `chevron-left-google`, `chevron-right-google`, `chevron-up-google`, `close-google`, `command-locked-f`, `damper-horizontal-off`, `damper-horizontal-on`, `dashboard`, `display-brilliance-low`, `duty`, `energy-battery`, `fan-off`, `fan-on`, `filter`, `filter-1-off`, `filter-1-on`, `forward`, `forward-fast`, `forward-stopped`, `generator`, `heatexhanger`, `heatpump`, `home`, `hydraulic-separator`, `local`, `local-only`, `manual`, `manual-only`, `media-play`, `media-stop`, `menu`, `more-google`, `more-vertical-google`, `motor-off-horizontal`, `motor-off-vertical`, `motor-on-horizontal`, `motor-on-vertical`, `motor-static-horizontal`, `motor-static-vertical`, `notification`, `notification-filled`, `off`, `on`, `palette-day`, `palette-day-bright`, `palette-dimming`, `palette-dusk`, `palette-night`, `placeholder`, `pump-off-horizontal`, `pump-off-vertical`, `pump-on-horizontal`, `pump-on-vertical`, `pump-static-horizontal`, `pump-static-vertical`, `search`, `sensor-water-drop-google`, `sensor-water-ph-google`, `speed`, `standby`, `support-google`, `switch-horizontal-off`, `switch-horizontal-on`, `tank`, `trend`, `trend-down`, `trend-up`, `twoway-analog-closed`, `twoway-digital-closed`, `twoway-digital-open`, `user`, `user-google`, `warning-badge`, `warning-rectified-outlined`, `warning-unacknowledged-outlined` |
+| The module navigation item's 34 (navigation under `ob` and `obasm`) | `menu`, `user`, `user-settings`, `notification`, `notification-filled`, `applications`, `alerts`, `alarm`, `alert-list`, `info`, `help`, `home`, `search`, `dashboard`, `palette-day`, `palette-dusk`, `palette-night`, `palette-day-bright`, `palette-dimming`, `time`, `silence-iec`, `settings-default-iec`, `chevron-left-google`, `chevron-right-google`, `close-google`, `check-google`, `placeholder`, `command-in`, `command-no`, `command-take`, `command-request`, `command-shared`, `command-locked`, `joystick` |
+| The 19 that draw in all four frames | `alert-list`, `alerts`, `check-google`, `chevron-left-google`, `chevron-right-google`, `close-google`, `dashboard`, `home`, `menu`, `notification`, `notification-filled`, `palette-day`, `palette-day-bright`, `palette-dimming`, `palette-dusk`, `palette-night`, `placeholder`, `search`, `user` |
+
+A page meant for any frame takes its `icon` from the last row. The generated Trends item uses `trend`, which draws no icon under `ob` and `obasm`.
 
 ## 5. Diagram Symbols
 

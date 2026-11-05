@@ -303,6 +303,12 @@ class ViewBuilderReference(unittest.TestCase):
                                screen.device_symbols(descs[:1], models[0]))
         self.assertEqual((res["ok"], res["problems"], res["warnings"]), (True, [], []))
 
+    def test_table_4a_gives_the_library_icons_the_module_navigation_icons_and_both(self):
+        rows = [set(re.findall(r"`([a-z0-9-]+)`", r[1])) for r in table(self.text, "4a")]
+        library = {p.stem for p in (ROOT / "library" / "icons").glob("*.json") if p.stem != "index"}
+        module = {n for n in COMPONENTS["cadre.ob.navigationitem"]["props"]["iconName"]["enum"] if n}
+        self.assertEqual(rows, [library, module, library & module])
+
     def test_table_58_gives_every_module_only_kind_with_its_component(self):
         rows = {r[0].strip("`"): r[1].strip("`") for r in table(self.text, "58")}
         want = {k: v for k, v in screen.MODULE_ONLY.items() if k not in screen.FRAME_ONLY}
