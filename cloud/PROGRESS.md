@@ -429,3 +429,8 @@
   each clean) and listed it as unexpected, so the route FAILs. The sweep's expected set comes from symbols and cards only; adding
   assemblies is a change to gate G11, which the brief reserves for the owner: not made, reported (REPORT-T3 6.2, open item 8).
   `cloud/REPORT-T3.md` completed. T3 ends here.
+- 2026-11-06 05:20: Owner's word: make G11 expect the local assembly's device and rerun it. The session restarted with the Docker
+  daemon stopped; `cloud/setup.sh gateway` brought the container back (module 0.8.0 registered, 97; projects intact; trial 6,545 s
+  left). `faceplates.expected_devices` adds each assembly's device by the title `assembly.item` registers (else its kind), and
+  `device_expectations` gives it the tabs of the kind `local` and its alarm source; `tests/test_g11_local.py` (7 tests); wiki 08, 18
+  and `CONFIGURATION.md` state it (`dd7fb38`). Targeted suite 519 run, all passing. G11 on the component test page rerunning alone.
