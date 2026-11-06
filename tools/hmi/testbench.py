@@ -1224,7 +1224,7 @@ def local_block(specs: dict) -> Block:
     block.add("assemblies", {"id": "TB_LOCAL", "kind": LOCAL_KIND, "device": f"{FOLDER}/{LOCAL_DEVICE}",
                              "title": specs[LOCAL_DEVICE]["title"], "label": specs[LOCAL_DEVICE]["label"],
                              "x": 0, "y": 0, "w": w, "h": h, "parts": parts, "home": home})
-    block.add("labels", label("TB_LOCAL_c", f"local kind {LOCAL_KIND}: drawn by the view Local/{LOCAL_KIND.capitalize()}",
+    block.add("labels", label("TB_LOCAL_c", f"local kind {LOCAL_KIND}: drawn by the view Local/{LOCAL_KIND.capitalize()}/Assembly",
                               0, h + 8, 420, 16, align="left"))
     block.w, block.h = max(w, 420), h + 8 + CAPTION
     return block

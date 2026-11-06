@@ -434,7 +434,7 @@ class ClickTests(unittest.TestCase):
     def test_the_embed_still_draws_the_kind_view_with_the_device_folder(self):
         res = self.build(assembly(x=120, y=60, w=200, h=180))
         embeds = [n for n in nodes(res.view("Screens/PageA"))
-                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}"]
+                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}/Assembly"]
         self.assertEqual(len(embeds), 1)
         self.assertEqual(embeds[0]["props"]["params"]["deviceId"], f"{TAG_ROOT}/Skid1")
         self.assertEqual({k: embeds[0]["position"][k] for k in ("x", "y", "width", "height")},

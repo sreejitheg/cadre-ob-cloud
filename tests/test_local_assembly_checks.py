@@ -144,7 +144,7 @@ class AssemblyChecksTests(unittest.TestCase):
         self.built([self.tagged("RO")], [self.tagged("HR")], [self.tagged("P")])
         code, doc = run(self.d, page(assembly()), "--built", str(self.d / "build"))
         self.assertEqual(code, 0, doc["tags_bound"])
-        # one component in the page view, one in Local/Skid and one in Local/Skid/Home are all counted
+        # one component in the page view, one in Local/Skid/Assembly and one in Local/Skid/Home are all counted
         self.assertEqual(sum(doc["tags_bound"]["view_classes"].values()), 3, doc["tags_bound"]["view_classes"])
 
     def test_a_component_with_no_tag_in_a_local_view_is_listed_unbound(self):

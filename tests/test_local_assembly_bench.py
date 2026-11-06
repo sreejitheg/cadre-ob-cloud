@@ -175,10 +175,10 @@ class BenchBuildTests(unittest.TestCase):
         self.assertEqual(res.code, 0, res.text[-2500:])
         self.assertIs(res.report["gates"]["ok"], True)
         self.assertEqual(res.g0_errors(), [])
-        self.assertIn("Local/Benchlocal/view.json", res.view_files())
+        self.assertIn("Local/Benchlocal/Assembly/view.json", res.view_files())
         self.assertIn("Local/Benchlocal/Home/view.json", res.view_files())
         embeds = [n for n in nodes(res.view("Screens/ComponentTest"))
-                  if n["type"] == "ia.display.view" and n["props"]["path"] == "Local/Benchlocal"]
+                  if n["type"] == "ia.display.view" and n["props"]["path"] == "Local/Benchlocal/Assembly"]
         self.assertEqual([n["props"]["params"]["deviceId"] for n in embeds], [f"{TAG_ROOT}/{DEVICE}"])
 
     def test_the_pages_own_assembly_needs_no_listing_by_the_user(self):
@@ -187,7 +187,7 @@ class BenchBuildTests(unittest.TestCase):
             res = self.base.screen(self.plain_page(), local_kinds=listed, extra=["--component-test"])
             self.assertEqual(res.code, 0, (listed, res.text[-2500:]))
             self.assertEqual(res.g0_errors(), [], listed)
-            self.assertIn("Local/Benchlocal/view.json", res.view_files())
+            self.assertIn("Local/Benchlocal/Assembly/view.json", res.view_files())
 
     def test_the_g7_device_count_includes_the_row_and_the_users_page_with_its_own_kind_builds_beside_it(self):
         res = self.base.screen(page(assembly()), dev=devices("Skid1"), local_kinds=[KIND], extra=["--component-test"])
@@ -196,8 +196,8 @@ class BenchBuildTests(unittest.TestCase):
         bench = testbench.build(contracts, library_profile.build(contracts), TAG_ROOT)
         self.assertEqual(res.report["gates"]["G7_devices"]["devices"], 1 + len(bench.devices))
         self.assertEqual(res.report["gates"]["G7_devices"]["problems"], [])
-        self.assertIn("Local/Skid/view.json", res.view_files())
-        self.assertIn("Local/Benchlocal/view.json", res.view_files())
+        self.assertIn("Local/Skid/Assembly/view.json", res.view_files())
+        self.assertIn("Local/Benchlocal/Assembly/view.json", res.view_files())
 
     def test_a_users_assembly_is_still_refused_without_the_option_beside_the_component_test(self):
         res = self.base.screen(page(assembly()), dev=devices("Skid1"), local_kinds=None, extra=["--component-test"])

@@ -326,7 +326,7 @@ def classify(c: dict, tagcustom: set[str]) -> str:
 def built_tags(built: Path, pages: list[str]) -> tuple[Counter, list[str]]:
     """The view classes of the built pages' components, and the value components that read no tag: the views
     `Screens/<page>` of the pages and every view under `Local/` (the local assemblies' kinds and their Homes,
-    NOTE-WFB-10 section 11.2 item 7), each entry named by its view (`<page>` or `Local/<Kind>`)."""
+    NOTE-WFB-10 section 11.2 item 7), each entry named by its view (`<page>`, `Local/<Kind>/Assembly` or `Local/<Kind>/Home`)."""
     counts: Counter = Counter()
     unbound: list[str] = []
     views = [(page, built / "views" / "Screens" / page / "view.json") for page in pages]

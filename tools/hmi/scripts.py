@@ -59,7 +59,7 @@ def select_device(session, device_id, kind, title="", label="", tab="", local=No
 	is the key of the faceplate tab to open on (`home`, `config`, `alarms`, ...), written last: the
 	faceplate shows it when it is one of its shown tabs, else its first. A plain symbol click names
 	none, so it clears the tab a call before it asked for and opens the first. `local` is the kind of a local
-	assembly (the `<Kind>` of its view `Local/<Kind>`): the local faceplate reads it as `localKind` to embed the
+	assembly (the `<Kind>` of its views `Local/<Kind>/Assembly` and `Local/<Kind>/Home`): the local faceplate reads it as `localKind` to embed the
 	kind's Home, and every other call clears it (NOTE-WFB-10 section 11.2 item 5)."""
 	session.custom.selectedStyle = faceplate_style(session, device_id)
 	session.custom.selectedLocal = local or ""

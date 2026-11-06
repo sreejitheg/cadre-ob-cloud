@@ -1,5 +1,9 @@
 """Local assemblies (NOTE-WFB-10 section 11.2, WP-W03): a part set a diagram page draws for a device kind the library
-lacks, written once per kind into the child as the views `Local/<Kind>` and `Local/<Kind>/Home`.
+lacks, written once per kind into the child as the views `Local/<Kind>/Assembly` and `Local/<Kind>/Home`.
+
+The two are siblings in the folder `Local/<Kind>`: Ignition 8.3.6 does not find a view whose folder also holds another
+view (measured at T3, `wiki/07` GF-117), so the source's design, with the page's view at `Local/<Kind>` and its Home
+beneath it, drew a view-not-found badge on the page. The Home keeps its path, which `Faceplate/ASM/Local` builds.
 
 A descriptor's `assemblies[]` gives each instance: `{id, kind, device, title, label, x, y, w, h, parts, home}`
 (`schemas/screen-descriptor.schema.json`, `$defs.assembly`). A part set is `{labels[], symbols[], lines[], buttons[],
@@ -9,7 +13,7 @@ own part functions: a label with `screen.text_label`, a readout, an indicator or
 `cadre.hmi.page_pulse`, write path W18) and a shape with `library.svg`. The views take the parameter `deviceId`, the
 instance's tag folder; every dynamic part binds `deviceId` joined with its member through an indirect tag binding
 (`{0}/<member>` with the reference `{view.params.deviceId}`, IGW:06-bindings section 4, the form of the faceplate rows
-in `framework.py`). On the page each assembly is an `ia.display.view` of `Local/<Kind>` with `deviceId`.
+in `framework.py`). On the page each assembly is an `ia.display.view` of `Local/<Kind>/Assembly` with `deviceId`.
 
 A shape is one SVG element in the palette's neutral stroke and no fill: `rect` (`x`, `y`, `width`, `height`) and
 `ellipse` (`cx`, `cy`, `rx`, `ry`) and `polygon` (`points` as `x,y x,y`) in the attributes the Ignition-Wiki corpus
@@ -43,6 +47,7 @@ ARRAYS = ("labels", "symbols", "lines", "buttons", "shapes")   # the arrays of a
 DYNAMIC = ("symbols", "buttons")                                # the parts that read or write a member
 LOCAL_KIND = "local"                                            # the device kind of an assembly's device
 VIEW_ROOT = "Local"
+PAGE_VIEW = "Assembly"   # the view a page embeds, beside `Home` in the kind's folder (GF-117)
 PARAM = "deviceId"
 DEVICE_REF = "{view.params.%s}" % PARAM
 # the keys a part may not carry (T5): a colour, a class or a style; `style` of a label or a line is an enumeration
@@ -64,12 +69,19 @@ def view_name(kind: str) -> str:
     return kind[:1].upper() + kind[1:]
 
 
-def view_path(kind: str) -> str:
+def kind_folder(kind: str) -> str:
+    """`Local/<Kind>`: the folder of a kind's two views (a folder only, never a view itself: GF-117)."""
     return f"{VIEW_ROOT}/{view_name(kind)}"
 
 
+def view_path(kind: str) -> str:
+    """`Local/<Kind>/Assembly`: the view each assembly of the kind is drawn by on its page."""
+    return f"{kind_folder(kind)}/{PAGE_VIEW}"
+
+
 def home_path(kind: str) -> str:
-    return f"{view_path(kind)}/Home"
+    """`Local/<Kind>/Home`: the Home the local faceplate embeds (`devices_asm.LOCAL_HOME_PATH`)."""
+    return f"{kind_folder(kind)}/Home"
 
 
 def assemblies(desc: dict) -> list[dict]:
@@ -315,7 +327,7 @@ def no_detail_view() -> dict:
 
 
 def kind_views(descs: list[dict], contracts: dict) -> dict[str, tuple[dict, str, list[str]]]:
-    """`Local/<Kind>` and `Local/<Kind>/Home` for each kind the descriptors draw, from its first assembly (G0 holds
+    """`Local/<Kind>/Assembly` and `Local/<Kind>/Home` for each kind the descriptors draw, from its first assembly (G0 holds
     every other equal): view path -> (view, the route of the page that first draws the kind, the errors of its parts)."""
     screen = _screen()
     first: dict[str, tuple[dict, str]] = {}
@@ -336,7 +348,7 @@ def kind_views(descs: list[dict], contracts: dict) -> dict[str, tuple[dict, str,
 
 
 def page_nodes(desc: dict) -> list[dict]:
-    """The page's embeds: an `ia.display.view` of `Local/<Kind>` at each assembly's box, with `deviceId` the device's
+    """The page's embeds: an `ia.display.view` of `Local/<Kind>/Assembly` at each assembly's box, with `deviceId` the device's
     tag folder."""
     screen = _screen()
     root = desc.get("tagRoot", "")

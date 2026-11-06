@@ -1,14 +1,14 @@
 ---
 title: Gateway facts
 type: wiki
-updated: 2026-11-03
+updated: 2026-11-06
 ---
 # 07 Gateway Facts Measured in This Work
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-07 |
-| Revision | K |
+| Revision | L |
 | Status | Issued for use |
 | Gateway | `Ignition-PCS_DEV_Station`, Ignition 8.3.6, `http://localhost:8088`, trial mode |
 | Method | Experiments E1 (`tools/experiments/e1_inheritance.py`), E2 (`tools/experiments/e2_lab.py`), E3 (`tools/experiments/e3_simulation.py`), E4 (`tools/experiments/e4_alarm_probe.py`), E5 (`tools/experiments/e5_security_probe.py`), E6 (`tools/experiments/e6_adapter_probe.py`), E7 (`tools/experiments/e7_tag_event_probe.py`) and E8 (`tools/experiments/e8_param_leak_probe.py`), the demo build, the water treatment sample (page 11) with its functional walk and faceplate sweep, the experiment cleanup, and read-only page scripts and DevTools protocol reads in a browser |
@@ -116,6 +116,7 @@ Table 1. Measured facts.
 | GF-114 | The module's alert menu, with nobody signed in, draws every row's ACK disabled (`primaryActionState` `disabled`) where the default frame's alert panel hides it; it closes on a click outside it, on Escape and on a second press of the bell, and has no close button. `obc-alert-menu-item`'s `title`, `description`, `status` and `primaryActionState`, and its `obc-alert-icon` child's `type`, `active` and `acknowledged`, are readable as properties of the elements | Cloud session T2, batch F7, 2026-11-03 12:40: read on `cadre_hmi_wtpobf` and `cadre_hmi_wtpoba` with nothing written (`wiki/13` section 13.11.4 items 2, 3 and 5); the enabled row ACK is still to be proved in a signed in run |
 | GF-115 | The gateway web page Config, Projects, Import Project sends `POST /data/api/v1/projects/import/<name>?overwrite=false` with the zip as the body (`application/zip`) and answers 200; the project name field stays empty after a file is chosen and the Import button is disabled until it is filled. A project imported this way and the same project imported by `?overwrite=true` (the tool route) render the same page. With the identity provider unset or set to `default` (GF-44), the showcase Devices page draws the same: 0 quality overlays, 0 console errors, and 11 of 11 faceplates open | Cloud session, 2026-11-05, Playwright against the gateway page, then the release files from `cloud/release/` imported through that dialog on a fresh 8.3.6 container |
 | GF-116 | A tag import places the document under the node it is started from, by the document root's own name. The showcase tags document rooted at `_componentTest` and imported at the provider root creates `[default]_componentTest`, not `[default]cadre_hmi_showcase/_componentTest`; every binding then reads a missing tag and each of the 11 device cards draws `ia_qualityOverlay--error` (the page and the clicks raise no script error, the gateway log and the browser console stay empty, 11 of 11 faceplates still open, the tank faceplate lacks its Trend tab). A document rooted at the project folder, imported at the provider root, lands in the right place. A tag import with the collision policy `Overwrite` of an empty folder over an existing one does not remove its children | Cloud session, 2026-11-05, release files imported by the owner's route on fresh gateways, then the generator corrected |
+| GF-117 | A Perspective view whose folder also holds another view is not found: in a project with the views `Probe/Outer` and `Probe/Outer/Inner`, a page that embeds `Probe/Outer` draws the view-state badge and none of its content, while a page that embeds `Probe/Outer/Inner`, and one that embeds a view with nothing beneath it, draw their views. The generator therefore never writes a view beneath another: a local assembly's views are the siblings `Local/<Kind>/Assembly` and `Local/<Kind>/Home` | Cloud session T3, 2026-11-06, 8.3.6 trial: the component test page's assembly at `Local/Benchlocal` (with `Local/Benchlocal/Home` beneath it) drew "View Not Found" (G8: one error badge); the probe project `cadre_hmi_probe` reproduced it with three plain label views; after the move to `Local/Benchlocal/Assembly` G8 passed with no badge. Held offline by `tests/test_view_nesting.py` |
 
 ## 3. Feedback for the Ignition-Wiki
 

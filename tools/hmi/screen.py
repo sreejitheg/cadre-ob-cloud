@@ -1758,7 +1758,7 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
             nav.append({"label": scr.get("navLabel", scr.get("title", scr["route"])), "path": scr["route"],
                         "icon": scr.get("icon", ""), "node": scr.get("node", "")})
         reports[scr["route"]] = info
-    for path, (doc, route, errors) in assembly.kind_views(descs, contracts).items():   # Local/<Kind>, Local/<Kind>/Home
+    for path, (doc, route, errors) in assembly.kind_views(descs, contracts).items():   # Local/<Kind>/Assembly, Local/<Kind>/Home
         child.add_view(path, doc)
         reports[route]["errors"] += errors
     if render == "module":

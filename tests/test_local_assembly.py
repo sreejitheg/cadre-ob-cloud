@@ -3,7 +3,7 @@ items 1 to 4 and 6; acceptance corpus 3 (offline part, G0 to G7), 5, 7 and 8; th
 WP-W03, written from the note before the feature exists.
 
 The assembly is a part set drawn on a diagram page for a device kind of its own (`skid` here, a synthetic name), written
-once per kind as the views `Local/<Kind>` and `Local/<Kind>/Home`. `screen.py --local-kinds <file>` lists the kinds a page
+once per kind as the views `Local/<Kind>/Assembly` and `Local/<Kind>/Home` (siblings: GF-117). `screen.py --local-kinds <file>` lists the kinds a page
 may draw as an assembly; G0 refuses any other, with a rule name in the screen report's `gates.G0.errors[]`.
 
 Run from the repository root:  python -m unittest discover -s tests
@@ -59,13 +59,13 @@ class OfflineTests(unittest.TestCase):
         self.assertEqual(res.g0_errors(), [])
         failing = {k: v for k, v in res.report["gates"].items() if isinstance(v, dict) and not v.get("ok", True)}
         self.assertEqual(failing, {})
-        self.assertIn(f"Local/{KIND_VIEW}/view.json", res.view_files())
+        self.assertIn(f"Local/{KIND_VIEW}/Assembly/view.json", res.view_files())
         self.assertIn(f"Local/{KIND_VIEW}/Home/view.json", res.view_files())
 
     def test_the_kind_view_and_its_home_are_coordinate_roots_named_diagram(self):
         res = self.valid(assembly())
         self.assertEqual(res.code, 0, res.text[-2000:])
-        for path in (f"Local/{KIND_VIEW}", f"Local/{KIND_VIEW}/Home"):
+        for path in (f"Local/{KIND_VIEW}/Assembly", f"Local/{KIND_VIEW}/Home"):
             view = res.view(path)
             self.assertIsNotNone(view, path)
             self.assertEqual((view["root"]["type"], view["root"]["meta"]["name"]), ("ia.container.coord", "Diagram"), path)
@@ -77,7 +77,7 @@ class OfflineTests(unittest.TestCase):
         self.assertEqual(res.code, 0, res.text[-2000:])
         home = res.view(f"Local/{KIND_VIEW}/Home")
         self.assertEqual([t for t in texts(home) if t], ["No detail"])
-        self.assertNotIn("No detail", [t for t in texts(res.view(f"Local/{KIND_VIEW}")) if t])
+        self.assertNotIn("No detail", [t for t in texts(res.view(f"Local/{KIND_VIEW}/Assembly")) if t])
 
     def test_a_home_the_assembly_gives_draws_its_parts_and_no_label_no_detail(self):
         home = {"w": 240, "h": 120, "parts": {
@@ -93,7 +93,7 @@ class OfflineTests(unittest.TestCase):
         res = self.valid(assembly(x=120, y=60, w=200, h=180))
         self.assertEqual(res.code, 0, res.text[-2000:])
         embeds = [n for n in nodes(res.view("Screens/PageA"))
-                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}"]
+                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}/Assembly"]
         self.assertEqual(len(embeds), 1)
         self.assertEqual(embeds[0]["props"]["params"]["deviceId"], f"{TAG_ROOT}/Skid1")
         pos = embeds[0]["position"]
@@ -102,7 +102,7 @@ class OfflineTests(unittest.TestCase):
     def test_the_parts_bind_the_device_folder_joined_with_their_member_and_hold_no_static_value(self):
         res = self.valid(assembly())
         self.assertEqual(res.code, 0, res.text[-2000:])
-        body = json.dumps(res.view(f"Local/{KIND_VIEW}")) + json.dumps(res.view(f"Local/{KIND_VIEW}/Home"))   # the button is in the Home
+        body = json.dumps(res.view(f"Local/{KIND_VIEW}/Assembly")) + json.dumps(res.view(f"Local/{KIND_VIEW}/Home"))   # the button is in the Home
         self.assertIn("view.params.deviceId", body)
         for member in ("value", "state", "cmdStart"):
             self.assertIn(member, body)
@@ -118,9 +118,9 @@ class OfflineTests(unittest.TestCase):
         res = self.valid(a1, a2)
         self.assertEqual(res.code, 0, res.text[-2000:])
         self.assertEqual([f for f in res.view_files() if f.startswith("Local/")],
-                         [f"Local/{KIND_VIEW}/Home/view.json", f"Local/{KIND_VIEW}/view.json"])
+                         [f"Local/{KIND_VIEW}/Assembly/view.json", f"Local/{KIND_VIEW}/Home/view.json"])
         embeds = [n for n in nodes(res.view("Screens/PageA"))
-                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}"]
+                  if n["type"] == "ia.display.view" and n["props"]["path"] == f"Local/{KIND_VIEW}/Assembly"]
         self.assertEqual(sorted(n["props"]["params"]["deviceId"] for n in embeds), [f"{TAG_ROOT}/Skid1", f"{TAG_ROOT}/Skid2"])
 
     def test_the_project_holds_the_kind_view_once_in_the_generator(self):
@@ -132,7 +132,7 @@ class OfflineTests(unittest.TestCase):
     def test_the_view_name_is_the_kind_with_its_first_letter_in_upper_case_only(self):
         res = self.valid(assembly(kind="tank-skid"))
         self.assertEqual(res.code, 0, res.text[-2000:])
-        self.assertIn("Local/Tank-skid/view.json", res.view_files())
+        self.assertIn("Local/Tank-skid/Assembly/view.json", res.view_files())
         self.assertIn("Local/Tank-skid/Home/view.json", res.view_files())
 
     def test_canonical_json_decides_equality_so_the_order_of_keys_does_not_matter(self):
@@ -327,7 +327,7 @@ class OfflineTests(unittest.TestCase):
     def test_a_kind_that_only_begins_like_a_library_kind_is_a_local_kind(self):
         res = self.valid(assembly(kind="pumpstand"))
         self.assertEqual(res.code, 0, res.text[-2000:])
-        self.assertIn("Local/Pumpstand/view.json", res.view_files())
+        self.assertIn("Local/Pumpstand/Assembly/view.json", res.view_files())
 
     # ---- the schema (item 1) ---------------------------------------------------------------------------------------
     def errors(self, mutate) -> list:

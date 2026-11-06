@@ -53,7 +53,7 @@ class BuildTests(unittest.TestCase):
     def test_the_kind_view_binds_each_dynamic_part_indirectly_through_the_device(self):
         res = self.base.screen(page(assembly()), dev=devices("Skid1"), local_kinds=[KIND])
         self.assertEqual(res.code, 0, res.text[-1500:])
-        view = res.view(f"Local/{KIND_VIEW}")
+        view = res.view(f"Local/{KIND_VIEW}/Assembly")
         self.assertEqual(view["params"], {"deviceId": ""})
         bindings = [b["binding"] for b in list(view["propConfig"].values()) + [
             c for n in nodes(view) for c in (n.get("propConfig") or {}).values()] if b.get("binding", {}).get("type") == "tag"]
@@ -76,7 +76,7 @@ class BuildTests(unittest.TestCase):
             {"id": "S4", "x": 60, "y": 30, "w": 50, "h": 20, "form": "polygon", "points": [[0, 0], [10, 10], [20, 0]]}]
         res = self.base.screen(page(a), dev=devices("Skid1"), local_kinds=[KIND])
         self.assertEqual(res.code, 0, res.text[-1500:])
-        shapes = {n["meta"]["name"]: n for n in nodes(res.view(f"Local/{KIND_VIEW}")) if n["meta"]["name"].startswith("Shape_")}
+        shapes = {n["meta"]["name"]: n for n in nodes(res.view(f"Local/{KIND_VIEW}/Assembly")) if n["meta"]["name"].startswith("Shape_")}
         els = {k: v["props"]["elements"][0] for k, v in shapes.items()}
         self.assertEqual({k: e["type"] for k, e in els.items()},
                          {"Shape_S1": "rect", "Shape_S2": "ellipse", "Shape_S3": "path", "Shape_S4": "polygon"})
