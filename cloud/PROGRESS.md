@@ -424,3 +424,8 @@
   `cadre_hmi_localdemo` (page 18's example, `--local-kinds`, one assembly) G0 to G7, G8 PASS, its faceplate CH-1 opens.
   `cadre_hmi_cob212` (three stateless switches) G8 PASS with no quality overlay; the same page from the pre-port line draws one.
   `cloud/REPORT-T3.md` written; G11 still running.
+- 2026-11-06 05:02: G11 on the component test page (alone, 51 min): 278 leaf views, 21 of 21 expected devices opened and read, none
+  missing, no fault; it also opened the `benchlocal` assembly's faceplate TB-LOCAL (no overlay, body present, Home, Alarms and Info
+  each clean) and listed it as unexpected, so the route FAILs. The sweep's expected set comes from symbols and cards only; adding
+  assemblies is a change to gate G11, which the brief reserves for the owner: not made, reported (REPORT-T3 6.2, open item 8).
+  `cloud/REPORT-T3.md` completed. T3 ends here.
