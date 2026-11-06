@@ -25,8 +25,10 @@ from test_library_gaps_features import design, row  # noqa: E402
 
 #: The tool as it was when this package began: the reference for corpus item 1. At the source that was the tip of WP-W02
 #: (`b2b9b2e`, not in this repository); here it is this line's `main` before the port (`e172346`, tranche T3), whose
-#: page mode the port must leave unchanged.
-BASE_COMMIT = "e172346"
+#: page mode the port must leave unchanged. The first of these present is used, so that the test runs in either repository.
+BASE_COMMITS = ("e172346", "b2b9b2e")
+BASE_COMMIT = next((c for c in BASE_COMMITS if subprocess.run(["git", "cat-file", "-t", c], capture_output=True, text=True,
+                                                              cwd=ROOT).stdout.strip() == "commit"), BASE_COMMITS[0])
 COMMIT = "c" * 40
 
 

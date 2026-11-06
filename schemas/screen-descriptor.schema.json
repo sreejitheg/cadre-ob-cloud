@@ -924,7 +924,7 @@
     },
     "assemblies": {
       "type": "array",
-      "description": "Diagram layout: local assemblies (NOTE-WFB-10 section 11.2), each a part set drawn for a device kind the library lacks. The generator writes the views Local/<Kind> and Local/<Kind>/Home once per kind and embeds Local/<Kind> at each assembly's box with the device's tag folder. `screen.py --local-kinds` lists the kinds a page may draw this way (gate G0).",
+      "description": "Diagram layout: local assemblies (NOTE-WFB-10 section 11.2), each a part set drawn for a device kind the library lacks. The generator writes the views Local/<Kind>/Assembly and Local/<Kind>/Home once per kind (siblings: a view whose folder holds another view is not found, wiki/07 GF-117) and embeds Local/<Kind>/Assembly at each assembly's box with the device's tag folder. `screen.py --local-kinds` lists the kinds a page may draw this way (gate G0).",
       "items": {
         "$ref": "#/$defs/assembly"
       }
@@ -1378,7 +1378,7 @@
         "kind": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$",
-          "description": "The local kind: its view is Local/<Kind>, the kind with its first letter in upper case"
+          "description": "The local kind: its views lie in the folder Local/<Kind>, the kind with its first letter in upper case"
         },
         "device": {
           "type": "string",
