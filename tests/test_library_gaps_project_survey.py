@@ -23,8 +23,10 @@ from test_library_gaps_features import CATALOGUE as STUB_CATALOGUE  # noqa: E402
 from test_library_gaps_features import SCHEMA as STUB_SCHEMA  # noqa: E402
 from test_library_gaps_features import design, row  # noqa: E402
 
-#: The tool as it was when this package began (the tip of WP-W02): the reference for corpus item 1.
-BASE_COMMIT = "b2b9b2e"
+#: The tool as it was when this package began: the reference for corpus item 1. At the source that was the tip of WP-W02
+#: (`b2b9b2e`, not in this repository); here it is this line's `main` before the port (`e172346`, tranche T3), whose
+#: page mode the port must leave unchanged.
+BASE_COMMIT = "e172346"
 COMMIT = "c" * 40
 
 

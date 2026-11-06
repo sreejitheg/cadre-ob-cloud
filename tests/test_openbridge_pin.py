@@ -12,6 +12,7 @@ import ast
 import hashlib
 import json
 import re
+import os
 import subprocess
 import sys
 import tempfile
@@ -19,7 +20,9 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MAIN = Path("F:/repos/Cadre-Sandbox-OpenBridge")
+# The main checkout whose installed package the read only tests read: the owner's Windows path, or the folder named by
+# CADRE_OB_MAIN_CHECKOUT (CLAUDE.md section 4; the cloud names this repository).
+MAIN = Path(os.environ.get("CADRE_OB_MAIN_CHECKOUT") or "F:/repos/Cadre-Sandbox-OpenBridge")
 VERIFY = ROOT / "module" / "tools" / "verify_pin.py"
 ELEMENTS = ROOT / "module" / "openbridge-elements.json"
 MAP = ROOT / "module" / "openbridge-map.json"
@@ -178,7 +181,7 @@ class VerifyPinTests(unittest.TestCase):
         r = self.refuse("dist/openbridge.css")
         self.assertIn("dist/automation/bus/bus.js", r.stdout + r.stderr)
 
-    @unittest.skipUnless(REAL_PKG.is_dir(), "the main checkout's installed OpenBridge tree is absent")
+    @unittest.skipUnless(REAL_PKG.is_dir(), "the main checkout's installed element package is absent")
     def test_real_tree_passes_read_only(self):
         before = (REAL_PKG / "package.json").stat().st_mtime_ns
         r = subprocess.run([sys.executable, str(VERIFY), "--root", str(MAIN / "module" / "web")],

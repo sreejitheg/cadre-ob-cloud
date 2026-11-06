@@ -1,10 +1,11 @@
-"""Own tests of WP-W06 (the generator's module wrap, NOTE-WFB-10 section 16.3): what the builder added beyond the tester's
-`tests/test_module_generator.py`. The status word of a generator symbol (On or Off from `state`), the symbols that stay on the library's view, the generator's guards (bundle tags and icon files) and the pin check's
-named root. Needs no gateway, no Gradle, no esbuild and no npm.
+"""Own tests of WP-W06 (the generator's module wrap, NOTE-WFB-10 section 16.3), adapted to module 0.8.0 (rulings R1 and R4):
+what the builder added beyond the tester's `tests/test_module_generator.py`. The status word of a generator symbol (On or Off
+from `state`), the symbols that stay on the library's view, the generator's guards (bundle tags and the tag in the pinned
+manifest) and the pin check's named root. The generator is wrapped on the indicator element here, not on the automation
+button with two icon files as the Sandbox had it. Needs no gateway, no Gradle, no esbuild and no npm.
 
 Run from the repository root:  python -m unittest tests.test_module_generator_wrap
 """
-import copy
 import importlib.util
 import json
 import os
@@ -22,7 +23,9 @@ from hmi import screen  # noqa: E402
 import verify_pin  # noqa: E402
 
 VIEW = "com.inductiveautomation.perspective/views/Screens/Intake/view.json"
-MAIN_WEB = Path(r"F:\repos\Cadre-Sandbox-OpenBridge\module\web")
+# The main checkout's `module/web`: the owner's Windows path, or that of the folder named by CADRE_OB_MAIN_CHECKOUT
+# (CLAUDE.md section 4; the cloud names this repository).
+MAIN_WEB = Path(os.environ.get("CADRE_OB_MAIN_CHECKOUT") or r"F:\repos\Cadre-Sandbox-OpenBridge") / "module" / "web"
 
 
 def generator_module():
@@ -90,7 +93,7 @@ class TheStatusWordOfAGeneratorSymbol(unittest.TestCase):
 
 
 class SymbolsThatStayOnTheLibrarysView(unittest.TestCase):
-    """The component is the automation button: it cannot show these, so the generator's symbol keeps the library view."""
+    """The component is the indicator disc: it cannot show these, so the generator's symbol keeps the library view."""
 
     def tearDown(self):
         screen.RENDER["target"] = "stock"
@@ -100,12 +103,22 @@ class SymbolsThatStayOnTheLibrarysView(unittest.TestCase):
 
     def test_the_plain_symbol_is_drawn_by_the_module(self):
         self.assertTrue(self.drawn())
-        self.assertTrue(self.drawn(on=True, variant="flat", alert=True, outOfService=True, badgeDuty=True))
+        self.assertTrue(self.drawn(on=True, variant="regular", alert=True))
 
-    def test_a_generator_set_a_vertical_symbol_and_the_double_variant_stay_on_the_view(self):
+    def test_the_variants_the_marks_and_the_progress_ring_the_indicator_lacks_stay_on_the_view(self):
+        # 0.8.0: the Sandbox's component drew the flat variant, the duty mark and the out of service greying; the indicator
+        # draws none of them (MODULE_NEEDS, and `parts.SYMBOL_PARAMS` for the two marks), so the symbol keeps the view
+        self.assertFalse(self.drawn(variant="flat"))
+        self.assertFalse(self.drawn(badgeDuty=True))
+        self.assertFalse(self.drawn(outOfService=True))
+        self.assertFalse(self.drawn(activated=True))
+        self.assertFalse(self.drawn(progress=True))
+
+    def test_a_generator_set_and_the_double_variant_stay_on_the_view_and_a_vertical_symbol_does_not(self):
         self.assertFalse(self.drawn(picture="genset"))
-        self.assertFalse(self.drawn(vertical=True))
         self.assertFalse(self.drawn(variant="double"))
+        # the Sandbox kept a vertical generator on the view; a disc has no orientation, so `vertical` is dropped (MODULE_DROP)
+        self.assertTrue(self.drawn(vertical=True))
 
     def test_a_control_interlock_or_command_lock_badge_stays_on_the_view(self):
         self.assertFalse(self.drawn(badgeControl="manual"))
@@ -130,29 +143,32 @@ class TheGeneratorsGuards(unittest.TestCase):
     def setUpClass(cls):
         cls.gen = generator_module()
 
-    def test_a_bundle_that_lacks_an_element_or_an_icon_is_reported(self):
-        tags = [c["tag"] for c in self.gen.COMPONENTS] + ["obi-electric-generator-on", "obi-electric-generator-off"]
+    def test_a_bundle_that_lacks_an_element_is_reported(self):
+        tags = [c["tag"] for c in self.gen.COMPONENTS]
         full = " ".join(f'customElement("{t}")' for t in tags)
         self.assertEqual(self.gen.check_bundle(full), [])
-        self.assertEqual(self.gen.check_bundle(full.replace('"obi-electric-generator-off"', '"x"')),
-                         ["obi-electric-generator-off"])
+        # 0.8.0 wraps the generator on the indicator: its tag is checked like every other (no icon tags are checked)
+        self.assertEqual(self.gen.check_bundle(full.replace('"obc-indicator-generator"', '"x"')), ["obc-indicator-generator"])
         self.assertEqual(self.gen.check_bundle(""), sorted(set(tags)))
 
     @unittest.skipUnless((MAIN_WEB / "node_modules").is_dir(), "the main checkout's node_modules is absent")
-    def test_the_icon_tags_are_checked_against_the_pinned_icon_files(self):
-        with mock.patch.object(self.gen, "PKG", MAIN_WEB / "node_modules/@oicl/openbridge-webcomponents"):
-            self.gen.check_icons()                         # the real tags: no exit
-            bad = copy.deepcopy(self.gen.COMPONENTS)
-            next(c for c in bad if c.get("icons"))["icons"]["on"] = "obi-electric-generator-nonesuch"
-            with mock.patch.object(self.gen, "COMPONENTS", bad), self.assertRaises(SystemExit):
-                self.gen.check_icons()
+    def test_the_generators_tag_is_declared_by_the_pinned_manifest(self):
+        # in place of the Sandbox's check of the two icon tags against the pinned icon files (`check_icons`, which this
+        # generator lacks): the element tag is looked up in the pinned package's manifest, and an unknown tag ends the run
+        manifest = json.loads((MAIN_WEB / "node_modules/@oicl/openbridge-webcomponents/custom-elements.json")
+                              .read_text(encoding="utf-8"))
+        decl = self.gen.declaration(manifest, "obc-indicator-generator")
+        self.assertEqual(decl["tagName"], "obc-indicator-generator")
+        with self.assertRaises(SystemExit):
+            self.gen.declaration(manifest, "obc-indicator-generator-nonesuch")
 
-    def test_the_status_row_of_the_automation_button_is_the_wrappers_not_the_elements(self):
+    def test_the_status_row_of_the_indicator_is_the_wrappers_not_the_elements(self):
         js = (MODULE / "gateway/src/main/resources/mounted/js/cadre-ob.js").read_text(encoding="utf-8")
         wrapper = js.split("var COMPONENTS =")[1]
-        self.assertIn("applyButtonStatus", wrapper)
-        self.assertIn("el.readouts = rows", wrapper)
-        self.assertIn("if (spec.icons) { this.applyButtonStatus(el, p); return; }", wrapper)
+        self.assertNotIn("applyButtonStatus", wrapper)      # the Sandbox's wrap on the button
+        self.assertIn("stack.readouts = show ? [{ type: p.on ? 'state-on' : 'state-off', value: word, hasIcon: true }] : [];",
+                      wrapper)
+        self.assertIn("if (spec.generator) this.applyGenerator(el, p);", wrapper)
 
 
 class ThePinChecksNamedRoot(unittest.TestCase):

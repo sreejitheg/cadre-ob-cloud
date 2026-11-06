@@ -23,7 +23,7 @@ JS = (MOUNTED / "js/cadre-ob.js").read_text(encoding="utf-8")
 ZOOM_JS = (MODULE / "web/canvaszoom.js").read_text(encoding="utf-8")
 CSS = (MOUNTED / "css/cadre-ob.css").read_text(encoding="utf-8")
 
-DEVICES = ("cadre.ob.pump", "cadre.ob.motor", "cadre.ob.fan", "cadre.ob.generator")   # 0.4.4: the generator takes the template
+DEVICES = ("cadre.ob.pump", "cadre.ob.motor", "cadre.ob.fan")   # the generator indicator does not take the template (see below)
 # the device props the Level 4 contract fixes (3.2): name, type, default
 DEVICE_PROPS = {"showStatus": ("boolean", True), "statusText": ("string", ""),
                 "badgeDuty": ("boolean", False), "outOfService": ("boolean", False)}
@@ -67,7 +67,7 @@ class ContractAgreesWithSchemas(unittest.TestCase):
 
 
 class DeviceProps(unittest.TestCase):
-    def test_the_devices_carry_the_status_and_badge_props(self):
+    def test_pump_motor_and_fan_carry_the_status_and_badge_props(self):
         for ctype in DEVICES:
             props = COMPONENTS[ctype]["props"]
             for name, (typ, default) in DEVICE_PROPS.items():
@@ -125,6 +125,9 @@ class DeviceProps(unittest.TestCase):
             extras = {e["name"]: e["def"] for e in by_type[ctype]["extras"]}
             for name, (_typ, default) in DEVICE_PROPS.items():
                 self.assertEqual(extras[name], default, f"{ctype}.{name}")
+        # the generator indicator draws its status word itself (W2): not the device template, so no duty or out of service mark
+        self.assertFalse(by_type["cadre.ob.generator"]["status"])
+        self.assertTrue(by_type["cadre.ob.generator"]["generator"])
         self.assertEqual({e["name"]: e["def"] for e in by_type["cadre.ob.readout"]["extras"]}, {"stretch": False})
         self.assertTrue(by_type["cadre.ob.readout"]["chipSheet"])
 
