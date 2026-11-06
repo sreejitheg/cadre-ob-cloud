@@ -434,3 +434,12 @@
   left). `faceplates.expected_devices` adds each assembly's device by the title `assembly.item` registers (else its kind), and
   `device_expectations` gives it the tabs of the kind `local` and its alarm source; `tests/test_g11_local.py` (7 tests); wiki 08, 18
   and `CONFIGURATION.md` state it (`dd7fb38`). Targeted suite 519 run, all passing. G11 on the component test page rerunning alone.
+- 2026-11-06 06:20: G11 reruns. Run 3 (05:15, cold gateway just restarted): stopped at click 0, leaf views 278 to 277; a diagnostic
+  showed the count settling about 5 s after load and holding at 277, so the page was still loading. Run 4 (warm, 52 min): 22 of 22
+  devices expected and opened, none missing or unexpected, but TB-LOCAL's three tabs each one error badge. Cause: the first deploy's
+  `Local/Benchlocal/view.json` (before the GF-117 fix) was still in the project on the gateway, because an import keeps resources its
+  zip lacks (GF-118); after the restart it hid both local views (GF-117 refined). The project was deleted through the REST API and
+  imported again: only the two sibling views; after a restart the probe and G8 were clean. The trial then had 49 min left, so the
+  container was recreated with a fresh volume (the same tested 0.8.0 file installed and trusted, 97 registered, trial 7,161 s),
+  parent and test page deployed, G8 PASS (6331 components, no badge, no overlay). G11 run 5 started alone. Wiki 07 (GF-118, GF-117)
+  and `CONFIGURATION.md` 4.6 (delete before import after a view moves) updated.

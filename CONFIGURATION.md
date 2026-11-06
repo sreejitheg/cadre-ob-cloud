@@ -435,6 +435,11 @@ Deploy the parent first, then the children (GF-10); verify in a new browser sess
 `deploy.py` sets the identity provider after each import (GF-44). A child of a frame or a module component the installed module does not
 yet have still imports (GF-72), but its component draws nothing until the module is installed.
 
+An import replaces the resources its zip carries and keeps the others (GF-118). After a generator change that moves or drops a view
+(T3 moved a local assembly's page view to `Local/<Kind>/Assembly`), delete the project first
+(`DELETE /data/api/v1/projects/<name>` with the API token) and import it again; a stale view whose folder holds the new views hides
+them after the next restart (GF-117). A gateway that ever held a page built by the Sandbox with a local assembly holds such a view.
+
 ### 4.7 The Showcase Project
 
 `cadre_hmi_showcase` shows every component of the module on a page of its own group, with an editor for each property, a live simulation and
