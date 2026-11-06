@@ -7,7 +7,7 @@ Perspective client (`PerspectiveClient.Component`, `ComponentRegistry`, a proper
 
 Run after `npm run build` in `module/web` and `python module/tools/gen_module_assets.py`. `PLAYWRIGHT` names the Playwright module to import (a `file:///` URL of its `index.mjs` when it is not installed beside the harness); `CHROMIUM` names a Chromium executable when Playwright's own is absent:
 
-    node module/tools/harness/devices.mjs   # status, duty, out of service and stretch on pump, motor, fan, readout
+    node module/tools/harness/devices.mjs   # status, duty, out of service and stretch on pump, motor, fan, readout; the generator's icons by `on` (0.4.4)
     node module/tools/harness/zoom.mjs      # canvas zoom: wheel, keys, pinch, point under the pointer, guard, unmount
     node module/tools/harness/alertselect.mjs   # alarm lists: row ticks, toggle, row click, stale ids, selectable false (0.4.2)
 

@@ -221,5 +221,27 @@
   "selectedMode": "all",
   "alerts": [],
   "showTime": false
+ },
+ "obc-automation-button": {
+  "variant": "regular",
+  "state": "open",
+  "static": false,
+  "activated": false,
+  "tag": null,
+  "readoutPosition": "bottom",
+  "readoutSize": "regular",
+  "alert": false,
+  "alertFrameType": "small-side-flip",
+  "alertFrameThickness": "small",
+  "alertFrameStatus": "alarm",
+  "alertFrameMode": "acked-active",
+  "showAlertIcon": false,
+  "progress": false,
+  "progressMode": "indeterminate",
+  "progressValue": 0,
+  "direction": "forward",
+  "positioning": "point",
+  "orientation": "horizontal",
+  "hasBadgeSpacer": false
  }
 }

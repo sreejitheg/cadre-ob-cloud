@@ -994,6 +994,201 @@
    }
   }
  },
+ "cadre.ob.generator": {
+  "element": "obc-automation-button",
+  "title": "OB Generator",
+  "palette": "OpenBridge generator: running or stopped icon, status word, badges and alert frame",
+  "schema": "schemas/generator.props.json",
+  "defaultSize": {
+   "width": 96,
+   "height": 96
+  },
+  "props": {
+   "variant": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "double",
+     "forward",
+     "square",
+     "flat",
+     "flat-forward"
+    ],
+    "default": "regular"
+   },
+   "state": {
+    "type": "string",
+    "enum": [
+     "closed",
+     "open"
+    ],
+    "default": "open"
+   },
+   "static": {
+    "type": "boolean",
+    "default": false
+   },
+   "activated": {
+    "type": "boolean",
+    "default": false
+   },
+   "tag": {
+    "type": "string",
+    "default": ""
+   },
+   "readoutPosition": {
+    "type": "string",
+    "enum": [
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "default": "bottom"
+   },
+   "readoutSize": {
+    "type": "string",
+    "enum": [
+     "small",
+     "regular",
+     "enhanced"
+    ],
+    "default": "regular"
+   },
+   "alert": {
+    "type": "boolean",
+    "default": false
+   },
+   "alertFrameType": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "small-side-flip",
+     "large-side-flip",
+     "bottom-flip",
+     "top-flip"
+    ],
+    "default": "small-side-flip"
+   },
+   "alertFrameThickness": {
+    "type": "string",
+    "enum": [
+     "small",
+     "large"
+    ],
+    "default": "small"
+   },
+   "alertFrameStatus": {
+    "type": "string",
+    "enum": [
+     "alarm",
+     "warning",
+     "caution",
+     "level-critical",
+     "level-high",
+     "level-medium",
+     "level-low",
+     "level-diagnostic"
+    ],
+    "default": "alarm"
+   },
+   "alertFrameMode": {
+    "type": "string",
+    "enum": [
+     "acked-active",
+     "unacked-active",
+     "unacked-rectified"
+    ],
+    "default": "acked-active"
+   },
+   "showAlertIcon": {
+    "type": "boolean",
+    "default": false
+   },
+   "progress": {
+    "type": "boolean",
+    "default": false
+   },
+   "progressMode": {
+    "type": "string",
+    "enum": [
+     "determinate",
+     "indeterminate",
+     "progressive-indeterminate"
+    ],
+    "default": "indeterminate"
+   },
+   "progressValue": {
+    "type": "number",
+    "default": 0
+   },
+   "direction": {
+    "type": "string",
+    "enum": [
+     "forward",
+     "forward-fast",
+     "forward-stopped",
+     "backward",
+     "backward-fast",
+     "backward-stopped",
+     "standby"
+    ],
+    "default": "forward"
+   },
+   "positioning": {
+    "type": "string",
+    "enum": [
+     "point",
+     "symbol",
+     "button"
+    ],
+    "default": "point"
+   },
+   "orientation": {
+    "type": "string",
+    "enum": [
+     "horizontal",
+     "verticalRight",
+     "verticalLeft"
+    ],
+    "default": "horizontal"
+   },
+   "hasBadgeSpacer": {
+    "type": "boolean",
+    "default": false
+   },
+   "on": {
+    "type": "boolean",
+    "default": false
+   },
+   "showStatus": {
+    "type": "boolean",
+    "default": true
+   },
+   "statusText": {
+    "type": "string",
+    "default": ""
+   },
+   "badgeDuty": {
+    "type": "boolean",
+    "default": false
+   },
+   "outOfService": {
+    "type": "boolean",
+    "default": false
+   },
+   "componentSize": {
+    "type": "string",
+    "enum": [
+     "regular",
+     "medium",
+     "large",
+     "xl"
+    ],
+    "default": "regular"
+   }
+  }
+ },
  "cadre.ob.valve": {
   "element": "obc-digital-valve",
   "title": "OB Valve",

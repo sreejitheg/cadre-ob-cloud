@@ -12,7 +12,7 @@ const errors = [];
 page.on('pageerror', e => errors.push(String(e)));
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 await page.goto(url);
-await page.waitForFunction(() => Object.keys(window.registry).length >= 11);
+await page.waitForFunction(() => Object.keys(window.registry).length >= 12);
 
 const results = [];
 function check(name, ok, detail) { results.push([ok ? 'PASS' : 'FAIL', name, detail === undefined ? '' : JSON.stringify(detail)]); }
@@ -80,6 +80,65 @@ for (const type of ['cadre.ob.pump', 'cadre.ob.motor', 'cadre.ob.fan']) {
   check(`${type} out of service veil 48x48 with OOS`, r.oos && r.oos.text === 'OOS' && Math.round(r.oos.w) === 48 && Math.round(r.oos.h) === 48, r.oos);
   r = await pump(type, {}, 'no oos');
   check(`${type} no veil by default`, r.oos === null, r.oos);
+}
+
+// The generator (module 0.4.4, ruling RW-01): `obc-automation-button` with the pinned generator icons, which the wrapper
+// places in the button's icon slots by `on` and replaces when `on` changes (NOTE-WFB-10 section 16.3, Table 16.3).
+const GEN = 'cadre.ob.generator';
+async function generator(raw, label) {
+  await page.evaluate(([type, raw]) => {
+    const st = document.getElementById('stage');
+    st.innerHTML = '<div id="m" style="width:96px;height:96px"></div>';
+    window.h = window.mount(type, raw, document.getElementById('m'));
+  }, [GEN, raw]);
+  await page.waitForTimeout(300);
+  return generatorState();
+}
+function generatorState() {
+  return page.evaluate(`(async () => {
+    const el = document.querySelector('#m obc-automation-button');
+    await el.updateComplete;
+    const deepText = ${deepText};
+    const icons = [...el.children].filter((c) => c.tagName.startsWith('OBI-'))
+      .map((c) => ({ tag: c.tagName.toLowerCase(), slot: c.getAttribute('slot') }));
+    const oos = document.querySelector('#m .cadre-ob-oos');
+    return { icons, text: deepText(el), alert: el.alert, status: el.alertFrameStatus, oos: oos ? oos.textContent : null };
+  })()`);
+}
+const ON = 'obi-electric-generator-on', OFF = 'obi-electric-generator-off';
+const only = (r, tag) => ['icon', 'icon-silhouette'].every((s) => r.icons.filter((i) => i.slot === s).length === 1 &&
+  r.icons.some((i) => i.slot === s && i.tag === tag)) && r.icons.length === 2;
+{
+  let r = await generator({ on: true }, 'running');
+  check(`${GEN} generator running: the ${ON} icon in both icon slots`, only(r, ON), r.icons);
+  r = await generator({ on: false }, 'stopped');
+  check(`${GEN} generator stopped: the ${OFF} icon in both icon slots`, only(r, OFF), r.icons);
+  r = await generator({ on: true, alert: true, alertFrameStatus: 'alarm' }, 'fault');
+  check(`${GEN} generator fault: the running icon and the element's alert frame at the alarm level`,
+    only(r, ON) && r.alert === true && r.status === 'alarm', r);
+  r = await generator({ on: false, outOfService: true }, 'out of service');
+  check(`${GEN} generator out of service: the stopped icon and the veil with OOS`, only(r, OFF) && r.oos === 'OOS', r);
+  // the icon is replaced when `on` changes: one element per slot after each change, never two stacked
+  r = await generator({ on: false }, 'change');
+  await page.evaluate(() => window.h.rerender({ on: true }));
+  await page.waitForTimeout(300);
+  r = await generatorState();
+  check(`${GEN} generator running after stopped: the icon is replaced, not stacked`, only(r, ON), r.icons);
+  await page.evaluate(() => window.h.rerender({ on: false }));
+  await page.waitForTimeout(300);
+  r = await generatorState();
+  check(`${GEN} generator stopped after running: the icon is replaced, not stacked`, only(r, OFF), r.icons);
+  // the status word: statusText when given, else On or Off from `on`; none while showStatus is false
+  r = await generator({ on: true, statusText: 'Running' }, 'word');
+  check(`${GEN} generator running: statusText Running is the status word`, r.text.includes('Running'), r.text);
+  r = await generator({ on: true }, 'on');
+  check(`${GEN} generator running with no statusText draws On`, r.text.includes('On'), r.text);
+  r = await generator({ on: false }, 'off');
+  check(`${GEN} generator stopped with no statusText draws Off`, r.text.includes('Off'), r.text);
+  r = await generator({ on: true, statusText: 'Running', showStatus: false }, 'muted');
+  check(`${GEN} generator running, showStatus false: no status word`, !r.text.includes('Running') && !r.text.includes('On'), r.text);
+  r = await generator({ on: true, tag: 'GEN-1', positioning: 'symbol' }, 'tag');
+  check(`${GEN} generator running keeps its identifier`, r.text.includes('GEN-1'), r.text);
 }
 
 // the pump drawn with every new prop, for the screenshot

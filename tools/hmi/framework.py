@@ -336,7 +336,9 @@ FACEPLATE_VIEW = {"pump": "Faceplate/Pump", "motor": "Faceplate/Pump", "fan": "F
                   "instrument-field": "Faceplate/Instrument", "controller": "Faceplate/Controller",
                   "indicator": "Faceplate/Input", "sequence": "Faceplate/Sequence",
                   # the generator has the asm faceplate only (COB-158): either style opens it
-                  "generator": "Faceplate/ASM/Generator"}
+                  "generator": "Faceplate/ASM/Generator",
+                  # the device of a local assembly (NOTE-WFB-10 section 11.2 item 5): one faceplate for every local kind
+                  "local": "Faceplate/ASM/Local"}
 FACEPLATE_OF_KIND = ("case(coalesce({session.custom.selectedKind}, ''), "
                      + ", ".join(f"'{k}', '{v}'" for k, v in FACEPLATE_VIEW.items()) + ", 'Faceplate/Empty')")
 # The faceplate styles (COBD-045). `openbridge`, the faceplates above, is the default. `asm` follows the
@@ -347,8 +349,14 @@ FACEPLATE_STYLES = tuple(scripts.constant("FACEPLATE_STYLES"))
 ASM_VIEW = {k: "Faceplate/ASM/" + v.split("/")[-1] for k, v in FACEPLATE_VIEW.items()
             if v in ("Faceplate/Pump", "Faceplate/Valve", "Faceplate/Sequence", "Faceplate/Instrument")}
 ASM_VIEW["generator"] = FACEPLATE_VIEW["generator"]
-# The asm faceplates `devices_asm` builds (COB-158): the generator's, the sequence's and the instrument's.
-ASM_BUILT = ("Faceplate/ASM/Generator", "Faceplate/ASM/Sequence", "Faceplate/ASM/Instrument")
+# The device kind of a local assembly and its faceplate (NOTE-WFB-10 section 11.2 item 5): the one faceplate every local
+# kind shares, whichever the style, with the tabs Home, Alarms and Info in place of the six of ASM_TABS; its Home embeds
+# the view `Local/<Kind>/Home` the view parameter `localKind` names.
+LOCAL_KIND = "local"
+LOCAL_VIEW = FACEPLATE_VIEW[LOCAL_KIND]
+ASM_VIEW[LOCAL_KIND] = LOCAL_VIEW
+# The asm faceplates `devices_asm` builds (COB-158): the generator's, the sequence's and the instrument's; the local one.
+ASM_BUILT = ("Faceplate/ASM/Generator", "Faceplate/ASM/Sequence", "Faceplate/ASM/Instrument", LOCAL_VIEW)
 FACEPLATE_OF_SELECTION = ("if(coalesce({session.custom.selectedStyle}, '') = 'asm', "
                           "case(coalesce({session.custom.selectedKind}, ''), "
                           + ", ".join(f"'{k}', '{v}'" for k, v in ASM_VIEW.items()) + f", {FACEPLATE_OF_KIND}), "
@@ -391,12 +399,14 @@ def side_menu() -> dict:
 def _faceplate_body(pos: dict) -> dict:
     """The faceplate of the selected device's kind and style, for the dock and for the popup."""
     return pv.node("ia.display.view", "Faceplate", pos, {
-        "path": "Faceplate/Empty", "params": {"deviceId": "", "tab": ""}, "useDefaultViewHeight": False,
+        "path": "Faceplate/Empty", "params": {"deviceId": "", "tab": "", "localKind": ""}, "useDefaultViewHeight": False,
         "useDefaultViewWidth": False},
         prop_config={"props.path": pv.bind(pv.expr(FACEPLATE_OF_SELECTION)),
                      "props.params.deviceId": pv.bind(pv.expr("{session.custom.selectedDevice}")),
                      # the tab to open on (COB-158): `cadre.hmi.select_device` writes it, empty for a plain click
-                     "props.params.tab": pv.bind(pv.expr("coalesce({session.custom.selectedTab}, '')"))})
+                     "props.params.tab": pv.bind(pv.expr("coalesce({session.custom.selectedTab}, '')")),
+                     # the local kind (NOTE-WFB-10 section 11.2 item 5): `select_device` writes it, empty for any other kind
+                     "props.params.localKind": pv.bind(pv.expr("coalesce({session.custom.selectedLocal}, '')"))})
 
 
 def _pin_button(name: str, script_lines: list[str]) -> dict:
@@ -597,6 +607,15 @@ TAB_SHOWN = {"pump": {"interlocks": "{view.custom.ilk.present}", "maintenance": 
 # maintenance functions and shows by their rule; Interlock shows for a device with interlocks.
 ASM_TABS = [("home", "Home"), ("config", "Config"), ("diagnostics", "Diagnostics"), ("alarms", "Alarms"),
             ("interlocks", "Interlock"), ("info", "Info")]
+LOCAL_TABS = [("home", "Home"), ("alarms", "Alarms"), ("info", "Info")]
+ASM_TABS_OF = {LOCAL_VIEW: LOCAL_TABS}   # the asm faceplates that do not take the six tabs of ASM_TABS
+
+
+def asm_tabs(view: str) -> list:
+    """The tabs of an `asm` faceplate `view`: ASM_TABS, or its own list (ASM_TABS_OF)."""
+    return ASM_TABS_OF.get(view, ASM_TABS)
+
+
 ASM_SHOWN = {"interlocks": "{view.custom.ilk.present}", "config": "{view.custom.dev.mnt} || {view.custom.dev.config} > 0"}
 # Members that also show the Config tab of an asm faceplate, by faceplate: a generator's service data (COB-158,
 # `cadre.hmi.CONFIG_SERVICE`).
@@ -626,7 +645,7 @@ def expected_tabs(kind: str, members, trend=(), style: str = "openbridge") -> li
              "trend": bool(set(trend) & set(TREND_INDEXED[key])) if key in TREND_INDEXED
              else TREND_MEMBER.get(key) in have}
     needs["config"] = needs["maintenance"] or bool(have & set(ASM_CONFIG_EXTRA.get(key, ())))
-    tabs = ASM_TABS if view in ASM_VIEW.values() else FACEPLATE_TABS.get(key, [])
+    tabs = asm_tabs(view) if view in ASM_VIEW.values() else FACEPLATE_TABS.get(key, [])
     return [label for k, label in tabs if needs.get(k, True)]
 
 
@@ -756,25 +775,29 @@ def _tab_lines(keys: list, requested: str) -> list:
 def _tabbed(kind: str, control_rows: list, custom: dict, custom_cfg: dict, panes: dict | None = None,
             style: str = "openbridge", *, reads: list | None = None, header: dict | None = None,
             config_rows: list | None = None, diagnostics: dict | None = None, shown: dict | None = None,
-            scroll_home: bool = False) -> dict:
+            scroll_home: bool = False, tabs: list | None = None, extra_params: dict | None = None) -> dict:
     """A device faceplate: the tab row, the quality line and one pane per tab of FACEPLATE_TABS. The
     first pane holds `control_rows`; the Alarms, Interlocks, Maintenance and single member Trend
     panes are built here, and `panes` gives any other by its key. In the `asm` style (COBD-045) the
     header strip comes first and the tabs are ASM_TABS: Config holds the maintenance functions, and
-    Diagnostics and Info are built here."""
+    Diagnostics and Info are built here. `tabs` gives the tab list in place of those two (the local faceplate's
+    Home, Alarms and Info: the Config and Diagnostics panes are built only for a list that has them), and
+    `extra_params` the view parameters beside `deviceId` and `tab`, each with an empty default."""
     asm = style == "asm"
-    tabs = ASM_TABS if asm else FACEPLATE_TABS[kind]
+    tabs = tabs or (ASM_TABS if asm else FACEPLATE_TABS[kind])
     keys = [k for k, _ in tabs]
     ilk = "interlocks" in keys
     built = {keys[0]: _pane(keys[0], ([_held_line()] if ilk else []) + control_rows, scroll_home),
              "alarms": _alarms_pane()}
     if ilk:
         built["interlocks"] = _interlocks_pane()
-    if "maintenance" in keys or asm:
+    if "maintenance" in keys or (asm and "config" in keys):
         built["config" if asm else "maintenance"] = _maintenance_pane("config" if asm else "maintenance",
                                                                       config_rows)
     if asm:
-        built.update({"diagnostics": diagnostics or _diagnostics_pane(kind), "info": _info_pane()})
+        if "diagnostics" in keys:
+            built["diagnostics"] = diagnostics or _diagnostics_pane(kind)
+        built["info"] = _info_pane()
     trend = "trend" in keys and kind in TREND_MEMBER
     if trend:
         built["trend"] = _trend_pane(TREND_MEMBER[kind])
@@ -785,7 +808,7 @@ def _tabbed(kind: str, control_rows: list, custom: dict, custom_cfg: dict, panes
                    prop_config={"props.style.classes": root_classes()},
                    children=head + [_tab_row(tabs, (shown or ASM_SHOWN) if asm else TAB_SHOWN.get(kind), wrap=asm),
                                     _quality_line(), _confirm_row()] + [built[k] for k in keys])
-    reads = reads or FACEPLATE_READS[kind]
+    reads = FACEPLATE_READS[kind] if reads is None else reads
     custom = {**custom, "tab": tabs[0][0], "source": "", "alarmCount": 0, "can": dict(CAN_DEFAULT), "message": "",
               "dev": dev_default(reads), "pending": dict(PENDING_DEFAULT)}
     custom_cfg = {**custom_cfg, "custom.source": DEVICE_SOURCE_CFG, "custom.alarmCount": ALARM_COUNT_CFG,
@@ -805,7 +828,8 @@ def _tabbed(kind: str, control_rows: list, custom: dict, custom_cfg: dict, panes
         custom_cfg["custom.historyTags"] = pv.bind(pv.expr("{view.params.deviceId}"), [pv.script_transform([
             f"return cadre.hmi.history_tags(value, '{TREND_MEMBER[kind]}')"])])
     # `tab` is the tab to open on (contract 2.1 of COB-158 to COB-160): the tab asked for, else the first
-    return pv.view(root, params={"deviceId": "", "tab": ""}, param_dirs={"deviceId": "input", "tab": "input"},
+    params = {"deviceId": "", "tab": "", **(extra_params or {})}
+    return pv.view(root, params=params, param_dirs={k: "input" for k in params},
                    param_change={"deviceId": reset, "tab": _tab_lines(keys, "currentValue.value")},
                    size={"width": 400, "height": 720}, custom=custom, custom_config=custom_cfg)
 

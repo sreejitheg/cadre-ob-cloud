@@ -22,15 +22,20 @@ element lists); circles, rectangles, lines and polygons were rewritten as SVG pa
 The Cadre OpenBridge module (module/, wiki/12) also carries the package's own code and files,
 under module/gateway/src/main/resources/mounted/:
 
-  js/cadre-ob.js            the OpenBridge components the module wraps (pump, tank, alert list,
-                            small alert page) with their dependencies, bundled and minified
-                            with esbuild from module/web/entry.js, followed by the module's own
-                            wrappers. The bundle also contains:
+  js/cadre-ob.js            the OpenBridge components the module wraps (obc-pump, obc-automation-tank,
+                            obc-motor, obc-fan, obc-digital-valve, obc-analog-valve, obc-transmitter,
+                            obc-instrument-field, obc-alert-list-details, obc-alert-list-page-small,
+                            obc-automation-button with the icons obi-electric-generator-on and
+                            obi-electric-generator-off; the canvas zoom is the module's own) with their dependencies, bundled and
+                            minified with esbuild from module/web/entry.js, followed by the module's
+                            own wrappers. The bundle also contains:
                               Lit (lit-html, lit-element, @lit/reactive-element, @lit/localize),
                                 BSD-3-Clause, Copyright Google LLC; the fnv1a64 function of
                                 @lit/localize, MIT, Copyright 2014 Travis Webb
                               Chart.js 4.5.1, MIT, Copyright 2025 Chart.js Contributors
                               @kurkle/color 0.3.4, MIT, Copyright 2024 Jukka Kurkela
+                              uPlot 1.6.32, MIT, Copyright (c) 2022 Leon Sorokin
+                              @lit-labs/observers 2.1.0, BSD-3-Clause, Copyright (c) 2021 Google LLC
   css/cadre-ob.css          the package's dist/openbridge.css, scoped and trimmed by
                             module/tools/gen_module_assets.py
   fonts/NotoSans-OB.ttf     the Noto Sans font file as shipped in the package (dist/NotoSans.ttf);

@@ -28,6 +28,10 @@ Four kinds of content, in labelled sections (wiki page 13 section 13):
                     stay fixed in the view
   page buttons      pulses of the test tags only (`Bench.pulse_tags`): raise an alarm for a minute, set a fault
                     (the library's `page_pulse`, write path W18, asks first and holds the tag true)
+  local assembly    one assembly of the synthetic local kind `benchlocal` (NOTE-WFB-10 section 11.2 item 8) on the
+                    test device `_componentTest/Bench/Local1` (kind `local`): a readout of `value`, an indicator of
+                    `state`, the pulse button of `cmdStart`, and a Home with the same three; `alarm` carries one alarm
+                    of priority High. `screen.py --component-test` allows this kind whatever `--local-kinds` holds
 
 `build` returns the descriptor, the device model entries, the tag folder and the pulse tags. `screen.py` adds
 them to the build (`--component-test`): the descriptor to the set (tag model `external`, so that the
@@ -59,6 +63,8 @@ MARGIN, GAP, HEAD = 12, 12, 30        # px: the page margin, between sections, a
 CAPTION = 16                          # px: the height of a case's caption line
 PULSE_MS = 60000                      # how long a page button holds a test tag true
 RAISE_ALL = f"{FOLDER}/ALM_ALL/raise"  # one tag raises every test alarm
+LOCAL_KIND = "benchlocal"             # the test page's own local kind (NOTE-WFB-10 section 11.2 item 8)
+LOCAL_DEVICE = "Bench/Local1"         # its device under FOLDER
 
 # Enumerations the contracts do not state (a contract holds the default only). Each is a fact of the library's own
 # drawing code, not of a vendor document: the alert colours (`library.ALERT_COLOURS`), the control badges
@@ -236,6 +242,14 @@ def device_specs(root: str, node: str) -> dict[str, dict]:
     specs["TB_MSTATE"] = {"kind": "motor", "title": "TB-MS", "faceplate": "asm", "modes": None,
                           "label": "Test motor with a state only: a plain motor symbol opens this faceplate",
                           "members": {"state": member("Boolean")}, "tags": [mem("state", "Boolean", False)]}
+    # the device of the local assembly (NOTE-WFB-10 section 11.2 item 8): kind `local`, four memory tags
+    specs[LOCAL_DEVICE] = {"kind": "local", "title": "TB-LOCAL", "modes": None,
+                           "label": "Test local assembly: a readout, a lamp and a pulse button of a kind the library lacks",
+                           "members": {"value": member("Float8"), "state": member("Boolean"), "cmdStart": pulse("Start"),
+                                       "alarm": member("Boolean")},
+                           "tags": [mem("value", "Float8", 42.0), mem("state", "Boolean", True),
+                                    mem("cmdStart", "Boolean", False),
+                                    mem("alarm", "Boolean", False, alarms=[alarm("Alarm", "TB-LOCAL", "Alarm", "High")])]}
     for prio in alarms.PRIORITIES:   # one alarm device for each priority: the state follows a button's pulse
         ident = f"ALM_{prio.upper()}"
         specs[ident] = {"kind": "indicator", "title": f"ALM-{prio.upper()}", "modes": None,
@@ -289,9 +303,15 @@ def gallery_tag(value) -> dict | None:
     return None
 
 
+def _nested(ident: str, tags: list) -> dict:
+    """A device's folder, `a/b` as the folder `a` holding the folder `b` (a tag name holds no '/', GF-11)."""
+    head, _, rest = ident.partition("/")
+    return {"name": head, "tagType": "Folder", "tags": [_nested(rest, tags)] if rest else copy.deepcopy(tags)}
+
+
 def tag_folder(specs: dict[str, dict], gallery: dict | None = None) -> dict:
     """The test folder: each device's tags beside the all-alarms tag, the lamps' tags and the gallery's."""
-    kids = [{"name": ident, "tagType": "Folder", "tags": copy.deepcopy(s["tags"])} for ident, s in specs.items()]
+    kids = [_nested(ident, s["tags"]) for ident, s in specs.items()]
     kids.append({"name": "ALM_ALL", "tagType": "Folder", "tags": [mem("raise", "Boolean", False)]})
     kids.append({"name": "lamps", "tagType": "Folder", "tags": [
         {"name": ident, "tagType": "Folder", "tags": copy.deepcopy(spec["tags"])} for ident, spec in LAMPS.items()]})
@@ -463,7 +483,13 @@ def _sequence(c):
 
 
 def _generator(c):
-    return []
+    """The two states of the generator's map row (`module/openbridge-map.json`, NOTE-WFB-10 Table 16.3) that the generic
+    cases do not state: a fault, running with the alert frame at the alarm level, and a stopped generator out of service.
+    The running and stopped states are the generic on and off cases."""
+    return [Case("fault", {"on": True, "alert": True, "alertFrameStatus": "alarm",
+                           "alertFrameMode": "acked-active", "hasTag": True, "tag": ident_of("generator")}),
+            Case("stopped, out of service", {"on": False, "outOfService": True, "hasTag": True,
+                                             "tag": ident_of("generator")})]
 
 
 EXTRAS = {"tank": _tank, "readout": _readout, "instrument-field": _field, "controller": _controller,
@@ -744,6 +770,40 @@ DEVICE_ROW = [("motor", "TB_MOTOR", {"hasSpeed": True}), ("fan", "TB_FAN", {"has
               ("sequence", "TB_SEQ", {"hasStep": True})]
 
 
+LOCAL_SIZE = (300, 200)   # the assembly's box on the page
+LOCAL_HOME = (360, 150)   # its Home
+
+
+def local_block(specs: dict) -> Block:
+    """The local assembly of the test device `Bench/Local1` (NOTE-WFB-10 section 11.2 item 8): an outline, a heading,
+    a readout of `value`, a lamp of `state` and a dashed rule, with a Home of the readout, the lamp and the pulse
+    button of `cmdStart` (a button is allowed in the Home only: G0 rule `assembly-button-on-page`)."""
+    w, h = LOCAL_SIZE
+    hw, hh = LOCAL_HOME
+    parts = {"labels": [{"id": "LT", "x": 12, "y": 8, "w": 200, "h": 24, "text": "Local assembly", "align": "left",
+                         "style": "heading"}],
+             "symbols": [{"id": "LRO", "kind": "readout", "x": 12, "y": 44, "w": 120, "h": 40, "member": "value",
+                          "format": "0.0", "label": "Value"},
+                         {"id": "LIN", "kind": "indicator", "x": 180, "y": 40, "w": 48, "h": 48, "member": "state"}],
+             "lines": [{"id": "LLN", "points": [[12, 140], [w - 12, 140]], "style": "dashed"}],
+             "shapes": [{"id": "LSH", "x": 0, "y": 0, "w": w, "h": h, "form": "rect"}]}
+    home = {"w": hw, "h": hh, "parts": {
+        "labels": [{"id": "HT", "x": 12, "y": 8, "w": 240, "h": 24, "text": "Local detail", "align": "left",
+                    "style": "heading"}],
+        "symbols": [{"id": "HRO", "kind": "readout", "x": 12, "y": 44, "w": 120, "h": 40, "member": "value",
+                     "format": "0.0", "label": "Value"},
+                    {"id": "HIN", "kind": "indicator", "x": 180, "y": 40, "w": 48, "h": 48, "member": "state"}],
+        "buttons": [{"id": "HBT", "x": 12, "y": 104, "w": 120, "h": 36, "label": "Start", "member": "cmdStart"}]}}
+    block = Block()
+    block.add("assemblies", {"id": "TB_LOCAL", "kind": LOCAL_KIND, "device": f"{FOLDER}/{LOCAL_DEVICE}",
+                             "title": specs[LOCAL_DEVICE]["title"], "label": specs[LOCAL_DEVICE]["label"],
+                             "x": 0, "y": 0, "w": w, "h": h, "parts": parts, "home": home})
+    block.add("labels", label("TB_LOCAL_c", f"local kind {LOCAL_KIND}: drawn by the view Local/{LOCAL_KIND.capitalize()}",
+                              0, h + 8, 420, 16, align="left"))
+    block.w, block.h = max(w, 420), h + 8 + CAPTION
+    return block
+
+
 def devices_block(specs: dict, contracts: dict) -> tuple[Block, list[str]]:
     """A device of each kind, with the pump and the valve in a flowing line, and the buttons that open each faceplate on
     its Alarms tab. The symbols open the faceplates in the project's mode (dock; the pin floats it)."""
@@ -906,6 +966,7 @@ def build(contracts: dict, prof: dict, tag_root: str, *, node: str = "Component 
     sections.append(("Alarms", "Test alarms: one lamp for each priority (Critical, High, Medium, Low, Diagnostic)", alarm_part))
     dev_part, dev_pulses = devices_block(specs, contracts)
     sections.append(("Devices", "Test devices: faceplates (dock and floating), modes, commands, flow", dev_part))
+    sections.append(("Local", "Local assembly: a part set for a kind the library lacks", local_block(specs)))
     boxes, arrays, height = pack(sections)
     gallery = galleryize(arrays.get("symbols", []))
     desc = {"schema": prof.get("descriptor", "cadre-hmi-screen/1"),
@@ -927,7 +988,7 @@ def check(desc: dict, contracts: dict) -> list[str]:
     """Problems of the page against the catalogue it came from: a parameter a contract lacks, a repeated id, a symbol
     of a kind the library lacks. Empty for a page the generator built from the catalogue it was given."""
     out, seen = [], set()
-    for array in ("sections", "labels", "symbols", "pipes", "buttons", "alarmPanels"):
+    for array in ("sections", "labels", "symbols", "pipes", "buttons", "alarmPanels", "assemblies"):
         for item in desc.get(array, []):
             if item["id"] in seen:
                 out.append(f"{array}: the id {item['id']!r} is used twice")

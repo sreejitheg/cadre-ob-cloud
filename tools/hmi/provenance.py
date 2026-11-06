@@ -44,6 +44,33 @@ def repository_state() -> tuple[str | None, bool | None]:
     return commit, (bool(status) if status is not None else None)
 
 
+def differing_from_head(paths) -> list[str]:
+    """The files among `paths` that lie in the repository and differ from its HEAD: changed (staged or not) or not
+    tracked. A file outside the repository is not judged, and neither is any file not named: only the named files
+    count (NOTE-WFB-10 section 11.4 item 2). Empty where git cannot say."""
+    root = ROOT.resolve()
+    named = []
+    for p in paths:
+        if p is None:
+            continue
+        try:
+            named.append(Path(p).resolve().relative_to(root).as_posix())
+        except (ValueError, OSError):
+            continue
+    if not named:
+        return []
+    out = _git("status", "--porcelain", "--untracked-files=all", "--", *named)
+    if not out:
+        return []
+    return porcelain_paths(out)
+
+
+def porcelain_paths(out: str) -> list[str]:
+    """The paths of `git status --porcelain` lines. The two status columns end at index 2 whether or not the output's
+    leading space was stripped, so the path is the rest of the line."""
+    return sorted({line[2:].strip().strip('"') for line in out.splitlines() if line.strip()})
+
+
 def inputs_of(paths) -> list[dict]:
     """`[{"path", "sha256"}]` for each existing file of `paths`; a folder contributes its files, sorted."""
     out = []
@@ -74,9 +101,10 @@ class Clock:
                                 "bits": struct.calcsize("P") * 8}}
 
 
-def write_json(path: Path, doc) -> Path:
-    """A JSON document with LF line endings and a final newline (the repository's `eol=lf`)."""
+def write_json(path: Path, doc, *, strict: bool = False) -> Path:
+    """A JSON document with LF line endings and a final newline (the repository's `eol=lf`). `strict` refuses a
+    non-finite number (`NaN`, `Infinity`), which Python writes but no JSON reader accepts."""
     import json
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_bytes((json.dumps(doc, indent=1, ensure_ascii=False) + "\n").encode("utf-8"))
+    path.write_bytes((json.dumps(doc, indent=1, ensure_ascii=False, allow_nan=not strict) + "\n").encode("utf-8"))
     return path

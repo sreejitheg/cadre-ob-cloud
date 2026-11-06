@@ -10,6 +10,7 @@
     "esbuild": "0.25.10"
   },
   "scripts": {
-    "build": "esbuild entry.js --bundle --format=iife --minify --legal-comments=linked --outfile=dist/ob-components.js"
+    "prebuild": "python ../tools/verify_pin.py --root .",
+    "build": "esbuild entry.js --bundle --format=iife --minify --legal-comments=linked --outfile=dist/ob-components.js && python ../tools/verify_pin.py --record-bundle --root ."
   }
 }

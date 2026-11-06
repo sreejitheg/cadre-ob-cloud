@@ -1,0 +1,94 @@
+{
+ "release": "2.0.0-next.155",
+ "rows": [
+  {
+   "kind": "switch",
+   "feature": null,
+   "element": "obc-switch",
+   "import": "@oicl/openbridge-webcomponents/dist/automation/switch/switch.js",
+   "properties": [],
+   "states": [],
+   "state": "proposed",
+   "reason": "The squared automation button (stable): on, variant (square or flat), orientation (horizontal, verticalRight, verticalLeft), the readout stack, the alert frame and flap, badges and progress. It fits with a value map (library regular to element square; library vertical to orientation verticalRight) and the module's tables.",
+   "reference": null
+  },
+  {
+   "kind": "bus",
+   "feature": null,
+   "element": "obc-bus",
+   "import": "@oicl/openbridge-webcomponents/dist/automation/bus/bus.js",
+   "properties": [],
+   "states": [],
+   "state": "proposed",
+   "reason": "A straight bar (beta): label, size (small or medium), variant (regular, enhanced or medium), tint and vertical. It fits straight bars, with a new descriptor form and a dashed cue for the dead state; corners need the pinned line elements.",
+   "reference": null
+  },
+  {
+   "kind": "generator",
+   "feature": null,
+   "element": "obc-automation-button",
+   "import": "@oicl/openbridge-webcomponents/dist/automation/automation-button/automation-button.js",
+   "properties": [],
+   "states": [
+    {
+     "name": "running",
+     "props": {
+      "on": true
+     }
+    },
+    {
+     "name": "stopped",
+     "props": {
+      "on": false
+     }
+    },
+    {
+     "name": "fault",
+     "props": {
+      "on": true,
+      "alert": true,
+      "alertFrameStatus": "alarm"
+     }
+    },
+    {
+     "name": "out_of_service",
+     "props": {
+      "on": false,
+      "outOfService": true
+     }
+    }
+   ],
+   "state": "reviewed",
+   "reason": "The process symbol holder (stable) with the pinned generator icons in dist/icons fits the generator symbol, with new wrapper code that places the icon element in the button's icon slots. A module-first upgrade of a library kind, not the closing of a gap (ruling RW-01).",
+   "reference": "WFBD-137"
+  },
+  {
+   "kind": "command-button",
+   "feature": null,
+   "element": "obc-button",
+   "import": "@oicl/openbridge-webcomponents/dist/components/button/button.js",
+   "properties": [],
+   "states": [],
+   "state": "proposed",
+   "reason": "The button (stable): variant, disabled, a label slot and a click event. It is the candidate for a command button, with a new event entry in the wrapper; the automation button is a process symbol holder with no label and does not fit.",
+   "reference": null
+  }
+ ],
+ "rejected": [
+  {
+   "kind": "range-bar",
+   "element": "linear-indicator",
+   "reason": "A module of SVG helpers, not an element: no pinned element draws a normal band and limit marks."
+  },
+  {
+   "kind": "generator-set",
+   "element": "obc-gauge-generator",
+   "reason": "An experimental radial load gauge: a different information type from the library's engine and alternator picture."
+  },
+  {
+   "kind": "generator",
+   "element": "obc-indicator-generator",
+   "reason": "A 48 px glyph on LitElement with no on state, tag, readout stack, badges or alert frame; obc-automation-button with the pinned generator icons fits instead."
+  }
+ ]
+}

@@ -32,11 +32,11 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts  # noqa: E402
+    from hmi import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts, assembly  # noqa: E402
     from hmi.framework import root_classes, search_panel  # noqa: E402
     from hmi.library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE  # noqa: E402
 else:
-    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts
+    from . import pv, diagram, framework, library, scripts, navigation, devices_asm, parent as par, parts, assembly
     from .framework import root_classes, search_panel
     from .library import svg, icon_svg, block_size, identifier_width, identifier_shown, STATIC_TILE
 
@@ -177,7 +177,10 @@ def pulse_members(kind: str) -> list[str]:
 RENDER = {"target": "stock", "devices": {}}
 MODULE_KIND = {"pump": "cadre.ob.pump", "tank": "cadre.ob.tank", "motor": "cadre.ob.motor", "fan": "cadre.ob.fan",
                "valve": "cadre.ob.valve", "analogvalve": "cadre.ob.analogvalve",
-               "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield"}
+               "readout": "cadre.ob.readout", "instrument-field": "cadre.ob.instrumentfield",
+               # module 0.4.4 (ruling RW-01, NOTE-WFB-10 16.3): the generator symbol is the automation button with the
+               # pinned generator icons; a generator set stays on the library's view (MODULE_EXCEPT)
+               "generator": "cadre.ob.generator"}
 # The two kinds of module 0.3.1 (COB-127): a value with its unit, drawn in the box the library gives the block
 # (`symbol_box`) with a digit count in place of a number format, and opening the faceplate of the device
 # kind its parameter names.
@@ -199,9 +202,16 @@ MODULE_INSTRUMENTS = ("readout", "instrument-field")
 # count), keep the library's view (`module_digits`). The enhanced field with a setpoint is 6 px higher than the
 # library's box and the other cases at most 4 px (`module/web/instruments.json`, `measure_instruments.py`): the
 # element is not cut, since its box does not clip, but it is not fitted either, so that case stays on the library's view.
-MODULE_EXCEPT = {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}
+# Module 0.4.4: the generator set (`picture` `genset`) stays on the library's view, since the gauge was rejected (3.1).
+MODULE_EXCEPT = {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}],
+                 "generator": [{"picture": "genset"}]}
 MODULE_NEEDS = {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
-                "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}}
+                "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]},
+                # the generator's component is the automation button: it has no vertical artwork, no control, interlock or
+                # command lock badge property (it takes badges in slots, which the wrapper fills with the duty badge only),
+                # and its `double` variant draws a direction arrow the library's does not, so those keep the library's view
+                "generator": {"variant": ["regular", "flat"], "vertical": [False], "badgeControl": ["none"],
+                              "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]}}
 # Parameters the module's component states with the contract's default where the symbol gives none: the
 # component's own default differs from the library view's (the module's pump prints a speed, the library's
 # does not).
@@ -313,12 +323,16 @@ _STATUS_DROP = {"showStatus", "statusText", "hasTag", "deviceId", "deviceKind", 
 # A readout's identifier is the element's `idTag` (beneath the value; the transmitter's `tag` draws nothing in a value
 # chip), a field's label its `tag` (the caption). The number formats become `fractionDigits`, the field's `align`
 # becomes `center`, and the field's own `tag` and `source` are drawn by neither (`embed_module`).
-MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {},
+MODULE_PARAM = {"pump": _SPEED_RENAME, "motor": _SPEED_RENAME, "fan": _SPEED_RENAME, "tank": {}, "generator": {},
                 "valve": {}, "analogvalve": {}, "readout": {"tag": "idTag"}, "instrument-field": {"label": "tag"}}
 MODULE_DROP = {"pump": _STATUS_DROP | {"value"}, "motor": _STATUS_DROP | {"value"},
                "fan": _STATUS_DROP | {"value", "vertical"},
                "valve": _STATUS_DROP | {"hasSpeed", "speed", "value"},
                "analogvalve": _STATUS_DROP | {"hasSpeed", "speed"},
+               # a generator has no speed or value, and the component lists no `picture` (the set is not drawn by it), no
+               # `vertical` and no control, interlock or command lock badge (MODULE_NEEDS keeps those symbols on the view)
+               "generator": _STATUS_DROP | {"hasSpeed", "speed", "value", "picture", "vertical", "badgeControl",
+                                            "badgeInterlock", "badgeCommandLocked"},
                "tank": {"medium", "showPercent", "chart", "history", "hasTag", "deviceId", "deviceKind",
                         "deviceLabel", "valueFractionDigits"},
                "readout": {"format", "hasTag", "label", "deviceId", "deviceKind", "deviceLabel", "stretch"},
@@ -332,7 +346,7 @@ MODULE_IDENT = {"readout": "idTag", "instrument-field": "tag"}
 # the readout's `stretch`. `module_drop` is the drop in force for the schema in hand.
 _STATUS_PROPS = ("showStatus", "statusText", "badgeDuty", "outOfService")
 MODULE_IF_LISTED = {"pump": _STATUS_PROPS, "motor": _STATUS_PROPS, "fan": _STATUS_PROPS, "valve": _STATUS_PROPS,
-                    "analogvalve": _STATUS_PROPS, "readout": ("stretch",)}
+                    "analogvalve": _STATUS_PROPS, "generator": _STATUS_PROPS, "readout": ("stretch",)}
 
 
 def module_drop(kind: str) -> set[str]:
@@ -469,7 +483,9 @@ def model_devices(model: dict | None) -> dict[str, dict]:
 
 
 def descriptor_items(desc: dict) -> list[dict]:
-    """Every symbol of a descriptor: diagram symbols, card items and the leaves of card bodies."""
+    """Every symbol of a descriptor: diagram symbols, card items and the leaves of card bodies, and each local
+    assembly as an item of kind `local` (`assembly.item`: its device, title, label and `params.localKind`), so that
+    every device structure reads it (NOTE-WFB-10 section 11.2 item 3)."""
     def walk(g):
         for it in g.get("items", []):
             if "items" in it:
@@ -482,6 +498,7 @@ def descriptor_items(desc: dict) -> list[dict]:
             items += card.get("items", [])
             if "body" in card:
                 items += list(walk(card["body"]))
+    items += [assembly.item(a) for a in assembly.assemblies(desc)]
     return items
 
 
@@ -1116,6 +1133,7 @@ def diagram_screen(desc: dict, contracts: dict, rep: Report) -> tuple[dict, dict
         kids.append(node)
         merge_custom(custom, c_def)
         custom_cfg.update(c_cfg)
+    kids += assembly.page_nodes(desc)   # each local assembly: its kind's view at its box (NOTE-WFB-10 section 11.2)
     kids += extra["over"]
     merge_custom(custom, extra["custom"])
     custom_cfg.update(extra["custom_cfg"])
@@ -1398,6 +1416,12 @@ def tags_document(descs: list[dict], devices: dict | None = None) -> dict | None
                     # sequence's step number is an integer, where a parameter's default says a number)
                     key = tuple(at + [m])
                     leaves[key] = (dt, leaves[key][1] if key in leaves else dv)
+        for a in assembly.assemblies(desc):   # a local device the model does not name: the members its parts name
+            if not isinstance(a.get("device"), str) or known.get(tag_path(root, a["device"])) is not None:
+                continue
+            for m, (dt, dv) in assembly.part_members(a).items():
+                leaves.setdefault(tuple(base + a["device"].split("/") + m.split("/")),
+                                  (dt, values.get(f"{a['device']}/{m}", dv)))
     for desc in descs:   # the tags the page parts read or pulse (COB-159), under the descriptor's tag root
         root = desc.get("tagRoot")
         if root and desc.get("tagModel") != "external":
@@ -1431,7 +1455,7 @@ def tags_document(descs: list[dict], devices: dict | None = None) -> dict | None
 
 def device_index(descs: list[dict], devices: dict | None = None) -> list[dict]:
     """Every device of the descriptors: its tag folder, kind, identifier and description, the
-    dock contract of `cadre.hmi.select_device`. The alarm panel's row click opens a device's
+    dock contract of `cadre.hmi.select_device`; a local assembly's device also `local`, its `<Kind>`. The alarm panel's row click opens a device's
     faceplate from it (COB-PLAN-01 WP4). A device drawn twice (a diagram symbol and an overview
     card) is listed once, with the first description given.
 
@@ -1452,9 +1476,13 @@ def device_index(descs: list[dict], devices: dict | None = None) -> list[dict]:
             if not folder:
                 continue
             path = tag_path(root, folder)
+            local = s["kind"] == assembly.LOCAL_KIND   # a local assembly (`assembly.item`): its title and its kind
             entry = out.setdefault(path, {"folder": path, "kind": device_kind(s),
-                                          "title": (s.get("params", {}).get("tag") if device_folder(s) else "") or folder.split("/")[-1],
+                                          "title": (s.get("title") if local else (s.get("params", {}).get("tag") if device_folder(s) else ""))
+                                          or folder.split("/")[-1],
                                           "label": "", "unit": ""})
+            if local:
+                entry.setdefault("local", s["params"]["localKind"])
             entry["label"] = entry["label"] or s.get("label", "")
             entry["unit"] = entry["unit"] or s.get("params", {}).get("unit", "")
     for path, model in model_devices(devices).items():
@@ -1565,6 +1593,9 @@ def build_child(name: str, descs: list[dict], app_name: str, alarm_scope: str = 
             nav.append({"label": scr.get("navLabel", scr.get("title", scr["route"])), "path": scr["route"],
                         "icon": scr.get("icon", ""), "node": scr.get("node", "")})
         reports[scr["route"]] = info
+    for path, (doc, route, errors) in assembly.kind_views(descs, contracts).items():   # Local/<Kind>, Local/<Kind>/Home
+        child.add_view(path, doc)
+        reports[route]["errors"] += errors
     if render == "module":
         # the alarm lists of the module (COB-078): child views over the parent's stock ones
         for path, doc in framework.module_overrides().items():
@@ -1602,6 +1633,15 @@ def gate_record(g: dict) -> dict:
     whole. A tool proves "no warning" with `not any(v["warnings"] for v in report["gates"].values()
     if isinstance(v, dict))`."""
     return {k: ({**v, "warnings": list(v.get("warnings", []))} if isinstance(v, dict) else v) for k, v in g.items()}
+
+
+def g0_report(path: str | None, errors: list[dict]) -> None:
+    """A G0 failure's screen report (NOTE-WFB-10 section 11.2 item 6): `gates.G0` with `errors[]`, each with its rule
+    (`schema` and `devices-schema` for the schemas, the assembly rules by name), written before `screen.py` exits."""
+    if path:
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+        Path(path).write_text(json.dumps({GATES_KEY: gate_record({"G0": {"ok": False, "errors": errors}, "ok": False})},
+                                         indent=1), encoding="utf-8")
 
 
 def schema_errors(descs: list[dict], names: list[str]) -> list[str]:
@@ -1663,6 +1703,9 @@ def main() -> int:
     ap.add_argument("--write-descriptor", default=None, metavar="DIR",
                     help="with --component-test: write the page's descriptor to DIR/component-test.json, for gate "
                          "G11 and the walk")
+    ap.add_argument("--local-kinds", default=None, metavar="FILE",
+                    help="a JSON list of the kind names a page may draw as a local assembly (NOTE-WFB-10 section 11.2): "
+                         "gate G0 refuses an assembly of any other kind, and any assembly without this option")
     ap.add_argument("--write-devices", default=None, metavar="FILE",
                     help="with --component-test: write the device model of the build (the test devices beside the "
                          "devices file given, if any) to FILE, for gate G11 and the walk")
@@ -1673,6 +1716,16 @@ def main() -> int:
     if (a.tag_root or a.write_descriptor or a.write_devices) and not a.component_test:
         print("--tag-root, --write-descriptor and --write-devices go with --component-test")
         return 1
+    local_kinds = None
+    if a.local_kinds:
+        try:
+            local_kinds = json.loads(Path(a.local_kinds).read_text(encoding="utf-8"))
+        except (OSError, ValueError) as e:
+            print(f"--local-kinds {a.local_kinds}: {e}")
+            return 1
+        if not isinstance(local_kinds, list) or not all(isinstance(k, str) for k in local_kinds):
+            print(f"--local-kinds {a.local_kinds}: a JSON list of kind names")
+            return 1
     descs = [json.loads(Path(d).read_text(encoding="utf-8")) for d in a.descriptor]
     names = list(a.descriptor)
     bench = None
@@ -1691,9 +1744,15 @@ def main() -> int:
         descs.append(bench.descriptor)
         names.append("<component test>")
     bad = schema_errors(descs, names)
-    print("  G0_descriptor_schema  ", "PASS" if not bad else "FAIL")
-    if bad:
+    from hmi import library_profile
+    prof = library_profile.build(load_contracts(), a.parent)
+    exempt = {len(descs) - 1: {testbench.LOCAL_KIND}} if bench else {}   # the component test page's own local kind
+    rules = assembly.g0_errors(descs, names, local_kinds, set(prof["kinds"]) | set(prof["deviceKinds"]), exempt)
+    print("  G0_descriptor_schema  ", "PASS" if not bad and not rules else "FAIL")
+    if bad or rules:
         print("\n".join(bad[:20]))
+        print("".join(f"  {e['rule']}: {e['page']}: {e['assembly']}: {e['message']}\n" for e in rules[:20]), end="")
+        g0_report(a.report, [{"rule": "schema", "message": e} for e in bad] + rules)
         return 1
     devices = json.loads(Path(a.devices_file).read_text(encoding="utf-8")) if a.devices_file else None
     if devices is None and bench and not a.descriptor:   # the page alone: its test devices are the device model
@@ -1703,6 +1762,7 @@ def main() -> int:
         print("  G0_devices_schema     ", "PASS" if not bad else "FAIL")
         if bad:
             print("\n".join(bad[:20]))
+            g0_report(a.report, [{"rule": "devices-schema", "message": e} for e in bad])
             return 1
     model = json.loads(Path(a.tags_file).read_text(encoding="utf-8")) if a.tags_file else None
     if bench:   # the test devices join the device model and the tag model the gates read, where the project has them

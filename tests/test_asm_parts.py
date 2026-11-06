@@ -977,7 +977,8 @@ class WholeBuildTests(GeneratorCase):
 
     def test_the_profile_states_the_parts(self):
         prof = library_profile.build(self.contracts)
-        self.assertEqual(prof["parts"]["arrays"], ["buttons", "bars", "trends", "lines", "links", "brackets", "wells", "alarmPanels"])
+        self.assertEqual(prof["parts"]["arrays"], ["buttons", "bars", "trends", "lines", "links", "brackets", "wells", "alarmPanels",
+                                                  "assemblies"])   # assemblies: NOTE-WFB-10 section 11.2 (WP-W03)
         self.assertEqual(prof["parts"]["pulsePath"], "W18")
         self.assertIn("Parts/RangeBar", self.contracts)
         for v in parts.TREND_VIEWS.values():

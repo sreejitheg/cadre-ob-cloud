@@ -36,6 +36,8 @@ public final class CadreOb {
             "OpenBridge motor: state, speed readout, badges and alert frame.", "obMotor", List.of()),
         descriptor("cadre.ob.fan", "fan", "OB Fan",
             "OpenBridge fan: state, speed readout, badges and alert frame.", "obFan", List.of()),
+        descriptor("cadre.ob.generator", "generator", "OB Generator",
+            "OpenBridge generator: running or stopped icon, status word, badges and alert frame.", "obGenerator", List.of()),
         descriptor("cadre.ob.valve", "valve", "OB Valve",
             "OpenBridge digital valve: open or closed, badges and alert frame.", "obValve", List.of()),
         descriptor("cadre.ob.analogvalve", "analogvalve", "OB Analog Valve",

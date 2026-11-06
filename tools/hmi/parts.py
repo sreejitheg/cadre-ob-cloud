@@ -26,11 +26,12 @@ if __package__ in (None, ""):
     import sys
     from pathlib import Path
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import pv, library, framework, scripts  # noqa: E402
+    from hmi import pv, library, framework, scripts, assembly  # noqa: E402
 else:
-    from . import pv, library, framework, scripts
+    from . import pv, library, framework, scripts, assembly
 
-PART_ARRAYS = ("buttons", "bars", "trends", "lines", "links", "brackets", "wells", "alarmPanels")   # the top-level arrays of a descriptor
+PART_ARRAYS = ("buttons", "bars", "trends", "lines", "links", "brackets", "wells", "alarmPanels",
+               "assemblies")   # the top-level arrays of a descriptor (`assemblies`: NOTE-WFB-10 section 11.2)
 SYMBOL_KEYS = ("bar", "alarm")                         # the keys a symbol takes
 # L5: the keys of an indicator coloured by state (`states`, `stateDefault`), of a plain symbol that opens a device's faceplate
 # (`faceplate`) and of one forced onto the library's view (`render`); they need no diagram layout, and `bind.state` is the
@@ -201,11 +202,12 @@ def _screen():
 
 
 def command_tags(desc: dict) -> list[dict]:
-    """The pulse commands a descriptor declares, each `{path, ms}` with the full tag path."""
+    """The pulse commands a descriptor declares, each `{path, ms}` with the full tag path: its page buttons' and the
+    buttons of its local assemblies' (`assembly.command_tags`, each `<device>/<member>`)."""
     screen = _screen()
     root = desc.get("tagRoot", "")
     return [{"path": screen.tag_path(root, b["action"]["tag"]), "ms": int(b["action"].get("ms", 1000))}
-            for b in desc.get("buttons", []) if b.get("action", {}).get("type") == "pulse"]
+            for b in desc.get("buttons", []) if b.get("action", {}).get("type") == "pulse"] + assembly.command_tags(desc)
 
 
 def commands_index(descs: list[dict]) -> list[dict]:
@@ -378,11 +380,13 @@ def _button_classes(b: dict) -> str:
     return "cadre/button/%s cadre/font/button" % ("flat" if b.get("style") == "flat" else "normal")
 
 
-def button_node(b: dict, desc: dict, rep) -> tuple[dict, dict, dict]:
+def button_node(b: dict, desc: dict, rep, *, path_code: str | None = None) -> tuple[dict, dict, dict]:
     """(node, view custom defaults, view custom bindings) of one command button, a flex row at the descriptor's
     box. A route or a faceplate opener is a button alone. A pulse is a button, a question with Confirm and
     Cancel in its place once pressed (P10), and the pulse made by `cadre.hmi.page_pulse` (write path W18):
-    the buttons that call it bind `enabled` to the permission of that path (gate G7 commands)."""
+    the buttons that call it bind `enabled` to the permission of that path (gate G7 commands). `path_code` is the
+    script expression of the pulse's tag path where the view finds it at run time (a local assembly's button:
+    its device parameter joined with its member); else the path is the descriptor's tag under its root."""
     screen = _screen()
     a, bid, label = b["action"], safe(b["id"]), b["label"]
     pos = pv.cpos(b["x"], b["y"], b["w"], b["h"])
@@ -419,7 +423,7 @@ def button_node(b: dict, desc: dict, rep) -> tuple[dict, dict, dict]:
     yes = pv.node("ia.input.button", "Confirm", pv.fpos(basis="84px", shrink=0), {
         "text": framework.CONFIRM, "style": {"classes": "cadre/button/normal cadre/font/button", "height": "100%"}},
         prop_config={"position.display": pv.bind(pv.expr("{view.custom.%s}" % pend)), "props.enabled": can},
-        events=pv.on_action([f"msg = cadre.hmi.page_pulse(self.session, {path!r})",
+        events=pv.on_action([f"msg = cadre.hmi.page_pulse(self.session, {path_code or repr(path)})",
                              f"self.view.custom.{pend} = False", f"self.view.custom.{msg} = msg"]))
     no = pv.node("ia.input.button", "Cancel", pv.fpos(basis="72px", shrink=0), {
         "text": framework.CANCEL, "style": {"classes": "cadre/button/flat cadre/font/button", "height": "100%"}},

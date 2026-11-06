@@ -24,8 +24,9 @@ def two_tank_desc(closed_pipe=False):
         "symbols": [
             {"id": "TA", "kind": "tank", "x": 0, "y": 0, "w": 100, "h": 100},
             {"id": "TB", "kind": "tank", "x": 600, "y": 0, "w": 100, "h": 100},
-            {"id": "V1", "kind": "valve", "x": 300, "y": 20, "w": 48, "h": 48},
-            {"id": "P1", "kind": "pump", "x": 300, "y": 200, "w": 48, "h": 48},
+            # a gate binds its state: one with none passes in the flow (COB-212)
+            {"id": "V1", "kind": "valve", "x": 300, "y": 20, "w": 48, "h": 48, "bind": {"open": "V1/state"}},
+            {"id": "P1", "kind": "pump", "x": 300, "y": 200, "w": 48, "h": 48, "bind": {"on": "P1/state"}},
         ],
         "junctions": [],
         "pipes": [
@@ -1856,7 +1857,8 @@ class ProfileTests(unittest.TestCase):
                          ("Automation/Indicator", "Faceplate/Input", "pass", {"on": "state"}))
         self.assertEqual(sorted(prof["deviceKinds"]),
                          sorted(["pump", "motor", "fan", "valve", "analogvalve", "damper", "tank", "instrument", "readout",
-                                 "instrument-field", "controller", "indicator", "sequence", "generator"]))
+                                 "instrument-field", "controller", "indicator", "sequence", "generator",
+                                 "local"]))   # local: a local assembly's device (NOTE-WFB-10 section 11.2 item 4)
         self.assertEqual(prof["deviceKinds"]["controller"]["trend"], ["value", "out", "sp"])
         self.assertEqual(prof["deviceKinds"]["instrument"]["faceplate"], "Faceplate/Instrument")
         self.assertIn("fault", prof["deviceKinds"]["valve"]["members"])
@@ -3573,8 +3575,11 @@ class FirstRenderTests(unittest.TestCase):
         self.assertEqual((node["type"], errors), ("ia.display.view", []))
         self.assertEqual((screen.MODULE_NEEDS, screen.MODULE_EXCEPT), (
             {"valve": {"variant": ["regular", "flat"]}, "analogvalve": {"variant": ["regular", "flat"]},
-             "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]}},
-            {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}]}))
+             "tank": {"valueFractionDigits": [0]}, "instrument-field": {"align": ["center", "end"]},
+             "generator": {"variant": ["regular", "flat"], "vertical": [False], "badgeControl": ["none"],
+                           "badgeInterlock": ["none"], "badgeCommandLocked": ["none"]}},
+            {"fan": [{"vertical": True}], "instrument-field": [{"size": "enhanced", "hasSetpoint": True}],
+             "generator": [{"picture": "genset"}]}))
 
     def test_every_module_property_the_generator_states_is_in_the_components_schema(self):
         # a property of the library's contract that the generator passes to a module component must be one the

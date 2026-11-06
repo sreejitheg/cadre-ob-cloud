@@ -11,7 +11,8 @@ exactly that, generated from the generator's own tables so it cannot drift from 
     text         the fonts a block is sized against and the length an identifier may have
     diagram      where a pipe meets a symbol and how a pipe is routed
     deviceKinds  device kind (the `kind` of a device model) -> faceplate, members, pulse members,
-                 binding rule, trended members
+                 binding rule, trended members; the kind `local` (a local assembly's device, NOTE-WFB-10
+                 section 11.2) names no member and takes any (`openMembers`)
     faceplates   faceplate view -> its tabs
     writePaths   write path -> the members it may write, the role it needs, the checked function
     forceEncodings  the two forms of a force, each a pair of members a device carries whole or not at all
@@ -43,6 +44,7 @@ else:
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = "cadre-hmi-library/1"
+LOCAL_KIND = "local"   # the device kind of a local assembly (`assembly.LOCAL_KIND`)
 
 
 def _members(kind: str) -> dict:
@@ -93,6 +95,8 @@ def build(contracts: dict, parent: str = "cadre_hmi_base") -> dict:
                        "value": c.get("value")}
     device_kinds = {}
     for kind, view in sorted(framework.FACEPLATE_VIEW.items()):
+        if kind == LOCAL_KIND:   # below: the device of a local assembly knows no member
+            continue
         members = _members(kind)
         main = screen.TREND_KINDS.get(kind)
         device_kinds[kind] = {"faceplate": view,
@@ -107,11 +111,20 @@ def build(contracts: dict, parent: str = "cadre_hmi_base") -> dict:
                               "pulses": screen.pulse_members(kind),
                               # its faceplate draws the Config rows of members marked `config` (F010)
                               "config": framework.has_config(kind)}
+    # the device of a local assembly (NOTE-WFB-10 section 11.2 item 4): no member is required or known, so gate G7
+    # devices accepts every member a devices file lists for it (`openMembers`); its faceplate is the library's local
+    # one where the library has it
+    device_kinds[LOCAL_KIND] = {"faceplate": framework.faceplate_view(LOCAL_KIND),
+                                "faceplates": {s: framework.faceplate_view(LOCAL_KIND, s) for s in framework.FACEPLATE_STYLES},
+                                # the controller acknowledgement bit is optional on every device (F049, `ackRelay`)
+                                "members": {scripts.constant("ACK_MEMBER"): {"type": "Boolean", "required": False}},
+                                "bind": {}, "trend": [], "interlocks": False, "maintenance": False,
+                                "pulses": [], "config": False, "openMembers": True}
     faceplates = {}
     for key, tabs in sorted(framework.FACEPLATE_TABS.items()):
         faceplates["Faceplate/" + key.capitalize()] = {"tabs": [t for t, _label in tabs]}
     for view in sorted(set(framework.ASM_VIEW.values())):
-        faceplates[view] = {"tabs": [t for t, _label in framework.ASM_TABS], "style": "asm"}
+        faceplates[view] = {"tabs": [t for t, _label in framework.asm_tabs(view)], "style": "asm"}
     write_paths = scripts.constant("WRITE_PATHS")
     members = {**scripts.constant("PATH_MEMBERS"), **scripts.constant("FUNCTION_MEMBERS")}
     role = scripts.constant("ADMIN_ROLE")

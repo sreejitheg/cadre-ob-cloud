@@ -19,17 +19,38 @@ stylesheet is scoped: OpenBridge declares its palettes and sizes on `:root` and 
 `*`; here they are declared on the wrapper (`.cadre-ob`) and keyed to the Cadre palette classes,
 and only the variables the bundled elements use (with their dependencies) are kept.
 
-Usage:  python module/tools/gen_module_assets.py
+The generator symbol (module 0.4.4, ruling RW-01, NOTE-WFB-10 sections 3.1 and 16.3) draws `obc-automation-button`
+with the pinned generator icons: a component specification may carry `icons: {on, off}`, the tags of two icon elements
+that the bundle defines (`entry.js` imports their files), and the wrapper places the one chosen by the module's own
+`on` property in the button's icon slots.
+
+Usage:  python module/tools/gen_module_assets.py [--allow-stale-bundle]
+
+Without `--allow-stale-bundle` the bundle must be the one `npm run build` recorded for this checkout
+(`verify_pin.require_bundle_record`: the SHA-256 of `package-lock.json`, `entry.js` and the bundle beside it).
+
+`node_modules` and `dist/` (the esbuild bundle) are read from `verify_pin.web_root()`: the sibling `web` folder, or the
+folder named by the environment variable `CADRE_OB_WEB_ROOT` (a read only `module/web` of the main checkout, for a
+worktree that has no `node_modules`). Nothing is written there. The tracked sources (`defaults.json`, `canvaszoom.js`)
+are always read from this module's own `web` folder. The run stops when the bundle does not define a wrapped element or
+an icon element, because the wrapper would register a tag nothing draws; `--allow-stale-bundle` lets it write anyway,
+for a host that cannot rebuild the bundle (it then prints the tags missing, and the bundle is rebuilt, the defaults
+measured again and this script run again before the module is built).
 """
 from __future__ import annotations
 
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import verify_pin  # noqa: E402  (the pin check runs first in main)
+
 HERE = Path(__file__).resolve().parents[1]
-PKG = HERE / "web/node_modules/@oicl/openbridge-webcomponents"
+WEB = verify_pin.web_root()                                   # node_modules and the built bundle (maybe another checkout)
+PKG = WEB / "node_modules/@oicl/openbridge-webcomponents"
 MOUNTED = HERE / "gateway/src/main/resources/mounted"
 SCHEMAS = HERE / "common/src/main/resources/schemas"
 
@@ -61,6 +82,13 @@ COMPONENTS = [
     {"tag": "obc-fan", "type": "cadre.ob.fan", "name": "fan", "title": "OB Fan",
      "palette": "OpenBridge fan: state, speed readout, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "extra": ["hasSpeed", "showStatus", "statusText", "badgeDuty", "outOfService"], "speedless": True, "status": True},
+    # The generator (module 0.4.4, RW-01): the automation button has no `on` and no icon of its own, so `on` is the
+    # module's (EXTRA) and `icons` names the two pinned icon elements the wrapper places in the button's icon slots.
+    {"tag": "obc-automation-button", "type": "cadre.ob.generator", "name": "generator", "title": "OB Generator",
+     "palette": "OpenBridge generator: running or stopped icon, status word, badges and alert frame",
+     "size": {"width": 96, "height": 96}, "exclude": [],
+     "extra": ["on", "showStatus", "statusText", "badgeDuty", "outOfService"], "status": True,
+     "icons": {"on": "obi-electric-generator-on", "off": "obi-electric-generator-off"}},
     {"tag": "obc-digital-valve", "type": "cadre.ob.valve", "name": "valve", "title": "OB Valve",
      "palette": "OpenBridge digital valve: open or closed, badges and alert frame", "size": {"width": 96, "height": 96},
      "exclude": [], "properties": ["showStatus"]},
@@ -115,6 +143,11 @@ DATA_SCHEMA = {"alerts": {"type": "array", "default": [], "items": {"type": "obj
 # WRAPPER below). Each lifts a case the element cannot show (COB-110): a device with no speed reads no speed, a
 # tank states the unit of its level, and a vessel that states no capacity draws no capacity line.
 EXTRA = {
+    # The generator's running state (module 0.4.4): `obc-automation-button` has `state` (open or closed) and no `on`; the
+    # wrapper chooses the icon element, and the state row of the status word, by this property.
+    "on": {"kind": "boolean", "def": False, "schema": {"type": "boolean", "default": False, "description":
+           "Whether the generator is running. Chooses the running or the stopped generator icon in the symbol (and "
+           "the On or Off state row of its status word); the OpenBridge automation button has no such property."}},
     "hasSpeed": {"kind": "boolean", "def": True, "schema": {"type": "boolean", "default": True, "description":
                  "Whether the element prints a speed while it runs. False leaves the speed readout out (the "
                  "state readout stays); the OpenBridge element has no such switch."}},
@@ -636,6 +669,7 @@ WRAPPER = r"""
       // wrapper passes showStatus on, and, when statusText is given, replaces the element's readouts with the one
       // word in the element's status place (the stock library view's status row does the same).
       applyStatus(el, p) {
+        if (spec.icons) { this.applyButtonStatus(el, p); return; }
         var show = p.showStatus !== false;
         if (el.showStatus !== show) el.showStatus = show;
         var text = typeof p.statusText === 'string' ? p.statusText : '';
@@ -654,6 +688,18 @@ WRAPPER = r"""
           } });
         }
         if (this.statusText !== text) { this.statusText = text; if (el.requestUpdate) el.requestUpdate(); }
+      }
+      // The status word of a generator (module 0.4.4). The automation button draws its readout rows from `readouts` and
+      // has no word of its own, so the wrapper gives it the one row: statusText, or On or Off from `on` when none is
+      // given; none while showStatus is false (the identifier stays).
+      applyButtonStatus(el, p) {
+        var rows = [];
+        if (p.showStatus !== false) {
+          var word = (typeof p.statusText === 'string' && p.statusText !== '') ? p.statusText : (p.on ? 'On' : 'Off');
+          rows = [{ type: p.on ? 'state-on' : 'state-off', value: word, hasIcon: true }];
+        }
+        var key = JSON.stringify(rows);
+        if (this.applied.readouts !== key) { this.applied.readouts = key; el.readouts = rows; }
       }
       // The duty badge goes into the first free corner of the element, unless its interlock badge, which draws
       // the same icon, is already there.
@@ -676,6 +722,15 @@ WRAPPER = r"""
         if (spec.status && p.badgeDuty) {
           var slot = this.dutySlot(p);
           if (slot) kids.push(h('obc-automation-badge', { slot: slot, key: 'duty', type: 'interlock' }));
+        }
+        if (spec.icons) {
+          // the icon element chosen by `on`, in each icon slot the automation button declares (`icon`, and
+          // `icon-silhouette` for its flat variant); the key follows `on`, so React replaces the element when `on`
+          // changes and two icons are never stacked
+          var iconTag = p.on ? spec.icons.on : spec.icons.off;
+          ['icon', 'icon-silhouette'].forEach(function (slotName) {
+            kids.push(h(iconTag, { slot: slotName, key: 'icon-' + slotName + (p.on ? '-on' : '-off') }));
+          });
         }
         // an out of service symbol: the library view's veil of the page colour and the word OOS, over the symbol
         var oos = (spec.status && p.outOfService) ? h('div', { className: 'cadre-ob-oos', key: 'oos' }, 'OOS') : null;
@@ -708,12 +763,47 @@ WRAPPER = r"""
 """
 
 
+def check_bundle(bundle_js: str) -> list[str]:
+    """The tags the wrappers use that the bundle does not define: each wrapped element and each icon element. The
+    bundle defines an element with `customElement("<tag>")`, which esbuild keeps as the string literal."""
+    tags = [c["tag"] for c in COMPONENTS] + [t for c in COMPONENTS for t in c.get("icons", {}).values()]
+    return sorted({t for t in tags if f'"{t}"' not in bundle_js})
+
+
+def check_icons() -> None:
+    """Each icon tag of a specification is the tag its icon file in the pinned package defines (the file is
+    `dist/icons/icon-electric-generator-on.js` for `obi-electric-generator-on`)."""
+    for c in COMPONENTS:
+        for tag in c.get("icons", {}).values():
+            f = PKG / "dist/icons" / f"{tag.replace('obi-', 'icon-', 1)}.js"
+            if not f.is_file() or f'customElement("{tag}")' not in f.read_text(encoding="utf-8"):
+                raise SystemExit(f"{c['type']}: {tag} is not the element {f.name} defines in the pinned package")
+
+
+def require_recorded_bundle(allow_stale: bool, bundle_root: Path | None = None, checkout: Path | None = None) -> None:
+    """Unless the offline option is given, end the process when the bundle has no record matching this checkout's lock
+    and entry file (NOTE-WFB-10 section 13 invariant 4)."""
+    if not allow_stale:
+        verify_pin.require_bundle_record(bundle_root or WEB, checkout or HERE / "web")
+
+
 def main() -> int:
+    verify_pin.require_pin()
+    allow_stale = "--allow-stale-bundle" in sys.argv[1:]
+    require_recorded_bundle(allow_stale)
     manifest = json.loads((PKG / "custom-elements.json").read_text(encoding="utf-8"))
     defaults = json.loads((HERE / "web/defaults.json").read_text(encoding="utf-8"))
     enum_map = enums()
-    bundle_js = (HERE / "web/dist/ob-components.js").read_text(encoding="utf-8")
-    shutil.copyfile(HERE / "web/dist/ob-components.js.LEGAL.txt", MOUNTED / "js/ob-components.js.LEGAL.txt")
+    check_icons()
+    bundle_js = (WEB / "dist/ob-components.js").read_text(encoding="utf-8")
+    missing = check_bundle(bundle_js)
+    if missing:
+        print(f"the bundle {WEB / 'dist/ob-components.js'} does not define: {', '.join(missing)}")
+        if not allow_stale:
+            raise SystemExit("rebuild it (npm run build in module/web, then measure_defaults.py) or pass --allow-stale-bundle")
+        print("WARNING: written with a stale bundle; rebuild the bundle, measure the defaults and run this again before "
+              "building the module")
+    shutil.copyfile(WEB / "dist/ob-components.js.LEGAL.txt", MOUNTED / "js/ob-components.js.LEGAL.txt")
     SCHEMAS.mkdir(parents=True, exist_ok=True)
     contract, js_specs = {}, []
     for spec in COMPONENTS:
@@ -742,7 +832,7 @@ def main() -> int:
                          "selection": bool(spec.get("selection")),
                          "status": bool(spec.get("status")), "endAligned": bool(spec.get("endAligned")),
                          "data": [{"name": n, "kind": k} for n, k in spec.get("data", {}).items()],
-                         "events": events})
+                         "events": events, **({"icons": spec["icons"]} if spec.get("icons") else {})})
         contract[spec["type"]] = {"element": spec["tag"], "title": spec["title"], "palette": spec["palette"],
                                   "schema": f"schemas/{spec['name']}.props.json",
                                   "defaultSize": spec["size"],

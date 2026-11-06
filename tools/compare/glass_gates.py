@@ -12,7 +12,8 @@ rewritten in Python Playwright for ctig's `.venv`. Usage:
     --build DIR       the `bridge/` folder of `asm_descriptors.py` (or its parent): the descriptors give each page's
                       columns, media and module symbols
     --navtable F      `wfb.migration.navtable/1`: an entry's own route joins the model's and the descriptors' in the routes gate
-    --design F        `wfb.migration.project_design/1`: its `routes` table gives the routes of the navigation table
+    --design F        `wfb.migration.project_design/1`: its `routes` table gives the routes of the navigation table; given, the plan lists the project's
+                      routes only (built model pages, the design's, the descriptors', `/alerts`), COB-211
     --gates LIST      comma list of the gates to run, default all: search, zoom, menus, panels, readouts, colour,
                       sizes, fill, routes, symbols, alarm, ack, banner, lamps, testpanel
     --raise-alarm     allow the gates that write: raise alarms through their source tags (only with the simulation
@@ -72,7 +73,7 @@ NO_MATCH = "No page, device or tag matches"
 # are `obc-digital-valve` and `obc-analog-valve`: no element named `obc-valve` or `obc-analogvalve` exists, so a selector
 # built from those names counted no valve and the readouts gate expected one device more than it found (COB-194).
 MODULE_TAGS = {"pump": "obc-pump", "motor": "obc-motor", "fan": "obc-fan", "valve": "obc-digital-valve",
-               "analogvalve": "obc-analog-valve"}
+               "analogvalve": "obc-analog-valve", "generator": "obc-automation-button"}
 EQ_TOL = 4
 TEST_ROUTE = "/component-test"                     # the library's component test page (`screen.py --component-test`)
 
@@ -205,9 +206,15 @@ def banner_pages(model: dict, alarm: dict) -> tuple[list[str], list[str]]:
 def plan_of(model: dict, descriptors: list[dict], base: str, window: tuple[int, int], gates: list[str],
             raise_alarm: bool, navtable=None, design=None, only_routes: list[str] | None = None) -> dict:
     pages = [p for p in model["pages"] if p["built"]]
-    routes = [p["route"] for p in model["pages"]]
-    routes += sorted({n["route"] for n in model["nav"] if n["resolution"] == "support" and n.get("route")})
-    routes += navtable_routes(navtable, design) + [d["screen"]["route"] for d in descriptors]   # never only the model's
+    if design is not None:
+        # the project's routes (COB-212, NOTE-WFB-12 section 6.1): the built model pages, the design's own routes (one
+        # the project lacks stays: a real broken link the evidence reports), every descriptor route and the alert
+        # list; no unbuilt model page and no support route of the model's that the design does not name
+        routes = [p["route"] for p in pages] + navtable_routes(navtable, design) + [d["screen"]["route"] for d in descriptors]
+    else:
+        routes = [p["route"] for p in model["pages"]]
+        routes += sorted({n["route"] for n in model["nav"] if n["resolution"] == "support" and n.get("route")})
+        routes += navtable_routes(navtable, design) + [d["screen"]["route"] for d in descriptors]   # never only the model's
     routes.append(ALERTS_ROUTE)
     routes = list(dict.fromkeys(routes))
     test = testpage_plan(descriptors)

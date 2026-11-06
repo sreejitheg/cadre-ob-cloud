@@ -17,7 +17,7 @@ The frame's state lives in `session.custom` (written by the generator when a chi
     contentNode    the node id the Alarms and Trend pivot pages show; empty means the root
     pageInfo       {route: {"title", "level", "previous", "previousTitle", "next", "nextTitle"}}
     searchIndex    {"pages": [[route, title, node path, level]],
-                    "devices": [[folder, kind, title, label, route, node path, faceplate 1 or 0]],
+                    "devices": [[folder, kind, title, label, route, node path, faceplate 1 or 0 (, local kind)]],
                     "tags": [[path, description, unit, device index or -1, tab]]}
     searchQuery    the text of the top bar's search field
     searchOpen     whether the in-page results panel is open (a key in the field opens it; Escape, a row, a click
@@ -41,7 +41,7 @@ SEARCH_GROUP_ROWS = 9
 BANNER_ROWS = 3
 ROW_DEFAULT = {"kind": "", "label": "", "second": "", "icon": "", "depth": 0, "selected": False, "disabled": False,
 	"action": "", "route": "", "nodeId": "", "deviceId": "", "deviceKind": "", "deviceTitle": "",
-	"deviceLabel": "", "tab": "", "close": ""}
+	"deviceLabel": "", "deviceLocal": "", "tab": "", "close": ""}
 
 
 def _custom(session, name, default=None):
@@ -123,12 +123,12 @@ def float_position(session, device):
 
 def float_params(session, popup_id):
 	"""The view parameters of a floating faceplate: the device `select_device` has just selected, with its
-	style and the tab `open_device` named. The popup reads these, never `session.custom.selected*`, so that
+	style, the tab `open_device` named and, for a local assembly's device, its kind. The popup reads these, never `session.custom.selected*`, so that
 	a second device does not redraw the first."""
 	return {"popupId": _text(popup_id), "deviceId": _text(_custom(session, "selectedDevice", "")),
 		"kind": _text(_custom(session, "selectedKind", "")), "style": _text(_custom(session, "selectedStyle", "openbridge")),
 		"title": _text(_custom(session, "selectedTitle", "")), "label": _text(_custom(session, "selectedLabel", "")),
-		"tab": _text(_custom(session, "selectedTab", ""))}
+		"tab": _text(_custom(session, "selectedTab", "")), "localKind": _text(_custom(session, "selectedLocal", ""))}
 
 
 # --- the node of the current page ------------------------------------------------------------------------
@@ -462,7 +462,8 @@ def _device_row(d, tab, second):
 	has = len(d) > 6 and int(d[6]) == 1
 	return _row(kind="device", label=_text(d[2]) or _text(d[0]).split("/")[-1], second=_text(second), icon="home",
 		action="route" if d[4] else "", route=_text(d[4]), deviceId=_text(d[0]) if has else "", deviceKind=_text(d[1]),
-		deviceTitle=_text(d[2]), deviceLabel=_text(d[3]), tab=tab, close="search")
+		deviceTitle=_text(d[2]), deviceLabel=_text(d[3]), deviceLocal=_text(d[7]) if len(d) > 7 else "", tab=tab,
+		close="search")
 
 
 def search_first(session, query):
@@ -531,6 +532,7 @@ def banner_alarms(session, route=""):
 			"unacked": unacked, "time": _clock(rec["time"]), "node": owner.get(folder, ""),
 			"tag": _text(d["title"]) if d is not None else folder.split("/")[-1], "text": _text(rec["text"]),
 			"state": state, "deviceId": folder if d is not None else "", "deviceKind": _text(d["kind"]) if d is not None else "",
-			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else ""})
+			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else "",
+			"deviceLocal": _text(_entry_local(d)) if d is not None else ""})
 	return out
 '''

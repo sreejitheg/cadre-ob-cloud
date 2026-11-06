@@ -7,6 +7,10 @@ console or a file. `--offline` uses only the Gradle cache: the build never downl
 
 Usage:  python module/tools/build_module.py [--jdk C:/Users/<user>/.jdks/jdk-17...]
 Prints the built file, its size and its SHA-256.
+
+The bundle must be the one `npm run build` recorded for this checkout (`verify_pin.require_bundle_record`): a bundle
+with no record, or whose record does not match this checkout's `package-lock.json` and `entry.js`, is refused, and so is
+`--allow-stale-bundle`, which stays an offline option of `gen_module_assets.py` only (NOTE-WFB-10 section 13 invariant 4).
 """
 from __future__ import annotations
 
@@ -16,6 +20,9 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import verify_pin  # noqa: E402  (the pin check runs first in main)
 
 HERE = Path(__file__).resolve().parents[1]
 SIGNING = Path.home() / ".cadre" / "signing" / "signing.properties"
@@ -30,7 +37,17 @@ def jdk17() -> Path | None:
     return None
 
 
+def refuse_stale_bundle(argv: list[str]) -> None:
+    """End the process when the arguments ask for a stale bundle: a module is never built from one."""
+    if any(a.startswith("--allow") for a in argv):
+        raise SystemExit("build_module: --allow-stale-bundle is an offline option of gen_module_assets.py only; a "
+                         "module is built from a bundle recorded for this checkout's lock and entry file")
+
+
 def main() -> int:
+    verify_pin.require_pin()
+    refuse_stale_bundle(sys.argv[1:])
+    verify_pin.require_bundle_record()
     ap = argparse.ArgumentParser()
     ap.add_argument("--jdk", default=None)
     ap.add_argument("--task", default="build")

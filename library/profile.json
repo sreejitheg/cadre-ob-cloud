@@ -761,6 +761,26 @@
     "value"
    ]
   },
+  "local": {
+   "bind": {},
+   "config": false,
+   "faceplate": "Faceplate/ASM/Local",
+   "faceplates": {
+    "asm": "Faceplate/ASM/Local",
+    "openbridge": "Faceplate/ASM/Local"
+   },
+   "interlocks": false,
+   "maintenance": false,
+   "members": {
+    "alarmAck": {
+     "required": false,
+     "type": "Boolean"
+    }
+   },
+   "openMembers": true,
+   "pulses": [],
+   "trend": []
+  },
   "motor": {
    "bind": {
     "on": "state",
@@ -1288,6 +1308,14 @@
     "diagnostics",
     "alarms",
     "interlocks",
+    "info"
+   ]
+  },
+  "Faceplate/ASM/Local": {
+   "style": "asm",
+   "tabs": [
+    "home",
+    "alarms",
     "info"
    ]
   },
@@ -2261,9 +2289,30 @@
      "type": "Float8"
     }
    },
-   "module": null,
-   "moduleExcept": [],
-   "moduleNeeds": {},
+   "module": "cadre.ob.generator",
+   "moduleExcept": [
+    {
+     "picture": "genset"
+    }
+   ],
+   "moduleNeeds": {
+    "badgeCommandLocked": [
+     "none"
+    ],
+    "badgeControl": [
+     "none"
+    ],
+    "badgeInterlock": [
+     "none"
+    ],
+    "variant": [
+     "regular",
+     "flat"
+    ],
+    "vertical": [
+     false
+    ]
+   },
    "params": [
     "activated",
     "alert",
@@ -3534,7 +3583,8 @@
    "links",
    "brackets",
    "wells",
-   "alarmPanels"
+   "alarmPanels",
+   "assemblies"
   ],
   "function": "page_pulse",
   "history": {

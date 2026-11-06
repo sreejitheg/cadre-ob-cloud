@@ -468,6 +468,23 @@ view or nobody draws it, and why (OpenBridge first with `--module-first`). A kin
 (`open`, `partial`, `closed`, `accepted`) and a reason; `open_count` is the open and partial gaps that no accepted list
 names. The audit table is also written as `audit.json`. Exit code 2 means open gaps.
 
+Two further modes and one option serve the project survey (NOTE-WFB-10 sections 7.5 to 7.8, 8.2, 9.2 and 11.4; the code
+is `tools/hmi/placement_survey.py`):
+
+1. `--survey <ctig survey>` places each kind and feature of a ctig survey (`ctig.survey/1`) by the catalogue, then the
+   reviewed or approved rows of `module/openbridge-map.json`, then the count against `--local-max` (Table 7.5), and
+   writes `survey.json` (`cadre-hmi-project-survey/1`), `unmapped.json` and `proposal_source.json` to `--out`. Earlier
+   surveys (`--prior-local`), a page run's late rows (`--late`), the model's `--proposals` and the owner's `--changes`
+   are inputs; a run given `--changes`, even an empty list, is final. The tool writes no approval record. Exit 0, or 1
+   for a fault.
+2. `--release <survey.json>` writes the project release's gap list (`cadre-hmi-library-gaps/2`): one open gap for each
+   `openbridge` and `shared_gap` placement, `GAP-<kind>` or `GAP-<kind>-<feature>` with each colon a hyphen. Exit 0, or 1.
+3. Page mode with `--project-survey <survey.json>` (and `--openbridge-map` for the late rule `map`) places a kind the
+   library does not draw by the survey: `local` is drawn as an assembly; `openbridge` and `shared_gap` are `unbuilt`
+   and the run exits 3. A kind or feature the survey does not hold is a late gap (rules `map`, `twice`, `second`,
+   `once`, `feature`) written to `late[]` for the next survey. Without a survey the output is `cadre-hmi-library-gaps/1`
+   exactly as before.
+
 ### 9.4 The Preview: `tools/hmi/preview.py`
 
 One renderer (`tools/hmi/preview_assets/renderer.js` and `style.css`) draws both previews from data: mode `recon`, the one

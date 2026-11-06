@@ -60,7 +60,7 @@ def action_lines(get, indent: str = "") -> list[str]:
            f"{ind}\tsystem.perspective.navigate({get('route')})",
            f"{ind}if {get('deviceId')}:"]
     out += open_device(get("deviceId"), get("deviceKind"), get("deviceTitle"), get("deviceLabel"), get("tab"),
-                       indent=ind + "\t")
+                       indent=ind + "\t", local=get("deviceLocal"))
     out += [f"{ind}if {get('close')} == '{NAV_DOCK}':",
             f"{ind}	system.perspective.closeDock('{NAV_DOCK}')",
             f"{ind}elif {get('close')} == '{SEARCH_CLOSE}':",
@@ -414,7 +414,8 @@ def page_header() -> dict:
 # The bottom alarm banner (DESIGN section 3 item 4; GX-10)
 # ---------------------------------------------------------------------------------------------------------
 BANNER_ROW_PARAMS = {"id": "", "priority": "", "status": "neutral", "unacked": False, "time": "", "node": "", "tag": "",
-                     "text": "", "state": "", "deviceId": "", "deviceKind": "", "deviceTitle": "", "deviceLabel": ""}
+                     "text": "", "state": "", "deviceId": "", "deviceKind": "", "deviceTitle": "", "deviceLabel": "",
+                     "deviceLocal": ""}
 
 
 def banner_row() -> dict:
@@ -439,7 +440,8 @@ def banner_row() -> dict:
         events={"dom": {"onClick": pv.script_handler([
             "p = self.view.params",
             "if p.deviceId:",
-            *open_device("p.deviceId", "p.deviceKind", "p.deviceTitle", "p.deviceLabel", "'alarms'", indent="\t")])}},
+            *open_device("p.deviceId", "p.deviceKind", "p.deviceTitle", "p.deviceLabel", "'alarms'", indent="\t",
+                        local="p.deviceLocal")])}},
         children=[*icons, cell("Time", "time", "72px", cls="cadre/font/label cadre/text/neutral"),
                   cell("Node", "node", "120px", cls="cadre/font/label cadre/text/neutral"),
                   cell("Tag", "tag", "140px", cls="cadre/font/body-active cadre/text/active"),
@@ -484,7 +486,8 @@ def alarm_banner() -> dict:
 # ---------------------------------------------------------------------------------------------------------
 # Several floating faceplates (DESIGN section 6, float mode)
 # ---------------------------------------------------------------------------------------------------------
-FLOAT_PARAMS = {"popupId": "", "deviceId": "", "kind": "", "style": "openbridge", "title": "", "label": "", "tab": ""}
+FLOAT_PARAMS = {"popupId": "", "deviceId": "", "kind": "", "style": "openbridge", "title": "", "label": "", "tab": "",
+                "localKind": ""}
 FLOAT_OF_PARAMS = (FACEPLATE_OF_SELECTION.replace("{session.custom.selectedStyle}", "{view.params.style}")
                    .replace("{session.custom.selectedKind}", "{view.params.kind}"))
 
@@ -493,12 +496,12 @@ def float_faceplate() -> dict:
     """`Framework/ASM/FloatFaceplate`: a device's own floating faceplate, one popup per device
     (`cadre.hmi.float_id`). It reads the device, kind, style, title, label and tab from its view parameters,
     never from `session.custom.selected*`, so a second device does not redraw the first. Its Dock pin puts
-    this faceplate in the right dock (and sets the session's mode to dock); the popup's own title bar
+    this faceplate in the right dock (and sets the session's mode to dock, with the local kind of a local device); the popup's own title bar
     carries the title, the close icon, the drag and the resize."""
     dock = _pin_button("Dock", [
         "p = self.view.params",
         "self.session.custom.faceplateMode = 'dock'",
-        *open_device("p.deviceId", "p.kind", "p.title", "p.label", "p.tab"),
+        *open_device("p.deviceId", "p.kind", "p.title", "p.label", "p.tab", local="p.localKind"),
         "system.perspective.closePopup(p.popupId)"])
     bar = pv.node("ia.container.flex", "Bar", pv.fpos(basis="44px", shrink=0), {
         "direction": "row", "alignItems": "center",
@@ -506,11 +509,12 @@ def float_faceplate() -> dict:
         children=[_label("Description", pv.fpos(grow=1), "{view.params.label}", classes="cadre/font/label cadre/text/neutral"),
                   dock])
     body = pv.node("ia.display.view", "Faceplate", pv.fpos(basis=f"{FACEPLATE_HEIGHT}px", shrink=0), {
-        "path": "Faceplate/Empty", "params": {"deviceId": "", "tab": ""}, "useDefaultViewHeight": False,
-        "useDefaultViewWidth": False},
+        "path": "Faceplate/Empty", "params": {"deviceId": "", "tab": "", "localKind": ""},
+        "useDefaultViewHeight": False, "useDefaultViewWidth": False},
         prop_config={"props.path": pv.bind(pv.expr(FLOAT_OF_PARAMS)),
                      "props.params.deviceId": pv.bind(pv.expr("{view.params.deviceId}")),
-                     "props.params.tab": pv.bind(pv.expr("{view.params.tab}"))})
+                     "props.params.tab": pv.bind(pv.expr("{view.params.tab}")),
+                     "props.params.localKind": pv.bind(pv.expr("{view.params.localKind}"))})
     scroll = pv.node("ia.container.flex", "Scroll", pv.fpos(grow=1, basis="0px"), {
         "direction": "column", "style": {"overflow": "auto"}}, children=[body])
     root = pv.node("ia.container.flex", "root", {}, {"direction": "column", "style": {"overflow": "hidden"}},
@@ -669,7 +673,8 @@ def search_index(descs: list[dict], tag_model: dict | None, index: list[dict], t
                  devices: dict | None = None) -> dict:
     """The search index (DESIGN section 5), compact lists to keep the session small (about 60 bytes a tag):
     pages `[route, title, node path, level]`, devices `[folder, kind, title, label, route, node path,
-    faceplate 1 or 0]` and tags `[path, description, unit, device index or -1, tab]`. The tag index comes
+    faceplate 1 or 0]` (a local assembly's device adds an eighth item, its `<Kind>`) and tags
+    `[path, description, unit, device index or -1, tab]`. The tag index comes
     from the tag model: the tags with a description or an alarm, and every tag of a device, each with the
     device that holds it (the longest device folder that is a prefix of the tag's path)."""
     from . import screen as scr
@@ -681,7 +686,8 @@ def search_index(descs: list[dict], tag_model: dict | None, index: list[dict], t
     if trends:
         pages.append(["/trends", "Trends", "", ""])
     devices = [[d["folder"], d["kind"], d["title"], d["label"], routes.get(d["folder"], ""), nodes.get(d["folder"], ""),
-                1 if framework.FACEPLATE_VIEW.get(d["kind"]) else 0] for d in index]
+                1 if framework.FACEPLATE_VIEW.get(d["kind"]) else 0, *([d["local"]] if d.get("local") else [])]
+               for d in index]
     where = sorted(((d["folder"].split("]", 1)[-1], i) for i, d in enumerate(index)), key=lambda x: -len(x[0]))
     tags = []
     for t in _tag_leaves(tag_model):
