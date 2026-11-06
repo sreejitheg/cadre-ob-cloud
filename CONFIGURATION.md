@@ -529,7 +529,7 @@ G0 to G7 run offline inside `screen.py` (before any import); G8 to G11 run again
 | G8 render | In a fresh session: no view error badge, no quality overlay, no trial page, no "View Not Found", components rendered | `tools/compare/capture.py` |
 | G9 live flow | Every pipe's rendered state against the solver, for memory tag gates | `tools/compare/live_flow.py` (not applicable to the water treatment sample, whose gates are expression tags) |
 | G10 functional | An operator's walk in a new session: navigation, faceplate, commands, setpoint, acknowledge, palette, each checked on the glass; then the generated walk | `tools/compare/functional.py`, `walk.py` |
-| G11 faceplates | Every leaf view clicked: each device opens its faceplate with its identifier as title; no overlay or empty body; every tab opened | `tools/compare/faceplates.py` |
+| G11 faceplates | Every leaf view clicked: each device, and each local assembly's device by its title (T3), opens its faceplate with its identifier as title; no overlay or empty body; every tab opened | `tools/compare/faceplates.py` |
 
 A clean render is not a working screen: run G10 or G11 before calling anything functional (`CLAUDE.md` section 5). Never weaken a
 gate to pass it.
