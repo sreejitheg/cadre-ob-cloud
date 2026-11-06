@@ -112,7 +112,7 @@ class FloatingFaceplateTests(unittest.TestCase):
         s = session_of(descs)
         self.assertEqual(ns["float_params"](s, "fp_x"),
                          {"popupId": "fp_x", "deviceId": "[default]cadre_hmi_wtp/P301", "kind": "pump", "style": "asm",
-                          "title": "P301", "label": "Filter feed pump", "tab": "alarms"})
+                          "title": "P301", "label": "Filter feed pump", "tab": "alarms", "localKind": ""})   # WP-W04
         self.assertEqual(set(ns["float_params"](s, "x")), set(navigation.FLOAT_PARAMS))
         self.assertTrue(ns["asm_frame"](s))
         s.custom.frame = "openbridge"
@@ -144,7 +144,7 @@ class FloatingFaceplateTests(unittest.TestCase):
         dock = n["Dock"]["events"]["component"]["onActionPerformed"]["config"]["script"].splitlines()
         self.assertEqual(dock[0].strip(), "p = self.view.params")
         self.assertEqual(dock[1].strip(), "self.session.custom.faceplateMode = 'dock'")
-        self.assertIn("cadre.hmi.select_device(self.session, p.deviceId, p.kind, p.title, p.label, p.tab)", dock[2])
+        self.assertIn("cadre.hmi.select_device(self.session, p.deviceId, p.kind, p.title, p.label, p.tab, local=p.localKind)", dock[2])   # WP-W04
         self.assertEqual(dock[-1].strip(), "system.perspective.closePopup(p.popupId)")
 
     def test_the_docks_float_button_floats_per_device_too(self):
@@ -320,7 +320,7 @@ class SearchTests(unittest.TestCase):
         self.assertIn("k == 'Escape'", keys)
         self.assertIn("self.session.custom.searchOpen = False", keys)
         self.assertIn("cadre.hmi.search_first(self.session, self.session.custom.searchQuery)", keys)
-        self.assertIn("cadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'])", keys)
+        self.assertIn("cadre.hmi.select_device(self.session, r['deviceId'], r['deviceKind'], r['deviceTitle'], r['deviceLabel'], r['tab'], local=r['deviceLocal'])", keys)
         self.assertIn("\telse:\n\t\tself.session.custom.searchOpen = True", keys)   # any other key opens the panel
         compile("def f(self, event):\n" + keys + "\n", "keys", "exec")
 
@@ -352,7 +352,7 @@ class SearchTests(unittest.TestCase):
         scope["system"] = types.SimpleNamespace(perspective=Persp)
         scope["cadre"] = types.SimpleNamespace(hmi=types.SimpleNamespace(
             search_first=lambda session, q: ns["search_first"](session, q),
-            select_device=lambda *a: seen.append(("select", a[1]))))
+            select_device=lambda *a, **k: seen.append(("select", a[1]))))
         exec("def f(self, event):\n" + "".join("\t" + ln + "\n" for ln in keys.split("\n")), scope)
 
         def press(session, key):
@@ -523,7 +523,7 @@ class BannerTests(unittest.TestCase):
         row = navigation.banner_row()
         r = T.view_nodes(row)
         code = r["root"]["events"]["dom"]["onClick"]["config"]["script"]
-        self.assertIn("cadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, 'alarms')",
+        self.assertIn("cadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, 'alarms', local=p.deviceLocal)",
                       code)   # the shared opener, on Alarms (the tab through select_device, COB-158)
         flashing = [k for k in r if k.startswith("Priority_")]
         self.assertEqual(len(flashing), 5)

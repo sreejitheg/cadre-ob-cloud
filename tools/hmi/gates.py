@@ -199,12 +199,33 @@ def g2_references(child: Path, parent: Path | None) -> dict:
             "variables_defined": len(defined), "classes": len(classes), "views": len(views)}
 
 
+def expressions_of(node) -> list[str]:
+    """Every expression string under `node` (a binding's `config.expression`, in a property binding or a transform)."""
+    found = []
+    if isinstance(node, dict):
+        found += [v for k, v in node.items() if k == "expression" and isinstance(v, str)]
+        found += [e for v in node.values() for e in expressions_of(v)]
+    elif isinstance(node, list):
+        found += [e for v in node for e in expressions_of(v)]
+    return found
+
+
+CUSTOM_REF = re.compile(r"\{view\.custom\.([^.}\[\s]+)")   # the top-level key: a name may hold a hyphen (`g_ind-level-high`)
+
+
 def g3_view_keys(child: Path) -> dict:
+    """G3: a view-level `propConfig` key is `custom.` or `params.` (GF-07); and every `{view.custom.<name>}` an
+    expression of the view names is a key of the view's `custom` (COB-212; a key that only a binding would make is
+    undefined until the binding delivers, and for ever when its tag is bad: a pipe that names the state of a switch the
+    view never defines is a failed binding, and Perspective frames the component)."""
     bad = []
     for vp, doc in views_of(child).items():
         for k in (doc.get("propConfig") or {}):
             if not k.startswith(("custom.", "params.")):
                 bad.append(f"{vp}: view-level key {k!r}")
+        defined = set(doc.get("custom") or {})
+        undefined = sorted({n for e in expressions_of(doc) for n in CUSTOM_REF.findall(e)} - defined)
+        bad += [f"{vp}: an expression names view.custom.{n}, which the view does not define" for n in undefined]
     return {"ok": not bad, "problems": bad}
 
 
@@ -367,7 +388,8 @@ def symbol_box_of(c: dict, e: tuple) -> tuple:
 FACEPLATES = ("Faceplate/Pump", "Faceplate/Valve", "Faceplate/Tank", "Faceplate/Instrument",
               "Faceplate/Controller", "Faceplate/Input", "Faceplate/Sequence",
               "Faceplate/ASM/Pump", "Faceplate/ASM/Valve",   # the `asm` style (COBD-045)
-              "Faceplate/ASM/Generator", "Faceplate/ASM/Sequence", "Faceplate/ASM/Instrument")   # COB-158
+              "Faceplate/ASM/Generator", "Faceplate/ASM/Sequence", "Faceplate/ASM/Instrument",   # COB-158
+              "Faceplate/ASM/Local")   # the local assembly's device (NOTE-WFB-10 section 11.2 item 5)
 ALARM_LISTS = {"ia.display.alarmstatustable": "props.filters.active.conditions.source",
                "cadre.ob.alertlist": "props.alerts"}
 
@@ -938,6 +960,9 @@ def g7_devices(model: dict, profile: dict, symbols: list[dict], tag_model: dict 
             continue
         known = kinds[kind]["members"]
         pulsed = kinds[kind].get("pulses", [])
+        # a kind that names no member and takes any (the local assembly's device, NOTE-WFB-10 section 11.2 item 4):
+        # every member the model lists is accepted; a pulse is still Boolean, written and captioned as any pulse
+        open_members = bool(kinds[kind].get("openMembers"))
         modes = d.get("modes")
         if modes is not None:   # ownership by mode (COBD-044)
             owners = profile.get("ownership", {}).get("owners", [])
@@ -968,7 +993,7 @@ def g7_devices(model: dict, profile: dict, symbols: list[dict], tag_model: dict 
                 continue
             # a pulse command (`cadre.hmi.pulse`, W18): the faceplate draws a button for it, with its caption
             if spec.get("pulse"):
-                if name not in pulsed:
+                if name not in pulsed and not open_members:
                     problems.append(f"{did}: member {name!r} is marked a pulse; kind {kind!r} has no pulse "
                                     "member of that name")
                 if spec["type"] != "Boolean":
@@ -989,6 +1014,8 @@ def g7_devices(model: dict, profile: dict, symbols: list[dict], tag_model: dict 
                 if name in pulsed and spec.get("access") == "write":
                     problems.append(f"{did}: member {name!r} is a pulse member of kind {kind!r} and is marked "
                                     "writable without \"pulse\": true (its faceplate draws its button)")
+            if open_members:
+                continue
             ilk = _ilk_member(name) if kinds[kind].get("interlocks") else None
             want = known[name]["type"] if name in known else ilk
             if want is None:

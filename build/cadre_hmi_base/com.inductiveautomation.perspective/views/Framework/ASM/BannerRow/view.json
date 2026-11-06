@@ -4,6 +4,7 @@
     "deviceId": "",
     "deviceKind": "",
     "deviceLabel": "",
+    "deviceLocal": "",
     "deviceTitle": "",
     "id": "",
     "node": "",
@@ -25,6 +26,10 @@
       "persistent": true
     },
     "params.deviceLabel": {
+      "paramDirection": "input",
+      "persistent": true
+    },
+    "params.deviceLocal": {
       "paramDirection": "input",
       "persistent": true
     },
@@ -427,7 +432,7 @@
       "dom": {
         "onClick": {
           "config": {
-            "script": "\tp = self.view.params\n\tif p.deviceId:\n\t\tcadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, 'alarms')\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
+            "script": "\tp = self.view.params\n\tif p.deviceId:\n\t\tcadre.hmi.select_device(self.session, p.deviceId, p.deviceKind, p.deviceTitle, p.deviceLabel, 'alarms', local=p.deviceLocal)\n\t\tif self.session.custom.faceplateMode == 'popup':\n\t\t\tif cadre.hmi.asm_frame(self.session):\n\t\t\t\tfid = cadre.hmi.float_id(self.session.custom.selectedDevice)\n\t\t\t\tsystem.perspective.closePopup(fid)\n\t\t\t\tsystem.perspective.openPopup(id=fid, view='Framework/ASM/FloatFaceplate', params=cadre.hmi.float_params(self.session, fid), title=self.session.custom.selectedTitle, position=cadre.hmi.float_position(self.session, self.session.custom.selectedDevice), showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\t\telse:\n\t\t\t\tsystem.perspective.openPopup(id='faceplatePopup', view='Framework/FaceplatePopup', title=self.session.custom.selectedTitle, position={'top': 56, 'right': 16}, showCloseIcon=True, draggable=True, resizable=True, modal=False, overlayDismiss=False, viewportBound=True)\n\t\telse:\n\t\t\tsystem.perspective.openDock(id='faceplate')\n\t\t\tself.session.custom.faceplateDocked = True"
           },
           "scope": "G",
           "type": "script"

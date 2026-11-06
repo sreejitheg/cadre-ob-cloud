@@ -75,14 +75,18 @@ def open_faceplate(indent: str = "") -> list[str]:
 
 
 def open_device(device: str, kind: str, title: str = "''", label: str = "''", tab: str = "''",
-                indent: str = "") -> list[str]:
+                indent: str = "", *, local: str | None = None) -> list[str]:
     """The lines that open a device's faceplate on a named tab (COB-158 to COB-160): every opener that
     names a tab (a command button, a search row, a row of the alarm banner) calls this. Each argument
     is a script expression, for example `"'[default]plant/P1'"` or `"d['kind']"`; `tab` is a tab key
     of the faceplate (`home`, `config`, `alarms`, ...), and a key the faceplate lacks opens its first
     tab. The tab travels in `session.custom.selectedTab`, which `cadre.hmi.select_device` writes last
-    (empty for a plain symbol click), and every faceplate view takes it as `params.tab`."""
-    return [f"{indent}cadre.hmi.select_device(self.session, {device}, {kind}, {title}, {label}, {tab})",
+    (empty for a plain symbol click), and every faceplate view takes it as `params.tab`. `local` is the script
+    expression of a local assembly's `<Kind>` (NOTE-WFB-10 section 11.2 item 5): `select_device` writes it to
+    `session.custom.selectedLocal`, which the hosts hand the local faceplate as `localKind`. Without it the call is
+    the call of before, and `select_device` clears the kind."""
+    extra = f", local={local}" if local is not None else ""
+    return [f"{indent}cadre.hmi.select_device(self.session, {device}, {kind}, {title}, {label}, {tab}{extra})",
             *open_faceplate(indent)]
 
 # ---------------------------------------------------------------------------------------

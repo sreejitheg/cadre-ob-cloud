@@ -1375,7 +1375,8 @@ columns, the banner rule), then `gates.json` (`cadre-hmi-glass-gates/1`) and `pi
    `alarm`, `ack` and `banner` are skipped, and said so, without it. The test login reaches the `ack` gate through
    `CADRE_TEST_LOGIN` and is never printed or written.
 3. A step may be accepted by a list of rows of an earlier run (`--accepted-rows`); the step then carries `accepted`.
-4. Exit codes: 0 every gate passes and the tag is restored; 2 otherwise; 1 a fault.
+4. The routes of the plan: without `--design`, every model page, the model's support routes, the navigation table's and the descriptors'; with it (COB-211), the built model pages, the design's page and support routes, every descriptor route and `/alerts`, without repeats. An unbuilt model page is not planned; a route the design names is, though the project lacks it.
+5. Exit codes: 0 every gate passes and the tag is restored; 2 otherwise; 1 a fault.
 
 The control flow is proven on a fake gateway's client page (`tests/glass_fake.py`). The selectors and the measures were
 lifted from the slice's scripts, which were measured on the glass; two readings of the alert list (the unacknowledged

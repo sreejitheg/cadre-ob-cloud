@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-library-gaps/2",
+  "title": "Cadre HMI library gaps, version 2",
+  "description": "Version 1 with a placement per kind; local[], late[], wraps[] and survey; and per gap placement, element, map_row, count and needed (NOTE-WFB-10 section 10.2). Written by tools/hmi/library_gaps.py in page mode with --project-survey, and in release mode (one open gap per openbridge and shared_gap placement of an approved survey). Page mode with no survey writes version 1.",
+  "type": "object",
+  "required": ["schema", "kinds", "gaps", "open_count", "local", "late", "wraps", "survey", "provenance"],
+  "properties": {
+    "schema": {"const": "cadre-hmi-library-gaps/2"},
+    "kinds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "count", "resolution", "placement"],
+        "properties": {
+          "kind": {"type": "string"},
+          "count": {"type": "integer", "minimum": 1},
+          "pages": {"type": "array", "items": {"type": "string"}},
+          "resolution": {"enum": ["module", "library", "gap", "local", "unbuilt", "openbridge", "shared_gap",
+                                  "unclassified"]},
+          "placement": {"enum": ["module", "library", "openbridge", "shared_gap", "local", "unclassified", null]},
+          "part": {"type": ["string", "null"]},
+          "audit": {
+            "type": "object",
+            "required": ["module_part", "library_part", "choice", "reason"],
+            "properties": {
+              "module_part": {"type": ["string", "null"]},
+              "library_part": {"type": ["string", "null"]},
+              "choice": {"enum": ["module", "library", "gap", "local", "unbuilt"]},
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "item", "library_today", "needed", "status", "reason", "mapping_rows",
+                     "placement", "count"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"type": "string"},
+          "feature": {"type": ["string", "null"]},
+          "item": {"type": ["string", "null"]},
+          "library_today": {"type": "string"},
+          "needed": {
+            "oneOf": [
+              {"type": "string"},
+              {"type": "object", "required": ["element", "properties", "states"],
+               "properties": {"element": {"type": ["string", "null"]}, "properties": {"type": ["object", "array"]},
+                              "states": {"type": "array"}}},
+              {"type": "object", "required": ["members", "instances"],
+               "properties": {"members": {"type": "array", "items": {"type": "string"}},
+                              "instances": {"type": "integer", "minimum": 0}}}
+            ]
+          },
+          "status": {"enum": ["open", "partial", "closed", "accepted"]},
+          "reason": {"type": "string", "minLength": 1},
+          "mapping_rows": {"type": "array", "items": {"type": "string"}},
+          "placement": {"enum": ["openbridge", "shared_gap", "local"]},
+          "element": {"type": ["string", "null"]},
+          "map_row": {
+            "oneOf": [
+              {"type": "null"},
+              {"type": "object", "required": ["element", "state"],
+               "properties": {"element": {"type": ["string", "null"]}, "state": {"type": ["string", "null"]}}}
+            ]
+          },
+          "count": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "open_count": {"type": "integer", "minimum": 0},
+    "features": {"type": "array"},
+    "local": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "instance", "page", "source"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string"}, "feature": {"type": ["string", "null"]},
+          "instance": {"type": ["string", "null"]}, "page": {"type": ["string", "null"]},
+          "source": {"enum": ["survey", "late"]}
+        }
+      }
+    },
+    "late": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "id", "rule", "status", "reason", "count", "stems"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string"}, "feature": {"type": ["string", "null"]}, "id": {"type": "string"},
+          "rule": {"enum": ["map", "twice", "second", "once", "feature"]},
+          "status": {"enum": ["accepted", "local"]},
+          "reason": {"type": "string", "minLength": 1},
+          "count": {"type": "integer", "minimum": 0},
+          "stems": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "wraps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "element"],
+        "properties": {"kind": {"type": "string"}, "feature": {"type": ["string", "null"]},
+                       "element": {"type": ["string", "null"]}}
+      }
+    },
+    "survey": {
+      "type": ["object", "null"],
+      "required": ["sha256", "library_commit"],
+      "properties": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                     "library_commit": {"type": ["string", "null"]}}
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["tool", "repository", "commit", "argv", "inputs", "started", "duration_s", "interpreter"]
+    }
+  }
+}

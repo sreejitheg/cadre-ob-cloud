@@ -69,6 +69,13 @@ def build_graph(desc: dict, contracts: dict) -> tuple[Graph, dict]:
     syms = {s["id"]: s for s in desc.get("symbols", [])}
     for s in syms.values():
         role = node_role(s["kind"])
+        if role == "gate":
+            # a gate has a state: bound to a member or stated as a parameter, the two cases in which `screen.py` defines
+            # `custom.g_<id>`. A switch the design draws with neither has none to follow and passes, as a junction does
+            # (COB-212): no expression may name a state that no view defines
+            state = GATED[s["kind"].lower()]
+            if state not in (s.get("bind") or {}) and state not in (s.get("params") or {}):
+                role = "pass"
         g.nodes[s["id"]] = role
         if role == "gate":
             g.gate_of[s["id"]] = s["id"]

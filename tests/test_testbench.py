@@ -197,6 +197,7 @@ class PageTests(unittest.TestCase):
         # each device symbol opens a faceplate (G11): it is a device symbol, in the model, of a kind with a faceplate
         folders = {s["device"] for s in self.desc["symbols"] if s.get("device")}
         folders |= {s["faceplate"] for s in self.desc["symbols"] if s.get("faceplate")}   # a plain symbol opens one (L5)
+        folders |= {a["device"] for a in self.desc.get("assemblies", [])}   # a local assembly's device (NOTE-WFB-10 11.2)
         self.assertEqual({d["id"] for d in self.bench.devices} - folders, set())
         for d in self.bench.devices:
             self.assertIn(d["kind"], self.prof["deviceKinds"])
