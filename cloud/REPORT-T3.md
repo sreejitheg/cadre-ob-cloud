@@ -6,7 +6,7 @@
 | Date | 2026-11-06 |
 | Branch | `port/sandbox-0.8.0` (from `import/sandbox-9727312`, `1034ea7`); the patch branch `sandbox-delta` (`0a35cbc`, at `26f38c8`) |
 | Inputs | `cloud/import/sandbox-delta.patch`, `sandbox-commits.txt`, `NOTE-WFB-10-standard-migration-workflow.md` (sections 7 to 11 and 16.3), `NOTE-WFB-12-front-end-demo-fixes.md` (sections 6 and 7.2) |
-| Result | Everything of 0.8.0 kept; every group of the delta present, tested and documented; one defect of the source's design found on the gateway and fixed (section 7.1); G11 on the component test page passes its 21 expected devices and fails only on the local device it was not told to expect, a gate change left for the owner (section 6.2) |
+| Result | Everything of 0.8.0 kept; every group of the delta present, tested and documented; one defect of the source's design found on the gateway and fixed (section 7.1); after the owner's word, G11 expects the local assembly's device and passes on the component test page, 22 of 22 (section 6.2) |
 
 ## 1. Purpose and Scope
 
@@ -43,7 +43,8 @@ committed tree.
 
 2.5 **Commits on the branch**, in order: `0a35cbc` (the patch), `11005e3` (the merge with its resolutions and regenerated files),
 `0a442c1` (tests ported under R4), `7a9e402` (GF-117: the local assembly's views), `1daa6fe` (the product name out of new prose),
-`0d25aa1` (documentation), then the records and the reviewer's corrections (section 11).
+`0d25aa1` (documentation), then the records and the reviewer's corrections (section 11), and after the owner's word `dd7fb38` (G11
+expects the local device) and `37bed37` (GF-118).
 
 ## 3. The Conflicted Files
 
@@ -186,20 +187,35 @@ Table 5. The verification of the brief's section 7, in its order.
 | 4 | G0 to G7 on the five samples; the tracked builds regenerate with no diff beyond the merge's intended changes | PASS: `cadre_hmi_sample`, `cadre_hmi_wtp`, `cadre_hmi_wtpob`, `cadre_hmi_wtpobf`, `cadre_hmi_wtpoba` and the showcase pass G0 to G7 (G3 with its new check). The tracked builds equalled a rebuild at `main`; the merge changes each child only by the session default `selectedLocal: ""`, and the parent by `Faceplate/ASM/Local`, the openers' local kind (`select_device`, `select_alarm_device`, `float_params`, the rows' `deviceLocal`) and `selectedLocal` (NOTE-WFB-10 11.2 item 5) |
 | 5 | The survey, release and page modes on the source's fixtures; a survey smoke run over the 97 types | PASS: their tests pass (Table 4). Smoke run, one kind per type, two instances each, `--module-first`, `local_max` 1: 97 kinds, 194 instances; 12 `module` (the kinds of `MODULE_KIND`), 85 `shared_gap` (81 module-only and frame kinds, 4 types with no kind), 0 wraps, 0 `local`, 1 pending proposal (the map's `bus` row). With `--local-max 2`: the same 85 kinds `local` (170 instance entries) |
 | 6 | `tests/test_wiki_reference.py` passes; `screen.py --help` lists `--local-kinds` | PASS: 27 tests (21 before, 4 of them failing on the merged code); `--local-kinds FILE` listed |
-| 7a | The component test page: G8 and G11 (21 of 21 devices) | G8 PASS (0 error badges, 0 quality overlays, 6331 components) after the fix of section 7.1. G11 (run alone, 51 min, 278 leaf views): 21 of 21 expected devices open and read with no missing device and no fault; verdict FAIL, only because the sweep also opened a 22nd device, TB-LOCAL (the `benchlocal` assembly), which its expected list lacks (section 6.2) |
-| 7b | The `benchlocal` probe (NOTE-WFB-10 11.3) | PASS (a Playwright probe in the main session, since G11 sweeps the descriptor's symbols and an assembly is none): the assembly draws "Local assembly" and the readout of `value`, 42.0, with no badge; its click opens `Faceplate/ASM/Local` in the dock as TB-LOCAL with exactly the tabs Home, Alarms and Info; Home shows "Local detail", 42.0, the lamp and the Start button; each tab opens with no view-state badge, no quality overlay, no "Bad quality" line and no empty body; G8 on the page: no error badge |
+| 7a | The component test page: G8 and G11 (21 of 21 devices) | G8 PASS (0 error badges, 0 quality overlays, 6331 components) after the fix of section 7.1. G11 PASS (run alone, 55 min, 278 leaf views): 22 of 22 devices, the local device TB-LOCAL among them, none missing, none unexpected, no fault, after the owner allowed the gate change of section 6.2 |
+| 7b | The `benchlocal` probe (NOTE-WFB-10 11.3) | PASS (a Playwright probe in the main session, run again after each gateway restart; G11 run 5 also opens and reads the faceplate, section 6.2): the assembly draws "Local assembly" and the readout of `value`, 42.0, with no badge; its click opens `Faceplate/ASM/Local` in the dock as TB-LOCAL with exactly the tabs Home, Alarms and Info; Home shows "Local detail", 42.0, the lamp and the Start button; each tab opens with no view-state badge, no quality overlay, no "Bad quality" line and no empty body; G8 on the page: no error badge |
 | 7c | `cadre_hmi_wtpobf` G8 6 of 6 | PASS: G8 6 of 6 routes (`/`, `/intake`, `/filtration`, `/disinfection`, `/trends`, `/alerts`; 66, 85, 82, 82, 144 and 49 components), no badge, no quality overlay |
 | 7d | One page built with `--local-kinds` and one assembly | PASS: the worked example of page 18 (`cadre_hmi_localdemo`, `/cooling`, one assembly of the kind `chiller`, `--local-kinds ["chiller"]`) passes G0 to G7 and fails G0 with `assembly-without-local-kinds` without the option; deployed, G8 passes (120 components, no badge, no overlay); the assembly draws "Chiller 1" and 7.5 degC and its click opens the faceplate CH-1 with Home, Alarms and Info, Home showing "Chiller detail", 7.5 and Reset |
 | 8 | The COB-211 and COB-212 tests; a page of switches with no state carries no red quality frame in G8 | Tests PASS (`test_cob211_glass_plan_routes`, `test_cob212_gate_without_state`, `test_note12_demo_fixes`). Gateway PASS: a page of three stateless switches and one stated switch in series between two tanks (`cadre_hmi_cob212`, module rendering) shows no quality overlay in G8 (105 components), and its pipe expressions name only the stated switch. Negative control: the same descriptor built by the pre-port line (`cadre_hmi_cob212old`) names `g_SW1` to `g_SW3`, which its view does not define, and draws one quality overlay (its G3 passed, the check not existing then) |
 
-6.2 **G11 and the local device.** The sweep's expected devices come from the descriptor's symbols and cards
-(`faceplates.expected_devices`); a local assembly is neither, and the source's patch did not change the sweep. The sweep found the
-assembly's embed as a leaf, opened its faceplate and read it as it reads every device: TB-LOCAL, no quality overlay, a non-empty body,
-and the tabs Home, Alarms (no rows: its alarm member is false) and Info, each with no overlay and no badge. It then listed TB-LOCAL as
-unexpected, which fails the route. Making the sweep expect it (adding each assembly's `title`, else its `kind`, to the expected set) is
-a change to gate G11; under the brief's section 9 a merge that needs a gate change stops and is reported, so the gate is unchanged and
-the change is open item 8 of section 10. Every other part of item 7a passes, and item 7b's "G11 opens and reads the faceplate" is met
-by the sweep's own record.
+6.2 **G11 and the local device.** The sweep's expected devices came from the descriptor's symbols and cards
+(`faceplates.expected_devices`); a local assembly is neither, and the source's patch did not change the sweep. The first full sweep
+(51 min) found the assembly's embed as a leaf, opened its faceplate and read it as it reads every device (TB-LOCAL, no overlay, a body,
+the tabs Home, Alarms and Info each clean), then listed TB-LOCAL as unexpected: 21 of 21 expected devices passed and the route failed.
+A change to a gate is reserved for the owner (the brief's section 9), so it was reported. With the owner's word, `expected_devices`
+adds each assembly's device by the title the generator registers (`assembly.item`: its `title`, else its kind), and
+`device_expectations` gives it, with a device model, the tabs of the kind `local` and its alarm source (`dd7fb38`,
+`tests/test_g11_local.py`, 7 tests; wiki 08 and 18, `CONFIGURATION.md`).
+
+Table 5a. The G11 runs on the component test page.
+
+| Run | Gateway | Result | Cause |
+|---|---|---|---|
+| 1 | With a concurrent probe | Stopped at click 0, leaf views 277 to 278 | The page still loading (the guard of the sweep); a probe used the gateway at the same time |
+| 2 | Alone | FAIL: 21 of 21 expected, TB-LOCAL unexpected | The expected set lacked the local device |
+| 3 | Restarted minutes before, cold | Stopped at click 0, 278 to 277 | The page settled about 5 s after load (measured), after the sweep's settle check |
+| 4 | Alone, warm, with the change | FAIL: 22 of 22 expected and opened, TB-LOCAL one error badge on each tab | A stale `Local/Benchlocal` view from the first deploy (before the GF-117 fix) kept by the import (GF-118); after the restart it hid both local views (GF-117) |
+| 5 | Recreated, project deployed fresh | PASS: 22 of 22, 278 leaf views, no fault, 55 min | |
+
+After run 4 the project was deleted through the REST API and imported again (only the two sibling views), and the probe and G8 were
+clean after a restart. The trial then had 49 min left, less than a sweep needs, and resets only after expiry (GF-33), so the throwaway
+gateway was recreated with a fresh volume: the same tested 0.8.0 file installed and trusted (97 registered), the parent and the test
+page deployed, G8 passing (6331 components, no badge, no overlay) before run 5.
 
 6.3 The gateway is the cloud gateway of `CLAUDE.md` section 3 (8.3.6, trial), created fresh in this container by
 `cloud/setup.sh gateway`. It had no module, so the tested 0.8.0 file of `cloud/release/` was installed unchanged (its SHA-256
@@ -281,9 +297,10 @@ the elements list generator, one test's skip message) were reworded in `1daa6fe`
    0.8.0 file carries the older text until the next build.
 7. **Generator states on the test page.** The map row's state `out_of_service` has no module cell under 0.8.0 (the indicator has no
    out of service mark); the test page draws it with the library's view.
-8. **G11 and local assemblies** (section 6.2): with the owner's word, `tools/compare/faceplates.py` `expected_devices` would add
-   each assembly's title (default its kind) to the expected set, so that the sweep of the component test page passes 22 of 22; the
-   sweep already opens and reads the local faceplate correctly.
+8. **Stale views on the owner's gateway** (GF-118): an import keeps the resources its zip lacks. A gateway that ever held a page
+   built by the Sandbox with a local assembly holds a view `Local/<Kind>` that, after a restart, hides the new
+   `Local/<Kind>/Assembly` and `Local/<Kind>/Home` (GF-117). Delete such a project before importing the merged build
+   (`CONFIGURATION.md` section 4.6); `deploy.py` could do so itself, a change not made here.
 
 ## 11. Review
 
@@ -320,4 +337,4 @@ Table 8. The subagents' usage.
 | Total | 840,403 | 201 | 28 min 19 s |
 
 12.2 The main session's own token count is not visible inside the session; by the length of its transcript it stayed well below the
-brief's limit of 4 million (an estimate). Wall time: 03:02 UTC to about 05:10 UTC, of which about 80 min were the two G11 runs.
+brief's limit of 4 million (an estimate). Wall time: 03:02 UTC to about 05:10 UTC, then, after the owner's word on G11, 05:13 to 07:20 UTC, most of it the G11 runs (Table 5a).

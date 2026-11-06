@@ -443,3 +443,6 @@
   container was recreated with a fresh volume (the same tested 0.8.0 file installed and trusted, 97 registered, trial 7,161 s),
   parent and test page deployed, G8 PASS (6331 components, no badge, no overlay). G11 run 5 started alone. Wiki 07 (GF-118, GF-117)
   and `CONFIGURATION.md` 4.6 (delete before import after a view moves) updated.
+- 2026-11-06 07:13: G11 run 5 on the recreated gateway (alone, 55 min): PASS, 22 of 22 devices (TB-LOCAL among them), 278 leaf views,
+  none missing or unexpected, no fault. `cloud/REPORT-T3.md` updated (section 6.2 and Table 5a, the five runs; open item 8, stale
+  views on the owner's gateway). Full offline suite running.
