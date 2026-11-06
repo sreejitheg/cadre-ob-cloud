@@ -167,7 +167,8 @@ Table 4. The full offline suite, `env -u CADRE_TEST_LOGIN python -m unittest dis
 |---|---|---|---|---|---|---|
 | Before: this repository's `main` line (`1034ea7`) | 1356 | 1356 | 0 | 0 | 0 | 268 s |
 | The merged tree before its commit (first round) | 1779 | 1667 | 92 | 11 | 9 | 298 s |
-| After: `port/sandbox-0.8.0` at the report | 1810 | 1810 | 0 | 0 | 0 | 307 s |
+| After: `port/sandbox-0.8.0` before the owner's word on G11 | 1810 | 1810 | 0 | 0 | 0 | 307 s |
+| After: the branch with the G11 change (`d01b645`) | 1817 | 1817 | 0 | 0 | 0 | 315 s |
 
 5.1 The first round's 103 failures and errors had four causes, none a defect of the merge's code: about 70 in the placement
 tool's tests, whose survey mode refuses a tree whose profile or elements list differs from `HEAD` (NOTE-WFB-10 section 11.4 item 2:
@@ -181,7 +182,7 @@ Table 5. The verification of the brief's section 7, in its order.
 
 | Item | Check | Result |
 |---|---|---|
-| 1 | Test count before and after | 1356 before; 1810, all passing, none skipped, after (Table 4) |
+| 1 | Test count before and after | 1356 before; 1817, all passing, none skipped, after (Table 4) |
 | 2 | `python module/tools/verify_pin.py` exits 0 | PASS: "ok, @oicl/openbridge-webcomponents 2.0.0-next.155 matches the lock and the manifest" |
 | 3 | `gen_openbridge_elements.py` writes a file equal to the tracked one | PASS: 281 elements, release 2.0.0-next.155, no difference |
 | 4 | G0 to G7 on the five samples; the tracked builds regenerate with no diff beyond the merge's intended changes | PASS: `cadre_hmi_sample`, `cadre_hmi_wtp`, `cadre_hmi_wtpob`, `cadre_hmi_wtpobf`, `cadre_hmi_wtpoba` and the showcase pass G0 to G7 (G3 with its new check). The tracked builds equalled a rebuild at `main`; the merge changes each child only by the session default `selectedLocal: ""`, and the parent by `Faceplate/ASM/Local`, the openers' local kind (`select_device`, `select_alarm_device`, `float_params`, the rows' `deviceLocal`) and `selectedLocal` (NOTE-WFB-10 11.2 item 5) |
