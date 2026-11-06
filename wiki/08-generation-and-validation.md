@@ -1,14 +1,14 @@
 ---
 title: Generation and validation
 type: wiki
-updated: 2026-10-23
+updated: 2026-11-06
 ---
 # 08 Screen Generation and Validation
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-08 |
-| Revision | I |
+| Revision | J |
 | Status | Issued for use |
 | Code | `tools/hmi/` (generator), `tools/compare/` (live gates and comparison), `schemas/screen-descriptor.schema.json`, `schemas/devices.schema.json` |
 
@@ -57,6 +57,9 @@ complete example, and `screens/wtp/` holds the four generated pages of the water
 This section explains the descriptor; page 18 gives every key of the descriptor and the device model, the
 parameters of each kind and the placement arithmetic as a reference for a tool that writes them, page 17 the
 tag structure (one UDT per device kind) and page 16 the criteria for choosing a kind.
+
+A descriptor may also draw local assemblies (`assemblies[]`, section 3.3), and the placement tool decides beforehand which
+kinds a project draws from the module, the library, a wrap, a shared gap or a local assembly (section 7 item 4).
 
 Table 1. Descriptor sections.
 
@@ -195,6 +198,18 @@ Table 2a. Heights of the rows of the water treatment overview (`screens/wtp/over
 | 1 | Production, Water quality (instrument fields) | 64 px | 40 + 64 + 8 + 16 = 128 px |
 | 2 | Storage (tanks), Pumps (pumps with a readout beneath) | 216 px | 40 + 216 + 8 + 16 = 280 px |
 
+### 3.3 Local Assemblies
+
+A kind the library lacks can be drawn on a diagram page as a local assembly: a part set of labels, readouts, indicators,
+instrument fields, lines, shapes and (in its Home only) pulse buttons, bound to one device's tag folder (`assemblies[]`,
+`$defs.assembly` of the descriptor schema; every key on page 18 section 10.8). `screen.py --local-kinds <file>` names the kinds
+a page may draw so; G0 refuses an assembly of a kind not listed, of a kind the library has, on a page whose layout is not
+`diagram`, with a colour, class or style key, with part identifiers repeated, with parts that differ between assemblies of one
+kind, or with a button outside its Home, and every assembly when the option is absent. Each kind is written once into the
+child as `Local/<Kind>/Assembly` and `Local/<Kind>/Home` (siblings, page 07 GF-117); each assembly is a device of the kind
+`local`, with its own entry in the device index, and its click opens `Faceplate/ASM/Local` with the tabs Home, Alarms and Info,
+whose Home embeds the kind's Home view. The page checks count the assemblies' parts (`page_checks.py`, kind `assembly`).
+
 ## 4. What the Generator Does
 
 1. **Contract check (G7).** Every symbol kind resolves to a library view; every static or bound
@@ -244,7 +259,7 @@ Table 3. The gates. G0 to G7 run offline before any import; G8 to G11 run agains
 
 | Gate | Checks | Tool |
 |---|---|---|
-| G0 descriptor | Each descriptor validates against its JSON Schema, and the device model, when one is given, against `schemas/devices.schema.json` | `tools/hmi/screen.py` |
+| G0 descriptor | Each descriptor validates against its JSON Schema, and the device model, when one is given, against `schemas/devices.schema.json`. A descriptor's local assemblies (`assemblies[]`) pass the eight rules of `assembly.RULES` against `--local-kinds` (section 3.3); a G0 failure writes the screen report with `gates.G0.errors[]`, each error with its rule | `tools/hmi/screen.py`, `tools/hmi/assembly.py` |
 | G1 registry | Every view of the child and the parent passes the Ignition-Wiki validator: component types, declared props, enumerations, position keys, binding keys. The validator reads the top level of a component's props; the gate also walks the levels below it against the same registry: a text value outside the enumerated domain of its property, a key a closed object does not declare, and a bound property path a closed object does not declare (for example `plots[].trends[].interpolation` of the time series chart). A part of a schema the walk cannot follow is left alone. It does not read the values an expression may answer | `F:/repos/Ignition-Wiki/tools/validate_view.py`; `tools/hmi/gates.py` (`g1_registry`, `_deep_findings`) |
 | G2 references | Every embedded view path, style class (also inside class expressions) and `var()` token resolves in the child or its parent | `tools/hmi/gates.py` |
 | G3 view keys | View-level keys are `custom.` or `params.` (GF-07); every `{view.custom.<name>}` an expression names is a key of the view's `custom` (COB-212) | `tools/hmi/gates.py` |
@@ -344,6 +359,14 @@ and tags writes a descriptor and calls the generator; the gates prove the result
    write paths to map onto.
 2. **New screens.** An engineer or an agent writes the descriptor directly; the schema and the
    contract gate catch mistakes before the gateway does.
+3. **The placement tool.** `tools/hmi/library_gaps.py` places each kind of a migrated project before its pages are built:
+   page mode lists a page set's gaps (`cadre-hmi-library-gaps/1`); survey mode places every kind and feature of the whole
+   project from a ctig survey (`cadre-hmi-project-survey/1`) by the library's catalogue, then the element map
+   (`module/openbridge-map.json`), then the count against `--local-max`; release mode lists the wraps and shared gaps an
+   approved survey leaves to build (`cadre-hmi-library-gaps/2`); page mode with `--project-survey` places a kind by the survey.
+   The options, exit codes and refusals are in `CONFIGURATION.md` section 4.8.
+4. **The pin check.** `module/tools/verify_pin.py` proves the installed element package is exactly the pinned release before
+   any module asset is generated or any module is built (`CONFIGURATION.md` section 3.2.1).
 
 ## 8. Extending the Library
 

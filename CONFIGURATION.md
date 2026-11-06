@@ -2,8 +2,8 @@
 
 | Field | Value |
 |---|---|
-| Subject | The operational configuration of the Cadre HMI Components library as built in the cloud sessions of 2026-11-02 and 2026-11-03 (spike T0 and tranches T1 and T2) |
-| Library state | Repository `cadre-ob-cloud`, branch `spike/t0` at `4cdda21`, a copy of `Cadre HMI Library` `main` at `d9f8655` |
+| Subject | The operational configuration of the Cadre HMI Components library as built in the cloud sessions of 2026-11-02 to 2026-11-06 (spike T0 and tranches T1 to T3) |
+| Library state | Repository `cadre-ob-cloud`, the only line of the library since tranche T3 (ruling R7, section 10): its 0.8.0 line with the Sandbox's own work from `d9f8655` to `9727312` merged in (branch `port/sandbox-0.8.0`, `cloud/REPORT-T3.md`) |
 | Module | Cadre HMI Components 0.8.0 (`cadre.hmi.ob`), 97 components |
 | Gateway | Ignition 8.3.6 in Docker, trial mode |
 | Companions | `module/CATALOGUE.md` (every component, generated), `wiki/14-library-configuration.md` (the same configuration as a wiki chapter), `wiki/07-gateway-facts.md` (measured facts GF-99 onward), `cloud/PROGRESS.md` (the dated record) |
@@ -45,6 +45,9 @@ Table 1. Variables of the session and the tools.
 | `CADRE_PIL_PYTHON` | `env.sh` | The `python3` that has Pillow | The interpreter the picture tools use |
 | `CADRE_IGNITION_WIKI` | `env.sh` | `<repo>/cloud/vendor/ignition-wiki` | The Ignition-Wiki validator and schemas (copied unchanged from Ignition-Wiki `62939dc`). Read by `tools/hmi/gates.py` (gate G1) and `tests/test_hmi.py`; default `F:/repos/Ignition-Wiki` at the source |
 | `CADRE_JDK17` | `env.sh` | `/usr/lib/jvm/java-17-openjdk-amd64` | The JDK 17 home that `module/tools/build_module.py` passes to Gradle where the owner's Windows locations do not exist |
+| `CADRE_OB_MAIN_CHECKOUT` | `env.sh` | `<repo>` | The main checkout whose installed package the read only pin tests read (`tests/test_openbridge_pin.py`, `tests/test_module_generator_wrap.py`); default `F:/repos/Cadre-Sandbox-OpenBridge` on the owner's host |
+| `CADRE_OB_WEB_ROOT` | Optional | Not set | A read only `module/web` of another checkout whose `node_modules` and `dist/` the module tools read (`verify_pin.web_root`), for a worktree with no `node_modules`; unset, the sibling `web` folder |
+| `PLAYWRIGHT` | `env.sh` | `file:///opt/node22/lib/node_modules/playwright/index.mjs` | The Node Playwright module the browser harness imports (`module/tools/harness`, `tests.test_module_generator`) |
 | `CHROME_PATH` | `env.sh` | `/usr/bin/google-chrome` (kept if already set) | Kept for the brief's wording. The tools launch Playwright's own Chromium and do not read it |
 | `CADRE_HOME` | Optional, for `setup.sh` | `/root/.cadre` | The folder of secrets, logs and `env.sh`. A second value sets up a second, throwaway gateway beside the first |
 | `CADRE_GW_CONTAINER` | Optional, for `setup.sh` | `cadre-gw` | The container name |
@@ -239,13 +242,30 @@ Never hand edit a generated file (`CLAUDE.md` rule 4). Change the generator and 
 |---|---|---|
 | `module/gateway/src/main/resources/mounted/js/cadre-ob.js` (the component bundle, the React wrappers and `module/web/canvaszoom.js`), `mounted/css/cadre-ob.css`, `mounted/fonts/NotoSans-OB.ttf`, `ob-components.js.LEGAL.txt` | `module/tools/gen_module_assets.py` from `module/web/dist/ob-components.js` | `cd module/web && npm ci && npm run build && cd ../.. && python module/tools/gen_module_assets.py` |
 | `module/components.json` (the contract) and `module/common/src/main/resources/schemas/*.json` (97 property schemas and 94 event schemas) | the same | the same |
-| `module/web/dist/` | `npm run build` (esbuild) in `module/web` from `module/web/entry.js` and `module/web/icons.js` | `cd module/web && npm run build` |
+| `module/web/dist/` (untracked) and its bundle record `dist/ob-components.build.json` | `npm run build` (esbuild) in `module/web` from `module/web/entry.js` and `module/web/icons.js`; the pin check runs first (`prebuild`) and the record is written last | `cd module/web && npm run build` |
+| `module/openbridge-elements.json` (`cadre-hmi-openbridge-elements/1`, every element of the pinned package with its properties) | `module/tools/gen_openbridge_elements.py` from the installed package's `custom-elements.json` | `python module/tools/gen_openbridge_elements.py`; the run must leave the tracked file unchanged |
+| `module/web/openbridge-2.0.0-next.155.sha256.json` (the pin manifest) | `module/tools/verify_pin.py --generate`, written once for the release | Not regenerated: `verify_pin.py` checks the tree against it |
 | `module/web/defaults.json` | `module/tools/measure_defaults.py` (additions only; needs the harness page in Chromium) | `python module/tools/measure_defaults.py` |
 | `module/CATALOGUE.md` | `module/tools/gen_catalogue.py` | `python module/tools/gen_catalogue.py` (`--check` exits 1 when stale); `tests/test_catalogue.py` holds it equal |
 | `library/contracts.json`, `library/profile.json`, `build/cadre_hmi_base/` | `tools/hmi/parent.py` | `python tools/hmi/parent.py --out build` |
 | `build/<project>/` | `tools/hmi/screen.py` | section 4 |
 
-The Gradle outputs (`module/build/`) are not tracked.
+The Gradle outputs (`module/build/`) are not tracked. `module/openbridge-map.json` (`cadre-hmi-openbridge-map/1`) is not generated: it is
+carried as the Sandbox wrote it (T3 ruling R2) and is out of date against the 97 components; the proposal for the owner is
+`cloud/import/MAP-PROPOSAL.md`.
+
+### 3.2.1 The Pin Check
+
+`python module/tools/verify_pin.py [--root <module/web>] [--manifest <file>]` (standard library only) exits 0 when the pinned
+package `@oicl/openbridge-webcomponents` is exactly 2.0.0-next.155 and unmodified, and 1, naming each failing path, when
+`package.json`, `package-lock.json`, `node_modules/.package-lock.json` or the installed package's `package.json` names another
+version, `resolved` or `integrity`, when a file the manifest lists is missing or differs, or when a file under the package's
+`dist/` is not listed. It runs as the `prebuild` step of `npm run build`, as the first statement of `gen_module_assets.main`
+and of `build_module.main`, and in `measure_defaults.py`. `npm run build` ends with `verify_pin.py --record-bundle`, which
+writes the bundle record (the SHA-256 of `package-lock.json`, `entry.js` and the bundle); `gen_module_assets.py` refuses a
+bundle with no matching record unless given `--allow-stale-bundle` (an offline option that prints the elements the bundle
+lacks), and `build_module.py` always refuses one. Measured at T3: exit 0; `gen_module_assets.py` after `npm run build` wrote
+every file byte-identical.
 
 ### 3.3 Build, Install and Restart
 
@@ -356,9 +376,13 @@ frame: `Framework/OB/*` (5 views) and `Framework/OBASM/*` (3 views) are inert un
 | `--tag-root [provider]folder` | none | With `--component-test`: the tag folder of the test devices; with no `--descriptor` the page is built alone. Must match `[provider]folder` |
 | `--write-descriptor DIR` | none | With `--component-test`: writes `DIR/component-test.json` for G11 and the walk |
 | `--write-devices FILE` | none | With `--component-test`: writes the device model of the build |
+| `--local-kinds FILE` | none | A JSON list of the kinds a page may draw as a local assembly (the descriptor's `assemblies[]`, `wiki/18` section 10.8). G0 refuses, naming each rule in the report's `gates.G0.errors[]` (written before the exit): `assembly-kind-not-local`, `assembly-kind-is-library`, `assembly-without-local-kinds`, `assembly-style`, `assembly-parts-differ`, `assembly-on-cards`, `assembly-part-ids`, `assembly-button-on-page`. A file that does not read as a JSON list of strings returns 1. The component test page's own kind `benchlocal` needs no listing |
 | `--parent` | `cadre_hmi_base` | The parent the child inherits, built beside it in `--out` |
 
-`--tag-root`, `--write-descriptor` and `--write-devices` without `--component-test` return 1. `--component-test` refuses descriptors that
+`--tag-root`, `--write-descriptor` and `--write-devices` without `--component-test` return 1. Each kind of local assembly is written
+once into the child as the sibling views `Local/<Kind>/Assembly` (the embed on the page) and `Local/<Kind>/Home` (what
+`Faceplate/ASM/Local` shows); `Local/<Kind>` is a folder only, because the gateway does not find a view whose folder holds another
+view (GF-117, measured at T3). `--component-test` refuses descriptors that
 do not share one `tagRoot`.
 
 ### 4.3 Frame, Rendering and Faceplate Combinations
@@ -402,9 +426,8 @@ the batches). One G11 sweep of it took 15 min at T0 and about 70 min at T1.
 | `cadre_hmi_ctest` | 4.4 | none |
 
 All the water treatment samples bind the same tags (`[default]cadre_hmi_wtp`), so the plant must be restored (the tag model re-imported)
-between gate runs on different projects. The committed `build/cadre_hmi_wtp` and `build/cadre_hmi_wtpob` predate the generator at
-`d9f8655`: a rebuild differs from them (the navigation dock's `modal`, the session properties and the screens). The rebuilt files were
-deployed and not committed so that the merge back carries no regenerated sample.
+between gate runs on different projects. The committed builds of `cadre_hmi_sample`, `cadre_hmi_wtp`, `cadre_hmi_wtpob` and
+`cadre_hmi_showcase` equal a rebuild by their generator (measured at T3 before the merge and regenerated after it).
 
 ### 4.6 Deploy Order
 
@@ -430,6 +453,26 @@ python tools/compare/showcase_check.py --base <the same> --model workspace/showc
 
 The page groups follow the catalogue's sections (a group of more than 13 components is split), and two further pages show the parent's
 embedded symbol views. The device page needs the memory tags the build imports under `[default]cadre_hmi_showcase/_componentTest`.
+
+### 4.8 The Placement Tool
+
+`tools/hmi/library_gaps.py` places the kinds a migrated project needs (who draws each: the module, the library's own view, a wrap,
+a shared gap, a local assembly or nobody). It has three modes; their contract is NOTE-WFB-10 sections 7.5 to 7.8, 8.2, 9.2 and 11.4
+(`cloud/import/`), and the schemas are in `schemas/`.
+
+| Mode | Command | Writes |
+|---|---|---|
+| Page | `--model F --designs LIST` or `--design F --descriptor-schema F`, with `--catalogue --profile --module [--module-first] [--accepted LIST] [--parent P] --out O`; optionally `--project-survey F --openbridge-map F [--elements F]` | `O/gaps.json` (`cadre-hmi-library-gaps/1`, or `/2` with a survey) and `O/audit.json`. With no survey the output equals the tool's before T3 (held by `tests/test_library_gaps_project_survey.py` against `e172346`) |
+| Survey | `--survey F` (a ctig survey, `ctig.survey/1`) with `--catalogue --profile --module --openbridge-map --elements [--local-max N] [--module-first] [--prior-local F]... [--late F]... [--proposals F] [--changes F] --out O` | `O/survey.json` (`cadre-hmi-project-survey/1`), `O/unmapped.json`, `O/proposal_source.json`; a run with `--changes` (even an empty list) is a final survey |
+| Release | `--release F` (an approved project survey) with `--catalogue --profile --module --openbridge-map [--elements F] --out O` | `O/gaps.json` (`cadre-hmi-library-gaps/2`): one open gap for each `openbridge` and `shared_gap` placement |
+
+Exit codes: 0 (survey and release modes once written; page mode with no open gap), 2 (page mode, no survey, open gaps), 3 (page mode
+with a survey and a kind placed but not yet built), 1 (a fault). Every mode refuses, naming the file or row: a `reviewed` or `approved`
+map row with no element or with one the elements list lacks; in survey mode a map, elements list or library profile that differs from
+the commit (the survey records `library_commit`; commit first); a `--prior-local` or `--late` file of another schema; in release mode a
+draft survey; in page mode `--project-survey` without `--openbridge-map`. The outputs are strict JSON (a non-finite default stays text,
+COB-210). Placement reads the library's views (`screen.KIND_VIEW`) for row 1, so a module-only kind is never placed `module`: the T3
+smoke run over the 97 types gave 12 `module` and 85 `shared_gap` (or `local` with `--local-max 2`); see `cloud/import/MAP-PROPOSAL.md`.
 
 ## 5. The Four Frames
 
@@ -475,10 +518,10 @@ G0 to G7 run offline inside `screen.py` (before any import); G8 to G11 run again
 
 | Gate | Checks | Run by |
 |---|---|---|
-| G0 descriptor | Descriptors (and the device model) validate against their JSON Schemas | `screen.py` |
+| G0 descriptor | Descriptors (and the device model) validate against their JSON Schemas; the local assembly rules of `--local-kinds` (4.2) | `screen.py` |
 | G1 registry | Every view of child and parent passes the Ignition-Wiki validator, including the module's property schemas (`module/components.json`, `schemas/*.props.json`) | `screen.py`, `parent.py` |
 | G2 references | Embedded view paths, style classes and `var()` tokens resolve | `screen.py` |
-| G3 view keys | View-level keys are `custom.` or `params.` (GF-07) | `screen.py` |
+| G3 view keys | View-level keys are `custom.` or `params.` (GF-07); no expression names a `view.custom` key the view does not define (COB-212) | `screen.py` |
 | G4 project | Routes, docks and navigation items name existing views; the parent is inheritable | `screen.py` |
 | G5 layout | Symbol boxes inside the canvas and not overlapping | `screen.py` |
 | G6 flow | The compiled flow expressions equal the reference solver | `screen.py` |
@@ -616,38 +659,24 @@ Numbers refer to the record they come from.
     13.11.6).
 13. **Icons.** The icon allow list is the icons imported in `module/web/icons.js`, not the package's 2,104; a navigation item draws an icon only
     where its Cadre icon name is also a bundled icon.
-14. **Tools of the source.** `CHROME_PATH` is ignored by the tools; the committed `build/cadre_hmi_wtp` and `build/cadre_hmi_wtpob` predate the generator.
+14. **Tools of the source.** `CHROME_PATH` is ignored by the tools. The committed sample builds are current (4.5).
 15. **Environment.** The Docker image cache across sessions is untested; a worker restart stops background processes (use `setsid nohup`); the
     trial restarts every two hours; the Playwright pin must match the image's browser build.
-16. **GF numbers.** The new gateway facts are numbered GF-99 onward in this copy. If the source has used those numbers since `d9f8655`, renumber at
-    the merge and update the citations in this document and `wiki/14-library-configuration.md`.
+16. **GF numbers.** The gateway facts measured in this repository are GF-99 to GF-117. Since ruling R7 the Sandbox makes no change of
+    its own to `wiki/`, so no renumbering is needed.
 
-## 10. Merge Back to the Source Repository
+## 10. The Library Line
 
-Work on `spike/t0` returns as a diff of the mirrored paths; `cloud/` is cloud only and is not merged. Ranges (commits on the branch):
+Since tranche T3 (2026-11-06, ruling R7) this repository is the only line of the library: library code, schemas, module sources and wiki
+change here and nowhere else. Cadre-Sandbox-OpenBridge, which the owner's migration workflow reads on the owner's PC, follows this
+repository's `main` by merge and makes no change of its own to `tools/`, `library/`, `schemas/`, `module/` or `wiki/`; a defect the
+migration workflow finds in the library is fixed here and reaches the Sandbox by that merge. The paths the workflow reads by name (file
+names, schema identifiers, command-line options, the module id `cadre.hmi.ob`) are kept exactly.
 
-| Tranche | Range | Report |
-|---|---|---|
-| T0 | `26f38c8..cc652a9` | `cloud/REPORT-T0.md` section 5 |
-| T1 | `cc652a9..c5d29a8` | `cloud/REPORT-T1.md` section 7 |
-| T2 | `c5d29a8..4cdda21` (and this documentation) | none yet |
-
-Steps:
-
-1. `git diff 26f38c8 <branch tip> -- . ':!cloud' > library.diff`, then apply to the source repository's `main` (at `d9f8655` plus whatever it has gained).
-2. Do not merge generated files textually: regenerate them at the source (3.2): `module/components.json`, the schemas, `mounted/` (script, stylesheet and legal
-   notes), `library/contracts.json`, `library/profile.json`, `module/CATALOGUE.md` and `build/cadre_hmi_base`.
-3. Mirrored paths changed overall (238 files in all, including the generated ones): `module/` sources (`build.gradle.kts`, `web/entry.js`, `web/icons.js`,
-   `web/defaults.json`, `tools/gen_module_assets.py`, `tools/measure_defaults.py`, `tools/build_module.py`, `tools/gen_catalogue.py`, `tools/harness/`,
-   `CadreOb.java`, `gradlew` mode); `tools/hmi/` (`screen.py`, `parts.py`, `testbench.py`, `navigation.py`, `navigation_scripts.py`, `obframe.py`,
-   `obasm.py`, `parent.py`, `gates.py`); `tools/compare/` (`glass.py`, `glass_gates.py`, `functional.py`, `walk_plan.py`, `capture.py`, `faceplates.py`,
-   `wtp_suite.py`); `schemas/screen-descriptor.schema.json`; `tests/` (including `test_catalogue.py`, `test_ob_frame.py`, `test_obasm_frame.py`);
-   `wiki/04`, `07`, `12`, `13`, `14` and `index.md`; this file.
-4. Regenerate and test: the commands of 3.3, `python tools/hmi/parent.py --out build`, then
-   `env -u CADRE_TEST_LOGIN python -m unittest discover -s tests` (1318 in the cloud), then the signed build and its install with the owner's restart, as
-   `wiki/12` section 17.6 describes.
-5. Not merged: the cloud's `build/cadre_hmi_base_asm`, `build/cadre_hmi_ctest` and the four sample builds rebuilt in the cloud.
-6. Check that the new GF numbers do not collide (9 item 16).
+T3 took in the Sandbox's own work (`d9f8655` to `9727312`, `cloud/import/sandbox-delta.patch`): applied at `26f38c8` on the branch
+`sandbox-delta` and merged into the 0.8.0 line; the conflicts and their resolutions, the tests changed and the verification are in
+`cloud/REPORT-T3.md`. Generated files are regenerated by their tools (3.2), never merged by hand. Earlier tranches: T0
+`26f38c8..cc652a9` (`cloud/REPORT-T0.md`), T1 `cc652a9..c5d29a8` (`cloud/REPORT-T1.md`), T2 `c5d29a8..4cdda21` (`cloud/REPORT-T2.md`).
 
 ## 11. What This Document Does Not Cover
 
