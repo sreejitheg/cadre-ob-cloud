@@ -413,3 +413,14 @@
   12 `module`, 85 `shared_gap`, 0 wraps, 1 pending proposal (the map's `bus` row); with `--local-max 2` 85 kinds `local`.
   `CLAUDE.md`, `CONFIGURATION.md`, wiki 07, 08, 14 updated. Targeted suite 604 run, all passing. Commits `0a442c1`, `7a9e402`,
   `1daa6fe`, `0d25aa1`; branch pushed. G11 on the component test page running.
+- 2026-11-06 04:00: Final full offline suite (`env -u CADRE_TEST_LOGIN`): 1810 run, all passing, none skipped, 307 s (1356 before).
+  Cold review by a Sonnet 5.5 subagent at high effort, reading only the conflict table and the diffs (243,261 tokens, 71 tool calls,
+  9 min 39 s): no rule broken, nothing of the source lost; findings 2 (two stale schema descriptions) and 4 (the page-mode base
+  commit in either repository) fixed in `71ada04`; finding 1 (the GF-117 path) left for the owner. Harness screenshots ignored
+  (`fce8320`).
+- 2026-11-06 04:07: G11 on the component test page stopped by the session's 30 min background limit, not by a fault (nothing
+  written); restarted alone with a two hour limit after the short checks. `benchlocal` probe PASS (dock-scoped: TB-LOCAL, tabs
+  Home, Alarms, Info, Home 42.0, no badge, overlay or bad-quality line on any tab). `cadre_hmi_wtpobf` G8 6 of 6.
+  `cadre_hmi_localdemo` (page 18's example, `--local-kinds`, one assembly) G0 to G7, G8 PASS, its faceplate CH-1 opens.
+  `cadre_hmi_cob212` (three stateless switches) G8 PASS with no quality overlay; the same page from the pre-port line draws one.
+  `cloud/REPORT-T3.md` written; G11 still running.
