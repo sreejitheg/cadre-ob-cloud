@@ -1,4 +1,4 @@
-"""Check that the OpenBridge package in `module/web` is exactly the pinned release, unmodified.
+"""Check that the pinned element package (`@oicl/openbridge-webcomponents`) in `module/web` is exactly the pinned release, unmodified.
 
 The pin is `@oicl/openbridge-webcomponents` 2.0.0-next.155 (COBD-003). The check (NOTE-WFB-10 section 11.1 item 3)
 exits 0 when every test holds and exits 1, printing each failing path, when:
@@ -12,7 +12,7 @@ exits 0 when every test holds and exits 1, printing each failing path, when:
 
 The manifest `module/web/openbridge-2.0.0-next.155.sha256.json` is `{package, version, integrity, files}`; each key of
 `files` is a path relative to `module/web/node_modules` (forward slashes), each value a SHA-256. `--generate` writes it
-once: the OpenBridge files are hashed from the release tarball's members (after the tarball's SHA-512 is checked against
+once: the package's own files are hashed from the release tarball's members (after the tarball's SHA-512 is checked against
 the lock's integrity and the constant), and the other packages the bundle can reach are hashed from the installed tree
 (after `npm ci` has verified them against the lock).
 

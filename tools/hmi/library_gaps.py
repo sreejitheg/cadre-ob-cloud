@@ -499,7 +499,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--parent", default=None, help="the parent project the profile must name (`library`); not checked "
                                                    "without it")
     ap.add_argument("--project-survey", default=None, help="page mode: the approved project survey")
-    ap.add_argument("--openbridge-map", default=None, help="the OpenBridge map (module/openbridge-map.json)")
+    ap.add_argument("--openbridge-map", default=None, help="the element map (module/openbridge-map.json)")
     ap.add_argument("--survey", default=None, help="survey mode: the ctig survey (ctig.survey/1)")
     ap.add_argument("--release", default=None, help="release mode: the project survey")
     ap.add_argument("--elements", default=None, help="module/openbridge-elements.json: required in survey mode; in release and page mode it lets a map row be checked against the list")
@@ -539,9 +539,9 @@ def main(argv: list[str] | None = None) -> int:
         module = load(a.module, "module components")
         accepted = read_accepted(a.accepted)
         survey = load(a.project_survey, "project survey") if a.project_survey else None
-        omap = load(a.openbridge_map, "OpenBridge map") if a.openbridge_map else None
+        omap = load(a.openbridge_map, "element map") if a.openbridge_map else None
         if omap is not None:
-            check_map_rows(omap, element_tags(load(a.elements, "OpenBridge elements")) if a.elements else None,
+            check_map_rows(omap, element_tags(load(a.elements, "elements list")) if a.elements else None,
                            a.openbridge_map)
         if survey is not None and (not isinstance(survey, dict) or survey.get("schema") != SURVEY_SCHEMA):
             raise InputFault(f"project survey: {a.project_survey}: not a {SURVEY_SCHEMA} document")

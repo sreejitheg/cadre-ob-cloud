@@ -63,7 +63,7 @@ def check_map_rows(omap, tags: set | None, path="") -> None:
         if not isinstance(r, dict) or r.get("state") not in PLACING_STATES:
             continue
         element = r.get("element")
-        where = f"OpenBridge map{': ' + str(path) if path else ''}: row {row_name(r)} ({r.get('state')})"
+        where = f"element map{': ' + str(path) if path else ''}: row {row_name(r)} ({r.get('state')})"
         if not isinstance(element, str) or not element:
             raise InputFault(f"{where}: no element; a {r.get('state')} row names a tag of openbridge-elements.json")
         if tags is not None and element not in tags:
@@ -590,7 +590,7 @@ def run_survey(a, clock: provenance.Clock, args_line: list[str]) -> int:
         raise InputFault("the working tree differs from its HEAD in " + ", ".join(differing) + ": the survey records "
                          "library_commit as the tree's state, so commit or restore these files first")
     ctig, ctig_sha = read_ctig(a.survey)
-    omap, elements = load(a.openbridge_map, "OpenBridge map"), load(a.elements, "OpenBridge elements")
+    omap, elements = load(a.openbridge_map, "element map"), load(a.elements, "elements list")
     check_map_rows(omap, element_tags(elements), a.openbridge_map)
     rules = Rules(load(a.catalogue, "catalogue"), load(a.profile, "profile"), load(a.module, "module components"),
                   omap, a.module_first, a.local_max)
@@ -649,7 +649,7 @@ def release_doc(survey: dict, survey_sha: str, omap: dict) -> dict:
                 gap["element"], gap["map_row"] = element, {"element": element, "state": w.get("state")}
                 gap["needed"] = wrap_needed(survey, rows, k["kind"], feature, element)
                 gap["library_today"] = f"neither the library nor the module draws {what}"
-                gap["reason"] = (f"the approved survey places {what} on the pinned OpenBridge element {element} "
+                gap["reason"] = (f"the approved survey places {what} on the pinned element {element} "
                                  f"(map row {w.get('state')}): a wrap in the project release")
                 wraps.append({"kind": k["kind"], "feature": feature, "element": element})
             else:
@@ -682,8 +682,8 @@ def run_release(a, clock: provenance.Clock, args_line: list[str]) -> int:
                          "survey is released")
     for path, what in ((a.catalogue, "catalogue"), (a.profile, "profile"), (a.module, "module components")):
         load(path, what)
-    omap = load(a.openbridge_map, "OpenBridge map")
-    check_map_rows(omap, element_tags(load(a.elements, "OpenBridge elements")) if a.elements else None,
+    omap = load(a.openbridge_map, "element map")
+    check_map_rows(omap, element_tags(load(a.elements, "elements list")) if a.elements else None,
                    a.openbridge_map)
     sha = provenance.sha256_of(Path(a.release))
     doc = release_doc(survey, sha, omap)

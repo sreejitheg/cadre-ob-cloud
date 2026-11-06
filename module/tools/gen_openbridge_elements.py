@@ -1,4 +1,4 @@
-"""Write `module/openbridge-elements.json` (`cadre-hmi-openbridge-elements/1`) from the pinned OpenBridge package.
+"""Write `module/openbridge-elements.json` (`cadre-hmi-openbridge-elements/1`) from the pinned element package.
 
 NOTE-WFB-10 section 11.1 item 1. The list holds every declaration of the package's `custom-elements.json` that has
 `customElement: true` and a `tagName`, in every group:
@@ -120,7 +120,7 @@ def build(package: Path) -> dict:
 
 def main(argv: list | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--package", type=Path, default=DEFAULT_PACKAGE, help="the installed OpenBridge package folder")
+    ap.add_argument("--package", type=Path, default=DEFAULT_PACKAGE, help="the installed folder of the pinned element package")
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
     a = ap.parse_args(argv)
     doc = build(a.package)
