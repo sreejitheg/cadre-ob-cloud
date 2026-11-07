@@ -1,0 +1,20 @@
+﻿9727312 2026-11-04 COB-211, COB-212: the glass plan takes the project's routes; a switch with no state passes and G3 refuses an undefined view property (WorkflowBuilder NOTE-WFB-12)
+8409a2e 2026-11-03 COB-210: records
+3d29a0e 2026-11-03 COB-210: the tree-state test's line breaks restored
+14da24f 2026-11-03 COB-210: the elements list and the placement tool's outputs are strict JSON (a NaN default stays text); the tree-state message keeps each path's first letter
+c1a7fdc 2026-11-03 COB-207 to COB-209: WorkflowBuilder NOTE-WFB-10 merged with its records (pin check, map and elements, generator wrap source, local assembly and faceplate, placement modes, review fixes)
+90a31cb 2026-11-03 Review fixes: openers pass the local kind, map rows checked against the pin, release refuses a draft, bundle record, button in Home only
+0ff02b6 2026-11-03 Review fixes: regression tests (tests first)
+581514e 2026-11-03 WP-W06: the generator's status word is On or Off from state; the runText binding is removed (orchestrator's ruling)
+5b9036d 2026-11-03 WP-W04: Faceplate/ASM/Local, the opener's local kind, the hosts passing localKind and the assembly's click (NOTE-WFB-10 section 11.2 item 5)
+9b63067 2026-11-03 WP-W06: the generator tests import glass_gates as the library's other tests do, accept a bound tag, and expect no device kind on a symbol with no device (orchestrator's rulings on test slips)
+6569047 2026-11-03 WP-W06: the generator's module wrap, cadre.ob.generator on obc-automation-button with the pinned generator icons (RW-01, module 0.4.4)
+dde9bcd 2026-11-03 WP-W05: library_gaps.py survey mode, release mode and page mode with --project-survey; schemas cadre-hmi-project-survey/1 and cadre-hmi-library-gaps/2
+fa72c5b 2026-11-03 WP-W04: tests of the local faceplate, the opener's local kind, the hosts and the assembly's click
+c334261 2026-11-03 WP-W03: the tag-leaf check skips folder keys, as the helper lists them (orchestrator's ruling on a test slip)
+48ac12d 2026-11-03 WP-W03: the assembly descriptor element: schema, Local/<Kind> views, registration as kind local, G0 assembly rules with --local-kinds, page checks, and the benchlocal test page row (NOTE-WFB-10 section 11.2 items 1 to 4 and 6 to 8)
+6b48c07 2026-11-03 WP-W06: tests for the generator's module wrap (RW-01, Table 16.3)
+a0eb695 2026-11-03 WP-W05: tests for the survey, release and project-survey modes of library_gaps.py (tester)
+b2b9b2e 2026-11-03 WP-W02: OpenBridge pin check, manifest, elements list, map and notices (NOTE-WFB-10 11.1)
+3fbf084 2026-11-03 WP-W03: tests of the local assembly element, its registration, the --local-kinds rules, the page checks and the benchlocal row
+f0e1939 2026-11-03 WP-W02: tests for the pin check, elements list, map, notices and wiring
