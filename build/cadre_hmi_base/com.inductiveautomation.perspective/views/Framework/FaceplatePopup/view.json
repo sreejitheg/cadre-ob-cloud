@@ -104,6 +104,14 @@
                   "type": "expr"
                 }
               },
+              "props.params.localKind": {
+                "binding": {
+                  "config": {
+                    "expression": "coalesce({session.custom.selectedLocal}, '')"
+                  },
+                  "type": "expr"
+                }
+              },
               "props.params.tab": {
                 "binding": {
                   "config": {
@@ -115,7 +123,7 @@
               "props.path": {
                 "binding": {
                   "config": {
-                    "expression": "if(coalesce({session.custom.selectedStyle}, '') = 'asm', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/ASM/Pump', 'motor', 'Faceplate/ASM/Pump', 'fan', 'Faceplate/ASM/Pump', 'valve', 'Faceplate/ASM/Valve', 'analogvalve', 'Faceplate/ASM/Valve', 'damper', 'Faceplate/ASM/Valve', 'instrument', 'Faceplate/ASM/Instrument', 'readout', 'Faceplate/ASM/Instrument', 'instrument-field', 'Faceplate/ASM/Instrument', 'sequence', 'Faceplate/ASM/Sequence', 'generator', 'Faceplate/ASM/Generator', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty')), case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'Faceplate/Empty'))"
+                    "expression": "if(coalesce({session.custom.selectedStyle}, '') = 'asm', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/ASM/Pump', 'motor', 'Faceplate/ASM/Pump', 'fan', 'Faceplate/ASM/Pump', 'valve', 'Faceplate/ASM/Valve', 'analogvalve', 'Faceplate/ASM/Valve', 'damper', 'Faceplate/ASM/Valve', 'instrument', 'Faceplate/ASM/Instrument', 'readout', 'Faceplate/ASM/Instrument', 'instrument-field', 'Faceplate/ASM/Instrument', 'sequence', 'Faceplate/ASM/Sequence', 'generator', 'Faceplate/ASM/Generator', 'local', 'Faceplate/ASM/Local', case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'local', 'Faceplate/ASM/Local', 'Faceplate/Empty')), case(coalesce({session.custom.selectedKind}, ''), 'pump', 'Faceplate/Pump', 'motor', 'Faceplate/Pump', 'fan', 'Faceplate/Pump', 'valve', 'Faceplate/Valve', 'analogvalve', 'Faceplate/Valve', 'damper', 'Faceplate/Valve', 'tank', 'Faceplate/Tank', 'instrument', 'Faceplate/Instrument', 'readout', 'Faceplate/Instrument', 'instrument-field', 'Faceplate/Instrument', 'controller', 'Faceplate/Controller', 'indicator', 'Faceplate/Input', 'sequence', 'Faceplate/Sequence', 'generator', 'Faceplate/ASM/Generator', 'local', 'Faceplate/ASM/Local', 'Faceplate/Empty'))"
                   },
                   "type": "expr"
                 }
@@ -124,6 +132,7 @@
             "props": {
               "params": {
                 "deviceId": "",
+                "localKind": "",
                 "tab": ""
               },
               "path": "Faceplate/Empty",

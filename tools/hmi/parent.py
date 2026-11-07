@@ -37,7 +37,7 @@ VAR_RE = re.compile(r"var\(\s*(--[\w-]+)")
 
 def session_defaults() -> dict:
     return {"custom": {"palette": "day", "selectedDevice": "", "selectedKind": "",
-                       "selectedTitle": "", "selectedLabel": "", "selectedStyle": "openbridge", "selectedTab": "", "faceplateDocked": False,
+                       "selectedTitle": "", "selectedLabel": "", "selectedStyle": "openbridge", "selectedTab": "", "selectedLocal": "", "faceplateDocked": False,
                        "faceplateStyle": "openbridge", "faceplateMode": "dock", "alarmScope": "*",
                        "frame": "openbridge", "floating": {}, "contentNode": "", "pageInfo": {}, "searchIndex": {},
                        "searchQuery": "", "searchOpen": False, "navQuery": "", "navPanel": "pages",

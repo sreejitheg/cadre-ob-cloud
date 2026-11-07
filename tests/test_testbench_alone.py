@@ -82,6 +82,11 @@ class AloneTests(unittest.TestCase):
             argv = ["--project", PROJECT, "--descriptor", str(Path(d) / "bridge" / "descriptors" / "component-test.json"),
                     "--devices-file", str(Path(d) / "bridge" / "devices.json"), "--render", "module", "--frame", "asm",
                     "--faceplate", "asm", "--out", str(again)]
+            # the page's local assembly needs the option once the page is a plain descriptor (NOTE-WFB-10 section 11.2
+            # item 6: only --component-test allows its own kind without it)
+            kinds = Path(d) / "local-kinds.json"
+            kinds.write_text(json.dumps([testbench.LOCAL_KIND]), encoding="utf-8")
+            argv += ["--local-kinds", str(kinds)]
             code, printed = run(argv, again)
             self.assertEqual(code, 0, printed)
 

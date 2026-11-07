@@ -1,11 +1,16 @@
 # Cadre OpenBridge library, cloud copy: operating manual (read every session)
 
-This repository is a copy of the library repository Cadre-Sandbox-OpenBridge (its `main` at `d9f8655`) for
-work in Claude Code cloud sessions. It holds the Perspective parent project generator, the component library,
-the Cadre OpenBridge module (`module/`), the gates, the tests and the wiki. The records of the source repository
-(status, register, decisions, documents, memory) are not copied; this repository has its own record under
-`cloud/`. Work done here returns to the source repository as a diff of the mirrored paths, so keep each change
-to a mirrored path small, portable and mergeable, and put anything that exists only for the cloud under `cloud/`.
+This repository began as a copy of the library repository Cadre-Sandbox-OpenBridge (its `main` at `d9f8655`) for
+work in Claude Code cloud sessions, and took in the source's later library work (to `9727312`) in tranche T3. It
+holds the Perspective parent project generator, the component library, the Cadre HMI Components module (`module/`),
+the gates, the tests and the wiki. The records of the source repository (status, register, decisions, documents,
+memory) are not copied; this repository has its own record under `cloud/`. Put anything that exists only for the
+cloud under `cloud/`.
+
+**One library line (ruling R7, 2026-11-06).** This repository is the only place where library code, schemas, module
+sources and wiki change. Cadre-Sandbox-OpenBridge, which the owner's migration workflow reads on the owner's PC,
+follows this repository's `main` by merge and makes no change of its own to `tools/`, `library/`, `schemas/`,
+`module/` or `wiki/`; a defect the migration workflow finds in the library is fixed here and reaches it by that merge.
 
 ## 1. Session Rituals
 
@@ -59,13 +64,16 @@ variables, which keep the Windows defaults so the source repository behaves as b
 | `CADRE_TEST_LOGIN` | `/root/.cadre/test-login.properties` (the cloud gateway's own test user) |
 | `CADRE_PIL_PYTHON` | the Python that has Pillow |
 | `CADRE_IGNITION_WIKI` | `cloud/vendor/ignition-wiki` (validator and schemas copied unchanged from Ignition-Wiki `62939dc`); `tools/hmi/gates.py` does not read it yet: adding it is the first portability change |
+| `CADRE_OB_MAIN_CHECKOUT` | this repository (the checkout whose installed package the read only pin tests read; default `F:/repos/Cadre-Sandbox-OpenBridge`) |
+| `PLAYWRIGHT` | `file:///opt/node22/lib/node_modules/playwright/index.mjs` (Node Playwright for the browser harness, `module/tools/harness`) |
 
 ## 5. Building
 
 ```bash
 python tools/hmi/parent.py --out build                # the parent; add --name cadre_hmi_base_asm for the ASM parent
 python tools/hmi/screen.py --project <cadre_hmi_x> --descriptor <file.json> --app-name <Name> --out build --deploy
-python -m unittest discover -s tests                   # last recorded at the source: 671 passing (2026-10-26)
+python -m unittest discover -s tests                   # with env -u CADRE_TEST_LOGIN; see cloud/PROGRESS.md for the last count
+python module/tools/verify_pin.py                      # the pin check; also run by npm run build, gen_module_assets.py, build_module.py
 cd module/web && npm ci && npm run build && cd ../.. && python module/tools/gen_module_assets.py
 python module/tools/build_module.py                    # JDK 17; unsigned here (no signing properties)
 python module/tools/install_module.py

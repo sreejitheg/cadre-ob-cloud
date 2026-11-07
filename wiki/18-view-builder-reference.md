@@ -1,17 +1,17 @@
 ---
 title: View builder reference
 type: wiki
-updated: 2026-11-05
+updated: 2026-11-06
 ---
 # 18 View Builder Reference
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-18 |
-| Revision | A |
+| Revision | B |
 | Status | Issued for use |
-| Built | Cloud session of 2026-11-05, branch `claude/keen-cori-cibeff` over `main` at `d9f8655` |
-| Code | `tools/hmi/screen.py` (generator, command line), `tools/hmi/gates.py` (G0 to G7), `tools/hmi/parts.py`, `tools/hmi/diagram.py`, `tools/hmi/navigation.py`, `tools/hmi/library.py`, `schemas/screen-descriptor.schema.json`, `schemas/devices.schema.json`, `library/contracts.json`, `library/profile.json`, `module/components.json` |
+| Built | Cloud session of 2026-11-05, branch `claude/keen-cori-cibeff` over `main` at `d9f8655`; revision B of 2026-11-06 (tranche T3, branch `port/sandbox-0.8.0`, merge `11005e3`) adds the local assemblies, the option `--local-kinds` and the two gate rules of section 12 |
+| Code | `tools/hmi/screen.py` (generator, command line), `tools/hmi/gates.py` (G0 to G7), `tools/hmi/parts.py`, `tools/hmi/diagram.py`, `tools/hmi/navigation.py`, `tools/hmi/library.py`, `tools/hmi/assembly.py`, `tools/hmi/testbench.py`, `schemas/screen-descriptor.schema.json`, `schemas/devices.schema.json`, `library/contracts.json`, `library/profile.json`, `module/components.json` |
 | Companions | Page 08 (the pipeline, the device model and the gates in prose), page 06 (the parent project, the library contract, the faceplate contract), page 05 (the component catalogue and the page parts), page 04 (the frames), page 12 (the module), page 16 (component selection), page 17 (the tag model: the members of each device kind), `module/CATALOGUE.md` (every module component), `CONFIGURATION.md` (commands) |
 
 ## 1. Purpose
@@ -47,6 +47,7 @@ Table 1. What a builder gives the generator and what it receives.
 | Screen descriptors | One JSON file per page, repeatable `--descriptor` | The files of one build share one provider and one top tag folder (a build that writes tags refuses two, section 2.3) |
 | Device model | One JSON file, `--devices-file` | Optional. Without it a device symbol keeps the faceplates' default members (page 08 section 3.1) |
 | External tag model | One folder document, `--tags-file`, with `tagModel` `external` in the descriptors | Optional. The gates read it (G7 devices, interlocks, libraries); `--deploy` imports it before the project |
+| Local kinds list | One JSON file, `--local-kinds`: a list of kind names | Required by any descriptor with `assemblies` (section 10.8); the kinds a page may draw as a local assembly |
 | The parent | The folder `<out>/cadre_hmi_base`, written by `python tools/hmi/parent.py --out <out>` | Required beside the child: gate G4 reads its `project.json`, and a missing parent stops the run with a `FileNotFoundError`, not a message |
 | The child project | `<out>/<project>`, the files of a Perspective project | The generator is deterministic: the same inputs give the same bytes |
 | The report | The file named by `--report` | Section 2.4 |
@@ -79,6 +80,7 @@ Table 2. The options of `screen.py`.
 | `--component-test` | off | Adds the component test page generated from the library catalogue (page 13 section 13). Not needed to build a plant's pages |
 | `--tag-root` | none | With `--component-test`: the folder `[provider]folder` of the test devices; with it and no `--descriptor`, the page is built alone |
 | `--write-descriptor` | none | With `--component-test`: write the test page's descriptor to `DIR/component-test.json` |
+| `--local-kinds` | none | `FILE`: a JSON list of kind names (strings) a page may draw as a local assembly (section 10.8). Gate G0 refuses an assembly of any other kind and every assembly when the option is absent (Table 56i). The component test page's own kind `benchlocal` (`testbench.LOCAL_KIND`) is allowed whatever the file holds |
 | `--write-devices` | none | With `--component-test`: write the build's device model to `FILE` |
 
 The exit code is 0 when the gates pass (warnings do not fail) and 1 on any refusal.
@@ -93,7 +95,9 @@ Table 3. The refusals of the command line and the build, in the order they happe
 | `--tag-root`, `--write-descriptor` or `--write-devices` without `--component-test` | A message; exit 1 |
 | `--frame ob` or `obasm` without `--render module` | `--frame <name> draws the module frame components of the module: it needs --render module`; exit 1 |
 | `--component-test` with descriptors of several tag roots | A message; exit 1 |
+| `--local-kinds` names a file that cannot be read or parsed, or that is not a JSON list of strings | `--local-kinds <file>: <the error>` or `--local-kinds <file>: a JSON list of kind names`; exit 1 before any descriptor is read |
 | G0: a descriptor or the device model fails its schema | `G0_descriptor_schema FAIL` or `G0_devices_schema FAIL` and the first 20 errors as `file: path: message`; exit 1 before anything is built |
+| G0: an assembly breaks a rule of Table 56i | `G0_descriptor_schema FAIL`, then the first 20 rule errors as `  <rule>: <page>: <assembly>: <message>`, listed in the order of Table 56i; exit 1 before anything is built. Schema errors, where there are any, print first, and the rules are checked as well |
 | `--frame asm` or `obasm` with a `previous` or `next` that is no route of the set | A `ValueError` from `build_child` (a traceback), naming the route and the key |
 | A contract error in a page (section 12, G7 contract) | `CONTRACT ERRORS: not deploying`; exit 1, before gates G1 to G7 run |
 | A gate fails | `GATES FAIL: not deploying`; exit 1 |
@@ -116,6 +120,20 @@ clean = not any(g["warnings"] for g in report["gates"].values() if isinstance(g,
 ```
 
 A gap is not a failure: a symbol of an unknown kind passes every gate as a dashed box, so a builder checks `gaps`.
+
+A build that fails gate G0 writes the report before `screen.py` exits, and the file then holds the key `gates` alone (no route is built):
+
+```json
+{"gates": {"G0": {"ok": false, "errors": [{"rule": "assembly-without-local-kinds", "page": "cooling.json",
+                                               "assembly": "CH1", "message": "an assembly needs screen.py --local-kinds"}],
+                  "warnings": []},
+           "ok": false}}
+```
+
+`gates.G0.errors[]` holds every error, not the first 20 that the console prints. The rule of an entry is `schema` (a descriptor fails its
+schema; `message` is the line `file: path: message`), `devices-schema` (the device model fails its schema) or one of the assembly rules of Table 56i,
+in which case `page` is the descriptor file as given on the command line, `assembly` is the assembly's `id` and `message` says what is wrong. A report of a
+build that passes G0 has no `G0` entry. A builder reads the rule, not the message text.
 
 ### 2.5 The Device Model Keys
 
@@ -209,11 +227,13 @@ Table 7. The top-level keys of a descriptor (`schemas/screen-descriptor.schema.j
 | `brackets` | array of object | no |  | diagram | A thin bracket with a name beside a group of symbols (section 10.5). |
 | `wells` | array of object | no |  | diagram | The liquid of a well with level switches (section 10.5). |
 | `alarmPanels` | array of object | no |  | diagram | An alarm list with Ack selected and Ack all over the alarms under tag folders (section 10.6). |
+| `assemblies` | array of assembly object | no |  | diagram | Local assemblies: part sets drawn for a device kind the library lacks, one view per kind, one embed per assembly (section 10.8). Needs `screen.py --local-kinds`. |
 
 The object allows no other key (`additionalProperties` false). A descriptor needs `schema` and `screen`; the layout decides
-the rest. A page part (`buttons`, `bars`, `trends`, `lines`, `links`, `brackets`, `wells`, `alarmPanels`), a label `emphasis`,
+the rest. A page part (`buttons`, `bars`, `trends`, `lines`, `links`, `brackets`, `wells`, `alarmPanels`, `assemblies`), a label `emphasis`,
 a symbol `bar` or `alarm`, and the screen option `fit` belong to the diagram layout: on a cards page the generator reports
-`page parts and fit are for a diagram layout` as a contract error (`parts.check`).
+`page parts and fit are for a diagram layout` as a contract error (`parts.check`); for `assemblies` gate G0 refuses the page first, by the rule
+`assembly-on-cards`.
 
 ### 3.2 Which Layout Uses What
 
@@ -1229,7 +1249,10 @@ The flow rules (decision COBD-006; page 08 section 4) decide whether a pipe draw
    neither.
 2. A valve and an analogue valve pass while `open`; a pump, a motor, a fan, a switch and a damper pass while `on`
    (`diagram.GATED`). The filter, the indicator, the generator, a readout, a field, a controller, a sequence and a junction
-   always pass.
+   always pass. A gated symbol that neither binds nor states its state parameter (`open` for the valves, `on` for the others) has no
+   state to follow and passes as a junction does: the flow graph gives it no gate, so no expression names a variable for it
+   (`diagram.build_graph`; the case is a switch drawn with neither, section 12 G3). An assembly is no node of the graph: a pipe
+   ends at a junction or a free end beside its box, because a `ref` names a symbol or a junction.
 3. A pipe carries the medium when it lies on a simple path from a source to a different sink through passing gates. A closed
    pipe (`state` `closed`) is left out of the graph and blocks.
 4. Each pipe's condition is compiled to one expression over the gate variables (`custom.g_<id>`), drawn as the colour of the
@@ -1489,6 +1512,246 @@ tag folders of `sources`, with Ack selected and Ack all beneath it.
 Every automation symbol takes `badgeDuty` and `outOfService`, stated or bound. The module's components lack both unless their
 schema lists them, so a symbol that states or binds one stays on the library view under `--render module` (section 11.2).
 
+### 10.8 Local Assemblies
+
+A local assembly draws a plant object for which the library has no kind (page 16 section 6.3). The descriptor gives the object's parts once per
+kind, as pixel boxes of labels, shapes, lines, readouts, indicators, instrument fields and pulse buttons; the generator writes them as the views
+`Local/<Kind>/Assembly` and `Local/<Kind>/Home` (section 10.11) and embeds the first at each assembly's box with the instance's tag folder. An assembly
+is a device of the kind `local`: a click opens the faceplate `Faceplate/ASM/Local`, whose Home tab shows the kind's Home view. Assemblies
+belong to the diagram layout, need `screen.py --local-kinds` (Table 2) and are the page part `assemblies` of Table 7.
+
+Table 56a. The keys of an entry of `assemblies` (`$defs/assembly`; no other key is allowed).
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The assembly's name on the page and the prefix of its parts in a mapping (`<id>/<part id>`). It is a page part id: unique among the page parts and not a symbol's id (section 10), and it has no hyphen. |
+| `kind` | string | yes | pattern `^[a-z][a-z0-9-]*$` | The local kind. Its views lie in the folder `Local/<Kind>`, the kind with its first letter in upper case and the rest as written. It must be in the `--local-kinds` list and must not be a kind of the library (Table 56i). |
+| `device` | string | yes | pattern `^[^/\[{}]([^{}]*[^/{}])?$`; no empty, `.` or `..` segment | The instance's tag folder, relative to `tagRoot`: not absolute, no braces, no leading or trailing `/`, and no segment that is empty, `.` or `..`. |
+| `title` | string | no |  | The identifier in the faceplate header. Default: the kind as written. |
+| `label` | string | no |  | The device's description in the device index. Default: the `id`. |
+| `x` | number | yes |  | Left edge on the page. |
+| `y` | number | yes |  | Top edge on the page. |
+| `w` | number | yes | minimum 1 | Width of the embed, and of the kind's view. |
+| `h` | number | yes | minimum 1 | Height of the embed, and of the kind's view. |
+| `parts` | part set | yes | at least one of the five arrays, with at least one entry | The parts drawn on the page, in pixels from the assembly's top left corner (Table 56c). |
+| `home` | object | no |  | The Home tab of the local faceplate (Table 56b). Absent, the kind's Home is one label, No detail, in a view of 360 by 80 px. |
+
+Table 56b. The keys of `home`.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `w` | number | yes | minimum 1 | Width of the Home view. |
+| `h` | number | yes | minimum 1 | Height of the Home view. |
+| `parts` | part set | yes |  | The Home's parts (Table 56c), in pixels from the Home's top left corner. The schema asks for no entry. |
+
+### 10.9 The Part Set
+
+A part set holds up to five arrays. A part carries geometry (`x`, `y`, `w`, `h`) and content only: it takes no colour, class or style. The library
+draws the palette and fonts, and an input that carries one is refused by the schema and by rule `assembly-style` of Table 56i. The one `style` a part may
+carry is the word of a label or of a line.
+
+Table 56c. The keys of a part set (`$defs/partSet`; no other key is allowed).
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `labels` | array of label object | no |  | Text (Table 56d). |
+| `symbols` | array of symbol object | no |  | A readout, an indicator or an instrument field bound to a member (Table 56e). |
+| `lines` | array of line object | no |  | Straight segments (Table 56f). |
+| `buttons` | array of button object | no |  | Pulse buttons (Table 56g); in `home` only. |
+| `shapes` | array of shape object | no |  | Static outlines (Table 56h). |
+
+Table 56d. The keys of a label of a part set.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The part's name; unique within the assembly's `parts` and `home` together. |
+| `x` | number | yes |  | Left edge. |
+| `y` | number | yes |  | Top edge. |
+| `w` | number | yes | minimum 1 | Width. |
+| `h` | number | yes | minimum 1 | Height. |
+| `text` | string | yes |  | The text. |
+| `align` | string | no | values `left`, `center`, `right`; default `left` | Horizontal alignment. |
+| `style` | string | no | values `heading`, `body`, `label`; default `label` | The library's text style. |
+
+Table 56e. The keys of a symbol of a part set.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The part's name; unique as above. |
+| `kind` | string | yes | values `readout`, `indicator`, `instrument-field` | The library view that draws it: `Automation/Readout`, `Automation/Indicator` or `Instrument/Field`. |
+| `x` | number | yes |  | Left edge of the part's box, used as given (the generator does not grow it). |
+| `y` | number | yes |  | Top edge. |
+| `w` | number | yes | minimum 1 | Width. |
+| `h` | number | yes | minimum 1 | Height. |
+| `member` | string | yes | pattern `^[A-Za-z0-9_][^{}\[\]]*$`; no empty, `.` or `..` segment | The member of the assembly's device that the part reads, relative to `device`. A readout and an instrument field bind it to `value`, an indicator to `state`. |
+| `unit` | string | no |  | The engineering unit shown (a parameter of the library view). |
+| `format` | string | no |  | A number format, as a readout takes (a parameter of the library view). |
+| `label` | string | no |  | The caption (a parameter of the library view). |
+
+Table 56f. The keys of a line of a part set.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The part's name; unique as above. |
+| `points` | array of [x, y] pairs | yes | at least items 2; each pair has exactly 2 numbers | The vertices, joined by straight segments, in pixels of the view. |
+| `style` | string | no | values `solid`, `dashed`; default `solid` | The stroke. A line of a part set has no `width` and no `gate`. |
+
+Table 56g. The keys of a button of a part set.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The part's name; unique as above. |
+| `x` | number | yes |  | Left edge. |
+| `y` | number | yes |  | Top edge. |
+| `w` | number | yes | minimum 1 | Width. |
+| `h` | number | yes | minimum 1 | Height. |
+| `label` | string | yes | at least chars 1 | The caption. |
+| `member` | string | yes | pattern `^[A-Za-z0-9_][^{}\[\]]*$`; no empty, `.` or `..` segment | The Boolean member of the device that the button pulses (true for 1,000 ms, with the Confirm and Cancel question, write path W18, role `Administrator`). |
+
+Table 56h. The keys of a shape of a part set.
+
+| Key | Type | Required | Constraint | Meaning |
+|---|---|---|---|---|
+| `id` | string | yes | pattern `^[A-Za-z][A-Za-z0-9_]*$` | The part's name; unique as above. |
+| `x` | number | yes |  | Left edge. |
+| `y` | number | yes |  | Top edge. |
+| `w` | number | yes | minimum 1 | Width. |
+| `h` | number | yes | minimum 1 | Height. |
+| `form` | string | yes | values `rect`, `ellipse`, `polyline`, `polygon` | The outline: a rectangle or an ellipse in the box, or a polyline or polygon through `points`. It is drawn in the library's neutral stroke with no fill. |
+| `points` | array of [x, y] pairs | no | at least items 2; each pair has exactly 2 numbers | The vertices, in pixels from the shape's top left corner. Required for `polyline` and `polygon`, refused for `rect` and `ellipse`. |
+
+### 10.10 The Rules of a Local Assembly
+
+The rules that gate G0 checks beyond the schema have one name each (`assembly.RULES`). `screen.py` prints them in this order, all the errors
+of a rule before those of the next, and the report file holds them as `gates.G0.errors[]` (section 2.4).
+
+Table 56i. The assembly rules of gate G0, in the order they are listed.
+
+| Order | Rule | Refused when |
+|---|---|---|
+| 1 | `assembly-kind-not-local` | `--local-kinds` is given and the assembly's `kind` is not in its list |
+| 2 | `assembly-kind-is-library` | the `kind` is a kind of the library profile (a key of `kinds` or of `deviceKinds`, so `local` itself is refused too): draw it with its library symbol or its wrap |
+| 3 | `assembly-without-local-kinds` | the option `--local-kinds` is absent; an empty list is a given option, so every assembly then fails rule 1 instead |
+| 4 | `assembly-style` | a part of `parts` or `home` carries one of `colour`, `color`, `class`, `classes`, `className`, `style`, `styles`, `fill`, `stroke`, `font`, `background`; the word `style` of a label or a line is not one (the schema checks the word) |
+| 5 | `assembly-parts-differ` | two assemblies of one kind differ in `w`, `h`, `parts` or `home`, compared as canonical JSON (keys sorted); one view is written per kind, so only `id`, `device`, `title`, `label`, `x` and `y` may differ |
+| 6 | `assembly-on-cards` | the page's layout is not `diagram` |
+| 7 | `assembly-part-ids` | a part `id` is used twice within one assembly, `parts` and `home` and all five arrays counted together |
+| 8 | `assembly-button-on-page` | `parts` holds a button: a button is allowed in `home` only, so that a press on the page never also opens the faceplate |
+
+The component test page's own kind `benchlocal` (the assembly `TB_LOCAL`, `tools/hmi/testbench.py`) is exempt from rules 1 and 3 whatever the option holds,
+and only on that page.
+
+Rules that the schema and the generator state and G0's list does not:
+
+1. A symbol and a button name a `member` (required). The `member`, like `device`, has no empty, `.` or `..` segment, so that it cannot leave the
+   device's folder; a brace or bracket in a `member`, or a brace in a `device`, is refused.
+2. The assembly's `id` is also a page part id: a repeat among the page parts, or an id that is a symbol's, is a contract error (section 10).
+3. A button's pulse is one length, 1,000 ms; the tag it pulses is declared in `session.custom.commands`, so that `cadre.hmi.page_pulse` writes that tag
+   and no other.
+4. Gate G5 reads the generated views as it reads a page: an embedded part (a symbol) lies inside the view's `w` by `h` and overlaps no other by more than
+   4 px, and the assembly's own embed lies inside the page's canvas. A label, line, button or shape is not measured.
+
+### 10.11 The Local Kind and the Generated Views
+
+One pair of views is written for each local kind the descriptors draw, from the first assembly of the kind (rule 5 holds the others equal):
+
+Table 56j. What the generator writes and registers for local assemblies.
+
+| Item | Form |
+|---|---|
+| `Local/<Kind>/Assembly` | A view of `w` by `h` with the input parameter `deviceId`, the tag folder of the instance. Its root is the coordinate container `Diagram`. Parts are drawn in this order, later ones above: shapes, lines, labels, symbols, buttons (`assembly.part_view`) |
+| `Local/<Kind>/Home` | The same, from `home` at its own `w` and `h`; where `home` is absent, one label, No detail, in 360 by 80 px |
+| The folder `Local/<Kind>` | A folder only, never a view: the two views are siblings in it, because Ignition 8.3.6 does not find a view whose folder also holds another view (page 07 GF-117) |
+| Member bindings | A tag binding of `{0}/<member>`, indirect, with the reference `{0}` = `{view.params.deviceId}`; a button writes the same path through `cadre.hmi.page_pulse` |
+| The embed on the page | An `ia.display.view` named by the assembly's `id` at `x`, `y`, `w`, `h`, path `Local/<Kind>/Assembly`, parameter `deviceId` = the full tag folder (`[default]cadre_hmi_localdemo/CH1`) |
+| The item | Each assembly is an item of kind `local` for every device structure (`screen.descriptor_items`): its `device`, `title` (the kind as written by default), `label` (the `id` by default) and `params.localKind`, the `<Kind>` |
+| The device index entry | `{folder, kind: "local", title, label, unit, local: "<Kind>"}` (`screen.device_index`); the alarm panel's row click (`cadre.hmi.select_alarm_device`) selects the device from it with its `local` kind |
+| The opener | A click calls `library.open_device(folder, 'local', title, label, local='<Kind>')`, that is `cadre.hmi.select_device(session, folder, 'local', title, label, tab, local)`, which writes `session.custom.selectedLocal` (every other call clears it); the faceplate host passes it to the faceplate as the view parameter `localKind`. A floating faceplate (the ASM frames) takes `localKind` as a view parameter of its own, and its Dock pin passes it back |
+| The faceplate | `Faceplate/ASM/Local` in both styles, with the tabs Home, Alarms and Info. Home embeds `Local/<localKind>/Home` with the same `deviceId`. Gate G11 expects the device by its `title` (else the kind) and, with a device model, these three tabs |
+| The device kind `local` | In `library/profile.json` `deviceKinds.local`, with `openMembers` true (page 17 section 4.9): gate G7 devices accepts every member that a device model lists for a device of this kind |
+
+A device model may name the device (`kind` `local`, any members; page 17). It need not: without an entry the tags of the device are the members the
+parts name (page 17 Table 11b). A local device that a model does name takes its kind, title, label and members from the model as any device does.
+
+### 10.12 A Worked Example of One Assembly
+
+A page with one assembly, a chiller of a kind the library lacks: an outline, a heading, an indicator of `running` and a readout of `supplyTemp` on the
+page, and on the Home an instrument field of `supplyTemp` and a Reset button. The page is 800 by 400 px, with no toolbar; the example passed gates G0 to G7 on 2026-11-06. `cooling.json`:
+
+```json
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {"id": "Cooling", "route": "/cooling", "title": "Cooling", "view": "Screens/Cooling",
+            "layout": "diagram", "width": 800, "height": 400, "icon": "tank", "node": "Plant/Cooling"},
+ "tagRoot": "[default]cadre_hmi_localdemo",
+ "tagValues": {"CH1/supplyTemp": 7.5, "CH1/running": true},
+ "toolbar": false,
+ "assemblies": [
+  {"id": "CH1", "kind": "chiller", "device": "CH1", "title": "CH-1", "label": "Chiller 1",
+   "x": 60, "y": 60, "w": 240, "h": 120,
+   "parts": {
+    "shapes": [{"id": "Body", "x": 0, "y": 0, "w": 240, "h": 120, "form": "rect"}],
+    "labels": [{"id": "Name", "x": 12, "y": 8, "w": 140, "h": 24, "text": "Chiller 1", "style": "heading"}],
+    "symbols": [{"id": "Run", "kind": "indicator", "x": 190, "y": 8, "w": 40, "h": 40, "member": "running"},
+                {"id": "Supply", "kind": "readout", "x": 12, "y": 60, "w": 120, "h": 40, "member": "supplyTemp",
+                 "unit": "degC", "format": "0.0"}]},
+   "home": {"w": 360, "h": 160,
+            "parts": {
+             "labels": [{"id": "HomeName", "x": 12, "y": 8, "w": 240, "h": 24, "text": "Chiller detail", "style": "heading"}],
+             "symbols": [{"id": "HomeSupply", "kind": "instrument-field", "x": 12, "y": 48, "w": 120, "h": 64,
+                          "member": "supplyTemp", "unit": "degC", "format": "0.0", "label": "Supply"}],
+             "buttons": [{"id": "Reset", "x": 200, "y": 64, "w": 120, "h": 32, "label": "Reset", "member": "cmdReset"}]}}}
+ ]
+}
+```
+
+`local-kinds.json`:
+
+```json
+["chiller"]
+```
+
+Commands, with the result of each:
+
+```bash
+python tools/hmi/parent.py --out build
+python tools/hmi/screen.py --project cadre_hmi_localdemo --descriptor cooling.json --local-kinds local-kinds.json --app-name LocalDemo --out build --report report.json
+```
+
+```text
+  G0_descriptor_schema   PASS
+  G1_registry            PASS
+  G1_registry_parent     PASS
+  G2_references          PASS
+  G3_view_keys           PASS
+  G4_project             PASS
+  G5_layout              PASS
+  G6_flow                PASS
+  G7_contract            PASS
+  G7_faceplates          PASS
+  G7_history             PASS
+  G7_commands            PASS
+```
+
+There is no device model, so no G7 devices line, and no flow, so G6 proves a page with no pipe. The build writes the views `Local/Chiller/Assembly` and
+`Local/Chiller/Home` beside `Screens/Cooling`, and the generated tags of the device are the folder `CH1` with `cmdReset` (Boolean, false), `running`
+(Boolean, true) and `supplyTemp` (Float8, 7.5). The device index lists `[default]cadre_hmi_localdemo/CH1` with kind `local` and `local` `Chiller`.
+
+The same page without the option fails the gate before anything is built (exit 1):
+
+```bash
+python tools/hmi/screen.py --project cadre_hmi_localdemo --descriptor cooling.json --app-name LocalDemo --out build --report report.json
+```
+
+```text
+  G0_descriptor_schema   FAIL
+
+  assembly-without-local-kinds: cooling.json: CH1: an assembly needs screen.py --local-kinds
+```
+
+The report then holds the `gates.G0.errors` entry shown in section 2.4. With a `local-kinds.json` that lacks `chiller`, the rule is
+`assembly-kind-not-local`.
+
 ## 11. Module Rendering
 
 ### 11.1 What Changes per Kind
@@ -1642,13 +1905,17 @@ Table 59. The checklist by gate.
 | G0 | A pipe has `id`, `from` and `to`; each end is a reference (`ref`, optional `side` of `top`, `bottom`, `left`, `right`) or a free point (`x`, `y`, optional `end`) and nothing else; `medium`, `size` and `state` are from their enumerations; each `via` is a pair of numbers |
 | G0 | A section has `id`, `x`, `y`, `w`, `h`; a junction `id`, `x`, `y`; a label `id`, `x`, `y`, `w`, `h`, `text`; a card has `id`; a group has `items`; a flex symbol has `id` and `kind` |
 | G0 | A part's `id` matches `^[A-Za-z0-9_-]+$`; a pulse `ms` is an integer from 100 to 600000; a trend has one or two pens; a line has at least two points; a well mark's `level` is above 0 and not above 1; an `emphasis` has exactly one of `tag` and `symbol` |
+| G0 | An assembly has `id`, `kind`, `device`, `x`, `y`, `w`, `h` and `parts` (at least one part); each part has the required keys of Tables 56d to 56h; `device` and `member` have no empty, `.` or `..` segment; a `polyline` or `polygon` shape has `points`, a `rect` or `ellipse` has none |
+| G0 | The assembly rules of Table 56i hold, in the order listed: the kind is in `--local-kinds` and is no library kind, the option is given, no part carries a colour, class or style key, assemblies of a kind share `w`, `h`, `parts` and `home`, the page is a diagram, part ids are unique within an assembly, `parts` holds no button. A failure is written to `gates.G0.errors[]` before `screen.py` exits (section 2.4) |
 | G0 | The device model has `schema`, `tagRoot` (`[provider]folder`, no trailing `/`) and `devices`; each device has `id`, `kind`, `members`; each member has `type` and `access`; an alarm source matches `prov:<provider>:/tag:<path>`; a pulse caption is one line of 1 to 32 characters |
 | G1 | Every view of the child passes the registry: component types, declared props, enumerations, position keys, binding keys. Under `--render module` a module-only kind's `params` must be properties of the component with values from its enumerations |
 | G2 | Every embedded view path, style class and `var()` token resolves in the child or the parent (generated from the library; a descriptor cannot cause a failure) |
 | G3 | View-level keys are `custom.` or `params.` (generated; a builder cannot cause this) |
+| G3 | An expression of a view names `{view.custom.<name>}` only for a key the view's `custom` defines; otherwise `<view>: an expression names view.custom.<name>, which the view does not define`. A descriptor reaches it only through a gated symbol (for example a switch) that neither binds nor states its state parameter: the flow graph passes such a symbol as a junction (section 9.2), so no pipe expression names it, and the descriptor is accepted |
 | G4 | The parent exists in `--out` and is inheritable and is the child's parent; every route names an existing view; every navigation item names an existing route |
 | G5 | Every embed box lies inside `0, 0, screen.width, screen.height` (`<name> outside the canvas`) |
 | G5 | No two symbol boxes share more than 4 px on both axes (`symbol <a> overlaps <b>`) |
+| G5 | The same two checks in the views `Local/<Kind>/Assembly` and `Local/<Kind>/Home`: a symbol part lies inside the view (`Local/<Kind>/Assembly: <id> outside the canvas`) and overlaps no other by more than 4 px; labels, lines, buttons and shapes are not measured |
 | G5 | Warnings, not failures: overlapping embeds; a block in a box smaller than its flags need; an identifier or an instrument field caption wider than its embed |
 | G6 | The compiled flow expression of every pipe equals the reference solver (exhaustive to 12 gates, a seeded sample of 4,096 above) |
 | G7 contract | Every symbol's kind resolves to a view, or is drawn as a counted gap (the build still passes) |
@@ -1660,6 +1927,7 @@ Table 59. The checklist by gate.
 | G7 contract | `flow`: fewer than 20,000 source to sink paths |
 | G7 faceplates, history, commands | The generated views carry each faceplate's tab row, one pane per tab, the alarm list narrowed by the device's source; every tag history binding references an array; no script writes a tag directly; every control that calls a checked write binds `enabled` to its permission. A builder cannot cause these with a descriptor; they fail only if the library code is changed |
 | G7 devices | With `--devices-file`: no device listed twice; each `kind` has a faceplate; each member is a name the kind knows (page 17) in a suitable type; each `write` member has a write path; each `trend` member is a member; a force is one whole encoding; an alarm source names a tag; a pulse member is a Boolean `write` pulse member of the kind, and its caption is valid; a pulse member of the kind that is `write` is marked `pulse` |
+| G7 devices | A device of kind `local` (the device of an assembly; `openMembers` in the profile) may list any member: its names, types and write paths are not checked, while a pulse member (Boolean, `write`, a caption of 1 to 32 characters) and a `cfg/` row are checked as for any kind; stating `faceplate` `asm` on it draws the warning that its asm faceplate is its stock one |
 | G7 devices | Every symbol marked `device` or `faceplate` names a device of the model; its kind opens the faceplate of the device's kind (state the `deviceKind` where it differs); each faceplate parameter it binds is a listed member; `hasSetpoint`, `hasOutput` and `hasStep` true need `sp`, `out` and `step` |
 | G7 devices | With `--tags-file`: each device folder exists; each listed member exists in the declared type; no `write` member is an expression tag; the folder carries no faceplate member the model leaves out |
 | G7 tag model | With `--tags-file`: interlocks of every `ilk` folder, every trip latched, and every `cadre` name in the tag model's scripts resolve (page 17) |
@@ -1836,6 +2104,10 @@ There is no device model, so no G7 devices line. The row's height is 196 px (sec
 10. `tools/hmi/parent.py` rewrites `library/profile.json` in the repository on every run, whatever `--out` says. The content is
     identical when the sources are unchanged.
 11. Property tables of the 97 module components are not repeated; `module/CATALOGUE.md` holds them.
+12. A local assembly is not part of the flow graph and its parts are not measured by gate G5 except the symbols (section 10.10). A label, line, button or
+    shape placed outside its view passes G0 to G7 and is clipped on the glass; check the box of every part against the assembly's `w` and `h`.
+13. One view is written for each local kind, from its first assembly; a second assembly that differs fails `assembly-parts-differ`. An instance that needs
+    a different part set is a different kind.
 
 ## 15. References
 
@@ -1843,7 +2115,7 @@ There is no device model, so no G7 devices line. The row's height is 196 px (sec
 2. `tools/hmi/screen.py` (`KIND_VIEW`, `MODULE_KIND`, `MODULE_ONLY`, `FRAME_ONLY`, `MODULE_EXCEPT`, `MODULE_NEEDS`,
    `MODULE_STATE`, `MODULE_VALUE`, `MODULE_PARAM`, `MODULE_DROP`, `READOUT_EXTENT`, `OVERLAP`, `symbol_box`, `grown_box`,
    `embed_limits`, `row_height`, `bind_rule`, `tag_path`, `main`), `tools/hmi/gates.py`, `tools/hmi/parts.py`,
-   `tools/hmi/diagram.py`, `tools/hmi/navigation.py`, `tools/hmi/library.py`.
+   `tools/hmi/diagram.py`, `tools/hmi/navigation.py`, `tools/hmi/library.py`, `tools/hmi/assembly.py` (`RULES`, `part_view`, `kind_views`, `item`).
 3. `library/contracts.json` and `library/profile.json`, generated by `tools/hmi/parent.py`.
 4. `module/components.json` and `module/CATALOGUE.md`.
 5. Page 04 sections 7, 8.8, 10 and 11; page 05 section 5; page 06 sections 2 to 5; page 08; page 12 sections 14 to 17; page 13

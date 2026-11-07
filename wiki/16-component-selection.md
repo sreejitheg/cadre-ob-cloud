@@ -1,17 +1,17 @@
 ---
 title: Component selection guide
 type: wiki
-updated: 2026-11-05
+updated: 2026-11-06
 ---
 # 16 Component Selection Guide
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-16 |
-| Revision | A |
+| Revision | B |
 | Status | Issued for use |
-| Built | Cloud session of 2026-11-05, from the library at `c595afa` (Cadre HMI Components 0.8.0, 97 components) |
-| Code | `library/profile.json` (`kinds`, `deviceKinds`, `faceplates`, `frame`), `tools/hmi/screen.py` (`KIND_VIEW`, `MODULE_KIND`, `MODULE_ONLY`, `FRAME_ONLY`, `MODULE_EXCEPT`, `MODULE_NEEDS`, `MODULE_VALUE`), `module/components.json`, `tools/hmi/parts.py` (`FIT_TOP_DOCK`, `FIT_TOOLBAR`) |
+| Built | Cloud session of 2026-11-05, from the library at `c595afa` (Cadre HMI Components 0.8.0, 97 components); revision B of 2026-11-06 (tranche T3, branch `port/sandbox-0.8.0`, merge `11005e3`) adds the local assembly and the device kind `local` |
+| Code | `library/profile.json` (`kinds`, `deviceKinds`, `faceplates`, `frame`), `tools/hmi/screen.py` (`KIND_VIEW`, `MODULE_KIND`, `MODULE_ONLY`, `FRAME_ONLY`, `MODULE_EXCEPT`, `MODULE_NEEDS`, `MODULE_VALUE`), `module/components.json`, `tools/hmi/parts.py` (`FIT_TOP_DOCK`, `FIT_TOOLBAR`), `tools/hmi/assembly.py`, `tools/hmi/placement_survey.py` |
 | Companions | Page 17 (the tag model and the UDT of each device kind), page 18 (the descriptor and device model reference for an automatic view builder), `module/CATALOGUE.md` (every component and property, generated), page 14 (the configuration as delivered) |
 
 ## 1. Purpose
@@ -30,7 +30,7 @@ Table 1. The decisions, their scope and where each is stated.
 | 2 | Frame | Project | `screen.py --frame {openbridge,asm,ob,obasm}` | 3 |
 | 3 | Faceplate style and place | Project default, device override | `--faceplate {openbridge,asm}`, `--faceplate-mode {dock,popup}`, the device model's `faceplate` | 4 |
 | 4 | Page layout: diagram or cards | Page | `screen.layout` | 5 |
-| 5 | Kind of each plant object | Symbol | `kind` | 6 and 7 |
+| 5 | Kind of each plant object | Symbol | `kind`, or an `assemblies` entry for an object with no kind | 6 and 7 |
 | 6 | Device, second drawing or plain drawing | Symbol | `device`, `faceplate` | 8 |
 | 7 | Instrument presentation | Symbol | `kind`, `deviceKind`, `bar` | 9 |
 | 8 | Page parts: pipes, buttons, bars, trends, alarm panels, links | Page | the descriptor's part keys | 10 |
@@ -160,14 +160,19 @@ Table 6. The faceplate each device kind opens in each style (`library/profile.js
 | `tank` | `Faceplate/Tank` | `Faceplate/Tank` |
 | `controller` | `Faceplate/Controller` | `Faceplate/Controller` |
 | `indicator` | `Faceplate/Input` | `Faceplate/Input` |
+| `local` | `Faceplate/ASM/Local` | `Faceplate/ASM/Local` |
 
 Gate G7 devices warns of a device model entry that itself states `faceplate` `asm` for a kind whose `asm` faceplate is its stock one: the tank,
-the controller, the indicator and also the generator, whose one faceplate serves both styles. A device that takes `asm` from the project default
+the controller, the indicator, the generator and the local device, whose one faceplate serves both styles. A device that takes `asm` from the project default
 (`--faceplate asm`) draws no warning.
 
 Rule: choose `asm` for a project built for an ASM operation (usually with the frame `asm` or `obasm`), and `openbridge` otherwise. Run G11 with
 the same `--faceplate` the project was built with. A `filter` or a `switch` is a symbol kind without a device kind: it opens no faceplate of its
 own (section 8).
+
+The kind `local` is the device kind of a local assembly (section 6.3). Its one faceplate, `Faceplate/ASM/Local`, is the same in both styles and has the
+tabs Home, Alarms and Info: Home shows the Home view of the assembly's kind, `Local/<Kind>/Home`, and the other two tabs are those of every `asm`
+faceplate. The Home view is the descriptor's `home` part set (page 18 section 10.8), or one label, No detail.
 
 ### 4.2 The Place
 
@@ -244,7 +249,45 @@ Table 9. The kind of a source object by its signals (the first row that matches)
 | One digital state and nothing to command | `indicator` |
 | A state that gates a line and nothing to command | `switch` |
 | No signal (a drawing only) | `filter`, a static `tank`, or a module-only kind (section 7) |
-| Nothing the library has a kind for | Record it under `unmapped` and leave it out, or draw it as a gap box (an unknown kind is drawn as a counted gap box) |
+| Nothing the library has a kind for | Draw it as a local assembly where the survey places it `local` (section 6.3), or record it under `unmapped` and leave it out, or draw it as a gap box (an unknown kind is drawn as a counted gap box) |
+
+### 6.3 A Plant Object Drawn as a Local Assembly
+
+Some plant objects have no library kind (Table 8), no module-only kind (Table 10) and no wrap that stands for them: a chiller, a heat trace panel, a
+one off skid. A builder may still draw such an object as a local assembly, a part set of labels, shapes, lines, readouts, indicators, instrument
+fields and pulse buttons that the descriptor lists once for the kind (`assemblies`, page 18 section 10.8). The generator writes the part set as the
+views `Local/<Kind>/Assembly` and `Local/<Kind>/Home`, the object becomes a device of the kind `local`, and a click opens `Faceplate/ASM/Local` (section 4.1).
+The kind is named in the file given to `screen.py --local-kinds`, which is the project's statement of which kinds it draws this way.
+
+The placement tool decides which objects are drawn locally, kind by kind, before a builder writes the descriptor. It places a kind or feature by the
+first row of Table 9a that applies (`tools/hmi/placement_survey.py`, page 04 section 9.3).
+
+Table 9a. The placement of a kind the designs use, by the first row that applies (the project survey, `--survey`; `--local-max` is 1 by default, from 1 to 10).
+
+| Order | The kind or feature | Placement | What a builder does |
+|---|---|---|---|
+| 1 | The library draws it: a module part or a library view | `module` or `library` | Draws it with that kind (Table 8) |
+| 2 | A map row of state `reviewed` or `approved` names a component for it | `openbridge` | Draws the component the row names; the gap stays open until the library has built it |
+| 3 | No resolution, no row, and more than `--local-max` instances | `shared_gap` | Leaves it unbuilt and reports a shared gap for the library to close; it is not a local assembly |
+| 4 | No resolution, no row, and `--local-max` instances or fewer | `local` | Draws a local assembly |
+| 5 | An unnamed feature, an unclassified template, or a kind with no instance | `unclassified` | Waits for the owner's changes to the survey |
+
+An earlier survey's `local` placement (`--prior-local`) and the owner's changes override the table. In page mode with a project survey the tool draws
+a `local` kind as an assembly and leaves the other two placements unbuilt, with exit code 3. A kind the survey does not hold is a late gap.
+
+The assembly is the cheapest honest drawing of a rare object, and it has limits that decide against it:
+
+1. It has no flow role. An assembly is not a node of the compiled flow: a pipe cannot end on it (a pipe end names a symbol or a junction), so the
+   pipe ends at a junction or a free end beside its box. An object that gates the flow takes the kind of the valve, the pump or the switch (Table 8).
+2. No `cadre.ob` component draws it: its parts are the library's views under both renderings.
+3. It takes no colour, class or style (page 18 Table 56i); the library's palette and fonts apply.
+4. One part set serves every instance of a kind: two instances that differ in their parts are two kinds.
+5. Its faceplate is the one `Faceplate/ASM/Local` with the tabs Home, Alarms and Info: no Config, Diagnostics or Interlock tab, no trend, no
+   ownership by mode and no maintenance members. An object that needs them is a gap for the library to close, not an assembly.
+6. Its members are free names (page 17 section 4.9); nothing checks them against a UDT.
+
+Rule: draw an object as a local assembly when it has no kind in Table 8 or Table 10, it is shown and perhaps pulsed but does not gate a flow, and the
+survey places it `local`; otherwise use a kind, or report the gap.
 
 ## 7. The Module-Only Kinds
 
@@ -400,7 +443,7 @@ Table 15. The device options beyond the members (page 13 sections 7 and 10, `sch
 2. Is the operation ASM? Then `--frame asm` (stock) or `obasm` (module), `--faceplate asm`, and `node`, `level`, `previous` and `next` on the pages.
 3. For each page: a process is a `diagram`, a set of values or devices is `cards`.
 4. For each object: the first matching row of Table 9 gives the kind; Table 8 confirms it has a library kind, else Table 10 offers a module-only
-   kind, else the object is `unmapped`.
+   kind, else the survey places the object `local` (a local assembly, section 6.3) or it is `unmapped`.
 5. For each object the operator commands or acknowledges: `device`, and a device model entry with exactly the members its folder carries (page 17).
 6. Under the module rendering, avoid the parameter sets of Table 3 for every symbol meant to be drawn by the module.
 7. Pipes with flow are `pipes`; trends from history are `trends` or the device model's `trend`; a page command is a pulse `buttons` entry.
@@ -418,7 +461,8 @@ Table 15. The device options beyond the members (page 13 sections 7 and 10, `sch
 ## 14. References
 
 1. `library/profile.json`, `library/contracts.json`, `module/components.json`, `module/CATALOGUE.md`, `schemas/screen-descriptor.schema.json`,
-   `schemas/devices.schema.json`, `tools/hmi/screen.py`, `tools/hmi/parts.py`, `tools/hmi/asm_descriptors.py`.
+   `schemas/devices.schema.json`, `tools/hmi/screen.py`, `tools/hmi/parts.py`, `tools/hmi/asm_descriptors.py`, `tools/hmi/assembly.py`,
+   `tools/hmi/placement_survey.py`.
 2. This wiki: pages 04 (frames), 06 (the symbol and faceplate contracts), 08 (the descriptor and the gates), 12 (the module and its
    comparison with the stock library), 13 (faceplates, ownership, the faceplate style), 14 (the configuration as delivered), 17 (the tag model and
    UDTs), 18 (the view builder reference).

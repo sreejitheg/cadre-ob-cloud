@@ -921,6 +921,13 @@
           }
         }
       }
+    },
+    "assemblies": {
+      "type": "array",
+      "description": "Diagram layout: local assemblies (NOTE-WFB-10 section 11.2), each a part set drawn for a device kind the library lacks. The generator writes the views Local/<Kind>/Assembly and Local/<Kind>/Home once per kind (siblings: a view whose folder holds another view is not found, wiki/07 GF-117) and embeds Local/<Kind>/Assembly at each assembly's box with the device's tag folder. `screen.py --local-kinds` lists the kinds a page may draw this way (gate G0).",
+      "items": {
+        "$ref": "#/$defs/assembly"
+      }
     }
   },
   "$defs": {
@@ -1347,6 +1354,428 @@
         "grow": {
           "type": "number",
           "minimum": 0
+        }
+      }
+    },
+    "assembly": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "device",
+        "x",
+        "y",
+        "w",
+        "h",
+        "parts"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$",
+          "description": "The local kind: its views lie in the folder Local/<Kind>, the kind with its first letter in upper case"
+        },
+        "device": {
+          "type": "string",
+          "pattern": "^[^/\\[{}]([^{}]*[^/{}])?$",
+          "not": {"pattern": "(^|/)\\.{0,2}(/|$)"},
+          "description": "The instance's tag folder, relative to tagRoot"
+        },
+        "title": {
+          "type": "string",
+          "description": "The faceplate's title (default the kind)"
+        },
+        "label": {
+          "type": "string",
+          "description": "The device's label in the device index (default the id)"
+        },
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "w": {
+          "type": "number",
+          "minimum": 1
+        },
+        "h": {
+          "type": "number",
+          "minimum": 1
+        },
+        "parts": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/partSet"
+            },
+            {
+              "anyOf": [
+                {
+                  "required": [
+                    "labels"
+                  ],
+                  "properties": {
+                    "labels": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "symbols"
+                  ],
+                  "properties": {
+                    "symbols": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "lines"
+                  ],
+                  "properties": {
+                    "lines": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "buttons"
+                  ],
+                  "properties": {
+                    "buttons": {
+                      "minItems": 1
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "shapes"
+                  ],
+                  "properties": {
+                    "shapes": {
+                      "minItems": 1
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "description": "At least one part; coordinates in pixels from the assembly's top left corner"
+        },
+        "home": {
+          "type": "object",
+          "required": [
+            "w",
+            "h",
+            "parts"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "w": {
+              "type": "number",
+              "minimum": 1
+            },
+            "h": {
+              "type": "number",
+              "minimum": 1
+            },
+            "parts": {
+              "$ref": "#/$defs/partSet"
+            }
+          },
+          "description": "The Home tab of the local faceplate; absent: the Home holds one label No detail"
+        }
+      }
+    },
+    "partSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The parts of an assembly or of its Home. No part admits a colour, a class or a style object (gate G0 rule assembly-style); a symbol or a button is dynamic and names a member.",
+      "properties": {
+        "labels": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "x",
+              "y",
+              "w",
+              "h",
+              "text"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 1
+              },
+              "h": {
+                "type": "number",
+                "minimum": 1
+              },
+              "text": {
+                "type": "string"
+              },
+              "align": {
+                "enum": [
+                  "left",
+                  "center",
+                  "right"
+                ],
+                "default": "left"
+              },
+              "style": {
+                "enum": [
+                  "heading",
+                  "body",
+                  "label"
+                ],
+                "default": "label"
+              }
+            }
+          }
+        },
+        "symbols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "x",
+              "y",
+              "w",
+              "h",
+              "member"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              },
+              "kind": {
+                "enum": [
+                  "readout",
+                  "indicator",
+                  "instrument-field"
+                ]
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 1
+              },
+              "h": {
+                "type": "number",
+                "minimum": 1
+              },
+              "member": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_][^{}\\[\\]]*$",
+                "not": {"pattern": "(^|/)\\.{0,2}(/|$)"},
+                "description": "A member of the assembly's device, relative to its tag folder (`device`)"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "format": {
+                "type": "string",
+                "description": "A number format, as a readout takes"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "points"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              },
+              "points": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              },
+              "style": {
+                "enum": [
+                  "solid",
+                  "dashed"
+                ],
+                "default": "solid"
+              }
+            }
+          }
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "x",
+              "y",
+              "w",
+              "h",
+              "label",
+              "member"
+            ],
+            "additionalProperties": false,
+            "description": "A pulse of the member, with the Confirm step",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 1
+              },
+              "h": {
+                "type": "number",
+                "minimum": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "member": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_][^{}\\[\\]]*$",
+                "not": {"pattern": "(^|/)\\.{0,2}(/|$)"},
+                "description": "A member of the assembly's device, relative to its tag folder (`device`)"
+              }
+            }
+          }
+        },
+        "shapes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "x",
+              "y",
+              "w",
+              "h",
+              "form"
+            ],
+            "additionalProperties": false,
+            "description": "A static outline in the palette's neutral stroke with no fill; `points` (pixels from the shape's top left corner) for a polyline or a polygon only",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "w": {
+                "type": "number",
+                "minimum": 1
+              },
+              "h": {
+                "type": "number",
+                "minimum": 1
+              },
+              "form": {
+                "enum": [
+                  "rect",
+                  "ellipse",
+                  "polyline",
+                  "polygon"
+                ]
+              },
+              "points": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "if": {
+              "properties": {
+                "form": {
+                  "enum": [
+                    "polyline",
+                    "polygon"
+                  ]
+                }
+              },
+              "required": [
+                "form"
+              ]
+            },
+            "then": {
+              "required": [
+                "points"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "points"
+                ]
+              }
+            }
+          }
         }
       }
     }

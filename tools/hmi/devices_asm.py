@@ -376,7 +376,26 @@ def faceplate_instrument_asm() -> dict:
                       diagnostics=diag, shown={**fw.ASM_SHOWN, "config": config_shown("instrument")})
 
 
+# ---------------------------------------------------------------------------------------
+# The local device (NOTE-WFB-10 section 11.2 item 5)
+# ---------------------------------------------------------------------------------------
+LOCAL_HOME_PATH = "'Local/' + {view.params.localKind} + '/Home'"   # the Home view of the local kind the view names
+
+
+def faceplate_local() -> dict:
+    """`Faceplate/ASM/Local`, the one faceplate of every device of a local assembly (a kind the library lacks,
+    `assembly.py`): the ASM style with the tabs Home, Alarms and Info. Home embeds the view `Local/<Kind>/Home` of the
+    view parameter `localKind`, with the view's `deviceId`; Alarms and Info are those of every asm faceplate. The
+    header strip holds the count of the device's alarms, the device carrying no member the library knows."""
+    home = pv.node("ia.display.view", "LocalHome", pv.fpos(shrink=0), {
+        "path": "", "params": {"deviceId": ""}, "useDefaultViewHeight": True, "useDefaultViewWidth": True},
+        prop_config={"props.path": pv.bind(pv.expr(LOCAL_HOME_PATH)),
+                     "props.params.deviceId": pv.bind(pv.expr("{view.params.deviceId}"))})
+    return fw._tabbed(fw.LOCAL_KIND, [home], {}, {}, style="asm", reads=[], header=header([]),
+                      tabs=fw.LOCAL_TABS, extra_params={"localKind": ""}, scroll_home=True)
+
+
 def views() -> dict[str, dict]:
     """The asm faceplate views this module builds, by path."""
     return {"Faceplate/ASM/Generator": faceplate_generator(), "Faceplate/ASM/Sequence": faceplate_sequence_asm(),
-            "Faceplate/ASM/Instrument": faceplate_instrument_asm()}
+            "Faceplate/ASM/Instrument": faceplate_instrument_asm(), fw.LOCAL_VIEW: faceplate_local()}

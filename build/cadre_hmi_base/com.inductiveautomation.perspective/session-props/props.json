@@ -30,6 +30,7 @@
     "selectedDevice": "",
     "selectedKind": "",
     "selectedLabel": "",
+    "selectedLocal": "",
     "selectedStyle": "openbridge",
     "selectedTab": "",
     "selectedTitle": "",

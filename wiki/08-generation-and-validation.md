@@ -1,14 +1,14 @@
 ---
 title: Generation and validation
 type: wiki
-updated: 2026-10-23
+updated: 2026-11-06
 ---
 # 08 Screen Generation and Validation
 
 | Field | Value |
 |---|---|
 | Document ID | COB-WIKI-08 |
-| Revision | I |
+| Revision | J |
 | Status | Issued for use |
 | Code | `tools/hmi/` (generator), `tools/compare/` (live gates and comparison), `schemas/screen-descriptor.schema.json`, `schemas/devices.schema.json` |
 
@@ -57,6 +57,9 @@ complete example, and `screens/wtp/` holds the four generated pages of the water
 This section explains the descriptor; page 18 gives every key of the descriptor and the device model, the
 parameters of each kind and the placement arithmetic as a reference for a tool that writes them, page 17 the
 tag structure (one UDT per device kind) and page 16 the criteria for choosing a kind.
+
+A descriptor may also draw local assemblies (`assemblies[]`, section 3.3), and the placement tool decides beforehand which
+kinds a project draws from the module, the library, a wrap, a shared gap or a local assembly (section 7 item 4).
 
 Table 1. Descriptor sections.
 
@@ -195,6 +198,18 @@ Table 2a. Heights of the rows of the water treatment overview (`screens/wtp/over
 | 1 | Production, Water quality (instrument fields) | 64 px | 40 + 64 + 8 + 16 = 128 px |
 | 2 | Storage (tanks), Pumps (pumps with a readout beneath) | 216 px | 40 + 216 + 8 + 16 = 280 px |
 
+### 3.3 Local Assemblies
+
+A kind the library lacks can be drawn on a diagram page as a local assembly: a part set of labels, readouts, indicators,
+instrument fields, lines, shapes and (in its Home only) pulse buttons, bound to one device's tag folder (`assemblies[]`,
+`$defs.assembly` of the descriptor schema; every key on page 18 section 10.8). `screen.py --local-kinds <file>` names the kinds
+a page may draw so; G0 refuses an assembly of a kind not listed, of a kind the library has, on a page whose layout is not
+`diagram`, with a colour, class or style key, with part identifiers repeated, with parts that differ between assemblies of one
+kind, or with a button outside its Home, and every assembly when the option is absent. Each kind is written once into the
+child as `Local/<Kind>/Assembly` and `Local/<Kind>/Home` (siblings, page 07 GF-117); each assembly is a device of the kind
+`local`, with its own entry in the device index, and its click opens `Faceplate/ASM/Local` with the tabs Home, Alarms and Info,
+whose Home embeds the kind's Home view. The page checks count the assemblies' parts (`page_checks.py`, kind `assembly`).
+
 ## 4. What the Generator Does
 
 1. **Contract check (G7).** Every symbol kind resolves to a library view; every static or bound
@@ -244,18 +259,18 @@ Table 3. The gates. G0 to G7 run offline before any import; G8 to G11 run agains
 
 | Gate | Checks | Tool |
 |---|---|---|
-| G0 descriptor | Each descriptor validates against its JSON Schema, and the device model, when one is given, against `schemas/devices.schema.json` | `tools/hmi/screen.py` |
+| G0 descriptor | Each descriptor validates against its JSON Schema, and the device model, when one is given, against `schemas/devices.schema.json`. A descriptor's local assemblies (`assemblies[]`) pass the eight rules of `assembly.RULES` against `--local-kinds` (section 3.3); a G0 failure writes the screen report with `gates.G0.errors[]`, each error with its rule | `tools/hmi/screen.py`, `tools/hmi/assembly.py` |
 | G1 registry | Every view of the child and the parent passes the Ignition-Wiki validator: component types, declared props, enumerations, position keys, binding keys. The validator reads the top level of a component's props; the gate also walks the levels below it against the same registry: a text value outside the enumerated domain of its property, a key a closed object does not declare, and a bound property path a closed object does not declare (for example `plots[].trends[].interpolation` of the time series chart). A part of a schema the walk cannot follow is left alone. It does not read the values an expression may answer | `F:/repos/Ignition-Wiki/tools/validate_view.py`; `tools/hmi/gates.py` (`g1_registry`, `_deep_findings`) |
 | G2 references | Every embedded view path, style class (also inside class expressions) and `var()` token resolves in the child or its parent | `tools/hmi/gates.py` |
-| G3 view keys | View-level keys are `custom.` or `params.` (GF-07) | `tools/hmi/gates.py` |
+| G3 view keys | View-level keys are `custom.` or `params.` (GF-07); every `{view.custom.<name>}` an expression names is a key of the view's `custom` (COB-212) | `tools/hmi/gates.py` |
 | G4 project | Routes and docks name existing views; navigation items name existing routes; the parent is inheritable and is the child's parent | `tools/hmi/gates.py` |
 | G5 layout | Symbol boxes inside the canvas and not overlapping (two boxes overlap when they share more than 4 px on both axes). Reported as warnings: overlapping readout areas (the embeds of two symbols whose default embeds already overlap); a block in a box smaller than the size its flags need (`sizes` of the profile: an instrument field with a setpoint and the enhanced value in a 96 by 64 px box); and an identifier, or the caption of an instrument field, wider than its embed, which then ends in an ellipsis. The last names an automation symbol or a readout only where the next symbol left the identifier no room or the identifier has more than 16 characters, since the generator sizes those embeds itself; a tank's identifier is measured against the share of the tile it takes (page 06 section 4.1) | `tools/hmi/gates.py` |
-| G6 flow | The compiled expressions equal the reference solver on every gate state (exhaustive up to 12 gates, a seeded sample of 4,096 above) | `tools/hmi/diagram.py` |
+| G6 flow | The compiled expressions equal the reference solver on every gate state (exhaustive up to 12 gates, a seeded sample of 4,096 above). A symbol of a gated kind that neither binds nor states its state is no gate: it passes as a junction does (COB-212) | `tools/hmi/diagram.py` |
 | G7 contract | No unknown kind or parameter; every device binds inside its own tag folder; gaps counted. The faceplate contract: each device faceplate the child resolves carries its tab row, one pane per tab, the reset to the first tab, and one kind of alarm list narrowed by the device's source with no text filter. Every tag history binding references an array, and a property it references has a list default. Command security (COB-063): no script of a view (event, change script, transform, custom method, message handler, `runScript` expression) writes a tag or acts on an alarm directly or calls a private function of `cadre.hmi`, no script names `system` without a module or `cadre` other than as `cadre.hmi` or `cadre.icons` (an import, an alias or a lookup would hide the function called), no tag binding is bidirectional, every control whose script names a checked write, however the call is spelt, binds `enabled` to the permission of the write path it calls, alone or joined by `&&`, no checked write is called at view level, and every stock alarm table binds its own actions (`g7_commands`; NOTE-COB-04 section 11.5 item 8). Every `cadre.hmi` and `cadre.icons` name a script takes, however it is spelt, is one the library code the parent and the child ship defines (`ignition/script-python/cadre/<module>/code.py`, its top-level functions and constants; `library_names`), so a call of a function the library lacks fails the build (F050 of the ASMP study, COB-142); a confirmed command's path is read from the Confirm row's `p = self.view.custom.pending` (page 13 section 10.5). The gate reads the text of generated scripts: it is a check on generated views, not a defence against a script written by hand to evade it. With `--tags-file`, the interlock contract of every `ilk` folder (page 13 section 7), every trip latched (COBD-023), and every `cadre` name and `runScript` of a `cadre` function in the tag model's expressions and scripts resolved against the same libraries (`g7_tag_libraries`), since a tag runs in the gateway, where a missing function fails with nothing on the glass. The faceplate and command checks cover `Faceplate/Controller`, `Faceplate/Input`, `Faceplate/Sequence` and `Faceplate/SetpointRow`, and the checked functions `force`, `error_mask` and `pulse`. With `--devices-file`, G7 devices (Table 4) | `tools/hmi/screen.py`, `tools/hmi/gates.py` (`g7_faceplates`, `g7_history`, `g7_commands`, `g7_interlocks`, `g7_tag_libraries`, `g7_devices`) |
 | G8 render | In a new session: no view error badge, no binding quality overlay, no trial page, no "View Not Found", components rendered; structural fingerprint and screenshot recorded | `tools/compare/capture.py` |
 | G9 live flow | For each scenario the gate tags are written, the page opened in a new session, and every pipe's rendered state compared with the reference solver. For memory tag gates only; where the gates are expression tags of a simulation, G6 and G10 cover flow | `tools/compare/live_flow.py` |
 | G10 functional | An operator's walk in a new session: navigation, faceplate, commands, setpoint, acknowledge, fault reset, palette, each checked on the glass (page 11 section 5); under module rendering the faceplate's package list display only, with no ACK (F10, COBD-025), ACK in the alarm menu with a row that opens a faceplate (F11), and ACK visible in the alarm menu (F14); a broken permissive that holds a pump, and a latched trip that holds P-502 after its fault clears until reset (F12); an instrument's limit written from its faceplate that raises its alarm, and its trend (F13); with nobody signed in, every command control disabled and a crafted click refused (F15), and no acknowledge path offered (F16); the test login of N-COB-9 signed in and commanding (F17), its name on an acknowledgement (F18, module rendering); the trend page's cards (F19). The commands run signed in; without the login only F1, F2, F6, F9, F15 and F16 run. Written for the water treatment sample; it starts from P-502's initial alarm state and restores the plant | `tools/compare/functional.py` |
-| G11 faceplates | Every leaf view of every page clicked: each `device` of the descriptors opens the faceplate with its identifier as title, no other view does, and no faceplate shows a quality overlay or the empty body. Every tab of every faceplate is opened: no pane may be empty or show an overlay or an error badge; the Alarms tab lists only the device's alarms, as many as its label counts, and the expected rows of the plant's initial state (`--expect-alarms`). The tabs Maintenance, Tuning and Status are opened like the others, and a line naming a member of bad quality fails the sweep as an overlay does. With `--devices-file`, each faceplate shows the tabs its device's members give it, and each alarm row carries a source path under one of the device's source patterns, in place of the device's identifier | `tools/compare/faceplates.py`; `tools/compare/wtp_suite.py` runs G8, G11 and G10 for the water treatment sample |
+| G11 faceplates | Every leaf view of every page clicked: each `device` of the descriptors, and each local assembly's device by its `title` (else its kind, as `assembly.item` registers it), opens the faceplate with its identifier as title, no other view does, and no faceplate shows a quality overlay or the empty body. Every tab of every faceplate is opened: no pane may be empty or show an overlay or an error badge; the Alarms tab lists only the device's alarms, as many as its label counts, and the expected rows of the plant's initial state (`--expect-alarms`). The tabs Maintenance, Tuning and Status are opened like the others, and a line naming a member of bad quality fails the sweep as an overlay does. With `--devices-file`, each faceplate shows the tabs its device's members give it, and each alarm row carries a source path under one of the device's source patterns, in place of the device's identifier | `tools/compare/faceplates.py`; `tools/compare/wtp_suite.py` runs G8, G11 and G10 for the water treatment sample |
 
 `screen.py` runs G0 and G2 to G7 itself and refuses to import on any failure; `parent.py` runs G1
 on the parent before importing it.
@@ -344,6 +359,14 @@ and tags writes a descriptor and calls the generator; the gates prove the result
    write paths to map onto.
 2. **New screens.** An engineer or an agent writes the descriptor directly; the schema and the
    contract gate catch mistakes before the gateway does.
+3. **The placement tool.** `tools/hmi/library_gaps.py` places each kind of a migrated project before its pages are built:
+   page mode lists a page set's gaps (`cadre-hmi-library-gaps/1`); survey mode places every kind and feature of the whole
+   project from a ctig survey (`cadre-hmi-project-survey/1`) by the library's catalogue, then the element map
+   (`module/openbridge-map.json`), then the count against `--local-max`; release mode lists the wraps and shared gaps an
+   approved survey leaves to build (`cadre-hmi-library-gaps/2`); page mode with `--project-survey` places a kind by the survey.
+   The options, exit codes and refusals are in `CONFIGURATION.md` section 4.8.
+4. **The pin check.** `module/tools/verify_pin.py` proves the installed element package is exactly the pinned release before
+   any module asset is generated or any module is built (`CONFIGURATION.md` section 3.2.1).
 
 ## 8. Extending the Library
 

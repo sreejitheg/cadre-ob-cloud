@@ -19,17 +19,34 @@ stylesheet is scoped: the package declares its palettes and sizes on `:root` and
 `*`; here they are declared on the wrapper (`.cadre-ob`) and keyed to the Cadre palette classes,
 and only the variables the bundled elements use (with their dependencies) are kept.
 
-Usage:  python module/tools/gen_module_assets.py
+Usage:  python module/tools/gen_module_assets.py [--allow-stale-bundle]
+
+The pin check (`verify_pin.require_pin`) runs first. Without `--allow-stale-bundle` the bundle must be the one
+`npm run build` recorded for this checkout (`verify_pin.require_bundle_record`: the SHA-256 of `package-lock.json`,
+`entry.js` and the bundle beside it).
+
+`node_modules` and `dist/` (the esbuild bundle) are read from `verify_pin.web_root()`: the sibling `web` folder, or the
+folder named by the environment variable `CADRE_OB_WEB_ROOT` (a read only `module/web` of the main checkout, for a
+worktree that has no `node_modules`). Nothing is written there. The tracked sources (`defaults.json`, `canvaszoom.js`,
+`icons.js`) are always read from this module's own `web` folder. The run stops when the bundle does not define a wrapped
+element, because the wrapper would register a tag nothing draws; `--allow-stale-bundle` lets it write anyway, for a host
+that cannot rebuild the bundle (it then prints the tags missing, and the bundle is rebuilt, the defaults measured again
+and this script run again before the module is built).
 """
 from __future__ import annotations
 
 import json
 import re
 import shutil
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import verify_pin  # noqa: E402  (the pin check runs first in main)
+
 HERE = Path(__file__).resolve().parents[1]
-PKG = HERE / "web/node_modules/@oicl/openbridge-webcomponents"
+WEB = verify_pin.web_root()                                   # node_modules and the built bundle (maybe another checkout)
+PKG = WEB / "node_modules/@oicl/openbridge-webcomponents"
 MOUNTED = HERE / "gateway/src/main/resources/mounted"
 SCHEMAS = HERE / "common/src/main/resources/schemas"
 
@@ -2148,7 +2165,23 @@ def wrapper_script(js_specs: list[dict]) -> str:
             .replace("__ITEM_PLAIN__", json.dumps(ITEM_PLAIN)).replace("__ITEM_DEPTH__", str(ITEM_DEPTH)))
 
 
+def check_bundle(bundle_js: str) -> list[str]:
+    """The tags the wrappers use that the bundle does not define. The bundle defines an element with
+    `customElement("<tag>")`, which esbuild keeps as the string literal."""
+    return sorted({c["tag"] for c in COMPONENTS if f'"{c["tag"]}"' not in bundle_js})
+
+
+def require_recorded_bundle(allow_stale: bool, bundle_root: Path | None = None, checkout: Path | None = None) -> None:
+    """Unless the offline option is given, end the process when the bundle has no record matching this checkout's lock
+    and entry file (NOTE-WFB-10 section 13 invariant 4)."""
+    if not allow_stale:
+        verify_pin.require_bundle_record(bundle_root or WEB, checkout or HERE / "web")
+
+
 def main() -> int:
+    verify_pin.require_pin()
+    allow_stale = "--allow-stale-bundle" in sys.argv[1:]
+    require_recorded_bundle(allow_stale)
     manifest = json.loads((PKG / "custom-elements.json").read_text(encoding="utf-8"))
     defaults = json.loads((HERE / "web/defaults.json").read_text(encoding="utf-8"))
     enum_map = enums()
@@ -2158,8 +2191,15 @@ def main() -> int:
     DEFAULTS.update(defaults)
     ITEM_TABLE.clear()
     ITEM_TABLE.update(build_item_table(manifest, COMPONENTS))
-    bundle_js = (HERE / "web/dist/ob-components.js").read_text(encoding="utf-8")
-    shutil.copyfile(HERE / "web/dist/ob-components.js.LEGAL.txt", MOUNTED / "js/ob-components.js.LEGAL.txt")
+    bundle_js = (WEB / "dist/ob-components.js").read_text(encoding="utf-8")
+    missing = check_bundle(bundle_js)
+    if missing:
+        print(f"the bundle {WEB / 'dist/ob-components.js'} does not define: {', '.join(missing)}")
+        if not allow_stale:
+            raise SystemExit("rebuild it (npm run build in module/web, then measure_defaults.py) or pass --allow-stale-bundle")
+        print("WARNING: written with a stale bundle; rebuild the bundle, measure the defaults and run this again before "
+              "building the module")
+    shutil.copyfile(WEB / "dist/ob-components.js.LEGAL.txt", MOUNTED / "js/ob-components.js.LEGAL.txt")
     SCHEMAS.mkdir(parents=True, exist_ok=True)
     contract, js_specs = {}, []
     for spec in COMPONENTS:

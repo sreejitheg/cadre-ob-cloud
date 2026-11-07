@@ -60,6 +60,16 @@ environment() {
   if ! [ -d "$REPO/module/web/node_modules/@oicl/openbridge-webcomponents" ]; then
     say "npm ci (pinned lock file)"; (cd "$REPO/module/web" && npm ci --no-audit --no-fund >/dev/null)
   fi
+  # The browser harness (module/tools/harness, tests.test_module_generator) loads React 18 from an untracked vendor folder
+  # (UMD builds, MIT); fetched from the npm registry by the exact version (T3).
+  if ! [ -s "$REPO/module/tools/harness/vendor/react-dom.js" ]; then
+    say "fetching React 18.3.1 for the harness"
+    local t; t=$(mktemp -d); (cd "$t" && npm pack react@18.3.1 react-dom@18.3.1 --silent >/dev/null && \
+      tar -xzf react-18.3.1.tgz && mv package r && tar -xzf react-dom-18.3.1.tgz && mv package d)
+    mkdir -p "$REPO/module/tools/harness/vendor"
+    cp "$t/r/umd/react.production.min.js" "$REPO/module/tools/harness/vendor/react.js"
+    cp "$t/d/umd/react-dom.production.min.js" "$REPO/module/tools/harness/vendor/react-dom.js"; rm -rf "$t"
+  fi
   chmod +x "$REPO/module/gradlew"
   if ! [ -d /root/.gradle/caches/modules-2/files-2.1/com.inductiveautomation.ignitionsdk ]; then
     say "warming the Gradle cache (one online build)"
@@ -74,6 +84,8 @@ export CADRE_TEST_LOGIN=$CADRE/test-login.properties
 export CADRE_PIL_PYTHON=$(command -v python3)
 export CADRE_IGNITION_WIKI=$REPO/cloud/vendor/ignition-wiki
 export CADRE_JDK17=/usr/lib/jvm/java-17-openjdk-amd64
+export CADRE_OB_MAIN_CHECKOUT=$REPO
+export PLAYWRIGHT=file:///opt/node22/lib/node_modules/playwright/index.mjs
 export CHROME_PATH=\${CHROME_PATH:-/usr/bin/google-chrome}
 EOF
   say "environment ready; source $CADRE/env.sh"

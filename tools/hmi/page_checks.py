@@ -61,16 +61,17 @@ from pathlib import Path
 
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from hmi import provenance, vessel  # noqa: E402
+    from hmi import assembly, provenance, vessel  # noqa: E402
 else:
-    from . import provenance, vessel
+    from . import assembly, provenance, vessel
 
 TOOL = "tools/hmi/page_checks.py"
 SCHEMA = "cadre-hmi-descriptor-coverage/1"
-# the kinds of element a mapping row names, and the descriptor list that holds each
+# the kinds of element a mapping row names, and the descriptor list that holds each; an `assembly` entry names one
+# part of a local assembly, `<assembly>/<part>` (NOTE-WFB-10 section 11.2 item 7)
 KINDS = {"symbol": "symbols", "section": "sections", "label": "labels", "pipe": "pipes", "junction": "junctions",
          "button": "buttons", "link": "links", "line": "lines", "bracket": "brackets", "well": "wells",
-         "trend": "trends", "bar": "bars"}
+         "trend": "trends", "bar": "bars", "assembly": "assemblies"}
 # the library's own kinds: a symbol of any other kind is the counted gap box
 LIBRARY_KINDS = {"pump", "motor", "fan", "valve", "analogvalve", "damper", "filter", "switch", "indicator", "tank",
                  "readout", "instrument-field", "controller", "sequence", "generator"}
@@ -128,7 +129,10 @@ def check_coverage(rows: list[dict], cover: dict, gap_rows: set[str], descs: dic
     elements: dict[str, set[tuple[str, str]]] = {}
     gapboxes: dict[str, set[str]] = {}
     for pid, d in descs.items():
-        elements[pid] = {(kind, e["id"]) for kind, key in KINDS.items() for e in d.get(key, []) if "id" in e}
+        elements[pid] = {(kind, e["id"]) for kind, key in KINDS.items() if kind != "assembly"
+                         for e in d.get(key, []) if isinstance(e, dict) and "id" in e}
+        elements[pid] |= {("assembly", f"{a.get('id')}/{p.get('id')}") for a in assembly.assemblies(d)
+                          for _where, _array, p in assembly.parts_of(a)}
         gapboxes[pid] = {e["id"] for e in d.get("symbols", []) if str(e.get("kind", "")).lower() not in LIBRARY_KINDS}
     carried, missing = [], []
     for r in rows:
@@ -267,7 +271,9 @@ def resolves(path: str, leaves: set[str], devices: dict[str, dict]) -> bool:
 
 
 def descriptor_tags(descs: dict[str, dict]) -> list[tuple[str, str, list[str]]]:
-    """(page, component id, the tag paths it reads) for every value component of the descriptors."""
+    """(page, component id, the tag paths it reads) for every value component of the descriptors. Each dynamic part
+    of a local assembly (a symbol or a button, its Home's included) is one, `<assembly>/<part>`, reading
+    `<device>/<member>`; a part with no member reads none (T4)."""
     out: list[tuple[str, str, list[str]]] = []
     for pid, d in descs.items():
         for s in d.get("symbols", []):
@@ -278,6 +284,12 @@ def descriptor_tags(descs: dict[str, dict]) -> list[tuple[str, str, list[str]]]:
             out.append((pid, w["id"], [m["tag"] for m in w.get("marks") or [] if m.get("tag")]))
         for b in d.get("bars", []):
             out.append((pid, b["id"], [str(b["tag"])] if b.get("tag") else []))
+        for a in assembly.assemblies(d):
+            device = a.get("device")
+            for _array, p in assembly.dynamic_parts(a):
+                member = p.get("member")
+                out.append((pid, f"{a.get('id')}/{p.get('id')}",
+                            [f"{device}/{member}"] if member and isinstance(device, str) and device else []))
     return out
 
 
@@ -312,10 +324,16 @@ def classify(c: dict, tagcustom: set[str]) -> str:
 
 
 def built_tags(built: Path, pages: list[str]) -> tuple[Counter, list[str]]:
+    """The view classes of the built pages' components, and the value components that read no tag: the views
+    `Screens/<page>` of the pages and every view under `Local/` (the local assemblies' kinds and their Homes,
+    NOTE-WFB-10 section 11.2 item 7), each entry named by its view (`<page>`, `Local/<Kind>/Assembly` or `Local/<Kind>/Home`)."""
     counts: Counter = Counter()
     unbound: list[str] = []
-    for page in pages:
-        f = built / "views" / "Screens" / page / "view.json"
+    views = [(page, built / "views" / "Screens" / page / "view.json") for page in pages]
+    local = built / "views" / assembly.VIEW_ROOT
+    if local.is_dir():
+        views += [(f.parent.relative_to(built / "views").as_posix(), f) for f in sorted(local.rglob("view.json"))]
+    for page, f in views:
         if not f.is_file():
             continue
         v = read_json(f, "view")
@@ -344,7 +362,8 @@ LAYOUT_FILL_X = 0.90            # the elements reach this share of the page widt
 LAYOUT_FILL_Y = 0.85            # and this share of its height (the largest bottom edge)
 COLUMN_TOLERANCE = 4            # readouts whose x lie within this many pixels form a column
 STATUS_KINDS = {"motor", "pump", "fan", "valve", "switch", "generator", "indicator"}   # kinds that state a status position
-BOXED = ("symbols", "labels", "sections", "buttons", "links", "brackets", "wells", "trends", "bars", "alarmPanels")
+BOXED = ("symbols", "labels", "sections", "buttons", "links", "brackets", "wells", "trends", "bars", "alarmPanels",
+         "assemblies")
 
 
 def page_extent(d: dict) -> tuple[float, float]:

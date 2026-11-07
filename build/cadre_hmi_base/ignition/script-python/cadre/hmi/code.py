@@ -32,14 +32,17 @@ def faceplate_style(session, device_id):
 	return "openbridge"
 
 
-def select_device(session, device_id, kind, title="", label="", tab=""):
+def select_device(session, device_id, kind, title="", label="", tab="", local=None):
 	"""The faceplate dock contract: written together before the dock opens. The title is the
 	device identifier shown on the symbol (its ID tag), else the last segment of the folder. The
 	style comes first, so that the dock never draws the new device in the old device's style. The tab
 	is the key of the faceplate tab to open on (`home`, `config`, `alarms`, ...), written last: the
 	faceplate shows it when it is one of its shown tabs, else its first. A plain symbol click names
-	none, so it clears the tab a call before it asked for and opens the first."""
+	none, so it clears the tab a call before it asked for and opens the first. `local` is the kind of a local
+	assembly (the `<Kind>` of its views `Local/<Kind>/Assembly` and `Local/<Kind>/Home`): the local faceplate reads it as `localKind` to embed the
+	kind's Home, and every other call clears it (NOTE-WFB-10 section 11.2 item 5)."""
 	session.custom.selectedStyle = faceplate_style(session, device_id)
+	session.custom.selectedLocal = local or ""
 	session.custom.selectedDevice = device_id
 	session.custom.selectedKind = kind
 	session.custom.selectedTitle = title or device_id.split("/")[-1]
@@ -658,16 +661,26 @@ def ack_listed(ids, session=None, path="W7"):
 	return ack_message(ack(ids, session, "Acknowledged from the alarm list", path))
 
 
+def _entry_local(entry):
+	"""The `local` kind of a device index entry (a local assembly's `<Kind>`, NOTE-WFB-10 section 11.2 item 3), or None
+	for a device that has none: what every opener of a device passes on to `select_device`."""
+	try:
+		return unicode(entry["local"] or "") or None
+	except Exception:
+		return None
+
+
 def select_alarm_device(session, event):
 	"""A row of the alarm panel: select the device whose folder raised the alarm, from the device
 	index the generator writes (`session.custom.devices`), instruments included since COB-062. The
 	record's `tagId` already names the device of an alarm on a source tag (`alarm_list` with the
-	session, `tag_id`). False when the alarm belongs to no device of the descriptors."""
+	session, `tag_id`). A local device is selected with its local kind (section 11.2 item 5), else its
+	faceplate would embed `Local//Home`. False when the alarm belongs to no device of the descriptors."""
 	folder = unicode(_event_field(event, "tagId", "") or "")
 	try:
 		for d in session.custom.devices:
 			if d["folder"] == folder:
-				select_device(session, folder, d["kind"], d["title"], d["label"])
+				select_device(session, folder, d["kind"], d["title"], d["label"], local=_entry_local(d))
 				return True
 	except Exception:
 		pass
@@ -1708,7 +1721,7 @@ SEARCH_GROUP_ROWS = 9
 BANNER_ROWS = 3
 ROW_DEFAULT = {"kind": "", "label": "", "second": "", "icon": "", "depth": 0, "selected": False, "disabled": False,
 	"action": "", "route": "", "nodeId": "", "deviceId": "", "deviceKind": "", "deviceTitle": "",
-	"deviceLabel": "", "tab": "", "close": ""}
+	"deviceLabel": "", "deviceLocal": "", "tab": "", "close": ""}
 
 
 def _custom(session, name, default=None):
@@ -1791,12 +1804,12 @@ def float_position(session, device):
 
 def float_params(session, popup_id):
 	"""The view parameters of a floating faceplate: the device `select_device` has just selected, with its
-	style and the tab `open_device` named. The popup reads these, never `session.custom.selected*`, so that
+	style, the tab `open_device` named and, for a local assembly's device, its kind. The popup reads these, never `session.custom.selected*`, so that
 	a second device does not redraw the first."""
 	return {"popupId": _text(popup_id), "deviceId": _text(_custom(session, "selectedDevice", "")),
 		"kind": _text(_custom(session, "selectedKind", "")), "style": _text(_custom(session, "selectedStyle", "openbridge")),
 		"title": _text(_custom(session, "selectedTitle", "")), "label": _text(_custom(session, "selectedLabel", "")),
-		"tab": _text(_custom(session, "selectedTab", ""))}
+		"tab": _text(_custom(session, "selectedTab", "")), "localKind": _text(_custom(session, "selectedLocal", ""))}
 
 
 # --- the node of the current page ------------------------------------------------------------------------
@@ -2130,7 +2143,8 @@ def _device_row(d, tab, second):
 	has = len(d) > 6 and int(d[6]) == 1
 	return _row(kind="device", label=_text(d[2]) or _text(d[0]).split("/")[-1], second=_text(second), icon="home",
 		action="route" if d[4] else "", route=_text(d[4]), deviceId=_text(d[0]) if has else "", deviceKind=_text(d[1]),
-		deviceTitle=_text(d[2]), deviceLabel=_text(d[3]), tab=tab, close="search")
+		deviceTitle=_text(d[2]), deviceLabel=_text(d[3]), deviceLocal=_text(d[7]) if len(d) > 7 else "", tab=tab,
+		close="search")
 
 
 def search_first(session, query):
@@ -2199,7 +2213,8 @@ def banner_alarms(session, route=""):
 			"unacked": unacked, "time": _clock(rec["time"]), "node": owner.get(folder, ""),
 			"tag": _text(d["title"]) if d is not None else folder.split("/")[-1], "text": _text(rec["text"]),
 			"state": state, "deviceId": folder if d is not None else "", "deviceKind": _text(d["kind"]) if d is not None else "",
-			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else ""})
+			"deviceTitle": _text(d["title"]) if d is not None else "", "deviceLabel": _text(d["label"]) if d is not None else "",
+			"deviceLocal": _text(_entry_local(d)) if d is not None else ""})
 	return out
 
 

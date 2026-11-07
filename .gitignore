@@ -13,3 +13,9 @@ build/cadre_hmi_lab/
 # The rebuild pilot is client data (COBD-028); the test fixture's build is regenerable.
 build/cadre_hmi_bh*/
 build/cadre_hmi_pilot/
+
+# Screenshots the browser harness writes into its working folder (module/tools/harness/devices.mjs, run by tests.test_module_generator)
+/module/devices.png
+/module/readouts.png
+/devices.png
+/readouts.png

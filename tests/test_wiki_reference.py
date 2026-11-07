@@ -113,6 +113,14 @@ class SelectionGuide(unittest.TestCase):
                 self.assertIn(f"`{faces['asm']}`", r[2], kind)
         self.assertEqual(seen, set(PROFILE["deviceKinds"]))
 
+    def test_the_local_faceplate_has_the_tabs_the_page_states(self):
+        """Section 4.1 and 6.3: the local device's one faceplate has the tabs Home, Alarms and Info, and the placements of Table 9a are the tool's."""
+        self.assertEqual(PROFILE["faceplates"]["Faceplate/ASM/Local"]["tabs"], ["home", "alarms", "info"])
+        self.assertIn("the tabs Home, Alarms and Info", self.text)
+        from hmi import placement_survey
+        placements = [set(re.findall(r"`([a-z_]+)`", r[2])) for r in table(self.text, "9a")]
+        self.assertEqual(placements, [set(placement_survey.LIBRARY_PLACEMENTS), {"openbridge"}, {"shared_gap"}, {"local"}, {"unclassified"}])
+
     def test_the_interlock_and_maintenance_kinds_follow_the_profile(self):
         row = {r[0]: r for r in table(self.text, "15")}
         for option, key in (("Interlocks and permissives", "interlocks"), ("Maintenance functions", "maintenance")):
@@ -127,7 +135,8 @@ class TagModel(unittest.TestCase):
     # the member tables of section 4 and the device kinds each one states
     KIND_TABLES = {"4": ("pump", "motor", "fan"), "5": ("valve", "analogvalve", "damper"), "6": ("tank",),
                    "7": ("instrument", "readout", "instrument-field"), "8": ("controller",), "9": ("indicator",),
-                   "10": ("sequence",), "11": ("generator",)}
+                   "10": ("sequence",), "11": ("generator",),
+                   "11a": ("local",)}
 
     @classmethod
     def setUpClass(cls):
@@ -156,9 +165,42 @@ class TagModel(unittest.TestCase):
     def test_the_test_model_column_follows_the_generator(self):
         for number, kinds in self.KIND_TABLES.items():
             listed = self.members(table(self.text, number))
-            created = screen.FACEPLATE_MEMBERS[kinds[0]]
+            # the local device has no entry of `FACEPLATE_MEMBERS`: the generator makes the members its parts name (Table 11b)
+            created = {} if kinds[0] == "local" else screen.FACEPLATE_MEMBERS[kinds[0]]
             for m, r in listed.items():
                 self.assertEqual(r[3].startswith("Yes"), m in created, f"Table {number}, {m}")
+
+    def test_the_local_device_is_open_and_its_generated_tags_follow_table_11b(self):
+        from hmi import assembly, gates, library_profile
+        self.assertNotIn("local", screen.FACEPLATE_MEMBERS)
+        spec = PROFILE["deviceKinds"]["local"]
+        self.assertTrue(spec["openMembers"])
+        self.assertEqual((spec["interlocks"], spec["maintenance"], spec["pulses"], spec["bind"]), (False, False, [], {}))
+        rows = {kind: next(r for r in table(self.text, "11b") if f"`{kind}`" in r[0]) for kind in assembly.MEMBER_TYPE}
+        for kind, (dtype, start) in assembly.MEMBER_TYPE.items():
+            self.assertEqual((rows[kind][1], rows[kind][2]), (dtype, str(start)), kind)
+        button = next(r for r in table(self.text, "11b") if r[0] == "Button")
+        self.assertEqual((button[1], button[2]), ("Boolean", "False"))
+        # the tags of a device the model does not name are the members its parts name, in those types
+        desc = {"schema": "cadre-hmi-screen/1", "tagRoot": "[default]cadre_hmi_x",
+                "screen": {"id": "P", "route": "/p", "title": "P", "view": "Screens/P", "layout": "diagram",
+                           "width": 400, "height": 200},
+                "assemblies": [{"id": "A1", "kind": "box", "device": "D1", "x": 0, "y": 0, "w": 100, "h": 50,
+                                "parts": {"symbols": [{"id": "r", "kind": "readout", "x": 0, "y": 0, "w": 60, "h": 24, "member": "v"},
+                                                      {"id": "i", "kind": "indicator", "x": 0, "y": 30, "w": 20, "h": 20, "member": "s"}]},
+                                "home": {"w": 100, "h": 50, "parts": {"buttons": [
+                                    {"id": "b", "x": 0, "y": 0, "w": 50, "h": 20, "label": "Go", "member": "cmd"}]}}}]}
+        doc = screen.tags_document([desc], None)
+        leaves = {t["name"]: (t["dataType"], t["value"]) for t in doc["tags"][0]["tags"]}
+        self.assertEqual(leaves, {"v": ("Float8", 0.0), "s": ("Boolean", False), "cmd": ("Boolean", False)})
+        # gate G7 devices takes any member of a local device and still checks a pulse
+        model = {"schema": "cadre-hmi-devices/1", "tagRoot": "[default]cadre_hmi_x", "devices": [
+            {"id": "D1", "kind": "local", "members": {"anything/at-all": {"type": "String", "access": "write"},
+                                                      "cmd": {"type": "Boolean", "access": "write", "pulse": True, "caption": "Go"}}}]}
+        res = gates.g7_devices(model, library_profile.build(screen.load_contracts()), [])
+        self.assertEqual((res["ok"], res["problems"]), (True, []))
+        model["devices"][0]["members"]["cmd"]["type"] = "Float8"
+        self.assertFalse(gates.g7_devices(model, library_profile.build(screen.load_contracts()), [])["ok"])
 
     def test_table_12_gives_every_maintenance_member(self):
         listed = self.members(table(self.text, "12"))
@@ -235,6 +277,14 @@ class ViewBuilderReference(unittest.TestCase):
         "53": (DESCRIPTOR, ("properties", "brackets", "items")), "54": (DESCRIPTOR, ("properties", "wells", "items")),
         "55": (DESCRIPTOR, ("properties", "wells", "items", "properties", "marks", "items")),
         "56": (DESCRIPTOR, ("properties", "alarmPanels", "items")),
+        # the local assemblies (section 10.8 to 10.10)
+        "56a": (DESCRIPTOR, ("$defs", "assembly")), "56b": (DESCRIPTOR, ("$defs", "assembly", "properties", "home")),
+        "56c": (DESCRIPTOR, ("$defs", "partSet")),
+        "56d": (DESCRIPTOR, ("$defs", "partSet", "properties", "labels", "items")),
+        "56e": (DESCRIPTOR, ("$defs", "partSet", "properties", "symbols", "items")),
+        "56f": (DESCRIPTOR, ("$defs", "partSet", "properties", "lines", "items")),
+        "56g": (DESCRIPTOR, ("$defs", "partSet", "properties", "buttons", "items")),
+        "56h": (DESCRIPTOR, ("$defs", "partSet", "properties", "shapes", "items")),
     }
     # the parameter tables of section 6 and the view each states
     PARAM_TABLES = {"14": "Automation/Pump", "15": "Automation/Motor", "16": "Automation/Fan", "17": "Automation/Valve",
@@ -282,6 +332,59 @@ class ViewBuilderReference(unittest.TestCase):
         options = set(re.findall(r"add_argument\(\"(--[a-z-]+)\"", source))
         listed = {r[0].strip("`") for r in table(self.text, "2")}
         self.assertEqual(listed, options)
+
+    def test_table_56i_gives_the_assembly_rules_of_gate_g0_in_the_order_the_code_lists_them(self):
+        from hmi import assembly
+        rows = table(self.text, "56i")
+        self.assertEqual([r[1].strip("`") for r in rows], list(assembly.RULES))
+        self.assertEqual([r[0] for r in rows], [str(i) for i in range(1, len(assembly.RULES) + 1)])
+        # the style keys of rule 4 are those the code refuses
+        rule4 = next(r for r in rows if r[1] == "`assembly-style`")[2]
+        self.assertEqual(set(re.findall(r"`([A-Za-z]+)`", rule4)) - {"parts", "home"}, set(assembly.STYLE_KEYS))
+
+    def test_the_assembly_and_part_array_names_are_those_of_the_code(self):
+        from hmi import assembly
+        listed = [r[0].strip("`") for r in table(self.text, "56c")]
+        self.assertEqual(listed, list(assembly.ARRAYS))
+        self.assertIn(f"`{assembly.VIEW_ROOT}/<Kind>`", self.text)
+        self.assertEqual((assembly.LOCAL_KIND, assembly.PARAM, assembly.PULSE_MS, assembly.NO_DETAIL_SIZE),
+                         ("local", "deviceId", 1000, (360, 80)))
+        self.assertIn("360 by 80 px", self.text)
+        self.assertIn("1,000 ms", self.text)
+
+    def test_the_worked_example_of_one_assembly_passes_g0_with_local_kinds_and_fails_without(self):
+        """Section 10.12: the descriptor passes the schema and the assembly rules with its local-kinds file, builds both views
+        of its kind without an error, and is refused by `assembly-without-local-kinds` without the file."""
+        from hmi import assembly, library_profile
+        section = self.text[self.text.index("### 10.12 "):self.text.index("## 11. ")]
+        blocks = re.findall(r"```json\n(.*?)\n```", section, re.S)
+        docs = [json.loads(b) for b in blocks]
+        desc = next(d for d in docs if isinstance(d, dict) and d.get("schema") == "cadre-hmi-screen/1")
+        kinds = next(d for d in docs if isinstance(d, list))
+        self.assertEqual((desc["screen"]["layout"], len(desc["assemblies"]), kinds), ("diagram", 1, ["chiller"]))
+        self.assertEqual(screen.schema_errors([desc], ["cooling.json"]), [])
+        prof = library_profile.build(screen.load_contracts())
+        library = set(prof["kinds"]) | set(prof["deviceKinds"])
+        self.assertEqual(assembly.g0_errors([desc], ["cooling.json"], kinds, library), [])
+        self.assertEqual([e["rule"] for e in assembly.g0_errors([desc], ["cooling.json"], None, library)],
+                         ["assembly-without-local-kinds"])
+        self.assertEqual([e["rule"] for e in assembly.g0_errors([desc], ["cooling.json"], ["pump"], library)],
+                         ["assembly-kind-not-local"])
+        views = assembly.kind_views([desc], screen.load_contracts())
+        self.assertEqual(sorted(views), ["Local/Chiller/Assembly", "Local/Chiller/Home"])
+        self.assertEqual([errors for _doc, _route, errors in views.values()], [[], []])
+        self.assertEqual(screen.device_index([desc], None)[0]["local"], "Chiller")
+
+    def test_the_g3_refusal_and_the_gated_symbol_without_a_state_are_stated(self):
+        """Table 59 and section 9.2: a gated symbol that neither binds nor states its state passes as a junction."""
+        from hmi import diagram
+        contracts = screen.load_contracts()
+        desc = {"symbols": [{"id": "S1", "kind": "switch", "x": 0, "y": 0, "w": 48, "h": 48},
+                            {"id": "S2", "kind": "switch", "x": 100, "y": 0, "w": 48, "h": 48, "bind": {"on": "S2/state"}}]}
+        graph, _geo = diagram.build_graph(desc, contracts)
+        self.assertEqual((graph.nodes["S1"], graph.nodes["S2"]), ("pass", "gate"))
+        row = next(r for r in table(self.text, "59") if r[0] == "G3" and "view.custom" in r[1])
+        self.assertIn("which the view does not define", row[1])
 
     def test_table_11_gives_every_library_kind_with_its_view(self):
         rows = table(self.text, "11")

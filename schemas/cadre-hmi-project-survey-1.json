@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cadre-hmi-project-survey/1",
+  "title": "Cadre HMI project survey, version 1",
+  "description": "Every kind and feature of a migrated project with its count and its placement (module, library, openbridge, shared_gap, local or unclassified), written by tools/hmi/library_gaps.py --survey (NOTE-WFB-10 sections 7.5 to 7.8). A draft survey has no approval; a final one (a run given --changes) holds the applied and the refused changes. The decision lives in the manager's survey record, not here. Local only: it names client tag stems and page names.",
+  "type": "object",
+  "required": ["schema", "library_commit", "openbridge_release", "ctig_survey_sha256", "local_max", "pages", "kinds",
+               "wraps", "shared_gaps", "local", "unclassified", "unclassified_features", "proposals", "approval",
+               "totals"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "cadre-hmi-project-survey/1"},
+    "library_commit": {"type": ["string", "null"]},
+    "openbridge_release": {
+      "type": "object",
+      "required": ["version", "commit"],
+      "properties": {"version": {"type": ["string", "null"]}, "commit": {"type": ["string", "null"]}}
+    },
+    "ctig_survey_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "local_max": {"type": "integer", "minimum": 1, "maximum": 10},
+    "pages": {"type": "object"},
+    "kinds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "count", "stemless", "faceplate_only", "pages", "library_resolution", "map_row",
+                     "placement", "placement_source", "resolution", "features"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "count": {"type": "integer", "minimum": 0},
+          "stemless": {"type": "integer", "minimum": 0},
+          "faceplate_only": {"type": "integer", "minimum": 0},
+          "pages": {"type": "integer", "minimum": 0},
+          "library_resolution": {"enum": ["module", "library", null]},
+          "map_row": {"$ref": "#/$defs/map_row"},
+          "placement": {"$ref": "#/$defs/placement"},
+          "placement_source": {"$ref": "#/$defs/placement_source"},
+          "resolution": {"type": ["string", "null"]},
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["feature", "count", "placement", "placement_source", "resolution"],
+              "additionalProperties": false,
+              "properties": {
+                "feature": {"type": "string", "pattern": "^(member:.+|unnamed:.+|faceplate)$"},
+                "count": {"type": "integer", "minimum": 0},
+                "placement": {"$ref": "#/$defs/placement"},
+                "placement_source": {"$ref": "#/$defs/placement_source"},
+                "resolution": {"type": ["string", "null"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "wraps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "element", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string"}, "feature": {"type": ["string", "null"]}, "element": {"type": "string"},
+          "state": {"enum": ["reviewed", "approved"]}
+        }
+      }
+    },
+    "shared_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "feature", "count", "stems"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^GAP-"}, "kind": {"type": "string"},
+          "feature": {"type": ["string", "null"]}, "count": {"type": "integer", "minimum": 1},
+          "stems": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "local": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "stem", "page"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string"}, "feature": {"type": ["string", "null"]}, "stem": {"type": ["string", "null"]},
+          "page": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "unclassified": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "template", "instances", "pages"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"enum": ["template", "static", "no_kind", "stem_not_recovered"]},
+          "template": {"type": ["string", "null"]},
+          "instances": {"type": "integer", "minimum": 0},
+          "pages": {"type": ["integer", "null"], "minimum": 0}
+        }
+      }
+    },
+    "unclassified_features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "count"],
+        "additionalProperties": false,
+        "properties": {"kind": {"type": "string"}, "feature": {"type": "string"},
+                       "count": {"type": "integer", "minimum": 0}}
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "feature", "element", "properties", "states", "reason", "source", "verdict", "why"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": {"type": "string"}, "feature": {"type": ["string", "null"]}, "element": {"type": ["string", "null"]},
+          "properties": {"type": ["object", "array"]},
+          "states": {"type": "array", "items": {"type": "object", "required": ["name", "props"]}},
+          "reason": {"type": "string"},
+          "source": {"enum": ["model", "map"]},
+          "verdict": {"enum": ["pending", "accepted", "rejected", "dropped"]},
+          "why": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "approval": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["changes", "refused"],
+          "additionalProperties": false,
+          "properties": {
+            "changes": {"type": "array", "items": {"$ref": "#/$defs/change"}},
+            "refused": {
+              "type": "array",
+              "items": {"type": "object", "required": ["why"], "properties": {"why": {"type": "string", "minLength": 1}}}
+            }
+          }
+        }
+      ]
+    },
+    "totals": {
+      "type": "object",
+      "required": ["kinds", "instances", "wraps", "shared_gaps", "local", "unclassified_objects"],
+      "additionalProperties": false,
+      "properties": {
+        "kinds": {"type": "integer", "minimum": 0}, "instances": {"type": "integer", "minimum": 0},
+        "wraps": {"type": "integer", "minimum": 0}, "shared_gaps": {"type": "integer", "minimum": 0},
+        "local": {"type": "integer", "minimum": 0}, "unclassified_objects": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "placement": {"enum": ["module", "library", "openbridge", "shared_gap", "local", "unclassified", null]},
+    "placement_source": {"enum": ["table", "prior_local", "change"]},
+    "map_row": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "required": ["element", "state"],
+          "additionalProperties": false,
+          "properties": {"element": {"type": "string"}, "state": {"enum": ["reviewed", "approved"]}}
+        }
+      ]
+    },
+    "change": {
+      "type": "object",
+      "required": ["action", "kind", "reason"],
+      "properties": {
+        "action": {"enum": ["reject_proposal", "to_local", "to_shared_gap"]},
+        "kind": {"type": "string"}, "feature": {"type": ["string", "null"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

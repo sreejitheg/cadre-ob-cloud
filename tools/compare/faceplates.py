@@ -5,7 +5,8 @@ must list only the device's alarms, as many as its tab label counts, and the num
 `--expect-alarms` names for a device in the plant's initial state.
 
 The descriptors are the oracle. Each symbol marked `device` must open the faceplate dock with its
-identifier (its `tag` parameter, else its `id`) as the title. The sweep clicks every leaf embedded
+identifier (its `tag` parameter, else its `id`) as the title, and so must each local assembly's device (its
+`title`, else its kind, as `assembly.item` registers it; NOTE-WFB-10 section 11.2). The sweep clicks every leaf embedded
 view on the page (a symbol at the centre of its 48 px box, any other view at its centre) and every
 component of the Cadre HMI Components module (at the centre of its box), reads
 the dock, counts `.ia_qualityOverlay` inside it, and closes the dock again before the next click.
@@ -95,7 +96,18 @@ def expected_devices(desc: dict) -> set[str]:
             if "body" in card:
                 items += list(walk(card["body"]))
     # a plain symbol with `faceplate` (a device id, COB-165) opens that device's faceplate as a device symbol does
-    return {faceplate_title(s) for s in items if s.get("device") or s.get("faceplate")}
+    return ({faceplate_title(s) for s in items if s.get("device") or s.get("faceplate")}
+            | {it["title"] for it in assembly_items(desc) if it.get("device")})
+
+
+def assembly_items(desc: dict) -> list[dict]:
+    """Each local assembly of a descriptor as the generator registers it (`assembly.item`): the kind `local`, its device
+    folder and the title its faceplate (`Faceplate/ASM/Local`) shows. Its embed is a leaf the sweep clicks, and the click
+    opens that faceplate (tranche T3, owner's word)."""
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from hmi import assembly
+    return [assembly.item(a) for a in assembly.assemblies(desc)]
 
 
 # The instrument kinds, whose faceplate is titled by the symbol's tag, else its label (`library.SELECT_INSTRUMENT`, and
@@ -180,6 +192,20 @@ def device_expectations(descs: list[dict], model: dict, style: str = "openbridge
                 continue
             kind = str(d.get("kind", "")).lower()
             out[s.get("params", {}).get("tag") or s["id"]] = {
+                "folder": folder,
+                "sources": list(d["alarmSources"]) if "alarmSources" in d else [folder_pattern(folder)],
+                "tabs": framework.expected_tabs(kind, d["members"], d.get("trend", ()), d.get("faceplate", style)),
+                "trend_open": framework.trend_by_index(kind) and "trend" not in d,
+                "style": d.get("faceplate", style)}
+        for it in assembly_items(desc):   # a local assembly's device: its faceplate shows the tabs of the kind `local`
+            if not isinstance(it.get("device"), str):
+                continue
+            folder = f"{desc.get('tagRoot', '')}/{it['device']}"
+            d = devices.get(folder)
+            if d is None:
+                continue
+            kind = str(d.get("kind", "")).lower()
+            out[it["title"]] = {
                 "folder": folder,
                 "sources": list(d["alarmSources"]) if "alarmSources" in d else [folder_pattern(folder)],
                 "tabs": framework.expected_tabs(kind, d["members"], d.get("trend", ()), d.get("faceplate", style)),

@@ -817,6 +817,15 @@
   },
   "view": "Faceplate/ASM/Instrument"
  },
+ "Faceplate/ASM/Local": {
+  "kind": "framework",
+  "params": {
+   "deviceId": "",
+   "localKind": "",
+   "tab": ""
+  },
+  "view": "Faceplate/ASM/Local"
+ },
  "Faceplate/ASM/Pump": {
   "kind": "framework",
   "params": {
@@ -968,6 +977,7 @@
    "deviceId": "",
    "deviceKind": "",
    "deviceLabel": "",
+   "deviceLocal": "",
    "deviceTitle": "",
    "id": "",
    "node": "",
@@ -1014,6 +1024,7 @@
    "deviceId": "",
    "kind": "",
    "label": "",
+   "localKind": "",
    "popupId": "",
    "style": "openbridge",
    "tab": "",
@@ -1050,6 +1061,7 @@
    "deviceId": "",
    "deviceKind": "",
    "deviceLabel": "",
+   "deviceLocal": "",
    "deviceTitle": "",
    "disabled": false,
    "icon": "",

@@ -437,7 +437,7 @@ class TabTests(unittest.TestCase):
 
     def test_the_dock_binds_the_tab(self):
         body = next(n for n in walk(faceplates()["Framework/SideMenu"]["root"]) if n["meta"]["name"] == "Faceplate")
-        self.assertEqual(body["props"]["params"], {"deviceId": "", "tab": ""})
+        self.assertEqual(body["props"]["params"], {"deviceId": "", "tab": "", "localKind": ""})   # WP-W04: the local kind
         self.assertEqual(body["propConfig"]["props.params.tab"]["binding"]["config"]["expression"],
                          "coalesce({session.custom.selectedTab}, '')")
         popup = next(n for n in walk(faceplates()["Framework/FaceplatePopup"]["root"]) if n["meta"]["name"] == "Faceplate")
@@ -603,7 +603,7 @@ class SampleTests(unittest.TestCase):
             self.assertEqual(nodes["SQ1"]["props"]["path"], "Instrument/Sequence")
             self.assertEqual(nodes["GEN2"]["props"]["params"]["picture"], "genset")
             # a device symbol follows its device's alarms (F016): the frame is bound to the page's alert states
-            if render == "module":
+            if render == "module":      # the component takes the alert as its own properties, and the device in its custom
                 self.assertIn("props.alert", nodes["GEN1"]["propConfig"])
                 self.assertEqual(nodes["GEN1"]["custom"]["deviceKind"], "generator")
             else:
