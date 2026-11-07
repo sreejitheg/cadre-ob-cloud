@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "wfb.hmi.client-layer/1",
+  "title": "Client layer of the house HMI standard STD-WFB-01",
+  "description": "One engagement's changes to the house HMI standard, by rule id (STD-WFB-01 section 12). The manager writes this file from the migration page; the person never edits it by hand. A layer that sets a statement of, or withdraws, a fixed rule, names an unknown rule or parameter, or names another standard version is refused when the effective standard is built; those tests read rules.json and are not expressible in this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "standard", "standard_version", "engagement", "entries"],
+  "properties": {
+    "format": {"const": "wfb.hmi.client-layer/1"},
+    "standard": {"const": "STD-WFB-01"},
+    "standard_version": {
+      "description": "The version of the standard this layer was written for (ruling SR6)",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "engagement": {
+      "description": "The engagement's folder name under projects/",
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{0,63}$"
+    },
+    "documents": {
+      "description": "The client documents the entries cite, for example a style guide or an alarm philosophy",
+      "type": "array",
+      "items": {"$ref": "#/$defs/document"}
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"$ref": "#/$defs/set_parameter"},
+          {"$ref": "#/$defs/replace_statement"},
+          {"$ref": "#/$defs/withdraw"},
+          {"$ref": "#/$defs/add_rule"}
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "house_rule_id": {"type": "string", "pattern": "^HMI-(DSP|NAV|VIS|ALM|TAG|UDT|HIS)-[0-9]{2}$"},
+    "client_rule_id": {"type": "string", "pattern": "^CLI-(DSP|NAV|VIS|ALM|TAG|UDT|HIS)-[0-9]{2}$"},
+    "check_id": {"type": "string", "pattern": "^CK-(DSP|NAV|VIS|ALM|TAG|UDT|HIS)-[0-9]{2}$"},
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 200},
+        "revision": {"type": "string", "maxLength": 32},
+        "date": {"type": "string", "format": "date"}
+      }
+    },
+    "ratified": {
+      "description": "Who accepted the entry on the migration page, and when",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["by", "at"],
+      "properties": {
+        "by": {"type": "string", "minLength": 1, "maxLength": 100},
+        "at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "common": {
+      "type": "object",
+      "required": ["action", "reason", "ratified"],
+      "properties": {
+        "reason": {"type": "string", "minLength": 1, "maxLength": 2000},
+        "document": {"description": "The id of an entry of documents", "type": "string"},
+        "ratified": {"$ref": "#/$defs/ratified"}
+      }
+    },
+    "set_parameter": {
+      "description": "Sets one parameter of a rule; allowed on fixed rules too",
+      "allOf": [{"$ref": "#/$defs/common"}],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["rule", "parameter", "value"],
+      "properties": {
+        "action": {"const": "set_parameter"},
+        "rule": {"$ref": "#/$defs/house_rule_id"},
+        "parameter": {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,63}$"},
+        "value": {}
+      }
+    },
+    "replace_statement": {
+      "description": "Replaces the statement of an overridable rule; its check and fixed flag stay",
+      "allOf": [{"$ref": "#/$defs/common"}],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["rule", "statement", "document"],
+      "properties": {
+        "action": {"const": "replace_statement"},
+        "rule": {"$ref": "#/$defs/house_rule_id"},
+        "statement": {"type": "string", "minLength": 1, "maxLength": 2000}
+      }
+    },
+    "withdraw": {
+      "description": "Withdraws an overridable rule for this engagement; its check reports not_applicable",
+      "allOf": [{"$ref": "#/$defs/common"}],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["rule"],
+      "properties": {
+        "action": {"const": "withdraw"},
+        "rule": {"$ref": "#/$defs/house_rule_id"}
+      }
+    },
+    "add_rule": {
+      "description": "Adds a client rule with the fields of STD-WFB-01 section 3.1",
+      "allOf": [{"$ref": "#/$defs/common"}],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["rule"],
+      "properties": {
+        "action": {"const": "add_rule"},
+        "rule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "level", "statement", "check", "carried_by"],
+          "properties": {
+            "id": {"$ref": "#/$defs/client_rule_id"},
+            "level": {"enum": ["shall", "should"]},
+            "statement": {"type": "string", "minLength": 1, "maxLength": 2000},
+            "check": {
+              "description": "A check id of STD-WFB-01 Table 11.1 that decides it, or null for a judgement of the design review",
+              "oneOf": [{"$ref": "#/$defs/check_id"}, {"type": "null"}]
+            },
+            "check_note": {"type": "string", "maxLength": 500},
+            "carried_by": {"enum": ["workflow", "library", "both"]},
+            "parameters": {
+              "type": "object",
+              "propertyNames": {"pattern": "^[a-z][a-z0-9_]{0,63}$"},
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["default", "description"],
+                "properties": {
+                  "default": {},
+                  "description": {"type": "string", "minLength": 1, "maxLength": 500}
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

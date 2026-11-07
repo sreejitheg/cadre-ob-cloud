@@ -1,0 +1,1365 @@
+{
+ "name": "cadre_hmi_proj1",
+ "tagType": "Folder",
+ "tags": [
+  {"name": "T006", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T011_S69", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T011_S74", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T012_S69", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T012_S74", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T013", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T014", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T015", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T016", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T017", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T018", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T019_S86", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T019_S87", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T019_S88", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T020_S90", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T021_S50", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T021_S53", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T021_S77", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T023_S54", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T023_S55", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T026_S90", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T027_S90", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T028_S90", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T029_S21", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S22", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S23", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S24", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {
+   "name": "ro-pm-voltage",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Float8",
+   "expression": "({[default]cadre_hmi_proj1/T029_S22} + {[default]cadre_hmi_proj1/T029_S23} + {[default]cadre_hmi_proj1/T029_S24}) / 3.0",
+   "executionMode": "FixedRate"
+  },
+  {"name": "T029_S25", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S18", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S19", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S20", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S84", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T029_S85", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S1", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S2", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S3", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T030_S5", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T030_S6", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {"name": "T030_S7", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S8", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S9", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S10", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S11", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S12", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S13", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S14", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S15", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S16", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T030_S17", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T031_S86", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T031_S87", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T031_S88", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T032_S86", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T032_S87", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T032_S88", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T011_S73", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {"name": "T012_S73", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 0},
+  {
+   "name": "T011",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T011_S73}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "remoteAuto",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T011_S74}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "oos",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T011_S69}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "T012",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "value",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T012_S73}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "remoteAuto",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T012_S74}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "oos",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T012_S69}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "T030_S4",
+   "tagType": "Folder",
+   "tags": [
+    {"name": "value", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+    {"name": "state", "tagType": "AtomicTag", "valueSource": "expr", "dataType": "Boolean", "expression": "coalesce({[.]value}, 0) > 0", "executionMode": "FixedRate"},
+    {
+     "name": "faultCode",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Int4",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T030_S5}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {"name": "cmdStart", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {"name": "cmdStop", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {"name": "cmdReset", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {"name": "cmdServiceDone", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {
+     "name": "engineSpeed",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T030_S13}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "voltageLL",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T030_S10}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fuelLevel",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T014}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {"name": "fuelLowLimit", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Float8", "value": 40},
+    {
+     "name": "startDelay",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T030_S1}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "stopDelay",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T030_S2}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "timeLeft",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T016}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "startsToday",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Int4",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T017}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "startsYesterday",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Int4",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T018}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "serviceHours",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Float8",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T015}, 0)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "T022",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T022_S76}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T022_S80}, false)",
+     "executionMode": "FixedRate"
+    },
+    {"name": "cmd", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {"name": "mode", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[default]cadre_hmi_proj1/T022_S74}, false), 'auto', 'manual')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "interlockBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[default]cadre_hmi_proj1/T022_S62}, false), 'interlock', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "oos",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T022_S69}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "duty",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T023_S55}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "T024",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "state",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T024_S76}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T024_S80}, false)",
+     "executionMode": "FixedRate"
+    },
+    {"name": "cmd", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+    {"name": "mode", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+    {
+     "name": "modeBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[default]cadre_hmi_proj1/T024_S74}, false), 'auto', 'manual')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "interlockBadge",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "String",
+     "expression": "if(coalesce({[default]cadre_hmi_proj1/T024_S62}, false), 'interlock', 'none')",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "oos",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T024_S69}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "duty",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T023_S54}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {
+   "name": "fp-T025",
+   "tagType": "Folder",
+   "tags": [
+    {
+     "name": "step",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Int4",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T025_S78}, 0)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "inService",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[default]cadre_hmi_proj1/T025_S69}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "enabled",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T025_S56}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "normal",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "!coalesce({[default]cadre_hmi_proj1/T025_S58}, false)",
+     "executionMode": "FixedRate"
+    },
+    {
+     "name": "fault",
+     "tagType": "AtomicTag",
+     "valueSource": "expr",
+     "dataType": "Boolean",
+     "expression": "coalesce({[default]cadre_hmi_proj1/T025_S58}, false)",
+     "executionMode": "FixedRate"
+    }
+   ]
+  },
+  {"name": "T022_S51", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": true},
+  {"name": "T022_S64", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S57", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S80", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S79", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S61", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S60", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S70", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S83", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S68", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S66", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S65", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S63", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S67", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S71", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S69", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S72", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S82", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S59", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S52", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S81", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S76", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S74", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S75", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T022_S62", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {
+   "name": "T022_S56",
+   "tagType": "AtomicTag",
+   "valueSource": "memory",
+   "dataType": "Boolean",
+   "value": true,
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 692",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 0.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T022_S27",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "!coalesce({[.]T022_S51}, true)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 693",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S36",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S64}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 694",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S30",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S57}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 695",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "High",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S46",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S80}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 696",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S45",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S79}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 697",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S33",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S61}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 698",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S35",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S60}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 699",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S42",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S70}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 700",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S49",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S83}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 701",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S40",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S68}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 702",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S38",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S66}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 703",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Medium",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 15
+    }
+   ]
+  },
+  {
+   "name": "T022_S37",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S65}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 704",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S34",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S63}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 705",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S39",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S67}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 706",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S43",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S71}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 707",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S41",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S69}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 708",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T022_S44",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S72}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 709",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S48",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S82}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 710",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S32",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S59}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 711",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Medium",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S28",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S52}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 712",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S47",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T022_S81}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 713",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T022_S89",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "{[.]T022_S27} || {[.]T022_S36} || {[.]T022_S30} || {[.]T022_S46} || {[.]T022_S45} || {[.]T022_S33} || {[.]T022_S35} || {[.]T022_S42} || {[.]T022_S49} || {[.]T022_S40} || {[.]T022_S38} || {[.]T022_S37} || {[.]T022_S34} || {[.]T022_S39} || {[.]T022_S43} || {[.]T022_S41} || {[.]T022_S44} || {[.]T022_S48} || {[.]T022_S32} || {[.]T022_S28} || {[.]T022_S47}",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 714",
+     "displayPath": "Item 1/Page 2/Page 8/T022",
+     "priority": "Diagnostic",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {"name": "T024_S51", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": true},
+  {"name": "T024_S64", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S57", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S80", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S79", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S61", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S60", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S70", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S83", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S68", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S66", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S65", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S63", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S67", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S71", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S69", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S72", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S82", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S59", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S52", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S81", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S76", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S74", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S75", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T024_S62", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {
+   "name": "T024_S56",
+   "tagType": "AtomicTag",
+   "valueSource": "memory",
+   "dataType": "Boolean",
+   "value": true,
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 715",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 0.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T024_S27",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "!coalesce({[.]T024_S51}, true)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 716",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S36",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S64}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 717",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S30",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S57}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 718",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "High",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S46",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S80}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 719",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S45",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S79}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 720",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S33",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S61}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 721",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S35",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S60}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 722",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S42",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S70}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 723",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S49",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S83}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 724",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S40",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S68}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 725",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S38",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S66}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 726",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Medium",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 15
+    }
+   ]
+  },
+  {
+   "name": "T024_S37",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S65}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 727",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S34",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S63}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 728",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S39",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S67}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 729",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S43",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S71}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 730",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S41",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S69}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 731",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T024_S44",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S72}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 732",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S48",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S82}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 733",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S32",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S59}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 734",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Medium",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S28",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S52}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 735",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S47",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T024_S81}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 736",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 5
+    }
+   ]
+  },
+  {
+   "name": "T024_S89",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "{[.]T024_S27} || {[.]T024_S36} || {[.]T024_S30} || {[.]T024_S46} || {[.]T024_S45} || {[.]T024_S33} || {[.]T024_S35} || {[.]T024_S42} || {[.]T024_S49} || {[.]T024_S40} || {[.]T024_S38} || {[.]T024_S37} || {[.]T024_S34} || {[.]T024_S39} || {[.]T024_S43} || {[.]T024_S41} || {[.]T024_S44} || {[.]T024_S48} || {[.]T024_S32} || {[.]T024_S28} || {[.]T024_S47}",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 737",
+     "displayPath": "Item 1/Page 2/Page 8/T024",
+     "priority": "Diagnostic",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {"name": "T025_S56", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": true},
+  {"name": "T025_S58", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T025_S69", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Boolean", "value": false},
+  {"name": "T025_S78", "tagType": "AtomicTag", "valueSource": "memory", "dataType": "Int4", "value": 0},
+  {
+   "name": "T025_S29",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "!coalesce({[.]T025_S56}, true)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 738",
+     "displayPath": "Item 1/Page 2/Page 8/T025",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T025_S41",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T025_S69}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 739",
+     "displayPath": "Item 1/Page 2/Page 8/T025",
+     "priority": "Low",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  },
+  {
+   "name": "T025_S31",
+   "tagType": "AtomicTag",
+   "valueSource": "expr",
+   "dataType": "Boolean",
+   "expression": "coalesce({[.]T025_S58}, false)",
+   "executionMode": "FixedRate",
+   "alarms": [
+    {
+     "name": "Alarm",
+     "label": "Item 740",
+     "displayPath": "Item 1/Page 2/Page 8/T025",
+     "priority": "Medium",
+     "shelvingAllowed": true,
+     "setpointA": 1.0,
+     "timeOnDelaySeconds": 0
+    }
+   ]
+  }
+ ]
+}

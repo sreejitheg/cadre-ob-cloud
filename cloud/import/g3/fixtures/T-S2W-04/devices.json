@@ -1,0 +1,98 @@
+{
+ "schema": "cadre-hmi-devices/1",
+ "tagRoot": "[default]cadre_hmi_proj1",
+ "devices": [
+  {
+   "id": "T011",
+   "kind": "instrument",
+   "title": "T011",
+   "label": "Item 86",
+   "unit": "\u00b0C",
+   "faceplate": "asm",
+   "members": {"value": {"type": "Float8", "access": "read"}, "remoteAuto": {"type": "Boolean", "access": "read"}, "oos": {"type": "Boolean", "access": "read"}},
+   "alarmSources": []
+  },
+  {
+   "id": "T012",
+   "kind": "instrument",
+   "title": "T012",
+   "label": "Item 87",
+   "unit": "\u00b0C",
+   "faceplate": "asm",
+   "members": {"value": {"type": "Float8", "access": "read"}, "remoteAuto": {"type": "Boolean", "access": "read"}, "oos": {"type": "Boolean", "access": "read"}},
+   "alarmSources": []
+  },
+  {
+   "id": "T022",
+   "kind": "pump",
+   "title": "T022",
+   "label": "Item 3",
+   "faceplate": "asm",
+   "members": {
+    "state": {"type": "Boolean", "access": "read"},
+    "fault": {"type": "Boolean", "access": "read"},
+    "cmd": {"type": "Boolean", "access": "write"},
+    "mode": {"type": "Int4", "access": "write"}
+   },
+   "modes": [{"value": 0, "name": "Item 598", "owner": "program"}, {"value": 1, "name": "Item 599", "owner": "operator"}],
+   "alarmSources": ["prov:default:/tag:cadre_hmi_proj1/T022_S26*:/alm:*", "prov:default:/tag:cadre_hmi_proj1/T022_S56:/alm:*", "prov:default:/tag:cadre_hmi_proj1/T022_S89:/alm:*"]
+  },
+  {
+   "id": "T024",
+   "kind": "pump",
+   "title": "T024",
+   "label": "Item 4",
+   "faceplate": "asm",
+   "members": {
+    "state": {"type": "Boolean", "access": "read"},
+    "fault": {"type": "Boolean", "access": "read"},
+    "cmd": {"type": "Boolean", "access": "write"},
+    "mode": {"type": "Int4", "access": "write"}
+   },
+   "modes": [{"value": 0, "name": "Item 598", "owner": "program"}, {"value": 1, "name": "Item 599", "owner": "operator"}],
+   "alarmSources": ["prov:default:/tag:cadre_hmi_proj1/T024_S26*:/alm:*", "prov:default:/tag:cadre_hmi_proj1/T024_S56:/alm:*", "prov:default:/tag:cadre_hmi_proj1/T024_S89:/alm:*"]
+  },
+  {
+   "id": "T030_S4",
+   "kind": "generator",
+   "title": "T030_S4",
+   "label": "Page 4",
+   "faceplate": "asm",
+   "members": {
+    "state": {"type": "Boolean", "access": "read"},
+    "faultCode": {"type": "Int4", "access": "read"},
+    "cmdStart": {"type": "Boolean", "access": "write", "pulse": true, "caption": "Item 600"},
+    "cmdStop": {"type": "Boolean", "access": "write", "pulse": true, "caption": "Item 601"},
+    "cmdReset": {"type": "Boolean", "access": "write", "pulse": true, "caption": "Item 602"},
+    "cmdServiceDone": {"type": "Boolean", "access": "write", "pulse": true, "caption": "Item 603"},
+    "engineSpeed": {"type": "Float8", "access": "read"},
+    "voltageLL": {"type": "Float8", "access": "read"},
+    "fuelLevel": {"type": "Float8", "access": "read"},
+    "fuelLowLimit": {"type": "Float8", "access": "read"},
+    "startDelay": {"type": "Float8", "access": "read"},
+    "stopDelay": {"type": "Float8", "access": "read"},
+    "timeLeft": {"type": "Float8", "access": "read"},
+    "startsToday": {"type": "Int4", "access": "read"},
+    "startsYesterday": {"type": "Int4", "access": "read"},
+    "serviceHours": {"type": "Float8", "access": "read"}
+   },
+   "alarmSources": []
+  },
+  {
+   "id": "fp-T025",
+   "kind": "sequence",
+   "title": "T025",
+   "label": "Item 9",
+   "faceplate": "asm",
+   "node": "Item 1/Page 2/Page 8",
+   "members": {
+    "step": {"type": "Int4", "access": "read"},
+    "inService": {"type": "Boolean", "access": "read"},
+    "enabled": {"type": "Boolean", "access": "read"},
+    "normal": {"type": "Boolean", "access": "read"},
+    "fault": {"type": "Boolean", "access": "read"}
+   },
+   "alarmSources": ["prov:default:/tag:cadre_hmi_proj1/T025_S26*:/alm:*"]
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "verdict": "concern",
+ "summary": "Item 987",
+ "images_examined": ["Page_8.png", "Page_2.png", "Page_4.png", "sheet-a.png", "sheet-b.png"],
+ "findings": [
+  {"image": "Page_8.png", "subject": "Item 988", "evidence": "Item 989", "severity": "medium"},
+  {"image": "Page_8.png", "subject": "Item 990", "evidence": "Item 991", "severity": "low"},
+  {"image": "Page_4.png", "subject": "Item 992", "evidence": "Item 993", "severity": "medium"},
+  {"image": "Page_4.png", "subject": "Item 994", "evidence": "Item 995", "severity": "medium"},
+  {"image": "Page_4.png", "subject": "Item 996", "evidence": "Item 997", "severity": "low"},
+  {"image": "Page_2.png", "subject": "Item 998", "evidence": "Item 999", "severity": "medium"},
+  {"image": "Page_2.png", "subject": "Item 1000", "evidence": "Item 1001", "severity": "low"},
+  {"image": "Page_2.png", "subject": "Item 1002", "evidence": "Item 1003", "severity": "low"}
+ ]
+}

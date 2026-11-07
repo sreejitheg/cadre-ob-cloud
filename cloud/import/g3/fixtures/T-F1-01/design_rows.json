@@ -1,0 +1,72 @@
+[
+ {"component": "well", "entry": "Page_8:Device_7", "gap": "GD-08", "page": "Page_8", "properties": ["marks"], "treatment": "Item 23"},
+ {
+  "component": "pump",
+  "entry": "Page_8:Device_37",
+  "gap": "GD-24",
+  "page": "Page_8",
+  "properties": ["device", "params.badgeControl", "params.badgeInterlock", "params.outOfService", "params.statusText", "params.readoutPosition"],
+  "treatment": "Item 24"
+ },
+ {
+  "component": "pump",
+  "entry": "Page_8:Device_38",
+  "gap": "GD-24",
+  "page": "Page_8",
+  "properties": ["device", "params.badgeControl", "params.badgeInterlock", "params.outOfService", "params.statusText", "params.readoutPosition"],
+  "treatment": "Item 25"
+ },
+ {"component": "label", "entry": "Page_8:Device_30", "gap": null, "page": "Page_8", "treatment": "Item 26"},
+ {"component": "label", "entry": "Page_8:Device_29", "gap": null, "page": "Page_8", "treatment": "Item 27"},
+ {"component": "section", "entry": "Page_8:Device_3", "gap": "GD-06", "page": "Page_8", "treatment": "Item 28"},
+ {"component": "pipe", "entry": "Page_8:flow_15", "gap": null, "page": "Page_8", "treatment": "Item 29"},
+ {"component": "pipe", "entry": "Page_8:flow_16", "gap": null, "page": "Page_8", "treatment": "Item 30"},
+ {"component": "pipe", "entry": "Page_8:flow_17", "gap": null, "page": "Page_8", "treatment": "Item 31"},
+ {"component": "pipe", "entry": "Page_8:flow_18", "gap": null, "page": "Page_8", "treatment": "Item 32"},
+ {"component": "pump", "entry": "Page_8:ind_39", "gap": null, "page": "Page_8", "properties": ["params.badgeDuty"], "treatment": "Item 33"},
+ {"component": "pump", "entry": "Page_8:ind_40", "gap": null, "page": "Page_8", "properties": ["params.badgeDuty"], "treatment": "Item 34"},
+ {
+  "component": "indicator",
+  "entry": "Page_8:ind_41",
+  "gap": "GD-09",
+  "page": "Page_8",
+  "properties": ["bind.state", "states", "stateDefault", "params.readoutPosition"],
+  "treatment": "Item 35"
+ },
+ {
+  "component": "indicator",
+  "entry": "Page_8:ind_42",
+  "gap": null,
+  "page": "Page_8",
+  "properties": ["bind.state", "states", "stateDefault", "params.readoutPosition"],
+  "treatment": "Item 36"
+ },
+ {
+  "component": "indicator",
+  "entry": "Page_8:ind_43",
+  "gap": null,
+  "page": "Page_8",
+  "properties": ["bind.state", "states", "stateDefault", "params.readoutPosition"],
+  "treatment": "Item 37"
+ },
+ {
+  "component": "indicator",
+  "entry": "Page_8:ind_44",
+  "gap": "GD-09",
+  "page": "Page_8",
+  "properties": ["bind.state", "states", "stateDefault", "params.readoutPosition"],
+  "treatment": "Item 38"
+ },
+ {"component": "button", "entry": "Page_8:nav_19", "gap": "GD-11", "page": "Page_8", "properties": ["action.device", "action.kind", "action.tab"], "treatment": "Item 39"},
+ {"component": "button", "entry": "Page_8:nav_20", "gap": "GD-11", "page": "Page_8", "properties": ["action.device", "action.kind", "action.tab"], "treatment": "Item 40"},
+ {"component": "button", "entry": "Page_8:nav_21", "gap": "GD-11", "page": "Page_8", "properties": ["action.device", "action.kind", "action.tab"], "treatment": "Item 41"},
+ {"component": "button", "entry": "Page_8:nav_22", "gap": null, "page": "Page_8", "properties": ["action.route"], "treatment": "Item 42"},
+ {"component": "section", "entry": "Page_8:reg_1", "gap": null, "page": "Page_8", "treatment": "Item 43"},
+ {"component": "section", "entry": "Page_8:reg_2", "gap": null, "page": "Page_8", "treatment": "Item 44"},
+ {"component": "section", "entry": "Page_8:reg_4", "gap": null, "page": "Page_8", "treatment": "Item 45"},
+ {"component": "section", "entry": "Page_8:reg_5", "gap": null, "page": "Page_8", "treatment": "Item 46"},
+ {"component": "section", "entry": "Page_8:reg_6", "gap": null, "page": "Page_8", "treatment": "Item 47"},
+ {"component": "section", "entry": "Page_8:static.0", "gap": null, "page": "Page_8", "treatment": "Item 48"},
+ {"component": "label", "entry": "Page_8:static.1", "gap": null, "page": "Page_8", "treatment": "Item 49"},
+ {"component": "label", "entry": "Page_8:static.2", "gap": null, "page": "Page_8", "treatment": "Item 50"}
+]

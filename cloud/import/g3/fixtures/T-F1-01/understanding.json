@@ -1,0 +1,187 @@
+{
+ "unit": {"id": "Page_8", "kind": "page", "windows": ["Page_8"]},
+ "regions": [
+  {"bbox": {"h": 22, "w": 259, "x": 1, "y": 70}, "kind": "button-bar", "title": "Item 51", "id": "reg_1", "ans": ["Page_8:504", "Page_8:506", "Page_8:510"]},
+  {"bbox": {"h": 77, "w": 136, "x": 884, "y": 70}, "kind": "panel", "title": "Item 52", "id": "reg_2", "ans": ["Page_8:753", "Page_8:113"]},
+  {
+   "bbox": {"h": 258, "w": 808, "x": 108, "y": 287},
+   "kind": "process-diagram",
+   "title": "Item 53",
+   "id": "reg_4",
+   "ans": [
+    "Page_8:106",
+    "Page_8:23",
+    "Page_8:12",
+    "Page_8:858",
+    "Page_8:40",
+    "Page_8:41",
+    "Page_8:484",
+    "Page_8:91",
+    "Page_8:393",
+    "Page_8:388",
+    "Page_8:390",
+    "Page_8:391",
+    "Page_8:392",
+    "Page_8:516",
+    "Page_8:394",
+    "Page_8:395",
+    "Page_8:415",
+    "Page_8:434",
+    "Page_8:460",
+    "Page_8:491",
+    "Page_8:517",
+    "Page_8:518",
+    "Page_8:42",
+    "Page_8:71",
+    "Page_8:580",
+    "Page_8:581",
+    "Page_8:84",
+    "Page_8:582",
+    "Page_8:583",
+    "Page_8:90",
+    "Page_8:598",
+    "Page_8:599",
+    "Page_8:107",
+    "Page_8:79",
+    "Page_8:109",
+    "Page_8:111",
+    "Page_8:112",
+    "Page_8:94"
+   ]
+  },
+  {
+   "bbox": {"h": 97, "w": 188, "x": 393, "y": 323},
+   "kind": "status-list",
+   "title": "Item 54",
+   "id": "reg_5",
+   "ans": ["Page_8:111", "Page_8:112", "Page_8:94", "Page_8:598", "Page_8:599", "Page_8:84", "Page_8:582", "Page_8:583", "Page_8:580", "Page_8:581", "Page_8:79", "Page_8:109"]
+  },
+  {"bbox": {"h": 47, "w": 204, "x": 395, "y": 497}, "kind": "panel", "title": "Item 55", "id": "reg_6", "ans": ["Page_8:434", "Page_8:460"]}
+ ],
+ "devices": [
+  {
+   "bbox": {"h": 199, "w": 242, "x": 385, "y": 295},
+   "type": "wet-well",
+   "inferred": false,
+   "label": "Item 56",
+   "id": "Device_7",
+   "ans": ["Page_8:106", "Page_8:23", "Page_8:12", "Page_8:858"],
+   "tag": null
+  },
+  {
+   "bbox": {"h": 90, "w": 99, "x": 395, "y": 454},
+   "type": "pump",
+   "inferred": true,
+   "label": "Item 57",
+   "faceplate": "Item 58",
+   "id": "Device_37",
+   "ans": ["Page_8:395", "Page_8:434"],
+   "tag": "T022"
+  },
+  {
+   "bbox": {"h": 90, "w": 99, "x": 500, "y": 454},
+   "type": "pump",
+   "inferred": true,
+   "label": "Item 59",
+   "faceplate": "Item 58",
+   "id": "Device_38",
+   "ans": ["Page_8:415", "Page_8:460"],
+   "tag": "T024"
+  },
+  {
+   "bbox": {"h": 97, "w": 84, "x": 497, "y": 323},
+   "type": "level-instrument",
+   "inferred": true,
+   "label": "Item 60",
+   "id": "Device_30",
+   "ans": ["Page_8:79", "Page_8:109"],
+   "tag": "T021"
+  },
+  {"bbox": {"h": 35, "w": 84, "x": 393, "y": 323}, "type": "level-switch", "inferred": true, "label": "Item 61", "id": "Device_29", "ans": ["Page_8:94"], "tag": "T020"},
+  {"bbox": {"h": 60, "w": 136, "x": 884, "y": 87}, "type": "duty-selector", "inferred": false, "label": "Item 62", "id": "Device_3", "ans": ["Page_8:113"], "tag": null}
+ ],
+ "flows": [
+  {"path": [{"x": 209, "y": 304}, {"x": 386, "y": 304}], "inferred": true, "id": "flow_15", "ans": ["Page_8:393", "Page_8:392"], "from": null, "to": "Device_7"},
+  {
+   "path": [{"x": 452, "y": 459}, {"x": 487, "y": 459}, {"x": 487, "y": 304}, {"x": 592, "y": 304}],
+   "inferred": true,
+   "id": "flow_16",
+   "ans": ["Page_8:394", "Page_8:41", "Page_8:42", "Page_8:90", "Page_8:91"],
+   "from": "Device_37",
+   "to": null
+  },
+  {
+   "path": [{"x": 557, "y": 459}, {"x": 592, "y": 459}, {"x": 592, "y": 304}, {"x": 620, "y": 304}],
+   "inferred": true,
+   "id": "flow_17",
+   "ans": ["Page_8:516", "Page_8:40", "Page_8:71", "Page_8:484"],
+   "from": "Device_38",
+   "to": null
+  },
+  {"path": [{"x": 620, "y": 304}, {"x": 816, "y": 304}], "inferred": true, "id": "flow_18", "ans": ["Page_8:388", "Page_8:107"], "from": null, "to": null}
+ ],
+ "readouts": [],
+ "indicators": [
+  {"bbox": {"h": 13, "w": 13, "x": 428, "y": 439}, "inferred": true, "label": "Item 63", "id": "ind_39", "ans": ["Page_8:518"], "region": "reg_4"},
+  {"bbox": {"h": 13, "w": 13, "x": 533, "y": 439}, "inferred": true, "label": "Item 64", "id": "ind_40", "ans": ["Page_8:517"], "region": "reg_4"},
+  {"bbox": {"h": 17, "w": 84, "x": 497, "y": 323}, "inferred": true, "label": "Item 65", "id": "ind_41", "ans": ["Page_8:598", "Page_8:599"], "region": "reg_5"},
+  {
+   "bbox": {"h": 17, "w": 84, "x": 497, "y": 363},
+   "inferred": true,
+   "label": "Item 66",
+   "id": "ind_42",
+   "ans": ["Page_8:84", "Page_8:582", "Page_8:583"],
+   "region": "reg_5"
+  },
+  {"bbox": {"h": 17, "w": 84, "x": 497, "y": 403}, "inferred": true, "label": "Item 67", "id": "ind_43", "ans": ["Page_8:580", "Page_8:581"], "region": "reg_5"},
+  {"bbox": {"h": 17, "w": 84, "x": 393, "y": 323}, "inferred": true, "label": "Item 68", "id": "ind_44", "ans": ["Page_8:111", "Page_8:112"], "region": "reg_5"}
+ ],
+ "navigation": [
+  {
+   "bbox": {"h": 22, "w": 80, "x": 1, "y": 70},
+   "kind": "popup",
+   "priv": null,
+   "inferred": false,
+   "label": "Item 8",
+   "id": "nav_19",
+   "ans": ["Page_8:504"],
+   "target": "Item 69"
+  },
+  {
+   "bbox": {"h": 22, "w": 85, "x": 82, "y": 70},
+   "kind": "popup",
+   "priv": null,
+   "inferred": false,
+   "label": "Item 70",
+   "id": "nav_20",
+   "ans": ["Page_8:506"],
+   "target": "Item 71"
+  },
+  {
+   "bbox": {"h": 22, "w": 92, "x": 168, "y": 70},
+   "kind": "popup",
+   "priv": null,
+   "inferred": false,
+   "label": "Item 72",
+   "id": "nav_21",
+   "ans": ["Page_8:510"],
+   "target": "Item 73"
+  },
+  {
+   "bbox": {"h": 32, "w": 101, "x": 815, "y": 287},
+   "kind": "page",
+   "priv": null,
+   "inferred": false,
+   "label": "Item 12",
+   "id": "nav_22",
+   "ans": ["Page_8:491"],
+   "target": "Page_9"
+  }
+ ],
+ "static": [
+  {"class": "artwork", "what": "Item 74", "ans": ["Page_8:390"]},
+  {"class": "label", "what": "Item 75", "ans": ["Page_8:391"]},
+  {"class": "heading", "what": "Item 76", "ans": ["Page_8:753"]}
+ ],
+ "dropped": []
+}

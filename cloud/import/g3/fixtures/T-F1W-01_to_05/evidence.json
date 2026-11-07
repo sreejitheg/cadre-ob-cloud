@@ -1,0 +1,1177 @@
+{
+ "format": "wfb.migration.evidence/1",
+ "pages": [
+  {
+   "route": "/page-16",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-16/screenshot.png"],
+     "item": "g8",
+     "page": "/page-16",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-16",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-16",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-16",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-9",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 536, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_9/screenshot.png"],
+     "item": "g8",
+     "page": "/page-9",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-9",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-9",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-9",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-11",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 536, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-11/screenshot.png"],
+     "item": "g8",
+     "page": "/page-11",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-11",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-11",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-11",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-20",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-20/screenshot.png"],
+     "item": "g8",
+     "page": "/page-20",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-20",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-20",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-20",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-18",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-18/screenshot.png"],
+     "item": "g8",
+     "page": "/page-18",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-18",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-18",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-18",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-19",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-19/screenshot.png"],
+     "item": "g8",
+     "page": "/page-19",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-19",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-19",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-19",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-21",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 507, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-21/screenshot.png"],
+     "item": "g8",
+     "page": "/page-21",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-21",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-21",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-21",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-13",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 526, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_13/screenshot.png"],
+     "item": "g8",
+     "page": "/page-13",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-13",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-13",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-13",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-10",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 526, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_10/screenshot.png"],
+     "item": "g8",
+     "page": "/page-10",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-10",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-10",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-10",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-22",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 507, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-22/screenshot.png"],
+     "item": "g8",
+     "page": "/page-22",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-22",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-22",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-22",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-14",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-14/screenshot.png"],
+     "item": "g8",
+     "page": "/page-14",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-14",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-14",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-14",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-7",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 526, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-7/screenshot.png"],
+     "item": "g8",
+     "page": "/page-7",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-7",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-7",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-7",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-8",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 735, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_8/screenshot.png"],
+     "item": "g8",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 2, "faulty": 0, "missing": 0, "opened": 2, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "readouts", "steps": 2},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:readouts",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "fill", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:fill",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "symbols", "steps": 3},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:symbols",
+     "page": "/page-8",
+     "verdict": "pass"
+    },
+    {
+     "cause": "library",
+     "counts": {"failed": 3, "held": 1, "states": 4},
+     "detail": "Item 972",
+     "files": ["probe/probe.json"],
+     "item": "alarm:high",
+     "page": "/page-8",
+     "verdict": "fail"
+    },
+    {
+     "cause": "library",
+     "counts": {"failed": 3, "held": 1, "states": 4},
+     "detail": "Item 973",
+     "files": ["probe/probe.json"],
+     "item": "alarm:medium",
+     "page": "/page-8",
+     "verdict": "fail"
+    },
+    {
+     "cause": "library",
+     "counts": {"failed": 3, "held": 1, "states": 4},
+     "detail": "Item 974",
+     "files": ["probe/probe.json"],
+     "item": "alarm:low",
+     "page": "/page-8",
+     "verdict": "fail"
+    },
+    {
+     "cause": null,
+     "counts": {"not_applicable": true},
+     "detail": "Item 975",
+     "files": ["probe/probe.json"],
+     "item": "alarm:diagnostic",
+     "page": "/page-8",
+     "verdict": "skipped"
+    }
+   ]
+  },
+  {
+   "route": "/page-6",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 526, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_6/screenshot.png"],
+     "item": "g8",
+     "page": "/page-6",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-6",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-6",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-6",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-3",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 531, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_3/screenshot.png"],
+     "item": "g8",
+     "page": "/page-3",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-3",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-3",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-3",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-2",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 810, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_2/screenshot.png"],
+     "item": "g8",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 5, "faulty": 0, "missing": 0, "opened": 5, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": "page",
+     "counts": {"failed": 1, "gate": "readouts", "steps": 2},
+     "detail": "Item 976",
+     "files": ["glass/gates.json"],
+     "item": "glass:readouts",
+     "page": "/page-2",
+     "verdict": "fail"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "sizes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:sizes",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "fill", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:fill",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-2",
+     "verdict": "pass"
+    },
+    {
+     "cause": "page",
+     "counts": {"failed": 1, "gate": "symbols", "steps": 5},
+     "detail": "Item 977",
+     "files": ["glass/gates.json"],
+     "item": "glass:symbols",
+     "page": "/page-2",
+     "verdict": "fail"
+    },
+    {
+     "cause": "page",
+     "counts": {"failed": 1, "gate": "banner", "steps": 1},
+     "detail": "Item 978",
+     "files": ["glass/gates.json"],
+     "item": "glass:banner",
+     "page": "/page-2",
+     "verdict": "fail"
+    }
+   ]
+  },
+  {
+   "route": "/page-4",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 1021, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-4/screenshot.png"],
+     "item": "g8",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 1, "faulty": 0, "missing": 0, "opened": 1, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "sizes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:sizes",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "fill", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:fill",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-4",
+     "verdict": "pass"
+    },
+    {
+     "cause": "page",
+     "counts": {"failed": 1, "gate": "banner", "steps": 1},
+     "detail": "Item 979",
+     "files": ["glass/gates.json"],
+     "item": "glass:banner",
+     "page": "/page-4",
+     "verdict": "fail"
+    }
+   ]
+  },
+  {
+   "route": "/page-5",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 541, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-5/screenshot.png"],
+     "item": "g8",
+     "page": "/page-5",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-5",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-5",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-5",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-15",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 506, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/page-15/screenshot.png"],
+     "item": "g8",
+     "page": "/page-15",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-15",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-15",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-15",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-12",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 536, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_12/screenshot.png"],
+     "item": "g8",
+     "page": "/page-12",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-12",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-12",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-12",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-1",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"components": 516, "error_badges": 0, "quality_overlays": 0},
+     "detail": "Item 970",
+     "files": ["pictures/g8/Page_1/screenshot.png"],
+     "item": "g8",
+     "page": "/page-1",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"expected": 0, "faulty": 0, "missing": 0, "opened": 0, "shallow": 0, "unexpected": 0},
+     "detail": "Item 971",
+     "files": ["g11/faceplates.json"],
+     "item": "g11",
+     "page": "/page-1",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "colour", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:colour",
+     "page": "/page-1",
+     "verdict": "pass"
+    },
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-1",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "/page-23",
+   "items": [
+    {
+     "cause": "page",
+     "counts": {"failed": 1, "gate": "routes", "steps": 1},
+     "detail": "Item 980",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-23",
+     "verdict": "fail"
+    }
+   ]
+  },
+  {
+   "route": "/page-26",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"failed": 0, "gate": "routes", "steps": 1},
+     "detail": "",
+     "files": ["glass/gates.json"],
+     "item": "glass:routes",
+     "page": "/page-26",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "Page_2",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"columns": 3, "kind": "page", "missing": 0},
+     "detail": "",
+     "files": ["pictures/sbs/manifest.json", "Page_2.png"],
+     "item": "sidebyside",
+     "page": "Page_2",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "Page_4",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"columns": 3, "kind": "page", "missing": 0},
+     "detail": "",
+     "files": ["pictures/sbs/manifest.json", "Page_4.png"],
+     "item": "sidebyside",
+     "page": "Page_4",
+     "verdict": "pass"
+    }
+   ]
+  },
+  {
+   "route": "Page_8",
+   "items": [
+    {
+     "cause": null,
+     "counts": {"columns": 3, "kind": "page", "missing": 0},
+     "detail": "",
+     "files": ["pictures/sbs/manifest.json", "Page_8.png"],
+     "item": "sidebyside",
+     "page": "Page_8",
+     "verdict": "pass"
+    }
+   ]
+  }
+ ],
+ "project_items": [
+  {
+   "cause": "page",
+   "counts": {"covered": 157, "rows": 191},
+   "detail": "Item 981",
+   "files": ["offline/checks.json"],
+   "item": "offline:coverage",
+   "page": null,
+   "verdict": "fail"
+  },
+  {"cause": null, "counts": {"resolved": 62, "total": 62}, "detail": "", "files": ["offline/checks.json"], "item": "offline:navigation", "page": null, "verdict": "pass"},
+  {
+   "cause": null,
+   "counts": {"bound": 64, "declared": 15, "value_components": 79},
+   "detail": "",
+   "files": ["offline/checks.json"],
+   "item": "offline:tags",
+   "page": null,
+   "verdict": "pass"
+  },
+  {
+   "cause": null,
+   "counts": {"L1": 0, "L10": 0, "L11": "not run", "L12": 0, "L2": 0, "L3": 0, "L4": 0, "L5": 0, "L6": 0, "L7": 0, "L8": 0, "L9": 0, "findings": 0, "pages": 3},
+   "detail": "Item 982",
+   "files": ["offline/checks.json"],
+   "item": "offline:layout",
+   "page": null,
+   "verdict": "pass"
+  },
+  {
+   "cause": "page",
+   "counts": {
+    "failed": 34,
+    "group_A": "0/0",
+    "group_C": "1/7",
+    "group_D": "2/3",
+    "group_N": "0/22",
+    "group_P": "0/0",
+    "group_R": "2/7",
+    "group_T": "0/0",
+    "rows": 39,
+    "trip": 0,
+    "writes": 7
+   },
+   "detail": "Item 983",
+   "files": [],
+   "item": "g10",
+   "page": null,
+   "verdict": "fail"
+  },
+  {
+   "cause": "tool",
+   "counts": {"failed": 1, "gate": "search", "steps": 3},
+   "detail": "Item 984",
+   "files": ["glass/gates.json"],
+   "item": "glass:search",
+   "page": null,
+   "verdict": "fail"
+  },
+  {
+   "cause": "tool",
+   "counts": {"failed": 1, "gate": "zoom", "steps": 7},
+   "detail": "Item 984",
+   "files": ["glass/gates.json"],
+   "item": "glass:zoom",
+   "page": null,
+   "verdict": "fail"
+  },
+  {
+   "cause": null,
+   "counts": {"failed": 0, "gate": "menus", "steps": 4},
+   "detail": "",
+   "files": ["glass/gates.json"],
+   "item": "glass:menus",
+   "page": null,
+   "verdict": "pass"
+  },
+  {
+   "cause": null,
+   "counts": {"failed": 0, "gate": "panels", "steps": 2},
+   "detail": "",
+   "files": ["glass/gates.json"],
+   "item": "glass:panels",
+   "page": null,
+   "verdict": "pass"
+  },
+  {"cause": null, "counts": {"failed": 0, "gate": "fill", "steps": 2}, "detail": "", "files": ["glass/gates.json"], "item": "glass:fill", "page": null, "verdict": "pass"},
+  {
+   "cause": "library",
+   "counts": {"failed": 5, "gate": "alarm", "steps": 5},
+   "detail": "Item 985",
+   "files": ["glass/gates.json"],
+   "item": "glass:alarm",
+   "page": null,
+   "verdict": "fail"
+  },
+  {
+   "cause": "library",
+   "counts": {"failed": 1, "gate": "ack", "steps": 4},
+   "detail": "Item 986",
+   "files": ["glass/gates.json"],
+   "item": "glass:ack",
+   "page": null,
+   "verdict": "fail"
+  }
+ ]
+}

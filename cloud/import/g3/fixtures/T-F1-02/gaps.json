@@ -1,0 +1,172 @@
+{
+ "gaps": [
+  {
+   "id": "GD-01",
+   "kind": "kind",
+   "item": "Item 244",
+   "library_today": "Item 245",
+   "needed": "Item 246",
+   "drawn": "Item 247",
+   "reason": "Item 248",
+   "status": "partial",
+   "mapping_rows": ["Page_2:Device_58", "Page_2:Device_59", "Page_2:Device_60", "Page_2:Device_61", "Page_2:Device_163"]
+  },
+  {
+   "id": "GD-02",
+   "kind": "kind",
+   "item": "Item 249",
+   "library_today": "Item 250",
+   "needed": "Item 251",
+   "drawn": "Item 252",
+   "reason": "Item 253",
+   "status": "open",
+   "mapping_rows": ["Page_2:Device_49", "Page_2:Device_50"]
+  },
+  {
+   "id": "GD-03",
+   "kind": "kind",
+   "item": "Item 254",
+   "library_today": "Item 255",
+   "needed": "Item 256",
+   "drawn": "Item 257",
+   "reason": "Item 258",
+   "status": "open",
+   "mapping_rows": [
+    "Page_2:starter-T001",
+    "Page_2:starter-T002",
+    "Page_2:starter-T003",
+    "Page_2:starter-T007",
+    "Page_2:starter-T008",
+    "Page_2:starter-T009",
+    "Page_2:starter-T010",
+    "Page_2:starter-T005",
+    "Page_2:starter-T022",
+    "Page_2:starter-T024",
+    "Page_2:starter-T033",
+    "Page_2:starter-T034"
+   ]
+  },
+  {
+   "id": "GD-04",
+   "kind": "kind",
+   "item": "Item 259",
+   "library_today": "Item 250",
+   "needed": "Item 260",
+   "drawn": "Item 261",
+   "reason": "Item 262",
+   "status": "open",
+   "mapping_rows": ["Page_2:Device_52", "Page_2:Device_53", "Page_2:Device_54", "Page_2:Device_55"]
+  },
+  {
+   "id": "GD-05",
+   "kind": "kind",
+   "item": "Item 263",
+   "library_today": "Item 264",
+   "needed": "Item 265",
+   "drawn": "Item 266",
+   "reason": "Item 267",
+   "status": "open",
+   "mapping_rows": ["Page_2:dev-T029"]
+  },
+  {
+   "id": "GD-07",
+   "kind": "data",
+   "item": "Item 268",
+   "library_today": "Item 269",
+   "needed": "Item 270",
+   "drawn": "Item 271",
+   "reason": "Item 272",
+   "status": "open",
+   "mapping_rows": [
+    "Page_2:motor-T001",
+    "Page_2:motor-T002",
+    "Page_2:motor-T003",
+    "Page_2:motor-T007",
+    "Page_2:motor-T008",
+    "Page_2:motor-T009",
+    "Page_2:motor-T010",
+    "Page_2:motor-T005",
+    "Page_2:motor-T033",
+    "Page_2:motor-T034",
+    "Page_2:dev-T004"
+   ]
+  },
+  {
+   "id": "GD-10",
+   "kind": "feature",
+   "item": "Item 273",
+   "library_today": "Item 274",
+   "needed": "Item 275",
+   "drawn": "Item 276",
+   "reason": "Item 277",
+   "status": "open",
+   "mapping_rows": ["Page_2:ind-171"]
+  },
+  {
+   "id": "GD-15",
+   "kind": "kind",
+   "item": "Item 278",
+   "library_today": "Item 279",
+   "needed": "Item 280",
+   "drawn": "Item 281",
+   "reason": "Item 282",
+   "status": "closed",
+   "mapping_rows": ["Page_2:Device_134"]
+  },
+  {
+   "id": "GD-16",
+   "kind": "feature",
+   "item": "Item 283",
+   "library_today": "Item 284",
+   "needed": "Item 285",
+   "drawn": "Item 286",
+   "reason": "Item 287",
+   "status": "open",
+   "mapping_rows": ["Page_2:dev-T011", "Page_2:dev-T012"]
+  },
+  {
+   "id": "GD-18",
+   "kind": "data",
+   "item": "Item 288",
+   "library_today": "Item 289",
+   "needed": "Item 290",
+   "drawn": "Item 291",
+   "reason": "Item 292",
+   "status": "open",
+   "mapping_rows": ["Page_2:ro-62", "Page_2:ro-63", "Page_2:ro-64", "Page_2:ind-172", "Page_2:ro-175", "Page_2:ro-176"]
+  },
+  {
+   "id": "GD-19",
+   "kind": "feature",
+   "item": "Item 293",
+   "library_today": "Item 294",
+   "needed": "Item 295",
+   "drawn": "Item 296",
+   "reason": "Item 297",
+   "status": "open",
+   "mapping_rows": ["Page_2:ro-68", "Page_2:ro-73", "Page_2:ro-76", "Page_2:ro-79"]
+  },
+  {
+   "id": "GB-03",
+   "kind": "data",
+   "item": "Item 298",
+   "library_today": "Item 299",
+   "needed": "Item 280",
+   "drawn": "Item 300",
+   "reason": "Item 301",
+   "status": "partial",
+   "mapping_rows": ["Page_2:ro-63"]
+  },
+  {
+   "id": "GB-05",
+   "kind": "feature",
+   "item": "Item 302",
+   "library_today": "Item 303",
+   "needed": "Item 304",
+   "drawn": "Item 305",
+   "reason": "Item 306",
+   "status": "open",
+   "mapping_rows": ["Page_2:dev-T011", "Page_2:dev-T012", "Page_2:ro-75", "Page_2:ro-78", "Page_2:ro-81"]
+  }
+ ]
+}

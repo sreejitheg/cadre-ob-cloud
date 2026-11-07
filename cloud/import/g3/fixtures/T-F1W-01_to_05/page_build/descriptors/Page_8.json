@@ -1,0 +1,193 @@
+{
+ "schema": "cadre-hmi-screen/1",
+ "screen": {
+  "id": "Page_8",
+  "route": "/page-8",
+  "title": "Page 8",
+  "view": "Screens/Page_8",
+  "layout": "diagram",
+  "width": 1900,
+  "height": 860,
+  "node": "Item 1/Page 2/Page 8",
+  "fit": {"reserveX": 0, "reserveY": 216},
+  "level": "Level 2 unit",
+  "previous": "/page-7",
+  "next": "/page-9"
+ },
+ "tagRoot": "[default]cadre_hmi_proj1",
+ "tagModel": "external",
+ "showTags": true,
+ "toolbar": true,
+ "sections": [
+  {"id": "reg_1", "x": 10, "y": 10, "w": 490, "h": 58},
+  {"id": "reg_2", "x": 1620, "y": 10, "w": 270, "h": 150},
+  {"id": "Device_3", "x": 1631, "y": 50, "w": 249, "h": 102, "label": "Item 2"},
+  {"id": "reg_4", "x": 200, "y": 378, "w": 1510, "h": 472},
+  {"id": "static_0", "x": 215, "y": 400, "w": 190, "h": 44},
+  {"id": "reg_5", "x": 735, "y": 436, "w": 425, "h": 206},
+  {"id": "reg_6", "x": 721, "y": 760, "w": 442, "h": 80}
+ ],
+ "wells": [
+  {
+   "id": "Device_7",
+   "x": 721,
+   "y": 407,
+   "w": 442,
+   "h": 342,
+   "marks": [{"level": 0.25, "tag": "T021_S53"}, {"level": 0.5, "tag": "T021_S77"}, {"level": 0.75, "tag": "T021_S50"}, {"level": 1.0, "tag": "T020_S90"}]
+  }
+ ],
+ "symbols": [
+  {
+   "id": "T022",
+   "kind": "pump",
+   "x": 739,
+   "y": 650,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Item 3",
+   "params": {"readoutPosition": "bottom", "hasTag": true, "tag": "T022", "vertical": false},
+   "bind": {"on": "T022/state", "badgeControl": "T022/modeBadge", "badgeInterlock": "T022/interlockBadge", "outOfService": "T022/oos", "badgeDuty": "T022/duty"}
+  },
+  {
+   "id": "T024",
+   "kind": "pump",
+   "x": 931,
+   "y": 650,
+   "w": 48,
+   "h": 48,
+   "device": true,
+   "label": "Item 4",
+   "params": {"readoutPosition": "bottom", "hasTag": true, "tag": "T024", "vertical": false},
+   "bind": {"on": "T024/state", "badgeControl": "T024/modeBadge", "badgeInterlock": "T024/interlockBadge", "outOfService": "T024/oos", "badgeDuty": "T024/duty"}
+  },
+  {
+   "id": "ind_8",
+   "kind": "indicator",
+   "x": 745,
+   "y": 446,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T020_S90"},
+   "states": [{"value": true, "colour": "caution", "label": "Item 5"}],
+   "stateDefault": "off"
+  },
+  {
+   "id": "ind_9",
+   "kind": "indicator",
+   "x": 925,
+   "y": 466,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T021_S50"},
+   "states": [{"value": true, "colour": "caution", "label": "Item 6"}],
+   "stateDefault": "off"
+  },
+  {
+   "id": "ind_10",
+   "kind": "indicator",
+   "x": 925,
+   "y": 530,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T021_S77"},
+   "states": [{"value": true, "colour": "active", "label": "Item 6"}],
+   "stateDefault": "off"
+  },
+  {
+   "id": "ind_11",
+   "kind": "indicator",
+   "x": 925,
+   "y": 594,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T021_S53"},
+   "states": [{"value": true, "colour": "active", "label": "Item 6"}],
+   "stateDefault": "off"
+  },
+  {
+   "id": "E12",
+   "kind": "indicator",
+   "x": 1640,
+   "y": 84,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T023_S54"},
+   "states": [{"value": true, "colour": "active", "label": "Item 7"}],
+   "stateDefault": "off"
+  },
+  {
+   "id": "E13",
+   "kind": "indicator",
+   "x": 1760,
+   "y": 84,
+   "w": 48,
+   "h": 48,
+   "params": {"hasTag": false, "readoutPosition": "none"},
+   "bind": {"state": "T023_S55"},
+   "states": [{"value": true, "colour": "active", "label": "Item 7"}],
+   "stateDefault": "off"
+  }
+ ],
+ "junctions": [{"id": "J_14", "x": 1100, "y": 422}],
+ "pipes": [
+  {"id": "flow_15", "from": {"x": 410, "y": 422, "end": "arrow-in"}, "to": {"x": 728, "y": 422, "end": "arrow-out"}, "medium": "waste"},
+  {"id": "flow_16", "from": {"ref": "T022", "side": "right"}, "to": {"ref": "J_14"}, "via": [[907, 674], [907, 422]], "medium": "waste"},
+  {"id": "flow_17", "from": {"ref": "T024", "side": "right"}, "to": {"ref": "J_14"}, "via": [[1100, 674]], "medium": "waste"},
+  {"id": "flow_18", "from": {"ref": "J_14"}, "to": {"x": 1500, "y": 422, "end": "arrow-out"}, "medium": "waste"}
+ ],
+ "buttons": [
+  {
+   "id": "nav_19",
+   "x": 20,
+   "y": 20,
+   "w": 150,
+   "h": 38,
+   "label": "Item 8",
+   "action": {"type": "faceplate", "device": "fp-T025", "tab": "config", "kind": "sequence", "title": "T025", "label": "Item 9"}
+  },
+  {
+   "id": "nav_20",
+   "x": 180,
+   "y": 20,
+   "w": 150,
+   "h": 38,
+   "label": "Item 10",
+   "action": {"type": "faceplate", "device": "fp-T025", "tab": "home", "kind": "sequence", "title": "T025", "label": "Item 9"}
+  },
+  {
+   "id": "nav_21",
+   "x": 340,
+   "y": 20,
+   "w": 150,
+   "h": 38,
+   "label": "Item 11",
+   "action": {"type": "faceplate", "device": "fp-T025", "tab": "interlocks", "kind": "sequence", "title": "T025", "label": "Item 9"}
+  },
+  {"id": "nav_22", "x": 1506, "y": 403, "w": 184, "h": 38, "label": "Item 12", "action": {"type": "route", "route": "/page-9"}},
+  {"id": "E23", "x": 730, "y": 762, "w": 110, "h": 24, "label": "Item 13", "action": {"type": "faceplate", "device": "T022", "tab": "alarms"}},
+  {"id": "E24", "x": 730, "y": 788, "w": 110, "h": 24, "label": "Item 14", "action": {"type": "faceplate", "device": "T022", "tab": "home"}},
+  {"id": "E25", "x": 730, "y": 814, "w": 110, "h": 24, "label": "Item 15", "action": {"type": "faceplate", "device": "T022", "tab": "interlocks"}},
+  {"id": "E26", "x": 922, "y": 762, "w": 110, "h": 24, "label": "Item 13", "action": {"type": "faceplate", "device": "T024", "tab": "alarms"}},
+  {"id": "E27", "x": 922, "y": 788, "w": 110, "h": 24, "label": "Item 14", "action": {"type": "faceplate", "device": "T024", "tab": "home"}},
+  {"id": "E28", "x": 922, "y": 814, "w": 110, "h": 24, "label": "Item 15", "action": {"type": "faceplate", "device": "T024", "tab": "interlocks"}}
+ ],
+ "labels": [
+  {"id": "static_1", "x": 225, "y": 410, "w": 170, "h": 24, "text": "Item 16", "align": "center", "style": "label"},
+  {"id": "static_2", "x": 1631, "y": 18, "w": 249, "h": 24, "text": "Item 17", "align": "right", "style": "heading"},
+  {"id": "Device_29", "x": 735, "y": 498, "w": 100, "h": 24, "text": "T020", "align": "left", "style": "label"},
+  {"id": "Device_30", "x": 925, "y": 438, "w": 100, "h": 24, "text": "T021", "align": "left", "style": "label"},
+  {"id": "lbl_31", "x": 800, "y": 458, "w": 90, "h": 24, "text": "Item 18", "align": "left", "style": "label"},
+  {"id": "lbl_32", "x": 981, "y": 478, "w": 96, "h": 24, "text": "Item 18", "align": "left", "style": "label"},
+  {"id": "lbl_33", "x": 981, "y": 542, "w": 96, "h": 24, "text": "Item 19", "align": "left", "style": "label"},
+  {"id": "lbl_34", "x": 981, "y": 606, "w": 96, "h": 24, "text": "Item 20", "align": "left", "style": "label"},
+  {"id": "lbl_35", "x": 1692, "y": 96, "w": 64, "h": 24, "text": "Item 21", "align": "left", "style": "label"},
+  {"id": "lbl_36", "x": 1812, "y": 96, "w": 64, "h": 24, "text": "Item 22", "align": "left", "style": "label"}
+ ]
+}

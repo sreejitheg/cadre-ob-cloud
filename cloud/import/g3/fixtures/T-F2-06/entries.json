@@ -1,0 +1,29 @@
+{
+ "unit": "Page_2",
+ "page_size": {"h": 768, "w": 1024},
+ "canvas": {"w": 1900, "h": 860},
+ "entries": [
+  {
+   "bbox": {"h": 46, "w": 44, "x": 219, "y": 216},
+   "type": "fuse",
+   "inferred": true,
+   "label": "Item 78",
+   "id": "Device_49",
+   "ans": ["Page_2:295", "Page_2:297"],
+   "tag": null
+  },
+  {
+   "bbox": {"h": 48, "w": 78, "x": 280, "y": 483},
+   "type": "fuse",
+   "inferred": true,
+   "label": "Item 79",
+   "id": "Device_50",
+   "ans": ["Page_2:387", "Page_2:388"],
+   "tag": null
+  }
+ ],
+ "design_rows": [
+  {"component": "section", "entry": "Page_2:Device_49", "gap": "GD-02", "page": "Page_2", "treatment": "Item 126"},
+  {"component": "section", "entry": "Page_2:Device_50", "gap": "GD-02", "page": "Page_2", "treatment": "Item 128"}
+ ]
+}
